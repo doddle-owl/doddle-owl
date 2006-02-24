@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.yamaguti.comp.ae.keio.ac.jp/doddle-j#">
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3c05e1">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3aa92f"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="en">locket</rdfs:label>
+    <rdfs:comment xml:lang="ja">ロケットという装身具</rdfs:comment>
+    <rdfs:label xml:lang="ja">ロケット</rdfs:label>
+    <rdfs:comment xml:lang="en">an ornament, called locket</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3aa92f">
+    <rdfs:comment xml:lang="en">inanimate object (inanimate object defined by function)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3aa966"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="ja">機能で捉えた具体物</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID30f6f0">
+    <rdfs:comment xml:lang="ja">器具</rdfs:comment>
+    <rdfs:comment xml:lang="en">	</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa92f"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3aa930">
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa966"/>
+    <rdfs:comment xml:lang="ja">自動物</rdfs:comment>
+    <rdfs:comment xml:lang="en">self-functioning entity (machine)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID30f707"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID30f707">
+    <rdfs:comment xml:lang="en">	</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa92f"/>
+    <rdfs:comment xml:lang="ja">機械</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UID8">
+    <rdfs:label xml:lang="ja">時計発射装置</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID0fabef"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="UID3">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#UID2"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">H2Aロケット発射装置</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="UID7">
+    <rdfs:label xml:lang="ja">ロボット発射装置</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID0fabef"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="UID2">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID0fabef"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">ロケット発射装置</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3be5f0">
+    <rdfs:label xml:lang="en">whirleybird</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID30f710"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="ja">ヘリコプターという航空機</rdfs:comment>
+    <rdfs:label xml:lang="en">whirlybird</rdfs:label>
+    <rdfs:comment xml:lang="en">an aircraft, called helicopter</rdfs:comment>
+    <rdfs:label xml:lang="ja">ヘリ</rdfs:label>
+    <rdfs:label xml:lang="en">copter</rdfs:label>
+    <rdfs:label xml:lang="en">chopper</rdfs:label>
+    <rdfs:label xml:lang="en">helicopter</rdfs:label>
+    <rdfs:label xml:lang="ja">ヘリコプター</rdfs:label>
+    <rdfs:label xml:lang="ja">ヘリコプタ</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3bd7b3">
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa930"/>
+    <rdfs:label xml:lang="ja">人造人間</rdfs:label>
+    <rdfs:label xml:lang="en">droid</rdfs:label>
+    <rdfs:label xml:lang="ja">アンドロイド</rdfs:label>
+    <rdfs:label xml:lang="en">androides</rdfs:label>
+    <rdfs:comment xml:lang="ja">ロボットという人造人間</rdfs:comment>
+    <rdfs:label xml:lang="en">android</rdfs:label>
+    <rdfs:label xml:lang="en">iron men</rdfs:label>
+    <rdfs:comment xml:lang="en">a robot as an android</rdfs:comment>
+    <rdfs:label xml:lang="en">iron man</rdfs:label>
+    <rdfs:label xml:lang="ja">ロボット</rdfs:label>
+    <rdfs:label xml:lang="en">robot</rdfs:label>
+    <rdfs:label xml:lang="en">robotry</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="UID0">
+    <rdfs:label xml:lang="ja">飛行機発射装置</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID0fabef"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID10052f">
+    <rdfs:label xml:lang="en">timekeeper</rdfs:label>
+    <rdfs:label xml:lang="ja">時計</rdfs:label>
+    <rdfs:label xml:lang="en">horologe</rdfs:label>
+    <rdfs:comment xml:lang="en">an apparatus that measures the passage of time</rdfs:comment>
+    <rdfs:label xml:lang="en">timepiece</rdfs:label>
+    <rdfs:comment xml:lang="ja">経過時間を計測する器械</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID30f6f0"/>
+  </owl:Class>
+  <owl:Class rdf:ID="UID5">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#UID4"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">B22ヘリコプター発射装置</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="UID6">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID0fabef"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">機械発射装置</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="UID1">
+    <rdfs:label xml:lang="ja">F14飛行機発射装置</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#UID0"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID30f710">
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID30f6f0"/>
+    <rdfs:comment xml:lang="ja">飛行機</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa930"/>
+    <rdfs:comment xml:lang="en">	</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3bc83c">
+    <rdfs:label xml:lang="en">airplane</rdfs:label>
+    <rdfs:label xml:lang="ja">エアープレーン</rdfs:label>
+    <rdfs:label xml:lang="en">craft</rdfs:label>
+    <rdfs:label xml:lang="ja">航空機</rdfs:label>
+    <rdfs:label xml:lang="ja">銀翼</rdfs:label>
+    <rdfs:label xml:lang="en">AP</rdfs:label>
+    <rdfs:label xml:lang="en">plane</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID30f710"/>
+    <rdfs:label xml:lang="en">bird</rdfs:label>
+    <rdfs:label xml:lang="en">avion</rdfs:label>
+    <rdfs:label xml:lang="en">flying machine</rdfs:label>
+    <rdfs:label xml:lang="ja">エアプレーン</rdfs:label>
+    <rdfs:comment xml:lang="en">a vehicle called airplane</rdfs:comment>
+    <rdfs:label xml:lang="ja">エアプレイン</rdfs:label>
+    <rdfs:comment xml:lang="ja">飛行機という乗り物</rdfs:comment>
+    <rdfs:label xml:lang="en">aircraft</rdfs:label>
+    <rdfs:label xml:lang="ja">エアープレイン</rdfs:label>
+    <rdfs:label xml:lang="ja">鵬翼</rdfs:label>
+    <rdfs:label xml:lang="ja">機</rdfs:label>
+    <rdfs:label xml:lang="ja">飛行機</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID1e850b">
+    <rdfs:label xml:lang="ja">機械</rdfs:label>
+    <rdfs:comment xml:lang="en">operating from a power source other than human power, an apparatus that performs a designated task</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID30f707"/>
+    <rdfs:label xml:lang="en">machine</rdfs:label>
+    <rdfs:comment xml:lang="ja">人力以外の動力によって作動し,一定の仕事をする仕組みの装置</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UID4">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID0fabef"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">ヘリコプター発射装置</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID0fabef">
+    <rdfs:label xml:lang="ja">デコール</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID30f6f0"/>
+    <rdfs:label xml:lang="ja">装置</rdfs:label>
+    <rdfs:comment xml:lang="en">a stage setting</rdfs:comment>
+    <rdfs:comment xml:lang="ja">舞台装置</rdfs:comment>
+    <rdfs:label xml:lang="ja">セット</rdfs:label>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR/IDPROP_ROOT"/>
+</rdf:RDF>

@@ -1,0 +1,5 @@
+http://www.yamaguti.comp.ae.keio.ac.jp/doddle-j#
+入力単語数: 206
+入力概念数: 142
+クラス数: 223
+プロパティ数: 119

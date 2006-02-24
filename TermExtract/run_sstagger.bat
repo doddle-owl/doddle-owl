@@ -1,0 +1,1 @@
+%1tagger.exe -i %1tmp.txt -o %1tmpTagger.txt
