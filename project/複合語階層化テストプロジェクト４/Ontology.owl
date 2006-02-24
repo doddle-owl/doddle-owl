@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.yamaguti.comp.ae.keio.ac.jp/doddle-j#">
+  <owl:Class rdf:ID="UID0">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID1e856d"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">レーダー情報</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3aa92f">
+    <rdfs:comment xml:lang="en">inanimate object (inanimate object defined by function)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID444d86"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="ja">機能で捉えた具体物</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UID1">
+    <rdfs:subClassOf rdf:resource="#UID0"/>
+    <rdfs:label xml:lang="ja">飛行機レーダー情報</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID30f710">
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa92f"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3aa966"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="ja">飛行機</rdfs:comment>
+    <rdfs:comment xml:lang="en">	</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID3bc83c">
+    <rdfs:label xml:lang="en">airplane</rdfs:label>
+    <rdfs:label xml:lang="ja">エアープレーン</rdfs:label>
+    <rdfs:label xml:lang="en">craft</rdfs:label>
+    <rdfs:label xml:lang="ja">航空機</rdfs:label>
+    <rdfs:label xml:lang="ja">銀翼</rdfs:label>
+    <rdfs:label xml:lang="en">AP</rdfs:label>
+    <rdfs:label xml:lang="en">plane</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID30f710"/>
+    <rdfs:label xml:lang="en">bird</rdfs:label>
+    <rdfs:label xml:lang="en">avion</rdfs:label>
+    <rdfs:label xml:lang="en">flying machine</rdfs:label>
+    <rdfs:label xml:lang="ja">エアプレーン</rdfs:label>
+    <rdfs:comment xml:lang="en">a vehicle called airplane</rdfs:comment>
+    <rdfs:label xml:lang="ja">エアプレイン</rdfs:label>
+    <rdfs:comment xml:lang="ja">飛行機という乗り物</rdfs:comment>
+    <rdfs:label xml:lang="en">aircraft</rdfs:label>
+    <rdfs:label xml:lang="ja">エアープレイン</rdfs:label>
+    <rdfs:label xml:lang="ja">鵬翼</rdfs:label>
+    <rdfs:label xml:lang="ja">機</rdfs:label>
+    <rdfs:label xml:lang="ja">飛行機</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID444d86">
+    <rdfs:comment xml:lang="en">thing, matter (thing)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa966"/>
+    <rdfs:comment xml:lang="ja">もの</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UID3">
+    <rdfs:subClassOf rdf:resource="#UID1"/>
+    <rdfs:label xml:lang="ja">ロケットレーダー情報</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID1e856d">
+    <rdfs:label xml:lang="ja">情報</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID3aa92f"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID444d86"/>
+    <rdfs:comment xml:lang="en">knowledge and reference materials necessary in order to make a decision</rdfs:comment>
+    <rdfs:comment xml:lang="ja">判断に必要な知識や資料</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UID2">
+    <rdfs:subClassOf rdf:resource="#UID1"/>
+    <rdfs:label xml:lang="ja">飛行機レーダー情報</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR/ID10ebc1">
+    <rdfs:comment xml:lang="ja">ロケットという推進機関</rdfs:comment>
+    <rdfs:comment xml:lang="en">a jet engine called a rocket</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR/ID30f710"/>
+    <rdfs:label xml:lang="ja">ロケット</rdfs:label>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR/IDPROP_ROOT"/>
+</rdf:RDF>

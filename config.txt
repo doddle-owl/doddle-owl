@@ -1,0 +1,8 @@
+CHASEN_EXE=C:/Program Files/ChaSen/chasen.exe
+SSTAGGER_HOME=C:/usr/postagger-1.0/
+PERL_EXE=C:/Perl/bin/perl.exe
+DODDLE_DIC=C:/DODDLE_DIC/
+BASE_URI=http://www.yamaguti.comp.ae.keio.ac.jp/doddle-j#
+PROJECT_DIR=./project/
+UPPER_CONCEPT_LIST=./upperConceptList.txt
+WORDNET_PATH=C:/program files/wordnet/2.0/dict
