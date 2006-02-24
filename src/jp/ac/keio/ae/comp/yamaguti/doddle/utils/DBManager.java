@@ -260,10 +260,10 @@ public class DBManager {
                             }
                             if (c == null) {
                                 Set<Concept> conceptSet = wordConceptSetMap.get(iwModel.getMatchedWord());
-                                if (conceptSet != null) {
+                                if (conceptSet != null && 0 < conceptSet.size()) {
                                     c = (Concept) conceptSet.toArray()[0];
                                     wordConceptMap.put(iwModel.getWord(), c);
-                                }
+                                } 
                             }
                         }
                         if (c.equals(InputModuleUI.nullConcept)) {
@@ -517,8 +517,7 @@ public class DBManager {
             EntryBinding idConceptDataBinding = new SerialBinding(catalog, Concept.class);
             EntryBinding stringBinding = TupleBinding.getPrimitiveBinding(String.class);
 
-            idConceptMap = new StoredSortedMap(db.getIDConceptDatabase(), stringBinding, idConceptDataBinding,
-                    true);
+            idConceptMap = new StoredSortedMap(db.getIDConceptDatabase(), stringBinding, idConceptDataBinding, true);
             wordIDsMap = new StoredSortedMap(db.getWordIDsDatabase(), stringBinding, stringBinding, true);
         }
 
