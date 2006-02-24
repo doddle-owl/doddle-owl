@@ -82,6 +82,7 @@ public class InputModule {
                 break;
             }
         }
+        if (conceptSet.size() == 0) { return null; }
         InputWordModel iwModel = new InputWordModel(iw, wordList, subIW.toString(), matchedPosition == 0, conceptSet
                 .size(), project);
         if (wcSetMap.get(iwModel.getMatchedWord()) == null) {
