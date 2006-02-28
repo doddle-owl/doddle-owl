@@ -97,7 +97,7 @@ public class ConstructConceptTreePanel extends JPanel implements ComplexConceptT
         conceptTreePanel.getConceptTree().setModel(new DefaultTreeModel(null));
     }
 
-    public TreeModel getTreeModel(Set conceptSet) {
+    public TreeModel getTreeModel(Set<Concept> conceptSet) {
         Set pathSet = treeMaker.getPathList(conceptSet);
         TreeModel model = treeMaker.getTrimmedTreeModel(pathSet, project);
         controlPanel.setDefaultValue();

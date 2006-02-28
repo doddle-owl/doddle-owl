@@ -1,6 +1,7 @@
 package jp.ac.keio.ae.comp.yamaguti.doddle.data;
 
 import java.io.*;
+import java.util.*;
 
 /** 
  *  このクラスを編集した場合，DBを作成しなおす必要あり
@@ -118,6 +119,12 @@ public class Concept implements Serializable {
         enWord = word;
     }
 
+    public void addEnWord(String word) {
+        if (!Arrays.asList(enWord.split("\t")).contains(word)) {
+            enWord += word + "\t";
+        }
+    }
+
     public String getEnWord() {
         return enWord;
     }
@@ -148,6 +155,12 @@ public class Concept implements Serializable {
 
     public void setJaWord(String word) {
         jaWord = word;
+    }
+
+    public void addJaWord(String word) {
+        if (!Arrays.asList(jaWord.split("\t")).contains(word)) {
+            jaWord += word + "\t";
+        }
     }
 
     public String getWord() {

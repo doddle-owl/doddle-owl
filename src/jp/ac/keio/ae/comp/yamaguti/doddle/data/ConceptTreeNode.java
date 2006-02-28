@@ -53,7 +53,7 @@ public class ConceptTreeNode extends DefaultMutableTreeNode {
                 Entry entry = (Entry) i.next();
                 String word = (String) entry.getKey();
                 Concept concept = (Concept) entry.getValue();
-                if (concept.equals(c) && EDRDic.getIDSet(word) != null) {
+                if (concept.equals(c) && EDRDic.getEDRIDSet(word) != null) {
                     c.setInputWord(word);
                     break;
                 }

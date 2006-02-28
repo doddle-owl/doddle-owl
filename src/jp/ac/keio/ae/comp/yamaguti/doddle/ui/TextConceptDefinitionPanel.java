@@ -287,7 +287,7 @@ public class TextConceptDefinitionPanel extends JPanel implements ListSelectionL
         }
         Set<List<Concept>> pathSet = null;
         if (c.getPrefix().equals("edr")) {
-            pathSet = EDRTree.getInstance().getPathToRootSet(c.getId());
+            pathSet = EDRTree.getEDRTree().getPathToRootSet(c.getId());
         } else if (c.getPrefix().equals("wn")) {
             pathSet = WordNetDic.getPathToRootSet(new Long(c.getId()));
         }

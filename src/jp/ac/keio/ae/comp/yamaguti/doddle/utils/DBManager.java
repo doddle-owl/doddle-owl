@@ -120,7 +120,7 @@ public class DBManager {
                  * @return ‘ÎÛŠT”O‚É‚¨‚¯‚é“ü—ÍŒêœb‚ğŠÜ‚ŞŒZ’íŠT”O”‚ğ•Ô‚·
                  */
                 private int cntRelevantSiblingConcepts(String id) {
-                    return getMaxEvalValue(EDRTree.getInstance().getSiblingIDsSet(id), id);
+                    return getMaxEvalValue(EDRTree.getEDRTree().getSiblingIDsSet(id), id);
                 }
 
                 /**
@@ -128,7 +128,7 @@ public class DBManager {
                  * @return
                  */
                 private int cntRelevantSupConcepts(String id) {
-                    return getMaxEvalValue(EDRTree.getInstance().getPathToRootSet(id), id);
+                    return getMaxEvalValue(EDRTree.getEDRTree().getPathToRootSet(id), id);
                 }
 
                 /**
@@ -136,7 +136,7 @@ public class DBManager {
                  * @return
                  */
                 private int cntRelevantSubConcepts(String id) {
-                    return getMaxEvalValue(EDRTree.getInstance().getSubIDsSet(id), id);
+                    return getMaxEvalValue(EDRTree.getEDRTree().getSubIDsSet(id), id);
                 }
 
             });

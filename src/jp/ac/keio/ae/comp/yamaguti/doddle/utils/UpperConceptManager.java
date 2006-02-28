@@ -48,7 +48,7 @@ public class UpperConceptManager {
 
     private static Set getSubWordSet(String upperID) {
         Set idSet = new HashSet();
-        Set subIDSet = EDRTree.getInstance().getSubIDsSet(upperID);
+        Set subIDSet = EDRTree.getEDRTree().getSubIDsSet(upperID);
         for (Iterator i = subIDSet.iterator(); i.hasNext();) {
             idSet.addAll((Set) i.next());
         }

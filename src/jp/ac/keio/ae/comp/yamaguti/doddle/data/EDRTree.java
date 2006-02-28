@@ -18,39 +18,49 @@ import org.apache.log4j.*;
 public class EDRTree {
 
     private Map<String, Set<TreeNode>> idNodeSetMap;
-    private Map conceptSubConceptSetMap;
+    private Map idSubIDSetMap;
     private TreeModel edrTreeModel;
     public static String ID_SUBIDSET_MAP = DODDLE.DODDLE_DIC + "idSubIDSetMapforEDR.txt";
     public static String EDRT_ID_SUBIDSET_MAP = DODDLE.DODDLE_EDRT_DIC + "idSubIDSetMapforEDR.txt";
 
     private static EDRTree edrTree;
+    private static EDRTree edrtTree;
 
-    public static EDRTree getInstance() {
+    private boolean isSpecial;
+
+    public static EDRTree getEDRTree() {
         if (edrTree == null) {
-            edrTree = new EDRTree();
+            edrTree = new EDRTree(ID_SUBIDSET_MAP, ConceptTreeMaker.EDR_CLASS_ROOT_ID, false);
         }
         return edrTree;
     }
 
-    private EDRTree() {
+    public static EDRTree getEDRTTree() {
+        if (edrtTree == null) {
+            edrtTree = new EDRTree(EDRT_ID_SUBIDSET_MAP, ConceptTreeMaker.EDRT_CLASS_ROOT_ID, true);
+        }
+        return edrtTree;
+    }
+
+    private EDRTree(String idSubIDSetMapPath, String edrClassRootID, boolean t) {
+        isSpecial = t;
         idNodeSetMap = new HashMap<String, Set<TreeNode>>();
-        conceptSubConceptSetMap = new HashMap();
+        idSubIDSetMap = new HashMap();
         try {
-            // System.out.println(CONCEPT_SUBCONCEPTSET_MAP);
-            InputStream inputStream = new FileInputStream(ID_SUBIDSET_MAP);
+            InputStream inputStream = new FileInputStream(idSubIDSetMapPath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "SJIS"));
             String line = "";
             while ((line = reader.readLine()) != null) {
                 String[] lines = line.replaceAll("\n", "").split("\t");
-                conceptSubConceptSetMap.put(lines[0], lines);
+                idSubIDSetMap.put(lines[0], lines);
             }
-            DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(ConceptTreeMaker.EDR_CLASS_ROOT_ID);
+            DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(edrClassRootID);
             Set<TreeNode> nodeSet = new HashSet<TreeNode>();
             nodeSet.add(rootNode);
-            idNodeSetMap.put(ConceptTreeMaker.EDR_CLASS_ROOT_ID, nodeSet);
-            makeEDRTree(ConceptTreeMaker.EDR_CLASS_ROOT_ID, rootNode);
+            idNodeSetMap.put(edrClassRootID, nodeSet);
+            makeEDRTree(edrClassRootID, rootNode);
             edrTreeModel = new DefaultTreeModel(rootNode);
-            conceptSubConceptSetMap.clear();
+            idSubIDSetMap.clear();
             reader.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +68,12 @@ public class EDRTree {
     }
 
     public Set<List<Concept>> getPathToRootSet(String id) {
-        Concept c = EDRDic.getEDRConcept(id);
+        Concept c = null;
+        if (isSpecial) {
+            EDRDic.getEDRTConcept(id);
+        } else {
+            EDRDic.getEDRConcept(id);
+        }
         Set<TreeNode> nodeSet = idNodeSetMap.get(id);
         Set<List<Concept>> pathToRootSet = new HashSet<List<Concept>>();
         if (nodeSet == null) {
@@ -74,7 +89,11 @@ public class EDRTree {
             for (int j = 1; j < pathToRoot.length; j++) {
                 DefaultMutableTreeNode n = (DefaultMutableTreeNode) pathToRoot[j];
                 String nid = (String) n.getUserObject();
-                path.add(EDRDic.getEDRConcept(nid));
+                if (isSpecial) {
+                    path.add(EDRDic.getEDRTConcept(nid));
+                } else {
+                    path.add(EDRDic.getEDRConcept(nid));
+                }
             }
             pathToRootSet.add(path);
         }
@@ -155,7 +174,7 @@ public class EDRTree {
     }
 
     private void makeEDRTree(String id, DefaultMutableTreeNode node) {
-        String[] subConceptSet = (String[]) conceptSubConceptSetMap.get(id);
+        String[] subConceptSet = (String[]) idSubIDSetMap.get(id);
         for (int i = 1; i < subConceptSet.length; i++) {
             String subID = subConceptSet[i];
             DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(subID);
@@ -167,7 +186,7 @@ public class EDRTree {
                 Set nodeSet = idNodeSetMap.get(subID);
                 nodeSet.add(subNode);
             }
-            if (conceptSubConceptSetMap.get(subID) != null) {
+            if (idSubIDSetMap.get(subID) != null) {
                 makeEDRTree(subID, subNode);
             }
             node.add(subNode);
@@ -175,16 +194,14 @@ public class EDRTree {
     }
 
     public static void main(String[] args) {
-        // edrTree.getSubIDsSet("3aa966");
-        // edrTree.getSiblingIDsSet("30f751");
-        // Set pathSet = edrTree.getPathToRootSet("3bed80");
-        // Set pathSet = edrTree.getPathToRootSet("1faaeb");
-        System.out.println(ID_SUBIDSET_MAP);
-        Set pathSet = edrTree.getPathToRootSet("3c1170");
-        for (Iterator i = pathSet.iterator(); i.hasNext();) {
-            List path = (List) i.next();
-            for (Iterator j = path.iterator(); j.hasNext();) {
-                System.out.print(j.next() + "\t");
+        DODDLE.IS_USING_DB = true;
+        EDRDic.init();
+        Set<List<Concept>> pathSet = EDRTree.getEDRTTree().getPathToRootSet("3f543e");
+        // Set<List<Concept>> pathSet =
+        // EDRTree.getEDRTree().getPathToRootSet("3c1170");
+        for (List<Concept> path : pathSet) {
+            for (Concept c : path) {
+                System.out.print(c + "\t");
             }
             System.out.println();
         }

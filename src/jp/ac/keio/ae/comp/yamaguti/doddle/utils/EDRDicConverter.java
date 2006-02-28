@@ -135,8 +135,8 @@ public class EDRDicConverter {
 
             if (!enWord.equals(enCWord)) {
                 Concept c = getConcept(id);
-                c.setJaWord(c.getJaWord() + jaWord + "\t");
-                c.setEnWord(c.getEnWord() + enWord + "\t");
+                c.addJaWord(jaWord);
+                c.addEnWord(enWord);
                 c.setJaExplanation(jaExp);
                 c.setEnExplanation(enExp);
                 idDefinitionMap.put(id, c);
@@ -174,8 +174,8 @@ public class EDRDicConverter {
 
             if (!jaWord.equals(jaCWord)) {
                 Concept c = getConcept(id);
-                c.setJaWord(c.getJaWord() + jaWord + "\t");
-                c.setEnWord(c.getEnWord() + enWord + "\t");
+                c.addJaWord(jaWord);
+                c.addEnWord(enWord);
                 c.setJaExplanation(jaExp);
                 c.setEnExplanation(enExp);
                 idDefinitionMap.put(id, c);
@@ -183,8 +183,8 @@ public class EDRDicConverter {
             String[] posSet = pos.split(";");
             if (posSet.length == 2 && posSet[0].equals("JN1") && posSet[1].equals("JVE")) {
                 Concept c = getConcept(id);
-                c.setJaWord(c.getJaWord() + invariableWord + "\t");
-                c.setEnWord(c.getEnWord() + enWord + "\t");
+                c.addJaWord(invariableWord);
+                c.addEnWord(enWord);
                 c.setJaExplanation(jaExp + "\t");
                 c.setEnExplanation(enExp + "\t");
                 idDefinitionMap.put(id, c);
@@ -428,7 +428,7 @@ public class EDRDicConverter {
     }
 
     public static void main(String[] args) {
-        boolean isSpecial = false;
+        boolean isSpecial = true;
         EDRDicConverter.setDICPath(isSpecial);
         System.out.println("isSpecial: " + isSpecial);
         System.out.println("make idDefinitionMap");

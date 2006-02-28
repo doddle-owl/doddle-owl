@@ -186,7 +186,7 @@ public class ConstructPropertyTreePanel extends JPanel implements ComplexConcept
             if (nounIDSet.contains(id)) {
                 abstractRegionSet.add(id);
             } else {
-                String subID = EDRTree.getInstance().getSubID(id, nounIDSet);
+                String subID = EDRTree.getEDRTree().getSubID(id, nounIDSet);
                 if (subID != null) {
                     // System.out.println(InputModule.getEDRConcept(id) + " Å® "
                     // + InputModule.getEDRConcept(subID));
