@@ -551,10 +551,10 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
 
     private void setInputConceptSetWithDB() {
         inputConceptSet = null;
-        EDRDic.getDBManager().setConceptSet(wordConceptMap, complexConstructTreeOptionMap, wordConceptSetMap,
+        EDRDic.getEDRDBManager().setConceptSet(wordConceptMap, complexConstructTreeOptionMap, wordConceptSetMap,
                 inputWordModelSet);
         while (inputConceptSet == null) {
-            inputConceptSet = EDRDic.getDBManager().getConceptSet();
+            inputConceptSet = EDRDic.getEDRDBManager().getConceptSet();
             try {
                 Thread.sleep(1000);
                 // System.out.println("sleep");
@@ -575,7 +575,7 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
 
             Set evalConceptSet = null;
             if (DODDLE.IS_USING_DB) {
-                wordEvalConceptSetMap = EDRDic.getDBManager().getWordEvalConceptSetMap();
+                wordEvalConceptSetMap = EDRDic.getEDRDBManager().getWordEvalConceptSetMap();
             }
 
             if (!(wordEvalConceptSetMap == null || wordEvalConceptSetMap.get(selectedWord) == null)) {
@@ -702,7 +702,9 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
                 EvalConcept ec = (EvalConcept) conceptSetJList.getSelectedValue();
                 Set pathSet = null;
                 if (ec.getConcept().getPrefix().equals("edr")) {
-                    pathSet = EDRTree.getInstance().getPathToRootSet(ec.getConcept().getId());
+                    pathSet = EDRTree.getEDRTree().getPathToRootSet(ec.getConcept().getId());
+                } else if (ec.getConcept().getPrefix().equals("edrt")) {
+                    pathSet = EDRTree.getEDRTTree().getPathToRootSet(ec.getConcept().getId());
                 } else if (ec.getConcept().getPrefix().equals("wn")) {
                     pathSet = WordNetDic.getPathToRootSet(new Long(ec.getConcept().getId()));
                 }
@@ -973,15 +975,15 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
         }
 
         private int cntRelevantSiblingConcepts(String id) {
-            return getMaxEvalValue(EDRTree.getInstance().getSiblingIDsSet(id), id);
+            return getMaxEvalValue(EDRTree.getEDRTree().getSiblingIDsSet(id), id);
         }
 
         private int cntRelevantSupConcepts(String id) {
-            return getMaxEvalValue(EDRTree.getInstance().getPathToRootSet(id), id);
+            return getMaxEvalValue(EDRTree.getEDRTree().getPathToRootSet(id), id);
         }
 
         private int cntRelevantSubConcepts(String id) {
-            return getMaxEvalValue(EDRTree.getInstance().getSubIDsSet(id), id);
+            return getMaxEvalValue(EDRTree.getEDRTree().getSubIDsSet(id), id);
         }
 
         private boolean isIncludeInputWords(Set wordSet, Concept c) {
@@ -1003,7 +1005,7 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
             new Thread() {
                 public void run() {
                     if (DODDLE.IS_USING_DB) {
-                        EDRDic.getDBManager().setWordEvalConceptSetMap(getInputWordModelSet());
+                        EDRDic.getEDRDBManager().setWordEvalConceptSetMap(getInputWordModelSet());
                     } else {
                         setWordEvalConceptSetMap(getInputWordModelSet());
                     }
@@ -1209,7 +1211,7 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
 
     public void saveWordEvalConceptSet(File file) {
         if (DODDLE.IS_USING_DB) {
-            wordEvalConceptSetMap = EDRDic.getDBManager().getWordEvalConceptSetMap();
+            wordEvalConceptSetMap = EDRDic.getEDRDBManager().getWordEvalConceptSetMap();
         }
         if (wordEvalConceptSetMap == null || inputWordModelSet == null) { return; }
         try {
@@ -1359,7 +1361,7 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
                 wordEvalConceptSetMap.put(word, evalConceptSet);
             }
             if (DODDLE.IS_USING_DB) {
-                EDRDic.getDBManager().setWordEvalConceptSetMap(wordEvalConceptSetMap);
+                EDRDic.getEDRDBManager().setWordEvalConceptSetMap(wordEvalConceptSetMap);
             }
             reader.close();
         } catch (IOException ioe) {

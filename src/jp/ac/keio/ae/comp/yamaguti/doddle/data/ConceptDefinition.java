@@ -268,7 +268,7 @@ public class ConceptDefinition {
 
     public Set getSupIDSet(String id) {
         Set idSet = new HashSet();
-        Set supIDSet = EDRTree.getInstance().getPathToRootSet(id);
+        Set supIDSet = EDRTree.getEDRTree().getPathToRootSet(id);
         for (Iterator i = supIDSet.iterator(); i.hasNext();) {
             idSet.addAll((List) i.next());
         }
@@ -277,7 +277,7 @@ public class ConceptDefinition {
 
     public Set<String> getSubIDSet(String id) {
         Set<String> idSet = new HashSet<String>();
-        Set subIDSet = EDRTree.getInstance().getSubIDsSet(id);
+        Set subIDSet = EDRTree.getEDRTree().getSubIDsSet(id);
         for (Iterator i = subIDSet.iterator(); i.hasNext();) {
             idSet.addAll((Set) i.next());
         }

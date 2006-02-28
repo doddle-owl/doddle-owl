@@ -44,6 +44,8 @@ public class JenaModelMaker {
         if (node.isUserConcept()) { return ResourceFactory.createResource(DODDLE.BASE_URI + node.getIdStr()); }
         if (node.getPrefix().equals("edr")) {
             return ResourceFactory.createResource(DODDLE.EDR_URI + node.getIdStr());
+        } else if (node.getPrefix().equals("edrt")) {
+            return ResourceFactory.createResource(DODDLE.EDRT_URI + node.getIdStr());
         } else if (node.getPrefix().equals("wn")) {
             return ResourceFactory.createResource(DODDLE.WN_URI + node.getIdStr());
         } else {
@@ -56,6 +58,8 @@ public class JenaModelMaker {
         if (parentNode.isUserConcept()) { return ontology.getResource(DODDLE.BASE_URI + parentNode.getIdStr()); }
         if (parentNode.getPrefix().equals("edr")) {
             return ontology.getResource(DODDLE.EDR_URI + parentNode.getIdStr());
+        } else if (parentNode.getPrefix().equals("edrt")) {
+            return ontology.getResource(DODDLE.EDRT_URI + parentNode.getIdStr());
         } else if (parentNode.getPrefix().equals("wn")) {
             return ontology.getResource(DODDLE.WN_URI + parentNode.getIdStr());
         } else {
@@ -99,6 +103,8 @@ public class JenaModelMaker {
                 regionValue = ontology.getResource(DODDLE.BASE_URI + id);
             } else {
                 if (vc.getPrefix().equals("edr")) {
+                    regionValue = ontology.getResource(DODDLE.EDR_URI + "ID" + id);
+                } else if (vc.getPrefix().equals("edrt")) {
                     regionValue = ontology.getResource(DODDLE.EDR_URI + "ID" + id);
                 } else if (vc.getPrefix().equals("wn")) {
                     regionValue = ontology.getResource(DODDLE.WN_URI + "ID" + id);

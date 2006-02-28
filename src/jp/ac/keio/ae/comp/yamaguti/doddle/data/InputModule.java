@@ -57,7 +57,7 @@ public class InputModule {
     public InputWordModel makeInputWordModel(String iw) {
         Map<String, Set<Concept>> wcSetMap = null;
         if (DODDLE.IS_USING_DB) {
-            wcSetMap = EDRDic.getDBManager().getWordConceptSetMap();
+            wcSetMap = EDRDic.getEDRDBManager().getWordConceptSetMap();
         } else {
             wcSetMap = wordConceptSetMap;
         }
@@ -94,6 +94,7 @@ public class InputModule {
     private Set<Concept> getConceptSet(String subIW) {
         Set<Concept> conceptSet = new HashSet<Concept>();
         setEDRConceptSet(subIW, conceptSet);
+        setEDRTConceptSet(subIW, conceptSet);
         setWordNetConceptSet(subIW, conceptSet);
         return conceptSet;
     }
@@ -117,13 +118,31 @@ public class InputModule {
     private void setEDRConceptSet(String subIW, Set<Concept> conceptSet) {
         Set<String> idSet = null;
         if (DODDLE.IS_USING_DB) {
-            idSet = EDRDic.getDBManager().getEDRIDSet(subIW);
+            idSet = EDRDic.getEDRDBManager().getEDRIDSet(subIW);
         } else {
-            idSet = EDRDic.getIDSet(subIW);
+            idSet = EDRDic.getEDRIDSet(subIW);
         }
         if (idSet == null) { return; }
         for (String id : idSet) {
             Concept c = EDRDic.getEDRConcept(id);
+            if (c != null) {
+                conceptSet.add(c);
+            }
+        }
+    }
+
+    private void setEDRTConceptSet(String subIW, Set<Concept> conceptSet) {
+        Set<String> idSet = null;
+        if (DODDLE.IS_USING_DB) {
+            idSet = EDRDic.getEDRTDBManager().getEDRIDSet(subIW);
+        } else {
+            System.out.println(subIW);
+            idSet = EDRDic.getEDRTIDSet(subIW);
+            System.out.println(idSet);
+        }
+        if (idSet == null) { return; }
+        for (String id : idSet) {
+            Concept c = EDRDic.getEDRTConcept(id);
             if (c != null) {
                 conceptSet.add(c);
             }
@@ -162,7 +181,7 @@ public class InputModule {
     }
 
     private InputWordModel setInputWord(String iw, DODDLEProject p) {
-        InputWordModel iwModel = makeInputWordModel(iw, wordConceptSetMap);        
+        InputWordModel iwModel = makeInputWordModel(iw, wordConceptSetMap);
         if (iwModel != null) {
             inputWordModelSet.add(iwModel);
         } else {
@@ -191,7 +210,7 @@ public class InputModule {
     }
 
     public void initDataWithDB(Set<String> iwSet) {
-        DBManager dbManager = EDRDic.getDBManager();
+        DBManager dbManager = EDRDic.getEDRDBManager();
         dbManager.initDataWithDB(iwSet, project);
         inputWordModelSet = new TreeSet<InputWordModel>(dbManager.getInputWordModelSet());
         wordConceptSetMap = new HashMap<String, Set<Concept>>(dbManager.getWordConceptSetMap());

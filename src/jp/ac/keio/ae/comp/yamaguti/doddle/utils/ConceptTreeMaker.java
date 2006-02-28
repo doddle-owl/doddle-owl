@@ -29,6 +29,7 @@ public class ConceptTreeMaker {
 
     private static ConceptTreeMaker maker = new ConceptTreeMaker();
     public static String EDR_CLASS_ROOT_ID = "3aa966";
+    public static String EDRT_CLASS_ROOT_ID = "2f3526";
     public static String EDR_PROPERTY_ROOT_ID = "PROP_ROOT";
 
     private ConceptTreeMaker() {
@@ -54,7 +55,9 @@ public class ConceptTreeMaker {
         Set<List<Concept>> pathSet = new HashSet<List<Concept>>();
         for (Concept c : conceptSet) {
             if (c.getPrefix().equals("edr")) {
-                pathSet.addAll(EDRTree.getInstance().getPathToRootSet(c.getId()));
+                pathSet.addAll(EDRTree.getEDRTree().getPathToRootSet(c.getId()));
+            } else if (c.getPrefix().equals("edrt")) {
+                pathSet.addAll(EDRTree.getEDRTTree().getPathToRootSet(c.getId()));
             } else if (c.getPrefix().equals("wn")) {
                 pathSet.addAll(WordNetDic.getPathToRootSet(new Long(c.getId())));
             }
@@ -391,6 +394,8 @@ public class ConceptTreeMaker {
     private String getPrefix(Resource res) {
         if (res.getNameSpace().equals(DODDLE.EDR_URI)) {
             return "edr";
+        } else if (res.getNameSpace().equals(DODDLE.EDRT_URI)) {
+            return "edrt";
         } else if (res.getNameSpace().equals(DODDLE.WN_URI)) {
             return "wn";
         } else if (res.getNameSpace().equals(DODDLE.BASE_URI)) {
