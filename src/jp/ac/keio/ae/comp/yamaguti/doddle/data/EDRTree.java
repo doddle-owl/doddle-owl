@@ -20,7 +20,8 @@ public class EDRTree {
     private Map<String, Set<TreeNode>> idNodeSetMap;
     private Map conceptSubConceptSetMap;
     private TreeModel edrTreeModel;
-    public static String CONCEPT_SUBCONCEPTSET_MAP = DODDLE.DODDLE_DIC + "conceptSubConceptSetMapforEDR.txt";
+    public static String ID_SUBIDSET_MAP = DODDLE.DODDLE_DIC + "idSubIDSetMapforEDR.txt";
+    public static String EDRT_ID_SUBIDSET_MAP = DODDLE.DODDLE_EDRT_DIC + "idSubIDSetMapforEDR.txt";
 
     private static EDRTree edrTree;
 
@@ -36,7 +37,7 @@ public class EDRTree {
         conceptSubConceptSetMap = new HashMap();
         try {
             // System.out.println(CONCEPT_SUBCONCEPTSET_MAP);
-            InputStream inputStream = new FileInputStream(CONCEPT_SUBCONCEPTSET_MAP);
+            InputStream inputStream = new FileInputStream(ID_SUBIDSET_MAP);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "SJIS"));
             String line = "";
             while ((line = reader.readLine()) != null) {
@@ -178,7 +179,7 @@ public class EDRTree {
         // edrTree.getSiblingIDsSet("30f751");
         // Set pathSet = edrTree.getPathToRootSet("3bed80");
         // Set pathSet = edrTree.getPathToRootSet("1faaeb");
-        System.out.println(CONCEPT_SUBCONCEPTSET_MAP);
+        System.out.println(ID_SUBIDSET_MAP);
         Set pathSet = edrTree.getPathToRootSet("3c1170");
         for (Iterator i = pathSet.iterator(); i.hasNext();) {
             List path = (List) i.next();

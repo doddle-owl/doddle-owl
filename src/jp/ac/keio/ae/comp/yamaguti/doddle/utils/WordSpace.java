@@ -199,8 +199,8 @@ public class WordSpace {
             c1LabelList = Arrays.asList(c1.getEnWords());
             c2LabelList = Arrays.asList(c2.getEnWords());
         } else if (lang.equals("ja")) {
-            c1LabelList = Arrays.asList(c1.getJpWords());
-            c2LabelList = Arrays.asList(c2.getJpWords());
+            c1LabelList = Arrays.asList(c1.getJaWords());
+            c2LabelList = Arrays.asList(c2.getJaWords());
         }
 
         int[] vec1 = new int[allGramNum];

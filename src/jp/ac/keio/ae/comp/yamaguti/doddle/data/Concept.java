@@ -14,9 +14,9 @@ public class Concept implements Serializable {
     private String id;
     private String prefix;
     private String inputWord;
-    private String jpWord;
+    private String jaWord;
     private String enWord;
-    private String jpExplanation;
+    private String jaExplanation;
     private String enExplanation;
 
     public Concept() {
@@ -25,9 +25,9 @@ public class Concept implements Serializable {
     public Concept(Concept c) {
         id = c.getId();
         prefix = c.getPrefix();
-        jpWord = c.getJpWord();
+        jaWord = c.getJaWord();
         enWord = c.getEnWord();
-        jpExplanation = c.getJpExplanation();
+        jaExplanation = c.getJaExplanation();
         enExplanation = c.getEnExplanation();
         if (c.getInputWord() != null && !c.getInputWord().equals("")) {
             inputWord = c.getInputWord();
@@ -37,22 +37,22 @@ public class Concept implements Serializable {
     public Concept(String id, String word) {
         this.id = id;
         enWord = "";
-        jpWord = word;
+        jaWord = word;
         enExplanation = "";
-        jpExplanation = "";
+        jaExplanation = "";
     }
 
     public Concept(String id, String[] items) {
         this.id = id;
-        jpWord = removeNullWords(items[0]);
+        jaWord = removeNullWords(items[0]);
         enWord = removeNullWords(items[1]);
-        jpExplanation = removeNullWords(items[2]);
+        jaExplanation = removeNullWords(items[2]);
         enExplanation = removeNullWords(items[3]);
 
-        String[] jpWords = jpWord.split("\t");
+        String[] jaWords = jaWord.split("\t");
         String[] enWords = enWord.split("\t");
-        if (0 < jpWords.length) {
-            inputWord = jpWords[0];
+        if (0 < jaWords.length) {
+            inputWord = jaWords[0];
         } else if (0 < enWords.length) {
             inputWord = enWords[0];
         }
@@ -60,15 +60,15 @@ public class Concept implements Serializable {
 
     public Concept(String[] items) {
         id = items[0];
-        jpWord = removeNullWords(items[1]);
+        jaWord = removeNullWords(items[1]);
         enWord = removeNullWords(items[2]);
-        jpExplanation = removeNullWords(items[3]);
+        jaExplanation = removeNullWords(items[3]);
         enExplanation = removeNullWords(items[4]);
 
-        String[] jpWords = jpWord.split("\t");
+        String[] jaWords = jaWord.split("\t");
         String[] enWords = enWord.split("\t");
-        if (0 < jpWords.length) {
-            inputWord = jpWords[0];
+        if (0 < jaWords.length) {
+            inputWord = jaWords[0];
         } else if (0 < enWords.length) {
             inputWord = enWords[0];
         }
@@ -87,10 +87,10 @@ public class Concept implements Serializable {
     }
 
     public void setInputWord() {
-        String[] jpWords = jpWord.split("\t");
+        String[] jaWords = jaWord.split("\t");
         String[] enWords = enWord.split("\t");
-        if (0 < jpWords.length) {
-            inputWord = jpWords[0];
+        if (0 < jaWords.length) {
+            inputWord = jaWords[0];
         } else if (0 < enWords.length) {
             inputWord = enWords[0];
         } else {
@@ -130,37 +130,37 @@ public class Concept implements Serializable {
         return id;
     }
 
-    public void setJpExplanation(String str) {
-        jpExplanation = str;
+    public void setJaExplanation(String str) {
+        jaExplanation = str;
     }
 
-    public String getJpExplanation() {
-        return jpExplanation;
+    public String getJaExplanation() {
+        return jaExplanation;
     }
 
-    public String getJpWord() {
-        return jpWord;
+    public String getJaWord() {
+        return jaWord;
     }
 
-    public String[] getJpWords() {
-        return jpWord.split("\t");
+    public String[] getJaWords() {
+        return jaWord.split("\t");
     }
 
-    public void setJpWord(String word) {
-        jpWord = word;
+    public void setJaWord(String word) {
+        jaWord = word;
     }
 
     public String getWord() {
-        String[] jpWords = jpWord.split("\t");
+        String[] jaWords = jaWord.split("\t");
         String[] enWords = enWord.split("\t");
         if (inputWord != null && 0 < inputWord.length()) {
             return inputWord;
-        } else if (0 < jpWord.length() && 0 < jpWords.length) {
-            return jpWord.split("\t")[0];
+        } else if (0 < jaWord.length() && 0 < jaWords.length) {
+            return jaWord.split("\t")[0];
         } else if (0 < enWord.length() && 0 < enWords.length) {
             return enWord.split("\t")[0];
-        } else if (0 < jpExplanation.length()) {
-            return jpExplanation;
+        } else if (0 < jaExplanation.length()) {
+            return jaExplanation;
         } else if (0 < enExplanation.length()) {
             return enExplanation;
         } else {

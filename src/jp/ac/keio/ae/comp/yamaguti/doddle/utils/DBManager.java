@@ -23,13 +23,13 @@ import com.sleepycat.je.*;
 public class DBManager {
 
     private EDRDatabase db;
-    private static EDRViews views;
+    private EDRViews views;
 
     /**
      * Open the database and views.
      */
-    public DBManager(boolean isReadOnly) throws DatabaseException, FileNotFoundException {
-        db = new EDRDatabase(DODDLE.DODDLE_DIC, isReadOnly);
+    public DBManager(boolean isReadOnly, String dicPath) throws DatabaseException, FileNotFoundException {
+        db = new EDRDatabase(dicPath, isReadOnly);
         views = new EDRViews(db);
     }
 
@@ -146,7 +146,7 @@ public class DBManager {
     }
 
     private boolean isIncludeInputWords(Concept c) {
-        String[] jpWords = c.getJpWords();
+        String[] jpWords = c.getJaWords();
         for (int j = 0; j < jpWords.length; j++) {
             if (wordSet.contains(jpWords[j])) { return true; }
         }
@@ -154,7 +154,7 @@ public class DBManager {
         for (int j = 0; j < enWords.length; j++) {
             if (wordSet.contains(enWords[j])) { return true; }
         }
-        if (wordSet.contains(c.getJpExplanation())) { return true; }
+        if (wordSet.contains(c.getJaExplanation())) { return true; }
         if (wordSet.contains(c.getEnExplanation())) { return true; }
         return false;
     }
@@ -214,15 +214,15 @@ public class DBManager {
         }
     }
 
-    public static Set<String> getEDRIDSet(String subIW) {
-        String idListStr = (String) views.getWordIDsMap().get(subIW);
+    public Set<String> getEDRIDSet(String subIW) {
+        String idListStr = (String) views.getWordIDSetMap().get(subIW);
         if (idListStr == null) { return null; }
-        String[] idListArray = idListStr.replaceAll("\n", "").split("\t");
+        String[] idListArray = idListStr.replaceAll("\n", "").split("\\s");
         return new HashSet<String>(Arrays.asList(idListArray));
     }
 
-    public Map getWordIDsMap() {
-        return views.getWordIDsMap();
+    public Map getWordIDSetMap() {
+        return views.getWordIDSetMap();
     }
 
     private InputWordModel setInputWord(String iw, DODDLEProject p) {
@@ -263,7 +263,7 @@ public class DBManager {
                                 if (conceptSet != null && 0 < conceptSet.size()) {
                                     c = (Concept) conceptSet.toArray()[0];
                                     wordConceptMap.put(iwModel.getWord(), c);
-                                } 
+                                }
                             }
                         }
                         if (c.equals(InputModuleUI.nullConcept)) {
@@ -306,66 +306,118 @@ public class DBManager {
         return concept;
     }
 
-    public void test() throws Exception {
+    public void test(boolean isSpecial) throws Exception {
         TransactionRunner runner = new TransactionRunner(db.getEnvironment());
-        runner.run(new EDRDatabaseTester());
+        runner.run(new EDRDatabaseTester(isSpecial));
     }
 
-    public void makeDB() throws Exception {
+    public void makeDB(String prefix, boolean isSpecial) throws Exception {
         TransactionRunner runner = new TransactionRunner(db.getEnvironment());
-        runner.run(new EDRDatabaseMaker());
+        runner.run(new EDRDatabaseMaker(prefix, isSpecial));
     }
 
     private class EDRDatabaseTester implements TransactionWorker {
 
-        void testWordIDsDBAccess() {
-            Map wordIDsMap = views.getWordIDsMap();
-            String idStr = (String) wordIDsMap.get("概念");
+        boolean isSpecial;
+
+        EDRDatabaseTester(boolean t) {
+            isSpecial = t;
+        }
+
+        void testWordIDSetDBAccess() {
+            Map wordIDSetMap = views.getWordIDSetMap();
+            String idStr = (String) wordIDSetMap.get("概念");
             System.out.println(idStr);
-            idStr = (String) wordIDsMap.get("起爆");
+            idStr = (String) wordIDSetMap.get("起爆");
             System.out.println(idStr);
-            idStr = (String) wordIDsMap.get("起動");
+            idStr = (String) wordIDSetMap.get("起動");
             System.out.println(idStr);
         }
 
         void testIDConceptDBAccess() {
             Map<String, Concept> idConceptMap = views.getIDConceptMap();
             Concept c = idConceptMap.get("3d02a7");
-            System.out.println(c.getJpWord());
+            System.out.println(c.getJaWord());
             System.out.println(c.getEnWord());
             c = idConceptMap.get("444d17");
-            System.out.println(c.getJpWord());
+            System.out.println(c.getJaWord());
             System.out.println(c.getEnWord());
             c = idConceptMap.get("0ebb6e");
-            System.out.println(c.getJpWord());
+            System.out.println(c.getJaWord());
             System.out.println(c.getEnWord());
+        }
+
+        void testEDRTIDConceptDBAccess() {
+            Map<String, Concept> idConceptMap = views.getIDConceptMap();
+            Concept c = idConceptMap.get("3cbda3");
+            System.out.println(c.getJaWord());
+            System.out.println(c.getEnWord());
+            c = idConceptMap.get("3c84ef");
+            System.out.println(c.getJaWord());
+            System.out.println(c.getEnWord());
+        }
+
+        void testEDRTWordIDSetDBAccess() {
+            Map wordIDSetMap = views.getWordIDSetMap();
+            String idStr = (String) wordIDSetMap.get("デジタル通信技術");
+            System.out.println(idStr);
+            idStr = (String) wordIDSetMap.get("デジタル論理回路検査");
+            System.out.println(idStr);
         }
 
         public void doWork() throws Exception {
-            testIDConceptDBAccess();
-            testWordIDsDBAccess();
+            if (isSpecial) {
+                System.out.println("EDRT idDefinitionMap Test");
+                testEDRTIDConceptDBAccess();
+                System.out.println("EDRT wordIDSetMap Test");
+                testEDRTWordIDSetDBAccess();
+            } else {
+                System.out.println("EDR idDefinitionMap Test");
+                testIDConceptDBAccess();
+                System.out.println("EDR wordIDSetMap Test");
+                testWordIDSetDBAccess();
+            }
         }
     }
 
-    public static String ID_DEFINITION_MAP = "C:/DODDLE_DIC/idDefinitionMapforEDR.txt";
-    public static String WORD_IDs_MAP = "C:/DODDLE_DIC/wordIDsMapforEDR.txt";
-
     private class EDRDatabaseMaker implements TransactionWorker {
 
-        public void makeWordIDsDB() {
-            System.out.println("Make WordIDsDB Start");
+        private String prefix;
+        private boolean isSpecial;
+        private String ID_DEFINITION_MAP = "C:/DODDLE_DIC/idDefinitionMapforEDR.txt";
+        private String WORD_IDSet_MAP = "C:/DODDLE_DIC/wordIDSetMapforEDR.txt";
+        private String EDRT_ID_DEFINITION_MAP = "C:/DODDLE_EDRT_DIC/idDefinitionMapforEDR.txt";
+
+        private String EDRT_WORD_IDSet_MAP = "C:/DODDLE_EDRT_DIC/wordIDSetMapforEDR.txt";
+
+        EDRDatabaseMaker(String prefix, boolean isSpecial) {
+            this.prefix = prefix;
+            this.isSpecial = isSpecial;
+        }
+
+        public void makeWordIDSetDB(String path) {
+            System.out.println("Make WordIDSetDB Start");
             try {
-                InputStream inputStream = new FileInputStream(WORD_IDs_MAP);
+                InputStream inputStream = new FileInputStream(path);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF8"));
 
                 String line = reader.readLine().replaceAll("\n", "");
                 String[] allWordList = line.split("\t");
                 line = reader.readLine().replaceAll("\n", "");
-                String[] wordIDsList = line.split("\\|");
+                String[] wordIDSetList = line.split("\\|");
 
-                Map wordIDsMap = views.getWordIDsMap();
+                System.out.println("all word size: " + allWordList.length);
+                System.out.println("word IDSet size: " + wordIDSetList.length);
+                Map wordIDSetMap = views.getWordIDSetMap();
                 for (int i = 0; i < allWordList.length; i++) {
-                    wordIDsMap.put(allWordList[i], wordIDsList[i]);
+                    if (allWordList[i].replaceAll("\\s*", "").length() == 0) {
+                        System.out.println("空白文字: " + allWordList[i]);
+                        continue;
+                    }
+                    wordIDSetMap.put(allWordList[i], wordIDSetList[i]);
+                    if (i % 10000 == 0) {
+                        System.out.println(i + "/" + allWordList.length);
+                    }
                 }
                 reader.close();
             } catch (FileNotFoundException e) {
@@ -373,26 +425,28 @@ public class DBManager {
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }
-            System.out.println("Make WordIDsDB Done");
+            System.out.println("Make WordIDSetDB Done");
         }
 
-        void makeIDConceptDB() {
+        void makeIDConceptDB(String path) {
             System.out.println("Make idConceptDB Start");
             try {
-                InputStream inputStream = new FileInputStream(ID_DEFINITION_MAP);
+                InputStream inputStream = new FileInputStream(path);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF16"));
 
                 String line = reader.readLine().replaceAll("\n", "");
                 String[] allIDList = line.split("\\|");
-                // System.out.println("id size: " + allIDList.length);
+                System.out.println("id size: " + allIDList.length);
                 line = reader.readLine().replaceAll("\n", "");
                 String[] definitionList = line.split("\"");
+                System.out.println("definition list size: " + definitionList.length);
 
                 Map idConceptMap = views.getIDConceptMap();
                 for (int i = 0; i < allIDList.length; i++) {
                     String id = allIDList[i];
+                    // System.out.println("id: "+id+"def: "+definitionList[i]);
                     Concept edrConcept = new Concept(id, definitionList[i].split("\\^"));
-                    edrConcept.setPrefix("edr");
+                    edrConcept.setPrefix(prefix);
                     idConceptMap.put(id, edrConcept); // データベースに追加
                 }
                 reader.close();
@@ -403,8 +457,13 @@ public class DBManager {
         }
 
         public void doWork() throws Exception {
-            makeIDConceptDB();
-            makeWordIDsDB();
+            if (isSpecial) {
+                makeIDConceptDB(EDRT_ID_DEFINITION_MAP);
+                makeWordIDSetDB(EDRT_WORD_IDSet_MAP);
+            } else {
+                makeIDConceptDB(ID_DEFINITION_MAP);
+                makeWordIDSetDB(WORD_IDSet_MAP);
+            }
         }
     }
 
@@ -413,14 +472,18 @@ public class DBManager {
     }
 
     public static void main(String[] args) {
-        DBManager dbManager = null;
+        DBManager edrDBManager = null;
+        DBManager edrtDBManager = null;
         try {
-            DODDLE.setPath("normal");
-            dbManager = new DBManager(false);
+            DODDLE.setPath();
+            edrDBManager = new DBManager(false, DODDLE.DODDLE_DIC);
+            edrtDBManager = new DBManager(false, DODDLE.DODDLE_EDRT_DIC);
             if (args.length == 1 && args[0].equals("-makeDB")) {
-                dbManager.makeDB();
+                edrDBManager.makeDB("edr", false);
+                edrtDBManager.makeDB("edrt", true);
             } else if (args.length == 1 && args[0].equals("-test")) {
-                dbManager.test();
+                edrDBManager.test(false);
+                edrtDBManager.test(true);
             }
         } catch (Exception e) {
             // If an exception reaches this point, the last transaction did not
@@ -428,10 +491,11 @@ public class DBManager {
             // the Berkeley DB recovery procedures before running again.
             e.printStackTrace();
         } finally {
-            if (dbManager != null) {
+            if (edrDBManager != null || edrtDBManager != null) {
                 try {
                     // Always attempt to close the database cleanly.
-                    dbManager.close();
+                    edrDBManager.close();
+                    edrtDBManager.close();
                     System.out.println("Close DB");
                 } catch (Exception e) {
                     System.err.println("Exception during database close:");
@@ -507,7 +571,7 @@ public class DBManager {
     public class EDRViews {
 
         private StoredSortedMap idConceptMap;
-        private StoredSortedMap wordIDsMap;
+        private StoredSortedMap wordIDSetMap;
 
         /**
          * Create the data bindings and collection views.
@@ -518,15 +582,15 @@ public class DBManager {
             EntryBinding stringBinding = TupleBinding.getPrimitiveBinding(String.class);
 
             idConceptMap = new StoredSortedMap(db.getIDConceptDatabase(), stringBinding, idConceptDataBinding, true);
-            wordIDsMap = new StoredSortedMap(db.getWordIDsDatabase(), stringBinding, stringBinding, true);
+            wordIDSetMap = new StoredSortedMap(db.getWordIDsDatabase(), stringBinding, stringBinding, true);
         }
 
         public final StoredSortedMap getIDConceptMap() {
             return idConceptMap;
         }
 
-        public final StoredSortedMap getWordIDsMap() {
-            return wordIDsMap;
+        public final StoredSortedMap getWordIDSetMap() {
+            return wordIDSetMap;
         }
     }
 }

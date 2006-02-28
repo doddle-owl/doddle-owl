@@ -117,7 +117,7 @@ public class InputModule {
     private void setEDRConceptSet(String subIW, Set<Concept> conceptSet) {
         Set<String> idSet = null;
         if (DODDLE.IS_USING_DB) {
-            idSet = DBManager.getEDRIDSet(subIW);
+            idSet = EDRDic.getDBManager().getEDRIDSet(subIW);
         } else {
             idSet = EDRDic.getIDSet(subIW);
         }
@@ -162,7 +162,7 @@ public class InputModule {
     }
 
     private InputWordModel setInputWord(String iw, DODDLEProject p) {
-        InputWordModel iwModel = makeInputWordModel(iw, wordConceptSetMap);
+        InputWordModel iwModel = makeInputWordModel(iw, wordConceptSetMap);        
         if (iwModel != null) {
             inputWordModelSet.add(iwModel);
         } else {
