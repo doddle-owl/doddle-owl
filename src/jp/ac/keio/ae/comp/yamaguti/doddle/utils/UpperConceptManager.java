@@ -60,8 +60,8 @@ public class UpperConceptManager {
             if (c == null) {
                 continue;
             }
-            if (c.getJpWord().length() != 0) {
-                wordSet.addAll(new HashSet(Arrays.asList(c.getJpWords())));
+            if (c.getJaWord().length() != 0) {
+                wordSet.addAll(new HashSet(Arrays.asList(c.getJaWords())));
             }
             if (c.getEnWord().length() != 0) {
                 wordSet.addAll(new HashSet(Arrays.asList(c.getEnWords())));

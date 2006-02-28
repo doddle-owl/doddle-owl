@@ -76,11 +76,11 @@ public class ConceptTreeNode extends DefaultMutableTreeNode {
     }
 
     public String getJpWord() {
-        return getConcept().getJpWord();
+        return getConcept().getJaWord();
     }
 
     public String[] getJpWords() {
-        return getConcept().getJpWords();
+        return getConcept().getJaWords();
     }
 
     public String getEnWord() {
@@ -92,7 +92,7 @@ public class ConceptTreeNode extends DefaultMutableTreeNode {
     }
 
     public String getJpExplanation() {
-        return getConcept().getJpExplanation();
+        return getConcept().getJaExplanation();
     }
 
     public String getEnExplanation() {

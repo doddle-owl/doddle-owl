@@ -1,6 +1,6 @@
 <project name="DODDLE" default="compile" basedir=".">
 	<property name="app.name" value="DODDLE" />
-	<property name="app.version" value="2006-02-24" />
+	<property name="app.version" value="2006-02-28" />
 	<property name="src.dir" value="src/jp/ac/keio/ae/comp/yamaguti/doddle/" />
 	<property name="doc.dir" value="docs/" />
 	<property name="build.dir" value="build/classes" />
@@ -17,7 +17,7 @@
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${resource.dir}" />
 
-		<javac encoding="sjis" srcdir="${src.dir}" source="1.5" optimize="true" destdir="${build.dir}">
+		<javac encoding="UTF16" srcdir="${src.dir}" source="1.5" optimize="true" destdir="${build.dir}">
 			<include name="**/*.java" />
 			<classpath refid="classpath" />
 		</javac>

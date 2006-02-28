@@ -693,9 +693,9 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
             wordConceptMap.put(word, c);
             syncPartialMatchedAmbiguousConceptSet(word, c);
             Concept edrConcept = evalConcept.getConcept();
-            jpWordList.setListData(edrConcept.getJpWords());
+            jpWordList.setListData(edrConcept.getJaWords());
             enWordList.setListData(edrConcept.getEnWords());
-            jpExplanationArea.setText(edrConcept.getJpExplanation());
+            jpExplanationArea.setText(edrConcept.getJaExplanation());
             enExplanationArea.setText(edrConcept.getEnExplanation());
 
             if (showAroundConceptTreeCheckBox.isSelected()) {
@@ -986,7 +986,7 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
 
         private boolean isIncludeInputWords(Set wordSet, Concept c) {
             if (c == null) { return false; }
-            String[] jpWords = c.getJpWords();
+            String[] jpWords = c.getJaWords();
             for (int j = 0; j < jpWords.length; j++) {
                 if (wordSet.contains(jpWords[j])) { return true; }
             }
@@ -994,7 +994,7 @@ public class InputModuleUI extends JPanel implements ListSelectionListener, Acti
             for (int j = 0; j < enWords.length; j++) {
                 if (wordSet.contains(enWords[j])) { return true; }
             }
-            if (wordSet.contains(c.getJpExplanation())) { return true; }
+            if (wordSet.contains(c.getJaExplanation())) { return true; }
             if (wordSet.contains(c.getEnExplanation())) { return true; }
             return false;
         }

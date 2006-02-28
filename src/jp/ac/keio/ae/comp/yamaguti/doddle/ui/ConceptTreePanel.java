@@ -194,7 +194,7 @@ public class ConceptTreePanel extends JPanel {
         }
 
         private boolean isSearchConcept(Concept c) {
-            if (c.getJpWord().indexOf(searchKeyWord) != -1) { return true; }
+            if (c.getJaWord().indexOf(searchKeyWord) != -1) { return true; }
             if (c.getEnWord().indexOf(searchKeyWord) != -1) { return true; }
             return false;
         }
@@ -519,7 +519,7 @@ public class ConceptTreePanel extends JPanel {
         searchedConcept = null;
         searchConcept(identity, rootNode);
         if (searchedConcept != null) {
-            searchedConcept.setJpWord(searchedConcept.getJpWord() + "\t" + word);
+            searchedConcept.setJaWord(searchedConcept.getJaWord() + "\t" + word);
             searchedConcept.setInputWord(word);
         }
     }

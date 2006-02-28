@@ -423,7 +423,7 @@ public class ConceptTreeMaker {
                     enWord += lit.getString() + "\t";
                 }
             }
-            concept.setJpWord(jaWord);
+            concept.setJaWord(jaWord);
             concept.setEnWord(enWord);
             String jaExplanation = "";
             String enExplanation = "";
@@ -437,7 +437,7 @@ public class ConceptTreeMaker {
                     enExplanation += lit.getString();
                 }
             }
-            concept.setJpExplanation(jaExplanation);
+            concept.setJaExplanation(jaExplanation);
             concept.setEnExplanation(enExplanation);
 
             Set domainSet = new HashSet();

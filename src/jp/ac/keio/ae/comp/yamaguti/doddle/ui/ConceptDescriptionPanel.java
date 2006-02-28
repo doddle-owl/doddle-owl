@@ -278,7 +278,7 @@ public class ConceptDescriptionPanel extends JPanel implements ActionListener {
             }
         }
         if (lang.equals("ja")) {
-            concept.setJpWord(wordListStr);
+            concept.setJaWord(wordListStr);
         } else if (lang.equals("en")) {
             concept.setEnWord(wordListStr);
         }
@@ -334,20 +334,20 @@ public class ConceptDescriptionPanel extends JPanel implements ActionListener {
         Concept concept = conceptTreeNode.getConcept();
 
         if (e.getSource() == addJPWordButton) {
-            concept.setJpWord(concept.getJpWord() + "\t" + jpWordField.getText());
-            setWordList(jpWordListModel, concept.getJpWords());
+            concept.setJaWord(concept.getJaWord() + "\t" + jpWordField.getText());
+            setWordList(jpWordListModel, concept.getJaWords());
         } else if (e.getSource() == deleteJPWordButton) {
             deleteWord("ja", jpWordList, concept);
         } else if (e.getSource() == editJPWordButton) {
             if (jpWordList.getSelectedIndices().length == 1) {
                 boolean isInputWord = deleteWord("ja", jpWordList, concept);
-                concept.setJpWord(concept.getJpWord() + "\t" + jpWordField.getText());
+                concept.setJaWord(concept.getJaWord() + "\t" + jpWordField.getText());
                 if (isInputWord) {
-                    concept.setInputWord(concept.getJpWord());
-                    typicalWordValueLabel.setText(concept.getJpWord());
+                    concept.setInputWord(concept.getJaWord());
+                    typicalWordValueLabel.setText(concept.getJaWord());
                     reloadConceptTreeNode(concept);
                 }
-                setWordList(jpWordListModel, concept.getJpWords());
+                setWordList(jpWordListModel, concept.getJaWords());
             }
         } else if (e.getSource() == addENWordButton) {
             concept.setEnWord(concept.getEnWord() + "\t" + enWordField.getText());
@@ -366,7 +366,7 @@ public class ConceptDescriptionPanel extends JPanel implements ActionListener {
                 setWordList(enWordListModel, concept.getEnWords());
             }
         } else if (e.getSource() == editJPExplanationButton) {
-            concept.setJpExplanation(jpExplanationArea.getText());
+            concept.setJaExplanation(jpExplanationArea.getText());
         } else if (e.getSource() == editENExplanationButton) {
             concept.setEnExplanation(enExplanationArea.getText());
         } else if (e.getSource() == setTypcialWordButton) {

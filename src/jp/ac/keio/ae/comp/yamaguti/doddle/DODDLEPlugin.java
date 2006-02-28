@@ -33,7 +33,7 @@ public class DODDLEPlugin extends MR3Plugin {
         File file = new File(jarPath);
         String doddleHome = file.getParentFile().getPath() + "/";
         EDRDic.ID_DEFINITION_MAP = doddleHome + EDRDic.ID_DEFINITION_MAP;
-        EDRDic.WORD_IDs_MAP = doddleHome + EDRDic.WORD_IDs_MAP;
+        EDRDic.WORD_IDSET_MAP = doddleHome + EDRDic.WORD_IDSET_MAP;
         DODDLE.doddlePlugin = this;
         new DODDLE();
     }
