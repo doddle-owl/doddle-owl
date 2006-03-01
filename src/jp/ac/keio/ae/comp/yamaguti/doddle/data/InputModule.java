@@ -100,6 +100,7 @@ public class InputModule {
     }
 
     private void setWordNetConceptSet(String subIW, Set<Concept> conceptSet) {
+        if (!project.getOntologySelectionPanel().isWordNetEnable()) { return; }
         if (!isEnglish(subIW)) { return; }
         try {
             // Ç±Ç±Ç≈ÅCPOS.NOUNÇÃÇ›ÇàµÇ¡ÇƒÇ¢ÇÈÇ™ÅCPOS.VERBÇ»Ç«ÇÕàµÇÌÇ»Ç≠ÇƒÇ‡Ç¢Ç¢ÇÃÇ©ÅH
@@ -116,6 +117,7 @@ public class InputModule {
     }
 
     private void setEDRConceptSet(String subIW, Set<Concept> conceptSet) {
+        if (!project.getOntologySelectionPanel().isEDREnable()) { return; }
         Set<String> idSet = null;
         if (DODDLE.IS_USING_DB) {
             idSet = EDRDic.getEDRDBManager().getEDRIDSet(subIW);
@@ -132,13 +134,12 @@ public class InputModule {
     }
 
     private void setEDRTConceptSet(String subIW, Set<Concept> conceptSet) {
+        if (!project.getOntologySelectionPanel().isEDRTEnable()) { return; }
         Set<String> idSet = null;
         if (DODDLE.IS_USING_DB) {
             idSet = EDRDic.getEDRTDBManager().getEDRIDSet(subIW);
         } else {
-            System.out.println(subIW);
             idSet = EDRDic.getEDRTIDSet(subIW);
-            System.out.println(idSet);
         }
         if (idSet == null) { return; }
         for (String id : idSet) {
@@ -211,10 +212,12 @@ public class InputModule {
 
     public void initDataWithDB(Set<String> iwSet) {
         DBManager dbManager = EDRDic.getEDRDBManager();
-        dbManager.initDataWithDB(iwSet, project);
-        inputWordModelSet = new TreeSet<InputWordModel>(dbManager.getInputWordModelSet());
-        wordConceptSetMap = new HashMap<String, Set<Concept>>(dbManager.getWordConceptSetMap());
-        undefinedWordSet = new TreeSet<String>(dbManager.getUndefinedWordSet());
+        if (dbManager != null) {
+            dbManager.initDataWithDB(iwSet, project);
+            inputWordModelSet = new TreeSet<InputWordModel>(dbManager.getInputWordModelSet());
+            wordConceptSetMap = new HashMap<String, Set<Concept>>(dbManager.getWordConceptSetMap());
+            undefinedWordSet = new TreeSet<String>(dbManager.getUndefinedWordSet());
+        }
     }
 
     public Set<InputWordModel> getInputWordModelSet() {

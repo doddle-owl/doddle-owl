@@ -6,6 +6,8 @@ import java.util.Map.*;
 
 import jp.ac.keio.ae.comp.yamaguti.doddle.*;
 
+import org.apache.log4j.*;
+
 /**
  * @author takeshi morita
  */
@@ -74,7 +76,7 @@ public class ConceptDefinition {
             // }
             reader.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            DODDLE.getLogger().log(Level.INFO, CONCEPT_DEFINITION + " (Žw’è‚³‚ê‚½ƒpƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ.)");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

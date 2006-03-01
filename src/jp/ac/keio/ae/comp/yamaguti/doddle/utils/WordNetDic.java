@@ -30,13 +30,13 @@ import org.apache.log4j.*;
  */
 public class WordNetDic {
 
-    private static WordNetDic wordnetData;
+    private static WordNetDic wordnetDic;
     private static final String FILE_TYPE = "net.didion.jwnl.princeton.file.PrincetonRandomAccessDictionaryFile";
 
     public WordNetDic() {
         try {
-            InputStream inputStream = WordNetDic.class.getClassLoader().getResourceAsStream(
-                    DODDLE.JWNL_PROPERTIES_FILE);
+            InputStream inputStream = WordNetDic.class.getClassLoader()
+                    .getResourceAsStream(DODDLE.JWNL_PROPERTIES_FILE);
             JWNL.initialize(inputStream);
         } catch (Exception ex) {
             DODDLE.getLogger().log(Level.INFO, "Initialize JWNL Error");
@@ -50,22 +50,18 @@ public class WordNetDic {
         }
     }
 
-    private void setWordNetPath() {
-        try {
-            File file = new File(DODDLE.WORDNET_PATH);
-            Class file_type = Class.forName(FILE_TYPE);
-            FileBackedDictionary.install(new FileManagerImpl(file.getAbsolutePath(), file_type),
-                    new PrincetonWN17FileDictionaryElementFactory());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    private void setWordNetPath() throws Exception {
+        File file = new File(DODDLE.WORDNET_PATH);
+        Class file_type = Class.forName(FILE_TYPE);
+        FileBackedDictionary.install(new FileManagerImpl(file.getAbsolutePath(), file_type),
+                new PrincetonWN17FileDictionaryElementFactory());
     }
 
     public static WordNetDic getInstance() {
-        if (wordnetData == null) {
-            wordnetData = new WordNetDic();
+        if (wordnetDic == null) {
+            wordnetDic = new WordNetDic();
         }
-        return wordnetData;
+        return wordnetDic;
     }
 
     public IndexWord getIndexWord(POS pos, String word) {
@@ -165,6 +161,7 @@ public class WordNetDic {
     private static Map<String, Concept> idConceptMap = new HashMap<String, Concept>();
 
     public static Concept getWNConcept(String id) {
+        if (Dictionary.getInstance() == null) { return null; }
         try {
             if (idConceptMap.get(id) != null) { return idConceptMap.get(id); }
             Synset synset = Dictionary.getInstance().getSynsetAt(POS.NOUN, new Long(id).longValue());
@@ -172,8 +169,8 @@ public class WordNetDic {
             c.setPrefix("wn");
             Word[] words = synset.getWords();
             StringBuilder builder = new StringBuilder();
-            for (int j = 0; j < words.length; j++) {
-                builder.append(words[j].getLemma() + "\t");
+            for (int i = 0; i < words.length; i++) {
+                builder.append(words[i].getLemma() + "\t");
             }
             c.setEnWord(builder.toString());
             c.setEnExplanation(synset.getGloss());
@@ -181,6 +178,8 @@ public class WordNetDic {
             return c;
         } catch (JWNLException jwnle) {
             jwnle.printStackTrace();
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
         }
         return null;
     }
