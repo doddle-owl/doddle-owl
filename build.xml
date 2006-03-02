@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <project name="DODDLE" default="compile" basedir=".">
 	<property name="app.name" value="DODDLE" />
-	<property name="app.version" value="2006-02-28" />
+	<property name="app.version" value="2006-03-01" />
 	<property name="src.dir" value="src/jp/ac/keio/ae/comp/yamaguti/doddle/" />
 	<property name="doc.dir" value="docs/" />
 	<property name="build.dir" value="build/classes" />
@@ -36,7 +37,7 @@
 
 	<target name="doc" depends="compile">
 		<mkdir dir="${doc.dir}" />
-		<javadoc sourcepath="./src" destdir="${doc.dir}/api" packagenames="jp.*" />
+		<javadoc encoding="UTF16" sourcepath="./src" destdir="${doc.dir}/api" packagenames="jp.*" />
 		<zip destfile="./docs.zip" basedir="${doc.dir}" />
 		<delete dir="${doc.dir}" />
 	</target>
