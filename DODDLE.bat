@@ -1,1 +1,1 @@
-java.exe -jar DODDLE-J.jar
+java.exe -jar DODDLE.jar
