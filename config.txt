@@ -3,6 +3,7 @@ SSTAGGER_HOME=C:/usr/postagger-1.0/
 PERL_EXE=C:/Perl/bin/perl.exe
 DODDLE_DIC=C:/DODDLE_DIC/
 DODDLE_EDRT_DIC=C:/DODDLE_EDRT_DIC/
+SEN_HOME=C:/DODDLE_DIC/sen-1.2.1
 BASE_URI=http://www.yamaguti.comp.ae.keio.ac.jp/doddle-j#
 BASE_PREFIX=keio
 PROJECT_DIR=./project/
