@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="build/lib/PDFBox-0.7.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/jwnl.jar"/>
 	<classpathentry kind="lib" path="build/lib/utilities.jar"/>
+	<classpathentry kind="lib" path="build/lib/skinlf.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
