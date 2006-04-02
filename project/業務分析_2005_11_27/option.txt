@@ -1,3 +1,6 @@
 true,true,true
 SUB
 NOUN+VERB
+Trim Internal Complex Word Concept Node
+Add Abstract Internal Complex Word Concept
+Construct Complex Word Tree
