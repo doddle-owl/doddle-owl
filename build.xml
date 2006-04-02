@@ -5,7 +5,7 @@
 	<property name="src.dir" value="src/jp/ac/keio/ae/comp/yamaguti/doddle/" />
 	<property name="doc.dir" value="docs/" />
 	<property name="build.dir" value="build/classes" />
-	<property name="resource.dir" value="${build.dir}/resources" />
+	<property name="resource.dir" value="${build.dir}/jp/ac/keio/ae/comp/yamaguti/doddle/resources" />
 	<property name="lib.dir" value="build/lib" />
 	<property name="jarfile" value="${name}.jar" />
 
