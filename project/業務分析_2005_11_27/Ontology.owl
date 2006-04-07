@@ -77,10 +77,10 @@
     <rdfs:comment xml:lang="en">state of event (attribute, condition)	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID21">
+    <rdfs:label xml:lang="ja">総務部門</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ed812"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">棚卸業者</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID4448db">
     <rdfs:comment xml:lang="en">	</rdfs:comment>
@@ -159,10 +159,10 @@
     <rdfs:comment xml:lang="ja">計算機システムを用いた動作・活動	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID50">
+    <rdfs:label xml:lang="ja">出荷予定</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f301c"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0d5624"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">調達先</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID10a47b">
     <rdfs:label xml:lang="ja">見世</rdfs:label>
@@ -175,9 +175,9 @@
   </owl:Class>
   <owl:Class rdf:ID="UID20">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ed812"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">指定伝票</rdfs:label>
+    <rdfs:label xml:lang="ja">納品業者</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3aa918">
     <rdfs:comment xml:lang="ja">役割で捉えた人間	</rdfs:comment>
@@ -188,9 +188,9 @@
   </owl:Class>
   <owl:Class rdf:ID="UID36">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f9a6b"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">営業部門</rdfs:label>
+    <rdfs:label xml:lang="ja">原料在庫</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf123">
     <rdfs:label xml:lang="en">performance</rdfs:label>
@@ -267,16 +267,17 @@
     <rdfs:comment xml:lang="ja">役所や会社で,ふつう係の上に位置する社会組織の単位	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID76">
+    <rdfs:label xml:lang="ja">CRM</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ead07"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0aa678"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">売価還元法</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#UID76"/>
   </owl:Class>
   <owl:Class rdf:ID="UID29">
+    <rdfs:label xml:lang="ja">流行品</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">審査部門</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf511">
     <rdfs:label xml:lang="ja">素材</rdfs:label>
@@ -318,10 +319,10 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="UID9">
+    <rdfs:label xml:lang="ja">取扱商品</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">有効在庫</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID2f2a3a">
     <rdfs:comment xml:lang="ja">担当者	</rdfs:comment>
@@ -383,16 +384,8 @@
     <rdfs:label xml:lang="en">schedule</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID51">
-    <rdfs:label xml:lang="ja">発注先</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f301c"/>
-    </rdfs:subClassOf>
-  </owl:Class>
-  <owl:Class rdf:ID="UID27">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">経理部門</rdfs:label>
+    <rdfs:label xml:lang="ja">発注予定</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0d5624"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1fae77">
     <rdfs:label xml:lang="ja">会計</rdfs:label>
@@ -401,6 +394,12 @@
     <rdfs:subClassOf>
       <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3f9688"/>
     </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="UID27">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f4e12"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">モーダルシフト</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f4e10">
     <rdfs:comment xml:lang="en">in baseball, a defensive tactic taken by fielders against a batter before a play begins, called shift	</rdfs:comment>
@@ -411,10 +410,8 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="UID34">
-    <rdfs:label xml:lang="ja">貯蔵品</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163"/>
-    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
+    <rdfs:label xml:lang="ja">理論在庫</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ead07">
     <rdfs:comment xml:lang="ja">(経済学で)収益の還元法	</rdfs:comment>
@@ -433,10 +430,8 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="UID35">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">後継品</rdfs:label>
+    <rdfs:label xml:lang="ja">実在庫</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
   </owl:Class>
   <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6009276">
     <rdfs:comment xml:lang="en">the form of a literary work submitted for publication</rdfs:comment>
@@ -536,9 +531,9 @@
   </owl:Class>
   <owl:Class rdf:ID="UID28">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">総務部門</rdfs:label>
+    <rdfs:label xml:lang="ja">貯蔵品</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID2e1690">
     <rdfs:label xml:lang="ja">調達期間</rdfs:label>
@@ -570,10 +565,8 @@
     <rdfs:comment xml:lang="ja">カリフォルニア大学で,開発された演算処理装置の設計法	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID52">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ebd0c"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">3PL企業</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ead07"/>
+    <rdfs:label xml:lang="ja">売価還元法</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID108b79">
     <rdfs:label xml:lang="ja">保証金</rdfs:label>
@@ -633,8 +626,10 @@
     <rdfs:comment xml:lang="en">	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID56">
-    <rdfs:label xml:lang="ja">出荷予定</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0d5624"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">発注伝票</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID444ac5">
     <rdfs:subClassOf>
@@ -652,14 +647,16 @@
     <rdfs:comment xml:lang="ja">帳票	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID53">
+    <rdfs:label xml:lang="ja">営業部門</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0fc3dc"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f9a6b"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">保管棚</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID57">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0d5624"/>
-    <rdfs:label xml:lang="ja">発注予定</rdfs:label>
+    <rdfs:label xml:lang="ja">指定伝票</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
+    </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0faa23">
     <rdfs:subClassOf>
@@ -670,8 +667,10 @@
     <rdfs:comment xml:lang="ja">倉庫営業者が他人の品物を保管するのに用いた設備	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID55">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf511"/>
-    <rdfs:label xml:lang="ja">補助材料</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">納品伝票</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID201e1e">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3c0a29"/>
@@ -690,9 +689,9 @@
   </owl:Class>
   <owl:Class rdf:ID="UID26">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3c69c7"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">棚卸差異</rdfs:label>
+    <rdfs:label xml:lang="ja">資材部門</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e49ca">
     <rdfs:label xml:lang="ja">型録</rdfs:label>
@@ -767,8 +766,10 @@
     <rdfs:comment xml:lang="ja">人の社会的属性	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID23">
-    <rdfs:label xml:lang="ja">与信限度額</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID201e1e"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">設計部門</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1f92c7">
     <rdfs:comment xml:lang="ja">エレクトロニックオーダリングシステムという注文入力システム	</rdfs:comment>
@@ -866,10 +867,8 @@
     <rdfs:comment xml:lang="ja">世の中に数が少なくてきわめて大切な品物	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID37">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID703402"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">JAN-POS</rdfs:label>
+    <rdfs:label xml:lang="ja">仕込み在庫</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e8c01">
     <rdfs:label xml:lang="ja">元価</rdfs:label>
@@ -886,14 +885,16 @@
     <rdfs:comment xml:lang="en">thing (abstract object)	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID1">
-    <rdfs:label xml:lang="ja">高額商品</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID102e7f"/>
     </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">希望納期</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID78">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID10a47b"/>
-    <rdfs:label xml:lang="ja">POS導入店</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID10256e"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">売上入力</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf8d9">
     <rdfs:label xml:lang="ja">財産</rdfs:label>
@@ -973,14 +974,8 @@
     <rdfs:label xml:lang="en">compression</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID24">
-    <rdfs:label xml:lang="ja">平均調達期間</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDRT#ID2e1690"/>
-  </owl:Class>
-  <owl:Class rdf:ID="UID77">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID201aec"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">営業管理部</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
+    <rdfs:label xml:lang="ja">購買部門</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0fc3dc">
     <rdfs:subClassOf>
@@ -990,6 +985,10 @@
     <rdfs:label xml:lang="en">shelf</rdfs:label>
     <rdfs:label xml:lang="ja">棚</rdfs:label>
     <rdfs:comment xml:lang="en">a thing that has horizontal planks on which things are placed	</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UID77">
+    <rdfs:label xml:lang="ja">外注加工品</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID200d3c"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3ce725">
     <rdfs:label xml:lang="en">disaster</rdfs:label>
@@ -1020,16 +1019,12 @@
     <rdfs:label xml:lang="ja">天罰</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID33">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">流行品</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
+    <rdfs:label xml:lang="ja">有効在庫</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID25">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0fea58"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">卸売業</rdfs:label>
+    <rdfs:label xml:lang="ja">経理部門</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID4445c2">
     <rdfs:subClassOf>
@@ -1107,10 +1102,6 @@
     <rdfs:comment xml:lang="en">the leading units moving at the head of an army</rdfs:comment>
     <rdfs:label xml:lang="en">vanguard</rdfs:label>
   </owl:Class>
-  <owl:Class rdf:ID="UID10">
-    <rdfs:label xml:lang="ja">コンピュータ在庫</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
-  </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID444634">
     <rdfs:comment xml:lang="ja">機能で捉えた建物または建物群	</rdfs:comment>
     <rdfs:subClassOf>
@@ -1122,6 +1113,12 @@
     <rdfs:comment xml:lang="ja">金銭を介在した相手としての客	</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID444755"/>
     <rdfs:comment xml:lang="en">	</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UID10">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">受注商品</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f6b8">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3f98cb"/>
@@ -1147,8 +1144,10 @@
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="UID54">
-    <rdfs:label xml:lang="ja">主要材料</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf511"/>
+    <rdfs:label xml:lang="ja">売上伝票</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
+    </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3c212d">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3aa933"/>
@@ -1165,8 +1164,9 @@
     <rdfs:label xml:lang="en">stamp</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID60">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f1689"/>
-    <rdfs:label xml:lang="ja">通信コスト</rdfs:label>
+    <rdfs:label xml:lang="ja">WMS</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6009276"/>
+    <rdfs:subClassOf rdf:resource="#UID60"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163">
     <rdfs:comment xml:lang="ja">品物	</rdfs:comment>
@@ -1230,9 +1230,9 @@
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID4448db"/>
   </owl:Class>
   <owl:Class rdf:ID="UID3">
-    <rdfs:label xml:lang="ja">取扱商品</rdfs:label>
+    <rdfs:label xml:lang="ja">定期発注法</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3bbe28"/>
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID2f2651">
@@ -1244,14 +1244,14 @@
   </owl:Class>
   <owl:Class rdf:ID="UID84">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1e8622"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1e8626"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">入荷予定表</rdfs:label>
+    <rdfs:label xml:lang="ja">調達方式</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID2">
-    <rdfs:label xml:lang="ja">セット商品</rdfs:label>
+    <rdfs:label xml:lang="ja">単純平均法</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3bbe28"/>
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ebd0c">
@@ -1281,14 +1281,14 @@
     <rdfs:label xml:lang="ja">代物</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID85">
-    <rdfs:label xml:lang="ja">保管場所</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf5fb"/>
-    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">VAN会社</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f74c"/>
   </owl:Class>
   <owl:Class rdf:ID="UID0">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e49ca"/>
-    <rdfs:label xml:lang="ja">督促表</rdfs:label>
+    <rdfs:label xml:lang="ja">要求納期</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID102e7f"/>
+    </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID20200c">
     <rdfs:comment xml:lang="en">	</rdfs:comment>
@@ -1297,9 +1297,8 @@
     <rdfs:label xml:lang="ja">ターミナル</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID80">
-    <rdfs:subClassOf rdf:resource="#UID80"/>
-    <rdfs:label xml:lang="ja">SKU</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID13814578"/>
+    <rdfs:label xml:lang="ja">商品マスタ</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDRT#ID2df130"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3f964d">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f746"/>
@@ -1313,25 +1312,25 @@
     <rdfs:comment xml:lang="en">place (structure)	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID46">
-    <rdfs:label xml:lang="ja">売上入力</rdfs:label>
+    <rdfs:label xml:lang="ja">費用率</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID10256e"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID10ddf7"/>
     </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="UID43">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3bbe28"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID3c74c6"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">定期発注法</rdfs:label>
+    <rdfs:label xml:lang="ja">先登録</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID11">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
-    <rdfs:label xml:lang="ja">実在庫</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+    <rdfs:label xml:lang="ja">セット商品</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID83">
-    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6009276"/>
     <rdfs:subClassOf rdf:resource="#UID83"/>
-    <rdfs:label xml:lang="ja">WMS</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID13814578"/>
+    <rdfs:label xml:lang="ja">SKU</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e84ad">
     <rdfs:label xml:lang="ja">はず</rdfs:label>
@@ -2005,15 +2004,13 @@
   </owl:Class>
   <owl:Class rdf:ID="UID42">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID2dd11d"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID3c74c6"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">流通経路</rdfs:label>
+    <rdfs:label xml:lang="ja">発注登録</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID47">
-    <rdfs:label xml:lang="ja">売価率</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID10ddf7"/>
-    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#UID46"/>
+    <rdfs:label xml:lang="ja">在庫費用率</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f7c8">
     <rdfs:comment xml:lang="en">state of event (evaluation of matter)	</rdfs:comment>
@@ -2042,17 +2039,16 @@
     <rdfs:comment xml:lang="ja">方法・技法全般	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID79">
-    <rdfs:subClassOf rdf:resource="#UID79"/>
+    <rdfs:label xml:lang="ja">倉庫番</rdfs:label>
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0aa678"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1fafe2"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">CRM</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID40">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="#UID39"/>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0fea58"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">取引先登録</rdfs:label>
+    <rdfs:label xml:lang="ja">卸売業</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1e8978">
     <rdfs:subClassOf>
@@ -2093,8 +2089,10 @@
     <rdfs:label xml:lang="en">prog</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID5">
-    <rdfs:label xml:lang="ja">注文商品</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3c6a08"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">棚卸記入票</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3f9882">
     <rdfs:subClassOf>
@@ -2104,23 +2102,22 @@
     <rdfs:comment xml:lang="ja">時間点	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID81">
-    <rdfs:label xml:lang="ja">資材購買部</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e84ad"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID2dd11d"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">流通経路</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID45">
-    <rdfs:label xml:lang="ja">在庫リスク</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3c19e0"/>
-    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf103"/>
+    <rdfs:label xml:lang="ja">新規顧客</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID61">
-    <rdfs:label xml:lang="ja">顧客満足度向上</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f0866"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0fc3dc"/>
+    <rdfs:label xml:lang="ja">保管棚</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID82">
-    <rdfs:label xml:lang="ja">EOQ</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0aa523"/>
-    <rdfs:subClassOf rdf:resource="#UID82"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf8d9"/>
+    <rdfs:label xml:lang="ja">消耗財</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID4447f4">
     <rdfs:subClassOf>
@@ -2159,16 +2156,12 @@
     <rdfs:comment xml:lang="ja">不明な点を手紙や電話などで相手に確かめること	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID8">
-    <rdfs:label xml:lang="ja">要求納期</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID102e7f"/>
-    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf511"/>
+    <rdfs:label xml:lang="ja">主要材料</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID59">
-    <rdfs:label xml:lang="ja">調達方式</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1e8626"/>
-    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d0c0e"/>
+    <rdfs:label xml:lang="ja">庶務課</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID70008a">
     <rdfs:comment xml:lang="ja">BTOという受注生産方式	</rdfs:comment>
@@ -2210,10 +2203,8 @@
     <rdfs:label xml:lang="ja">納期</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID41">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f4e12"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">モーダルシフト</rdfs:label>
+    <rdfs:label xml:lang="ja">与信限度額</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID201e1e"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3c0872">
     <rdfs:comment xml:lang="ja">意見を外国に伝える外交文書	</rdfs:comment>
@@ -2297,8 +2288,8 @@
     <rdfs:comment xml:lang="en">	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID68">
-    <rdfs:label xml:lang="ja">基本契約書</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ef348"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID10a47b"/>
+    <rdfs:label xml:lang="ja">POS導入店</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cfc24">
     <rdfs:comment xml:lang="ja">物の数量	</rdfs:comment>
@@ -2326,12 +2317,12 @@
     <rdfs:comment xml:lang="ja">静物	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID69">
-    <rdfs:label xml:lang="ja">売買契約書</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ef348"/>
+    <rdfs:label xml:lang="ja">JAN-POS</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID703402"/>
   </owl:Class>
   <owl:Class rdf:ID="UID58">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3befd5"/>
-    <rdfs:label xml:lang="ja">クロスドッキング</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d0c0e"/>
+    <rdfs:label xml:lang="ja">外注課</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID4445c5">
     <rdfs:comment xml:lang="ja">表	</rdfs:comment>
@@ -2344,8 +2335,8 @@
     <rdfs:comment xml:lang="en">	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID7">
-    <rdfs:label xml:lang="ja">希望納期</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID102e7f"/>
+    <rdfs:label xml:lang="ja">補助材料</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf511"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID444e39">
     <rdfs:comment xml:lang="en">	</rdfs:comment>
@@ -2355,8 +2346,10 @@
     <rdfs:comment xml:lang="ja">計算機を用いた専門システム	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID62">
-    <rdfs:label xml:lang="ja">棚卸記入票</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3c6a08"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID201aec"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">営業管理部</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f6ae">
     <rdfs:comment xml:lang="ja">具体物	</rdfs:comment>
@@ -2364,8 +2357,8 @@
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID444d86"/>
   </owl:Class>
   <owl:Class rdf:ID="UID16">
-    <rdfs:label xml:lang="ja">物流センター</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cfc56"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cff6b"/>
+    <rdfs:label xml:lang="ja">受注機会損失</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID2dd11d">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDRT#ID2f2651"/>
@@ -2396,12 +2389,6 @@
     </rdfs:subClassOf>
     <rdfs:comment xml:lang="ja">情報処理関係の「動作・行為」	</rdfs:comment>
   </owl:Class>
-  <owl:Class rdf:ID="UID38">
-    <rdfs:label xml:lang="ja">発注登録</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID3c74c6"/>
-    </rdfs:subClassOf>
-  </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f0fe3">
     <rdfs:label xml:lang="ja">得意先</rdfs:label>
     <rdfs:label xml:lang="ja">得意客</rdfs:label>
@@ -2413,6 +2400,12 @@
     <rdfs:comment xml:lang="en">a customer	</rdfs:comment>
     <rdfs:comment xml:lang="ja">おとくいの客	</rdfs:comment>
   </owl:Class>
+  <owl:Class rdf:ID="UID38">
+    <rdfs:label xml:lang="ja">在庫リスク</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3c19e0"/>
+    </rdfs:subClassOf>
+  </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3c1105">
     <rdfs:comment xml:lang="ja">ある物事について責任を負う立場の人	</rdfs:comment>
     <rdfs:label xml:lang="en">patsy</rdfs:label>
@@ -2423,8 +2416,8 @@
     <rdfs:label xml:lang="ja">責任者</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID6">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID1e9396"/>
-    <rdfs:label xml:lang="ja">出荷指示書</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3befd5"/>
+    <rdfs:label xml:lang="ja">クロスドッキング</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f301c">
     <rdfs:comment xml:lang="ja">相手	</rdfs:comment>
@@ -2465,22 +2458,20 @@
     <rdfs:label xml:lang="ja">入力</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID17">
-    <rdfs:label xml:lang="ja">発注伝票</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
+    <rdfs:label xml:lang="ja">基本契約書</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ef348"/>
   </owl:Class>
   <owl:Class rdf:ID="UID39">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID3c74c6"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">先登録</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf5fb"/>
+    <rdfs:label xml:lang="ja">保管場所</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID63">
-    <rdfs:label xml:lang="ja">新規顧客</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf103"/>
+    <rdfs:label xml:lang="ja">資材購買部</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e84ad"/>
   </owl:Class>
   <owl:Class rdf:ID="UID18">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
-    <rdfs:label xml:lang="ja">売上伝票</rdfs:label>
+    <rdfs:label xml:lang="ja">売買契約書</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ef348"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID44464e">
     <rdfs:comment xml:lang="en">	</rdfs:comment>
@@ -2606,14 +2597,12 @@
     <rdfs:comment xml:lang="en">inanimate object (inanimate object defined by function, purpose of object)	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID49">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#UID48"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">在庫費用率</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDRT#ID2f2a3a"/>
+    <rdfs:label xml:lang="ja">営業担当者</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID12">
-    <rdfs:label xml:lang="ja">原料在庫</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
+    <rdfs:label xml:lang="ja">高額商品</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f966e">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf123"/>
@@ -2623,20 +2612,21 @@
     <rdfs:label xml:lang="ja">プロダクト</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID13">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
-    <rdfs:label xml:lang="ja">理論在庫</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+    <rdfs:label xml:lang="ja">注文商品</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID65">
-    <rdfs:label xml:lang="ja">営業担当者</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDRT#ID2f2a3a"/>
+    <rdfs:label xml:lang="ja">督促表</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e49ca"/>
   </owl:Class>
   <owl:Class rdf:ID="UID72">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d0c0e"/>
-    <rdfs:label xml:lang="ja">庶務課</rdfs:label>
+    <rdfs:label xml:lang="ja">顧客満足度向上</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f0866"/>
   </owl:Class>
   <owl:Class rdf:ID="UID64">
-    <rdfs:label xml:lang="ja">外注加工品</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID200d3c"/>
+    <rdfs:label xml:lang="ja">KKD</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID12974977"/>
+    <rdfs:subClassOf rdf:resource="#UID64"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID7024e8">
     <rdfs:comment xml:lang="ja">商品を発注するための書類	</rdfs:comment>
@@ -2668,8 +2658,8 @@
     <rdfs:label xml:lang="ja">SFA</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID67">
-    <rdfs:label xml:lang="ja">倉庫番</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID1fafe2"/>
+    <rdfs:label xml:lang="ja">通信コスト</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f1689"/>
   </owl:Class>
   <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID20486">
     <rdfs:comment xml:lang="en">a general concept formed by extracting common features from specific examples</rdfs:comment>
@@ -2690,8 +2680,8 @@
     <rdfs:comment xml:lang="ja">方法・技法	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID32">
-    <rdfs:label xml:lang="ja">資材部門</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
+    <rdfs:label xml:lang="ja">コンピュータ在庫</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f792">
     <rdfs:comment xml:lang="en">abstract object (product of thought)	</rdfs:comment>
@@ -2699,10 +2689,8 @@
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID444e40"/>
   </owl:Class>
   <owl:Class rdf:ID="UID22">
-    <rdfs:label xml:lang="ja">納品業者</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ed812"/>
-    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
+    <rdfs:label xml:lang="ja">審査部門</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f7aa">
     <rdfs:comment xml:lang="ja">数量	</rdfs:comment>
@@ -2710,26 +2698,25 @@
     <rdfs:comment xml:lang="en">condition of things (number, amount of things)	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID31">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
-    <rdfs:label xml:lang="ja">設計部門</rdfs:label>
+    <rdfs:label xml:lang="ja">適正在庫</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
   </owl:Class>
   <owl:Class rdf:ID="UID66">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDRT#ID2df130"/>
-    <rdfs:label xml:lang="ja">商品マスタ</rdfs:label>
+    <rdfs:label xml:lang="ja">EOQ</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0aa523"/>
+    <rdfs:subClassOf rdf:resource="#UID66"/>
   </owl:Class>
   <owl:Class rdf:ID="UID44">
-    <rdfs:label xml:lang="ja">単純平均法</rdfs:label>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3bbe28"/>
-    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#UID43"/>
+    <rdfs:label xml:lang="ja">取引先登録</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID75">
-    <rdfs:label xml:lang="ja">消耗財</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf8d9"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID1e8622"/>
+    <rdfs:label xml:lang="ja">入荷予定表</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID30">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID107797"/>
-    <rdfs:label xml:lang="ja">購買部門</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163"/>
+    <rdfs:label xml:lang="ja">後継品</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID704e99">
     <rdfs:comment xml:lang="en">	</rdfs:comment>
@@ -2751,12 +2738,12 @@
     <rdfs:label xml:lang="en">modus</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID15">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
-    <rdfs:label xml:lang="ja">仕込み在庫</rdfs:label>
+    <rdfs:label xml:lang="ja">調達先</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f301c"/>
   </owl:Class>
   <owl:Class rdf:ID="UID74">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cff6b"/>
-    <rdfs:label xml:lang="ja">受注機会損失</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ebd0c"/>
+    <rdfs:label xml:lang="ja">3PL企業</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ed812">
     <rdfs:comment xml:lang="ja">事業を経営している人	</rdfs:comment>
@@ -2817,8 +2804,8 @@
     <rdfs:label xml:lang="ja">メソード</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID4">
-    <rdfs:label xml:lang="ja">受注商品</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDRT#ID2e1690"/>
+    <rdfs:label xml:lang="ja">平均調達期間</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDRT#ID3c74c6">
     <rdfs:label xml:lang="ja">登録</rdfs:label>
@@ -2841,12 +2828,12 @@
     <rdfs:comment xml:lang="en">	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID14">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30"/>
-    <rdfs:label xml:lang="ja">適正在庫</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f301c"/>
+    <rdfs:label xml:lang="ja">発注先</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID71">
-    <rdfs:label xml:lang="ja">外注課</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d0c0e"/>
+    <rdfs:label xml:lang="ja">棚卸差異</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3c69c7"/>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3aa967">
     <rdfs:comment xml:lang="ja">情報を担う音や記号や文字	</rdfs:comment>
@@ -2868,16 +2855,16 @@
     <rdfs:comment xml:lang="en">things provided as furnishings	</rdfs:comment>
   </owl:Class>
   <owl:Class rdf:ID="UID19">
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77"/>
-    <rdfs:label xml:lang="ja">納品伝票</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ed812"/>
+    <rdfs:label xml:lang="ja">棚卸業者</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID70">
-    <rdfs:label xml:lang="ja">VAN会社</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f74c"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cfc56"/>
+    <rdfs:label xml:lang="ja">物流センター</rdfs:label>
   </owl:Class>
   <owl:Class rdf:ID="UID48">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID10ddf7"/>
-    <rdfs:label xml:lang="ja">費用率</rdfs:label>
+    <rdfs:label xml:lang="ja">売価率</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3aa966">
     <rdfs:comment xml:lang="ja">概念	</rdfs:comment>
@@ -2911,9 +2898,8 @@
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID444df2"/>
   </owl:Class>
   <owl:Class rdf:ID="UID73">
-    <rdfs:label xml:lang="ja">KKD</rdfs:label>
-    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID12974977"/>
-    <rdfs:subClassOf rdf:resource="#UID73"/>
+    <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID1e9396"/>
+    <rdfs:label xml:lang="ja">出荷指示書</rdfs:label>
   </owl:Class>
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID444645">
     <rdfs:subClassOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f7e4"/>
@@ -2975,10 +2961,10 @@
     </rdfs:subPropertyOf>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID119">
-    <rdfs:label xml:lang="ja">伝票記載ミス</rdfs:label>
     <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3d02c5"/>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ff2cb"/>
     </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">伝票取り消し</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID444dd8">
     <rdfs:comment xml:lang="ja">対象行為	</rdfs:comment>
@@ -3049,16 +3035,16 @@
     <rdfs:domain rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f6b0"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID91">
-    <rdfs:label xml:lang="ja">発注管理</rdfs:label>
-    <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="#UID89"/>
-    </rdfs:subPropertyOf>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="UID92">
-    <rdfs:label xml:lang="ja">受注残管理</rdfs:label>
+    <rdfs:label xml:lang="ja">納期管理</rdfs:label>
     <rdfs:subPropertyOf>
       <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216"/>
     </rdfs:subPropertyOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="UID92">
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3bb8cb"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">誂える入力</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f87e">
     <rdfs:comment xml:lang="en">action with thing or person as recipient of action (action done to thing)	</rdfs:comment>
@@ -3234,10 +3220,10 @@
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3ce7fa"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID121">
-    <rdfs:label xml:lang="ja">定量発注</rdfs:label>
     <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID103dfd"/>
+      <owl:ObjectProperty rdf:about="#UID120"/>
     </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">トラック配送振り分け</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f826">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID444db1"/>
@@ -3263,28 +3249,26 @@
     <rdfs:domain rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3aa911"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID100">
+    <rdfs:label xml:lang="ja">注文書発行</rdfs:label>
     <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf83a"/>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf770"/>
     </rdfs:subPropertyOf>
-    <rdfs:label xml:lang="ja">損益計算</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID94">
-    <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID107528"/>
-    </rdfs:subPropertyOf>
-    <rdfs:label xml:lang="ja">配送振り分け</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="#UID92"/>
+    <rdfs:label xml:lang="ja">発注入力</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID113">
-    <rdfs:label xml:lang="ja">在庫問い合わせ</rdfs:label>
+    <rdfs:label xml:lang="ja">運用付加</rdfs:label>
     <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f4b12"/>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0fe35d"/>
     </rdfs:subPropertyOf>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID118">
+    <rdfs:label xml:lang="ja">財務会計</rdfs:label>
     <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3ce62e"/>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e88a0"/>
     </rdfs:subPropertyOf>
-    <rdfs:label xml:lang="ja">発注依頼</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID444c8c">
     <rdfs:comment xml:lang="en">movement with specific direction (movement from source to goal)	</rdfs:comment>
@@ -3397,8 +3381,10 @@
     </rdfs:subPropertyOf>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID112">
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3bb8cb"/>
-    <rdfs:label xml:lang="ja">入荷入力</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID108b73"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">原価管理</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f82e">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3aa933"/>
@@ -3413,8 +3399,8 @@
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f74c"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID95">
-    <rdfs:subPropertyOf rdf:resource="#UID94"/>
-    <rdfs:label xml:lang="ja">トラック配送振り分け</rdfs:label>
+    <rdfs:label xml:lang="ja">出荷入力</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3bb8cb"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3aa952">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID4445bc"/>
@@ -3454,10 +3440,8 @@
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID4445bc"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID120">
-    <rdfs:label xml:lang="ja">トラック輸送</rdfs:label>
-    <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID10cc89"/>
-    </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">配送振り分け</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID107528"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf9dc">
     <rdfs:domain rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f6b0"/>
@@ -3534,10 +3518,8 @@
     <rdfs:comment xml:lang="en">to place an order for something		</rdfs:comment>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID101">
-    <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e14e1"/>
-    </rdfs:subPropertyOf>
-    <rdfs:label xml:lang="ja">定期訪問</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d02c5"/>
+    <rdfs:label xml:lang="ja">伝票記載ミス</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID10cc89">
     <rdfs:label xml:lang="ja">運送</rdfs:label>
@@ -3592,8 +3574,10 @@
     <rdfs:label xml:lang="ja">納入</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID107">
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e5231"/>
-    <rdfs:label xml:lang="ja">納期回答</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3ce62e"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">発注依頼</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0fde0d">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf511"/>
@@ -3608,8 +3592,10 @@
     <rdfs:label xml:lang="ja">調達する</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID108">
-    <rdfs:label xml:lang="ja">誂える入力</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3bb8cb"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf15e"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">赤黒処理</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f0866"/>
@@ -3695,9 +3681,9 @@
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID115">
     <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf770"/>
+      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e14e1"/>
     </rdfs:subPropertyOf>
-    <rdfs:label xml:lang="ja">納品書発行</rdfs:label>
+    <rdfs:label xml:lang="ja">定期訪問</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f3f5d">
     <rdfs:comment xml:lang="en">the action of buying goods	</rdfs:comment>
@@ -3890,10 +3876,8 @@
     <rdfs:label xml:lang="ja">CTO</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID102">
-    <rdfs:label xml:lang="ja">集中購買</rdfs:label>
-    <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3d1717"/>
-    </rdfs:subPropertyOf>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID10cc89"/>
+    <rdfs:label xml:lang="ja">トラック輸送</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ef511">
     <rdfs:comment xml:lang="en">to finish a business transaction		</rdfs:comment>
@@ -3983,8 +3967,8 @@
     <rdfs:label xml:lang="en">compute</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID93">
-    <rdfs:label xml:lang="ja">納期管理</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216"/>
+    <rdfs:subPropertyOf rdf:resource="#UID92"/>
+    <rdfs:label xml:lang="ja">受注入力</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1f5a92">
     <rdfs:label xml:lang="ja">違</rdfs:label>
@@ -4007,8 +3991,8 @@
     <rdfs:label xml:lang="ja">不了見だ</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID109">
-    <rdfs:subPropertyOf rdf:resource="#UID108"/>
-    <rdfs:label xml:lang="ja">発注入力</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf15e"/>
+    <rdfs:label xml:lang="ja">在庫処理</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf770">
     <rdfs:label xml:lang="ja">発行する</rdfs:label>
@@ -4097,8 +4081,10 @@
     <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f8aa"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID88">
-    <rdfs:label xml:lang="ja">売上管理</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="#UID87"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label xml:lang="ja">受注管理</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cb75e">
     <rdfs:comment xml:lang="en">the management of selling	</rdfs:comment>
@@ -4318,8 +4304,8 @@
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0fbdc4"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID103">
-    <rdfs:label xml:lang="ja">スポット購買</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d1717"/>
+    <rdfs:label xml:lang="ja">在庫問い合わせ</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f4b12"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0ef08f">
     <rdfs:comment xml:lang="en">to take the consequences and progress of something into consideration when thinking about something		</rdfs:comment>
@@ -4385,12 +4371,12 @@
     <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID444c01"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID114">
-    <rdfs:label xml:lang="ja">共同配送</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID1035b8"/>
+    <rdfs:label xml:lang="ja">納期回答</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e5231"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID104">
-    <rdfs:label xml:lang="ja">赤黒処理</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf15e"/>
+    <rdfs:label xml:lang="ja">スポット購買</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d1717"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID100c7e">
     <rdfs:domain rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf103"/>
@@ -4420,37 +4406,35 @@
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID4446ac"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID98">
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0fe35d"/>
-    <rdfs:label xml:lang="ja">運用付加</rdfs:label>
+    <rdfs:label xml:lang="ja">定量発注</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID103dfd"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID87">
-    <rdfs:subPropertyOf>
-      <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID108b73"/>
-    </rdfs:subPropertyOf>
-    <rdfs:label xml:lang="ja">原価管理</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216"/>
+    <rdfs:label xml:lang="ja">誂える管理</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID106">
-    <rdfs:label xml:lang="ja">在庫圧縮</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e328d"/>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="UID122">
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ff2cb"/>
-    <rdfs:label xml:lang="ja">伝票取り消し</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="UID89">
-    <rdfs:label xml:lang="ja">誂える管理</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216"/>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="UID117">
     <rdfs:subPropertyOf>
       <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3ce62e"/>
     </rdfs:subPropertyOf>
     <rdfs:label xml:lang="ja">見積依頼</rdfs:label>
   </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="UID89">
+    <rdfs:subPropertyOf rdf:resource="#UID87"/>
+    <rdfs:label xml:lang="ja">発注管理</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="UID122">
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID702e7e"/>
+    <rdfs:label xml:lang="ja">WEB-EDI</rdfs:label>
+  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3aa949">
     <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f802"/>
     <rdfs:comment xml:lang="en">spatial movement (movement of agent)	</rdfs:comment>
     <rdfs:comment xml:lang="ja">主体の移動	</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="UID117">
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e328d"/>
+    <rdfs:label xml:lang="ja">在庫圧縮</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f7b46">
     <rdfs:comment xml:lang="en">to receive an order		</rdfs:comment>
@@ -4464,8 +4448,8 @@
     <rdfs:label xml:lang="ja">受注する</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID116">
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf770"/>
-    <rdfs:label xml:lang="ja">注文書発行</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f7b46"/>
+    <rdfs:label xml:lang="ja">ライン受注</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e61d1">
     <rdfs:label xml:lang="ja">売買</rdfs:label>
@@ -4526,18 +4510,18 @@
     <rdfs:label xml:lang="ja">保守する</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID110">
-    <rdfs:subPropertyOf rdf:resource="#UID108"/>
-    <rdfs:label xml:lang="ja">受注入力</rdfs:label>
-  </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="UID86">
-    <rdfs:label xml:lang="ja">ライン受注</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0f7b46"/>
+    <rdfs:label xml:lang="ja">損益計算</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf83a"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3aa94a">
     <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f87e"/>
     <rdfs:comment xml:lang="ja">具体物を移動する	</rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID30f802"/>
     <rdfs:comment xml:lang="en">spatial movement (movement of agent regarding concrete object)	</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="UID86">
+    <rdfs:label xml:lang="ja">売上管理</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID30f8dd">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3aa911"/>
@@ -4547,12 +4531,12 @@
     <rdfs:comment xml:lang="ja">対人行為	</rdfs:comment>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID99">
-    <rdfs:label xml:lang="ja">WEB-EDI</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID702e7e"/>
+    <rdfs:label xml:lang="ja">納品書発行</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf770"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID105">
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf15e"/>
-    <rdfs:label xml:lang="ja">在庫処理</rdfs:label>
+    <rdfs:label xml:lang="ja">集中購買</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3d1717"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0f58e4">
     <rdfs:label xml:lang="ja">出庫する</rdfs:label>
@@ -4610,12 +4594,12 @@
     <rdfs:comment xml:lang="en">action having to do with progress of action or matter (end)	</rdfs:comment>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID111">
-    <rdfs:label xml:lang="ja">出荷入力</rdfs:label>
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3bb8cb"/>
+    <rdfs:label xml:lang="ja">共同配送</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID1035b8"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID96">
-    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0e88a0"/>
-    <rdfs:label xml:lang="ja">財務会計</rdfs:label>
+    <rdfs:label xml:lang="ja">入荷入力</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3bb8cb"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID0e899c">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf163"/>
@@ -4639,8 +4623,8 @@
     <rdfs:domain rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID0ed812"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="UID90">
-    <rdfs:subPropertyOf rdf:resource="#UID89"/>
-    <rdfs:label xml:lang="ja">受注管理</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3cf216"/>
+    <rdfs:label xml:lang="ja">受注残管理</rdfs:label>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID3cf7ca">
     <rdfs:range rdf:resource="http://www2.nict.go.jp/kk/e416/EDR#ID3bbe28"/>
