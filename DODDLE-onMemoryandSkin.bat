@@ -1,1 +1,0 @@
-java.exe -Xms512m -Xmx756m -cp DODDLE.jar  jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE --DEBUG --SKIN
