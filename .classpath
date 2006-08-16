@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_07"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="build/lib/antlr-2.7.5.jar"/>
+	<classpathentry kind="lib" path="build/lib/arq.jar"/>
 	<classpathentry kind="lib" path="build/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="build/lib/antlr.jar"/>
 	<classpathentry kind="lib" path="build/lib/concurrent.jar"/>
-	<classpathentry kind="lib" path="build/lib/icu4j.jar"/>
-	<classpathentry kind="lib" path="build/lib/jakarta-oro-2.0.5.jar"/>
+	<classpathentry kind="lib" path="build/lib/icu4j_3_4.jar"/>
+	<classpathentry kind="lib" path="build/lib/iri.jar"/>
+	<classpathentry kind="lib" path="build/lib/java-getopt-1.0.11.jar"/>
+	<classpathentry kind="lib" path="build/lib/je.jar"/>
 	<classpathentry kind="lib" path="build/lib/jena.jar"/>
+	<classpathentry kind="lib" path="build/lib/jenatest.jar"/>
+	<classpathentry kind="lib" path="build/lib/json.jar"/>
 	<classpathentry kind="lib" path="build/lib/junit.jar"/>
-	<classpathentry kind="lib" path="build/lib/log4j-1.2.7.jar"/>
-	<classpathentry kind="lib" path="build/lib/rdf-api-2001-01-19.jar"/>
+	<classpathentry kind="lib" path="build/lib/jwnl.jar"/>
+	<classpathentry kind="lib" path="build/lib/log4j-1.2.12.jar"/>
+	<classpathentry kind="lib" path="build/lib/metouia.jar"/>
+	<classpathentry kind="lib" path="build/lib/mr3.jar"/>
+	<classpathentry kind="lib" path="build/lib/PDFBox-0.7.2.jar"/>
+	<classpathentry kind="lib" path="build/lib/sen.jar"/>
+	<classpathentry kind="lib" path="build/lib/stax-api-1.0.jar"/>
+	<classpathentry kind="lib" path="build/lib/utilities.jar"/>
+	<classpathentry kind="lib" path="build/lib/wstx-asl-2.8.jar"/>
 	<classpathentry kind="lib" path="build/lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="build/lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="build/lib/je.jar"/>
-	<classpathentry kind="lib" path="build/lib/mr3.jar"/>
-	<classpathentry kind="lib" path="build/lib/sen.jar"/>
-	<classpathentry kind="lib" path="build/lib/java-getopt-1.0.11.jar"/>
-	<classpathentry kind="lib" path="build/lib/PDFBox-0.7.2.jar"/>
-	<classpathentry kind="lib" path="build/lib/jwnl.jar"/>
-	<classpathentry kind="lib" path="build/lib/utilities.jar"/>
-	<classpathentry kind="lib" path="build/lib/metouia.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
