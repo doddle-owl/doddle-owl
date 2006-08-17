@@ -1,0 +1,576 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.yamaguti.comp.ae.keio.ac.jp/doddle-j#">
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID1043364">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="CLASS_ROOT"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID26194"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the act of transacting within or between groups (as carrying on commercial activities); "no transactions are possible without him"; "he has always been honest is his dealings with me"</rdfs:comment>
+    <rdfs:label xml:lang="en">dealings</rdfs:label>
+    <rdfs:label xml:lang="en">dealing</rdfs:label>
+    <rdfs:label xml:lang="en">transaction</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6225142">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6191171"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a message received and understood</rdfs:comment>
+    <rdfs:label xml:lang="en">info</rdfs:label>
+    <rdfs:label xml:lang="en">information</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9253155">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6026"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a capitalist who engages in industrial commercial enterprise</rdfs:comment>
+    <rdfs:label xml:lang="en">bourgeois</rdfs:label>
+    <rdfs:label xml:lang="en">businessperson</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID4207742">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID19244"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">instrumentality that combines interrelated interacting artifacts designed to work as a coherent entity; "he bought a new stereo system"; "the system consists of a motor and a small computer"</rdfs:comment>
+    <rdfs:label xml:lang="en">system</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID10010662">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6026"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">someone other than the principals who are involved in a transaction</rdfs:comment>
+    <rdfs:label xml:lang="en">third_party</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID13141678">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID13137195"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the state of being acceptable and accepted; "torn jeans received no acceptance at the country club"</rdfs:comment>
+    <rdfs:label xml:lang="en">acceptance</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID27371">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:comment xml:lang="en">anything owned or possessed</rdfs:comment>
+    <rdfs:label xml:lang="en">possession</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID13131686">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID24568"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a state at a particular time; "a condition (or state) of disrepair"; "the current status of the arms negotiations"</rdfs:comment>
+    <rdfs:label xml:lang="en">status</rdfs:label>
+    <rdfs:label xml:lang="en">condition</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID303175">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID180570"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the act of delivering or distributing something (as goods or mail); "his reluctant delivery of bad news"</rdfs:comment>
+    <rdfs:label xml:lang="en">bringing</rdfs:label>
+    <rdfs:label xml:lang="en">delivery</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6121377">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6118498"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a contract stating the terms of a purchase</rdfs:comment>
+    <rdfs:label xml:lang="en">purchase_agreement</rdfs:label>
+    <rdfs:label xml:lang="en">purchase_contract</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID7523126">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID7470450"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a group of people who work together</rdfs:comment>
+    <rdfs:label xml:lang="en">organisation</rdfs:label>
+    <rdfs:label xml:lang="en">organization</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID12569849">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID27371"/>
+    <rdfs:comment xml:lang="en">the charge for exchanging currency of one country for currency of another</rdfs:comment>
+    <rdfs:label xml:lang="en">exchange_rate</rdfs:label>
+    <rdfs:label xml:lang="en">rate_of_exchange</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6191171">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID28764"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">what a communication that is about something is about</rdfs:comment>
+    <rdfs:label xml:lang="en">substance</rdfs:label>
+    <rdfs:label xml:lang="en">subject_matter</rdfs:label>
+    <rdfs:label xml:lang="en">content</rdfs:label>
+    <rdfs:label xml:lang="en">message</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID389883">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID26194"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">any specific activity; "they avoided all recreational activity"</rdfs:comment>
+    <rdfs:label xml:lang="en">activity</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6331587">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6308607"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a statement (either spoken or written) that is made in reply to a question or request or criticism or accusation; "I waited several days for his answer"; "he wrote replies to several of his critics"</rdfs:comment>
+    <rdfs:label xml:lang="en">response</rdfs:label>
+    <rdfs:label xml:lang="en">reply</rdfs:label>
+    <rdfs:label xml:lang="en">answer</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID14257468">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID29305"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">an amount of time; "a time period of 30 years"; "hastened the period of time of his recovery"; "Picasso's blue period"</rdfs:comment>
+    <rdfs:label xml:lang="en">period</rdfs:label>
+    <rdfs:label xml:lang="en">period_of_time</rdfs:label>
+    <rdfs:label xml:lang="en">time_period</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9300802">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6026"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">an associate who works with others toward a common goal; "partners in crime"</rdfs:comment>
+    <rdfs:label xml:lang="en">pardner</rdfs:label>
+    <rdfs:label xml:lang="en">partner</rdfs:label>
+    <rdfs:label xml:lang="en">cooperator</rdfs:label>
+    <rdfs:label xml:lang="en">collaborator</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID1740">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:comment xml:lang="en">that which is perceived or known or inferred to have its own distinct existence (living or nonliving)</rdfs:comment>
+    <rdfs:label xml:lang="en">entity</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9981331">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID9253155"/>
+    <rdfs:comment xml:lang="en">someone whose business is to supply a particular service or commodity</rdfs:comment>
+    <rdfs:label xml:lang="en">provider</rdfs:label>
+    <rdfs:label xml:lang="en">supplier</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6082556">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID27929"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">an item in an appropriation bill; "Some governors can veto line items in their state budgets"</rdfs:comment>
+    <rdfs:label xml:lang="en">line_item</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID7765339">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID7470450"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a band of people associated temporarily in some activity; "they organized a party to search for food"; "the company of cooks walked into the kitchen"</rdfs:comment>
+    <rdfs:label xml:lang="en">company</rdfs:label>
+    <rdfs:label xml:lang="en">party</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID1056649">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID1028287"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the act of paying money</rdfs:comment>
+    <rdfs:label xml:lang="en">defrayment</rdfs:label>
+    <rdfs:label xml:lang="en">defrayal</rdfs:label>
+    <rdfs:label xml:lang="en">payment</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID5967883">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID28764"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the work of a writer; anything expressed in letters of the alphabet (especially when considered from the point of view of style and effect); "the writing in her novels is excellent"; "that editorial was a fine piece of writing"</rdfs:comment>
+    <rdfs:label xml:lang="en">piece_of_writing</rdfs:label>
+    <rdfs:label xml:lang="en">written_material</rdfs:label>
+    <rdfs:label xml:lang="en">writing</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6026">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID16236"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="en">human</rdfs:label>
+    <rdfs:comment xml:lang="en">a human being; "there was too much for one person to do"</rdfs:comment>
+    <rdfs:label xml:lang="en">mortal</rdfs:label>
+    <rdfs:label xml:lang="en">individual</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID1740"/>
+    <rdfs:label xml:lang="en">somebody</rdfs:label>
+    <rdfs:label xml:lang="en">soul</rdfs:label>
+    <rdfs:label xml:lang="en">someone</rdfs:label>
+    <rdfs:label xml:lang="en">person</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID32816">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID26194"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">something done (usually as opposed to something said); "there were stories of murders and other unnatural actions"</rdfs:comment>
+    <rdfs:label xml:lang="en">action</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6340858">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6308607"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a statement of the current market price of a security or commodity</rdfs:comment>
+    <rdfs:label xml:lang="en">quotation</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID4827181">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID27563"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">an adequate or large amount; "he had a quantity of ammunition"</rdfs:comment>
+    <rdfs:label xml:lang="en">quantity</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6126427">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6071636"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a commercial document used to request someone to supply something in return for payment and providing specifications and quantities; "IBM received an order for a hundred computers"</rdfs:comment>
+    <rdfs:label xml:lang="en">purchase_order</rdfs:label>
+    <rdfs:label xml:lang="en">order</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID12495940">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID27371"/>
+    <rdfs:comment xml:lang="en">wealth reckoned in terms of money; "all his money is in real estate"</rdfs:comment>
+    <rdfs:label xml:lang="en">money</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID7949563">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID26769"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a collection of facts from which conclusions may be drawn; "statistical data"</rdfs:comment>
+    <rdfs:label xml:lang="en">information</rdfs:label>
+    <rdfs:label xml:lang="en">data</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID14301432">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID29305"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the specified day of the month; "what is the date today?"</rdfs:comment>
+    <rdfs:label xml:lang="en">day_of_the_month</rdfs:label>
+    <rdfs:label xml:lang="en">date</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID1028287">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID1043364"/>
+    <rdfs:comment xml:lang="en">transactions (sales and purchases) having the objective of supplying commodities (goods and services)</rdfs:comment>
+    <rdfs:label xml:lang="en">mercantilism</rdfs:label>
+    <rdfs:label xml:lang="en">commercialism</rdfs:label>
+    <rdfs:label xml:lang="en">commerce</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9255462">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9345934"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a person who buys</rdfs:comment>
+    <rdfs:label xml:lang="en">vendee</rdfs:label>
+    <rdfs:label xml:lang="en">emptor</rdfs:label>
+    <rdfs:label xml:lang="en">purchaser</rdfs:label>
+    <rdfs:label xml:lang="en">buyer</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID7565031">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID7523126"/>
+    <rdfs:comment xml:lang="en">an institution (public or private) that collects funds (from the public or other institutions) and invests them in financial assets</rdfs:comment>
+    <rdfs:label xml:lang="en">financial_organisation</rdfs:label>
+    <rdfs:label xml:lang="en">financial_organization</rdfs:label>
+    <rdfs:label xml:lang="en">financial_institution</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID37061">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID32816"/>
+    <rdfs:comment xml:lang="en">the act of acquiring something; "I envied his talent for acquiring"; "he's much more interested in the getting than in the giving"</rdfs:comment>
+    <rdfs:label xml:lang="en">getting</rdfs:label>
+    <rdfs:label xml:lang="en">acquiring</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID12575085">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID27371"/>
+    <rdfs:comment xml:lang="en">available source of wealth; a new or reserve supply that can be drawn upon when needed</rdfs:comment>
+    <rdfs:label xml:lang="en">resource</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID3455609">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID2645"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a whole individual unit; especially when included in a list or collection; "they reduced the price on many items"</rdfs:comment>
+    <rdfs:label xml:lang="en">item</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID2645">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID16236"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">an assemblage of parts that is regarded as a single entity; "how big is that part compared to the whole?"; "the team is a unit"</rdfs:comment>
+    <rdfs:label xml:lang="en">unit</rdfs:label>
+    <rdfs:label xml:lang="en">whole_thing</rdfs:label>
+    <rdfs:label xml:lang="en">whole</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID4518979">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID4521520"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the quality of being at hand when needed</rdfs:comment>
+    <rdfs:label xml:lang="en">availableness</rdfs:label>
+    <rdfs:label xml:lang="en">availability</rdfs:label>
+    <rdfs:label xml:lang="en">accessibility</rdfs:label>
+    <rdfs:label xml:lang="en">handiness</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID20486">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:comment xml:lang="en">a general concept formed by extracting common features from specific examples</rdfs:comment>
+    <rdfs:label xml:lang="en">abstraction</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9734755">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6026"/>
+    <rdfs:comment xml:lang="en">a person who pays money for something</rdfs:comment>
+    <rdfs:label xml:lang="en">remunerator</rdfs:label>
+    <rdfs:label xml:lang="en">payer</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6071636">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6069783"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a document of or relating to commerce</rdfs:comment>
+    <rdfs:label xml:lang="en">commercial_instrument</rdfs:label>
+    <rdfs:label xml:lang="en">commercial_document</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID4856818">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID4521520"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">the property of having material worth (often indicated by the amount of money something would bring if sold); "the fluctuating monetary value of gold and silver"; "he puts a high price on his services"; "he couldn't calculate the cost of the collection"</rdfs:comment>
+    <rdfs:label xml:lang="en">cost</rdfs:label>
+    <rdfs:label xml:lang="en">price</rdfs:label>
+    <rdfs:label xml:lang="en">monetary_value</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID10040824">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6026"/>
+    <rdfs:comment xml:lang="en">a person who makes use of a thing; someone who uses or employs something</rdfs:comment>
+    <rdfs:label xml:lang="en">user</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9734637">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6026"/>
+    <rdfs:comment xml:lang="en">a person to whom money is paid</rdfs:comment>
+    <rdfs:label xml:lang="en">payee</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID1033295">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID389883"/>
+    <rdfs:comment xml:lang="en">the volume of business activity; "business is good today"; "show me where the business was today"</rdfs:comment>
+    <rdfs:label xml:lang="en">business</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID26194">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:comment xml:lang="en">something that people do or cause to happen</rdfs:comment>
+    <rdfs:label xml:lang="en">human_activity</rdfs:label>
+    <rdfs:label xml:lang="en">human_action</rdfs:label>
+    <rdfs:label xml:lang="en">act</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9899514">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID9253155"/>
+    <rdfs:comment xml:lang="en">someone who ships goods</rdfs:comment>
+    <rdfs:label xml:lang="en">shipper</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID3608510">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID2965274"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">commodities offered for sale; "good business depends on having good merchandise"; "that store offers a variety of products"</rdfs:comment>
+    <rdfs:label xml:lang="en">product</rdfs:label>
+    <rdfs:label xml:lang="en">wares</rdfs:label>
+    <rdfs:label xml:lang="en">merchandise</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID26769">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:comment xml:lang="en">any number of entities (members) considered as a unit</rdfs:comment>
+    <rdfs:label xml:lang="en">grouping</rdfs:label>
+    <rdfs:label xml:lang="en">group</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID22625">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID1740"/>
+    <rdfs:comment xml:lang="en">a point or extent in space</rdfs:comment>
+    <rdfs:label xml:lang="en">location</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6118498">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6069783"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6354408"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a binding agreement between two or more persons that is enforceable by law</rdfs:comment>
+    <rdfs:label xml:lang="en">contract</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID7470450">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID26769"/>
+    <rdfs:comment xml:lang="en">people sharing some social relation</rdfs:comment>
+    <rdfs:label xml:lang="en">social_group</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9887627">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID9253155"/>
+    <rdfs:comment xml:lang="en">someone who promotes or exchanges goods or services for money</rdfs:comment>
+    <rdfs:label xml:lang="en">trafficker</rdfs:label>
+    <rdfs:label xml:lang="en">vendor</rdfs:label>
+    <rdfs:label xml:lang="en">vender</rdfs:label>
+    <rdfs:label xml:lang="en">marketer</rdfs:label>
+    <rdfs:label xml:lang="en">seller</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID85715">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID1028287"/>
+    <rdfs:comment xml:lang="en">the public sale of something to the highest bidder</rdfs:comment>
+    <rdfs:label xml:lang="en">vendue</rdfs:label>
+    <rdfs:label xml:lang="en">auction_sale</rdfs:label>
+    <rdfs:label xml:lang="en">auction</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID27563">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID20486"/>
+    <rdfs:comment xml:lang="en">an abstraction belonging to or characteristic of an entity</rdfs:comment>
+    <rdfs:label xml:lang="en">attribute</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6308607">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6191171"/>
+    <rdfs:comment xml:lang="en">a message that is stated or declared; a communication (oral or written) setting forth particulars or facts etc; "according to his statement he was in London on that day"</rdfs:comment>
+    <rdfs:label xml:lang="en">statement</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID29305">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID20486"/>
+    <rdfs:comment xml:lang="en">how much there is of something that you can quantify</rdfs:comment>
+    <rdfs:label xml:lang="en">amount</rdfs:label>
+    <rdfs:label xml:lang="en">quantity</rdfs:label>
+    <rdfs:label xml:lang="en">measure</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID72647">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID37061"/>
+    <rdfs:comment xml:lang="en">the acquisition of something for payment; "they closed the purchase with a handshake"</rdfs:comment>
+    <rdfs:label xml:lang="en">purchase</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID12620468">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID1028287"/>
+    <rdfs:comment xml:lang="en">the system by which one currency is exchanged for another; enables international transactions to take place</rdfs:comment>
+    <rdfs:label xml:lang="en">foreign_exchange</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6111184">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6191171"/>
+    <rdfs:comment xml:lang="en">a formal message requesting something that is submitted to an authority</rdfs:comment>
+    <rdfs:label xml:lang="en">postulation</rdfs:label>
+    <rdfs:label xml:lang="en">petition</rdfs:label>
+    <rdfs:label xml:lang="en">request</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID964359">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID389883"/>
+    <rdfs:comment xml:lang="en">a particular course of action intended to achieve a result; "the procedure of obtaining a driver's license"; "it was a process of trial and error"</rdfs:comment>
+    <rdfs:label xml:lang="en">process</rdfs:label>
+    <rdfs:label xml:lang="en">procedure</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID9345934">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID10040824"/>
+    <rdfs:comment xml:lang="en">someone who pays for goods or services</rdfs:comment>
+    <rdfs:label xml:lang="en">client</rdfs:label>
+    <rdfs:label xml:lang="en">customer</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID28764">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID27929"/>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">something that is communicated by or to or between people or groups</rdfs:comment>
+    <rdfs:label xml:lang="en">communication</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID24568">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:comment xml:lang="en">the way something is with respect to its main attributes; "the current state of knowledge"; "his state of health"; "in a weak financial state"</rdfs:comment>
+    <rdfs:label xml:lang="en">state</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6069783">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID5967883"/>
+    <rdfs:comment xml:lang="en">writing that provides information (especially information of an official nature)</rdfs:comment>
+    <rdfs:label xml:lang="en">papers</rdfs:label>
+    <rdfs:label xml:lang="en">written_document</rdfs:label>
+    <rdfs:label xml:lang="en">document</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6354408">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6308607"/>
+    <rdfs:comment xml:lang="en">the statement (oral or written) of an exchange of promises; "they had an agreement that they would not interfere in each other's business"; "there was an understanding between management and the workers"</rdfs:comment>
+    <rdfs:label xml:lang="en">understanding</rdfs:label>
+    <rdfs:label xml:lang="en">agreement</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6204851">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID28764"/>
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID5967883"/>
+    <rdfs:comment xml:lang="en">a passage or expression that is quoted or cited</rdfs:comment>
+    <rdfs:label xml:lang="en">citation</rdfs:label>
+    <rdfs:label xml:lang="en">quote</rdfs:label>
+    <rdfs:label xml:lang="en">quotation</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID4521520">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID27563"/>
+    <rdfs:comment xml:lang="en">an essential and distinguishing attribute of something or someone; "the quality of mercy is not strained"--Shakespeare</rdfs:comment>
+    <rdfs:label xml:lang="en">quality</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID19244">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID16236"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID2645"/>
+    <rdfs:comment xml:lang="en">a man-made object taken as a whole</rdfs:comment>
+    <rdfs:label xml:lang="en">artefact</rdfs:label>
+    <rdfs:label xml:lang="en">artifact</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID1034340">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID389883"/>
+    <rdfs:comment xml:lang="en">the world of commercial activity where goods and services are bought and sold; "without competition there would be no market"; "they were driven from the marketplace"</rdfs:comment>
+    <rdfs:label xml:lang="en">marketplace</rdfs:label>
+    <rdfs:label xml:lang="en">market</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID13137195">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID24568"/>
+    <rdfs:comment xml:lang="en">the general state of things; the combination of circumstances at a given time; "the present international situation is dangerous"; "wondered how such a state of affairs had come about"; "eternal truths will be neither true nor eternal unless they have fresh meaning for every new social situation"- Franklin D.Roosevelt</rdfs:comment>
+    <rdfs:label xml:lang="en">state_of_affairs</rdfs:label>
+    <rdfs:label xml:lang="en">situation</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID16236">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID1740"/>
+    <rdfs:comment xml:lang="en">a tangible and visible entity; an entity that can cast a shadow; "it was full of rackets, balls and other objects"</rdfs:comment>
+    <rdfs:label xml:lang="en">physical_object</rdfs:label>
+    <rdfs:label xml:lang="en">object</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID2965274">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID19244"/>
+    <rdfs:comment xml:lang="en">articles of commerce</rdfs:comment>
+    <rdfs:label xml:lang="en">goods</rdfs:label>
+    <rdfs:label xml:lang="en">trade_goods</rdfs:label>
+    <rdfs:label xml:lang="en">commodity</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6094488">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6225142"/>
+    <rdfs:comment xml:lang="en">an ordered list of times at which things are planned to occur</rdfs:comment>
+    <rdfs:label xml:lang="en">schedule</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID27929">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID20486"/>
+    <rdfs:comment xml:lang="en">an abstraction belonging to or characteristic of two entities or parts together</rdfs:comment>
+    <rdfs:label xml:lang="en">relation</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID555444">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID389883"/>
+    <rdfs:comment xml:lang="en">employment in or work for another; "he retired after 30 years of service"</rdfs:comment>
+    <rdfs:label xml:lang="en">service</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID83620">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID37061"/>
+    <rdfs:comment xml:lang="en">the act of receiving</rdfs:comment>
+    <rdfs:label xml:lang="en">receipt</rdfs:label>
+    <rdfs:label xml:lang="en">reception</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID6114501">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID6071636"/>
+    <rdfs:comment xml:lang="en">an itemized statement of money owed for goods shipped or services rendered; "he paid his bill and left"; "send me an account of what I owe"</rdfs:comment>
+    <rdfs:label xml:lang="en">invoice</rdfs:label>
+    <rdfs:label xml:lang="en">account</rdfs:label>
+    <rdfs:label xml:lang="en">bill</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID180570">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID32816"/>
+    <rdfs:comment xml:lang="en">the action of changing something; "the change of government had no impact on the economy"; "his change on abortion cost him the election"</rdfs:comment>
+    <rdfs:label xml:lang="en">change</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="http://wordnet.princeton.edu/wn/2.0#ID13146626">
+    <rdfs:subClassOf rdf:resource="http://wordnet.princeton.edu/wn/2.0#ID13137195"/>
+    <rdfs:comment xml:lang="en">the state of being rejected</rdfs:comment>
+    <rdfs:label xml:lang="en">rejection</rdfs:label>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="PROP_ROOT"/>
+</rdf:RDF>

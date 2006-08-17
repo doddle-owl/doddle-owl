@@ -10,4 +10,4 @@ BASE_PREFIX=keio
 PROJECT_DIR=./project/
 UPPER_CONCEPT_LIST=./upperConceptList.txt
 WORDNET_PATH=C:/program files/wordnet/2.0/dict
-LANG=ja
+LANG=en

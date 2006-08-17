@@ -1,0 +1,149 @@
+*AuctionCreateThe AuctionCreate is used when the user wants to create a new auction．
+ It contains all the header, detail and summary level information．
+*AuctionCreateResponseThe AuctionCreateResponse provides information and status related to the request to create an auction via the AuctionCreate message．
+*AuctionResultThe AuctionResult is used to call for the results of the auction．
+ This element occurs once within the document．
+*AuctionResultResponseThe AuctionResultResponse is used to respond to a document calling for the result of the auction．
+ The auction initiator can send the AuctionResultResponse to communicate status of the AuctionResult receipt．
+*AvailabilityToPromiseThe AvailabilityToPromise consists of the request for availability to be sent from a buyer to a supplier or a number of suppliers．
+ The request for availability can also be received from an outside source by a supplier．
+ The request is used to determine when, where and how many of the requested goods the supplier(s) can supply, in many cases the request will be sent to existing suppliers only．
+*AvailabilityToPromiseResponseThe AvailabilityToPromiseResponse is used to respond to an AvailabilityToPromise document．
+ This element occurs once within the document．
+*ProductCatalogThe ProductCatalog is a document that is used to supply pricing and product description data to trading partners．
+ It is also used to configure non-standard product attributes that are useful for a particular type of product, service, catalog, etc．
+, and is sometimes used as a vehicle for exchanging non-standard attributes and categorizations．
+*MessageAcknowledgementThe MessageAcknowledgement is part of a larger business process defined by a document exchange．
+ Message acknowledgements are used by e-business parties to notify the sender of a message/document that the message has been received．
+ Message acknowledgements are not used to indicate a syntactical or content check of the received document．
+*ApplicationResponseThe ApplicationResponse  is a message used by one Application (the receiver of a Business Document) to indicate to another Application (the sender of the Business Document) a business response to the received document．
+ The document can report content errors in a document, acknowledge the receipt or successful processing of a document or be used in those cases where a business response is needed．
+ The ApplicationResponse document is only to be used when a specific response document does not exist for a Business Document．
+  *InvoiceThe Invoice comprises the creation of an invoice that is sent from a seller to a buyer for payment for the goods or services detailed in the invoice supplied under conditions agreed between buyer and seller．
+ An invoice may refer to goods, items or services related to one or more orders．
+ An invoice may contain references to payment terms and transport information．
+*InvoiceResponseThe InvoiceResponse  describes the response of an invoice receiving party to an invoice．
+ The invoice as a whole can be accepted or rejected by the invoice response．
+*PaymentRequestThe PaymentRequest  consists of details for arranging for payment of a specified value amount to a beneficiary in settlement of a business transaction．
+ The payer can initiate a PaymentRequest to instruct its financial institution to debit its account by the specified amount to be paid to the beneficiary for goods or services rendered．
+ The PaymentRequest can reference multiple documents (i．
+e．
+ PO, ASN, Invoice) but no reference is mandatory．
+ The payment is expressed in a single language．
+ Consolidated payment is supported．
+ The Payer can send multiple payment requests in a single PaymentRequest document．
+ Foreign exchange rates are supported．
+ This is not an IFX compliant document; however IFX influenced the design of this document．
+*PaymentRequestAcknowledgmentThe PaymentRequestAcknowledgment acknowledges the receipt of the PaymentRequest．
+  *RemittanceAdviceThe RemittanceAdvice advises a trading partner of payment for specific goods and/or services being provided．
+ Payers may initiate a RemittanceAdvice with a related payment request to specify the exact goods being paid．
+ Payers may also initiate a RemittanceAdvice to inform payees of the intent to refund moneys for specific goods and/or services．
+*FXRateRequestThe FXRateRequest  enables payers to retrieve a foreign exchange quote from a financial institution．
+ The payer can initiate a Foreign Exchange Request to get a rate quote and quote reference number on two specific currency pairs．
+ The payer will review the quote information and then decide whether this quote is satisfactory．
+ This will allow the payer the capability to pay for goods and services in a foreign currency when they perform a Payment Request．
+*FXRateResponseThe FXRateResponse  ．
+ The Financial Institution sends this document to the Payer to provide a foreign exchange rate quote to obtain the currency needed to settle the payment．
+*PaymentStatusRequestThe PaymentStatusRequest enables payers to query the status of a previously submitted payment to/from a financial institution．
+*PaymentStatusResponseThe PaymentStatusResponse  ．
+ The payment status response document enables the financial institution to send the information on the status of a payment to the payer．
+*AdvanceShipmentNoticeThe AdvanceShipmentNotice (ASN) comprises the notification by a supplier to the buyer of a shipment．
+ The shipment can be for planning or serve as a notice of a shipment in progress．
+ Therefore it is not necessary for a supplier to provide a preliminary notice of shipment, nor is it necessary for a supplier to send an actual note of shipment．
+ Actual tracking of freight will initially be handled by the shipper directly and not via the ASN．
+ Buyers can respond to the ASN with an ASN Error document that will be created at a later date．
+*GoodsReceiptThe GoodsReceipt  is a message initiated by the party, which received the goods．
+ In most cases this is the buyer, but can also be a third party．
+ The GoodsReceipt can be used to provide customary and established business and industry practice relative to the notification of receipt or formal acceptance of goods and services．
+ The message is used to report the physical receipt of goods．
+ It allows for the reporting of discrepancies in products, quantities, terms, packages, etc．
+ It should not be used to convey inventory positions- this will be handled in a separate xCBL document．
+ The GoodsReceipt is often sent when there is a discrepancy between the material being received and the information that was transmitted in the AdvanceShipmentNotice (ASN)．
+ The GoodsReceipt can also be used as a credit memo in a 'pay on ASN relationship．
+' In this scenario the GoodsReceipt is used as a reference for payment, as in an Evaluated Receipt Settlement (ERS)．
+*PlanningScheduleThe PlanningSchedule  is sent from a party who is planning the use or consumption of products (buyer) to a party who has to plan for the supply of the products (seller)．
+ The document consists of the notification of a forecast to be sent from the buyer to the seller．
+ The document outlines the requirements regarding the details for short term delivery and/or medium to long scheduling for products．
+ The scheduling can be used to authorize manufacturing and/or the provision of materials．
+ This is based on the terms and conditions defined in a purchasing agreement commonly outlined by a contract or order．
+ The Planning Schedule defined here will not be designed to support release capability．
+ This document will serve solely as a materials requirement schedule．
+ All schedule requirements relating to shipping and release authorization will be handled by the ShippingSchedule document．
+ A response to Planning Schedule can be made using the PlanningScheduleResponse document．
+ Use of this document is determined by trading partners．
+*PlanningScheduleResponseThe PlanningScheduleResponse is the response to a previously sent PlanningSchedule．
+ The intent of this document is for sellers to provide changes or corrections to the original documents．
+ A seller can reply back with changes to a schedule due to factors such as backorder, insufficient parts, cannot meet demand, incorrect information, etc．
+*ShippingScheduleThe ShippingSchedule  consists of notifications of short-term shipping requirements from a buyer to a supplier in reference to an existing planning schedule or purchasing agreement．
+ The shipping schedule is not intended to be used for authorizing labor, materials, or other resources．
+ The buyer will initially outline product requirements to the supplier in the form of a planning schedule or purchasing agreement．
+ The Shipping Schedule will then be issued in reference to a planning schedule or purchasing agreement and provide specific details relating to the required products, quantities, delivery points and requested delivery dates．
+ The Shipping Schedule document supersedes certain shipping and delivery information transmitted in a previous planning schedule, but does not replace it．
+ Shipping schedules are usually stated in daily, weekly or monthly buckets (depending upon the industry) and are used to refine planning schedules in support of a just-in-time planning environment．
+ This provides a mechanism to issue precise shipping schedule requirements on a more frequent basis than with the issuance of a planning schedule．
+ The Shipping Schedule also provides the ability for a customer location to issue shipping requirements independent of other customer locations when planning schedules are issued by a consolidated scheduling organization．
+*ShippingScheduleResponseThe ShippingScheduleResponse is a response to a previously sent ShippingSchedule．
+ The intent of these documents is for sellers to provide changes or corrections to the original documents．
+ A seller can reply back with changes to a schedule due to factors such as backorder, insufficient parts, cannot meet demand, incorrect information, etc．
+ The choice between ListOfLocationGroupedShippingResponse and ListOfMaterialGroupedShippingResponse allows you to determine how the detail section will be structured．
+ ListOfLocationGroupedShippingResponse groups the shipping schedule line items according to location and ListOfMaterialGroupedShippingResponse allows you to group the planning schedule line items according to product．
+*OrderThe Order comprises the creation of a purchase order that is sent for acceptance or rejection by a seller．
+ A requisitioner, buyer, or buying organization can initiate an Order in response to a variety of factors in the electronic business arena, contracts, auctions, order requests, etc．
+ A requisitioner, or buyer, can initiate a change to an already existing order．
+ A seller uses the OrderResponse document to accept or reject an Order or a changed order．
+*OrderConfirmationThe OrderConfirmation  describes the confirmation of the purchase of goods or services．
+ A supplier system sends the confirmation to an e-procurement system as a confirmation for already provided services or delivered goods．
+ The confirmation usually refers to a purchase order．
+*OrderConfirmationResponseThe OrderConfirmationResponse is used to respond to an OrderConfirmation．
+ This document details whether the OrderConfirmation was accepted or rejected．
+*OrderRequestThe OrderRequest comprises ordering information that is a result of a buyer's inquiry to purchase．
+ A supplier initiates an OrderRequest to a requisitioner that is a result of a buyer's inquiry into a purchase of the supplier's goods．
+ The requisitioner's approval of this OrderRequest results in the creation of a purchase order．
+ There is not a response to the OrderRequest．
+ Any changes to the OrderRequest will be represented in the Order．
+*OrderResponseThe OrderResponse is used to respond at the application level to an order or change order that has been received．
+*ChangeOrderThe ChangeOrder allows a requisitioner or buyer to initiate a change to an already existing order．
+ A seller uses the OrderResponse document to accept or reject an order or a changed order．
+*OrderStatusRequestThe OrderStatusRequest is the root element for requesting the status of an Order．
+ OrderStatusRequest is sent from a buyer to a supplier．
+ The request is only used to request the status of goods．
+*OrderStatusResultThe OrderStatusResult is the root element that holds the OrderStatusResult response to an OrderStatusRequest．
+ This element occurs once within the document．
+*RequestForQuotationThe RequestForQuotation  consists of the request for a quotation to be sent from the buyer to the supplier．
+ The document outlines the requirements regarding the details for a request for quotation sent directly between the two parties．
+ The request can be used to request goods or services．
+ The requests are based on the terms and conditions defined either in a previous purchasing agreement or in the request itself．
+ The request can be used to determine the availability of goods from existing suppliers where price will not be a deciding factor．
+ The RequestForQuotation defined here allows for delivery information to be built into the request．
+ All schedule requirements relating to shipping and release authorization will be handled by the ShippingSchedule document．
+ The response to the request (a quote) can be used as the basis for a purchase order by the buyer if appropriate．
+*QuoteThe Quote contains information in response to a RequestForQuotation．
+ This will contain details on the availability of the goods and prices if applicable．
+*SourcingCreateThe SourcingCreate  is used when the user wants to create a new sourcing event．
+ It contains all the header, detail and summary level information．
+ This information is sent from the sourcing event initiator to the portal where the sourcing event is created．
+*SourcingCreateResponseThe SourcingCreateResponse is used to respond to a call to create a new sourcing event based on the SourcingCreate．
+ The SourcingCreateResponse is sent by the portal to the initiator of the sourcing event to inform whether the sourcing event was successfully created．
+*SourcingResultThe SourcingResult is used by the portal to send the results of the winners of the sourcing event to the initiator．
+*SourcingResultResponseThe SourcingResultResponse is used to inform the portal if the SourcingResult message was successfully received．
+ The sourcing event initiator can send the SourcingResultResponse to communicate status of the SourcingResult receipt．
+*TimeSeriesRequestThe TimeSeriesRequest contains the TimeSeriesRequestHeader, Detail and Summary information relating to the request of a time series document．
+ TimeSeries is a forecasting document that can be used to process data based on variable characteristics．
+ Data is collected over a period of time, and time slices can be presented as a historical account or a planned forecast．
+*TimeSeriesThe TimeSeries is a forecasting document that can be used to process data based on variable characteristics．
+ Data is collected over a period of time, and time slices can be presented as a historical account or a planned forecast．
+*TimeSeriesResponseThe TimeSeriesResponse contains all time series response header, detail and summary information relating to the response to a time series document．
+ TimeSeries is a forecasting document that can be used to process data based on variable characteristics．
+ Data is collected over a period of time, and time slices can be presented as a historical account or a planned forecast．
+*PriceCheckRequestThe PriceCheckRequest  consists of the request for a price to be sent from a buyer to a supplier．
+ The request is only used to request the price of the goods．
+*PriceCheckResultThe PriceCheckResult consists of the response from a supplier to a PriceCheckRequest sent by a buyer．
+ The PriceCheckResult contains specific price information for items in the PriceCheckRequest．
+*AvailabilityCheckRequestThe AvailabilityCheckRequest  contains a request to check the availability of a specified list of items．
+ All items in the list are offered by a single supplier to a single buyer account．
+*AvailabilityCheckResultThe AvailabilityCheckResult contains the resulting response to an AvailabilityCheckRequest for specific supplier items．
+*TradingPartnerOrganizationInformationThe TradingPartnerOrganizationInformation holds all information necessary to create and change a trading partner organization．
+*TradingPartnerUserInformationThe TradingPartnerUserInformation is used to create or update trading partner user information in a trading partner directory within a marketplace．
+*TradingPartnerOrganizationDeleteThe TradingPartnerOrganizationDelete holds information for deleting trading partner organizations．
+*TradingPartnerUserDeleteThe TradingPartnerUserDelete provides the information necessary for deleting trading partner users from a trading partner directory．
+*TradingPartnerResponseThe TradingPartnerResponse is the response to creating or changing trading partner organizations or users．
