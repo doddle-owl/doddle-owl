@@ -1,7 +1,8 @@
-#Fri Mar 03 12:05:21 JST 2006
+#Thu Aug 24 11:16:24 JST 2006
 eclipse.preferences.version=1
 encoding/<project>=UTF-16
 encoding/DODDLE.bat=MS932
 encoding/DODDLE.mf=MS932
 encoding/config.txt=MS932
-encoding/upperConceptList.txt=MS932
+encoding/stop_word_list.txt=US-ASCII
+encoding/upper_concept_list.txt=MS932
