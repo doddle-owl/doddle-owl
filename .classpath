@@ -16,7 +16,6 @@
 	<classpathentry kind="lib" path="build/lib/junit.jar"/>
 	<classpathentry kind="lib" path="build/lib/jwnl.jar"/>
 	<classpathentry kind="lib" path="build/lib/log4j-1.2.12.jar"/>
-	<classpathentry kind="lib" path="build/lib/metouia.jar"/>
 	<classpathentry kind="lib" path="build/lib/mr3.jar"/>
 	<classpathentry kind="lib" path="build/lib/PDFBox-0.7.2.jar"/>
 	<classpathentry kind="lib" path="build/lib/sen.jar"/>
@@ -25,5 +24,6 @@
 	<classpathentry kind="lib" path="build/lib/wstx-asl-2.8.jar"/>
 	<classpathentry kind="lib" path="build/lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="build/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="build/lib/metouia.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
