@@ -10,5 +10,5 @@ BASE_PREFIX=keio
 PROJECT_DIR=C:/DODDLE/project/
 UPPER_CONCEPT_LIST=./upper_concept_list.txt
 WORDNET_PATH=C:/program files/wordnet/2.0/dict
-USING_DB=true
+USING_DB=false
 LANG=ja
