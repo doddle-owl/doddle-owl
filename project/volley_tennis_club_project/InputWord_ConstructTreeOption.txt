@@ -1,0 +1,11 @@
+collected letter	wn:6215070	SUB
+annual fee	wn:12563429	SUB
+not member	wn:9641340	SUB
+volley tennis club	wn:7732203	SUB
+member register	wn:12653348	SUB
+postal address	wn:7974756	SUB
+membership fee	wn:12563429	SUB
+letter of refuse	wn:14011534	SUB
+postal mail	wn:3571176	SUB
+bank transfer	wn:10024837	SUB
+letter book	wn:12645294	SUB
