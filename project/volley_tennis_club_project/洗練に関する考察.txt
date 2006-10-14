@@ -1,0 +1,64 @@
+洗練前: 38
+
+
+== 追加概念数: 3
+letter boxクラスのサブクラスとして追加
+* mailbox for club
+* mailbox for applicant
+
+individualクラスの下位クラス，secretary, administratorクラスの上位クラス
+* staff of club
+
+== 削除概念数: 9
+* communicationクラス ... 上位ルート，下位piece of writing, record, membership_card(SIN)
+* addressクラス ... 上位entity, 下位post address
+* refuseクラス ... 上位entity, 下位letter of refuse
+* mailクラス　... 上位instrumentation，下位postal mail
+* transferクラス ... 上位individualクラス，下位bank transferクラス
+* bookクラス	 ... letter bookクラスの上位，recordクラスの下位
+* registerクラス ... member registerクラスの上位，recordクラスの下位
+* piece of writingクラス ... invoiceクラスの上位，communicationクラスの下位
+
+
+== 削除された上位・下位関係: 
+* individualの上位概念がentityであったのがなくなった
+* letterの上位概念がpiece of writingであったのがなくなった
+
+== 移動概念数: 
+=== 完全照合の移動概念
+* fee => ルートクラスの下位からinformationクラスの下位へ
+* secretaryクラス => individualクラスの下位クラスから，staff of clubクラスの下位クラスへ
+* administratorクラス => individualクラスの下位クラスから，staff of clubクラスの下位クラスへ
+* recordクラス => communicationクラスの下位クラスからentityクラスの下位クラスへ
+* invoiceクラス ... piece of writingクラスの下位クラス  => artefactの下位クラスへ
+	
+
+=== 部分照合の移動概念
+* postal address => addressクラスの下位クラスからinformationクラスの下位クラスへ
+* letter of refuse => refuseクラスの下位クラスからarteffactクラスの下位クラスへ
+* postal mail => mailクラスの下位クラスからinstrumentationクラスの下位クラスへ
+* letter box(mail box) => instrumentationクラスの下位クラスからrecordクラスの下位クラスへ
+* bank transfer => transferクラスの下位クラスから，instrumentationクラスの下位クラスへ
+* not member => memberクラスの下位クラスから，individualクラスの下位クラスへ
+* membership cardクラス => communicationクラスの下位クラスからartifactクラスの下位クラスへ
+* collected letterクラス => letterクラスの下位クラスからrecordクラスの下位クラスへ
+* letter bookクラス => bookクラスの下位クラスからrecordクラスの下位クラスへ
+* member registerクラス => registerクラスの下位クラスからrecordクラスの下位クラスへ
+
+== 変化していないクラス
+* tennis club
+* volley tennis club
+* information
+* annual fee
+* membership fee
+* telephone call
+* instrumentation
+* member
+* applier(applicant)
+* individual
+* letterクラス
+* entity
+* physical object
+* artifact
+
+洗練後: 32
