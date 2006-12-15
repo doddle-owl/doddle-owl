@@ -24,6 +24,6 @@
 	<classpathentry path="build/lib/wstx-asl-2.8.jar" kind="lib"/>
 	<classpathentry path="build/lib/xercesImpl.jar" kind="lib"/>
 	<classpathentry path="build/lib/xml-apis.jar" kind="lib"/>
-	<classpathentry path="build/lib/metouia.jar" kind="lib"/>
+	<classpathentry path="build/lib/looks-2.1.1.jar" kind="lib"/>
 	<classpathentry path="build/classes" kind="output"/>
 </classpath>
