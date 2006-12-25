@@ -9,7 +9,6 @@
 	<classpathentry path="build/lib/icu4j_3_4.jar" kind="lib"/>
 	<classpathentry path="build/lib/iri.jar" kind="lib"/>
 	<classpathentry path="build/lib/java-getopt-1.0.11.jar" kind="lib"/>
-	<classpathentry path="build/lib/je.jar" kind="lib"/>
 	<classpathentry path="build/lib/jena.jar" kind="lib"/>
 	<classpathentry path="build/lib/jenatest.jar" kind="lib"/>
 	<classpathentry path="build/lib/json.jar" kind="lib"/>
@@ -18,12 +17,13 @@
 	<classpathentry path="build/lib/log4j-1.2.12.jar" kind="lib"/>
 	<classpathentry path="build/lib/mr3.jar" kind="lib"/>
 	<classpathentry path="build/lib/PDFBox-0.7.2.jar" kind="lib"/>
-	<classpathentry path="build/lib/sen.jar" kind="lib"/>
 	<classpathentry path="build/lib/stax-api-1.0.jar" kind="lib"/>
 	<classpathentry path="build/lib/utilities.jar" kind="lib"/>
 	<classpathentry path="build/lib/wstx-asl-2.8.jar" kind="lib"/>
 	<classpathentry path="build/lib/xercesImpl.jar" kind="lib"/>
 	<classpathentry path="build/lib/xml-apis.jar" kind="lib"/>
 	<classpathentry path="build/lib/looks-2.1.1.jar" kind="lib"/>
+	<classpathentry path="build/lib/sen.jar" kind="lib"/>
+	<classpathentry path="build/lib/je-3.2.13.jar" kind="lib"/>
 	<classpathentry path="build/classes" kind="output"/>
 </classpath>

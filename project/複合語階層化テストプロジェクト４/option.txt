@@ -1,5 +1,0 @@
-true,true,true
-SUB
-NOUN
-Keep Internal Complex Word Concept Node
-Add Abstract Internal Complex Word Concept

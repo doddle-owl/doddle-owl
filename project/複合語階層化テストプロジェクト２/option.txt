@@ -1,4 +1,0 @@
-true,true,true
-SUB
-NOUN
-Trim Internal Complex Word Concept Node
