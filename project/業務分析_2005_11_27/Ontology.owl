@@ -3,7 +3,7 @@
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:owl="http://www.w3.org/2002/07/owl#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-  xml:base="http://www.yamaguti.comp.ae.keio.ac.jp/doddle-j#">
+  xml:base="http://www.yamaguti.comp.ae.keio.ac.jp/doddle#">
   <owl:Class rdf:about="http://www2.nict.go.jp/kk/e416/EDR#ID1e9396">
     <rdfs:comment xml:lang="ja">文書	</rdfs:comment>
     <rdfs:subClassOf>
