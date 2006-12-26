@@ -23,7 +23,7 @@
 	<classpathentry path="build/lib/xercesImpl.jar" kind="lib"/>
 	<classpathentry path="build/lib/xml-apis.jar" kind="lib"/>
 	<classpathentry path="build/lib/looks-2.1.1.jar" kind="lib"/>
-	<classpathentry path="build/lib/sen.jar" kind="lib"/>
 	<classpathentry path="build/lib/je-3.2.13.jar" kind="lib"/>
+	<classpathentry path="build/lib/sen.jar" kind="lib"/>
 	<classpathentry path="build/classes" kind="output"/>
 </classpath>
