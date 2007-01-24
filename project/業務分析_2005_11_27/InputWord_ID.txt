@@ -66,7 +66,7 @@ EDI,http://www2.nict.go.jp/kk/e416/EDR#ID702e7e
 納品書発行,http://www2.nict.go.jp/kk/e416/EDR#ID3cf770
 シフト,http://www2.nict.go.jp/kk/e416/EDR#ID0f4e10
 向上,http://www2.nict.go.jp/kk/e416/EDR#ID3ce7fa
-VAN,wn:7717897
+VAN,http://wordnet.princeton.edu/wn/2.0#7717897
 BTO,http://www2.nict.go.jp/kk/e416/EDR#ID70008a
 単純平均法,http://www2.nict.go.jp/kk/e416/EDR#ID3bbe28
 損益計算,http://www2.nict.go.jp/kk/e416/EDR#ID3cf83a
@@ -76,7 +76,7 @@ BTO,http://www2.nict.go.jp/kk/e416/EDR#ID70008a
 部,http://www2.nict.go.jp/kk/e416/EDR#ID0e84ad
 小売店,http://www2.nict.go.jp/kk/e416/EDR#ID0f5f75
 トラック配送振り分け,http://www2.nict.go.jp/kk/e416/EDR#ID107528
-MS,wn:6009276
+MS,http://wordnet.princeton.edu/wn/2.0#6009276
 VAN会社,http://www2.nict.go.jp/kk/e416/EDR#ID30f74c
 在庫費用率,http://www2.nict.go.jp/kk/e416/EDR#ID10ddf7
 総務部門,http://www2.nict.go.jp/kk/e416/EDR#ID107797
@@ -138,7 +138,7 @@ CTO,http://www2.nict.go.jp/kk/e416/EDR#ID700a12
 受付,http://www2.nict.go.jp/kk/e416/EDR#ID3c17fa
 財,http://www2.nict.go.jp/kk/e416/EDR#ID0fbdc4
 調達方式,http://www2.nict.go.jp/kk/e416/EDR#ID1e8626
-WMS,wn:6009276
+WMS,http://wordnet.princeton.edu/wn/2.0#6009276
 覚書,http://www2.nict.go.jp/kk/e416/EDR#ID3c0872
 適正在庫,http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30
 納期管理,http://www2.nict.go.jp/kk/e416/EDR#ID3cf216
@@ -146,7 +146,7 @@ WMS,wn:6009276
 定量発注,http://www2.nict.go.jp/kk/e416/EDR#ID103dfd
 要求納期,http://www2.nict.go.jp/kk/e416/EDR#ID102e7f
 メーカ,http://www2.nict.go.jp/kk/e416/EDR#ID10b05c
-SKU,wn:13814578
+SKU,http://wordnet.princeton.edu/wn/2.0#13814578
 指定伝票,http://www2.nict.go.jp/kk/e416/EDR#ID0ffd77
 ドッキング,http://www2.nict.go.jp/kk/e416/EDR#ID3befd5
 加工,http://www2.nict.go.jp/kk/e416/EDR#ID3c1589
@@ -155,7 +155,7 @@ SKU,wn:13814578
 ライン受注,http://www2.nict.go.jp/kk/e416/EDR#ID0f7b46
 棚,http://www2.nict.go.jp/kk/e416/EDR#ID0fc3dc
 生産,http://www2.nict.go.jp/kk/e416/EDRT#ID2de76a
-D,wn:12974977
+D,http://wordnet.princeton.edu/wn/2.0#12974977
 EOS,http://www2.nict.go.jp/kk/e416/EDR#ID1f92c7
 配送,http://www2.nict.go.jp/kk/e416/EDR#ID1035b8
 資材購買部,http://www2.nict.go.jp/kk/e416/EDR#ID0e84ad
@@ -212,7 +212,7 @@ CRM,http://www2.nict.go.jp/kk/e416/EDR#ID0aa678
 セット商品,http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd
 有効在庫,http://www2.nict.go.jp/kk/e416/EDR#ID0f8d30
 物流センター,http://www2.nict.go.jp/kk/e416/EDR#ID3cfc56
-KU,wn:13814578
+KU,http://wordnet.princeton.edu/wn/2.0#13814578
 発注管理,http://www2.nict.go.jp/kk/e416/EDR#ID3cf216
 流行品,http://www2.nict.go.jp/kk/e416/EDR#ID3cf163
 訪問,http://www2.nict.go.jp/kk/e416/EDR#ID0e14e1
@@ -239,7 +239,7 @@ KU,wn:13814578
 受注商品,http://www2.nict.go.jp/kk/e416/EDR#ID0e61fd
 窓口,http://www2.nict.go.jp/kk/e416/EDR#ID3c17fa
 予定,http://www2.nict.go.jp/kk/e416/EDR#ID0d5624
-KKD,wn:12974977
+KKD,http://wordnet.princeton.edu/wn/2.0#12974977
 決済,http://www2.nict.go.jp/kk/e416/EDR#ID0ef511
 基本契約書,http://www2.nict.go.jp/kk/e416/EDR#ID0ef348
 物流,http://www2.nict.go.jp/kk/e416/EDR#ID1f3e05
