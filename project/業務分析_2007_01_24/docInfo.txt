@@ -1,0 +1,1 @@
+inputDoc,InputDocument.txt,ja
