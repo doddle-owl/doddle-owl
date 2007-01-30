@@ -43,6 +43,7 @@
   </rdfs:Class>
   <rdfs:Class rdf:ID="Siamese">
     <rdfs:label xml:lang="en">Siamese</rdfs:label>
+    <rdfs:label xml:lang="ja">ƒVƒƒƒ€”L</rdfs:label>
     <rdfs:comment xml:lang="ja">ƒVƒƒƒ€”L</rdfs:comment>
     <rdfs:subClassOf rdf:resource="#cat"/>
     <rdfs:subClassOf>
