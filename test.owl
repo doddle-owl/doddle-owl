@@ -5,52 +5,81 @@
     xmlns:owl="http://www.w3.org/2002/07/owl#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
   xml:base="http://mmm.semanticweb.org/mr3#">
-  <rdfs:Class rdf:ID="brothercat">
-    <rdfs:label xml:lang="en">brothercat</rdfs:label>
-    <rdfs:comment xml:lang="en">brother cat</rdfs:comment>
+  <rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  <rdfs:Class rdf:ID="specialNora">
+    <rdfs:label xml:lang="en">specialNora</rdfs:label>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="nora"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="testdog">
+    <rdfs:label>dog</rdfs:label>
     <rdfs:subClassOf>
       <rdfs:Class rdf:ID="testanimal"/>
     </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="creature">
+    <rdfs:label xml:lang="en">creature</rdfs:label>
+    <rdfs:comment xml:lang="ja">ê∂ï®
+</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="dog">
+    <rdfs:label>dog</rdfs:label>
+    <rdfs:label>å¢</rdfs:label>
     <rdfs:subClassOf>
       <rdfs:Class rdf:ID="animal"/>
     </rdfs:subClassOf>
   </rdfs:Class>
-  <rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  <rdfs:Class rdf:ID="Siamese">
+    <rdfs:label xml:lang="en">Siamese</rdfs:label>
+    <rdfs:label xml:lang="ja">ÉVÉÉÉÄîL</rdfs:label>
+    <rdfs:comment xml:lang="ja">ÉVÉÉÉÄîL</rdfs:comment>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="cat"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="brothercat"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="#nora">
+    <rdfs:label xml:lang="ja">ÇÃÇÁîL</rdfs:label>
+    <rdfs:label xml:lang="en">nora</rdfs:label>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="#cat"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="#brothercat">
+    <rdfs:label xml:lang="en">brothercat</rdfs:label>
+    <rdfs:comment xml:lang="en">brother cat</rdfs:comment>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="#animal"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="#testanimal"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
   <rdfs:Class rdf:ID="testcat">
     <rdfs:label>cat</rdfs:label>
     <rdfs:subClassOf>
       <rdfs:Class rdf:about="#testanimal"/>
     </rdfs:subClassOf>
   </rdfs:Class>
-  <rdfs:Class rdf:ID="testdog">
-    <rdfs:label>dog</rdfs:label>
-    <rdfs:subClassOf>
-      <rdfs:Class rdf:about="#testanimal"/>
-    </rdfs:subClassOf>
-  </rdfs:Class>
-  <rdfs:Class rdf:ID="cat">
+  <rdfs:Class rdf:about="#cat">
     <rdfs:label>cat</rdfs:label>
     <rdfs:label>îL</rdfs:label>
     <rdfs:subClassOf>
-      <rdfs:Class rdf:about="#testanimal"/>
+      <rdfs:Class rdf:about="#animal"/>
     </rdfs:subClassOf>
     <rdfs:subClassOf>
-      <rdfs:Class rdf:about="#animal"/>
+      <rdfs:Class rdf:about="#testanimal"/>
     </rdfs:subClassOf>
   </rdfs:Class>
   <rdfs:Class rdf:ID="mammal">
     <rdfs:label xml:lang="en">mammal</rdfs:label>
     <rdfs:comment xml:lang="ja">öMì˚óﬁ
 </rdfs:comment>
-    <rdfs:subClassOf>
-      <rdfs:Class rdf:ID="creature"/>
-    </rdfs:subClassOf>
-  </rdfs:Class>
-  <rdfs:Class rdf:about="#creature">
-    <rdfs:label xml:lang="en">creature</rdfs:label>
-    <rdfs:comment xml:lang="ja">ê∂ï®
-</rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:subClassOf rdf:resource="#creature"/>
   </rdfs:Class>
   <rdfs:Class rdf:about="#testanimal">
     <rdfs:label>animal</rdfs:label>
@@ -66,17 +95,9 @@
     <rdfs:comment xml:lang="en">animal class</rdfs:comment>
     <rdfs:subClassOf rdf:resource="#mammal"/>
   </rdfs:Class>
-  <rdfs:Class rdf:ID="dog">
-    <rdfs:label>dog</rdfs:label>
-    <rdfs:label>å¢</rdfs:label>
-    <rdfs:subClassOf rdf:resource="#animal"/>
-  </rdfs:Class>
-  <rdfs:Class rdf:ID="Siamese">
-    <rdfs:label xml:lang="en">Siamese</rdfs:label>
-    <rdfs:label xml:lang="ja">ÉVÉÉÉÄîL</rdfs:label>
-    <rdfs:comment xml:lang="ja">ÉVÉÉÉÄîL</rdfs:comment>
-    <rdfs:subClassOf rdf:resource="#cat"/>
-    <rdfs:subClassOf rdf:resource="#brothercat"/>
+  <rdfs:Class rdf:ID="specialSiamese">
+    <rdfs:label xml:lang="en">specialSiamse</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#Siamese"/>
   </rdfs:Class>
   <rdf:Property rdf:ID="nigeru">
     <rdfs:label xml:lang="ja">ì¶Ç∞ÇÈ</rdfs:label>
@@ -91,7 +112,6 @@
       <rdf:Property rdf:about="#ability"/>
     </rdfs:subPropertyOf>
     <rdfs:domain rdf:resource="#dog"/>
-    <rdfs:domain rdf:resource="#testdog"/>
     <rdfs:range rdf:resource="#creature"/>
   </rdf:Property>
   <rdf:Property rdf:about="#ability">
@@ -101,7 +121,6 @@
     <rdfs:label xml:lang="ja">Ç–Ç¡Ç©Ç≠</rdfs:label>
     <rdfs:subPropertyOf rdf:resource="#ability"/>
     <rdfs:domain rdf:resource="#cat"/>
-    <rdfs:domain rdf:resource="#testcat"/>
     <rdfs:range rdf:resource="#creature"/>
     <rdfs:range rdf:resource="#mammal"/>
   </rdf:Property>
