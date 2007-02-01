@@ -1,0 +1,5 @@
+#Ontology Info
+#Thu Feb 01 11:54:48 JST 2007
+EDR(general)=true
+EDR(technical)=false
+WordNet=false

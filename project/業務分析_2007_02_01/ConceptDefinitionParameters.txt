@@ -1,0 +1,9 @@
+#Concept Definition Parameters
+#Thu Feb 01 11:54:49 JST 2007
+Minimum_Confidence=50
+Front_Scope=60
+Gram_Count=7
+N-Gram=4
+Minimum_Support=0
+WordSpace_Value=50
+Behind_Scope=10

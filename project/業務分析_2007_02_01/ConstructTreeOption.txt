@@ -1,0 +1,7 @@
+#Construct Tree Option
+#Thu Feb 01 11:54:48 JST 2007
+ConstructTree.isTreeConstruction=true
+ConstructTree.isConstructionWithComplexWordTree=true
+ConstructTree.isTrimmingInternalNode=true
+ConstructTree.isAddAbstractConceptWithComplexWordTree=false
+ConstructTree.isTrimmingInternalNodeWithComplexWordTree=true
