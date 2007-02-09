@@ -6,6 +6,7 @@
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
   xml:base="http://mmm.semanticweb.org/mr3#">
   <rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+  <rdfs:Class rdf:ID="specialNora2"/>
   <rdfs:Class rdf:ID="specialNora">
     <rdfs:label xml:lang="en">specialNora</rdfs:label>
     <rdfs:subClassOf>
