@@ -1,10 +1,11 @@
-#Wed Feb 07 21:18:49 JST 2007
+#Mon Feb 12 19:54:13 JST 2007
 eclipse.preferences.version=1
 encoding//src/jp/ac/keio/ae/comp/yamaguti/doddle/data/PrefixNSInfo.java=UTF-16
 encoding/<project>=UTF-16
 encoding/DODDLE.bat=MS932
 encoding/DODDLE.mf=MS932
 encoding/config.txt=MS932
+encoding/doddle.jnlp=UTF-8
 encoding/stop_word_list.txt=US-ASCII
 encoding/test.owl=SJIS
 encoding/upper_concept_list.txt=MS932
