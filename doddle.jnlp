@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for DODDLE -->
+<jnlp spec="1.0+" codebase="http://avalon.comp.ae.keio.ac.jp/doddle-htdocs/" href="doddle.jnlp">
+   <information>
+     <title>DODDLE</title>
+     <vendor>Yamaguchi Lab</vendor>
+     <homepage href="http://avalon.comp.ae.keio.ac.jp/doddle"/>
+     <description>Domain Ontology rapiD Development Environment</description>
+     <description kind="short">DODDLE</description>
+	 <icon href="img/doddle_logo.jpg"/> 
+     <offline-allowed/>
+   </information>
+   <security>
+       <all-permissions/>
+   </security>
+   <resources>
+     <j2se version="1.6+"/>	
+   	<jar href="./download/lib/DODDLE.jar"/>
+	<jar href="./download/lib/antlr-2.7.5.jar"/>
+	<jar href="./download/lib/arq.jar"/>
+	<jar href="./download/lib/concurrent.jar"/>
+	<jar href="./download/lib/icu4j_3_4.jar"/>
+	<jar href="./download/lib/iri.jar"/>
+	<jar href="./download/lib/java-getopt-1.0.11.jar"/>
+  	<jar href="./download/lib/jena.jar"/>	
+  	<jar href="./download/lib/jenatest.jar"/>		
+  	<jar href="./download/lib/json.jar"/>		
+	<jar href="./download/lib/junit.jar"/>	
+	<jar href="./download/lib/jwnl.jar"/>	
+	<jar href="./download/lib/log4j-1.2.12.jar"/>
+	<jar href="./download/lib/mr3.jar"/>
+	<jar href="./download/lib/PDFBox-0.7.2.jar"/>
+	<jar href="./download/lib/stax-api-1.0.jar"/>
+	<jar href="./download/lib/utilities.jar"/>
+	<jar href="./download/lib/xercesImpl.jar"/>
+	<jar href="./download/lib/xml-apis.jar"/>	
+	<jar href="./download/lib/looks-2.1.1.jar"/>	
+	<jar href="./download/lib/je-3.2.13.jar"/>	
+	<jar href="./download/lib/sen.jar"/>	
+	<jar href="./download/lib/commons-logging-1.1.jar"/>
+	<jar href="./download/lib/arq-extra.jar"/>
+	<jar href="./download/lib/lucene-core-2.0.0.jar"/>
+	<jar href="./download/lib/wstx-asl-3.0.0.jar"/>
+   </resources>   
+   <application-desc main-class="jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE"/>
+</jnlp>
