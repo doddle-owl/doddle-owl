@@ -14,7 +14,7 @@
        <all-permissions/>
    </security>
    <resources>
-     <j2se version="1.6+"/>	
+     <j2se version="1.6+" java-vm-args="-Xmx756m -Xms512m"/>	
    	<jar href="./download/lib/DODDLE.jar"/>
 	<jar href="./download/lib/antlr-2.7.5.jar"/>
 	<jar href="./download/lib/arq.jar"/>
