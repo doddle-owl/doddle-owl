@@ -25,7 +25,12 @@
 		<zip destfile="./src.zip" basedir="./src" />
 		<copy todir="${resource.dir}">
 			<fileset dir="${src.dir}/resources">
-				<include name="**" />
+				<include name="*.png" />
+				<include name="*.xml" />
+				<include name="*.gif" />
+				<include name="*.properties" />
+				<include name="ontology_templates/*.rq" />
+				<exclude name=".svn" />
 			</fileset>
 		</copy>
 	</target>
