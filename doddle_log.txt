@@ -1,0 +1,646 @@
+[ERROR][RDFDefaultErrorHandler][2007-2-14 11:08:50]: http://www.yamaguti.comp.ae.keio.ac.jp/doddle#(line 1028878 column 44): XML document structures must start and end within the same entity.
+[ INFO][Dictionary][2007-2-14 14:28:31]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 14:28:32]: time to load posInfo file = 109[ms]
+[ INFO][Dictionary][2007-2-14 14:28:32]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 14:28:32]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 14:28:32]: loaded time = 0.203[ms]
+[ INFO][Dictionary][2007-2-14 14:28:32]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 14:28:32]: time to load pos info file = 16[ms]
+[ INFO][Tokenizer][2007-2-14 14:28:32]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 14:28:32]: time to load connect cost file = 250[ms]
+[ INFO][DODDLE][2007-2-14 14:28:46]: 完全照合 単語数: 3
+[ INFO][DODDLE][2007-2-14 14:28:46]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 14:28:46]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 14:28:46]: 入力語彙数: 3
+[ INFO][DODDLE][2007-2-14 14:28:46]: 入力概念数: 3
+[ INFO][DODDLE][2007-2-14 14:28:46]: 入力名詞的概念数: 3
+[ INFO][DODDLE][2007-2-14 14:28:46]: クラス階層構築における追加SIN数: 18
+[ INFO][DODDLE][2007-2-14 14:28:46]: 剪定前クラス数: 21
+[ INFO][DODDLE][2007-2-14 14:28:46]: 剪定クラス数: 11
+[ INFO][DODDLE][2007-2-14 14:28:46]: 剪定後クラス数: 10
+[ INFO][DODDLE][2007-2-14 14:28:46]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 14:28:46]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 14:28:46]: 剪定プロパティ数: 0
+[ INFO][DODDLE][2007-2-14 14:29:18]: init EDRT Concept Classification Dictionary on Memory
+[ INFO][DODDLE][2007-2-14 14:29:55]: init EDR Concept Classification Dictionary on Memory
+[ INFO][DODDLE][2007-2-14 14:29:56]: init EDR Concept Description Dictionary on Memory
+[ INFO][Dictionary][2007-2-14 14:33:05]: Installing dictionary net.didion.jwnl.dictionary.FileBackedDictionary@be8c3e
+[ INFO][Dictionary][2007-2-14 14:33:05]: Installing dictionary net.didion.jwnl.dictionary.FileBackedDictionary@1e965e9
+[ INFO][DODDLE][2007-2-14 14:58:35]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 14:59:38]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:10:45]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:11:02]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:11:56]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:13:22]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:15:53]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:19:04]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:22:07]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:31:17]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:32:44]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:35:39]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:36:20]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:42:50]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:43:06]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 15:43:06]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 15:43:06]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 15:43:06]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 15:43:06]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 15:43:06]: loaded time = 0.141[ms]
+[ INFO][Dictionary][2007-2-14 15:43:06]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 15:43:06]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 15:43:06]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 15:43:06]: time to load connect cost file = 156[ms]
+[ INFO][DODDLE][2007-2-14 15:43:23]: 完全照合 単語数: 3
+[ INFO][DODDLE][2007-2-14 15:43:23]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 15:43:23]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 15:43:23]: 入力語彙数: 3
+[ INFO][DODDLE][2007-2-14 15:43:23]: 入力概念数: 3
+[ INFO][DODDLE][2007-2-14 15:43:23]: 入力名詞的概念数: 3
+[ INFO][DODDLE][2007-2-14 15:43:23]: クラス階層構築における追加SIN数: 18
+[ INFO][DODDLE][2007-2-14 15:43:23]: 剪定前クラス数: 21
+[ INFO][DODDLE][2007-2-14 15:43:23]: 剪定クラス数: 11
+[ INFO][DODDLE][2007-2-14 15:43:23]: 剪定後クラス数: 10
+[ INFO][DODDLE][2007-2-14 15:43:23]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 15:43:23]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 15:43:23]: 剪定プロパティ数: 0
+[ INFO][DODDLE][2007-2-14 15:43:50]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 15:43:50]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 15:46:53]: init EDR Concept Classification Dictionary on DB
+[ INFO][DODDLE][2007-2-14 15:47:58]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 15:48:05]: init EDR Concept Classification Dictionary on DB
+[ INFO][DODDLE][2007-2-14 15:50:08]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 15:50:39]: init EDR Concept Classification Dictionary on DB
+[ INFO][DODDLE][2007-2-14 15:50:51]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 15:50:58]: init EDR Concept Classification Dictionary on DB
+[ INFO][DODDLE][2007-2-14 15:51:10]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 15:51:39]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 15:51:47]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 15:51:47]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 15:51:47]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 15:51:47]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 15:51:47]: loaded time = 0.141[ms]
+[ INFO][Dictionary][2007-2-14 15:51:47]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 15:51:47]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 15:51:47]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 15:51:47]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 15:52:13]: 完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 15:52:13]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 15:52:13]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 15:52:13]: 入力語彙数: 4
+[ INFO][DODDLE][2007-2-14 15:52:13]: 入力概念数: 4
+[ INFO][DODDLE][2007-2-14 15:52:13]: 入力名詞的概念数: 4
+[ INFO][DODDLE][2007-2-14 15:52:13]: クラス階層構築における追加SIN数: 23
+[ INFO][DODDLE][2007-2-14 15:52:13]: 剪定前クラス数: 27
+[ INFO][DODDLE][2007-2-14 15:52:13]: 剪定クラス数: 17
+[ INFO][DODDLE][2007-2-14 15:52:13]: 剪定後クラス数: 10
+[ INFO][DODDLE][2007-2-14 15:52:13]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 15:52:13]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 15:52:13]: 剪定プロパティ数: 0
+[ INFO][DODDLE][2007-2-14 15:55:56]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 15:56:08]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 15:56:17]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 15:56:17]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 15:56:17]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 15:56:17]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 15:56:18]: loaded time = 0.204[ms]
+[ INFO][Dictionary][2007-2-14 15:56:18]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 15:56:18]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 15:56:18]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 15:56:18]: time to load connect cost file = 235[ms]
+[ INFO][DODDLE][2007-2-14 15:56:50]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 15:56:50]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 15:56:50]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 15:56:50]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 15:56:50]: 入力概念数: 149
+[ INFO][DODDLE][2007-2-14 15:56:50]: 入力名詞的概念数: 149
+[ INFO][DODDLE][2007-2-14 15:56:51]: クラス階層構築における追加SIN数: 297
+[ INFO][DODDLE][2007-2-14 15:56:51]: 剪定前クラス数: 446
+[ INFO][DODDLE][2007-2-14 15:56:51]: 剪定クラス数: 198
+[ INFO][DODDLE][2007-2-14 15:56:51]: 剪定後クラス数: 248
+[ INFO][DODDLE][2007-2-14 15:56:51]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 15:56:51]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 15:56:51]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 15:56:51]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 15:56:51]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 15:56:51]: 剪定プロパティ数: 0
+[ INFO][DODDLE][2007-2-14 15:56:51]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 15:56:51]: 抽象中間プロパティの平均兄弟プロパティグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 15:57:13]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 15:57:13]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 15:57:13]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 15:57:13]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 15:57:13]: 入力概念数: 149
+[ INFO][DODDLE][2007-2-14 15:57:31]: 入力名詞的概念数: 84
+[ INFO][DODDLE][2007-2-14 15:57:31]: クラス階層構築における追加SIN数: 137
+[ INFO][DODDLE][2007-2-14 15:57:31]: 剪定前クラス数: 221
+[ INFO][DODDLE][2007-2-14 15:57:31]: 剪定クラス数: 86
+[ INFO][DODDLE][2007-2-14 15:57:31]: 剪定後クラス数: 135
+[ INFO][DODDLE][2007-2-14 15:57:31]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 15:57:31]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 15:57:31]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 15:57:31]: 入力動詞的概念数: 65
+[ INFO][DODDLE][2007-2-14 15:57:31]: プロパティ階層構築における追加SIN数: 175
+[ INFO][DODDLE][2007-2-14 15:57:31]: 剪定前プロパティ数: 240
+[ INFO][DODDLE][2007-2-14 15:57:31]: 剪定プロパティ数: 126
+[ INFO][DODDLE][2007-2-14 16:03:16]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:08:22]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:08:27]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:08:27]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:08:27]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:08:27]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:08:28]: loaded time = 0.14[ms]
+[ INFO][Dictionary][2007-2-14 16:08:28]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:08:28]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:08:28]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:08:28]: time to load connect cost file = 141[ms]
+[ INFO][DODDLE][2007-2-14 16:08:41]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:08:41]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:08:41]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:08:41]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:08:41]: 入力概念数: 146
+[ INFO][DODDLE][2007-2-14 16:09:01]: 入力名詞的概念数: 74
+[ INFO][DODDLE][2007-2-14 16:09:01]: クラス階層構築における追加SIN数: 137
+[ INFO][DODDLE][2007-2-14 16:09:01]: 剪定前クラス数: 211
+[ INFO][DODDLE][2007-2-14 16:09:01]: 剪定クラス数: 90
+[ INFO][DODDLE][2007-2-14 16:09:01]: 剪定後クラス数: 121
+[ INFO][DODDLE][2007-2-14 16:09:01]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:09:01]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:09:01]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:09:01]: 入力動詞的概念数: 72
+[ INFO][DODDLE][2007-2-14 16:09:01]: プロパティ階層構築における追加SIN数: 173
+[ INFO][DODDLE][2007-2-14 16:09:01]: 剪定前プロパティ数: 245
+[ INFO][DODDLE][2007-2-14 16:09:01]: 剪定プロパティ数: 122
+[ INFO][DODDLE][2007-2-14 16:09:25]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:09:31]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:09:36]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:09:36]: time to load posInfo file = 16[ms]
+[ INFO][Dictionary][2007-2-14 16:09:36]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:09:36]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:09:36]: loaded time = 0.141[ms]
+[ INFO][Dictionary][2007-2-14 16:09:36]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:09:36]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:09:36]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:09:36]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:09:39]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:09:39]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:09:39]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:09:39]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:09:39]: 入力概念数: 147
+[ INFO][DODDLE][2007-2-14 16:10:00]: 入力名詞的概念数: 79
+[ INFO][DODDLE][2007-2-14 16:10:00]: クラス階層構築における追加SIN数: 145
+[ INFO][DODDLE][2007-2-14 16:10:00]: 剪定前クラス数: 224
+[ INFO][DODDLE][2007-2-14 16:10:00]: 剪定クラス数: 97
+[ INFO][DODDLE][2007-2-14 16:10:00]: 剪定後クラス数: 127
+[ INFO][DODDLE][2007-2-14 16:10:00]: 入力動詞的概念数: 68
+[ INFO][DODDLE][2007-2-14 16:10:00]: プロパティ階層構築における追加SIN数: 193
+[ INFO][DODDLE][2007-2-14 16:10:00]: 剪定前プロパティ数: 261
+[ INFO][DODDLE][2007-2-14 16:10:00]: 剪定プロパティ数: 146
+[ INFO][DODDLE][2007-2-14 16:10:59]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:13:09]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:13:21]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:13:21]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:13:21]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:13:21]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:13:21]: loaded time = 0.14[ms]
+[ INFO][Dictionary][2007-2-14 16:13:21]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:13:21]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:13:21]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:13:22]: time to load connect cost file = 188[ms]
+[ INFO][DODDLE][2007-2-14 16:13:25]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:13:25]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:13:25]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:13:25]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:13:25]: 入力概念数: 148
+[ INFO][DODDLE][2007-2-14 16:13:45]: 入力名詞的概念数: 75
+[ INFO][DODDLE][2007-2-14 16:13:45]: クラス階層構築における追加SIN数: 135
+[ INFO][DODDLE][2007-2-14 16:13:45]: 剪定前クラス数: 210
+[ INFO][DODDLE][2007-2-14 16:13:45]: 剪定クラス数: 87
+[ INFO][DODDLE][2007-2-14 16:13:45]: 剪定後クラス数: 123
+[ INFO][DODDLE][2007-2-14 16:13:45]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:13:45]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:13:45]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:13:45]: 入力動詞的概念数: 73
+[ INFO][DODDLE][2007-2-14 16:13:45]: プロパティ階層構築における追加SIN数: 202
+[ INFO][DODDLE][2007-2-14 16:13:45]: 剪定前プロパティ数: 275
+[ INFO][DODDLE][2007-2-14 16:13:45]: 剪定プロパティ数: 145
+[ INFO][DODDLE][2007-2-14 16:17:05]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:17:05]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 16:17:12]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:17:17]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:17:17]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:17:17]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:17:17]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:17:17]: loaded time = 0.141[ms]
+[ INFO][Dictionary][2007-2-14 16:17:17]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:17:17]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:17:17]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:17:17]: time to load connect cost file = 109[ms]
+[ INFO][DODDLE][2007-2-14 16:17:20]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:17:20]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:17:20]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:17:20]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:17:20]: 入力概念数: 149
+[ INFO][DODDLE][2007-2-14 16:17:40]: 入力名詞的概念数: 81
+[ INFO][DODDLE][2007-2-14 16:17:40]: クラス階層構築における追加SIN数: 141
+[ INFO][DODDLE][2007-2-14 16:17:40]: 剪定前クラス数: 222
+[ INFO][DODDLE][2007-2-14 16:17:40]: 剪定クラス数: 92
+[ INFO][DODDLE][2007-2-14 16:17:40]: 剪定後クラス数: 130
+[ INFO][DODDLE][2007-2-14 16:17:40]: 入力動詞的概念数: 68
+[ INFO][DODDLE][2007-2-14 16:17:40]: プロパティ階層構築における追加SIN数: 183
+[ INFO][DODDLE][2007-2-14 16:17:40]: 剪定前プロパティ数: 251
+[ INFO][DODDLE][2007-2-14 16:17:40]: 剪定プロパティ数: 130
+[ INFO][DODDLE][2007-2-14 16:18:08]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:18:52]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:19:00]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:19:00]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:19:00]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:19:00]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:19:00]: loaded time = 0.171[ms]
+[ INFO][Dictionary][2007-2-14 16:19:00]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:19:00]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:19:00]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:19:00]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:19:02]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:19:02]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:19:02]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:19:02]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:19:02]: 入力概念数: 147
+[ INFO][DODDLE][2007-2-14 16:19:22]: 入力名詞的概念数: 80
+[ INFO][DODDLE][2007-2-14 16:19:23]: クラス階層構築における追加SIN数: 146
+[ INFO][DODDLE][2007-2-14 16:19:23]: 剪定前クラス数: 226
+[ INFO][DODDLE][2007-2-14 16:19:23]: 剪定クラス数: 93
+[ INFO][DODDLE][2007-2-14 16:19:23]: 剪定後クラス数: 133
+[ INFO][DODDLE][2007-2-14 16:19:23]: 入力動詞的概念数: 67
+[ INFO][DODDLE][2007-2-14 16:19:23]: プロパティ階層構築における追加SIN数: 172
+[ INFO][DODDLE][2007-2-14 16:19:23]: 剪定前プロパティ数: 239
+[ INFO][DODDLE][2007-2-14 16:19:23]: 剪定プロパティ数: 126
+[ INFO][DODDLE][2007-2-14 16:21:10]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:21:28]: init EDR Concept Classification Dictionary on Memory
+[ INFO][DODDLE][2007-2-14 16:21:29]: init EDR Concept Description Dictionary on Memory
+[ INFO][Dictionary][2007-2-14 16:21:40]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:21:40]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:21:40]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:21:40]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:21:41]: loaded time = 0.141[ms]
+[ INFO][Dictionary][2007-2-14 16:21:41]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:21:41]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:21:41]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:21:41]: time to load connect cost file = 109[ms]
+[ INFO][DODDLE][2007-2-14 16:21:43]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:21:43]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:21:43]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:21:43]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:21:43]: 入力概念数: 147
+[ INFO][DODDLE][2007-2-14 16:21:53]: 入力名詞的概念数: 76
+[ INFO][DODDLE][2007-2-14 16:21:53]: クラス階層構築における追加SIN数: 131
+[ INFO][DODDLE][2007-2-14 16:21:53]: 剪定前クラス数: 207
+[ INFO][DODDLE][2007-2-14 16:21:53]: 剪定クラス数: 82
+[ INFO][DODDLE][2007-2-14 16:21:53]: 剪定後クラス数: 125
+[ INFO][DODDLE][2007-2-14 16:21:53]: 入力動詞的概念数: 71
+[ INFO][DODDLE][2007-2-14 16:21:53]: プロパティ階層構築における追加SIN数: 179
+[ INFO][DODDLE][2007-2-14 16:21:53]: 剪定前プロパティ数: 250
+[ INFO][DODDLE][2007-2-14 16:21:53]: 剪定プロパティ数: 128
+[ INFO][DODDLE][2007-2-14 16:22:26]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:22:33]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:22:33]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:22:33]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:22:33]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:22:33]: loaded time = 0.141[ms]
+[ INFO][Dictionary][2007-2-14 16:22:33]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:22:33]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:22:33]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:22:33]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:22:37]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:22:37]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:22:37]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:22:37]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:22:37]: 入力概念数: 146
+[ INFO][DODDLE][2007-2-14 16:22:57]: 入力名詞的概念数: 75
+[ INFO][DODDLE][2007-2-14 16:22:57]: クラス階層構築における追加SIN数: 128
+[ INFO][DODDLE][2007-2-14 16:22:57]: 剪定前クラス数: 203
+[ INFO][DODDLE][2007-2-14 16:22:57]: 剪定クラス数: 82
+[ INFO][DODDLE][2007-2-14 16:22:57]: 剪定後クラス数: 121
+[ INFO][DODDLE][2007-2-14 16:22:57]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:22:57]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:22:57]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:22:57]: 入力動詞的概念数: 71
+[ INFO][DODDLE][2007-2-14 16:22:57]: プロパティ階層構築における追加SIN数: 178
+[ INFO][DODDLE][2007-2-14 16:22:57]: 剪定前プロパティ数: 249
+[ INFO][DODDLE][2007-2-14 16:22:57]: 剪定プロパティ数: 123
+[ INFO][DODDLE][2007-2-14 16:31:40]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:31:47]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:31:52]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:31:52]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:31:52]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:31:52]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:31:53]: loaded time = 0.125[ms]
+[ INFO][Dictionary][2007-2-14 16:31:53]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:31:53]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:31:53]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:31:53]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:31:57]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:31:57]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:31:57]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:31:57]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:31:57]: 入力概念数: 143
+[ INFO][DODDLE][2007-2-14 16:32:17]: 入力名詞的概念数: 79
+[ INFO][DODDLE][2007-2-14 16:32:17]: クラス階層構築における追加SIN数: 143
+[ INFO][DODDLE][2007-2-14 16:32:17]: 剪定前クラス数: 222
+[ INFO][DODDLE][2007-2-14 16:32:17]: 剪定クラス数: 93
+[ INFO][DODDLE][2007-2-14 16:32:17]: 剪定後クラス数: 129
+[ INFO][DODDLE][2007-2-14 16:32:17]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:32:17]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:32:17]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:32:17]: 入力動詞的概念数: 64
+[ INFO][DODDLE][2007-2-14 16:32:17]: プロパティ階層構築における追加SIN数: 161
+[ INFO][DODDLE][2007-2-14 16:32:17]: 剪定前プロパティ数: 225
+[ INFO][DODDLE][2007-2-14 16:32:17]: 剪定プロパティ数: 114
+[ INFO][DODDLE][2007-2-14 16:34:02]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:34:08]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:34:16]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:34:16]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:34:16]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:34:16]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:34:16]: loaded time = 0.172[ms]
+[ INFO][Dictionary][2007-2-14 16:34:16]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:34:16]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:34:16]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:34:16]: time to load connect cost file = 140[ms]
+[ INFO][DODDLE][2007-2-14 16:34:19]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:34:19]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:34:19]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:34:19]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:34:19]: 入力概念数: 148
+[ INFO][DODDLE][2007-2-14 16:34:40]: 入力名詞的概念数: 77
+[ INFO][DODDLE][2007-2-14 16:34:40]: クラス階層構築における追加SIN数: 122
+[ INFO][DODDLE][2007-2-14 16:34:40]: 剪定前クラス数: 199
+[ INFO][DODDLE][2007-2-14 16:34:40]: 剪定クラス数: 67
+[ INFO][DODDLE][2007-2-14 16:34:40]: 剪定後クラス数: 132
+[ INFO][DODDLE][2007-2-14 16:34:40]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:34:40]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:34:40]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:34:40]: 入力動詞的概念数: 71
+[ INFO][DODDLE][2007-2-14 16:34:40]: プロパティ階層構築における追加SIN数: 189
+[ INFO][DODDLE][2007-2-14 16:34:40]: 剪定前プロパティ数: 260
+[ INFO][DODDLE][2007-2-14 16:34:40]: 剪定プロパティ数: 133
+[ INFO][DODDLE][2007-2-14 16:35:53]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:36:02]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:36:07]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:36:07]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:36:07]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:36:07]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:36:07]: loaded time = 0.156[ms]
+[ INFO][Dictionary][2007-2-14 16:36:07]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:36:07]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:36:07]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:36:07]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:36:10]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:36:10]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:36:10]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:36:10]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:36:10]: 入力概念数: 148
+[ INFO][DODDLE][2007-2-14 16:36:31]: 入力名詞的概念数: 78
+[ INFO][DODDLE][2007-2-14 16:36:31]: クラス階層構築における追加SIN数: 141
+[ INFO][DODDLE][2007-2-14 16:36:31]: 剪定前クラス数: 219
+[ INFO][DODDLE][2007-2-14 16:36:31]: 剪定クラス数: 96
+[ INFO][DODDLE][2007-2-14 16:36:31]: 剪定後クラス数: 123
+[ INFO][DODDLE][2007-2-14 16:36:31]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:36:31]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:36:31]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:36:31]: 入力動詞的概念数: 70
+[ INFO][DODDLE][2007-2-14 16:36:31]: プロパティ階層構築における追加SIN数: 186
+[ INFO][DODDLE][2007-2-14 16:36:31]: 剪定前プロパティ数: 256
+[ INFO][DODDLE][2007-2-14 16:36:31]: 剪定プロパティ数: 136
+[ INFO][DODDLE][2007-2-14 16:38:36]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:38:44]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:38:49]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:38:49]: time to load posInfo file = 16[ms]
+[ INFO][Dictionary][2007-2-14 16:38:49]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:38:49]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:38:49]: loaded time = 0.14[ms]
+[ INFO][Dictionary][2007-2-14 16:38:49]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:38:49]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:38:49]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:38:49]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:38:53]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:38:53]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:38:53]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:38:53]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:38:53]: 入力概念数: 146
+[ INFO][DODDLE][2007-2-14 16:39:13]: 入力名詞的概念数: 80
+[ INFO][DODDLE][2007-2-14 16:39:13]: クラス階層構築における追加SIN数: 152
+[ INFO][DODDLE][2007-2-14 16:39:13]: 剪定前クラス数: 232
+[ INFO][DODDLE][2007-2-14 16:39:13]: 剪定クラス数: 103
+[ INFO][DODDLE][2007-2-14 16:39:13]: 剪定後クラス数: 129
+[ INFO][DODDLE][2007-2-14 16:39:13]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:39:13]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:39:13]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:39:13]: 入力動詞的概念数: 66
+[ INFO][DODDLE][2007-2-14 16:39:13]: プロパティ階層構築における追加SIN数: 171
+[ INFO][DODDLE][2007-2-14 16:39:13]: 剪定前プロパティ数: 237
+[ INFO][DODDLE][2007-2-14 16:39:13]: 剪定プロパティ数: 119
+[ INFO][DODDLE][2007-2-14 16:40:52]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:45:03]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:45:10]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:45:10]: time to load posInfo file = 32[ms]
+[ INFO][Dictionary][2007-2-14 16:45:10]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:45:10]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:45:10]: loaded time = 0.218[ms]
+[ INFO][Dictionary][2007-2-14 16:45:10]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:45:10]: time to load pos info file = 32[ms]
+[ INFO][Tokenizer][2007-2-14 16:45:10]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:45:11]: time to load connect cost file = 359[ms]
+[ INFO][DODDLE][2007-2-14 16:45:28]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:45:28]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:45:28]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:45:28]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:45:28]: 入力概念数: 145
+[ INFO][DODDLE][2007-2-14 16:49:46]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:49:55]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:49:55]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:49:55]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:49:55]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:49:55]: loaded time = 0.14[ms]
+[ INFO][Dictionary][2007-2-14 16:49:55]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:49:55]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:49:55]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:49:55]: time to load connect cost file = 110[ms]
+[ INFO][DODDLE][2007-2-14 16:50:00]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:50:00]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:50:00]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:50:00]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:50:00]: 入力概念数: 147
+[ INFO][DODDLE][2007-2-14 16:51:29]: 入力名詞的概念数: 77
+[ INFO][DODDLE][2007-2-14 16:51:29]: クラス階層構築における追加SIN数: 135
+[ INFO][DODDLE][2007-2-14 16:51:29]: 剪定前クラス数: 212
+[ INFO][DODDLE][2007-2-14 16:51:29]: 剪定クラス数: 87
+[ INFO][DODDLE][2007-2-14 16:51:29]: 剪定後クラス数: 125
+[ INFO][DODDLE][2007-2-14 16:51:29]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:51:29]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:51:29]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:51:29]: 入力動詞的概念数: 70
+[ INFO][DODDLE][2007-2-14 16:51:29]: プロパティ階層構築における追加SIN数: 179
+[ INFO][DODDLE][2007-2-14 16:51:29]: 剪定前プロパティ数: 249
+[ INFO][DODDLE][2007-2-14 16:51:29]: 剪定プロパティ数: 128
+[ INFO][DODDLE][2007-2-14 16:51:55]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:51:55]: 抽象中間プロパティの平均兄弟プロパティグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:53:16]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:55:20]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:55:29]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:55:29]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:55:29]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:55:29]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:55:30]: loaded time = 0.14[ms]
+[ INFO][Dictionary][2007-2-14 16:55:30]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:55:30]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:55:30]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:55:30]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:56:09]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:56:28]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:56:34]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:56:34]: time to load posInfo file = 16[ms]
+[ INFO][Dictionary][2007-2-14 16:56:34]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:56:34]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:56:34]: loaded time = 0.14[ms]
+[ INFO][Dictionary][2007-2-14 16:56:34]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:56:34]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:56:34]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:56:34]: time to load connect cost file = 125[ms]
+[ INFO][DODDLE][2007-2-14 16:57:45]: cannot open EDR Dic
+[ INFO][DODDLE][2007-2-14 16:58:25]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 16:58:34]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 16:58:39]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 16:58:39]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 16:58:39]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:58:39]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 16:58:39]: loaded time = 0.141[ms]
+[ INFO][Dictionary][2007-2-14 16:58:39]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 16:58:39]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 16:58:39]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 16:58:39]: time to load connect cost file = 141[ms]
+[ INFO][DODDLE][2007-2-14 16:58:42]: 完全照合 単語数: 2
+[ INFO][DODDLE][2007-2-14 16:58:42]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 16:58:42]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 16:58:42]: 入力語彙数: 2
+[ INFO][DODDLE][2007-2-14 16:58:42]: 入力概念数: 2
+[ INFO][DODDLE][2007-2-14 16:58:42]: 入力名詞的概念数: 2
+[ INFO][DODDLE][2007-2-14 16:58:44]: クラス階層構築における追加SIN数: 8
+[ INFO][DODDLE][2007-2-14 16:58:44]: 剪定前クラス数: 10
+[ INFO][DODDLE][2007-2-14 16:58:44]: 剪定クラス数: 5
+[ INFO][DODDLE][2007-2-14 16:58:44]: 剪定後クラス数: 5
+[ INFO][DODDLE][2007-2-14 16:58:44]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 16:58:44]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 16:58:44]: 剪定プロパティ数: 0
+[ INFO][DODDLE][2007-2-14 16:59:21]: 完全照合 単語数: 146
+[ INFO][DODDLE][2007-2-14 16:59:21]: システムが追加した完全照合 単語数: 4
+[ INFO][DODDLE][2007-2-14 16:59:21]: 部分照合 単語数: 119
+[ INFO][DODDLE][2007-2-14 16:59:21]: 入力語彙数: 269
+[ INFO][DODDLE][2007-2-14 16:59:21]: 入力概念数: 146
+[ INFO][DODDLE][2007-2-14 16:59:38]: 入力名詞的概念数: 74
+[ INFO][DODDLE][2007-2-14 16:59:38]: クラス階層構築における追加SIN数: 138
+[ INFO][DODDLE][2007-2-14 16:59:38]: 剪定前クラス数: 212
+[ INFO][DODDLE][2007-2-14 16:59:38]: 剪定クラス数: 90
+[ INFO][DODDLE][2007-2-14 16:59:38]: 剪定後クラス数: 122
+[ INFO][DODDLE][2007-2-14 16:59:38]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 16:59:38]: 追加した抽象中間クラス数: 0.0
+[ INFO][DODDLE][2007-2-14 16:59:38]: 抽象中間クラスの平均兄弟クラスグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 16:59:38]: 入力動詞的概念数: 72
+[ INFO][DODDLE][2007-2-14 16:59:38]: プロパティ階層構築における追加SIN数: 166
+[ INFO][DODDLE][2007-2-14 16:59:38]: 剪定前プロパティ数: 238
+[ INFO][DODDLE][2007-2-14 16:59:38]: 剪定プロパティ数: 114
+[ INFO][DODDLE][2007-2-14 17:00:10]: 追加した抽象中間ノード数: 0
+[ INFO][DODDLE][2007-2-14 17:00:10]: 抽象中間プロパティの平均兄弟プロパティグループ化数: 0.0
+[ INFO][DODDLE][2007-2-14 17:00:50]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 17:02:16]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 17:02:36]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 17:02:36]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 17:02:36]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 17:02:36]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 17:02:36]: loaded time = 0.14[ms]
+[ INFO][Dictionary][2007-2-14 17:02:36]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 17:02:36]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 17:02:36]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 17:02:36]: time to load connect cost file = 110[ms]
+[DEBUG][DODDLE][2007-2-14 17:02:37]: 合計時間: 1
+[ INFO][DODDLE][2007-2-14 17:02:55]: 完全照合 単語数: 2
+[ INFO][DODDLE][2007-2-14 17:02:55]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:02:55]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:02:55]: 入力語彙数: 2
+[ INFO][DODDLE][2007-2-14 17:02:55]: 入力概念数: 2
+[ INFO][DODDLE][2007-2-14 17:02:55]: 入力名詞的概念数: 2
+[ INFO][DODDLE][2007-2-14 17:02:55]: クラス階層構築における追加SIN数: 20
+[ INFO][DODDLE][2007-2-14 17:02:55]: 剪定前クラス数: 22
+[ INFO][DODDLE][2007-2-14 17:02:55]: 剪定クラス数: 17
+[ INFO][DODDLE][2007-2-14 17:02:55]: 剪定後クラス数: 5
+[ INFO][DODDLE][2007-2-14 17:02:55]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 17:02:55]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 17:02:55]: 剪定プロパティ数: 0
+[DEBUG][DODDLE][2007-2-14 17:02:56]: 合計時間: 1
+[ INFO][DODDLE][2007-2-14 17:03:01]: 完全照合 単語数: 2
+[ INFO][DODDLE][2007-2-14 17:03:01]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:03:01]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:03:01]: 入力語彙数: 2
+[ INFO][DODDLE][2007-2-14 17:03:01]: 入力概念数: 2
+[ INFO][DODDLE][2007-2-14 17:03:01]: 入力名詞的概念数: 2
+[ INFO][DODDLE][2007-2-14 17:03:01]: クラス階層構築における追加SIN数: 16
+[ INFO][DODDLE][2007-2-14 17:03:01]: 剪定前クラス数: 18
+[ INFO][DODDLE][2007-2-14 17:03:01]: 剪定クラス数: 13
+[ INFO][DODDLE][2007-2-14 17:03:01]: 剪定後クラス数: 5
+[ INFO][DODDLE][2007-2-14 17:03:01]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 17:03:01]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 17:03:01]: 剪定プロパティ数: 0
+[DEBUG][DODDLE][2007-2-14 17:03:02]: 合計時間: 1
+[ INFO][DODDLE][2007-2-14 17:03:05]: Close EDR DB
+[ INFO][DODDLE][2007-2-14 17:03:05]: Close EDRT DB
+[ INFO][DODDLE][2007-2-14 17:03:19]: init EDR Concept Classification Dictionary on Memory
+[ INFO][DODDLE][2007-2-14 17:03:21]: init EDR Concept Description Dictionary on Memory
+[ INFO][DODDLE][2007-2-14 17:03:23]: init EDRT Concept Classification Dictionary on Memory
+[ INFO][Dictionary][2007-2-14 17:03:29]: token file = C:\DODDLE_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 17:03:29]: time to load posInfo file = 16[ms]
+[ INFO][Dictionary][2007-2-14 17:03:29]: double array trie dictionary = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 17:03:29]: loading double array trie dict = C:\DODDLE_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 17:03:29]: loaded time = 0.234[ms]
+[ INFO][Dictionary][2007-2-14 17:03:29]: pos info file = C:\DODDLE_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 17:03:29]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 17:03:29]: connection file = C:\DODDLE_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 17:03:29]: time to load connect cost file = 109[ms]
+[ INFO][DODDLE][2007-2-14 17:03:35]: 完全照合 単語数: 2
+[ INFO][DODDLE][2007-2-14 17:03:35]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:03:35]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:03:35]: 入力語彙数: 2
+[ INFO][DODDLE][2007-2-14 17:03:35]: 入力概念数: 2
+[ INFO][DODDLE][2007-2-14 17:03:35]: 入力名詞的概念数: 2
+[ INFO][DODDLE][2007-2-14 17:03:37]: クラス階層構築における追加SIN数: 16
+[ INFO][DODDLE][2007-2-14 17:03:37]: 剪定前クラス数: 18
+[ INFO][DODDLE][2007-2-14 17:03:37]: 剪定クラス数: 13
+[ INFO][DODDLE][2007-2-14 17:03:37]: 剪定後クラス数: 5
+[ INFO][DODDLE][2007-2-14 17:03:37]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 17:03:37]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 17:03:37]: 剪定プロパティ数: 0
+[DEBUG][DODDLE][2007-2-14 17:03:38]: 合計時間: 2
+[ INFO][DODDLE][2007-2-14 17:05:19]: init EDR Concept Classification Dictionary on DB
+[ INFO][Dictionary][2007-2-14 17:05:26]: token file = C:\SEN_DIC\sen-1.2.1\dic/token.sen
+[ INFO][Dictionary][2007-2-14 17:05:26]: time to load posInfo file = 0[ms]
+[ INFO][Dictionary][2007-2-14 17:05:26]: double array trie dictionary = C:\SEN_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 17:05:26]: loading double array trie dict = C:\SEN_DIC\sen-1.2.1\dic/da.sen
+[ INFO][DoubleArrayTrie][2007-2-14 17:05:26]: loaded time = 0.125[ms]
+[ INFO][Dictionary][2007-2-14 17:05:26]: pos info file = C:\SEN_DIC\sen-1.2.1\dic/posInfo.sen
+[ INFO][Dictionary][2007-2-14 17:05:26]: time to load pos info file = 0[ms]
+[ INFO][Tokenizer][2007-2-14 17:05:26]: connection file = C:\SEN_DIC\sen-1.2.1\dic\matrix.sen
+[ INFO][Tokenizer][2007-2-14 17:05:26]: time to load connect cost file = 110[ms]
+[DEBUG][DODDLE][2007-2-14 17:05:26]: 合計時間: 1
+[ INFO][DODDLE][2007-2-14 17:05:29]: 完全照合 単語数: 2
+[ INFO][DODDLE][2007-2-14 17:05:29]: システムが追加した完全照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:05:29]: 部分照合 単語数: 0
+[ INFO][DODDLE][2007-2-14 17:05:29]: 入力語彙数: 2
+[ INFO][DODDLE][2007-2-14 17:05:29]: 入力概念数: 2
+[ INFO][DODDLE][2007-2-14 17:05:29]: 入力名詞的概念数: 2
+[ INFO][DODDLE][2007-2-14 17:05:32]: クラス階層構築における追加SIN数: 15
+[ INFO][DODDLE][2007-2-14 17:05:32]: 剪定前クラス数: 17
+[ INFO][DODDLE][2007-2-14 17:05:32]: 剪定クラス数: 12
+[ INFO][DODDLE][2007-2-14 17:05:32]: 剪定後クラス数: 5
+[ INFO][DODDLE][2007-2-14 17:05:32]: プロパティ階層構築における追加SIN数: 1
+[ INFO][DODDLE][2007-2-14 17:05:32]: 剪定前プロパティ数: 1
+[ INFO][DODDLE][2007-2-14 17:05:32]: 剪定プロパティ数: 0
+[DEBUG][DODDLE][2007-2-14 17:05:33]: 合計時間: 3
+[ INFO][DODDLE][2007-2-14 17:05:35]: Close EDR DB
