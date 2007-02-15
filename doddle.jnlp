@@ -41,6 +41,7 @@
 	<jar href="./download/lib/arq-extra.jar"/>
 	<jar href="./download/lib/lucene-core-2.0.0.jar"/>
 	<jar href="./download/lib/wstx-asl-3.0.0.jar"/>
+	<jar href="./download/lib/idw-gpl.jar"/>
    </resources>   
    <application-desc main-class="jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE"/>
 </jnlp>
