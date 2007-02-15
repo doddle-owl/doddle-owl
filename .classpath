@@ -27,5 +27,6 @@
 	<classpathentry path="build/lib/arq-extra.jar" kind="lib"/>
 	<classpathentry path="build/lib/lucene-core-2.0.0.jar" kind="lib"/>
 	<classpathentry path="build/lib/wstx-asl-3.0.0.jar" kind="lib"/>
+	<classpathentry path="build/lib/idw-gpl.jar" kind="lib"/>
 	<classpathentry path="build/classes" kind="output"/>
 </classpath>
