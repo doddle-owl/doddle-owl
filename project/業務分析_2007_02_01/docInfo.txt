@@ -1,1 +1,1 @@
-inputDoc,InputDocument.txt,ja
+inputDoc,C:\t_morita_data\eclipse_workspace\DODDLE\InputDocument.txt,ja
