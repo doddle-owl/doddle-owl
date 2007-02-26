@@ -1,3 +1,0 @@
-EDR(general),false
-EDR(technical),false
-WordNet,true
