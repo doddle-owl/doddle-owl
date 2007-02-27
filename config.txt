@@ -1,7 +1,8 @@
 #DODDLE-OWL Option
 #Mon Jan 29 19:49:31 JST 2007
 XDOC2TXT_EXE=C\:/usr/d2txt123/xdoc2txt.exe
-Japanese_Morphological_Analyzer=C\:/Program Files/Mecab/bin/mecab.exe -Ochasen
+#Japanese_Morphological_Analyzer=C\:\\Program Files\\MeCab\\bin\\mecab.exe -Ochasen
+Japanese_Morphological_Analyzer=C\:\\Program Files\\ChaSen\\chasen.exe
 BASE_PREFIX=keio
 UPPER_CONCEPT_LIST=./upper_concept_list.txt
 AutomaticDisambiguation.useSiblingNodeCount=false
