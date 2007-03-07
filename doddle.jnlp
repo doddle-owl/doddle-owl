@@ -34,7 +34,6 @@
 	<jar href="./download/lib/utilities.jar"/>
 	<jar href="./download/lib/xercesImpl.jar"/>
 	<jar href="./download/lib/xml-apis.jar"/>	
-	<jar href="./download/lib/looks-2.1.1.jar"/>	
 	<jar href="./download/lib/je-3.2.13.jar"/>	
 	<jar href="./download/lib/sen.jar"/>	
 	<jar href="./download/lib/commons-logging-1.1.jar"/>
