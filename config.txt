@@ -1,25 +1,29 @@
 #DODDLE-OWL Option
-#Mon Jan 29 19:49:31 JST 2007
+#Tue Mar 13 18:42:53 JST 2007
 XDOC2TXT_EXE=C\:/usr/d2txt123/xdoc2txt.exe
 Japanese_Morphological_Analyzer=C\:\\Program Files\\ChaSen\\chasen.exe
 BASE_PREFIX=keio
-UPPER_CONCEPT_LIST=./upper_concept_list.txt
 AutomaticDisambiguation.useSiblingNodeCount=false
-SEN_HOME=C\:/SEN_DIC/sen-1.2.1
+UPPER_CONCEPT_LIST=./upper_concept_list.txt
+WORDNET_HOME=C\:/program files/wordnet/2.0/dict
+SEN_HOME=C\:/DODDLE-OWL/SEN_DIC/sen-1.2.1
 AutomaticDisambiguation.isCheckAverageSpreadActivation=false
+EDR_HOME=C\:/DODDLE-OWL/EDR_DIC/
 LANG=ja
 AutomaticDisambiguation.usePathToRootNodeCount=false
+SWOOGLE_QUERY_RESULTS_DIR=C\:\\DODDLE-OWL\\swoogle_query_results
 MakeConceptTreeWithComplexWord.isSameConceptOrSubConcept=SUB
-PROJECT_DIR=C\:/DODDLEProject/
+PROJECT_DIR=C\:/DODDLE-OWL/DODDLEProject/
 AutomaticDisambiguation.isCheckShortestSpreadActivation=false
 PERL_EXE=C\:\\Perl\\bin\\perl.exe
 DisplayPrefix=false
 AutomaticDisambiguation.isCheckLongestSpreadActivation=true
-EDR_HOME=C\:/EDR_DIC/
+EDRT_HOME=C\:/DODDLE-OWL/EDRT_DIC/
 AutomaticDisambiguation.useChildNodeCount=false
+CHASEN_EXE=C\:\\Program Files\\ChaSen\\chasen.exe
 USING_DB=false
-EDRT_HOME=C\:/EDRT_DIC/
 BASE_URI=http\://www.yamaguti.comp.ae.keio.ac.jp/doddle\#
 SSTAGGER_HOME=C\:/usr/postagger-1.0/
-WORDNET_HOME=C\:/program files/wordnet/2.0/dict
 AutomaticDisambiguation.isUsingSpreadActivationAlgorithm=true
+TERM_EXTRACT_SCRIPTS_DIR=C\:/DODDLE-OWL/TermExtractScripts/
+OWL_ONTOLOGIES_DIR=C\:\\DODDLE-OWL\\owl_ontologies
