@@ -52,6 +52,9 @@
     <j.0:prefLabel>概念階層の展開</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="MatchedResultAnalysisResultBorder">
+    <j.1:partOf>
+      <owl:Class rdf:ID="ConceptDriftManagementPanel"/>
+    </j.1:partOf>
     <rdfs:subClassOf>
       <owl:Class rdf:ID="Border"/>
     </rdfs:subClassOf>
@@ -285,6 +288,9 @@
     <j.0:prefLabel>クラス階層構築パネル</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="RemoveMultipleInheritanceBorder">
+    <j.1:partOf>
+      <owl:Class rdf:about="#ConceptDriftManagementPanel"/>
+    </j.1:partOf>
     <rdfs:subClassOf rdf:resource="#Border"/>
     <rdfs:label xml:lang="ja">多重継承の除去</rdfs:label>
     <rdfs:label xml:lang="en">Remove Multiple Inheritance</rdfs:label>
@@ -346,7 +352,7 @@
   </owl:Class>
   <owl:Class rdf:ID="RemoveCorrectConceptPairButton">
     <j.1:partOf>
-      <owl:Class rdf:ID="DefineConceptPairPanel"/>
+      <owl:Class rdf:about="#CorrectConceptPairTable"/>
     </j.1:partOf>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Button"/>
@@ -407,6 +413,9 @@
     <j.0:prefLabel>適用</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="UpperConceptList">
+    <j.1:partOf>
+      <owl:Class rdf:about="#ConceptDriftManagementPanel"/>
+    </j.1:partOf>
     <rdfs:subClassOf>
       <owl:Class rdf:ID="ConceptList"/>
     </rdfs:subClassOf>
@@ -445,21 +454,6 @@
     <rdfs:label xml:lang="en">Delete Concept</rdfs:label>
     <j.0:prefLabel>概念の削除</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:about="#Input Document List">
-    <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
-    <j.1:partOf>
-      <owl:Class rdf:ID="InputDocumentViewerPanel"/>
-    </j.1:partOf>
-    <j.1:partOf>
-      <owl:Class rdf:about="#TextBasedConceptDefinitionPanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#List"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">入力文書リスト</rdfs:label>
-    <rdfs:label xml:lang="en">Input Document List</rdfs:label>
-    <j.0:prefLabel>入力文書リスト</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:about="#HasaConceptTreePanel">
     <j.1:partOf>
       <owl:Class rdf:about="#ConceptTreeConstructionPanel"/>
@@ -467,9 +461,9 @@
     <rdfs:subClassOf>
       <owl:Class rdf:ID="ConceptTreePanel"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">partOf 階層パネル</rdfs:label>
-    <rdfs:label xml:lang="en">partOf Concept Tree Panel</rdfs:label>
-    <j.0:prefLabel>partOf 階層パネル</j.0:prefLabel>
+    <rdfs:label xml:lang="ja">Has-a 階層パネル</rdfs:label>
+    <rdfs:label xml:lang="en">Has-a Concept Tree Panel</rdfs:label>
+    <j.0:prefLabel>Has-a 階層パネル</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#DisambiguationOptionPanel">
     <j.1:partOf>
@@ -506,15 +500,6 @@
     <rdfs:label xml:lang="en">partOf Tree</rdfs:label>
     <j.0:prefLabel>partOf階層</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="LongestRadioButton">
-    <j.1:partOf rdf:resource="#DisambiguationOptionPanel"/>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#RadioButton"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">最長</rdfs:label>
-    <rdfs:label xml:lang="en">Longest</rdfs:label>
-    <j.0:prefLabel>最長</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="AddConceptAction">
     <j.1:partOf rdf:resource="#HasaConceptTreePanel"/>
     <j.1:partOf>
@@ -526,6 +511,23 @@
     <rdfs:label xml:lang="ja">概念の追加</rdfs:label>
     <rdfs:label xml:lang="en">Add Concept</rdfs:label>
     <j.0:prefLabel>概念の追加</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="LongestRadioButton">
+    <j.1:partOf rdf:resource="#DisambiguationOptionPanel"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#RadioButton"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">最長</rdfs:label>
+    <rdfs:label xml:lang="en">Longest</rdfs:label>
+    <j.0:prefLabel>最長</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="VisualizationPanel">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Panel"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">視覚化パネル</rdfs:label>
+    <rdfs:label xml:lang="en">Visualization Panel</rdfs:label>
+    <j.0:prefLabel>視覚化パネル</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#CheckBox">
     <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
@@ -710,8 +712,8 @@
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Label"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">剪定概念数: </rdfs:label>
-    <rdfs:label xml:lang="en">Trimmed Concept Count: </rdfs:label>
+    <rdfs:label xml:lang="ja">剪定概念数</rdfs:label>
+    <rdfs:label xml:lang="en">Trimmed Concept Count</rdfs:label>
     <j.0:prefLabel>剪定概念数: </j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="PerfectMatchSearchOptionCheckBox">
@@ -753,7 +755,10 @@
     <rdfs:label xml:lang="en">Word</rdfs:label>
     <j.0:prefLabel>単語</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="ConceptDriftManagementPanel">
+  <owl:Class rdf:about="#ConceptDriftManagementPanel">
+    <j.1:partOf>
+      <owl:Class rdf:about="#ConceptTreeConstructionPanel"/>
+    </j.1:partOf>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Panel"/>
     </rdfs:subClassOf>
@@ -917,7 +922,7 @@
   </owl:Class>
   <owl:Class rdf:ID="InputDocumentArea">
     <j.1:partOf>
-      <owl:Class rdf:about="#InputDocumentViewerPanel"/>
+      <owl:Class rdf:ID="InputDocumentViewerPanel"/>
     </j.1:partOf>
     <j.1:partOf>
       <owl:Class rdf:about="#DisambiguationPanel"/>
@@ -987,6 +992,7 @@
     <j.0:prefLabel>メニュー</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="TrimmedResultAnalysisResultBorder">
+    <j.1:partOf rdf:resource="#ConceptDriftManagementPanel"/>
     <rdfs:subClassOf rdf:resource="#Border"/>
     <rdfs:label xml:lang="ja">剪定結果分析の結果</rdfs:label>
     <rdfs:label xml:lang="en">Trimmed Result Analysis Result</rdfs:label>
@@ -1183,6 +1189,7 @@
     <j.0:prefLabel>その他の品詞</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="RemoveLinkToUpperConceptButton">
+    <j.1:partOf rdf:resource="#ConceptDriftManagementPanel"/>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#RemoveButton"/>
     </rdfs:subClassOf>
@@ -1259,6 +1266,7 @@
     <j.0:prefLabel>未定義単語リストパネル</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="TrimmedConceptList">
+    <j.1:partOf rdf:resource="#ConceptDriftManagementPanel"/>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#ConceptList"/>
     </rdfs:subClassOf>
@@ -1288,6 +1296,17 @@
     <rdfs:label xml:lang="ja">再読み込み</rdfs:label>
     <rdfs:label xml:lang="en">Reload</rdfs:label>
     <j.0:prefLabel>再読み込み</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="InputDocumentList">
+    <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
+    <j.1:partOf>
+      <owl:Class rdf:about="#InputDocumentViewerPanel"/>
+    </j.1:partOf>
+    <j.1:partOf rdf:resource="#TextBasedConceptDefinitionPanel"/>
+    <rdfs:subClassOf rdf:resource="#List"/>
+    <rdfs:label xml:lang="ja">入力文書リスト</rdfs:label>
+    <rdfs:label xml:lang="en">Input Document List</rdfs:label>
+    <j.0:prefLabel>入力文書リスト</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="CancelButton">
     <j.1:partOf rdf:resource="#NameSpaceTable"/>
@@ -1403,6 +1422,9 @@
     <j.0:prefLabel>入力文書ビューア</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="AddWrongConceptPairButton">
+    <j.1:partOf>
+      <owl:Class rdf:ID="DefineConceptPairPanel"/>
+    </j.1:partOf>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#AddButton"/>
     </rdfs:subClassOf>
@@ -1439,6 +1461,12 @@
     <rdfs:label xml:lang="ja">テキストエリア</rdfs:label>
     <rdfs:label xml:lang="en">Text Area</rdfs:label>
     <j.0:prefLabel>テキストエリア</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="SearchOptionBorder">
+    <rdfs:subClassOf rdf:resource="#Border"/>
+    <rdfs:label xml:lang="ja">検索オプション</rdfs:label>
+    <rdfs:label xml:lang="en">Search Option</rdfs:label>
+    <j.0:prefLabel>検索オプション</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#ConceptTreeConstructionPanel">
     <j.1:partOf rdf:resource="#CLASS_HASA_ROOT"/>
@@ -1698,6 +1726,7 @@
     <j.0:prefLabel>文書追加</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="TrimmedResultAnalysisButton">
+    <j.1:partOf rdf:resource="#ConceptDriftManagementPanel"/>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Button"/>
     </rdfs:subClassOf>
@@ -1907,6 +1936,9 @@
     <j.0:prefLabel>言語</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="AddCorrectConceptPairButton">
+    <j.1:partOf>
+      <owl:Class rdf:about="#DefineConceptPairPanel"/>
+    </j.1:partOf>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#AddButton"/>
     </rdfs:subClassOf>
@@ -1996,7 +2028,7 @@
   </owl:Class>
   <owl:Class rdf:ID="RemoveWrongConceptPairButton">
     <j.1:partOf>
-      <owl:Class rdf:about="#DefineConceptPairPanel"/>
+      <owl:Class rdf:about="#WrongConceptPairTable"/>
     </j.1:partOf>
     <rdfs:subClassOf rdf:resource="#Button"/>
     <rdfs:label xml:lang="ja">不正解概念対の削除</rdfs:label>
@@ -2081,6 +2113,7 @@
     <j.0:prefLabel>TF</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="MultipleInheritanceConceptList">
+    <j.1:partOf rdf:resource="#ConceptDriftManagementPanel"/>
     <rdfs:subClassOf rdf:resource="#List"/>
     <rdfs:label xml:lang="ja">多重継承の概念リスト</rdfs:label>
     <rdfs:label xml:lang="en">Multiple Inheritance Concept List</rdfs:label>
@@ -2159,6 +2192,9 @@
     <j.0:prefLabel>partOf階層(プロパティ)</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="TreeConstructionOptionBorder">
+    <j.1:partOf>
+      <owl:Class rdf:about="#TreeConstructionOptionPanel"/>
+    </j.1:partOf>
     <rdfs:subClassOf rdf:resource="#Border"/>
     <rdfs:label xml:lang="ja">構築オプション</rdfs:label>
     <rdfs:label xml:lang="en">Tree Construction Option</rdfs:label>
