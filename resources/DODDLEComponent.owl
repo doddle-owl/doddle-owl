@@ -78,6 +78,17 @@
     <rdfs:label xml:lang="en">Matched Results Analysis Result</rdfs:label>
     <j.0:prefLabel>照合結果分析の結果</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="ShowOnlyCorrespondComplexWordsCheckBox">
+    <j.1:partOf>
+      <owl:Class rdf:ID="PartialMatchedWordListPanel"/>
+    </j.1:partOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="CheckBox"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">選択中の完全照合単語に対応する複合語のみ表示</rdfs:label>
+    <rdfs:label xml:lang="en">corresponding to the selected perfect matched word</rdfs:label>
+    <j.0:prefLabel>選択中の完全照合単語に対応する複合語のみ表示</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="NotValidNameSpaceMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
     <rdfs:label xml:lang="ja">この名前空間は使えません．</rdfs:label>
@@ -103,7 +114,7 @@
       <owl:Class rdf:ID="ConceptTreePanel"/>
     </j.1:partOf>
     <rdfs:subClassOf>
-      <owl:Class rdf:ID="CheckBox"/>
+      <owl:Class rdf:about="#CheckBox"/>
     </rdfs:subClassOf>
     <rdfs:label xml:lang="ja">大文字と小文字の区別</rdfs:label>
     <rdfs:label xml:lang="en">Case Sensitivity</rdfs:label>
@@ -701,15 +712,6 @@
     <rdfs:label xml:lang="en">Warning</rdfs:label>
     <j.0:prefLabel>注意</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="HilightInputWordCheckBox">
-    <j.1:partOf>
-      <owl:Class rdf:about="#DisambiguationPanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf rdf:resource="#CheckBox"/>
-    <rdfs:label xml:lang="ja">入力単語を強調</rdfs:label>
-    <rdfs:label xml:lang="en">Hilight Input Word</rdfs:label>
-    <j.0:prefLabel>入力単語を強調</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:about="#WordSpaceAndAprioriResultTable">
     <j.1:partOf rdf:resource="#TextBasedConceptDefinitionPanel"/>
     <rdfs:subClassOf>
@@ -1052,7 +1054,7 @@
   </owl:Class>
   <owl:Class rdf:ID="MatchResultCheckBox">
     <j.1:partOf>
-      <owl:Class rdf:ID="PartialMatchedWordListPanel"/>
+      <owl:Class rdf:about="#PartialMatchedWordListPanel"/>
     </j.1:partOf>
     <rdfs:subClassOf rdf:resource="#CheckBox"/>
     <rdfs:label xml:lang="ja">照合結果</rdfs:label>
@@ -1512,13 +1514,6 @@
     <rdfs:label xml:lang="en">Swoogle Query Result Folder</rdfs:label>
     <j.0:prefLabel>Swoogleクエリー結果フォルダ</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="ShowOnlyCorrespondComplexWords">
-    <j.1:partOf rdf:resource="#PartialMatchedWordListPanel"/>
-    <rdfs:subClassOf rdf:resource="#CheckBox"/>
-    <rdfs:label xml:lang="ja">選択中の完全照合単語に対応する複合語のみ表示</rdfs:label>
-    <rdfs:label xml:lang="en">corresponding to the selected perfect matched word</rdfs:label>
-    <j.0:prefLabel>選択中の完全照合単語に対応する複合語のみ表示</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="DomainList">
     <j.1:partOf>
       <owl:Class rdf:about="#SwoogleWebServiceWrapperPanel"/>
@@ -1970,6 +1965,13 @@
     <rdfs:label xml:lang="ja">前</rdfs:label>
     <rdfs:label xml:lang="en">Previous</rdfs:label>
     <j.0:prefLabel>前</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="HighlightInputWordCheckBox">
+    <j.1:partOf rdf:resource="#DisambiguationPanel"/>
+    <rdfs:subClassOf rdf:resource="#CheckBox"/>
+    <rdfs:label xml:lang="ja">入力単語を強調</rdfs:label>
+    <rdfs:label xml:lang="en">Hilight Input Word</rdfs:label>
+    <j.0:prefLabel>入力単語を強調</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="NewRadioButton">
     <j.1:partOf>
