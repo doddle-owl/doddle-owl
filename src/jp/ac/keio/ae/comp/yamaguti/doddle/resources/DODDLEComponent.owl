@@ -17,6 +17,14 @@
     <rdfs:label xml:lang="en">Property Tree Construction</rdfs:label>
     <j.0:prefLabel>プロパティ階層構築</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="TotalClassCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">合計クラス数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of total classes</rdfs:label>
+    <j.0:prefLabel>合計クラス数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="ShortestRadioButton">
     <j.1:partOf>
       <owl:Class rdf:ID="DisambiguationOptionPanel"/>
@@ -35,6 +43,22 @@
     <rdfs:label xml:lang="ja">概念説明の編集ダイアログ</rdfs:label>
     <rdfs:label xml:lang="en">Edit Description Dialog</rdfs:label>
     <j.0:prefLabel>概念説明の編集ダイアログ</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="PropertyFromComplexWordCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">複合語プロパティ数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of properties from complex words</rdfs:label>
+    <j.0:prefLabel>複合語プロパティ数</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AverageAbstractSiblingConceptCountInPropertiesMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">平均兄弟プロパティグループ化数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of average grouping sibling properties</rdfs:label>
+    <j.0:prefLabel>平均兄弟プロパティグループ化数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="Message">
     <rdfs:subClassOf>
@@ -95,6 +119,14 @@
     <rdfs:label xml:lang="en">This NameSpace is not valid.</rdfs:label>
     <j.0:prefLabel>この名前空間は使えません．</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="BeforeTrimmingPropertyCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">剪定前プロパティ数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of properties before trimming</rdfs:label>
+    <j.0:prefLabel>剪定前プロパティ数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="RangeLabel">
     <j.1:partOf>
       <owl:Class rdf:ID="CorrectConceptPairTable"/>
@@ -109,17 +141,6 @@
     <rdfs:label xml:lang="en">Range</rdfs:label>
     <j.0:prefLabel>値域</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="CaseSensitivityCheckBox">
-    <j.1:partOf>
-      <owl:Class rdf:ID="ConceptTreePanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#CheckBox"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">大文字と小文字の区別</rdfs:label>
-    <rdfs:label xml:lang="en">Case Sensitivity</rdfs:label>
-    <j.0:prefLabel>大文字と小文字の区別</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="WordSpaceParameterPanel">
     <j.1:partOf>
       <owl:Class rdf:ID="TextBasedConceptDefinitionPanel"/>
@@ -130,6 +151,17 @@
     <rdfs:label xml:lang="ja">WordSpaceパラメータ</rdfs:label>
     <rdfs:label xml:lang="en">WordSpace Parameter</rdfs:label>
     <j.0:prefLabel>WordSpaceパラメータ</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="CaseSensitivityCheckBox">
+    <j.1:partOf>
+      <owl:Class rdf:ID="ConceptTreePanel"/>
+    </j.1:partOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#CheckBox"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">大文字と小文字の区別</rdfs:label>
+    <rdfs:label xml:lang="en">Case Sensitivity</rdfs:label>
+    <j.0:prefLabel>大文字と小文字の区別</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SaveInputWordTableAction">
     <rdfs:subClassOf>
@@ -183,6 +215,12 @@
     <rdfs:label xml:lang="en">Trimming</rdfs:label>
     <j.0:prefLabel>剪定</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="ExitProjectMessage">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">このプロジェクトを終了しますか？</rdfs:label>
+    <rdfs:label xml:lang="en">Exit this project ?</rdfs:label>
+    <j.0:prefLabel>このプロジェクトを終了しますか？</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="ClassIsaTreeBorder">
     <j.1:partOf>
       <owl:Class rdf:ID="ClassTreeConstructionPanel"/>
@@ -214,6 +252,14 @@
     <rdfs:label xml:lang="en">Border</rdfs:label>
     <j.0:prefLabel>ボーダー</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="PropertySINCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">プロパティ階層構築におけるSIN数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of SIN in property tree construction</rdfs:label>
+    <j.0:prefLabel>プロパティ階層構築におけるSIN数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="NameSpaceTable">
     <j.1:partOf>
       <owl:Class rdf:ID="OntologySelectionPanel"/>
@@ -225,6 +271,12 @@
     <rdfs:label xml:lang="en">NameSpace Table</rdfs:label>
     <j.0:prefLabel>名前空間テーブル</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:about="#Dialog">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:label xml:lang="ja">ダイアログ</rdfs:label>
+    <rdfs:label xml:lang="en">Dialog</rdfs:label>
+    <j.0:prefLabel>ダイアログ</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SaveButton">
     <j.1:partOf>
       <owl:Class rdf:ID="OptionDialog"/>
@@ -235,12 +287,6 @@
     <rdfs:label xml:lang="ja">保存</rdfs:label>
     <rdfs:label xml:lang="en">Save</rdfs:label>
     <j.0:prefLabel>保存</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:about="#Dialog">
-    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
-    <rdfs:label xml:lang="ja">ダイアログ</rdfs:label>
-    <rdfs:label xml:lang="en">Dialog</rdfs:label>
-    <j.0:prefLabel>ダイアログ</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SearchRegionSetTemplateLabel">
     <j.1:partOf>
@@ -274,6 +320,14 @@
     <rdfs:label xml:lang="ja">OWLメタデータ</rdfs:label>
     <rdfs:label xml:lang="en">OWL Meta Data</rdfs:label>
     <j.0:prefLabel>OWLメタデータ</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="ClassFromComplexWordCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">複合語クラス数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of classes from complex words</rdfs:label>
+    <j.0:prefLabel>複合語クラス数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="LogConsoleDialog">
     <rdfs:subClassOf rdf:resource="#Dialog"/>
@@ -322,6 +376,20 @@
     <rdfs:label xml:lang="ja">追加 (URI)</rdfs:label>
     <rdfs:label xml:lang="en">Add (URI)</rdfs:label>
     <j.0:prefLabel>追加 (URI)</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="ConstructConceptTreeFromComplexWordsMessage">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">複合語階層構築</rdfs:label>
+    <rdfs:label xml:lang="en">Construct class tree from complex words</rdfs:label>
+    <j.0:prefLabel>複合語階層構築</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AbstractInternalClassCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">抽象中間クラス数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of abstract internal classes</rdfs:label>
+    <j.0:prefLabel>抽象中間クラス数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="ConstructionCheckBox">
     <j.1:partOf>
@@ -381,6 +449,14 @@
     <rdfs:label xml:lang="en">Range List</rdfs:label>
     <j.0:prefLabel>値域のリスト</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="ClassSINCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">クラス階層構築におけるSIN数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of SIN in class tree construction</rdfs:label>
+    <j.0:prefLabel>クラス階層構築におけるSIN数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="CloneConceptAction">
     <j.1:partOf>
       <owl:Class rdf:about="#IsaConceptTreePanel"/>
@@ -403,14 +479,13 @@
     <rdfs:label xml:lang="en">Document</rdfs:label>
     <j.0:prefLabel>文書</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="NounCheckBox">
-    <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
+  <owl:Class rdf:ID="MatchedWordCountMessage">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="#CheckBox"/>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">名詞</rdfs:label>
-    <rdfs:label xml:lang="en">Noun</rdfs:label>
-    <j.0:prefLabel>名詞</j.0:prefLabel>
+    <rdfs:label xml:lang="ja">照合単語数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of matched words</rdfs:label>
+    <j.0:prefLabel>照合単語数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#OWLOntologySelectionPanel">
     <j.1:partOf>
@@ -422,6 +497,23 @@
     <rdfs:label xml:lang="ja">OWLオントロジー選択</rdfs:label>
     <rdfs:label xml:lang="en">OWL Ontology Selection</rdfs:label>
     <j.0:prefLabel>OWLオントロジー選択</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="NounCheckBox">
+    <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#CheckBox"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">名詞</rdfs:label>
+    <rdfs:label xml:lang="en">Noun</rdfs:label>
+    <j.0:prefLabel>名詞</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AfterTrimmingClassCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">剪定後クラス数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of classes after trimming</rdfs:label>
+    <j.0:prefLabel>剪定後クラス数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="RemoveCorrectConceptPairButton">
     <j.1:partOf>
@@ -484,17 +576,6 @@
     <rdfs:label xml:lang="en">Is-a Concept Tree</rdfs:label>
     <j.0:prefLabel>Is-a階層</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="SyncPartiallyMatchedWordListCheckBox">
-    <j.1:partOf>
-      <owl:Class rdf:ID="PerfectlyMatchedWordListPanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#CheckBox"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">多義性解消結果を対応する部分照合単語リストに適用</rdfs:label>
-    <rdfs:label xml:lang="en">Apply disambiguation result to partial matched words</rdfs:label>
-    <j.0:prefLabel>多義性解消結果を対応する部分照合単語リストに適用</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="UpperConceptList">
     <j.1:partOf>
       <owl:Class rdf:about="#ConceptDriftManagementPanel"/>
@@ -505,6 +586,17 @@
     <rdfs:label xml:lang="ja">上位概念リスト</rdfs:label>
     <rdfs:label xml:lang="en">Upper Concept List</rdfs:label>
     <j.0:prefLabel>上位概念リスト</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="SyncPartiallyMatchedWordListCheckBox">
+    <j.1:partOf>
+      <owl:Class rdf:ID="PerfectlyMatchedWordListPanel"/>
+    </j.1:partOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#CheckBox"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">多義性解消結果を対応する部分照合単語リストに適用</rdfs:label>
+    <rdfs:label xml:lang="en">Apply disambiguation result to partial matched words</rdfs:label>
+    <j.0:prefLabel>多義性解消結果を対応する部分照合単語リストに適用</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SenDicFolderTextField">
     <j.1:partOf>
@@ -525,6 +617,14 @@
     <rdfs:label xml:lang="ja">入力文書追加</rdfs:label>
     <rdfs:label xml:lang="en">Add Input Document</rdfs:label>
     <j.0:prefLabel>入力文書追加</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="TrimmedPropertyCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">剪定プロパティ数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of trimmed properties</rdfs:label>
+    <j.0:prefLabel>剪定プロパティ数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="DeleteConceptAction">
     <j.1:partOf>
@@ -559,6 +659,14 @@
     <rdfs:label xml:lang="en">Disambiguation</rdfs:label>
     <j.0:prefLabel>多義性解消</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="ShowLogConsoleAction">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Action"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">ログコンソールを表示</rdfs:label>
+    <rdfs:label xml:lang="en">Show Log Console</rdfs:label>
+    <j.0:prefLabel>ログコンソールを表示</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:about="#TextBasedConceptDefinitionPanel">
     <j.1:partOf rdf:resource="#CLASS_HASA_ROOT"/>
     <rdfs:subClassOf>
@@ -567,14 +675,6 @@
     <rdfs:label xml:lang="ja">概念定義</rdfs:label>
     <rdfs:label xml:lang="en">Concept Definition</rdfs:label>
     <j.0:prefLabel>概念定義</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:ID="ShowLogConsoleAction">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Action"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">ログコンソールを表示</rdfs:label>
-    <rdfs:label xml:lang="en">Show Log Console</rdfs:label>
-    <j.0:prefLabel>ログコンソールを表示</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="HasaTreeBorder">
     <j.1:partOf rdf:resource="#HasaConceptTreePanel"/>
@@ -669,6 +769,12 @@
     <rdfs:label xml:lang="en">Gram Count</rdfs:label>
     <j.0:prefLabel>Gram Count</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="BaseURINameSpaceMessage">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">この名前空間はベースURIです．</rdfs:label>
+    <rdfs:label xml:lang="en">This NameSpace is base URI.</rdfs:label>
+    <j.0:prefLabel>この名前空間はベースURIです．</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="MetaPropertyLabel">
     <j.1:partOf>
       <owl:Class rdf:about="#CorrectConceptPairTable"/>
@@ -679,12 +785,6 @@
     <rdfs:label xml:lang="ja">メタプロパティ</rdfs:label>
     <rdfs:label xml:lang="en">Meta Property</rdfs:label>
     <j.0:prefLabel>メタプロパティ</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:ID="BaseURINameSpaceMessage">
-    <rdfs:subClassOf rdf:resource="#Message"/>
-    <rdfs:label xml:lang="ja">この名前空間はベースURIです．</rdfs:label>
-    <rdfs:label xml:lang="en">This NameSpace is base URI.</rdfs:label>
-    <j.0:prefLabel>この名前空間はベースURIです．</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="ExitAction">
     <rdfs:subClassOf>
@@ -701,6 +801,22 @@
     <rdfs:label xml:lang="ja">注意</rdfs:label>
     <rdfs:label xml:lang="en">Warning</rdfs:label>
     <j.0:prefLabel>注意</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="InputVerbConceptCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">入力動詞的概念数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of input verb concepts</rdfs:label>
+    <j.0:prefLabel>入力動詞的概念数</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="InputWordCountMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">入力単語数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of input words</rdfs:label>
+    <j.0:prefLabel>入力単語数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#WordSpaceAndAprioriResultTable">
     <j.1:partOf rdf:resource="#TextBasedConceptDefinitionPanel"/>
@@ -841,17 +957,6 @@
     <rdfs:label xml:lang="en">Open Descriptions</rdfs:label>
     <j.0:prefLabel>概念記述を開く</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:about="#ConceptDriftManagementPanel">
-    <j.1:partOf>
-      <owl:Class rdf:about="#ConceptTreeConstructionPanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Panel"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">概念変動管理</rdfs:label>
-    <rdfs:label xml:lang="en">Concept Drift Management</rdfs:label>
-    <j.0:prefLabel>概念変動管理</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="WordLabel">
     <j.1:partOf>
       <owl:Class rdf:about="#WordInfoTable"/>
@@ -863,16 +968,24 @@
     <rdfs:label xml:lang="en">Word</rdfs:label>
     <j.0:prefLabel>単語</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="DisambiguationConceptInformationPanel">
+  <owl:Class rdf:about="#ConceptDriftManagementPanel">
     <j.1:partOf>
-      <owl:Class rdf:about="#DisambiguationPanel"/>
+      <owl:Class rdf:about="#ConceptTreeConstructionPanel"/>
     </j.1:partOf>
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Panel"/>
     </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">概念情報</rdfs:label>
-    <rdfs:label xml:lang="en">Concept Information</rdfs:label>
-    <j.0:prefLabel>概念情報</j.0:prefLabel>
+    <rdfs:label xml:lang="ja">概念変動管理</rdfs:label>
+    <rdfs:label xml:lang="en">Concept Drift Management</rdfs:label>
+    <j.0:prefLabel>概念変動管理</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AverageSiblingPropertiesMessage">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ProjectInformationMessage"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">平均兄弟プロパティ数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of average sibling properties</rdfs:label>
+    <j.0:prefLabel>平均兄弟プロパティ数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SetOWLOntologiesButton">
     <j.1:partOf>
@@ -884,6 +997,17 @@
     <rdfs:label xml:lang="ja">OWLオントロジーのセット</rdfs:label>
     <rdfs:label xml:lang="en">Set OWL Ontologies</rdfs:label>
     <j.0:prefLabel>OWLオントロジーのセット</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="DisambiguationConceptInformationPanel">
+    <j.1:partOf>
+      <owl:Class rdf:about="#DisambiguationPanel"/>
+    </j.1:partOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Panel"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">概念情報</rdfs:label>
+    <rdfs:label xml:lang="en">Concept Information</rdfs:label>
+    <j.0:prefLabel>概念情報</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="URILabel">
     <j.1:partOf rdf:resource="#NameSpaceTable"/>
@@ -914,6 +1038,18 @@
     <rdfs:label xml:lang="en">Verb</rdfs:label>
     <j.0:prefLabel>動詞</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:about="#ProjectInformationMessage">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">プロジェクト情報</rdfs:label>
+    <rdfs:label xml:lang="en">Project Information</rdfs:label>
+    <j.0:prefLabel>プロジェクト情報</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:about="#List">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:label xml:lang="ja">リスト</rdfs:label>
+    <rdfs:label xml:lang="en">List</rdfs:label>
+    <j.0:prefLabel>リスト</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SearchNextButton">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Button"/>
@@ -922,11 +1058,15 @@
     <rdfs:label xml:lang="en">Next</rdfs:label>
     <j.0:prefLabel>次</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:about="#List">
-    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
-    <rdfs:label xml:lang="ja">リスト</rdfs:label>
-    <rdfs:label xml:lang="en">List</rdfs:label>
-    <j.0:prefLabel>リスト</j.0:prefLabel>
+  <owl:Class rdf:ID="LabelList">
+    <j.1:partOf>
+      <owl:Class rdf:about="#SwoogleWebServiceWrapperPanel"/>
+    </j.1:partOf>
+    <j.1:partOf rdf:resource="#DisambiguationConceptInformationPanel"/>
+    <rdfs:subClassOf rdf:resource="#List"/>
+    <rdfs:label xml:lang="ja">見出し</rdfs:label>
+    <rdfs:label xml:lang="en">Label</rdfs:label>
+    <j.0:prefLabel>見出し</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="ExtractedOntologyList">
     <j.1:partOf>
@@ -938,16 +1078,6 @@
     <rdfs:label xml:lang="ja">獲得したオントロジーのリスト</rdfs:label>
     <rdfs:label xml:lang="en">Extracted Ontology List</rdfs:label>
     <j.0:prefLabel>獲得したオントロジーのリスト</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:ID="LabelList">
-    <j.1:partOf>
-      <owl:Class rdf:about="#SwoogleWebServiceWrapperPanel"/>
-    </j.1:partOf>
-    <j.1:partOf rdf:resource="#DisambiguationConceptInformationPanel"/>
-    <rdfs:subClassOf rdf:resource="#List"/>
-    <rdfs:label xml:lang="ja">見出し</rdfs:label>
-    <rdfs:label xml:lang="en">Label</rdfs:label>
-    <j.0:prefLabel>見出し</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="LabelTextField">
     <j.1:partOf>
@@ -989,6 +1119,12 @@
     <rdfs:label xml:lang="ja">追加</rdfs:label>
     <rdfs:label xml:lang="en">Add</rdfs:label>
     <j.0:prefLabel>追加</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="SystemAddedPerfectlyMatchedWordCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">システムが追加した完全照合単語数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of system added perfectly matched words</rdfs:label>
+    <j.0:prefLabel>システムが追加した完全照合単語数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="DescriptionLangList">
     <j.1:partOf>
@@ -1136,6 +1272,12 @@
     <rdfs:label xml:lang="en">Action</rdfs:label>
     <j.0:prefLabel>アクション</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="TrimmingComplexWordsMessage">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">複合語の剪定</rdfs:label>
+    <rdfs:label xml:lang="en">Trimming complex words</rdfs:label>
+    <j.0:prefLabel>複合語の剪定</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="NewConceptLabel">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Label"/>
@@ -1253,6 +1395,14 @@
     <rdfs:label xml:lang="en">Undefine Word</rdfs:label>
     <j.0:prefLabel>未定義</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="OpenOWLOntologyAction">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#OpenAction"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">OWLオントロジーを開く</rdfs:label>
+    <rdfs:label xml:lang="en">Open OWL Ontology</rdfs:label>
+    <j.0:prefLabel>OWLオントロジーを開く</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SearchClassSetTemplateLabel">
     <j.1:partOf rdf:resource="#OWLOntologySelectionPanel"/>
     <rdfs:subClassOf>
@@ -1261,14 +1411,6 @@
     <rdfs:label xml:lang="ja">クラス抽出テンプレート</rdfs:label>
     <rdfs:label xml:lang="en">Class Extracting Template</rdfs:label>
     <j.0:prefLabel>クラス抽出テンプレート</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:ID="OpenOWLOntologyAction">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#OpenAction"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">OWLオントロジーを開く</rdfs:label>
-    <rdfs:label xml:lang="en">Open OWL Ontology</rdfs:label>
-    <j.0:prefLabel>OWLオントロジーを開く</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SetInputWordListDoneMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
@@ -1296,6 +1438,12 @@
     <rdfs:label xml:lang="ja">定義域</rdfs:label>
     <rdfs:label xml:lang="en">Domain</rdfs:label>
     <j.0:prefLabel>定義域</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="TrimmedClassCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">剪定クラス数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of trimmed classes</rdfs:label>
+    <j.0:prefLabel>剪定クラス数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#OptionDialog">
     <j.1:partOf rdf:resource="#CLASS_HASA_ROOT"/>
@@ -1383,17 +1531,6 @@
     <rdfs:label xml:lang="en">Trimmed Concept List</rdfs:label>
     <j.0:prefLabel>剪定概念リスト</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="SearchConceptTextField">
-    <j.1:partOf>
-      <owl:Class rdf:about="#ConceptTreePanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#TextField"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">概念検索</rdfs:label>
-    <rdfs:label xml:lang="en">Search Concept</rdfs:label>
-    <j.0:prefLabel>概念検索</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="SubConceptRadioButton">
     <j.1:partOf>
       <owl:Class rdf:ID="ComplexWordOptionPanel"/>
@@ -1405,6 +1542,17 @@
     <rdfs:label xml:lang="ja">下位概念</rdfs:label>
     <rdfs:label xml:lang="en">Sub Concept</rdfs:label>
     <j.0:prefLabel>下位概念</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="SearchConceptTextField">
+    <j.1:partOf>
+      <owl:Class rdf:about="#ConceptTreePanel"/>
+    </j.1:partOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#TextField"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">概念検索</rdfs:label>
+    <rdfs:label xml:lang="en">Search Concept</rdfs:label>
+    <j.0:prefLabel>概念検索</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="UndefinedWordListPanel">
     <j.1:partOf rdf:resource="#DisambiguationPanel"/>
@@ -1493,6 +1641,12 @@
     <rdfs:label xml:lang="en">One Character</rdfs:label>
     <j.0:prefLabel>１文字</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="TotalPropertyCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">合計プロパティ数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of total properties</rdfs:label>
+    <j.0:prefLabel>合計プロパティ数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SwoogleQueryResultFolderTextField">
     <j.1:partOf>
       <owl:Class rdf:about="#FolderOptionPanel"/>
@@ -1531,6 +1685,12 @@
     <rdfs:label xml:lang="ja">入力文書</rdfs:label>
     <rdfs:label xml:lang="en">Input Document</rdfs:label>
     <j.0:prefLabel>入力文書</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AvailableGeneralOntologiesMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">利用可能な汎用オントロジー</rdfs:label>
+    <rdfs:label xml:lang="en">Available General Ontologies</rdfs:label>
+    <j.0:prefLabel>利用可能な汎用オントロジー</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="WordListPanel">
     <j.1:partOf rdf:resource="#DisambiguationPanel"/>
@@ -1588,6 +1748,12 @@
     <rdfs:label xml:lang="en">Save FreeMind Ontology</rdfs:label>
     <j.0:prefLabel>FreeMindオントロジーを保存</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="UndefinedWordCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">未照合単語数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of undefined words</rdfs:label>
+    <j.0:prefLabel>未照合単語数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="TechnicalEDRCheckBox">
     <j.1:partOf rdf:resource="#GenericOntologySelectionPanel"/>
     <rdfs:subClassOf rdf:resource="#CheckBox"/>
@@ -1595,17 +1761,17 @@
     <rdfs:label xml:lang="en">EDR (Technical)</rdfs:label>
     <j.0:prefLabel>EDR専門辞書</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:about="#RadioButton">
-    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
-    <rdfs:label xml:lang="ja">ラジオボタン</rdfs:label>
-    <rdfs:label xml:lang="en">Radio Button</rdfs:label>
-    <j.0:prefLabel>ラジオボタン</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="SavePerfectlyMatchedWordListAction">
     <rdfs:subClassOf rdf:resource="#SaveAction"/>
     <rdfs:label xml:lang="ja">完全照合単語リストを保存</rdfs:label>
     <rdfs:label xml:lang="en">Save Perfectly Matched Word List</rdfs:label>
     <j.0:prefLabel>完全照合単語リストを保存</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:about="#RadioButton">
+    <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
+    <rdfs:label xml:lang="ja">ラジオボタン</rdfs:label>
+    <rdfs:label xml:lang="en">Radio Button</rdfs:label>
+    <j.0:prefLabel>ラジオボタン</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#TextArea">
     <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
@@ -1626,12 +1792,6 @@
     <rdfs:label xml:lang="en">Concept Tree Construction</rdfs:label>
     <j.0:prefLabel>概念階層構築</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="ShowAllWordAction">
-    <rdfs:subClassOf rdf:resource="#Action"/>
-    <rdfs:label xml:lang="ja">すべての単語を表示</rdfs:label>
-    <rdfs:label xml:lang="en">Show All Word</rdfs:label>
-    <j.0:prefLabel>すべての単語を表示</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="ExecuteAprioriButton">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Button"/>
@@ -1639,6 +1799,12 @@
     <rdfs:label xml:lang="ja">Aprioriの実行</rdfs:label>
     <rdfs:label xml:lang="en">Execute Apriori</rdfs:label>
     <j.0:prefLabel>Aprioriの実行</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="ShowAllWordAction">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+    <rdfs:label xml:lang="ja">すべての単語を表示</rdfs:label>
+    <rdfs:label xml:lang="en">Show All Word</rdfs:label>
+    <j.0:prefLabel>すべての単語を表示</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="FrontScopeLabel">
     <j.1:partOf rdf:resource="#WordSpaceParameterPanel"/>
@@ -1664,6 +1830,12 @@
     <rdfs:label xml:lang="en">Add Sibling Concept</rdfs:label>
     <j.0:prefLabel>兄弟概念の追加</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="SavePerfectlyMatchedWordComplexWordMapAction">
+    <rdfs:subClassOf rdf:resource="#SaveAction"/>
+    <rdfs:label xml:lang="ja">完全照合単語と対応する複合語を保存</rdfs:label>
+    <rdfs:label xml:lang="en">Save Perfectly Matched Word Complex Word Map</rdfs:label>
+    <j.0:prefLabel>完全照合単語と対応する複合語を保存</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="Xdoc2TxtTextField">
     <j.1:partOf>
       <owl:Class rdf:about="#FolderOptionPanel"/>
@@ -1675,12 +1847,6 @@
     <rdfs:label xml:lang="en">xdoc2txt.exe</rdfs:label>
     <j.0:prefLabel>xdoc2txt.exe</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="SavePerfectlyMatchedWordComplexWordMapAction">
-    <rdfs:subClassOf rdf:resource="#SaveAction"/>
-    <rdfs:label xml:lang="ja">完全照合単語と対応する複合語を保存</rdfs:label>
-    <rdfs:label xml:lang="en">Save Perfectly Matched Word Complex Word Map</rdfs:label>
-    <j.0:prefLabel>完全照合単語と対応する複合語を保存</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="AddOntologyFromFileButton">
     <j.1:partOf rdf:resource="#OWLOntologySelectionPanel"/>
     <rdfs:subClassOf>
@@ -1689,6 +1855,12 @@
     <rdfs:label xml:lang="ja">追加 (ファイル)</rdfs:label>
     <rdfs:label xml:lang="en">Add (File)</rdfs:label>
     <j.0:prefLabel>追加 (ファイル)</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="BeforeTrimmingClassCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">剪定前クラス数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of classes before trimming</rdfs:label>
+    <j.0:prefLabel>剪定前クラス数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SaveConfigFileAction">
     <rdfs:subClassOf rdf:resource="#SaveAction"/>
@@ -1704,6 +1876,12 @@
     <rdfs:label xml:lang="ja">参照オントロジーの概念見出しを追加</rdfs:label>
     <rdfs:label xml:lang="en">Add Labels from Reference Ontology</rdfs:label>
     <j.0:prefLabel>参照オントロジーの概念見出しを追加</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="PartiallyMatchedWordCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">部分照合単語数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of partially matched words</rdfs:label>
+    <j.0:prefLabel>部分照合単語数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="DocumentList">
     <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
@@ -1739,17 +1917,17 @@
     <rdfs:label xml:lang="en">Class and Property Tree Construction</rdfs:label>
     <j.0:prefLabel>クラス及びプロパティ階層構築</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:about="#AddAction">
-    <rdfs:subClassOf rdf:resource="#Action"/>
-    <rdfs:label xml:lang="ja">追加</rdfs:label>
-    <rdfs:label xml:lang="en">Add</rdfs:label>
-    <j.0:prefLabel>追加</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="NotImplementedMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
     <rdfs:label xml:lang="ja">未実装</rdfs:label>
     <rdfs:label xml:lang="en">Not implemented yes.</rdfs:label>
     <j.0:prefLabel>未実装</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:about="#AddAction">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+    <rdfs:label xml:lang="ja">追加</rdfs:label>
+    <rdfs:label xml:lang="en">Add</rdfs:label>
+    <j.0:prefLabel>追加</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="AddSubConceptAction">
     <j.1:partOf rdf:resource="#HasaConceptTreePanel"/>
@@ -1825,12 +2003,24 @@
     <rdfs:label xml:lang="en">WordNet Folder</rdfs:label>
     <j.0:prefLabel>WordNetフォルダ</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="AfterTrimmingPropertyCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">剪定後プロパティ数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of properties after trimming</rdfs:label>
+    <j.0:prefLabel>剪定後プロパティ数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:about="#ComplexWordOptionPanel">
     <j.1:partOf rdf:resource="#OptionDialog"/>
     <rdfs:subClassOf rdf:resource="#Panel"/>
     <rdfs:label xml:lang="ja">複合語</rdfs:label>
     <rdfs:label xml:lang="en">Complex Word</rdfs:label>
     <j.0:prefLabel>複合語</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="InputNounConceptCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">入力名詞的概念数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of input noun concepts</rdfs:label>
+    <j.0:prefLabel>入力名詞的概念数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="ReverseButton">
     <j.1:partOf>
@@ -1972,15 +2162,6 @@
     <rdfs:label xml:lang="en">Hilight Input Word</rdfs:label>
     <j.0:prefLabel>入力単語を強調</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="NewRadioButton">
-    <j.1:partOf>
-      <owl:Class rdf:about="#TreeConstructionOptionPanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf rdf:resource="#RadioButton"/>
-    <rdfs:label xml:lang="ja">新規</rdfs:label>
-    <rdfs:label xml:lang="en">New</rdfs:label>
-    <j.0:prefLabel>新規</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="EDRDicFolderTextField">
     <j.1:partOf rdf:resource="#FolderOptionPanel"/>
     <rdfs:subClassOf>
@@ -1989,6 +2170,15 @@
     <rdfs:label xml:lang="ja">EDR辞書フォルダ</rdfs:label>
     <rdfs:label xml:lang="en">EDR Dic Folder</rdfs:label>
     <j.0:prefLabel>EDR辞書フォルダ</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="NewRadioButton">
+    <j.1:partOf>
+      <owl:Class rdf:about="#TreeConstructionOptionPanel"/>
+    </j.1:partOf>
+    <rdfs:subClassOf rdf:resource="#RadioButton"/>
+    <rdfs:label xml:lang="ja">新規</rdfs:label>
+    <rdfs:label xml:lang="en">New</rdfs:label>
+    <j.0:prefLabel>新規</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="OpenFreeMindOntologyAction">
     <rdfs:subClassOf>
@@ -2086,14 +2276,6 @@
     <rdfs:label xml:lang="en">Literal</rdfs:label>
     <j.0:prefLabel>リテラル</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="SameConceptRadioButton">
-    <j.1:partOf rdf:resource="#ComplexWordOptionPanel"/>
-    <j.1:partOf rdf:resource="#DisambiguationConceptInformationPanel"/>
-    <rdfs:subClassOf rdf:resource="#RadioButton"/>
-    <rdfs:label xml:lang="ja">同一概念</rdfs:label>
-    <rdfs:label xml:lang="en">Same Concept</rdfs:label>
-    <j.0:prefLabel>同一概念</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="SetURIButton">
     <j.1:partOf rdf:resource="#ConceptInformationPanel"/>
     <rdfs:subClassOf>
@@ -2103,11 +2285,25 @@
     <rdfs:label xml:lang="en">Set URI</rdfs:label>
     <j.0:prefLabel>URIの設定</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="SameConceptRadioButton">
+    <j.1:partOf rdf:resource="#ComplexWordOptionPanel"/>
+    <j.1:partOf rdf:resource="#DisambiguationConceptInformationPanel"/>
+    <rdfs:subClassOf rdf:resource="#RadioButton"/>
+    <rdfs:label xml:lang="ja">同一概念</rdfs:label>
+    <rdfs:label xml:lang="en">Same Concept</rdfs:label>
+    <j.0:prefLabel>同一概念</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="VersionMenu">
     <rdfs:subClassOf rdf:resource="#Menu"/>
     <rdfs:label xml:lang="ja">バージョン</rdfs:label>
     <rdfs:label xml:lang="en">Version</rdfs:label>
     <j.0:prefLabel>バージョン</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AddAbstractInternalConceptsMessage">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">抽象中間概念を追加</rdfs:label>
+    <rdfs:label xml:lang="en">Add abstract internal concepts</rdfs:label>
+    <j.0:prefLabel>抽象中間概念を追加</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="LangTextField">
     <j.1:partOf>
@@ -2119,6 +2315,12 @@
     <rdfs:label xml:lang="ja">言語</rdfs:label>
     <rdfs:label xml:lang="en">Lang</rdfs:label>
     <j.0:prefLabel>言語</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AverageAbstractSiblingConceptCountInClassesMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">平均兄弟クラスグループ化数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of average grouping sibling classes</rdfs:label>
+    <j.0:prefLabel>平均兄弟クラスグループ化数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="AddCorrectConceptPairButton">
     <j.1:partOf>
@@ -2158,6 +2360,12 @@
     <rdfs:label xml:lang="ja">接頭辞</rdfs:label>
     <rdfs:label xml:lang="en">Prefix</rdfs:label>
     <j.0:prefLabel>接頭辞</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="LineMessage">
+    <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">行目</rdfs:label>
+    <rdfs:label xml:lang="en">Line</rdfs:label>
+    <j.0:prefLabel>行目</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="BasePrefixLabel">
     <j.1:partOf>
@@ -2259,6 +2467,12 @@
     <rdfs:label xml:lang="ja">partOf階層(クラス)</rdfs:label>
     <rdfs:label xml:lang="en">partOf Tree (Class)</rdfs:label>
     <j.0:prefLabel>partOf階層(クラス)</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="InputConceptCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">入力概念数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of input concepts</rdfs:label>
+    <j.0:prefLabel>入力概念数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="POSLabel">
     <j.1:partOf>
@@ -2383,13 +2597,6 @@
     <rdfs:label xml:lang="en">Save Input Word Concept Map</rdfs:label>
     <j.0:prefLabel>入力単語と概念の対応を保存</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="PropertyHasaTreeBorder">
-    <j.1:partOf rdf:resource="#PropertyTreeConstructionPanel"/>
-    <rdfs:subClassOf rdf:resource="#HasaTreeBorder"/>
-    <rdfs:label xml:lang="ja">partOf階層(プロパティ)</rdfs:label>
-    <rdfs:label xml:lang="en">partOf Tree (Property)</rdfs:label>
-    <j.0:prefLabel>partOf階層(プロパティ)</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="PasteConceptAction">
     <j.1:partOf rdf:resource="#HasaConceptTreePanel"/>
     <j.1:partOf rdf:resource="#IsaConceptTreePanel"/>
@@ -2397,6 +2604,13 @@
     <rdfs:label xml:lang="ja">概念の貼り付け</rdfs:label>
     <rdfs:label xml:lang="en">Paste Concept</rdfs:label>
     <j.0:prefLabel>概念の貼り付け</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="PropertyHasaTreeBorder">
+    <j.1:partOf rdf:resource="#PropertyTreeConstructionPanel"/>
+    <rdfs:subClassOf rdf:resource="#HasaTreeBorder"/>
+    <rdfs:label xml:lang="ja">partOf階層(プロパティ)</rdfs:label>
+    <rdfs:label xml:lang="en">partOf Tree (Property)</rdfs:label>
+    <j.0:prefLabel>partOf階層(プロパティ)</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="TreeConstructionOptionBorder">
     <j.1:partOf>
@@ -2448,6 +2662,12 @@
     <rdfs:label xml:lang="ja">完全照合単語リスト</rdfs:label>
     <rdfs:label xml:lang="en">Perfectly Matched Word List</rdfs:label>
     <j.0:prefLabel>完全照合単語リスト</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="PerfectlyMatchedWordCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">完全照合単語数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of perfectly matched words</rdfs:label>
+    <j.0:prefLabel>完全照合単語数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="InputWordListArea">
     <j.1:partOf rdf:resource="#SwoogleWebServiceWrapperPanel"/>
@@ -2597,13 +2817,6 @@
     <rdfs:label xml:lang="en">perl.exe</rdfs:label>
     <j.0:prefLabel>perl.exe</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="NGramLabel">
-    <j.1:partOf rdf:resource="#WordSpaceParameterPanel"/>
-    <rdfs:subClassOf rdf:resource="#Label"/>
-    <rdfs:label xml:lang="ja">N-Gram</rdfs:label>
-    <rdfs:label xml:lang="en">N-Gram</rdfs:label>
-    <j.0:prefLabel>N-Gram</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="PartiallyMatchedWordList">
     <j.1:partOf>
       <owl:Class rdf:about="#PartiallyMatchedWordListPanel"/>
@@ -2619,6 +2832,13 @@
     <rdfs:label xml:lang="ja">階層構築オプション</rdfs:label>
     <rdfs:label xml:lang="en">Tree Construction Option</rdfs:label>
     <j.0:prefLabel>階層構築オプション</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="NGramLabel">
+    <j.1:partOf rdf:resource="#WordSpaceParameterPanel"/>
+    <rdfs:subClassOf rdf:resource="#Label"/>
+    <rdfs:label xml:lang="ja">N-Gram</rdfs:label>
+    <rdfs:label xml:lang="en">N-Gram</rdfs:label>
+    <j.0:prefLabel>N-Gram</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#LabelPanel">
     <j.1:partOf rdf:resource="#ConceptInformationPanel"/>
@@ -2674,6 +2894,12 @@
     <rdfs:label xml:lang="en">Valid</rdfs:label>
     <j.0:prefLabel>有効</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="AbstractInternalPropertyCountMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">抽象中間プロパティ数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of abstract internal properties</rdfs:label>
+    <j.0:prefLabel>抽象中間プロパティ数</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="OpenInputWordConceptMapAction">
     <rdfs:subClassOf rdf:resource="#OpenAction"/>
     <rdfs:label xml:lang="ja">入力単語と概念の対応を開く</rdfs:label>
@@ -2686,6 +2912,12 @@
     <rdfs:label xml:lang="ja">TF-IDF</rdfs:label>
     <rdfs:label xml:lang="en">TF-IDF</rdfs:label>
     <j.0:prefLabel>TF-IDF</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AverageSiblingClassesMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">平均兄弟クラス数</rdfs:label>
+    <rdfs:label xml:lang="en">The number of average sibling classes</rdfs:label>
+    <j.0:prefLabel>平均兄弟クラス数</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="LocationLabel">
     <j.1:partOf rdf:resource="#OWLOntologySelectionPanel"/>
