@@ -692,14 +692,6 @@
     <rdfs:label xml:lang="en">Longest</rdfs:label>
     <j.0:prefLabel>最長</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="VisualizationPanel">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Panel"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">視覚化</rdfs:label>
-    <rdfs:label xml:lang="en">Visualization</rdfs:label>
-    <j.0:prefLabel>視覚化</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="ExpandConceptTreeButton">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Button"/>
@@ -707,6 +699,14 @@
     <rdfs:label xml:lang="ja">概念階層の展開</rdfs:label>
     <rdfs:label xml:lang="en">Expand Concept Tree</rdfs:label>
     <j.0:prefLabel>概念階層の展開</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="VisualizationPanel">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Panel"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">視覚化</rdfs:label>
+    <rdfs:label xml:lang="en">Visualization</rdfs:label>
+    <j.0:prefLabel>視覚化</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="#CheckBox">
     <rdfs:subClassOf rdf:resource="#CLASS_ROOT"/>
@@ -2556,6 +2556,12 @@
     <rdfs:label xml:lang="en">DODDLE</rdfs:label>
     <j.0:prefLabel>DODDLE</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="SaveInputWordListAction">
+    <rdfs:subClassOf rdf:resource="#SaveAction"/>
+    <rdfs:label xml:lang="ja">入力単語リストを保存</rdfs:label>
+    <rdfs:label xml:lang="en">Save Input Word List</rdfs:label>
+    <j.0:prefLabel>入力単語リストを保存</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SubConceptCheckBox">
     <j.1:partOf rdf:resource="#DisambiguationOptionPanel"/>
     <rdfs:subClassOf rdf:resource="#CheckBox"/>
@@ -2817,6 +2823,13 @@
     <rdfs:label xml:lang="en">perl.exe</rdfs:label>
     <j.0:prefLabel>perl.exe</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:about="#TreeConstructionOptionPanel">
+    <j.1:partOf rdf:resource="#DisambiguationPanel"/>
+    <rdfs:subClassOf rdf:resource="#Panel"/>
+    <rdfs:label xml:lang="ja">階層構築オプション</rdfs:label>
+    <rdfs:label xml:lang="en">Tree Construction Option</rdfs:label>
+    <j.0:prefLabel>階層構築オプション</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="PartiallyMatchedWordList">
     <j.1:partOf>
       <owl:Class rdf:about="#PartiallyMatchedWordListPanel"/>
@@ -2825,13 +2838,6 @@
     <rdfs:label xml:lang="ja">部分照合単語リスト</rdfs:label>
     <rdfs:label xml:lang="en">Partially Matched Word List</rdfs:label>
     <j.0:prefLabel>部分照合単語リスト</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:about="#TreeConstructionOptionPanel">
-    <j.1:partOf rdf:resource="#DisambiguationPanel"/>
-    <rdfs:subClassOf rdf:resource="#Panel"/>
-    <rdfs:label xml:lang="ja">階層構築オプション</rdfs:label>
-    <rdfs:label xml:lang="en">Tree Construction Option</rdfs:label>
-    <j.0:prefLabel>階層構築オプション</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="NGramLabel">
     <j.1:partOf rdf:resource="#WordSpaceParameterPanel"/>
