@@ -1752,6 +1752,12 @@
     <rdfs:label xml:lang="en">Input Document Viewer</rdfs:label>
     <j.0:prefLabel>入力文書ビューア</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="RedoAction">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+    <rdfs:label xml:lang="ja">やり直す</rdfs:label>
+    <rdfs:label xml:lang="en">Redo</rdfs:label>
+    <j.0:prefLabel>やり直す</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="AddWrongConceptPairButton">
     <j.1:partOf>
       <owl:Class rdf:ID="DefineConceptPairPanel"/>
@@ -2628,6 +2634,12 @@
     <rdfs:label xml:lang="ja">概念階層</rdfs:label>
     <rdfs:label xml:lang="en">Concept Tree</rdfs:label>
     <j.0:prefLabel>概念階層</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="UndoAction">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+    <rdfs:label xml:lang="ja">元に戻す</rdfs:label>
+    <rdfs:label xml:lang="en">Undo</rdfs:label>
+    <j.0:prefLabel>元に戻す</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SaveInputWordConceptMapAction">
     <rdfs:subClassOf rdf:resource="#SaveAction"/>
