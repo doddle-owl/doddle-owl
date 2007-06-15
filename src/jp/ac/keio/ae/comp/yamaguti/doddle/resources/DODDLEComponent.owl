@@ -2245,6 +2245,14 @@
     <rdfs:label xml:lang="en">Related Concept List</rdfs:label>
     <j.0:prefLabel>関連概念リスト</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="EditInputDocumentButton">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Button"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">入力文書の編集</rdfs:label>
+    <rdfs:label xml:lang="en">Edit Input Document</rdfs:label>
+    <j.0:prefLabel>入力文書の編集</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SetPropertyButton">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Button"/>
@@ -2474,7 +2482,7 @@
     <j.1:partOf>
       <owl:Class rdf:about="#WrongConceptPairTable"/>
     </j.1:partOf>
-    <rdfs:subClassOf rdf:resource="#Button"/>
+    <rdfs:subClassOf rdf:resource="#RemoveButton"/>
     <rdfs:label xml:lang="ja">不正解概念対の削除</rdfs:label>
     <rdfs:label xml:lang="en">Remove Wrong Concept Pair</rdfs:label>
     <j.0:prefLabel>不正解概念対の削除</j.0:prefLabel>
