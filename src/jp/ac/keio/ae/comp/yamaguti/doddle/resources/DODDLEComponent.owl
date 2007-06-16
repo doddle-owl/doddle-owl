@@ -1416,14 +1416,6 @@
     <rdfs:label xml:lang="en">Undefine Word</rdfs:label>
     <j.0:prefLabel>未定義</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="OpenOWLOntologyAction">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#OpenAction"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">OWLオントロジーを開く</rdfs:label>
-    <rdfs:label xml:lang="en">Open OWL Ontology</rdfs:label>
-    <j.0:prefLabel>OWLオントロジーを開く</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="SearchClassSetTemplateLabel">
     <j.1:partOf rdf:resource="#OWLOntologySelectionPanel"/>
     <rdfs:subClassOf>
@@ -1432,6 +1424,14 @@
     <rdfs:label xml:lang="ja">クラス抽出テンプレート</rdfs:label>
     <rdfs:label xml:lang="en">Class Extracting Template</rdfs:label>
     <j.0:prefLabel>クラス抽出テンプレート</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="OpenOWLOntologyAction">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#OpenAction"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">OWLオントロジーを開く</rdfs:label>
+    <rdfs:label xml:lang="en">Open OWL Ontology</rdfs:label>
+    <j.0:prefLabel>OWLオントロジーを開く</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SetInputWordListDoneMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
@@ -2380,6 +2380,12 @@
     <rdfs:label xml:lang="ja">概念と代表見出しの対応を開く</rdfs:label>
     <rdfs:label xml:lang="en">Open Concept Typical Word Map</rdfs:label>
     <j.0:prefLabel>概念と代表見出しの対応を開く</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="UserDefinedWordCheckBox">
+    <rdfs:subClassOf rdf:resource="#CheckBox"/>
+    <rdfs:label xml:lang="ja">ユーザ定義単語</rdfs:label>
+    <rdfs:label xml:lang="en">User Defined Word</rdfs:label>
+    <j.0:prefLabel>ユーザ定義単語</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="AverageRadioButton">
     <j.1:partOf rdf:resource="#DisambiguationOptionPanel"/>
