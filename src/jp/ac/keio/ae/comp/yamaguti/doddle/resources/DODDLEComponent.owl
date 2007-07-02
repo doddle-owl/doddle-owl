@@ -1433,6 +1433,14 @@
     <rdfs:label xml:lang="en">Open OWL Ontology</rdfs:label>
     <j.0:prefLabel>OWLオントロジーを開く</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="CompletelyDeleteWordButton">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="RemoveButton"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">完全削除</rdfs:label>
+    <rdfs:label xml:lang="en">Completely Delete Word</rdfs:label>
+    <j.0:prefLabel>Completely Delete Word</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SetInputWordListDoneMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
     <rdfs:label xml:lang="ja">入力単語リストの設定完了</rdfs:label>
@@ -1442,7 +1450,7 @@
   <owl:Class rdf:ID="RemoveInputDocumentButton">
     <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
     <rdfs:subClassOf>
-      <owl:Class rdf:ID="RemoveButton"/>
+      <owl:Class rdf:about="#RemoveButton"/>
     </rdfs:subClassOf>
     <rdfs:label xml:lang="ja">入力文書削除</rdfs:label>
     <rdfs:label xml:lang="en">Remove Input Document</rdfs:label>
