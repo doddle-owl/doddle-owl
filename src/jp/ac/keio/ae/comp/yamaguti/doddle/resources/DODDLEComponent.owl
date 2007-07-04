@@ -374,6 +374,14 @@
     <rdfs:label xml:lang="en">Add (URI)</rdfs:label>
     <j.0:prefLabel>追加 (URI)</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="SetPunctuationCharacterButton">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Button"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">1文の区切り文字を設定</rdfs:label>
+    <rdfs:label xml:lang="en">Set Punctuation Character</rdfs:label>
+    <j.0:prefLabel>1文の区切り文字を設定</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="ConstructConceptTreeFromComplexWordsMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
     <rdfs:label xml:lang="ja">複合語階層構築</rdfs:label>
@@ -872,17 +880,6 @@
     <rdfs:label xml:lang="en">TermRank</rdfs:label>
     <j.0:prefLabel>TermRank</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="ComplexWordExtractionScriptFolderTextField">
-    <j.1:partOf>
-      <owl:Class rdf:about="#FolderOptionPanel"/>
-    </j.1:partOf>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#TextField"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">複合語抽出スクリプトフォルダ</rdfs:label>
-    <rdfs:label xml:lang="en">Complex Word Extraction Script Folder</rdfs:label>
-    <j.0:prefLabel>複合語抽出スクリプトフォルダ</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="ReferenceButton">
     <j.1:partOf rdf:resource="#OWLOntologySelectionPanel"/>
     <rdfs:subClassOf>
@@ -913,6 +910,17 @@
     <rdfs:label xml:lang="ja">不要なオントロジーのリスト</rdfs:label>
     <rdfs:label xml:lang="en">Unnecessary Ontology List</rdfs:label>
     <j.0:prefLabel>不要なオントロジーのリスト</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="ComplexWordExtractionScriptFolderTextField">
+    <j.1:partOf>
+      <owl:Class rdf:about="#FolderOptionPanel"/>
+    </j.1:partOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#TextField"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">複合語抽出スクリプトフォルダ</rdfs:label>
+    <rdfs:label xml:lang="en">Complex Word Extraction Script Folder</rdfs:label>
+    <j.0:prefLabel>複合語抽出スクリプトフォルダ</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="LabelBorder">
     <rdfs:subClassOf rdf:resource="#Border"/>
@@ -2485,6 +2493,12 @@
     <rdfs:label xml:lang="en">Relation (Property)</rdfs:label>
     <j.0:prefLabel>関係 (プロパティ)</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="PageLinesList">
+    <rdfs:subClassOf rdf:resource="#List"/>
+    <rdfs:label xml:lang="ja">ページ番号リスト</rdfs:label>
+    <rdfs:label xml:lang="en">Page Lines List</rdfs:label>
+    <j.0:prefLabel>ページ番号リスト</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:about="#DescriptionPanel">
     <j.1:partOf rdf:resource="#ConceptInformationPanel"/>
     <rdfs:subClassOf rdf:resource="#LiteralPanel"/>
@@ -2874,6 +2888,12 @@
     <rdfs:label xml:lang="ja">Has-a階層</rdfs:label>
     <rdfs:label xml:lang="en">Has-a Concept Tree</rdfs:label>
     <j.0:prefLabel>Has-a階層</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="SetLinesPerPageButton">
+    <rdfs:subClassOf rdf:resource="#Button"/>
+    <rdfs:label xml:lang="ja">1ページの行数を設定</rdfs:label>
+    <rdfs:label xml:lang="en">Set Lines per page</rdfs:label>
+    <j.0:prefLabel>1ページの行数を設定</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="JapaneseMorphologicalAnalyzerTextField">
     <j.1:partOf rdf:resource="#FolderOptionPanel"/>
