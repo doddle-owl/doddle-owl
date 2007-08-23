@@ -805,6 +805,14 @@
     <rdfs:label xml:lang="en">Meta Property</rdfs:label>
     <j.0:prefLabel>メタプロパティ</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="JapaneseDependencyStructureAnalyzerTextField">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#TextField"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">日本語係り受け解析器</rdfs:label>
+    <rdfs:label xml:lang="en">Japanese Dependency Structure Analyzer</rdfs:label>
+    <j.0:prefLabel>日本語係り受け解析器</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="ExitAction">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Action"/>
@@ -880,15 +888,6 @@
     <rdfs:label xml:lang="en">TermRank</rdfs:label>
     <j.0:prefLabel>TermRank</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="ReferenceButton">
-    <j.1:partOf rdf:resource="#OWLOntologySelectionPanel"/>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Button"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">参照</rdfs:label>
-    <rdfs:label xml:lang="en">Reference</rdfs:label>
-    <j.0:prefLabel>参照</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="GenericOntologySelectionPanel">
     <j.1:partOf>
       <owl:Class rdf:about="#OntologySelectionPanel"/>
@@ -910,6 +909,15 @@
     <rdfs:label xml:lang="ja">不要なオントロジーのリスト</rdfs:label>
     <rdfs:label xml:lang="en">Unnecessary Ontology List</rdfs:label>
     <j.0:prefLabel>不要なオントロジーのリスト</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="ReferenceButton">
+    <j.1:partOf rdf:resource="#OWLOntologySelectionPanel"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Button"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">参照</rdfs:label>
+    <rdfs:label xml:lang="en">Reference</rdfs:label>
+    <j.0:prefLabel>参照</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="ComplexWordExtractionScriptFolderTextField">
     <j.1:partOf>
@@ -1455,6 +1463,18 @@
     <rdfs:label xml:lang="en">Set Input Word List Done</rdfs:label>
     <j.0:prefLabel>入力単語リストの設定完了</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="CompoundWordCheckBox">
+    <rdfs:subClassOf rdf:resource="#CheckBox"/>
+    <rdfs:label xml:lang="ja">複合語</rdfs:label>
+    <rdfs:label xml:lang="en">Compound Word</rdfs:label>
+    <j.0:prefLabel>複合語</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="CabochaCheckBox">
+    <rdfs:subClassOf rdf:resource="#CheckBox"/>
+    <rdfs:label xml:lang="ja">複合語(CaboCha)</rdfs:label>
+    <rdfs:label xml:lang="en">Compound Word (CaboCha)</rdfs:label>
+    <j.0:prefLabel>複合語(CaboCha)</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="RemoveInputDocumentButton">
     <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
     <rdfs:subClassOf>
@@ -1723,18 +1743,24 @@
     <rdfs:label xml:lang="en">Input Document</rdfs:label>
     <j.0:prefLabel>入力文書</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="AvailableGeneralOntologiesMessage">
-    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
-    <rdfs:label xml:lang="ja">利用可能な汎用オントロジー</rdfs:label>
-    <rdfs:label xml:lang="en">Available General Ontologies</rdfs:label>
-    <j.0:prefLabel>利用可能な汎用オントロジー</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="WordListPanel">
     <j.1:partOf rdf:resource="#DisambiguationPanel"/>
     <rdfs:subClassOf rdf:resource="#Panel"/>
     <rdfs:label xml:lang="ja">単語リスト</rdfs:label>
     <rdfs:label xml:lang="en">Word List</rdfs:label>
     <j.0:prefLabel>単語リスト</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="AvailableGeneralOntologiesMessage">
+    <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
+    <rdfs:label xml:lang="ja">利用可能な汎用オントロジー</rdfs:label>
+    <rdfs:label xml:lang="en">Available General Ontologies</rdfs:label>
+    <j.0:prefLabel>利用可能な汎用オントロジー</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="IsMultipleInheritanceLabel">
+    <rdfs:subClassOf rdf:resource="#Label"/>
+    <rdfs:label xml:lang="ja">多重継承</rdfs:label>
+    <rdfs:label xml:lang="en">Is Multiple Inheritance</rdfs:label>
+    <j.0:prefLabel>多重継承</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="AddInputWordSetButton">
     <j.1:partOf>
@@ -1746,12 +1772,6 @@
     <rdfs:label xml:lang="ja">入力語彙を追加</rdfs:label>
     <rdfs:label xml:lang="en">Add Input Word Set</rdfs:label>
     <j.0:prefLabel>入力語彙を追加</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:ID="IsMultipleInheritanceLabel">
-    <rdfs:subClassOf rdf:resource="#Label"/>
-    <rdfs:label xml:lang="ja">多重継承</rdfs:label>
-    <rdfs:label xml:lang="en">Is Multiple Inheritance</rdfs:label>
-    <j.0:prefLabel>多重継承</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="ShowOptionDialogAction">
     <rdfs:subClassOf rdf:resource="#Action"/>
@@ -2955,9 +2975,9 @@
   <owl:Class rdf:ID="GensenCheckBox">
     <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
     <rdfs:subClassOf rdf:resource="#CheckBox"/>
-    <rdfs:label xml:lang="ja">複合語</rdfs:label>
-    <rdfs:label xml:lang="en">Complex Word</rdfs:label>
-    <j.0:prefLabel>複合語</j.0:prefLabel>
+    <rdfs:label xml:lang="ja">複合語(言選)</rdfs:label>
+    <rdfs:label xml:lang="en">Compound Word (Gensen)</rdfs:label>
+    <j.0:prefLabel>複合語(言選)</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="ClassTreeConstructionAction">
     <rdfs:subClassOf rdf:resource="#Action"/>
