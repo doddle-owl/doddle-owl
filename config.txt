@@ -2,6 +2,7 @@
 #Tue Mar 13 18:42:53 JST 2007
 XDOC2TXT_EXE=C\:\\DODDLE-OWL\\d2txt123\\xdoc2txt.exe
 Japanese_Morphological_Analyzer=C\:\\Program Files\\ChaSen\\chasen.exe
+Japanese_Dependency_Structure_Analyzer=C\:\\Program Files\\CaboCha\\bin\\cabocha.exe
 BASE_PREFIX=keio
 AutomaticDisambiguation.useSiblingNodeCount=false
 UPPER_CONCEPT_LIST=.\\upper_concept_list.txt
