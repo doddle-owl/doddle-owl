@@ -1966,6 +1966,12 @@
     <rdfs:label xml:lang="en">Concept Tree</rdfs:label>
     <j.0:prefLabel>概念階層</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="OpenRecentProjectsMenu">
+    <rdfs:subClassOf rdf:resource="#Menu"/>
+    <rdfs:label xml:lang="ja">最近のプロジェクトを開く</rdfs:label>
+    <rdfs:label xml:lang="en">Open Recent Projects</rdfs:label>
+    <j.0:prefLabel>最近のプロジェクトを開く</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="DescriptionList">
     <j.1:partOf rdf:resource="#SwoogleWebServiceWrapperPanel"/>
     <j.1:partOf rdf:resource="#DisambiguationConceptInformationPanel"/>
