@@ -96,19 +96,6 @@ CREATE TABLE `doc_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `doddle_project`
---
-
-DROP TABLE IF EXISTS `doddle_project`;
-CREATE TABLE `doddle_project` (
-  `Project_ID` int(10) unsigned NOT NULL default '0',
-  `Project_Name` text NOT NULL,
-  `Project_Author` text NOT NULL,
-  `Project_Creation_Date` datetime NOT NULL,
-  `Project_Modification_Date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Table structure for table `eval_concept_set`
 --
 
@@ -173,6 +160,146 @@ DROP TABLE IF EXISTS `input_term_set`;
 CREATE TABLE `input_term_set` (
   `Project_ID` int(11) NOT NULL default '0',
   `Input_Term` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g1t0_reif`
+--
+
+DROP TABLE IF EXISTS `jena_g1t0_reif`;
+CREATE TABLE `jena_g1t0_reif` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `GraphID` int(11) default NULL,
+  `Stmt` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `HasType` char(1) NOT NULL,
+  UNIQUE KEY `jena_g1t0_reifXSTMT` (`Stmt`,`HasType`),
+  KEY `jena_g1t0_reifXSP` (`Subj`,`Prop`),
+  KEY `jena_g1t0_reifXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g1t1_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_g1t1_stmt`;
+CREATE TABLE `jena_g1t1_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_g1t1_stmtXSP` (`Subj`,`Prop`),
+  KEY `jena_g1t1_stmtXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_graph`
+--
+
+DROP TABLE IF EXISTS `jena_graph`;
+CREATE TABLE `jena_graph` (
+  `ID` int(11) NOT NULL auto_increment,
+  `Name` tinyblob,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_long_lit`
+--
+
+DROP TABLE IF EXISTS `jena_long_lit`;
+CREATE TABLE `jena_long_lit` (
+  `ID` int(11) NOT NULL auto_increment,
+  `Head` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `ChkSum` bigint(20) default NULL,
+  `Tail` mediumblob,
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY `jena_XLIT` (`Head`,`ChkSum`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_long_uri`
+--
+
+DROP TABLE IF EXISTS `jena_long_uri`;
+CREATE TABLE `jena_long_uri` (
+  `ID` int(11) NOT NULL auto_increment,
+  `Head` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `ChkSum` bigint(20) default NULL,
+  `Tail` mediumblob,
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY `jena_XURI` (`Head`,`ChkSum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_prefix`
+--
+
+DROP TABLE IF EXISTS `jena_prefix`;
+CREATE TABLE `jena_prefix` (
+  `ID` int(11) NOT NULL auto_increment,
+  `Head` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `ChkSum` bigint(20) default NULL,
+  `Tail` mediumblob,
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY `jena_XBND` (`Head`,`ChkSum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_sys_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_sys_stmt`;
+CREATE TABLE `jena_sys_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_XSP` (`Subj`,`Prop`),
+  KEY `jena_XO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `project_info`
+--
+
+DROP TABLE IF EXISTS `project_info`;
+CREATE TABLE `project_info` (
+  `Project_ID` int(10) unsigned NOT NULL default '0',
+  `Project_Name` text NOT NULL,
+  `Author` text NOT NULL,
+  `Creation_Date` datetime NOT NULL,
+  `Modification_Date` datetime NOT NULL,
+  `Available_General_Ontologies` text NOT NULL,
+  `Input_Term_Count` int(10) unsigned NOT NULL,
+  `Perfectly_Matched_Term_Count` int(10) unsigned NOT NULL,
+  `System_Added_Perfectly_Matched_Term_Count` int(10) unsigned NOT NULL,
+  `Partially_Matched_Term_Count` int(10) unsigned NOT NULL,
+  `Matched_Term_Count` int(10) unsigned NOT NULL,
+  `Undefined_Term_Count` int(10) unsigned NOT NULL,
+  `Input_Concept_Count` int(10) unsigned NOT NULL,
+  `Input_Noun_Concept_Count` int(10) unsigned NOT NULL,
+  `Input_Verb_Concept_Count` int(10) unsigned NOT NULL,
+  `Class_SIN_Count` int(10) unsigned NOT NULL,
+  `Before_Trimming_Class_Count` int(10) unsigned NOT NULL,
+  `Trimmed_Class_Count` int(10) unsigned NOT NULL,
+  `After_Trimming_Class_Count` int(10) unsigned NOT NULL,
+  `Property_SIN_Count` int(10) unsigned NOT NULL,
+  `Before_Trimming_Property_Count` int(10) unsigned NOT NULL,
+  `Trimmed_Property_Count` int(10) unsigned NOT NULL,
+  `After_Trimming_Property_Count` int(10) unsigned NOT NULL,
+  `Abstract_Internal_Class_Count` int(10) unsigned NOT NULL,
+  `Average_Abstract_Sibling_Concept_Count_In_Classes` int(10) unsigned NOT NULL,
+  `Abstract_Internal_Property_Count_Message` int(10) unsigned NOT NULL,
+  `Average_Abstract_Sibling_Concept_Count_In_Properties` int(10) unsigned NOT NULL,
+  `Class_From_Compound_Word_Count` int(10) unsigned NOT NULL,
+  `Property_From_Compound_Word_Count` int(10) unsigned NOT NULL,
+  `Total_Class_Count` int(10) unsigned NOT NULL,
+  `Total_Property_Count` int(10) unsigned NOT NULL,
+  `Average_Sibling_Classes` double NOT NULL,
+  `Average_Sibling_Properties` double NOT NULL,
+  `Base_URI` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -339,4 +466,4 @@ CREATE TABLE `wrong_pair` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2007-09-16  4:55:55
+-- Dump completed on 2007-09-18  2:26:48
