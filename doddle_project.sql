@@ -60,13 +60,13 @@ CREATE TABLE `concept_definition` (
 DROP TABLE IF EXISTS `concept_definition_parameter`;
 CREATE TABLE `concept_definition_parameter` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
-  `Minimum_Confidence` double NOT NULL,
+  `Minimum_Confidence` int(10) unsigned NOT NULL,
   `Minimum_Support` double NOT NULL,
   `Front_Scope` int(10) unsigned NOT NULL,
   `Behind_Scope` int(10) unsigned NOT NULL,
   `N_Gram` int(10) unsigned NOT NULL,
   `Gram_Count` int(10) unsigned NOT NULL,
-  `Word_Space_Value` double NOT NULL
+  `Word_Space_Value` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -315,11 +315,11 @@ CREATE TABLE `property_trimmed_result_analysis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `removed_word_info`
+-- Table structure for table `removed_term_info`
 --
 
-DROP TABLE IF EXISTS `removed_word_info`;
-CREATE TABLE `removed_word_info` (
+DROP TABLE IF EXISTS `removed_term_info`;
+CREATE TABLE `removed_term_info` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Term` text NOT NULL,
   `POS_List_ID` int(10) unsigned NOT NULL,
@@ -330,11 +330,11 @@ CREATE TABLE `removed_word_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `removed_word_info_doc_list`
+-- Table structure for table `removed_term_info_doc_list`
 --
 
-DROP TABLE IF EXISTS `removed_word_info_doc_list`;
-CREATE TABLE `removed_word_info_doc_list` (
+DROP TABLE IF EXISTS `removed_term_info_doc_list`;
+CREATE TABLE `removed_term_info_doc_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Doc_List_ID` int(10) unsigned NOT NULL,
   `Doc` text NOT NULL,
@@ -342,11 +342,11 @@ CREATE TABLE `removed_word_info_doc_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `removed_word_info_pos_list`
+-- Table structure for table `removed_term_info_pos_list`
 --
 
-DROP TABLE IF EXISTS `removed_word_info_pos_list`;
-CREATE TABLE `removed_word_info_pos_list` (
+DROP TABLE IF EXISTS `removed_term_info_pos_list`;
+CREATE TABLE `removed_term_info_pos_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `POS_List_ID` int(10) unsigned NOT NULL,
   `POS` text NOT NULL
@@ -361,6 +361,44 @@ CREATE TABLE `term_eval_concept_set` (
   `Project_ID` int(10) unsigned NOT NULL,
   `Term_ID` int(10) unsigned NOT NULL,
   `Term` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `term_info`
+--
+
+DROP TABLE IF EXISTS `term_info`;
+CREATE TABLE `term_info` (
+  `Project_ID` int(10) unsigned NOT NULL default '0',
+  `Term` text NOT NULL,
+  `POS_List_ID` int(10) unsigned NOT NULL,
+  `TF` int(10) unsigned NOT NULL,
+  `IDF` double NOT NULL,
+  `TF_IDF` double NOT NULL,
+  `Doc_List_ID` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `term_info_doc_list`
+--
+
+DROP TABLE IF EXISTS `term_info_doc_list`;
+CREATE TABLE `term_info_doc_list` (
+  `Project_ID` int(10) unsigned NOT NULL default '0',
+  `Doc_List_ID` int(10) unsigned NOT NULL,
+  `Doc` text NOT NULL,
+  `TF` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `term_info_pos_list`
+--
+
+DROP TABLE IF EXISTS `term_info_pos_list`;
+CREATE TABLE `term_info_pos_list` (
+  `Project_ID` int(10) unsigned NOT NULL default '0',
+  `POS_List_ID` int(10) unsigned NOT NULL,
+  `POS` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -396,44 +434,6 @@ CREATE TABLE `undefined_term_set` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `word_info`
---
-
-DROP TABLE IF EXISTS `word_info`;
-CREATE TABLE `word_info` (
-  `Project_ID` int(10) unsigned NOT NULL default '0',
-  `Term` text NOT NULL,
-  `POS_List_ID` int(10) unsigned NOT NULL,
-  `TF` int(10) unsigned NOT NULL,
-  `IDF` double NOT NULL,
-  `TF_IDF` double NOT NULL,
-  `Doc_List_ID` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `word_info_doc_list`
---
-
-DROP TABLE IF EXISTS `word_info_doc_list`;
-CREATE TABLE `word_info_doc_list` (
-  `Project_ID` int(10) unsigned NOT NULL default '0',
-  `Doc_List_ID` int(10) unsigned NOT NULL,
-  `Doc` text NOT NULL,
-  `TF` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `word_info_pos_list`
---
-
-DROP TABLE IF EXISTS `word_info_pos_list`;
-CREATE TABLE `word_info_pos_list` (
-  `Project_ID` int(10) unsigned NOT NULL default '0',
-  `POS_List_ID` int(10) unsigned NOT NULL,
-  `POS` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Table structure for table `wordspace_result`
 --
 
@@ -466,4 +466,4 @@ CREATE TABLE `wrong_pair` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2007-09-18  2:26:48
+-- Dump completed on 2007-09-19  3:27:13
