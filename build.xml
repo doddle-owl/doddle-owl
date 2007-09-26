@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="DODDLE" default="compile" basedir=".">
 	<property name="app.name" value="DODDLE" />
-	<property name="app.version" value="2007-09-19" />
+	<property name="app.version" value="2007-09-26" />
 	<property name="src.dir" value="src/jp/ac/keio/ae/comp/yamaguti/doddle/" />
 	<property name="doc.dir" value="docs/" />
 	<property name="build.dir" value="build/classes" />
