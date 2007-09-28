@@ -25,8 +25,9 @@ CREATE TABLE `apriori_result` (
   `Doc_ID` int(10) unsigned NOT NULL,
   `Term1` text NOT NULL,
   `Term2` text NOT NULL,
-  `Value` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Value` double NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `class_trimmed_result_analysis`
@@ -37,8 +38,9 @@ CREATE TABLE `class_trimmed_result_analysis` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Concept_List_ID` int(10) unsigned NOT NULL,
   `Target_Concept` text NOT NULL,
-  `Target_Parent_Concept` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Target_Parent_Concept` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `concept_definition`
@@ -50,8 +52,9 @@ CREATE TABLE `concept_definition` (
   `is_Meta_Property` tinyint(1) NOT NULL,
   `Term1` text NOT NULL,
   `Relation` text NOT NULL,
-  `Term2` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Term2` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `concept_definition_parameter`
@@ -66,8 +69,9 @@ CREATE TABLE `concept_definition_parameter` (
   `Behind_Scope` int(10) unsigned NOT NULL,
   `N_Gram` int(10) unsigned NOT NULL,
   `Gram_Count` int(10) unsigned NOT NULL,
-  `Word_Space_Value` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Word_Space_Value` int(10) unsigned NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `construct_tree_option`
@@ -80,8 +84,9 @@ CREATE TABLE `construct_tree_option` (
   `is_Construction_With_Compound_Word_Tree` tinyint(1) NOT NULL,
   `is_Trimming_Internal_Node` tinyint(1) NOT NULL,
   `is_Add_Abstract_Concept_With_Compound_Word_Tree` tinyint(1) NOT NULL,
-  `is_Trimming_Internal_Node_With_Compound_Word_Tree` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `is_Trimming_Internal_Node_With_Compound_Word_Tree` tinyint(1) NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `doc_info`
@@ -92,8 +97,10 @@ CREATE TABLE `doc_info` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Doc_ID` int(10) unsigned NOT NULL,
   `Doc_Path` text NOT NULL,
-  `Language` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Language` text NOT NULL,
+  `Text` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `eval_concept_set`
@@ -104,8 +111,9 @@ CREATE TABLE `eval_concept_set` (
   `Project_ID` int(10) unsigned NOT NULL,
   `Term_ID` int(10) unsigned NOT NULL,
   `Eval_Value` double NOT NULL,
-  `Concept` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Concept` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `general_ontology_info`
@@ -116,8 +124,9 @@ CREATE TABLE `general_ontology_info` (
   `EDR_General` tinyint(1) NOT NULL,
   `EDR_Technical` tinyint(1) NOT NULL,
   `WordNet` tinyint(1) NOT NULL,
-  `Project_ID` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Project_ID` int(10) unsigned NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `input_concept_set`
@@ -126,8 +135,9 @@ CREATE TABLE `general_ontology_info` (
 DROP TABLE IF EXISTS `input_concept_set`;
 CREATE TABLE `input_concept_set` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
-  `Input_Concept` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Input_Concept` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `input_term_concept_map`
@@ -137,8 +147,9 @@ DROP TABLE IF EXISTS `input_term_concept_map`;
 CREATE TABLE `input_term_concept_map` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Input_Term` text NOT NULL,
-  `Input_Concept` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Input_Concept` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `input_term_construct_tree_option`
@@ -149,8 +160,9 @@ CREATE TABLE `input_term_construct_tree_option` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Input_Term` text NOT NULL,
   `Input_Concept` text NOT NULL,
-  `Tree_Option` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Tree_Option` varchar(45) NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `input_term_set`
@@ -159,8 +171,9 @@ CREATE TABLE `input_term_construct_tree_option` (
 DROP TABLE IF EXISTS `input_term_set`;
 CREATE TABLE `input_term_set` (
   `Project_ID` int(11) NOT NULL default '0',
-  `Input_Term` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Input_Term` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `jena_g1t0_reif`
@@ -194,6 +207,192 @@ CREATE TABLE `jena_g1t1_stmt` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Table structure for table `jena_g2t0_reif`
+--
+
+DROP TABLE IF EXISTS `jena_g2t0_reif`;
+CREATE TABLE `jena_g2t0_reif` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `GraphID` int(11) default NULL,
+  `Stmt` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `HasType` char(1) NOT NULL,
+  UNIQUE KEY `jena_g2t0_reifXSTMT` (`Stmt`,`HasType`),
+  KEY `jena_g2t0_reifXSP` (`Subj`,`Prop`),
+  KEY `jena_g2t0_reifXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g2t1_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_g2t1_stmt`;
+CREATE TABLE `jena_g2t1_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_g2t1_stmtXSP` (`Subj`,`Prop`),
+  KEY `jena_g2t1_stmtXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g3t0_reif`
+--
+
+DROP TABLE IF EXISTS `jena_g3t0_reif`;
+CREATE TABLE `jena_g3t0_reif` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `GraphID` int(11) default NULL,
+  `Stmt` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `HasType` char(1) NOT NULL,
+  UNIQUE KEY `jena_g3t0_reifXSTMT` (`Stmt`,`HasType`),
+  KEY `jena_g3t0_reifXSP` (`Subj`,`Prop`),
+  KEY `jena_g3t0_reifXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g3t1_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_g3t1_stmt`;
+CREATE TABLE `jena_g3t1_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_g3t1_stmtXSP` (`Subj`,`Prop`),
+  KEY `jena_g3t1_stmtXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g4t0_reif`
+--
+
+DROP TABLE IF EXISTS `jena_g4t0_reif`;
+CREATE TABLE `jena_g4t0_reif` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `GraphID` int(11) default NULL,
+  `Stmt` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `HasType` char(1) NOT NULL,
+  UNIQUE KEY `jena_g4t0_reifXSTMT` (`Stmt`,`HasType`),
+  KEY `jena_g4t0_reifXSP` (`Subj`,`Prop`),
+  KEY `jena_g4t0_reifXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g4t1_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_g4t1_stmt`;
+CREATE TABLE `jena_g4t1_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_g4t1_stmtXSP` (`Subj`,`Prop`),
+  KEY `jena_g4t1_stmtXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g5t0_reif`
+--
+
+DROP TABLE IF EXISTS `jena_g5t0_reif`;
+CREATE TABLE `jena_g5t0_reif` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `GraphID` int(11) default NULL,
+  `Stmt` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `HasType` char(1) NOT NULL,
+  UNIQUE KEY `jena_g5t0_reifXSTMT` (`Stmt`,`HasType`),
+  KEY `jena_g5t0_reifXSP` (`Subj`,`Prop`),
+  KEY `jena_g5t0_reifXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g5t1_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_g5t1_stmt`;
+CREATE TABLE `jena_g5t1_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_g5t1_stmtXSP` (`Subj`,`Prop`),
+  KEY `jena_g5t1_stmtXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g6t0_reif`
+--
+
+DROP TABLE IF EXISTS `jena_g6t0_reif`;
+CREATE TABLE `jena_g6t0_reif` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `GraphID` int(11) default NULL,
+  `Stmt` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `HasType` char(1) NOT NULL,
+  UNIQUE KEY `jena_g6t0_reifXSTMT` (`Stmt`,`HasType`),
+  KEY `jena_g6t0_reifXSP` (`Subj`,`Prop`),
+  KEY `jena_g6t0_reifXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g6t1_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_g6t1_stmt`;
+CREATE TABLE `jena_g6t1_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_g6t1_stmtXSP` (`Subj`,`Prop`),
+  KEY `jena_g6t1_stmtXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g7t0_reif`
+--
+
+DROP TABLE IF EXISTS `jena_g7t0_reif`;
+CREATE TABLE `jena_g7t0_reif` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin default NULL,
+  `GraphID` int(11) default NULL,
+  `Stmt` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `HasType` char(1) NOT NULL,
+  UNIQUE KEY `jena_g7t0_reifXSTMT` (`Stmt`,`HasType`),
+  KEY `jena_g7t0_reifXSP` (`Subj`,`Prop`),
+  KEY `jena_g7t0_reifXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `jena_g7t1_stmt`
+--
+
+DROP TABLE IF EXISTS `jena_g7t1_stmt`;
+CREATE TABLE `jena_g7t1_stmt` (
+  `Subj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Prop` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `Obj` varchar(100) character set utf8 collate utf8_bin NOT NULL,
+  `GraphID` int(11) default NULL,
+  KEY `jena_g7t1_stmtXSP` (`Subj`,`Prop`),
+  KEY `jena_g7t1_stmtXO` (`Obj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `jena_graph`
 --
 
@@ -202,7 +401,7 @@ CREATE TABLE `jena_graph` (
   `ID` int(11) NOT NULL auto_increment,
   `Name` tinyblob,
   PRIMARY KEY  (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `jena_long_lit`
@@ -216,7 +415,7 @@ CREATE TABLE `jena_long_lit` (
   `Tail` mediumblob,
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `jena_XLIT` (`Head`,`ChkSum`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `jena_long_uri`
@@ -299,8 +498,10 @@ CREATE TABLE `project_info` (
   `Total_Property_Count` int(10) unsigned NOT NULL,
   `Average_Sibling_Classes` double NOT NULL,
   `Average_Sibling_Properties` double NOT NULL,
-  `Base_URI` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Base_URI` text NOT NULL,
+  `Comment` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `property_trimmed_result_analysis`
@@ -311,8 +512,9 @@ CREATE TABLE `property_trimmed_result_analysis` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Concept_List_ID` int(10) unsigned NOT NULL,
   `Target_Concept` text NOT NULL,
-  `Target_Parent_Concept` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Target_Parent_Concept` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `removed_term_info`
@@ -326,8 +528,9 @@ CREATE TABLE `removed_term_info` (
   `TF` int(10) unsigned NOT NULL,
   `IDF` double NOT NULL,
   `TF_IDF` double NOT NULL,
-  `Doc_List_ID` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Doc_List_ID` int(10) unsigned NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `removed_term_info_doc_list`
@@ -338,8 +541,9 @@ CREATE TABLE `removed_term_info_doc_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Doc_List_ID` int(10) unsigned NOT NULL,
   `Doc` text NOT NULL,
-  `TF` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `TF` int(10) unsigned NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `removed_term_info_pos_list`
@@ -349,8 +553,9 @@ DROP TABLE IF EXISTS `removed_term_info_pos_list`;
 CREATE TABLE `removed_term_info_pos_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `POS_List_ID` int(10) unsigned NOT NULL,
-  `POS` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `POS` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `term_eval_concept_set`
@@ -360,8 +565,9 @@ DROP TABLE IF EXISTS `term_eval_concept_set`;
 CREATE TABLE `term_eval_concept_set` (
   `Project_ID` int(10) unsigned NOT NULL,
   `Term_ID` int(10) unsigned NOT NULL,
-  `Term` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Term` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `term_info`
@@ -375,8 +581,9 @@ CREATE TABLE `term_info` (
   `TF` int(10) unsigned NOT NULL,
   `IDF` double NOT NULL,
   `TF_IDF` double NOT NULL,
-  `Doc_List_ID` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Doc_List_ID` int(10) unsigned NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `term_info_doc_list`
@@ -387,8 +594,9 @@ CREATE TABLE `term_info_doc_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Doc_List_ID` int(10) unsigned NOT NULL,
   `Doc` text NOT NULL,
-  `TF` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `TF` int(10) unsigned NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `term_info_pos_list`
@@ -398,8 +606,9 @@ DROP TABLE IF EXISTS `term_info_pos_list`;
 CREATE TABLE `term_info_pos_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `POS_List_ID` int(10) unsigned NOT NULL,
-  `POS` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `POS` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `trimmed_class_list`
@@ -409,8 +618,9 @@ DROP TABLE IF EXISTS `trimmed_class_list`;
 CREATE TABLE `trimmed_class_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Concept_List_ID` int(10) unsigned NOT NULL,
-  `Concept` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Concept` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `trimmed_property_list`
@@ -420,8 +630,9 @@ DROP TABLE IF EXISTS `trimmed_property_list`;
 CREATE TABLE `trimmed_property_list` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Concept_List_ID` int(10) unsigned NOT NULL,
-  `Concept` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Concept` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `undefined_term_set`
@@ -430,8 +641,9 @@ CREATE TABLE `trimmed_property_list` (
 DROP TABLE IF EXISTS `undefined_term_set`;
 CREATE TABLE `undefined_term_set` (
   `Project_ID` int(10) unsigned NOT NULL,
-  `Term` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Term` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `wordspace_result`
@@ -443,8 +655,9 @@ CREATE TABLE `wordspace_result` (
   `Doc_ID` int(10) unsigned NOT NULL,
   `Term1` text NOT NULL,
   `Term2` text NOT NULL,
-  `Value` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Value` double NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Table structure for table `wrong_pair`
@@ -454,8 +667,9 @@ DROP TABLE IF EXISTS `wrong_pair`;
 CREATE TABLE `wrong_pair` (
   `Project_ID` int(10) unsigned NOT NULL default '0',
   `Term1` text NOT NULL,
-  `Term2` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Term2` text NOT NULL,
+  KEY `Index_1` (`Project_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -466,4 +680,4 @@ CREATE TABLE `wrong_pair` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2007-09-19  3:27:13
+-- Dump completed on 2007-09-28  9:22:50
