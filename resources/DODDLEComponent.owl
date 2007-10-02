@@ -635,6 +635,14 @@
     <rdfs:label xml:lang="en">Project</rdfs:label>
     <j.0:prefLabel>プロジェクト</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="DeleteInternalConceptAction">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="RemoveAction"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">中間概念の削除</rdfs:label>
+    <rdfs:label xml:lang="en">Delete Internal Concept</rdfs:label>
+    <j.0:prefLabel>中間概念の削除</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="SystemAddedPerfectlyMatchedWordCountMessage">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#ProjectInformationMessage"/>
@@ -874,6 +882,12 @@
     <rdfs:label xml:lang="en">Other POS</rdfs:label>
     <j.0:prefLabel>その他の品詞</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="HelpMenu">
+    <rdfs:subClassOf rdf:resource="#Menu"/>
+    <rdfs:label xml:lang="ja">ヘルプ</rdfs:label>
+    <rdfs:label xml:lang="en">Help</rdfs:label>
+    <j.0:prefLabel>ヘルプ</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="RemoveLinkToUpperConceptButton">
     <j.1:partOf>
       <owl:Class rdf:about="#ConceptDriftManagementPanel"/>
@@ -884,12 +898,6 @@
     <rdfs:label xml:lang="ja">上位概念へのリンクを削除</rdfs:label>
     <rdfs:label xml:lang="en">Remove Link to Upper Concept</rdfs:label>
     <j.0:prefLabel>上位概念へのリンクを削除</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:ID="HelpMenu">
-    <rdfs:subClassOf rdf:resource="#Menu"/>
-    <rdfs:label xml:lang="ja">ヘルプ</rdfs:label>
-    <rdfs:label xml:lang="en">Help</rdfs:label>
-    <j.0:prefLabel>ヘルプ</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="SSTaggerFolderTextField">
     <j.1:partOf>
@@ -1909,7 +1917,7 @@
       <owl:Class rdf:about="#IsaConceptTreePanel"/>
     </j.1:partOf>
     <rdfs:subClassOf>
-      <owl:Class rdf:ID="RemoveAction"/>
+      <owl:Class rdf:about="#RemoveAction"/>
     </rdfs:subClassOf>
     <rdfs:label xml:lang="ja">上位概念へのリンクを削除</rdfs:label>
     <rdfs:label xml:lang="en">Delete Link To Upper Concept</rdfs:label>
@@ -2386,6 +2394,14 @@
     <rdfs:label xml:lang="en">UXGA Layout</rdfs:label>
     <j.0:prefLabel>UXGAレイアウト</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="SystemAddedLabel">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Label"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">自動追加</rdfs:label>
+    <rdfs:label xml:lang="en">Automatically Added</rdfs:label>
+    <j.0:prefLabel>自動追加</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="NewConceptLabel">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Label"/>
@@ -2578,15 +2594,6 @@
     <rdfs:label xml:lang="en">Reload</rdfs:label>
     <j.0:prefLabel>再読み込み</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="CancelButton">
-    <j.1:partOf rdf:resource="#NameSpaceTable"/>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Button"/>
-    </rdfs:subClassOf>
-    <rdfs:label xml:lang="ja">取消し</rdfs:label>
-    <rdfs:label xml:lang="en">Cancel</rdfs:label>
-    <j.0:prefLabel>取消し</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="InputDocumentList">
     <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
     <j.1:partOf rdf:resource="#InputDocumentViewerPanel"/>
@@ -2595,6 +2602,15 @@
     <rdfs:label xml:lang="ja">入力文書リスト</rdfs:label>
     <rdfs:label xml:lang="en">Input Document List</rdfs:label>
     <j.0:prefLabel>入力文書リスト</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="CancelButton">
+    <j.1:partOf rdf:resource="#NameSpaceTable"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Button"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="ja">取消し</rdfs:label>
+    <rdfs:label xml:lang="en">Cancel</rdfs:label>
+    <j.0:prefLabel>取消し</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="TotalPropertyCountMessage">
     <rdfs:subClassOf rdf:resource="#ProjectInformationMessage"/>
@@ -2860,17 +2876,17 @@
     <rdfs:label xml:lang="en">Save</rdfs:label>
     <j.0:prefLabel>保存</j.0:prefLabel>
   </owl:Class>
-  <owl:Class rdf:ID="ModificationDateLabel">
-    <rdfs:subClassOf rdf:resource="#Label"/>
-    <rdfs:label xml:lang="ja">更新日</rdfs:label>
-    <rdfs:label xml:lang="en">Modification Date</rdfs:label>
-    <j.0:prefLabel>更新日</j.0:prefLabel>
-  </owl:Class>
   <owl:Class rdf:ID="SaveOWLOntologyAction">
     <rdfs:subClassOf rdf:resource="#SaveAction"/>
     <rdfs:label xml:lang="ja">OWLオントロジーを保存</rdfs:label>
     <rdfs:label xml:lang="en">Save OWL Ontology</rdfs:label>
     <j.0:prefLabel>OWLオントロジーを保存</j.0:prefLabel>
+  </owl:Class>
+  <owl:Class rdf:ID="ModificationDateLabel">
+    <rdfs:subClassOf rdf:resource="#Label"/>
+    <rdfs:label xml:lang="ja">更新日</rdfs:label>
+    <rdfs:label xml:lang="en">Modification Date</rdfs:label>
+    <j.0:prefLabel>更新日</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="EDRDicFolderTextField">
     <j.1:partOf rdf:resource="#FolderOptionPanel"/>
@@ -3167,6 +3183,13 @@
     <rdfs:label xml:lang="en">Save Input Word Concept Map</rdfs:label>
     <j.0:prefLabel>入力単語と概念の対応を保存</j.0:prefLabel>
   </owl:Class>
+  <owl:Class rdf:ID="PropertyHasaTreeBorder">
+    <j.1:partOf rdf:resource="#PropertyTreeConstructionPanel"/>
+    <rdfs:subClassOf rdf:resource="#HasaTreeBorder"/>
+    <rdfs:label xml:lang="ja">partOf階層(プロパティ)</rdfs:label>
+    <rdfs:label xml:lang="en">partOf Tree (Property)</rdfs:label>
+    <j.0:prefLabel>partOf階層(プロパティ)</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:ID="PasteConceptAction">
     <j.1:partOf rdf:resource="#HasaConceptTreePanel"/>
     <j.1:partOf rdf:resource="#IsaConceptTreePanel"/>
@@ -3174,13 +3197,6 @@
     <rdfs:label xml:lang="ja">概念の貼り付け</rdfs:label>
     <rdfs:label xml:lang="en">Paste Concept</rdfs:label>
     <j.0:prefLabel>概念の貼り付け</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:ID="PropertyHasaTreeBorder">
-    <j.1:partOf rdf:resource="#PropertyTreeConstructionPanel"/>
-    <rdfs:subClassOf rdf:resource="#HasaTreeBorder"/>
-    <rdfs:label xml:lang="ja">partOf階層(プロパティ)</rdfs:label>
-    <rdfs:label xml:lang="en">partOf Tree (Property)</rdfs:label>
-    <j.0:prefLabel>partOf階層(プロパティ)</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:ID="LangList">
     <j.1:partOf rdf:resource="#SwoogleWebServiceWrapperPanel"/>
