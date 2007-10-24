@@ -35,13 +35,13 @@
 	<jar href="./download/lib/xercesImpl.jar"/>
 	<jar href="./download/lib/xml-apis.jar"/>	
 	<jar href="./download/lib/je-3.2.13.jar"/>	
-	<jar href="./download/lib/sen.jar"/>	
+	<jar href="./download/lib/gosen-1.0beta.jar"/>	
 	<jar href="./download/lib/commons-logging-1.1.jar"/>
 	<jar href="./download/lib/arq-extra.jar"/>
 	<jar href="./download/lib/lucene-core-2.0.0.jar"/>
 	<jar href="./download/lib/wstx-asl-3.0.0.jar"/>
 	<jar href="./download/lib/idw-gpl.jar"/>
-	<jar href="./download/lib/mysql-connector-java-5.1.3-rc-bin.jar"/>
+	<jar href="./download/lib/mysql-connector-java-5.1.5-bin.jar"/>
    </resources>   
    <application-desc main-class="jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE"/>
 </jnlp>
