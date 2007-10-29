@@ -20,7 +20,6 @@
 	<classpathentry kind="lib" path="build/lib/utilities.jar"/>
 	<classpathentry kind="lib" path="build/lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="build/lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="build/lib/je-3.2.13.jar"/>
 	<classpathentry kind="lib" path="build/lib/commons-logging-1.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/arq-extra.jar"/>
 	<classpathentry kind="lib" path="build/lib/lucene-core-2.0.0.jar"/>

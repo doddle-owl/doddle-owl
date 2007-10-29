@@ -34,7 +34,6 @@
 	<jar href="./download/lib/utilities.jar"/>
 	<jar href="./download/lib/xercesImpl.jar"/>
 	<jar href="./download/lib/xml-apis.jar"/>	
-	<jar href="./download/lib/je-3.2.13.jar"/>	
 	<jar href="./download/lib/gosen-1.0beta.jar"/>	
 	<jar href="./download/lib/commons-logging-1.1.jar"/>
 	<jar href="./download/lib/arq-extra.jar"/>
