@@ -22,7 +22,6 @@ AutomaticDisambiguation.isCheckLongestSpreadActivation=true
 EDRT_HOME=C\:\\DODDLE-OWL\\EDRT_DIC
 AutomaticDisambiguation.useChildNodeCount=false
 CHASEN_EXE=C\:\\Program Files\\ChaSen\\chasen.exe
-USING_DB=false
 BASE_URI=http\://www.yamaguti.comp.ae.keio.ac.jp/doddle\#
 SSTAGGER_HOME=C\:\\DODDLE-OWL\\postagger-1.0
 AutomaticDisambiguation.isUsingSpreadActivationAlgorithm=true
