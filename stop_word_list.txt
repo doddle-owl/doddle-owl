@@ -318,3 +318,5 @@ yours
 yourself
 yourselves
 br
+である
+できる
