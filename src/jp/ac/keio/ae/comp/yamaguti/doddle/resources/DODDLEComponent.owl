@@ -363,6 +363,14 @@
     <j.0:prefLabel>Has-a階層</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <rdf:Description rdf:about="#AddInputTermListButton">
+    <j.1:partOf rdf:resource="#InputTermInfoTablePanel"/>
+    <rdfs:subClassOf rdf:resource="#AddButton"/>
+    <rdfs:label xml:lang="ja">入力語リストに追加</rdfs:label>
+    <rdfs:label xml:lang="en">Add Input Term List</rdfs:label>
+    <j.0:prefLabel>入力語リストに追加</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
   <rdf:Description rdf:about="#OpenInputConceptSetAction">
     <rdfs:subClassOf rdf:resource="#OpenAction"/>
     <rdfs:label xml:lang="ja">入力概念セットを開く</rdfs:label>
@@ -376,14 +384,6 @@
     <rdfs:label xml:lang="ja">最長</rdfs:label>
     <rdfs:label xml:lang="en">Longest</rdfs:label>
     <j.0:prefLabel>最長</j.0:prefLabel>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="#AddInputTermListButton">
-    <j.1:partOf rdf:resource="#InputTermInfoTablePanel"/>
-    <rdfs:subClassOf rdf:resource="#AddButton"/>
-    <rdfs:label xml:lang="ja">入力語リストに追加</rdfs:label>
-    <rdfs:label xml:lang="en">Add Input Term List</rdfs:label>
-    <j.0:prefLabel>入力語リストに追加</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#CheckBox">
@@ -1939,11 +1939,10 @@
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#WarningMessage">
-    <rdfs:label xml:lang="ja">注意</rdfs:label>
-    <rdfs:label xml:lang="en">Warning</rdfs:label>
-    <j.0:prefLabel>注意</j.0:prefLabel>
     <rdfs:subClassOf rdf:resource="#Message"/>
+    <rdfs:label xml:lang="ja">注意</rdfs:label>
     <rdfs:label xml:lang="ja">警告メッセージ</rdfs:label>
+    <rdfs:label xml:lang="en">Warning</rdfs:label>
     <rdfs:label xml:lang="en">Warning Message</rdfs:label>
     <j.0:prefLabel>警告メッセージ</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
@@ -2225,6 +2224,13 @@
     <j.0:prefLabel>多義性解消結果を保存</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <rdf:Description rdf:about="#DODDLEProjectFolderFilter">
+    <rdfs:subClassOf rdf:resource="#FileFilter"/>
+    <rdfs:label xml:lang="ja">DODDLEプロジェクトフォルダ</rdfs:label>
+    <rdfs:label xml:lang="en">DODDLE Project Folder</rdfs:label>
+    <j.0:prefLabel>DODDLEプロジェクトフォルダ</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
   <rdf:Description rdf:about="#PartiallyMatchedOptionBorder">
     <j.1:partOf rdf:resource="#TreeConstructionOptionPanel"/>
     <rdfs:subClassOf rdf:resource="#Border"/>
@@ -2484,7 +2490,7 @@
   <rdf:Description rdf:about="#NotImplementedMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
     <rdfs:label xml:lang="ja">未実装</rdfs:label>
-    <rdfs:label xml:lang="en">Not implemented yes.</rdfs:label>
+    <rdfs:label xml:lang="en">Not implemented yet.</rdfs:label>
     <j.0:prefLabel>未実装</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>

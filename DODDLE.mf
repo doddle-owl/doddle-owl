@@ -4,4 +4,4 @@ Class-Path:   ./build/lib/junit.jar ./build/lib/concurrent.jar ./build/lib/antlr
 Name: jp.ac.keio.ae.comp.yamaguti.doddle.DODDLEPlugin
 menu-name: DODDLEPlugin
 creator: Takeshi Morita
-Date: 2007-10-30
+Date: 2007-11-02
