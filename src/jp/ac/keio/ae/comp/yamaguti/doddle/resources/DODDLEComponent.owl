@@ -82,13 +82,6 @@
     <j.0:prefLabel>作成日</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
-  <rdf:Description rdf:about="#AutomaticDisambiguationAction">
-    <rdfs:subClassOf rdf:resource="#Action"/>
-    <rdfs:label xml:lang="ja">自動多義性解消</rdfs:label>
-    <rdfs:label xml:lang="en">Automatic Disambiguation</rdfs:label>
-    <j.0:prefLabel>自動多義性解消</j.0:prefLabel>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
   <rdf:Description rdf:about="#DoneMessage">
     <rdfs:subClassOf rdf:resource="#Message"/>
     <rdfs:label xml:lang="ja">完了メッセージ</rdfs:label>
@@ -559,14 +552,6 @@
     <j.0:prefLabel>剪定結果分析結果の確認</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
-  <rdf:Description rdf:about="#DisambiguationButton">
-    <j.1:partOf rdf:resource="#OntologySelectionPanel"/>
-    <rdfs:subClassOf rdf:resource="#Button"/>
-    <rdfs:label xml:lang="ja">多義性解消</rdfs:label>
-    <rdfs:label xml:lang="en">Disambiguation</rdfs:label>
-    <j.0:prefLabel>多義性解消</j.0:prefLabel>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
   <rdf:Description rdf:about="#DisambiguationPanel">
     <j.1:partOf rdf:resource="#CLASS_HASA_ROOT"/>
     <rdfs:label xml:lang="ja">多義性解消</rdfs:label>
@@ -723,13 +708,6 @@
     <j.0:prefLabel>DBアカウント</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
-  <rdf:Description rdf:about="#CompoundWordCheckBox">
-    <rdfs:subClassOf rdf:resource="#CheckBox"/>
-    <rdfs:label xml:lang="ja">複合語</rdfs:label>
-    <rdfs:label xml:lang="en">Compound Word</rdfs:label>
-    <j.0:prefLabel>複合語</j.0:prefLabel>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
   <rdf:Description rdf:about="#RemoveInputDocumentButton">
     <j.1:partOf rdf:resource="#DocumentSelectionPanel"/>
     <rdfs:subClassOf rdf:resource="#RemoveButton"/>
@@ -876,6 +854,13 @@
     <j.0:prefLabel>入力用語と対応する階層構築オプション</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <rdf:Description rdf:about="#AutomaticInputConceptSelectionAction">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+    <rdfs:label xml:lang="ja">自動入力概念選択</rdfs:label>
+    <rdfs:label xml:lang="en">Automatic Input Concept Selection</rdfs:label>
+    <j.0:prefLabel>自動入力概念選択</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
   <rdf:Description rdf:about="#TechnicalEDRCheckBox">
     <j.1:partOf rdf:resource="#GenericOntologySelectionPanel"/>
     <rdfs:subClassOf rdf:resource="#CheckBox"/>
@@ -1004,13 +989,6 @@
     <rdfs:label xml:lang="ja">追加</rdfs:label>
     <rdfs:label xml:lang="en">Add</rdfs:label>
     <j.0:prefLabel>追加</j.0:prefLabel>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="#OpenDisambiguationResultAction">
-    <rdfs:subClassOf rdf:resource="#OpenAction"/>
-    <rdfs:label xml:lang="ja">多義性解消結果を開く</rdfs:label>
-    <rdfs:label xml:lang="en">Open Disambiguation Result</rdfs:label>
-    <j.0:prefLabel>多義性解消結果を開く</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#UpperConceptLabel">
@@ -1165,6 +1143,13 @@
     <rdfs:label xml:lang="ja">関係 (プロパティ)の設定</rdfs:label>
     <rdfs:label xml:lang="en">Set Relation (Property)</rdfs:label>
     <j.0:prefLabel>関係 (プロパティ)の設定</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#OpenInputConceptSelectionResultAction">
+    <rdfs:subClassOf rdf:resource="#OpenAction"/>
+    <rdfs:label xml:lang="ja">入力概念選択結果を開く</rdfs:label>
+    <rdfs:label xml:lang="en">Open Input Concept Selection Result</rdfs:label>
+    <j.0:prefLabel>入力概念選択結果を開く</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#OpenInputTermTableAction">
@@ -1388,6 +1373,13 @@
     <j.0:prefLabel>IDF</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <rdf:Description rdf:about="#ShowMorphemeListCheckBox">
+    <rdfs:subClassOf rdf:resource="#CheckBox"/>
+    <rdfs:label xml:lang="ja">形態素リスト</rdfs:label>
+    <rdfs:label xml:lang="en">Morpheme List</rdfs:label>
+    <j.0:prefLabel>形態素リスト</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
   <rdf:Description rdf:about="#InputConceptSetCheckBox">
     <rdfs:subClassOf rdf:resource="#ProjectItemCheckBox"/>
     <rdfs:label xml:lang="ja">入力概念のセット</rdfs:label>
@@ -1409,6 +1401,13 @@
     <rdfs:label xml:lang="ja">用語情報テーブル</rdfs:label>
     <rdfs:label xml:lang="en">Term Information Table</rdfs:label>
     <j.0:prefLabel>用語情報テーブル</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#SaveInputConceptSelectionResultAction">
+    <rdfs:subClassOf rdf:resource="#SaveAction"/>
+    <rdfs:label xml:lang="ja">入力概念選択結果を保存</rdfs:label>
+    <rdfs:label xml:lang="en">Save Input Concept Selection Result</rdfs:label>
+    <j.0:prefLabel>入力概念選択結果を保存</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#TreeConstructionOptionBorder">
@@ -2159,9 +2158,9 @@
   <rdf:Description rdf:about="#SyncPartiallyMatchedTermListCheckBox">
     <j.1:partOf rdf:resource="#PerfectlyMatchedTermListPanel"/>
     <rdfs:subClassOf rdf:resource="#CheckBox"/>
-    <rdfs:label xml:lang="ja">多義性解消結果を対応する部分照合語リストに適用</rdfs:label>
-    <rdfs:label xml:lang="en">Apply Disambiguation Results to Partially Matched Terms</rdfs:label>
-    <j.0:prefLabel>多義性解消結果を対応する部分照合語リストに適用</j.0:prefLabel>
+    <rdfs:label xml:lang="ja">入力概念選択結果を対応する部分照合語リストに適用</rdfs:label>
+    <rdfs:label xml:lang="en">Apply Input Concept Selection Results to Partially Matched Terms</rdfs:label>
+    <j.0:prefLabel>入力概念選択結果を対応する部分照合語リストに適用</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#NewConceptLabel">
@@ -2215,13 +2214,6 @@
     <rdfs:label xml:lang="ja">説明</rdfs:label>
     <rdfs:label xml:lang="en">Description</rdfs:label>
     <j.0:prefLabel>説明</j.0:prefLabel>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="#SaveDisambiguationResultAction">
-    <rdfs:subClassOf rdf:resource="#SaveAction"/>
-    <rdfs:label xml:lang="ja">多義性解消結果を保存</rdfs:label>
-    <rdfs:label xml:lang="en">Save Disambiguation Result</rdfs:label>
-    <j.0:prefLabel>多義性解消結果を保存</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#DODDLEProjectFolderFilter">
@@ -3141,6 +3133,14 @@
     <rdfs:label xml:lang="ja">複合語クラス数</rdfs:label>
     <rdfs:label xml:lang="en">Classes from Compound Word Count</rdfs:label>
     <j.0:prefLabel>複合語クラス数</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#InputConceptSelectionButton">
+    <j.1:partOf rdf:resource="#OntologySelectionPanel"/>
+    <rdfs:subClassOf rdf:resource="#Button"/>
+    <rdfs:label xml:lang="ja">入力概念選択</rdfs:label>
+    <rdfs:label xml:lang="en">Input Concept Selection</rdfs:label>
+    <j.0:prefLabel>入力概念選択</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
   <rdf:Description rdf:about="#ConstructConceptTreeFromCompoundsWordsMessage">

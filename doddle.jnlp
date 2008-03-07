@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- JNLP File for DODDLE -->
-<jnlp spec="1.0+" codebase="http://avalon.comp.ae.keio.ac.jp/doddle-htdocs/" href="doddle.jnlp">
+<jnlp spec="1.0+" codebase="http://doddle-owl.sourceforge.net/" href="doddle.jnlp">
    <information>
      <title>DODDLE</title>
      <vendor>Yamaguchi Lab</vendor>
-     <homepage href="http://avalon.comp.ae.keio.ac.jp/doddle"/>
+     <homepage href="http://doddle-owl.sourceforge.net/"/>
      <description>Domain Ontology rapiD Development Environment</description>
      <description kind="short">DODDLE</description>
 	 <icon href="img/doddle_logo.jpg"/> 
@@ -35,9 +35,9 @@
 	<jar href="./download/lib/xercesImpl.jar"/>
 	<jar href="./download/lib/xml-apis.jar"/>	
 	<jar href="./download/lib/gosen-1.0beta.jar"/>	
-	<jar href="./download/lib/commons-logging-1.1.jar"/>
+	<jar href="./download/lib/commons-logging-1.1.1.jar"/>
 	<jar href="./download/lib/arq-extra.jar"/>
-	<jar href="./download/lib/lucene-core-2.0.0.jar"/>
+	<jar href="./download/lib/lucene-core-2.2.0.jar"/>
 	<jar href="./download/lib/wstx-asl-3.0.0.jar"/>
 	<jar href="./download/lib/idw-gpl.jar"/>
 	<jar href="./download/lib/mysql-connector-java-5.1.5-bin.jar"/>
