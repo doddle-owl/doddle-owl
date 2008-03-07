@@ -37,7 +37,7 @@
 		</param>
 		<param name="dictionary_element_factory" value="net.didion.jwnl.princeton.data.PrincetonWN17FileDictionaryElementFactory"/>
 		<param name="file_manager" value="net.didion.jwnl.dictionary.file_manager.FileManagerImpl">
-				<param name="file_type" value="net.didion.jwnl.princeton.file.PrincetonRandomAccessDictionaryFile"/> 
+			<param name="file_type" value="net.didion.jwnl.princeton.file.PrincetonRandomAccessDictionaryFile"/>
 			<param name="dictionary_path" value="c:\program files\wordnet\2.0\dict"/>
 		</param>
 	</dictionary>

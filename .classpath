@@ -20,12 +20,12 @@
 	<classpathentry kind="lib" path="build/lib/utilities.jar"/>
 	<classpathentry kind="lib" path="build/lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="build/lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="build/lib/commons-logging-1.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/arq-extra.jar"/>
-	<classpathentry kind="lib" path="build/lib/lucene-core-2.0.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/wstx-asl-3.0.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/idw-gpl.jar"/>
 	<classpathentry kind="lib" path="build/lib/mysql-connector-java-5.1.5-bin.jar"/>
 	<classpathentry kind="lib" path="build/lib/gosen-1.0beta.jar"/>
+	<classpathentry kind="lib" path="build/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="build/lib/lucene-core-2.2.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
