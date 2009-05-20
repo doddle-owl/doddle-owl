@@ -2678,6 +2678,14 @@
     <j.0:prefLabel>WordNet</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <rdf:Description rdf:about="#JpnWordNetCheckBox">
+    <j.1:partOf rdf:resource="#GenericOntologySelectionPanel"/>
+    <rdfs:subClassOf rdf:resource="#CheckBox"/>
+    <rdfs:label xml:lang="ja">日本語WordNet</rdfs:label>
+    <rdfs:label xml:lang="en">Japanese WordNet</rdfs:label>
+    <j.0:prefLabel>Japanese WordNet</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
   <rdf:Description rdf:about="#RemoveProjectAction">
     <rdfs:subClassOf rdf:resource="#RemoveAction"/>
     <rdfs:label xml:lang="ja">プロジェクトの削除</rdfs:label>

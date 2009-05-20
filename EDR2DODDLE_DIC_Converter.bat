@@ -1,1 +1,0 @@
-java -Xmx1024m -cp DODDLE.jar jp.ac.keio.ae.comp.yamaguti.doddle.ui.EDR2DoddleDicConverterUI
