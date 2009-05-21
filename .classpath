@@ -27,7 +27,6 @@
 	<classpathentry kind="lib" path="build/lib/gosen-1.0beta.jar"/>
 	<classpathentry kind="lib" path="build/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="build/lib/lucene-core-2.2.0.jar"/>
-	<classpathentry kind="lib" path="build/lib/nestedvm-1.0.jar"/>
 	<classpathentry kind="lib" path="build/lib/sqlite-jdbc-3.6.11.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
