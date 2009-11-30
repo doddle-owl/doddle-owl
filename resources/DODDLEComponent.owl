@@ -5,7 +5,7 @@
     xmlns:j.1="http://www.yamaguti.comp.ae.keio.ac.jp/doddle#"
     xmlns:owl="http://www.w3.org/2002/07/owl#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-  xml:base="http://www.yamaguti.comp.ae.keio.ac.jp/doddle#" > 
+    xml:base="http://www.yamaguti.comp.ae.keio.ac.jp/doddle#">
   <rdf:Description rdf:about="#ShortestRadioButton">
     <j.1:partOf rdf:resource="#InputConceptSelectionPanel"/>
     <rdfs:subClassOf rdf:resource="#RadioButton"/>

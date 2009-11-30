@@ -44,7 +44,7 @@
 			<fileset dir="." includes="DODDLE.jar" />
 		</signjar>
 	</target>
-	
+
 	<target name="signjar">
 		<property file="SignInfo.properties" />
 		<signjar maxmemory="256m" keystore="${keystore}" alias="${alias}" storepass="${storepass}" lazy="true">
