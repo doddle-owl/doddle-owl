@@ -4,7 +4,7 @@
 // 順序,http://www2.nict.go.jp/kk/e416/EDR#ID3f988a
 // 識別名,http://www2.nict.go.jp/kk/e416/EDR#ID444daa
 // 抽象物,http://www2.nict.go.jp/kk/e416/EDR#ID444e40
-// もの,http://www2.nict.go.jp/kk/e416/EDR#ID444d86 
+// もの,http://www2.nict.go.jp/kk/e416/EDR#ID444d86
 // 物事・ものごと,http://www2.nict.go.jp/kk/e416/EDR#ID3d017c
 // 職業，肩書，役割で限定した人間,http://www2.nict.go.jp/kk/e416/EDR#ID444df2
 // 人間または人間と似た振る舞いをする主体// ,http://www2.nict.go.jp/kk/e416/EDR#ID3aa911
