@@ -1,0 +1,9 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wob: <http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#>
+
+SELECT ?reference_type ?ontology_url 
+WHERE { 
+      ?anon rdf:type rdf:Statement;
+	    rdf:predicate ?reference_type;
+	    rdf:object ?ontology_url.
+}

@@ -1,0 +1,9 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wob: <http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#>
+PREFIX swoogle: <http://daml.umbc.edu/ontologies/webofbelief/1.4/swoogle.owl#>
+
+SELECT ?swt_uri ?termRank
+WHERE {
+   		?swt_uri rdf:type wob:SemanticWebTerm ;
+   					swoogle:hasTermRank ?termRank.
+}

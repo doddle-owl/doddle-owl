@@ -1,0 +1,10 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX daml03: <http://www.daml.org/2001/03/daml+oil#>
+PREFIX daml10: <http://www.w3.org/2001/10/daml+oil#>
+
+SELECT ?property
+WHERE {
+    {?property rdf:type rdf:Property} UNION {?property rdf:type owl:ObjectProperty} UNION {?property rdf:type owl:DatatypeProperty} UNION {?property rdf:type owl:AnnotationProperty} UNION {?property rdf:type owl:FunctionalProperty} UNION {?property rdf:type owl:InverseFunctionalProperty} UNION {?property rdf:type owl:SymmetricProperty} UNION {?property rdf:type owl:OntologyProperty} UNION {?property rdf:type owl:TransitiveProperty} UNION {?property rdf:type daml03:Property} UNION {?property rdf:type daml03:ObjectProperty} UNION {?property rdf:type daml03:DatatypeProperty} UNION {?property rdf:type daml03:TransitiveProperty} UNION {?property rdf:type daml03:DatatypeProperty} UNION {?property rdf:type daml03:UniqueProperty}  UNION {?property rdf:type daml10:Property} UNION {?property rdf:type daml10:ObjectProperty} UNION {?property rdf:type daml10:DatatypeProperty} UNION {?property rdf:type daml10:TransitiveProperty} UNION {?property rdf:type daml10:DatatypeProperty} UNION {?property rdf:type daml10:UniqueProperty}
+}
