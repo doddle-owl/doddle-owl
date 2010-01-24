@@ -1,0 +1,10 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX daml03: <http://www.daml.org/2001/03/daml+oil#>
+PREFIX daml10: <http://www.w3.org/2001/10/daml+oil#>
+
+SELECT ?class
+WHERE {
+		{?class rdf:type rdfs:Class} UNION {?class rdf:type owl:Class} UNION {?class rdf:type owl:Restriction} UNION {?class rdf:type owl:DataRange} UNION {?class rdf:type daml03:Class} UNION {?class rdf:type daml03:Datatype} UNION {?class rdf:type daml03:Restriction} UNION {?class rdf:type daml10:Class} UNION {?class rdf:type daml10:Datatype} UNION {?class rdf:type daml10:Restriction}
+}

@@ -1,0 +1,8 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX daml03: <http://www.daml.org/2001/03/daml+oil#>
+PREFIX daml10: <http://www.w3.org/2001/10/daml+oil#>
+
+SELECT ?label ?description 
+WHERE {
+  {?concept rdfs:label ?label} UNION {?concept rdfs:comment ?description} UNION {?concept daml03:label ?label} UNION {?concept daml03:comment ?description} UNION  {?concept daml10:label ?label} UNION {?concept daml10:comment ?description}   
+}

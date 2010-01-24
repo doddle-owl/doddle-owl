@@ -1,0 +1,8 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX daml03: <http://www.daml.org/2001/03/daml+oil#>
+PREFIX daml10: <http://www.w3.org/2001/10/daml+oil#>
+
+SELECT ?property ?domain ?range
+WHERE {
+		{?property rdfs:domain ?domain} UNION {?property rdfs:range ?range} UNION {?property daml03:domain ?domain} UNION {?property daml03:range ?range} UNION {?property daml10:domain ?domain} UNION {?property daml10:range ?range}
+}

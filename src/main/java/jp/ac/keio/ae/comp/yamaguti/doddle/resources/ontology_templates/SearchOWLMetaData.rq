@@ -1,0 +1,14 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX daml03: <http://www.daml.org/2001/03/daml+oil#>
+PREFIX daml10: <http://www.w3.org/2001/10/daml+oil#>
+
+SELECT ?property ?value
+WHERE {
+	{?owl_meta_data_subject rdf:type owl:Ontology;
+			       ?property ?value.} UNION 
+   	{?owl_meta_data_subject rdf:type daml03:Ontology;
+			       ?property ?value.} UNION 
+   	{?owl_meta_data_subject rdf:type daml10:Ontology;
+			       ?property ?value.}
+}

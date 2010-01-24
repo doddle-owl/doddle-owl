@@ -1,0 +1,12 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wob: <http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#>
+PREFIX swoogle: <http://daml.umbc.edu/ontologies/webofbelief/1.4/swoogle.owl#>
+
+SELECT ?ontology_url ?file_type ?encoding ?rdf_type ?ontoRank
+WHERE {
+   		?ontology_url rdf:type wob:SemanticWebDocument ;
+   					swoogle:hasOntoRank ?ontoRank;
+					 swoogle:hasEncoding ?encoding ;
+ 					 swoogle:hasFiletype ?file_type ;
+					 wob:hasGrammar ?rdf_type.
+}
