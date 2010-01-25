@@ -16,6 +16,17 @@
 			<outputDirectory>resources</outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>src/main/java/jp/ac/keio/ae/comp/yamaguti/doddle/resources</directory>
+			<outputDirectory>resources</outputDirectory>
+			<includes>
+				<include>*.owl</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/java/jp/ac/keio/ae/comp/yamaguti/doddle/resources/ontology_templates</directory>
+			<outputDirectory>resources/ontology_templates</outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>target/site/apidocs</directory>
 			<outputDirectory>apidocs</outputDirectory>
 		</fileSet>
