@@ -98,6 +98,18 @@
 		</testResources>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<!-- mvn exec:java  -->
+				<configuration>
+					<commandlineArgs></commandlineArgs>
+					<mainClass>jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE</mainClass>
+					<!--
+						<mainClass>jp.ac.keio.ae.comp.yamaguti.doddle.ui.DODDLEDicConverterUI</mainClass>
+					-->
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -172,7 +184,6 @@
 							<name>DODDLE_DIC_Converter</name>
 						</program>
 					</programs>
-
 				</configuration>
 				<executions>
 					<execution>
