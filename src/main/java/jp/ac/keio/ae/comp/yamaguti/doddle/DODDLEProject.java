@@ -67,7 +67,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 
     private View visualizationPanelView;
 
-    class NewProjectWorker extends SwingWorker implements PropertyChangeListener {
+    class NewProjectWorker extends SwingWorker<String, String> implements PropertyChangeListener {
 
         private int taskCnt;
         private int currentTaskCnt;
@@ -85,7 +85,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
         }
 
         @Override
-        protected Object doInBackground() {
+        protected String doInBackground() {
             try {
                 ToolTipManager.sharedInstance().setEnabled(false);
                 projectMenuItem = new JCheckBoxMenuItem(title);

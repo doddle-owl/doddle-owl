@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE (a Domain Ontology rapiD DeveLopment Environment)
  * Project Website: http://doddle-owl.sourceforge.net/
- * 
- * Copyright (C) 2004-2009 Yamaguchi Laboratory, Keio University. All rights reserved. 
- * 
+ *
+ * Copyright (C) 2004-2009 Yamaguchi Laboratory, Keio University. All rights reserved.
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.ui;
@@ -54,7 +54,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
 
     private JLabel nodeTypeLabel;
     private JComboBox nodeTypeBox;
-    
+
     private JLabel trimmedNodeCntLabel;
     private JLabel trimmedNodeCntValueLabel;
 
@@ -101,7 +101,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
         JPanel nodeTypePanel = new JPanel();
         nodeTypePanel.add(nodeTypeLabel);
         nodeTypePanel.add(nodeTypeBox);
-        
+
         trimmedNodeCntLabel = new JLabel(Translator.getTerm("TrimmedConceptCountLabel") + "： ");
         trimmedNodeCntValueLabel = new JLabel("");
         JPanel trimmedNodeCntPanel = new JPanel();
@@ -109,14 +109,14 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
         trimmedNodeCntPanel.add(trimmedNodeCntValueLabel);
 
         isMultipleInheritanceLabel = new JLabel(Translator.getTerm("IsMultipleInheritanceLabel")+": ");
-        
+
         JPanel conceptDriftManagementInfoPanel = new JPanel();
         conceptDriftManagementInfoPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptDriftManagementInfoBorder")));
         conceptDriftManagementInfoPanel.setLayout(new GridLayout(1,3));
         conceptDriftManagementInfoPanel.add(getWestPanel(nodeTypePanel));
         conceptDriftManagementInfoPanel.add(getWestPanel(trimmedNodeCntPanel));
         conceptDriftManagementInfoPanel.add(getWestPanel(isMultipleInheritanceLabel));
-        
+
         setLayout(new BorderLayout());
         add(getWestPanel(northPanel), BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
@@ -151,7 +151,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
         conceptDriftManagementPanel = cdmp;
     }
 
-    
+
     public void setConceptInformation(ConceptTreeNode conceptTreeNode) {
         selectedConcept = conceptTreeNode.getConcept();
         labelPanel.setSelectedConcept(selectedConcept);
@@ -180,7 +180,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
             edrConceptDefinitionPanel.setRangeList(vc.getRangeSet());
         }
         conceptDriftManagementPanel.traAction(conceptTreeNode);
-    }    
+    }
 
     private void setURI(String uri) {
         NameSpaceTable nsTable = DODDLE.getCurrentProject().getOntologySelectionPanel().getNSTable();
@@ -197,7 +197,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
         }
         localNameField.setText(ln);
     }
-    
+
     private void setTreeConfig(JTree tree, DefaultTreeCellRenderer renderer) {
         tree.addTreeSelectionListener(new TreeSelectionListener() {
 

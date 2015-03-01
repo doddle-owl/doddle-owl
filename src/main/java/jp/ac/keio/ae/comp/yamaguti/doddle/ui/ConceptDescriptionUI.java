@@ -23,14 +23,18 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.Concept;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.ConceptDefinition;
 
 import javax.swing.*;
-import javax.swing.event.*;
-
-import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author takeshi morita
@@ -124,7 +128,7 @@ public class ConceptDescriptionUI extends JPanel implements ListSelectionListene
             setVerbIDList();
         } else if (e.getSource() == verbIDJList) {
             setSubVerbIDList();
-            setToRelationList();
+            setToRelationList();            
         } else if (e.getSource() == toRelationJList) {
             setNounIDList();
         } else if (e.getSource() == nounIDJList) {

@@ -23,22 +23,53 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.utils;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.ui.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLEConstants;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.ReferenceOWLOntology;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.SwoogleOWLMetaData;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.SwoogleWebServiceData;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.NameSpaceTable;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.StatusBarPanel;
 
-import org.apache.log4j.*;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
-import com.hp.hpl.jena.ontology.*;
-import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.ontology.OntDocumentManager;
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.rdf.model.impl.*;
-import com.hp.hpl.jena.vocabulary.*;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.impl.RDFDefaultErrorHandler;
+import com.hp.hpl.jena.vocabulary.RDFS;
+
 
 /**
  * @author takeshi morita

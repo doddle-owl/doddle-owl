@@ -1,43 +1,80 @@
 /*
  * Project Name: DODDLE (a Domain Ontology rapiD DeveLopment Environment)
  * Project Website: http://doddle-owl.sourceforge.net/
- * 
- * Copyright (C) 2004-2009 Yamaguchi Laboratory, Keio University. All rights reserved. 
- * 
+ *
+ * Copyright (C) 2004-2009 Yamaguchi Laboratory, Keio University. All rights reserved.
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.sql.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map.*;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeMap;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.SwingWorker;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLEProject;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.ConceptPair;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.Document;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.WordSpaceData;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Apriori;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.WordSpace;
 
 /**
  * @author Yoshihiro Shigeta
@@ -123,27 +160,28 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         aprioriParamPanel = getNorthWestComponent(getAprioriPanel());
         /*
          * View[] mainViews = new View[2]; ViewMap viewMap = new ViewMap();
-         * 
+         *
          * mainViews[0] = new
-         * View(Translator.getString("ConceptDefinitionPanel.WordSpaceParameters"),
-         * null, getWestComponent(wordSpaceParamPanel)); mainViews[1] = new
-         * View(Translator.getString("ConceptDefinitionPanel.AprioriParameters"),
+         * View(Translator.getString("ConceptDefinitionPanel.WordSpaceParameters"
+         * ), null, getWestComponent(wordSpaceParamPanel)); mainViews[1] = new
+         * View
+         * (Translator.getString("ConceptDefinitionPanel.AprioriParameters"),
          * null, getWestComponent(aprioriParamPanel));
-         * 
+         *
          * for (int i = 0; i < mainViews.length; i++) { viewMap.addView(i,
          * mainViews[i]); } RootWindow rootWindow =
          * Utils.createDODDLERootWindow(viewMap); //SplitWindow sw1 = new
          * SplitWindow(false, 0.3f, mainViews[0], mainViews[1]);
          * rootWindow.setWindow(new TabWindow(new DockingWindow[]{mainViews[0],
          * mainViews[1]}));
-         * 
-         * setLayout(new BorderLayout()); add(rootWindow, BorderLayout.CENTER); /*
-         * JTabbedPane parameterTab = new JTabbedPane();
+         *
+         * setLayout(new BorderLayout()); add(rootWindow, BorderLayout.CENTER);
+         * /* JTabbedPane parameterTab = new JTabbedPane();
          * parameterTab.add(getWestComponent(wordSpaceParamPanel), Translator
          * .getString("ConceptDefinitionPanel.WordSpaceParameters"));
          * parameterTab.add(getWestComponent(aprioriParamPanel), Translator
          * .getString("ConceptDefinitionPanel.AprioriParameters"));
-         * 
+         *
          * setLayout(new BorderLayout()); add(parameterTab,
          * BorderLayout.CENTER);
          */
@@ -250,7 +288,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return (new Double(confidenceValue.getText())).doubleValue();
     }
 
-    public double getWordSpaceUnder() {
+    public double getWordSpaceUnderValue() {
         return (new Double(wordSpaceValue.getText())).doubleValue();
     }
 
@@ -326,13 +364,12 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
     }
 
     public WordSpaceData getWordSpaceData() {
-        WordSpaceData wsData = new WordSpaceData();
-        wsData.setGramNumber(getGramNumber());
-        wsData.setGramCount(getGramCount());
-        wsData.setFrontScope(getFrontScope());
-        wsData.setBehindScope(getBehindScope());
-        wsData.setUnderValue(getWordSpaceUnder());
-        return wsData;
+        int gramNumber = getGramNumber();
+        int gramCount = getGramCount();
+        int frontScope = getFrontScope();
+        int behindScope = getBehindScope();
+        double underValue = getWordSpaceUnderValue();
+        return new WordSpaceData(gramNumber, gramCount, frontScope, behindScope, underValue);
     }
 
     public void setInputConcept() {

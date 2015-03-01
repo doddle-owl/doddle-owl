@@ -1,45 +1,76 @@
 /*
  * Project Name: DODDLE (a Domain Ontology rapiD DeveLopment Environment)
  * Project Website: http://doddle-owl.sourceforge.net/
- * 
- * Copyright (C) 2004-2009 Yamaguchi Laboratory, Keio University. All rights reserved. 
- * 
+ *
+ * Copyright (C) 2004-2009 Yamaguchi Laboratory, Keio University. All rights reserved.
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.*;
-import java.text.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.actions.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLEProject;
+import jp.ac.keio.ae.comp.yamaguti.doddle.actions.LoadOntologyAction;
+import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveOntologyAction;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLEConstants;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Utils;
 
-import com.hp.hpl.jena.db.*;
+import com.hp.hpl.jena.db.DBConnection;
+import com.hp.hpl.jena.db.IDBConnection;
 
 /**
  * @author takeshi morita
@@ -493,7 +524,7 @@ public class DBManagerDialog extends JDialog implements ActionListener, ListSele
         connectDB();
     }
 
-    class UpdateProjectWorker extends SwingWorker implements java.beans.PropertyChangeListener {
+    class UpdateProjectWorker extends SwingWorker<String, String> implements java.beans.PropertyChangeListener {
 
         private int currentTaskCnt;
 
@@ -503,7 +534,7 @@ public class DBManagerDialog extends JDialog implements ActionListener, ListSele
         }
 
         @Override
-        protected Object doInBackground() throws Exception {
+        protected String doInBackground() throws Exception {
             DODDLE.STATUS_BAR.setLastMessage(projectName);
             try {
                 DODDLEProject project = DODDLE.getCurrentProject();
@@ -655,7 +686,7 @@ public class DBManagerDialog extends JDialog implements ActionListener, ListSele
         }
     }
 
-    class OpenProjectWorker extends SwingWorker implements java.beans.PropertyChangeListener {
+    class OpenProjectWorker extends SwingWorker<String, String> implements java.beans.PropertyChangeListener {
 
         private int currentTaskCnt;
 
@@ -665,7 +696,7 @@ public class DBManagerDialog extends JDialog implements ActionListener, ListSele
         }
 
         @Override
-        protected Object doInBackground() throws Exception {
+        protected String doInBackground() throws Exception {
             while (!currentProject.isInitialized()) {
                 try {
                     Thread.sleep(1000);

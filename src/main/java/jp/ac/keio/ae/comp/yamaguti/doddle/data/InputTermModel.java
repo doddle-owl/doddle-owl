@@ -23,136 +23,135 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.data;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
-import net.java.sen.dictionary.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLEProject;
+import jp.ac.keio.ae.comp.yamaguti.doddle.taskanalyzer.Morpheme;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
 
 /**
  * @author takeshi morita
  */
 public class InputTermModel implements Comparable {
 
-    private int matchedPoint;
-    private int ambiguousCnt;
-    private String inputWord;
-    private String matchedInputWord;
-    private List<Token> tokenList;
-    private String wordListStr;
-    private boolean isSystemAdded;
+	private int matchedPoint;
+	private int ambiguousCnt;
+	private String inputWord;
+	private String matchedInputWord;
+	private List<Morpheme> morphemeList;
+	private String wordListStr;
+	private boolean isSystemAdded;
 
-    private DODDLEProject project;
+	private DODDLEProject project;
 
-    public InputTermModel(String w, List<Token> tList, String miw, int ac, int mp, DODDLEProject p) {
-        project = p;
-        inputWord = w;
-        tokenList = tList;
-        matchedInputWord = miw;
-        StringBuffer buf = new StringBuffer("(");
-        for (Iterator i = tokenList.iterator(); i.hasNext();) {
-            Token token = (Token) i.next();
-            // String word = token.getBasicString();
-            String word = token.getMorpheme().getBasicForm();
-            if (i.hasNext()) {
-                buf.append(word + "+");
-            } else {
-                buf.append(word + ")");
-            }
-        }
-        wordListStr = buf.toString();
-        ambiguousCnt = ac;
-        matchedPoint = mp;
-    }
+	public InputTermModel(String w, List<Morpheme> mList, String miw, int ac, int mp,
+			DODDLEProject p) {
+		project = p;
+		inputWord = w;
+		morphemeList = mList;
+		matchedInputWord = miw;
+		StringBuffer buf = new StringBuffer("(");
+		for (Iterator i = morphemeList.iterator(); i.hasNext();) {
+			Morpheme m = (Morpheme) i.next();
+			String word = m.getBasic();
+			if (i.hasNext()) {
+				buf.append(word + "+");
+			} else {
+				buf.append(word + ")");
+			}
+		}
+		wordListStr = buf.toString();
+		ambiguousCnt = ac;
+		matchedPoint = mp;
+	}
 
-    public void setIsSystemAdded(boolean t) {
-        isSystemAdded = t;
-    }
+	public void setIsSystemAdded(boolean t) {
+		isSystemAdded = t;
+	}
 
-    public boolean isSystemAdded() {
-        return isSystemAdded;
-    }
+	public boolean isSystemAdded() {
+		return isSystemAdded;
+	}
 
-    // 部分照合かどうか
-    public boolean isPartiallyMatchTerm() {
-        // 1 < wordList.size()の条件を2006/10/5に追加
-        // 「打合せ」が「打合す」と照合してしまうため
-        return !inputWord.equals(matchedInputWord) && 1 < tokenList.size();
-    }
+	// 部分照合かどうか
+	public boolean isPartiallyMatchTerm() {
+		// 1 < wordList.size()の条件を2006/10/5に追加
+		// 「打合せ」が「打合す」と照合してしまうため
+		return !inputWord.equals(matchedInputWord) && 1 < morphemeList.size();
+	}
 
-    // 完全照合かどうか
-    public boolean isPerfectlyMatchWord() {
-        return !isPartiallyMatchTerm();
-    }
+	// 完全照合かどうか
+	public boolean isPerfectlyMatchWord() {
+		return !isPartiallyMatchTerm();
+	}
 
-    public int compareTo(Object o) {
-        InputTermModel oiwModel = (InputTermModel) o;
-        int onum = oiwModel.getAmbiguousCnt();
-        String oword = oiwModel.getTerm();
-        if (this.ambiguousCnt < onum) {
-            return 1;
-        } else if (this.ambiguousCnt > onum) {
-            return -1;
-        } else {
-            return oword.compareTo(inputWord);
-        }
-    }
+	public int compareTo(Object o) {
+		InputTermModel oiwModel = (InputTermModel) o;
+		int onum = oiwModel.getAmbiguousCnt();
+		String oword = oiwModel.getTerm();
+		if (this.ambiguousCnt < onum) {
+			return 1;
+		} else if (this.ambiguousCnt > onum) {
+			return -1;
+		} else {
+			return oword.compareTo(inputWord);
+		}
+	}
 
-    public String getTerm() {
-        return inputWord;
-    }
+	public String getTerm() {
+		return inputWord;
+	}
 
-    public String getMatchedTerm() {
-        return matchedInputWord;
-    }
+	public String getMatchedTerm() {
+		return matchedInputWord;
+	}
 
-    public int getMatchedPoint() {
-        return matchedPoint;
-    }
+	public int getMatchedPoint() {
+		return matchedPoint;
+	}
 
-    public int getAmbiguousCnt() {
-        return ambiguousCnt;
-    }
+	public int getAmbiguousCnt() {
+		return ambiguousCnt;
+	}
 
-    public List<Token> getTokenList() {
-        return tokenList;
-    }
+	public List<Morpheme> getMorphemeList() {
+		return morphemeList;
+	}
 
-    public String getTopBasicWord() {
-        // return tokenList.get(0).getBasicString();
-        return tokenList.get(0).getMorpheme().getBasicForm();
-    }
+	public String getTopBasicWord() {
+		return morphemeList.get(0).getBasic();
+	}
 
-    public String getBasicWordWithoutTopWord() {
-        StringBuilder builder = new StringBuilder();
-        for (Token token : tokenList) {
-            // builder.append(token.getBasicString());
-            builder.append(token.getMorpheme().getBasicForm());
-        }
-        return builder.toString();
-    }
+	public String getBasicWordWithoutTopWord() {
+		StringBuilder builder = new StringBuilder();
+		for (Morpheme m : morphemeList) {
+			builder.append(m.getBasic());
+		}
+		return builder.toString();
+	}
 
-    public int getCompoundWordLength() {
-        return tokenList.size();
-    }
+	public int getCompoundWordLength() {
+		return morphemeList.size();
+	}
 
-    public String toString() {
-        StringBuffer buf = new StringBuffer(inputWord);
-        if (isPartiallyMatchTerm() && project.isPartiallyMatchedCompoundWordCheckBox()) {
-            buf.append(" " + wordListStr);
-        }
-        if (isPartiallyMatchTerm() && project.isPartiallyMatchedMatchedWordBox()) {
-            buf.append(" (" + matchedInputWord + ") ");
-        }
-        if (isPartiallyMatchTerm() && project.isPartiallyMatchedAmbiguityCntCheckBox()) {
-            buf.append(" (" + ambiguousCnt + ")");
-        }
-        if (isPerfectlyMatchWord() && project.isPerfectlyMatchedAmbiguityCntCheckBox()) {
-            buf.append(" (" + ambiguousCnt + ")");
-        }
-        if (isSystemAdded() && project.isPerfectlyMatchedSystemAddedWordCheckBox()) {
-            buf.append(" (" + Translator.getTerm("SystemAddedLabel") + ")");
-        }
-        return buf.toString();
-    }
+	public String toString() {
+		StringBuffer buf = new StringBuffer(inputWord);
+		if (isPartiallyMatchTerm() && project.isPartiallyMatchedCompoundWordCheckBox()) {
+			buf.append(" " + wordListStr);
+		}
+		if (isPartiallyMatchTerm() && project.isPartiallyMatchedMatchedWordBox()) {
+			buf.append(" (" + matchedInputWord + ") ");
+		}
+		if (isPartiallyMatchTerm() && project.isPartiallyMatchedAmbiguityCntCheckBox()) {
+			buf.append(" (" + ambiguousCnt + ")");
+		}
+		if (isPerfectlyMatchWord() && project.isPerfectlyMatchedAmbiguityCntCheckBox()) {
+			buf.append(" (" + ambiguousCnt + ")");
+		}
+		if (isSystemAdded() && project.isPerfectlyMatchedSystemAddedWordCheckBox()) {
+			buf.append(" (" + Translator.getTerm("SystemAddedLabel") + ")");
+		}
+		return buf.toString();
+	}
 }

@@ -23,15 +23,16 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.actions;
 
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLELiteral;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.ConstructClassPanel;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.ConstructPropertyPanel;
 
 import javax.swing.*;
-
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.ui.*;
+import java.awt.event.ActionEvent;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author takeshi morita
@@ -66,7 +67,7 @@ public class LoadDescriptionsAction extends AbstractAction {
                     if (type.equals("class")) {
                         classWordDescriptionMap.put(word, descriptionLiteral);
                     } else if (type.equals("property")) {
-                        propertyWordDescriptionMap.put(word, descriptionLiteral);
+                        propertyWordDescriptionMap.put(word, descriptionLiteral);                        
                     }
                 }
             }
