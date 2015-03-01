@@ -28,17 +28,22 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import jp.ac.keio.ae.comp.yamaguti.doddle.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
 
 /**
  * @author takeshi morita
  */
-public class AutomaticDisambiguationTestAction extends AbstractAction{
-    public AutomaticDisambiguationTestAction(String title) {
-        super(title);
+public class ShowOptionDialogAction extends AbstractAction {
+
+    private DODDLE doddle;
+
+    public ShowOptionDialogAction(String title, DODDLE ddl) {
+        super(title, Utils.getImageIcon("cog.png"));
+        doddle = ddl;
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().getAutomaticDisAmbiguationAction().doDisambiguationTest();
+        doddle.getOptionDialog().setLocationRelativeTo(doddle);
+        doddle.getOptionDialog().setVisible(true);
     }
 }

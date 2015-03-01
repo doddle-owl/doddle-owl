@@ -1,44 +1,67 @@
 /*
  * Project Name: DODDLE (a Domain Ontology rapiD DeveLopment Environment)
  * Project Website: http://doddle-owl.sourceforge.net/
- * 
- * Copyright (C) 2004-2008 Yamaguchi Laboratory, Keio University. All rights reserved. 
- * 
+ *
+ * Copyright (C) 2004-2008 Yamaguchi Laboratory, Keio University. All rights reserved.
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.actions;
 
-import java.awt.event.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.tree.*;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.ui.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLEProject;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.Concept;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.ConceptTreeNode;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLEConstants;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLELiteral;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.FreeMindFileFilter;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.OWLFileFilter;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.VerbConcept;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.ConceptTreePanel;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.ConstructClassPanel;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.ConstructPropertyPanel;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.InputConceptSelectionPanel;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.ConceptTreeMaker;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.FreeMindModelMaker;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import com.hp.hpl.jena.db.*;
-import com.hp.hpl.jena.rdf.model.*;
+import com.hp.hpl.jena.db.IDBConnection;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ModelMaker;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 /**
  * @author takeshi morita

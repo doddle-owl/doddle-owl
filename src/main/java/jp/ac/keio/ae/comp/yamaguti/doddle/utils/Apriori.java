@@ -39,200 +39,208 @@ import net.java.sen.dictionary.*;
  */
 public class Apriori {
 
-    private List<List<String>> lineList;
+	private List<List<String>> lineList;
 
-    private Set<List<Integer>> pairSet;
-    private List<ConceptPair> allRelation;
-    private Map<String, List<ConceptPair>> aprioriResult;
-    private Map<List<Integer>, Integer> indexPairAppearence;
-    private double minSupport;
-    private double minConfidence;
-    private List<String> inputWordList;
+	private Set<List<Integer>> pairSet;
+	private List<ConceptPair> allRelation;
+	private Map<String, List<ConceptPair>> aprioriResult;
+	private Map<List<Integer>, Integer> indexPairAppearence;
+	private double minSupport;
+	private double minConfidence;
+	private List<String> inputWordList;
 
-    private Document document;
-    private ConceptDefinitionPanel conceptDefinitionPanel;
+	private Document document;
+	private ConceptDefinitionPanel conceptDefinitionPanel;
 
-    public Apriori(ConceptDefinitionPanel cdp, Document doc) {
-        document = doc;
-        conceptDefinitionPanel = cdp;
-        pairSet = new HashSet<List<Integer>>();
-        aprioriResult = new HashMap<String, List<ConceptPair>>();
-        indexPairAppearence = new HashMap<List<Integer>, Integer>();
-        allRelation = new ArrayList<ConceptPair>();
-        inputWordList = conceptDefinitionPanel.getInputTermList();
-        makeLineList();
-    }
+	public Apriori(ConceptDefinitionPanel cdp, Document doc) {
+		document = doc;
+		conceptDefinitionPanel = cdp;
+		pairSet = new HashSet<List<Integer>>();
+		aprioriResult = new HashMap<String, List<ConceptPair>>();
+		indexPairAppearence = new HashMap<List<Integer>, Integer>();
+		allRelation = new ArrayList<ConceptPair>();
+		inputWordList = conceptDefinitionPanel.getInputTermList();
+		makeLineList();
+	}
 
-    public Document getDocument() {
-        return document;
-    }
+	public Document getDocument() {
+		return document;
+	}
 
-    public void setParameters(double mins, double minc) {
-        minSupport = mins;
-        minConfidence = minc;
-    }
+	public void setParameters(double mins, double minc) {
+		minSupport = mins;
+		minConfidence = minc;
+	}
 
-    // 1行単位での形態素解析
-    private List<String> getJaLineWordList(String line) {
-        List<String> lineWordList = new ArrayList<String>();
-        try {
-            StringTagger tagger = SenFactory.getStringTagger(DODDLEConstants.GOSEN_CONFIGURATION_FILE);
-            List<Token> tokenList = tagger.analyze(line);
-            if (tokenList == null) { return lineWordList; }
-            for (Token token : tokenList) {
-                String basicStr = token.getMorpheme().getBasicForm();
-                lineWordList.add(basicStr);
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-        Utils.addJaCompoundWord(lineWordList, inputWordList); // 複合語の追加
+	// 1行単位での形態素解析
+	private List<String> getJaLineWordList(String line) {
+		List<String> lineWordList = new ArrayList<String>();
+		try {
+			StringTagger tagger = SenFactory.getStringTagger(null);
+			List<Token> tokenList = new ArrayList<Token>();
+			tagger.analyze(line, tokenList);
+			for (Token token : tokenList) {
+				String basicStr = token.getMorpheme().getBasicForm();
+				if (basicStr.equals("*")) {
+					basicStr = token.getSurface();
+				}
+				lineWordList.add(basicStr);
+			}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		Utils.addJaCompoundWord(lineWordList, inputWordList); // 複合語の追加
 
-        return lineWordList;
-    }
+		return lineWordList;
+	}
 
-    // 1行単位での形態素解析
-    private List<String> getEnLineWordList(String line) {
-        line = line.replaceAll("\\.|．", "");
-        List<String> lineWordList = new ArrayList<String>();
-        for (String lineWord : line.split("\\s+")) {
-            lineWordList.add(lineWord.toLowerCase());
-        }
-        Utils.addEnCompoundWord(lineWordList, inputWordList); // 複合語の追加
-        return lineWordList;
-    }
+	// 1行単位での形態素解析
+	private List<String> getEnLineWordList(String line) {
+		line = line.replaceAll("\\.|．", "");
+		List<String> lineWordList = new ArrayList<String>();
+		for (String lineWord : line.split("\\s+")) {
+			lineWordList.add(lineWord.toLowerCase());
+		}
+		Utils.addEnCompoundWord(lineWordList, inputWordList); // 複合語の追加
+		return lineWordList;
+	}
 
-    /**
-     * 入力概念がセットされた時に一度だけ実行され， 入力単語リストのリストを生成する
-     */
-    private void makeLineList() {
-        lineList = new ArrayList<List<String>>();
-        // String corpusString = DocumentSelectionPanel.getTextString(document);
-        String corpusString = document.getText();
-        if (corpusString == null) { return; }
-        String[] lines = corpusString.split("\n");
-        for (int i = 0; i < lines.length; i++) {
-            if (document.getLang().equals("en")) {
-                lineList.add(getEnLineWordList(lines[i]));
-            } else if (document.getLang().equals("ja")) {
-                lineList.add(getJaLineWordList(lines[i]));
-            }
-        }
-    }
+	/**
+	 * 入力概念がセットされた時に一度だけ実行され， 入力単語リストのリストを生成する
+	 */
+	private void makeLineList() {
+		lineList = new ArrayList<List<String>>();
+		// String corpusString = DocumentSelectionPanel.getTextString(document);
+		String corpusString = document.getText();
+		if (corpusString == null) {
+			return;
+		}
+		String[] lines = corpusString.split("\n");
+		for (int i = 0; i < lines.length; i++) {
+			if (document.getLang().equals("en")) {
+				lineList.add(getEnLineWordList(lines[i]));
+			} else if (document.getLang().equals("ja")) {
+				lineList.add(getJaLineWordList(lines[i]));
+			}
+		}
+	}
 
-    /**
-     * corpusStringは，あらかじめピリオドまたは丸で改行されているものとする
-     * 
-     */
-    public Map<String, List<ConceptPair>> calcAprioriResult(List<String> targetInputWordList) {
-        pairSet.clear();
-        allRelation.clear();
-        aprioriResult.clear();
-        if (targetInputWordList == null) { return aprioriResult; }
-        int conceptAppearence[] = new int[targetInputWordList.size()];
+	/**
+	 * corpusStringは，あらかじめピリオドまたは丸で改行されているものとする
+	 * 
+	 */
+	public Map<String, List<ConceptPair>> calcAprioriResult(List<String> targetInputWordList) {
+		pairSet.clear();
+		allRelation.clear();
+		aprioriResult.clear();
+		if (targetInputWordList == null) {
+			return aprioriResult;
+		}
+		int conceptAppearence[] = new int[targetInputWordList.size()];
 
-        List<Integer> itemList = new ArrayList<Integer>();
-        int lineNum = lineList.size();
-        // System.out.println("line_num: " + lineNum);
-        for (List<String> lineWordList : lineList) {
-            for (String lineWord : lineWordList) {
-                for (int k = 0; k < targetInputWordList.size(); k++) {
-                    String word = targetInputWordList.get(k);
-                    if (word.equals(lineWord)) {
-                        itemList.add(new Integer(k));
-                        ++conceptAppearence[k];
-                        break;
-                    }
-                }
-            }
-            // System.out.println(itemList);
-            culAprioriPair(itemList);
-            itemList.clear();
-        }
-        DODDLE.STATUS_BAR.addProjectValue();
-        makePair(conceptAppearence, lineNum, targetInputWordList);
-        DODDLE.STATUS_BAR.addProjectValue();
-        return aprioriResult;
-    }
+		List<Integer> itemList = new ArrayList<Integer>();
+		int lineNum = lineList.size();
+		// System.out.println("line_num: " + lineNum);
+		for (List<String> lineWordList : lineList) {
+			for (String lineWord : lineWordList) {
+				for (int k = 0; k < targetInputWordList.size(); k++) {
+					String word = targetInputWordList.get(k);
+					if (word.equals(lineWord)) {
+						itemList.add(new Integer(k));
+						++conceptAppearence[k];
+						break;
+					}
+				}
+			}
+			// System.out.println(itemList);
+			culAprioriPair(itemList);
+			itemList.clear();
+		}
+		DODDLE.STATUS_BAR.addProjectValue();
+		makePair(conceptAppearence, lineNum, targetInputWordList);
+		DODDLE.STATUS_BAR.addProjectValue();
+		return aprioriResult;
+	}
 
-    private void culAprioriPair(List<Integer> itemList) {
-        for (int i = 0; i < itemList.size(); i++) {
-            for (int j = 0; j < itemList.size(); j++) {
-                if (i != j) {
-                    List<Integer> pair = new ArrayList<Integer>();
-                    pair.add(itemList.get(i));
-                    pair.add(itemList.get(j));
-                    pairSet.add(pair);
-                    if (indexPairAppearence.containsKey(pair)) {
-                        indexPairAppearence.put(pair, indexPairAppearence.get(pair) + 1);
-                    } else {
-                        indexPairAppearence.put(pair, 1);
-                    }
-                }
-            }
-        }
-    }
-    public void setConfidence(double dou) {
-        minConfidence = dou;
-    }
+	private void culAprioriPair(List<Integer> itemList) {
+		for (int i = 0; i < itemList.size(); i++) {
+			for (int j = 0; j < itemList.size(); j++) {
+				if (i != j) {
+					List<Integer> pair = new ArrayList<Integer>();
+					pair.add(itemList.get(i));
+					pair.add(itemList.get(j));
+					pairSet.add(pair);
+					if (indexPairAppearence.containsKey(pair)) {
+						indexPairAppearence.put(pair, indexPairAppearence.get(pair) + 1);
+					} else {
+						indexPairAppearence.put(pair, 1);
+					}
+				}
+			}
+		}
+	}
 
-    /**
-     * 
-     * conceptAppearance ...
-     * 全文の中にconceptData.getConcepts()リストの番号に対応する概念がいくつ出現したかを保存
-     * concept[A|B]Support ... ある概念の出現回数/全文の数(いくつの文に含まれていたか．一回でも出現すればよい）
-     * pairAppearance ... 全文の中である概念対が出現する回数
-     * 
-     * @param conceptAppearence
-     * @param lineNum
-     */
-    private void makePair(int conceptAppearence[], double lineNum, List<String> inputWordList) {
-        List<ConceptPair> rpList;
-        for (List<Integer> pair : pairSet) {
-            int conceptAIndex = pair.get(0);
-            String word1 = inputWordList.get(conceptAIndex);
-            int conceptBIndex = pair.get(1);
-            String word2 = inputWordList.get(conceptBIndex);
-            // System.out.println(conceptAIndex + ":" + conceptBIndex);
-            double conceptASupport = conceptAppearence[conceptAIndex] / lineNum;
-            double conceptBSupport = conceptAppearence[conceptBIndex] / lineNum;
+	public void setConfidence(double dou) {
+		minConfidence = dou;
+	}
 
-            // System.out.println(conceptAppearence[conceptAIndex]+"/"+lines+
-            // "=" +conceptASupport);
-            // System.out.println(conceptAppearence[conceptBIndex]+"/"+lines+
-            // "=" +conceptBSupport);
+	/**
+	 * 
+	 * conceptAppearance ...
+	 * 全文の中にconceptData.getConcepts()リストの番号に対応する概念がいくつ出現したかを保存
+	 * concept[A|B]Support ... ある概念の出現回数/全文の数(いくつの文に含まれていたか．一回でも出現すればよい）
+	 * pairAppearance ... 全文の中である概念対が出現する回数
+	 * 
+	 * @param conceptAppearence
+	 * @param lineNum
+	 */
+	private void makePair(int conceptAppearence[], double lineNum, List<String> inputWordList) {
+		List<ConceptPair> rpList;
+		for (List<Integer> pair : pairSet) {
+			int conceptAIndex = pair.get(0);
+			String word1 = inputWordList.get(conceptAIndex);
+			int conceptBIndex = pair.get(1);
+			String word2 = inputWordList.get(conceptBIndex);
+			// System.out.println(conceptAIndex + ":" + conceptBIndex);
+			double conceptASupport = conceptAppearence[conceptAIndex] / lineNum;
+			double conceptBSupport = conceptAppearence[conceptBIndex] / lineNum;
 
-            double aprioriValue = 0;
-            if (conceptASupport >= minSupport && conceptBSupport >= minSupport) {
-                int pairAppearence = indexPairAppearence.get(pair);
-                aprioriValue = (double) pairAppearence / (double) conceptAppearence[conceptAIndex];
-            }
+			// System.out.println(conceptAppearence[conceptAIndex]+"/"+lines+
+			// "=" +conceptASupport);
+			// System.out.println(conceptAppearence[conceptBIndex]+"/"+lines+
+			// "=" +conceptBSupport);
 
-            if (aprioriValue > minConfidence) {
-                ConceptPair rp = new ConceptPair(word1, word2, new Double(aprioriValue));
-                // rp.setrelationValue(value);
-                // System.out.println(conceptA + "<>" + rp.toString());
-                // System.out.println("Apriori:" + rp.toString());
-                allRelation.add(rp);
+			double aprioriValue = 0;
+			if (conceptASupport >= minSupport && conceptBSupport >= minSupport) {
+				int pairAppearence = indexPairAppearence.get(pair);
+				aprioriValue = (double) pairAppearence / (double) conceptAppearence[conceptAIndex];
+			}
 
-                if (aprioriResult.containsKey(word1)) {
-                    rpList = aprioriResult.get(word1);
-                    rpList.add(rp);
-                    aprioriResult.put(word1, rpList);
-                } else {
-                    rpList = new ArrayList<ConceptPair>();
-                    rpList.add(rp);
-                    aprioriResult.put(word1, rpList);
-                }
-            }
-        }
-    }
+			if (aprioriValue > minConfidence) {
+				ConceptPair rp = new ConceptPair(word1, word2, new Double(aprioriValue));
+				// rp.setrelationValue(value);
+				// System.out.println(conceptA + "<>" + rp.toString());
+				// System.out.println("Apriori:" + rp.toString());
+				allRelation.add(rp);
 
-    public Map<String, List<ConceptPair>> getAprioriResult() {
-        return aprioriResult;
-    }
+				if (aprioriResult.containsKey(word1)) {
+					rpList = aprioriResult.get(word1);
+					rpList.add(rp);
+					aprioriResult.put(word1, rpList);
+				} else {
+					rpList = new ArrayList<ConceptPair>();
+					rpList.add(rp);
+					aprioriResult.put(word1, rpList);
+				}
+			}
+		}
+	}
 
-    public List<ConceptPair> getAllRelation() {
-        return allRelation;
-    }
+	public Map<String, List<ConceptPair>> getAprioriResult() {
+		return aprioriResult;
+	}
+
+	public List<ConceptPair> getAllRelation() {
+		return allRelation;
+	}
 }
