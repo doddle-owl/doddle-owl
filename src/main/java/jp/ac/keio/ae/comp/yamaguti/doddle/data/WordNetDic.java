@@ -55,8 +55,6 @@ import org.apache.log4j.Level;
 public class WordNetDic {
 
 	private static WordNetDic wordnetDic;
-	private static final String RESOURCES = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
-	public static String JWNL_PROPERTIES_FILE = RESOURCES + "extjwnl_resource_properties.xml";
 	private static Dictionary dictionary;
 
 	public WordNetDic() {
@@ -306,8 +304,8 @@ public class WordNetDic {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		System.out.println(dictionary.lookupIndexWord(POS.NOUN, "digital clock"));		
-		String word = "ping-pong ball";	
+		System.out.println(dictionary.lookupIndexWord(POS.NOUN, "digital clock"));
+		String word = "ping-pong ball";
 		IndexWord indexWord = dictionary.lookupIndexWord(POS.NOUN, word);
 		System.out.println(indexWord);
 		for (Synset synset : indexWord.getSenses()) {

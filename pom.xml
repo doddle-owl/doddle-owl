@@ -284,5 +284,10 @@
         	<artifactId>lucene-gosen-ipadic</artifactId>
         	<version>1.2.1</version>
         </dependency>
+        <dependency>
+        	<groupId>org.apache.poi</groupId>
+        	<artifactId>poi-ooxml</artifactId>
+        	<version>3.11</version>
+        </dependency>
 	</dependencies>
 </project>

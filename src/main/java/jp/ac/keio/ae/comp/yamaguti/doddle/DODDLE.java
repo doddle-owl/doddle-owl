@@ -164,6 +164,7 @@ public class DODDLE extends JFrame {
 		rootFrame = this;
 		desktop = new JDesktopPane();
 		optionDialog = new OptionDialog(this);
+		setFileLogger();
 		logConsole = new LogConsole(this, Translator.getTerm("LogConsoleDialog"), null);
 		STATUS_BAR = new StatusBarPanel();
 		GENERAL_ONTOLOGY_NAMESPACE_SET = new HashSet<String>();
@@ -535,8 +536,11 @@ public class DODDLE extends JFrame {
 
 	public static void setFileLogger() {
 		try {
+			getLogger().setLevel(Level.INFO);
+			setDefaultLoggerFormat();
+			String file = DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt";
 			FileAppender appender = new FileAppender(new PatternLayout(
-					"[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"), "./doddle_log.txt");
+					"[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"), file);
 			appender.setName("LOG File");
 			appender.setAppend(true);
 			Logger.getRootLogger().addAppender(appender);
@@ -546,10 +550,6 @@ public class DODDLE extends JFrame {
 	}
 
 	public static void initOptions(String[] args) {
-		getLogger().setLevel(Level.INFO);
-		setDefaultLoggerFormat();
-		setFileLogger();
-
 		LongOpt[] longopts = new LongOpt[4];
 		longopts[0] = new LongOpt("DEBUG", LongOpt.NO_ARGUMENT, null, 'g');
 		longopts[1] = new LongOpt("LANG", LongOpt.REQUIRED_ARGUMENT, null, 'l');
