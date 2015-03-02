@@ -333,7 +333,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		}
 
 		properties.setProperty("SSTAGGER_HOME", directoryPanel.getSSTaggerDir());
-		properties.setProperty("XDOC2TXT_EXE", directoryPanel.getXdoc2txtDir());
 		properties.setProperty("WORDNET_HOME", directoryPanel.getWNDicDir());
 		properties.setProperty("JPNWN_HOME", directoryPanel.getJPNWNDicDir());
 
@@ -406,7 +405,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		UpperConceptManager.UPPER_CONCEPT_LIST = directoryPanel.getUpperConceptList();
 		InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = directoryPanel.getStopWordList();
 		InputDocumentSelectionPanel.SS_TAGGER_HOME = directoryPanel.getSSTaggerDir();
-		InputDocumentSelectionPanel.XDOC2TXT_EXE = directoryPanel.getXdoc2txtDir();
 		InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = directoryPanel
 				.getTermExtractScriptsDir();
 		SwoogleWebServiceWrapper.SWOOGLE_QUERY_RESULTS_DIR = directoryPanel
@@ -446,7 +444,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		directoryPanel.setUpperCnceptList("");
 		directoryPanel.setStopWordList("");
 		directoryPanel.setSSTaggerDir("");
-		directoryPanel.setXdoc2txtDir("");
 		directoryPanel.setTermExtractScriptsDir("");
 		directoryPanel.setSwoogleQueryResultsDir("");
 		directoryPanel.setOWLOntologiesDir("");
@@ -480,8 +477,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
 		InputDocumentSelectionPanel.SS_TAGGER_HOME = properties.getProperty("SSTAGGER_HOME");
 		directoryPanel.setSSTaggerDir(InputDocumentSelectionPanel.SS_TAGGER_HOME);
-		InputDocumentSelectionPanel.XDOC2TXT_EXE = properties.getProperty("XDOC2TXT_EXE");
-		directoryPanel.setXdoc2txtDir(InputDocumentSelectionPanel.XDOC2TXT_EXE);
 
 		InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties
 				.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
@@ -599,7 +594,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		private JTextField japaneseDependencyStructureAnalyzerField;
 		private JTextField ssTaggerDirField;
 		private JTextField perlDirField;
-		private JTextField xdoc2txtDirField;
 		private JTextField edrDicDirField;
 		private JTextField edrtDicDirField;
 		private JTextField wnDicDirField;
@@ -615,7 +609,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		private JButton browseJapaneseDependencyStructureAnalyzerButton;
 		private JButton browseSSTaggerDirButton;
 		private JButton browsePerlDirButton;
-		private JButton browseXdoc2txtDirButton;
 		private JButton browseEDRDicDirButton;
 		private JButton browseEDRTDicDirButton;
 		private JButton browseWNDicDirButton;
@@ -648,10 +641,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 			perlDirField = new JTextField(FIELD_SIZE);
 			browsePerlDirButton = new JButton(Translator.getTerm("ReferenceButton"));
 			initComponent(perlDirField, browsePerlDirButton, InputDocumentSelectionPanel.PERL_EXE);
-			xdoc2txtDirField = new JTextField(FIELD_SIZE);
-			browseXdoc2txtDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-			initComponent(xdoc2txtDirField, browseXdoc2txtDirButton,
-					InputDocumentSelectionPanel.XDOC2TXT_EXE);
 			edrDicDirField = new JTextField(FIELD_SIZE);
 			browseEDRDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
 			initComponent(edrDicDirField, browseEDRDicDirButton, DODDLEConstants.EDR_HOME);
@@ -700,8 +689,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 					Translator.getTerm("SSTaggerFolderTextField")));
 			panel.add(getPanel(perlDirField, browsePerlDirButton,
 					Translator.getTerm("PerlTextField")));
-			panel.add(getPanel(xdoc2txtDirField, browseXdoc2txtDirButton,
-					Translator.getTerm("Xdoc2TxtTextField")));
 			panel.add(getPanel(edrDicDirField, browseEDRDicDirButton,
 					Translator.getTerm("EDRDicFolderTextField")));
 			panel.add(getPanel(edrtDicDirField, browseEDRTDicDirButton,
@@ -750,14 +737,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
 		public String getPerlDir() {
 			return perlDirField.getText();
-		}
-
-		public void setXdoc2txtDir(String dir) {
-			xdoc2txtDirField.setText(dir);
-		}
-
-		public String getXdoc2txtDir() {
-			return xdoc2txtDirField.getText();
 		}
 
 		public void setSSTaggerDir(String dir) {

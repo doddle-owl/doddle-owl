@@ -23,15 +23,25 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.data;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
 
-import javax.swing.*;
+import javax.swing.UIManager;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.ui.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.InputDocumentSelectionPanel;
 
-import org.pdfbox.pdfparser.*;
-import org.pdfbox.pdmodel.*;
-import org.pdfbox.util.*;
+import org.apache.poi.POITextExtractor;
+import org.apache.poi.extractor.ExtractorFactory;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.pdfbox.pdfparser.PDFParser;
+import org.pdfbox.pdmodel.PDDocument;
+import org.pdfbox.util.PDFTextStripper;
 
 /**
  * @author takeshi morita
@@ -74,10 +84,10 @@ public class Document implements Comparable<Document> {
 		}
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			if (!isWindowsOS() && file.getAbsolutePath().toLowerCase().matches(".*.pdf")) {
-				// CMAPの設定をしないと，日本語の処理はうまくできない．
-				// うまくできている場合もある．JISAutoDetectがいけないのか？
-				// 登録されていないエンコーディングは，処理できない．
+			String fileName = file.getName().toLowerCase();
+			if (fileName.matches(".*.txt")) {
+				return getTextString(new InputStreamReader(fis, "UTF-8"));
+			} else if (fileName.matches(".*.pdf")) {
 				PDFParser pdfParser = new PDFParser(fis);
 				pdfParser.parse();
 				PDDocument pddoc = pdfParser.getPDDocument();
@@ -85,17 +95,12 @@ public class Document implements Comparable<Document> {
 				String text = stripper.getText(pddoc);
 				pddoc.close();
 				return text;
-			} else if (file.getAbsolutePath().toLowerCase().matches(".*.txt")) {
-				return getTextString(new InputStreamReader(fis, "UTF-8"));
-			} else if (isWindowsOS()) {
-				Runtime rt = Runtime.getRuntime();
-				Process process = rt.exec(InputDocumentSelectionPanel.XDOC2TXT_EXE + " "
-						+ file.getAbsolutePath());
-				return getTextString(new InputStreamReader(process.getInputStream()));
+			} else if (fileName.matches(".*.docx")) {
+				XWPFDocument doc = new XWPFDocument(fis);
+				return new XWPFWordExtractor(doc).getText();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return "";
 		}
 		return "";
 	}
