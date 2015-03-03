@@ -30,10 +30,10 @@ public class DODDLEConstants {
 
 	public static int DIVIDER_SIZE = 10;
 	public static final String VERSION = "1.0RC1";
-	public static final String LAST_UPDATE = "2015-03-01";
+	public static final String LAST_UPDATE = "2015-03-03";
 
 	public static boolean DEBUG = false;
-	public static boolean IS_INTEGRATING_SWOOGLE = false;
+	public static boolean IS_INTEGRATING_SWOOGLE = true;
 	public static String LANG = "en"; // DB構築時に必要
 
 	public static final int ONTOLOGY_SELECTION_PANEL = 0;
@@ -52,7 +52,9 @@ public class DODDLEConstants {
 
 	public static String EDR_HOME = "C:/DODDLE-OWL/EDR_DIC/";
 	public static String EDRT_HOME = "C:/DODDLE-OWL/EDRT_DIC/";
-	public static String JPNWN_HOME = "C:/DODDLE-OWL/JPNWN_DIC/";
+	public static String ENWN_3_0_HOME = "enwn_dict_3.0/";
+	public static String ENWN_3_1_HOME = "enwn_dict_3.1/";
+	public static String ENWN_HOME = ENWN_3_0_HOME;
+	public static String JPWN_HOME = "jpwn_dict_1.1/";
 	public static String PROJECT_HOME = "./";
-	public static String WORDNET_HOME = "C:/program files/wordnet/2.0/dict/";
 }

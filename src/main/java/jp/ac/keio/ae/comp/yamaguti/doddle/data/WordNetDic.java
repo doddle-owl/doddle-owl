@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
 
 import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
 import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Utils;
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
@@ -59,7 +60,7 @@ public class WordNetDic {
 
 	public WordNetDic() {
 		try {
-			dictionary = Dictionary.getFileBackedInstance(DODDLEConstants.WORDNET_HOME);
+			dictionary = Dictionary.getFileBackedInstance(Utils.getENWNFile().getAbsolutePath());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			DODDLE.getLogger().log(Level.INFO, Translator.getTerm("WordNetLoadErrorMessage"));
@@ -69,9 +70,11 @@ public class WordNetDic {
 
 	public static void resetWordNet() {
 		try {
-			dictionary = Dictionary.getFileBackedInstance(DODDLEConstants.WORDNET_HOME);
+			dictionary = Dictionary.getFileBackedInstance(Utils.getENWNFile().getAbsolutePath());
 		} catch (JWNLException e) {
 			e.printStackTrace();
+			DODDLE.getLogger().log(Level.INFO, Translator.getTerm("WordNetLoadErrorMessage"));
+			JOptionPane.showMessageDialog(null, Translator.getTerm("WordNetLoadErrorMessage"));
 		}
 	}
 

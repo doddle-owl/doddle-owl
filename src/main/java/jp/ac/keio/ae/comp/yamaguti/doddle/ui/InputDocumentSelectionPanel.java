@@ -39,6 +39,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.ResultSet;
@@ -95,6 +96,7 @@ import net.java.sen.dictionary.Token;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
 
 /**
@@ -744,11 +746,11 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 	public static String PERL_EXE = "C:/Perl/bin/perl.exe";
 	public static String SS_TAGGER_HOME = "C:/DODDLE-OWL/postagger-1.0";
 	public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
-	private static String TERM_EXTRACT_CHASEN_EXE = "ex_chasen.pl";
-	private static String TERM_EXTRACT_MECAB_EXE = "ex_mecab.pl";
-	private static String TERM_EXTRACT_TAGGER_EXE = "ex_brillstagger.pl";
-	public static String TERM_EXTRACT_SCRIPTS_DIR = "C:/DODDLE-OWL/TermExtractScripts";
-	public static String XDOC2TXT_EXE = "C:/DODDLE-OWL/d2txt123/xdoc2txt.exe";
+	private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
+	private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
+	private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
+	public static String TERM_EXTRACT_SCRIPTS_DIR = Utils.TEMP_DIR + "TermExtractScripts"
+			+ File.separator;
 	public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
 
 	public void destroyProcesses() {
@@ -822,8 +824,20 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 	}
 
 	private BufferedReader getSSTaggerReader() throws IOException {
-		String taggerPath = "";
-		taggerPath = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_TAGGER_EXE;
+		File dir = new File(TERM_EXTRACT_SCRIPTS_DIR);
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+		String taggerPath = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_TAGGER_PL;
+		File scriptFile = new File(taggerPath);
+		if (!scriptFile.exists()) {
+			URL url = DODDLE.class.getClassLoader().getResource(
+					RESOURCE_DIR + "TermExtractScripts" + File.separator + TERM_EXTRACT_TAGGER_PL);
+			if (url != null) {
+				FileUtils.copyURLToFile(url, scriptFile);
+				System.out.println("copy: " + scriptFile.getAbsolutePath());
+			}
+		}
 		ProcessBuilder processBuilder = new ProcessBuilder(PERL_EXE, taggerPath, SS_TAGGER_HOME
 				+ File.separator + "tmpTagger.txt");
 		termExtractProcess = processBuilder.start();
@@ -871,11 +885,24 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
 		jaMorphologicalAnalyzerProcess = processBuilder.start();
 		String path = "";
-		String TERM_EXTRACT_EXE = TERM_EXTRACT_CHASEN_EXE;
+		String TERM_EXTRACT_EXE = TERM_EXTRACT_CHASEN_PL;
 		if (Japanese_Morphological_Analyzer.matches(".*mecab.*")) {
-			TERM_EXTRACT_EXE = TERM_EXTRACT_MECAB_EXE;
+			TERM_EXTRACT_EXE = TERM_EXTRACT_MECAB_PL;
+		}
+		File dir = new File(TERM_EXTRACT_SCRIPTS_DIR);
+		if (!dir.exists()) {
+			dir.mkdir();
 		}
 		path = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_EXE;
+		File scriptFile = new File(path);
+		if (!scriptFile.exists()) {
+			URL url = DODDLE.class.getClassLoader().getResource(
+					RESOURCE_DIR + "TermExtractScripts" + File.separator + TERM_EXTRACT_EXE);
+			if (url != null) {
+				FileUtils.copyURLToFile(url, scriptFile);
+				System.out.println("copy: " + scriptFile.getAbsolutePath());
+			}
+		}
 		processBuilder = new ProcessBuilder(PERL_EXE, path,
 				tmpJapaneseMorphologicalAnalyzerFile.getAbsolutePath());
 		termExtractProcess = processBuilder.start();

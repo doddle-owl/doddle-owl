@@ -308,11 +308,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		properties.setProperty("PROJECT_DIR", directoryPanel.getProjectDir());
 		properties.setProperty("STOP_WORD_LIST", directoryPanel.getStopWordList());
 		properties.setProperty("UPPER_CONCEPT_LIST", directoryPanel.getUpperConceptList());
-		properties.setProperty("TERM_EXTRACT_SCRIPTS_DIR",
-				directoryPanel.getTermExtractScriptsDir());
-		properties.setProperty("SWOOGLE_QUERY_RESULTS_DIR",
-				directoryPanel.getSwoogleQueryResultsDir());
-		properties.setProperty("OWL_ONTOLOGIES_DIR", directoryPanel.getOWLOntologiesDir());
 
 		if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
 			properties.setProperty("Japanese_Morphological_Analyzer",
@@ -333,8 +328,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		}
 
 		properties.setProperty("SSTAGGER_HOME", directoryPanel.getSSTaggerDir());
-		properties.setProperty("WORDNET_HOME", directoryPanel.getWNDicDir());
-		properties.setProperty("JPNWN_HOME", directoryPanel.getJPNWNDicDir());
 
 		properties.setProperty("AutomaticDisambiguation.useSiblingNodeCount",
 				String.valueOf(siblingDisambiguationCheckBox.isSelected()));
@@ -392,9 +385,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
 		DODDLEConstants.EDR_HOME = directoryPanel.getEDRDicDir();
 		DODDLEConstants.EDRT_HOME = directoryPanel.getEDRTDicDir();
-		DODDLEConstants.WORDNET_HOME = directoryPanel.getWNDicDir();
-		WordNetDic.resetWordNet();
-		DODDLEConstants.JPNWN_HOME = directoryPanel.getJPNWNDicDir();
 
 		InputDocumentSelectionPanel.PERL_EXE = directoryPanel.getPerlDir();
 		InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = directoryPanel
@@ -405,11 +395,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		UpperConceptManager.UPPER_CONCEPT_LIST = directoryPanel.getUpperConceptList();
 		InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = directoryPanel.getStopWordList();
 		InputDocumentSelectionPanel.SS_TAGGER_HOME = directoryPanel.getSSTaggerDir();
-		InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = directoryPanel
-				.getTermExtractScriptsDir();
-		SwoogleWebServiceWrapper.SWOOGLE_QUERY_RESULTS_DIR = directoryPanel
-				.getSwoogleQueryResultsDir();
-		SwoogleWebServiceWrapper.OWL_ONTOLOGIES_DIR = directoryPanel.getOWLOntologiesDir();
 		// 汎用オントロジーパネルのチェックボックスを有効化する
 		DODDLEProject currentProject = (DODDLEProject) DODDLE.desktop.getSelectedFrame();
 		if (currentProject != null) {
@@ -437,16 +422,11 @@ public class OptionDialog extends JDialog implements ActionListener {
 		directoryPanel.setJapaneseDependencyStructureAnalyzer("");
 		directoryPanel.setEDRDicDir("");
 		directoryPanel.setEDRTDicDir("");
-		directoryPanel.setWNDicDir("");
-		directoryPanel.setJPNWNDicDir("");
 		directoryPanel.setPerlDir("");
 		directoryPanel.setProjectDir("");
 		directoryPanel.setUpperCnceptList("");
 		directoryPanel.setStopWordList("");
 		directoryPanel.setSSTaggerDir("");
-		directoryPanel.setTermExtractScriptsDir("");
-		directoryPanel.setSwoogleQueryResultsDir("");
-		directoryPanel.setOWLOntologiesDir("");
 	}
 
 	public void loadConfig(Properties properties) {
@@ -461,10 +441,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		directoryPanel.setEDRDicDir(DODDLEConstants.EDR_HOME);
 		DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
 		directoryPanel.setEDRTDicDir(DODDLEConstants.EDRT_HOME);
-		DODDLEConstants.WORDNET_HOME = properties.getProperty("WORDNET_HOME");
-		directoryPanel.setWNDicDir(DODDLEConstants.WORDNET_HOME);
-		DODDLEConstants.JPNWN_HOME = properties.getProperty("JPNWN_HOME");
-		directoryPanel.setJPNWNDicDir(DODDLEConstants.JPNWN_HOME);
 
 		InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
 		directoryPanel.setPerlDir(InputDocumentSelectionPanel.PERL_EXE);
@@ -477,18 +453,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
 		InputDocumentSelectionPanel.SS_TAGGER_HOME = properties.getProperty("SSTAGGER_HOME");
 		directoryPanel.setSSTaggerDir(InputDocumentSelectionPanel.SS_TAGGER_HOME);
-
-		InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties
-				.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
-		directoryPanel
-				.setTermExtractScriptsDir(InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
-
-		SwoogleWebServiceWrapper.SWOOGLE_QUERY_RESULTS_DIR = properties
-				.getProperty("SWOOGLE_QUERY_RESULTS_DIR");
-		directoryPanel
-				.setSwoogleQueryResultsDir(SwoogleWebServiceWrapper.SWOOGLE_QUERY_RESULTS_DIR);
-		SwoogleWebServiceWrapper.OWL_ONTOLOGIES_DIR = properties.getProperty("OWL_ONTOLOGIES_DIR");
-		directoryPanel.setOWLOntologiesDir(SwoogleWebServiceWrapper.OWL_ONTOLOGIES_DIR);
 
 		if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
 			properties.setProperty("Japanese_Morphological_Analyzer",
@@ -596,14 +560,9 @@ public class OptionDialog extends JDialog implements ActionListener {
 		private JTextField perlDirField;
 		private JTextField edrDicDirField;
 		private JTextField edrtDicDirField;
-		private JTextField wnDicDirField;
-		private JTextField jpnwnDicDirField;
 		private JTextField projectDirField;
 		private JTextField upperConceptListField;
 		private JTextField stopWordListField;
-		private JTextField termExtractScriptsField;
-		private JTextField swoogleQueryResultsDirField;
-		private JTextField owlOntologiesDirField;
 
 		private JButton browseJapaneseMorphologicalAnalyzerButton;
 		private JButton browseJapaneseDependencyStructureAnalyzerButton;
@@ -611,14 +570,9 @@ public class OptionDialog extends JDialog implements ActionListener {
 		private JButton browsePerlDirButton;
 		private JButton browseEDRDicDirButton;
 		private JButton browseEDRTDicDirButton;
-		private JButton browseWNDicDirButton;
-		private JButton browseJPNWNDicDirButton;
 		private JButton browseProjectDirButton;
 		private JButton browseUpperConceptListButton;
 		private JButton browseStopWordListButton;
-		private JButton browseTermExtractScriptsDirButton;
-		private JButton browseSwoogleQueryResultsDirButton;
-		private JButton browseOWLOntologiesDirButton;
 
 		public DirectoryPanel() {
 			japaneseMorphologicalAnalyzerField = new JTextField(FIELD_SIZE);
@@ -647,12 +601,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 			edrtDicDirField = new JTextField(FIELD_SIZE);
 			browseEDRTDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
 			initComponent(edrtDicDirField, browseEDRTDicDirButton, DODDLEConstants.EDRT_HOME);
-			wnDicDirField = new JTextField(FIELD_SIZE);
-			browseWNDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-			initComponent(wnDicDirField, browseWNDicDirButton, DODDLEConstants.WORDNET_HOME);
-			jpnwnDicDirField = new JTextField(FIELD_SIZE);
-			browseJPNWNDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-			initComponent(jpnwnDicDirField, browseJPNWNDicDirButton, DODDLEConstants.JPNWN_HOME);
 			projectDirField = new JTextField(FIELD_SIZE);
 			browseProjectDirButton = new JButton(Translator.getTerm("ReferenceButton"));
 			initComponent(projectDirField, browseProjectDirButton, DODDLEConstants.PROJECT_HOME);
@@ -664,21 +612,9 @@ public class OptionDialog extends JDialog implements ActionListener {
 			browseStopWordListButton = new JButton(Translator.getTerm("ReferenceButton"));
 			initComponent(stopWordListField, browseStopWordListButton,
 					InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
-			termExtractScriptsField = new JTextField(FIELD_SIZE);
-			browseTermExtractScriptsDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-			initComponent(termExtractScriptsField, browseTermExtractScriptsDirButton,
-					InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
-			swoogleQueryResultsDirField = new JTextField(FIELD_SIZE);
-			browseSwoogleQueryResultsDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-			initComponent(swoogleQueryResultsDirField, browseSwoogleQueryResultsDirButton,
-					SwoogleWebServiceWrapper.SWOOGLE_QUERY_RESULTS_DIR);
-			owlOntologiesDirField = new JTextField(FIELD_SIZE);
-			browseOWLOntologiesDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-			initComponent(owlOntologiesDirField, browseOWLOntologiesDirButton,
-					SwoogleWebServiceWrapper.OWL_ONTOLOGIES_DIR);
 
 			JPanel panel = new JPanel();
-			panel.setLayout(new GridLayout(8, 2));
+			panel.setLayout(new GridLayout(5, 2));
 			panel.add(getPanel(japaneseMorphologicalAnalyzerField,
 					browseJapaneseMorphologicalAnalyzerButton,
 					Translator.getTerm("JapaneseMorphologicalAnalyzerTextField")));
@@ -693,22 +629,12 @@ public class OptionDialog extends JDialog implements ActionListener {
 					Translator.getTerm("EDRDicFolderTextField")));
 			panel.add(getPanel(edrtDicDirField, browseEDRTDicDirButton,
 					Translator.getTerm("EDRTDicFolderTextField")));
-			panel.add(getPanel(wnDicDirField, browseWNDicDirButton,
-					Translator.getTerm("WordNetFolderTextField")));
-			panel.add(getPanel(jpnwnDicDirField, browseJPNWNDicDirButton,
-					Translator.getTerm("JPNWNFolderTextField")));
 			panel.add(getPanel(projectDirField, browseProjectDirButton,
 					Translator.getTerm("ProjectFolderTextField")));
 			panel.add(getPanel(upperConceptListField, browseUpperConceptListButton,
 					Translator.getTerm("UpperConceptListTextField")));
 			panel.add(getPanel(stopWordListField, browseStopWordListButton,
 					Translator.getTerm("StopWordsTextField")));
-			panel.add(getPanel(termExtractScriptsField, browseTermExtractScriptsDirButton,
-					Translator.getTerm("CompoundWordExtractionScriptFolderTextField")));
-			panel.add(getPanel(swoogleQueryResultsDirField, browseSwoogleQueryResultsDirButton,
-					Translator.getTerm("SwoogleQueryResultFolderTextField")));
-			panel.add(getPanel(owlOntologiesDirField, browseOWLOntologiesDirButton,
-					Translator.getTerm("OWLOntologyFolderTextField")));
 
 			setLayout(new BorderLayout());
 			setBorder(BorderFactory.createEtchedBorder());
@@ -763,22 +689,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 			return edrtDicDirField.getText();
 		}
 
-		public void setWNDicDir(String dir) {
-			wnDicDirField.setText(dir);
-		}
-
-		public String getWNDicDir() {
-			return wnDicDirField.getText();
-		}
-
-		public void setJPNWNDicDir(String dir) {
-			jpnwnDicDirField.setText(dir);
-		}
-
-		public String getJPNWNDicDir() {
-			return jpnwnDicDirField.getText();
-		}
-
 		public void setProjectDir(String dir) {
 			projectDirField.setText(dir);
 		}
@@ -801,30 +711,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
 		public String getStopWordList() {
 			return stopWordListField.getText();
-		}
-
-		public void setTermExtractScriptsDir(String file) {
-			termExtractScriptsField.setText(file);
-		}
-
-		public String getTermExtractScriptsDir() {
-			return termExtractScriptsField.getText();
-		}
-
-		public void setSwoogleQueryResultsDir(String file) {
-			swoogleQueryResultsDirField.setText(file);
-		}
-
-		public String getSwoogleQueryResultsDir() {
-			return swoogleQueryResultsDirField.getText();
-		}
-
-		public void setOWLOntologiesDir(String file) {
-			owlOntologiesDirField.setText(file);
-		}
-
-		public String getOWLOntologiesDir() {
-			return owlOntologiesDirField.getText();
 		}
 
 		private static final int FIELD_SIZE = 20;
@@ -880,20 +766,10 @@ public class OptionDialog extends JDialog implements ActionListener {
 						DODDLEConstants.EDR_HOME = fileOrDirectoryName;
 					} else if (directoryField == edrtDicDirField) {
 						DODDLEConstants.EDRT_HOME = fileOrDirectoryName;
-					} else if (directoryField == wnDicDirField) {
-						DODDLEConstants.WORDNET_HOME = fileOrDirectoryName;
-					} else if (directoryField == jpnwnDicDirField) {
-						DODDLEConstants.JPNWN_HOME = fileOrDirectoryName;
 					} else if (directoryField == projectDirField) {
 						DODDLEConstants.PROJECT_HOME = fileOrDirectoryName;
 					} else if (directoryField == upperConceptListField) {
 						UpperConceptManager.UPPER_CONCEPT_LIST = fileOrDirectoryName;
-					} else if (directoryField == termExtractScriptsField) {
-						InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = fileOrDirectoryName;
-					} else if (directoryField == swoogleQueryResultsDirField) {
-						SwoogleWebServiceWrapper.SWOOGLE_QUERY_RESULTS_DIR = fileOrDirectoryName;
-					} else if (directoryField == owlOntologiesDirField) {
-						SwoogleWebServiceWrapper.OWL_ONTOLOGIES_DIR = fileOrDirectoryName;
 					}
 				}
 			}

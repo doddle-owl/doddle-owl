@@ -92,7 +92,7 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
     }
 
     public void setXGALayout() {
-        SplitWindow sw1 = new SplitWindow(false, 0.3f, mainViews[0], mainViews[2]);
+        SplitWindow sw1 = new SplitWindow(false, 0.2f, mainViews[0], mainViews[2]);
         TabWindow tabWindow = new TabWindow(new DockingWindow[] { sw1, mainViews[3], mainViews[1]});
         rootWindow.setWindow(tabWindow);
         mainViews[0].restoreFocus();

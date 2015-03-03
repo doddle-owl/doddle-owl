@@ -25,6 +25,7 @@ package jp.ac.keio.ae.comp.yamaguti.doddle.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -60,6 +61,8 @@ import net.java.sen.SenFactory;
 import net.java.sen.StringTagger;
 import net.java.sen.dictionary.Token;
 
+import org.apache.commons.io.FileUtils;
+
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -72,6 +75,9 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
  */
 public class Utils {
 	public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
+	public static final String TEMP_DIR = System.getProperty("java.io.tmpdir") + "DODDLE-OWL"
+			+ File.separator;
+	private static final String JPWN_TEMP_DIR = TEMP_DIR + "jpwn_dict_1.1" + File.separator;
 
 	public static ImageIcon getImageIcon(String icon) {
 		return new ImageIcon(DODDLE.class.getClassLoader().getResource(RESOURCE_DIR + icon));
@@ -79,6 +85,57 @@ public class Utils {
 
 	public static URL getURL(String icon) {
 		return DODDLE.class.getClassLoader().getResource(RESOURCE_DIR + icon);
+	}
+
+	public static File getENWNFile() {
+		File wnDir = new File(TEMP_DIR + DODDLEConstants.ENWN_HOME);
+		if (wnDir.exists()) {
+			System.out.println("exist: " + wnDir.getAbsolutePath());
+			return wnDir;
+		} else {
+			wnDir.mkdir();
+			String[] wnFiles = { "adj.exc", "adv.exc", "cntlist", "cntlist.rev", "data.adj",
+					"data.noun", "data.verb", "frames.vrb", "index.adj", "index.adv", "index.noun",
+					"index.sense", "index.verb", "lexnames", "log.grind.3.0", "noun.exc",
+					"sentidx.vrb", "sents.vrb", "verb.exc", "verb.Framestext" };
+			for (String wnf : wnFiles) {
+				URL url = DODDLE.class.getClassLoader().getResource(
+						RESOURCE_DIR + DODDLEConstants.ENWN_HOME + wnf);
+				try {
+					File f = new File(wnDir.getAbsolutePath() + File.separator + wnf);
+					if (url != null) {
+						FileUtils.copyURLToFile(url, f);
+					}
+					System.out.println("copy: " + f.getAbsolutePath());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println("created: " + wnDir.getAbsolutePath());
+			return wnDir;
+		}
+	}
+
+	public static File getJPWNFile(String resName) {
+		File dir = new File(JPWN_TEMP_DIR);
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+		File file = new File(JPWN_TEMP_DIR + resName);
+		if (file.exists()) {
+			System.out.println("exist: " + file.getAbsolutePath());
+			return file;
+		} else {
+			URL url = DODDLE.class.getClassLoader().getResource(
+					RESOURCE_DIR + DODDLEConstants.JPWN_HOME + resName);
+			try {
+				FileUtils.copyURLToFile(url, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("created: " + file.getAbsolutePath());
+			return file;
+		}
 	}
 
 	public static RootWindow createDODDLERootWindow(ViewMap viewMap) {
