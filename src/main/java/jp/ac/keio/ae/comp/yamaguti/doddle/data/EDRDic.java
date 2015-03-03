@@ -517,7 +517,7 @@ public class EDRDic {
     }
 
     public static void main(String[] args) throws Exception {
-        DODDLEConstants.WORDNET_HOME = "C:/program files (x86)/wordnet/2.0/dict/";
+        DODDLEConstants.ENWN_HOME = "C:/program files (x86)/wordnet/2.0/dict/";
         WordNetDic dic = WordNetDic.getInstance();
         Set<String> idSet = new HashSet<String>();
         Set<String> uriSet = dic.getURISet("operation");

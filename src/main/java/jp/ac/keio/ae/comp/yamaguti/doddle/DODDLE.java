@@ -488,14 +488,10 @@ public class DODDLE extends JFrame {
 		InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
 				.getProperty("Japanese_Dependency_Structure_Analyzer");
 		InputDocumentSelectionPanel.SS_TAGGER_HOME = properties.getProperty("SSTAGGER_HOME");
-		InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties
-				.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
-		InputDocumentSelectionPanel.XDOC2TXT_EXE = properties.getProperty("XDOC2TXT_EXE");
 		DODDLEConstants.BASE_URI = properties.getProperty("BASE_URI");
 		DODDLEConstants.BASE_PREFIX = properties.getProperty("BASE_PREFIX");
 		DODDLEConstants.PROJECT_HOME = properties.getProperty("PROJECT_DIR");
 		UpperConceptManager.UPPER_CONCEPT_LIST = properties.getProperty("UPPER_CONCEPT_LIST");
-		DODDLEConstants.WORDNET_HOME = properties.getProperty("WORDNET_HOME");
 		DODDLEConstants.LANG = properties.getProperty("LANG");
 	}
 

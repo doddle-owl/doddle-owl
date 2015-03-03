@@ -30,6 +30,8 @@ import java.sql.*;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import jp.ac.keio.ae.comp.yamaguti.doddle.*;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
@@ -38,13 +40,15 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
 /**
  * @author takeshi morita
  */
-public class GeneralOntologySelectionPanel extends JPanel implements ActionListener {
+public class GeneralOntologySelectionPanel extends JPanel implements ActionListener, ChangeListener {
 	private JCheckBox edrCheckBox;
 	private JCheckBox edrtCheckBox;
 	private JCheckBox wnCheckBox;
 	private JCheckBox jpnWnCheckBox;
 
-	private static final String jpnWnTestSynsetId = "00001740-n"; // entity
+	private JRadioButton wn30RadioButton;
+	private JRadioButton wn31RadioButton;
+	private JPanel wnVersionSelectionPanel;
 
 	public GeneralOntologySelectionPanel() {
 		edrCheckBox = new JCheckBox(Translator.getTerm("GenericEDRCheckBox"), false);
@@ -53,16 +57,31 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 		edrtCheckBox.addActionListener(this);
 		wnCheckBox = new JCheckBox(Translator.getTerm("WordNetCheckBox"), false);
 		wnCheckBox.addActionListener(this);
+		wnVersionSelectionPanel = new JPanel();
+		wn30RadioButton = new JRadioButton("3.0");
+		wn30RadioButton.addChangeListener(this);
+		wn31RadioButton = new JRadioButton("3.1");
+		wn31RadioButton.setSelected(true);
+		wn31RadioButton.addChangeListener(this);
+		ButtonGroup group = new ButtonGroup();
+		group.add(wn30RadioButton);
+		group.add(wn31RadioButton);
+		wnVersionSelectionPanel.add(wnCheckBox);
+		wnVersionSelectionPanel.add(wn30RadioButton);
+		wnVersionSelectionPanel.add(wn31RadioButton);
+		JPanel borderPanel = new JPanel();
+		borderPanel.setLayout(new BorderLayout());
+		borderPanel.add(wnVersionSelectionPanel, BorderLayout.WEST);
+
 		jpnWnCheckBox = new JCheckBox(Translator.getTerm("JpnWordNetCheckBox"), false);
 		jpnWnCheckBox.addActionListener(this);
 		JPanel checkPanel = new JPanel();
-		checkPanel.setLayout(new GridLayout(4, 1));
+		checkPanel.add(borderPanel);
+		checkPanel.add(jpnWnCheckBox);
 		checkPanel.add(edrCheckBox);
 		checkPanel.add(edrtCheckBox);
-		checkPanel.add(wnCheckBox);
-		checkPanel.add(jpnWnCheckBox);
 		setLayout(new BorderLayout());
-		add(checkPanel, BorderLayout.NORTH);
+		add(checkPanel, BorderLayout.WEST);
 	}
 
 	public void saveGeneralOntologyInfo(File saveFile) {
@@ -268,10 +287,22 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 			project.addLog("TechnicalEDRCheckBox", edrtCheckBox.isSelected());
 		} else if (e.getSource() == wnCheckBox) {
 			enableWordNetDic(wnCheckBox.isSelected());
+			wnVersionSelectionPanel.setEnabled(wnCheckBox.isSelected());
 			project.addLog("WordNetCheckBox", wnCheckBox.isSelected());
 		} else if (e.getSource() == jpnWnCheckBox) {
 			enableJpnWordNetDic(jpnWnCheckBox.isSelected());
 			project.addLog("JpnWordNetCheckBox", jpnWnCheckBox.isSelected());
+		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if (e.getSource() == wn30RadioButton) {
+			DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_0_HOME;
+			WordNetDic.resetWordNet();
+		} else if (e.getSource() == wn31RadioButton) {
+			DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
+			WordNetDic.resetWordNet();
 		}
 	}
 }
