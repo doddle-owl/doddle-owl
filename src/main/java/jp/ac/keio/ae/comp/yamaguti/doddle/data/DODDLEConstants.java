@@ -49,6 +49,7 @@ public class DODDLEConstants {
 	public static String EDRT_URI = "http://www2.nict.go.jp/kk/e416/EDRT#";
 	public static String WN_URI = "http://wordnet.princeton.edu/wn/";
 	public static String JPN_WN_URI = "http://nlpwww.nict.go.jp/wn-ja/";
+	public static String JWO_URI = "http://www.wikipediaontology.org/class/";
 
 	public static String EDR_HOME = "C:/DODDLE-OWL/EDR_DIC/";
 	public static String EDRT_HOME = "C:/DODDLE-OWL/EDRT_DIC/";

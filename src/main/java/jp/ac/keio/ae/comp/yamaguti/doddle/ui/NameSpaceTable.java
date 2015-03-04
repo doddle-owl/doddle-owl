@@ -111,6 +111,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
 		knownNSPrefixMap.put(DODDLEConstants.JPN_WN_URI, "jwn");
 		knownNSPrefixMap.put(FreeMindModelMaker.FREEMIND_URI, "freemind");
 		knownNSPrefixMap.put(JenaModelMaker.SKOS_URI, "skos");
+		knownNSPrefixMap.put(DODDLEConstants.JWO_URI, "jwo");
 	}
 
 	// baseURIがrdf, rdfs, mr3の場合があるため
@@ -132,6 +133,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
 		addDefaultNS("edrt", DODDLEConstants.EDRT_URI);
 		addDefaultNS("wn", DODDLEConstants.WN_URI);
 		addDefaultNS("jwn", DODDLEConstants.JPN_WN_URI);
+		addDefaultNS("jwo", DODDLEConstants.JWO_URI);
 		addDefaultNS("freemind", FreeMindModelMaker.FREEMIND_URI);
 		addDefaultNS("skos", JenaModelMaker.SKOS_URI);
 		setNSInfoMap();

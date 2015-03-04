@@ -23,19 +23,47 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.sql.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.data.*;
-import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLEProject;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLEConstants;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.EDRDic;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.EDRTree;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.JPNWNTree;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.JpnWordNetDic;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.ReferenceOWLOntology;
+import jp.ac.keio.ae.comp.yamaguti.doddle.data.WordNetDic;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.OWLOntologyManager;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Utils;
+
+import org.apache.commons.io.FileUtils;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.util.FileManager;
 
 /**
  * @author takeshi morita
@@ -45,12 +73,17 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 	private JCheckBox edrtCheckBox;
 	private JCheckBox wnCheckBox;
 	private JCheckBox jpnWnCheckBox;
+	private JCheckBox jwoCheckBox;
 
 	private JRadioButton wn30RadioButton;
 	private JRadioButton wn31RadioButton;
 	private JPanel wnVersionSelectionPanel;
 
-	public GeneralOntologySelectionPanel() {
+	private NameSpaceTable nameSpaceTable;
+	private static final String JWO_HOME = Utils.TEMP_DIR + "jwo";
+
+	public GeneralOntologySelectionPanel(NameSpaceTable nsTable) {
+		nameSpaceTable = nsTable;
 		edrCheckBox = new JCheckBox(Translator.getTerm("GenericEDRCheckBox"), false);
 		edrCheckBox.addActionListener(this);
 		edrtCheckBox = new JCheckBox(Translator.getTerm("TechnicalEDRCheckBox"), false);
@@ -75,9 +108,12 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 
 		jpnWnCheckBox = new JCheckBox(Translator.getTerm("JpnWordNetCheckBox"), false);
 		jpnWnCheckBox.addActionListener(this);
+		jwoCheckBox = new JCheckBox(Translator.getTerm("JWOCheckBox"), false);
+		jwoCheckBox.addActionListener(this);
 		JPanel checkPanel = new JPanel();
 		checkPanel.add(borderPanel);
 		checkPanel.add(jpnWnCheckBox);
+		checkPanel.add(jwoCheckBox);
 		checkPanel.add(edrCheckBox);
 		checkPanel.add(edrtCheckBox);
 		setLayout(new BorderLayout());
@@ -94,6 +130,7 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 			properties.setProperty("EDR(technical)", String.valueOf(isEDRTEnable()));
 			properties.setProperty("WordNet", String.valueOf(isWordNetEnable()));
 			properties.setProperty("JPN WordNet", String.valueOf(isJpnWordNetEnable()));
+			properties.setProperty("JWO", String.valueOf(isJWOEnable()));
 			properties.store(writer, "Ontology Info");
 		} catch (IOException ioex) {
 			ioex.printStackTrace();
@@ -152,6 +189,9 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 			t = new Boolean(properties.getProperty("JPN WordNet"));
 			jpnWnCheckBox.setSelected(t);
 			enableJpnWordNetDic(t);
+			t = new Boolean(properties.getProperty("JWO"));
+			jwoCheckBox.setSelected(t);
+			enableJWO(t);
 		} catch (IOException ioex) {
 			ioex.printStackTrace();
 		} finally {
@@ -202,6 +242,9 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 		if (isJpnWordNetEnable()) {
 			builder.append("JPN WordNet ");
 		}
+		if (isJWOEnable()) {
+			builder.append("JWO");
+		}
 		return builder.toString();
 	}
 
@@ -219,6 +262,10 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 
 	public boolean isJpnWordNetEnable() {
 		return jpnWnCheckBox.isEnabled() && jpnWnCheckBox.isSelected();
+	}
+
+	public boolean isJWOEnable() {
+		return jwoCheckBox.isEnabled() && jwoCheckBox.isSelected();
 	}
 
 	private void enableEDRDic(boolean t) {
@@ -267,6 +314,12 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 		}
 	}
 
+	private void enableJWO(boolean t) {
+		if (t) {
+			jwoCheckBox.setSelected(t);
+		}
+	}
+
 	/**
 	 * オプションダイアログでパスを変更した場合は，再度，チェックできるようにする．
 	 */
@@ -292,6 +345,35 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 		} else if (e.getSource() == jpnWnCheckBox) {
 			enableJpnWordNetDic(jpnWnCheckBox.isSelected());
 			project.addLog("JpnWordNetCheckBox", jpnWnCheckBox.isSelected());
+		} else if (e.getSource() == jwoCheckBox) {
+			if (jwoCheckBox.isSelected()) {
+				File jwoDir = new File(JWO_HOME);
+				if (!jwoDir.exists()) {
+					jwoDir.mkdir();
+				}
+				File jwoFile = new File(JWO_HOME + "jwo" + File.separator + "jwo_classes.owl");
+				if (!jwoFile.exists()) {
+					URL url = DODDLE.class.getClassLoader().getResource(
+							Utils.RESOURCE_DIR + "jwo" + File.separator + "jwo_classes.owl");
+					try {
+						if (url != null) {
+							FileUtils.copyURLToFile(url, jwoFile);
+						}
+						System.out.println("copy: " + jwoFile.getAbsolutePath());
+					} catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+				}
+				if (OWLOntologyManager.getRefOntology(jwoFile.getAbsolutePath()) == null) {
+					Model ontModel = FileManager.get().loadModel(jwoFile.getAbsolutePath());
+					ReferenceOWLOntology refOnt = new ReferenceOWLOntology(ontModel,
+							jwoFile.getAbsolutePath(), nameSpaceTable);
+					OWLOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
+				} else {
+					System.out
+							.println(OWLOntologyManager.getRefOntology(jwoFile.getAbsolutePath()));
+				}
+			}
 		}
 	}
 
