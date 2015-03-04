@@ -1809,6 +1809,14 @@
     <j.0:prefLabel>Japanese WordNet</j.0:prefLabel>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdf:Description>
+  <rdf:Description rdf:about="#JWOCheckBox">
+    <j.1:partOf rdf:resource="#GenericOntologySelectionPanel"/>
+    <rdfs:subClassOf rdf:resource="#CheckBox"/>
+    <rdfs:label xml:lang="ja">日本語Wikipediaオントロジー</rdfs:label>
+    <rdfs:label xml:lang="en">Japanese Wikipedia Ontology</rdfs:label>
+    <j.0:prefLabel>Japanese Wikipedia Ontology</j.0:prefLabel>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
   <rdf:Description rdf:about="#OWLOntologySelectionPanel">
     <j.1:partOf rdf:resource="#OntologySelectionPanel"/>
     <rdfs:subClassOf rdf:resource="#Panel"/>
