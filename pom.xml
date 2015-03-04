@@ -86,8 +86,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<debug>true</debug>
 				</configuration>
 			</plugin>
@@ -96,7 +96,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
 					<author>true</author>
-					<source>1.6</source>
+					<source>1.8</source>
 					<showPackage>false</showPackage>
 					<showPrivate>true</showPrivate>
 					<encoding>UTF-8</encoding>
@@ -288,6 +288,11 @@
         	<groupId>org.apache.poi</groupId>
         	<artifactId>poi-ooxml</artifactId>
         	<version>3.11</version>
+        </dependency>
+        <dependency>
+        	<groupId>edu.stanford.nlp</groupId>
+        	<artifactId>stanford-parser</artifactId>
+        	<version>3.5.1</version>
         </dependency>
 	</dependencies>
 </project>
