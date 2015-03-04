@@ -189,6 +189,9 @@ public class SwoogleWebServiceWrapper {
 						|| queryTypeAndSearchString.indexOf("queryType=digest_swd") != -1) {
 					File file = new File(SWOOGLE_QUERY_RESULTS_DIR + File.separator + "query_"
 							+ (index + 1));
+					if (!file.exists()) {
+						continue;
+					}
 					Model model = getModel(new FileInputStream(file), DODDLEConstants.BASE_URI);
 					String sparqlQueryString = SPARQLQueryUtil
 							.getQueryString(getSearchOntologyQuery());

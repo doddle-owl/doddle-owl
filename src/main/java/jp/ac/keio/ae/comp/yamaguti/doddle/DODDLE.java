@@ -487,7 +487,6 @@ public class DODDLE extends JFrame {
 				.getProperty("Japanese_Morphological_Analyzer");
 		InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
 				.getProperty("Japanese_Dependency_Structure_Analyzer");
-		InputDocumentSelectionPanel.SS_TAGGER_HOME = properties.getProperty("SSTAGGER_HOME");
 		DODDLEConstants.BASE_URI = properties.getProperty("BASE_URI");
 		DODDLEConstants.BASE_PREFIX = properties.getProperty("BASE_PREFIX");
 		DODDLEConstants.PROJECT_HOME = properties.getProperty("PROJECT_DIR");

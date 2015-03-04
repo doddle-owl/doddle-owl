@@ -327,8 +327,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 					"C:/Program Files/CaboCha/bin/cabocha.exe");
 		}
 
-		properties.setProperty("SSTAGGER_HOME", directoryPanel.getSSTaggerDir());
-
 		properties.setProperty("AutomaticDisambiguation.useSiblingNodeCount",
 				String.valueOf(siblingDisambiguationCheckBox.isSelected()));
 		properties.setProperty("AutomaticDisambiguation.useChildNodeCount",
@@ -394,7 +392,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		DODDLEConstants.PROJECT_HOME = directoryPanel.getProjectDir();
 		UpperConceptManager.UPPER_CONCEPT_LIST = directoryPanel.getUpperConceptList();
 		InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = directoryPanel.getStopWordList();
-		InputDocumentSelectionPanel.SS_TAGGER_HOME = directoryPanel.getSSTaggerDir();
 		// 汎用オントロジーパネルのチェックボックスを有効化する
 		DODDLEProject currentProject = (DODDLEProject) DODDLE.desktop.getSelectedFrame();
 		if (currentProject != null) {
@@ -426,7 +423,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		directoryPanel.setProjectDir("");
 		directoryPanel.setUpperCnceptList("");
 		directoryPanel.setStopWordList("");
-		directoryPanel.setSSTaggerDir("");
 	}
 
 	public void loadConfig(Properties properties) {
@@ -450,9 +446,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 		directoryPanel.setUpperCnceptList(UpperConceptManager.UPPER_CONCEPT_LIST);
 		InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = properties.getProperty("STOP_WORD_LIST");
 		directoryPanel.setStopWordList(InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
-
-		InputDocumentSelectionPanel.SS_TAGGER_HOME = properties.getProperty("SSTAGGER_HOME");
-		directoryPanel.setSSTaggerDir(InputDocumentSelectionPanel.SS_TAGGER_HOME);
 
 		if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
 			properties.setProperty("Japanese_Morphological_Analyzer",
@@ -556,7 +549,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 	class DirectoryPanel extends JPanel {
 		private JTextField japaneseMorphologicalAnalyzerField;
 		private JTextField japaneseDependencyStructureAnalyzerField;
-		private JTextField ssTaggerDirField;
 		private JTextField perlDirField;
 		private JTextField edrDicDirField;
 		private JTextField edrtDicDirField;
@@ -566,7 +558,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
 		private JButton browseJapaneseMorphologicalAnalyzerButton;
 		private JButton browseJapaneseDependencyStructureAnalyzerButton;
-		private JButton browseSSTaggerDirButton;
 		private JButton browsePerlDirButton;
 		private JButton browseEDRDicDirButton;
 		private JButton browseEDRTDicDirButton;
@@ -588,10 +579,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 					browseJapaneseDependencyStructureAnalyzerButton,
 					InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
 
-			ssTaggerDirField = new JTextField(FIELD_SIZE);
-			browseSSTaggerDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-			initComponent(ssTaggerDirField, browseSSTaggerDirButton,
-					InputDocumentSelectionPanel.SS_TAGGER_HOME);
 			perlDirField = new JTextField(FIELD_SIZE);
 			browsePerlDirButton = new JButton(Translator.getTerm("ReferenceButton"));
 			initComponent(perlDirField, browsePerlDirButton, InputDocumentSelectionPanel.PERL_EXE);
@@ -614,27 +601,25 @@ public class OptionDialog extends JDialog implements ActionListener {
 					InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
 			JPanel panel = new JPanel();
-			panel.setLayout(new GridLayout(5, 2));
+			panel.setLayout(new GridLayout(4, 2));
+			panel.add(getPanel(projectDirField, browseProjectDirButton,
+					Translator.getTerm("ProjectFolderTextField")));
+			panel.add(getPanel(stopWordListField, browseStopWordListButton,
+					Translator.getTerm("StopWordsTextField")));
+			panel.add(getPanel(edrDicDirField, browseEDRDicDirButton,
+					Translator.getTerm("EDRDicFolderTextField")));
+			panel.add(getPanel(edrtDicDirField, browseEDRTDicDirButton,
+					Translator.getTerm("EDRTDicFolderTextField")));
 			panel.add(getPanel(japaneseMorphologicalAnalyzerField,
 					browseJapaneseMorphologicalAnalyzerButton,
 					Translator.getTerm("JapaneseMorphologicalAnalyzerTextField")));
 			panel.add(getPanel(japaneseDependencyStructureAnalyzerField,
 					browseJapaneseDependencyStructureAnalyzerButton,
 					Translator.getTerm("JapaneseDependencyStructureAnalyzerTextField")));
-			panel.add(getPanel(ssTaggerDirField, browseSSTaggerDirButton,
-					Translator.getTerm("SSTaggerFolderTextField")));
 			panel.add(getPanel(perlDirField, browsePerlDirButton,
 					Translator.getTerm("PerlTextField")));
-			panel.add(getPanel(edrDicDirField, browseEDRDicDirButton,
-					Translator.getTerm("EDRDicFolderTextField")));
-			panel.add(getPanel(edrtDicDirField, browseEDRTDicDirButton,
-					Translator.getTerm("EDRTDicFolderTextField")));
-			panel.add(getPanel(projectDirField, browseProjectDirButton,
-					Translator.getTerm("ProjectFolderTextField")));
 			panel.add(getPanel(upperConceptListField, browseUpperConceptListButton,
 					Translator.getTerm("UpperConceptListTextField")));
-			panel.add(getPanel(stopWordListField, browseStopWordListButton,
-					Translator.getTerm("StopWordsTextField")));
 
 			setLayout(new BorderLayout());
 			setBorder(BorderFactory.createEtchedBorder());
@@ -663,14 +648,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
 		public String getPerlDir() {
 			return perlDirField.getText();
-		}
-
-		public void setSSTaggerDir(String dir) {
-			ssTaggerDirField.setText(dir);
-		}
-
-		public String getSSTaggerDir() {
-			return ssTaggerDirField.getText();
 		}
 
 		public void setEDRDicDir(String dir) {
@@ -758,8 +735,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 						InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = fileOrDirectoryName;
 					} else if (directoryField == japaneseDependencyStructureAnalyzerField) {
 						InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = fileOrDirectoryName;
-					} else if (directoryField == ssTaggerDirField) {
-						InputDocumentSelectionPanel.SS_TAGGER_HOME = fileOrDirectoryName;
 					} else if (directoryField == perlDirField) {
 						InputDocumentSelectionPanel.PERL_EXE = fileOrDirectoryName;
 					} else if (directoryField == edrDicDirField) {

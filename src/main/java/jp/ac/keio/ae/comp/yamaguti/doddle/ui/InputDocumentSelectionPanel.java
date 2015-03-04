@@ -34,6 +34,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -98,6 +99,11 @@ import net.sf.extjwnl.data.POS;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
+
+import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.ling.Sentence;
+import edu.stanford.nlp.ling.TaggedWord;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 /**
  * @author takeshi morita
@@ -529,51 +535,42 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 		termInfoMap.put(term, info);
 	}
 
-	private String runSSTagger(String text) {
-		StringBuffer buf = new StringBuffer("");
-		BufferedReader reader = null;
+	private String runStanfordParser(File docFile) {
+		File dir = new File(STANFORD_PARSER_MODELS_HOME);
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
 		BufferedWriter bw = null;
+		StringBuilder builder = new StringBuilder();
 		try {
-			// System.out.println(SS_TAGGER_HOME);
-			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(SS_TAGGER_HOME
-					+ File.separator + "tmp.txt"), "UTF-8"));
-			text = text.replaceAll("．|\\*", " ");
-			bw.write(text);
-			bw.close();
-			ProcessBuilder processBuilder = new ProcessBuilder(SS_TAGGER_HOME + File.separator
-					+ "tagger.exe", "-i", "tmp.txt");
-			processBuilder.directory(new File(SS_TAGGER_HOME));
-			ssTaggerProcess = processBuilder.start();
-			reader = new BufferedReader(new InputStreamReader(ssTaggerProcess.getErrorStream(),
-					"UTF-8"));
-			String line = "";
-			while ((line = reader.readLine()) != null) { // reader.ready()は使えない
-				DODDLE.STATUS_BAR.printMessage("SS-Tagger " + line);
-				if (line.matches(".*15")) {
-					break;
+			String modelName = "english-left3words-distsim.tagger";
+			String modelPath = STANFORD_PARSER_MODELS_HOME + File.separator + modelName;
+			File modelFile = new File(modelPath);
+			if (!modelFile.exists()) {
+				URL url = DODDLE.class.getClassLoader().getResource(
+						RESOURCE_DIR + "stanford_parser_models" + File.separator + modelName);
+				if (url != null) {
+					FileUtils.copyURLToFile(url, modelFile);
+					System.out.println("copy: " + modelFile.getAbsolutePath());
 				}
 			}
-			reader.close();
-			reader = new BufferedReader(new InputStreamReader(ssTaggerProcess.getInputStream(),
-					"UTF-8"));
-			while ((line = reader.readLine()) != null) {
-				buf.append(line);
-				buf.append("\n");
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+					STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt"), "UTF-8"));
+			MaxentTagger tagger = new MaxentTagger(modelFile.getAbsolutePath());
+			List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new BufferedReader(
+					new FileReader(docFile)));
+			for (List<HasWord> sentence : sentences) {
+				List<TaggedWord> tSentence = tagger.tagSentence(sentence);
+				bw.write(Sentence.listToString(tSentence, false));
+				builder.append(Sentence.listToString(tSentence, false));
 			}
-			reader.close();
-			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(SS_TAGGER_HOME
-					+ File.separator + "tmpTagger.txt"), "UTF-8"));
-			bw.write(buf.toString());
 			bw.close();
 		} catch (IOException ioe) {
-			DODDLE.getLogger().log(Level.DEBUG, "SS Tagger can not execute.");
+			DODDLE.getLogger().log(Level.DEBUG, "Stanford Parser can not be executed.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (reader != null) {
-					reader.close();
-				}
 				if (bw != null) {
 					bw.close();
 				}
@@ -581,7 +578,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 				ioe2.printStackTrace();
 			}
 		}
-		return buf.toString();
+		return builder.toString();
 	}
 
 	private void setTermInfo(String term, String pos, String basicStr, File file, boolean isInputDoc) {
@@ -628,9 +625,9 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 		}
 	}
 
-	private void enTermExtraction(String text, Document doc, boolean isInputDoc) {
+	private void enTermExtraction(Document doc, boolean isInputDoc) {
 		File file = doc.getFile();
-		String taggedText = runSSTagger(text);
+		String taggedText = runStanfordParser(file);
 		if (taggedText.length() != 0) {
 			String[] token = taggedText.split("\\s");
 			if (token == null) {
@@ -654,7 +651,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 				setTermInfo(word, pos, basicStr, file, isInputDoc);
 			}
 		} else {
-			String[] words = text.split("\\s");
+			String[] words = doc.getText().split("\\s");
 			for (int i = 0; i < words.length; i++) {
 				String word = words[i];
 				String basicStr = word.toLowerCase();
@@ -670,19 +667,19 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 			}
 		}
 		if (genSenCheckBox.isSelected()) {
-			Set<String> comoundWordSet = getGensenCompoundWordSet(text, doc.getLang());
+			Set<String> comoundWordSet = getGensenCompoundWordSet(doc);
 			for (String compoundWord : comoundWordSet) {
 				setTermInfoMap(compoundWord, COMPOUND_WORD_EN, file, isInputDoc);
 			}
 		}
 	}
 
-	private void jaTermExtraction(String text, Document doc, boolean isInputDoc) {
+	private void jaTermExtraction(Document doc, boolean isInputDoc) {
 		File file = doc.getFile();
 		try {
 			StringTagger tagger = SenFactory.getStringTagger(null);
 			List<Token> tokenList = new ArrayList<Token>();
-			tagger.analyze(text, tokenList);
+			tagger.analyze(doc.getText(), tokenList);
 			for (Token token : tokenList) {
 				String pos = token.getMorpheme().getPartOfSpeech();
 				String basicStr = token.getMorpheme().getBasicForm();
@@ -704,7 +701,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 				}
 			}
 			if (genSenCheckBox.isSelected()) {
-				Set<String> compoundWordSet = getGensenCompoundWordSet(text, doc.getLang());
+				Set<String> compoundWordSet = getGensenCompoundWordSet(doc);
 				for (String compoundWord : compoundWordSet) {
 					setTermInfoMap(compoundWord, COMPOUND_WORD_JA, file, isInputDoc);
 				}
@@ -731,20 +728,19 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
 	private void termExtraction(Document doc, boolean isInputDoc) {
 		if (doc.getLang().equals("ja")) {
-			jaTermExtraction(doc.getText(), doc, isInputDoc);
+			jaTermExtraction(doc, isInputDoc);
 		} else if (doc.getLang().equals("en")) {
-			enTermExtraction(doc.getText(), doc, isInputDoc);
+			enTermExtraction(doc, isInputDoc);
 		}
 	}
 
 	private Process jaMorphologicalAnalyzerProcess;
 	private Process termExtractProcess;
-	private Process ssTaggerProcess;
 	public static String Japanese_Morphological_Analyzer = "C:/Program Files/Chasen/chasen.exe";
 	public static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
 	public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
 	public static String PERL_EXE = "C:/Perl/bin/perl.exe";
-	public static String SS_TAGGER_HOME = "C:/DODDLE-OWL/postagger-1.0";
+	public static String STANFORD_PARSER_MODELS_HOME = Utils.TEMP_DIR + "stanford_parser_models";
 	public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
 	private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
 	private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
@@ -763,23 +759,20 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 			termExtractProcess.destroy();
 			// System.out.println("Term Extract Process");
 		}
-		if (ssTaggerProcess != null) {
-			ssTaggerProcess.destroy();
-			// System.out.println("SS Tagger Process");
-		}
 		if (taskAnalyzer != null) {
 			taskAnalyzer.destroyProcess();
 		}
 	}
 
-	public Set<String> getGensenCompoundWordSet(String text, String lang) {
+	public Set<String> getGensenCompoundWordSet(Document doc) {
+		String lang = doc.getLang();
 		Set<String> wordSet = new HashSet<String>();
 		BufferedReader reader = null;
 		try {
 			if (lang.equals("ja")) {
-				reader = getGenSenReader(text);
+				reader = getJaGenSenReader(doc.getText());
 			} else if (lang.equals("en")) {
-				reader = getSSTaggerReader();
+				reader = getEnGensenReader();
 			}
 			String line = "";
 			String splitStr = "\\s+";
@@ -823,7 +816,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 		return wordSet;
 	}
 
-	private BufferedReader getSSTaggerReader() throws IOException {
+	private BufferedReader getEnGensenReader() throws IOException {
 		File dir = new File(TERM_EXTRACT_SCRIPTS_DIR);
 		if (!dir.exists()) {
 			dir.mkdir();
@@ -838,8 +831,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 				System.out.println("copy: " + scriptFile.getAbsolutePath());
 			}
 		}
-		ProcessBuilder processBuilder = new ProcessBuilder(PERL_EXE, taggerPath, SS_TAGGER_HOME
-				+ File.separator + "tmpTagger.txt");
+		ProcessBuilder processBuilder = new ProcessBuilder(PERL_EXE, taggerPath,
+				STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
 		termExtractProcess = processBuilder.start();
 		return new BufferedReader(new InputStreamReader(termExtractProcess.getInputStream(),
 				"UTF-8"));
@@ -863,7 +856,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 	 * @return
 	 * @throws IOException
 	 */
-	private BufferedReader getGenSenReader(String text) throws IOException {
+	private BufferedReader getJaGenSenReader(String text) throws IOException {
 		tmpFile = File.createTempFile("tmp", null);
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(tmpFile), Japanese_Morphological_Analyzer_CharacterSet));
