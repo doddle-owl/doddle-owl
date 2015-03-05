@@ -61,10 +61,8 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.ModelMaker;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
 
 /**
@@ -166,21 +164,6 @@ public class SaveOntologyAction extends AbstractAction {
 				}
 			}
 		}
-	}
-
-	public void saveOWLOntology(int projectID, IDBConnection con, DODDLEProject project) {
-		ModelMaker maker = ModelFactory.createModelRDBMaker(con);
-		Model model = maker.createModel("DODDLE Project " + projectID);
-		model.removeAll();
-		model.add(getOntology(project));
-		model.close();
-	}
-
-	public void removeOWLOntology(int projectID, IDBConnection con) {
-		ModelMaker maker = ModelFactory.createModelRDBMaker(con);
-		Model model = maker.createModel("DODDLE Project " + projectID);
-		model.removeAll();
-		model.close();
 	}
 
 	public void actionPerformed(ActionEvent e) {

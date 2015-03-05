@@ -260,32 +260,6 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		}
 	}
 
-	public void saveConceptDefinition(int projectID, Statement stmt) {
-		DBManagerDialog.deleteTableContents(projectID, stmt, "concept_definition");
-		try {
-			for (NonTaxonomicRelation nonTaxRel : nonTaxRelSet) {
-				int isMetaProperty = DBManagerDialog.getMySQLBoolean(nonTaxRel.isMetaProperty());
-				String domain = URLEncoder.encode(nonTaxRel.getDomain(), "UTF8");
-				String relation = nonTaxRel.getRelation().getURI();
-				String range = URLEncoder.encode(nonTaxRel.getRange(), "UTF8");
-				String sql = "INSERT INTO concept_definition (Project_ID,is_Meta_Property,Term1,Relation,Term2) "
-						+ "VALUES("
-						+ projectID
-						+ ","
-						+ isMetaProperty
-						+ ",'"
-						+ domain
-						+ "','"
-						+ relation + "','" + range + "')";
-				stmt.executeUpdate(sql);
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void loadConceptDefinition(File file) {
 		if (!file.exists()) {
 			return;
@@ -322,28 +296,6 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		}
 	}
 
-	public void loadConceptDefinition(int projectID, Statement stmt) {
-		try {
-			String sql = "SELECT * from concept_definition where Project_ID=" + projectID;
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				boolean isMetaProperty = DBManagerDialog.getMySQLBoolean(rs
-						.getInt("is_Meta_Property"));
-				String term1 = URLDecoder.decode(rs.getString("Term1"), "UTF8");
-				Concept relation = doddleProject.getConstructPropertyPanel().getConcept(
-						rs.getString("Relation"));
-				String term2 = URLDecoder.decode(rs.getString("Term2"), "UTF8");
-				NonTaxonomicRelation nonTaxRel = new NonTaxonomicRelation(term1, relation, term2);
-				nonTaxRel.setMetaProperty(isMetaProperty);
-				addNonTaxonomicRelation(nonTaxRel);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void saveWrongPairSet(File file) {
 		BufferedWriter writer = null;
 		try {
@@ -371,22 +323,6 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 					ioe2.printStackTrace();
 				}
 			}
-		}
-	}
-
-	public void saveWrongPairSet(int projectID, Statement stmt) {
-		DBManagerDialog.deleteTableContents(projectID, stmt, "wrong_pair");
-		try {
-			for (WrongPair wp : wrongPairSet) {
-				String sql = "INSERT INTO wrong_pair (Project_ID,Term1,Term2) " + "VALUES("
-						+ projectID + ",'" + URLEncoder.encode(wp.getDomain(), "UTF8") + "','"
-						+ URLEncoder.encode(wp.getRange(), "UTF8") + "')";
-				stmt.executeUpdate(sql);
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		}
 	}
 

@@ -62,8 +62,9 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Utils;
 
 import org.apache.commons.io.FileUtils;
 
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.util.FileManager;
+import com.hp.hpl.jena.tdb.TDBFactory;
 
 /**
  * @author takeshi morita
@@ -80,7 +81,9 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 	private JPanel wnVersionSelectionPanel;
 
 	private NameSpaceTable nameSpaceTable;
-	private static final String JWO_HOME = Utils.TEMP_DIR + "jwo";
+	public static final String JWO_HOME = Utils.TEMP_DIR + "jwo";
+
+	private Dataset dataset;
 
 	public GeneralOntologySelectionPanel(NameSpaceTable nsTable) {
 		nameSpaceTable = nsTable;
@@ -120,6 +123,12 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 		add(checkPanel, BorderLayout.WEST);
 	}
 
+	public void closeDataSet() {
+		if (dataset != null) {
+			dataset.close();
+		}
+	}
+
 	public void saveGeneralOntologyInfo(File saveFile) {
 		BufferedWriter writer = null;
 		try {
@@ -143,28 +152,6 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 				}
 			}
 		}
-	}
-
-	public void insertGeneralOntologyInfo(int projectID, Statement stmt) {
-		try {
-			String sql = "INSERT INTO general_ontology_info (Project_ID,EDR_General,EDR_Technical,WordNet) "
-					+ "VALUES("
-					+ projectID
-					+ ",'"
-					+ DBManagerDialog.getMySQLBoolean(isEDREnable())
-					+ "','"
-					+ DBManagerDialog.getMySQLBoolean(isEDRTEnable())
-					+ "','"
-					+ DBManagerDialog.getMySQLBoolean(isWordNetEnable()) + "')";
-			stmt.executeUpdate(sql);
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		}
-	}
-
-	public void saveGeneralOntologyInfoToDB(int projectID, Statement stmt) {
-		DBManagerDialog.deleteTableContents(projectID, stmt, "general_ontology_info");
-		insertGeneralOntologyInfo(projectID, stmt);
 	}
 
 	public void loadGeneralOntologyInfo(File loadFile) {
@@ -202,29 +189,6 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 			} catch (IOException ioe2) {
 				ioe2.printStackTrace();
 			}
-		}
-	}
-
-	public void loadGeneralOntologyInfo(int projectID, Statement stmt) {
-		try {
-			String sql = "SELECT * from general_ontology_info where Project_ID=" + projectID;
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				boolean t = DBManagerDialog.getMySQLBoolean(rs.getInt("EDR_General"));
-				edrCheckBox.setSelected(t);
-				enableEDRDic(t);
-				t = DBManagerDialog.getMySQLBoolean(rs.getInt("EDR_Technical"));
-				edrtCheckBox.setSelected(t);
-				enableEDRTDic(t);
-				t = DBManagerDialog.getMySQLBoolean(rs.getInt("WordNet"));
-				wnCheckBox.setSelected(t);
-				enableWordNetDic(t);
-				t = DBManagerDialog.getMySQLBoolean(rs.getInt("JPN_WordNet"));
-				jpnWnCheckBox.setSelected(t);
-				enableJpnWordNetDic(t);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -351,27 +315,41 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 				if (!jwoDir.exists()) {
 					jwoDir.mkdir();
 				}
-				File jwoFile = new File(JWO_HOME + "jwo" + File.separator + "jwo_classes.owl");
-				if (!jwoFile.exists()) {
-					URL url = DODDLE.class.getClassLoader().getResource(
-							Utils.RESOURCE_DIR + "jwo" + File.separator + "jwo_classes.owl");
-					try {
-						if (url != null) {
-							FileUtils.copyURLToFile(url, jwoFile);
+				String[] tdbFiles = { "GOSP.dat", "GOSP.idn", "GOSP.info", "GPOS.dat", "GPOS.idn",
+						"GPOS.info", "GSPO.dat", "GSPO.idn", "GSPO.info", "node2id.dat",
+						"node2id.idn", "node2id.info", "nodes.dat", "nodes.info", "OSP.dat",
+						"OSP.idn", "OSP.info", "OSPG.dat", "OSPG.idn", "OSPG.info", "POS.dat",
+						"POS.idn", "POS.info", "POSG.dat", "POSG.idn", "POSG.info",
+						"prefix2id.dat", "prefix2id.idn", "prefix2id.info", "prefixes.dat",
+						"prefixes.info", "prefixIdx.dat", "prefixIdx.idn", "prefixIdx.info",
+						"SPO.dat", "SPO.idn", "SPO.info", "SPOG.dat", "SPOG.idn", "SPOG.info",
+						"this.info" };
+				for (String fname : tdbFiles) {
+					File f = new File(JWO_HOME + File.separator + fname);
+					System.out.println(f.getAbsolutePath());
+					if (!f.exists()) {
+						URL url = DODDLE.class.getClassLoader().getResource(
+								Utils.RESOURCE_DIR + "jwo" + File.separator + f.getName());
+						try {
+							if (url != null) {
+								FileUtils.copyURLToFile(url, f);
+							}
+							System.out.println("copy: " + f.getAbsolutePath());
+						} catch (IOException ioe) {
+							ioe.printStackTrace();
 						}
-						System.out.println("copy: " + jwoFile.getAbsolutePath());
-					} catch (IOException ioe) {
-						ioe.printStackTrace();
 					}
 				}
-				if (OWLOntologyManager.getRefOntology(jwoFile.getAbsolutePath()) == null) {
-					Model ontModel = FileManager.get().loadModel(jwoFile.getAbsolutePath());
+				if (OWLOntologyManager.getRefOntology(jwoDir.getAbsolutePath()) == null) {
+					dataset = TDBFactory.createDataset(jwoDir.getAbsolutePath());
+					Model ontModel = dataset.getDefaultModel();
+					System.out.println(ontModel.size());
+					System.out.println(jwoDir.getAbsolutePath());
 					ReferenceOWLOntology refOnt = new ReferenceOWLOntology(ontModel,
-							jwoFile.getAbsolutePath(), nameSpaceTable);
+							jwoDir.getAbsolutePath(), nameSpaceTable);
 					OWLOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
 				} else {
-					System.out
-							.println(OWLOntologyManager.getRefOntology(jwoFile.getAbsolutePath()));
+					System.out.println(OWLOntologyManager.getRefOntology(jwoDir.getAbsolutePath()));
 				}
 			}
 		}

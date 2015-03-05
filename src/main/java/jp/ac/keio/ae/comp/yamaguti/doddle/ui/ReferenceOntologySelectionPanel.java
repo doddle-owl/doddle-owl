@@ -132,16 +132,8 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
 		generalOntologySelectionPanel.saveGeneralOntologyInfo(saveFile);
 	}
 
-	public void saveGeneralOntologyInfoToDB(int projectID, Statement stmt) {
-		generalOntologySelectionPanel.saveGeneralOntologyInfoToDB(projectID, stmt);
-	}
-
 	public void loadGeneralOntologyInfo(File loadFile) {
 		generalOntologySelectionPanel.loadGeneralOntologyInfo(loadFile);
-	}
-
-	public void loadGeneralOntologyInfo(int projectID, Statement stmt) {
-		generalOntologySelectionPanel.loadGeneralOntologyInfo(projectID, stmt);
 	}
 
 	public String getEnableDicList() {
@@ -170,5 +162,9 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
 
 	public void resetGeneralOntologiesCheckBoxes() {
 		generalOntologySelectionPanel.resetCheckBoxes();
+	}
+
+	public void closeDataset() {
+		generalOntologySelectionPanel.closeDataSet();
 	}
 }
