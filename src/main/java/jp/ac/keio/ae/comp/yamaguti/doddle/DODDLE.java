@@ -65,7 +65,6 @@ import javax.swing.UIManager;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.AutomaticDisAmbiguationAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ConstructNounAndVerbTreeAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ConstructNounTreeAction;
-import jp.ac.keio.ae.comp.yamaguti.doddle.actions.DBManagerAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ExitAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.LayoutDockingWindowAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.LoadConceptPreferentialTermAction;
@@ -78,7 +77,6 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.actions.LoadTermInfoTableAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.NewProjectAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.OpenProjectAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.OpenRecentProjectAction;
-import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowOptionDialogAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveConceptPreferentialTermAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveInputTermSetAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveOntologyAction;
@@ -91,6 +89,7 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveTermEvalConceptSetAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveTermInfoTableAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowAllTermAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowLogConsoleAction;
+import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowOptionDialogAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowVersionInfoAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLEConstants;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.InputModule;
@@ -154,7 +153,6 @@ public class DODDLE extends JFrame {
 
 	private LayoutDockingWindowAction xgaLayoutDockingWindowAction;
 	private LayoutDockingWindowAction uxgaLayoutDockingWindowAction;
-	private DBManagerAction dbManagerAction;
 
 	public static final Property HASA_PROPERTY = ResourceFactory
 			.createProperty(DODDLEConstants.BASE_URI + "partOf");
@@ -206,7 +204,7 @@ public class DODDLE extends JFrame {
 				Translator.getDescription("ExitAction"), Translator.getTerm("ExitAction"),
 				JOptionPane.YES_NO_OPTION);
 		if (messageType == JOptionPane.YES_OPTION) {
-			dbManagerAction.closeDB();
+			DODDLE.getCurrentProject().getOntologySelectionPanel().closeDataset();
 			if (isExistingCurrentProject()) {
 				getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
 			}
@@ -321,7 +319,6 @@ public class DODDLE extends JFrame {
 				LayoutDockingWindowAction.XGA_LAYOUT, Translator.getTerm("XGALayoutAction"));
 		uxgaLayoutDockingWindowAction = new LayoutDockingWindowAction(
 				LayoutDockingWindowAction.UXGA_LAYOUT, Translator.getTerm("UXGALayoutAction"));
-		dbManagerAction = new DBManagerAction(Translator.getTerm("DBManagerDialog"));
 	}
 
 	private void makeMenuBar() {
@@ -365,8 +362,6 @@ public class DODDLE extends JFrame {
 		saveMenu.add(saveFreeMindOntologyAction);
 		saveMenu.add(saveConceptDisplayTermAction);
 		fileMenu.add(saveMenu);
-		fileMenu.addSeparator();
-		fileMenu.add(dbManagerAction);
 		fileMenu.addSeparator();
 		fileMenu.add(new ExitAction(Translator.getTerm("ExitAction"), this));
 		menuBar.add(fileMenu);

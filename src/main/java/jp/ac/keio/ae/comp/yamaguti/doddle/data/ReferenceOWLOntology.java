@@ -36,6 +36,7 @@ import java.util.Set;
 
 import javax.swing.table.TableModel;
 
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.GeneralOntologySelectionPanel;
 import jp.ac.keio.ae.comp.yamaguti.doddle.ui.NameSpaceTable;
 import jp.ac.keio.ae.comp.yamaguti.doddle.utils.ConceptTreeMaker;
 import jp.ac.keio.ae.comp.yamaguti.doddle.utils.SPARQLQueryUtil;
@@ -54,11 +55,10 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
-
-
 
 /**
  * @author takeshi morita
@@ -102,7 +102,9 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		setOWLMetaData(owlExtractionTemplate.getSearchOWLMetaDataTemplate());
 		setClassSet(owlExtractionTemplate.getSearchClassSetTemplate());
 		setPropertySet(owlExtractionTemplate.getSearchPropertySetTemplate());
-		makeWordURIsMap();
+		if (!uri.equals(GeneralOntologySelectionPanel.JWO_HOME)) {
+			makeWordURIsMap();
+		}
 		setRegionSet();
 	}
 
@@ -121,7 +123,9 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		setOWLMetaData(owlExtractionTemplate.getSearchOWLMetaDataTemplate());
 		setClassSet(owlExtractionTemplate.getSearchClassSetTemplate());
 		setPropertySet(owlExtractionTemplate.getSearchPropertySetTemplate());
-		makeWordURIsMap();
+		if (!uri.equals(GeneralOntologySelectionPanel.JWO_HOME)) {
+			makeWordURIsMap();
+		}
 	}
 
 	public TableModel getOWLMetaDataTableModel() {
@@ -303,14 +307,18 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 			ResultSet results = qexec.execSelect();
 			while (results.hasNext()) {
 				QuerySolution qs = results.nextSolution();
-				Literal label = (Literal) qs.get(LABEL_QUERY_STRING);
-				if (label != null) {
-					setWordURIsMap(label.getString(), uri);
+				if (qs.contains(LABEL_QUERY_STRING)) {
+					Literal label = (Literal) qs.get(LABEL_QUERY_STRING);
+					if (label != null) {
+						setWordURIsMap(label.getString(), uri);
+					}
 				}
-				Literal description = (Literal) qs.get(DESCRIPTION_QUERY_STRING);
-				if (description != null
-						&& description.getString().length() < LABEL_DESCRIPTION_LENGHT) {
-					setWordURIsMap(description.getString(), uri);
+				if (qs.contains(DESCRIPTION_QUERY_STRING)) {
+					Literal description = (Literal) qs.get(DESCRIPTION_QUERY_STRING);
+					if (description != null
+							&& description.getString().length() < LABEL_DESCRIPTION_LENGHT) {
+						setWordURIsMap(description.getString(), uri);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -425,6 +433,21 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 	}
 
 	public Set<String> getURISet(String word) {
+		if (wordURIsMap.get(word.toLowerCase()) == null
+				&& uri.equals(GeneralOntologySelectionPanel.JWO_HOME)) {
+			for (ResIterator i = ontModel.listSubjectsWithProperty(RDFS.label, word); i.hasNext();) {
+				Resource res = i.nextResource();
+				System.out.println(res.getURI() + ": " + word);
+				if (wordURIsMap.get(word) != null) {
+					Set<String> uris = wordURIsMap.get(word);
+					uris.add(res.getURI());
+				} else {
+					Set<String> uris = new HashSet<String>();
+					uris.add(res.getURI());
+					wordURIsMap.put(word, uris);
+				}
+			}
+		}
 		return wordURIsMap.get(word.toLowerCase());
 	}
 

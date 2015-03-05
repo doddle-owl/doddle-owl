@@ -406,7 +406,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 	}
 
 	public void saveDocumentInfo(int projectID, Statement stmt) {
-		DBManagerDialog.deleteTableContents(projectID, stmt, "doc_info");
 		int docID = 1;
 		try {
 			for (int i = 0; i < inputDocList.getModel().getSize(); i++) {
