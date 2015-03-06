@@ -28,7 +28,9 @@ import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,6 +51,7 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.Concept;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.ConceptTreeNode;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLEConstants;
+import jp.ac.keio.ae.comp.yamaguti.doddle.ui.GeneralOntologySelectionPanel;
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.properties.RootWindowProperties;
 import net.infonode.docking.theme.DockingWindowsTheme;
@@ -90,7 +93,7 @@ public class Utils {
 	public static File getENWNFile() {
 		File wnDir = new File(TEMP_DIR + DODDLEConstants.ENWN_HOME);
 		if (wnDir.exists()) {
-			System.out.println("exist: " + wnDir.getAbsolutePath());
+			// System.out.println("exist: " + wnDir.getAbsolutePath());
 			return wnDir;
 		} else {
 			wnDir.mkdir();
@@ -106,12 +109,12 @@ public class Utils {
 					if (url != null) {
 						FileUtils.copyURLToFile(url, f);
 					}
-					System.out.println("copy: " + f.getAbsolutePath());
+					// System.out.println("copy: " + f.getAbsolutePath());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			System.out.println("created: " + wnDir.getAbsolutePath());
+			// System.out.println("created: " + wnDir.getAbsolutePath());
 			return wnDir;
 		}
 	}
@@ -123,7 +126,7 @@ public class Utils {
 		}
 		File file = new File(JPWN_TEMP_DIR + resName);
 		if (file.exists()) {
-			System.out.println("exist: " + file.getAbsolutePath());
+			// System.out.println("exist: " + file.getAbsolutePath());
 			return file;
 		} else {
 			URL url = DODDLE.class.getClassLoader().getResource(
@@ -133,7 +136,7 @@ public class Utils {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("created: " + file.getAbsolutePath());
+			// System.out.println("created: " + file.getAbsolutePath());
 			return file;
 		}
 	}
@@ -295,7 +298,16 @@ public class Utils {
 	 * 独自に実装している．（不完全）
 	 */
 	public static String getLocalName(Resource res) {
-		return res.getURI().replaceAll(getNameSpace(res), "");
+		String ns = getNameSpace(res);
+		String localName = res.getURI().replaceAll(ns, "");
+		if (ns.equals(DODDLEConstants.JWO_URI)) {
+			try {
+				localName = URLDecoder.decode(localName, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		return localName;
 	}
 
 	public static String getLocalName(String uri) {

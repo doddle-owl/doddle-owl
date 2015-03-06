@@ -326,7 +326,6 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 						"this.info" };
 				for (String fname : tdbFiles) {
 					File f = new File(JWO_HOME + File.separator + fname);
-					System.out.println(f.getAbsolutePath());
 					if (!f.exists()) {
 						URL url = DODDLE.class.getClassLoader().getResource(
 								Utils.RESOURCE_DIR + "jwo" + File.separator + f.getName());
@@ -334,7 +333,8 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 							if (url != null) {
 								FileUtils.copyURLToFile(url, f);
 							}
-							System.out.println("copy: " + f.getAbsolutePath());
+							// System.out.println("copy: " +
+							// f.getAbsolutePath());
 						} catch (IOException ioe) {
 							ioe.printStackTrace();
 						}
@@ -343,13 +343,9 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 				if (OWLOntologyManager.getRefOntology(jwoDir.getAbsolutePath()) == null) {
 					dataset = TDBFactory.createDataset(jwoDir.getAbsolutePath());
 					Model ontModel = dataset.getDefaultModel();
-					System.out.println(ontModel.size());
-					System.out.println(jwoDir.getAbsolutePath());
 					ReferenceOWLOntology refOnt = new ReferenceOWLOntology(ontModel,
 							jwoDir.getAbsolutePath(), nameSpaceTable);
 					OWLOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
-				} else {
-					System.out.println(OWLOntologyManager.getRefOntology(jwoDir.getAbsolutePath()));
 				}
 			}
 		}

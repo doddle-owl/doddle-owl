@@ -147,8 +147,7 @@ public class DODDLE extends JFrame {
 
 	@Override
 	public Image getIconImage() {
-		return super.getIconImage(); // To change body of overridden methods use
-										// File | Settings | File Templates.
+		return super.getIconImage();
 	}
 
 	private LayoutDockingWindowAction xgaLayoutDockingWindowAction;

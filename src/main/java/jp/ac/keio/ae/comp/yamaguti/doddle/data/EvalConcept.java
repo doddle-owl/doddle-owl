@@ -23,51 +23,58 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.data;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
 
 /**
  * @author takeshi morita
  */
 public class EvalConcept implements Comparable {
 
-    private Concept concept;
-    private double evalValue;
+	private Concept concept;
+	private double evalValue;
 
-    public EvalConcept(Concept c, double v) {
-        concept = c;
-        evalValue = v;
-    }
+	public EvalConcept(Concept c, double v) {
+		concept = c;
+		evalValue = v;
+	}
 
-    public void setEvalValue(double ev) {
-        evalValue = ev;
-    }
+	public void setEvalValue(double ev) {
+		evalValue = ev;
+	}
 
-    public double getEvalValue() {
-        return evalValue;
-    }
+	public double getEvalValue() {
+		return evalValue;
+	}
 
-    public Concept getConcept() {
-        return concept;
-    }
+	public Concept getConcept() {
+		return concept;
+	}
 
-    public int compareTo(Object o) {
-        double ev = ((EvalConcept) o).getEvalValue();
-        EvalConcept c = (EvalConcept) o;
-        if (evalValue < ev) {
-            return 1;
-        } else if (evalValue > ev) {
-            return -1;
-        } else {
-            if (concept == null) {
-                return 1;
-            } else if (c == null) { return -1; }
-            return concept.getURI().compareTo(c.getConcept().getURI());
-        }
-    }
+	public int compareTo(Object o) {
+		double ev = ((EvalConcept) o).getEvalValue();
+		EvalConcept c = (EvalConcept) o;
+		if (evalValue < ev) {
+			return 1;
+		} else if (evalValue > ev) {
+			return -1;
+		} else {
+			if (concept == null) {
+				return 1;
+			} else if (c == null) {
+				return -1;
+			}
+			return concept.getURI().compareTo(c.getConcept().getURI());
+		}
+	}
 
-    public String toString() {
-        if (concept == null) { return Translator.getTerm("NotAvailableLabel"); }
-        return "[" + String.format("%.3f", evalValue) + "]" + "[" + concept.getQName() + "]" + "[" + concept.getWord()
-                + "]";
-    }
+	public String toString() {
+		if (concept == null) {
+			return Translator.getTerm("NotAvailableLabel");
+		}
+		return "[" + String.format("%.3f", evalValue) + "]" + "[" + concept.getQName() + "]" + "["
+				+ concept.getWord() + "]";
+	}
 }

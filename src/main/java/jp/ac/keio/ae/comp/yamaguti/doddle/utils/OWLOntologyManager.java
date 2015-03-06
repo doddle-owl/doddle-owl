@@ -172,18 +172,13 @@ public class OWLOntologyManager {
 				uriSet.addAll(set);
 			}
 		}
-		System.out.println("jwo: "
-				+ DODDLE.getCurrentProject().getOntologySelectionPanel().isJWOEnable());
 		if (DODDLE.getCurrentProject().getOntologySelectionPanel().isJWOEnable()) {
 			return uriSet;
 		}
 		Set<String> newURISet = new HashSet<String>();
 		for (String uri : uriSet) {
 			if (!uri.contains(DODDLEConstants.JWO_URI)) {
-				System.out.println("added: " + uri);
 				newURISet.add(uri);
-			} else {
-				System.out.println("removed: " + uri);
 			}
 		}
 		return newURISet;
@@ -199,7 +194,7 @@ public class OWLOntologyManager {
 				for (String uri : uriSet) {
 					if (!DODDLE.getCurrentProject().getOntologySelectionPanel().isJWOEnable()
 							&& uri.contains(DODDLEConstants.JWO_URI)) {
-						System.out.println("removed: " + uri);
+						// System.out.println("removed: " + uri);
 					} else {
 						conceptSet.add(refOnt.getConcept(uri));
 					}

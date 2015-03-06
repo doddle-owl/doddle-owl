@@ -550,7 +550,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 						RESOURCE_DIR + "stanford_parser_models" + File.separator + modelName);
 				if (url != null) {
 					FileUtils.copyURLToFile(url, modelFile);
-					System.out.println("copy: " + modelFile.getAbsolutePath());
+					// System.out.println("copy: " +
+					// modelFile.getAbsolutePath());
 				}
 			}
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
@@ -827,7 +828,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 					RESOURCE_DIR + "TermExtractScripts" + File.separator + TERM_EXTRACT_TAGGER_PL);
 			if (url != null) {
 				FileUtils.copyURLToFile(url, scriptFile);
-				System.out.println("copy: " + scriptFile.getAbsolutePath());
+				// System.out.println("copy: " + scriptFile.getAbsolutePath());
 			}
 		}
 		ProcessBuilder processBuilder = new ProcessBuilder(PERL_EXE, taggerPath,
@@ -892,7 +893,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 					RESOURCE_DIR + "TermExtractScripts" + File.separator + TERM_EXTRACT_EXE);
 			if (url != null) {
 				FileUtils.copyURLToFile(url, scriptFile);
-				System.out.println("copy: " + scriptFile.getAbsolutePath());
+				// System.out.println("copy: " + scriptFile.getAbsolutePath());
 			}
 		}
 		processBuilder = new ProcessBuilder(PERL_EXE, path,
