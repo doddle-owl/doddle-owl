@@ -13,7 +13,7 @@ DODDLE-OWLはフリーソフトウェアです．Free Software Foundation によ
 DODDLE-OWLは以下のライブラリを利用しています．
 
 * [WordNet](http://wordnet.princeton.edu/) ([License](http://wordnet.princeton.edu/wordnet/license/))
-* [Japanese WordNet](http://nlpwww.nict.go.jp/wn-ja/)([License](http://nlpwww.nict.go.jp/wn-ja/))
+* [Japanese WordNet](http://nlpwww.nict.go.jp/wn-ja/)([License](http://nlpwww.nict.go.jp/wn-ja/license.txt))
 * [Japanese Wikipedia Ontology](http://www.wikipediaontology.org/)([License](http://www.wikipediaontology.org/download.html))
 * [Apache Jena](https://jena.apache.org/)([License](http://www.apache.org/licenses/LICENSE-2.0))
 * [Lucene-Gosen](https://code.google.com/p/lucene-gosen/)([License](http://www.gnu.org/licenses/lgpl.html))
