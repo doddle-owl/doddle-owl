@@ -437,7 +437,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 				&& uri.equals(GeneralOntologySelectionPanel.JWO_HOME)) {
 			for (ResIterator i = ontModel.listSubjectsWithProperty(RDFS.label, word); i.hasNext();) {
 				Resource res = i.nextResource();
-				System.out.println(res.getURI() + ": " + word);
+				// System.out.println(res.getURI() + ": " + word);
 				if (wordURIsMap.get(word) != null) {
 					Set<String> uris = wordURIsMap.get(word);
 					uris.add(res.getURI());

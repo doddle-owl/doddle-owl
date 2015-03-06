@@ -67,6 +67,9 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 
 	private View visualizationPanelView;
 
+	private static final int WINDOW_WIDTH = 1024;
+	private static final int WINDOW_HEIGHT = 768;
+
 	class NewProjectWorker extends SwingWorker<String, String> implements PropertyChangeListener {
 
 		private int taskCnt;
@@ -95,6 +98,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 				userIDCount = 0;
 				uriConceptMap = new HashMap<String, Concept>();
 				logList = new ArrayList<String>();
+
 				addLog("NewProjectAction");
 				constructClassPanel = new ConstructClassPanel(project);
 				setProgress(currentTaskCnt++);
@@ -147,6 +151,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 				rootWindow = Utils.createDODDLERootWindow(viewMap);
 				getContentPane().add(rootWindow, BorderLayout.CENTER);
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 				addInternalFrameListener(new InternalFrameAdapter() {
 					public void internalFrameClosing(InternalFrameEvent e) {
 						int messageType = JOptionPane.showConfirmDialog(rootWindow, getTitle()
@@ -158,7 +163,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 						}
 					}
 				});
-				setSize(800, 600);
+				setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 				DODDLE.desktop.add(project);
 				project.toFront();
 				DODDLE.desktop.setSelectedFrame(project);
@@ -175,7 +180,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 				if (taskCnt == 11) {
 					try {
 						project.setVisible(true); // かならず表示させるため
-						project.setMaximum(true); // setVisibleより前にしてしまうと，初期サイズ(800x600)で最大化されてしまう
+						project.setMaximum(true); // setVisibleより前にしてしまうと，初期サイズで最大化されてしまう
 					} catch (PropertyVetoException pve) {
 						pve.printStackTrace();
 					}

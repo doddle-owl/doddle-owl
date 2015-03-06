@@ -35,23 +35,19 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.utils.*;
  */
 public class NewProjectAction extends AbstractAction {
 
-    private String title;
+	private String title;
 
-    public NewProjectAction(String title) {
-        super(title, Utils.getImageIcon("page_white.png"));
-        this.title = title;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
-    }
+	public NewProjectAction(String title) {
+		super(title, Utils.getImageIcon("page_white.png"));
+		this.title = title;
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
+	}
 
-    public String getTitle() {
-        return title;
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);                
-            }
-        });
-    }
+	public String getTitle() {
+		return title;
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
+	}
 }

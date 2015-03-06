@@ -132,7 +132,7 @@ public class SwoogleWebServiceWrapper {
 			dir.mkdir();
 		}
 		File file = new File(OWL_ONTOLOGIES_DIR + File.separator + OWL_ONTOLOGY_RESULT_LIST_FILE);
-		System.out.println(file.getAbsolutePath());
+		// System.out.println(file.getAbsolutePath());
 		owlOntologyList = new ArrayList<String>();
 		if (!file.exists()) {
 			return;
@@ -156,7 +156,7 @@ public class SwoogleWebServiceWrapper {
 		}
 		File file = new File(SWOOGLE_QUERY_RESULTS_DIR + File.separator
 				+ SWOOGLE_QUERY_RESULT_LIST_FILE);
-		System.out.println(file.getAbsolutePath());
+		// System.out.println(file.getAbsolutePath());
 		swoogleQueryList = new ArrayList<String>();
 		if (!file.exists()) {
 			return;
@@ -353,7 +353,7 @@ public class SwoogleWebServiceWrapper {
 				+ SWOOGLE_WEB_SERVICE_KEY;
 		Model model = null;
 		try {
-			System.out.println(queryTypeAndSearchString);
+			// System.out.println(queryTypeAndSearchString);
 			int index = swoogleQueryList.lastIndexOf(queryTypeAndSearchString);
 			index += 1;
 			File queryCachFile = new File(SWOOGLE_QUERY_RESULTS_DIR + File.separator + "query_"
@@ -942,11 +942,11 @@ public class SwoogleWebServiceWrapper {
 	}
 
 	public static void initSwoogleWebServiceWrapper() {
-		System.out.println("Init OWL Ontology List");
+		// System.out.println("Init OWL Ontology List");
 		initOWLOntologyList();
-		System.out.println("Init Swoogle Query List");
+		// System.out.println("Init Swoogle Query List");
 		initSwoogleQueryList();
-		System.out.println("Init Swoogle OWL MetaData");
+		// System.out.println("Init Swoogle OWL MetaData");
 		initSwoogleOWLMetaData();
 	}
 

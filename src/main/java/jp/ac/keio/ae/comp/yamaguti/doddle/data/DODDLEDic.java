@@ -60,11 +60,10 @@ public class DODDLEDic {
 		String id = Utils.getLocalName(res);
 		String ns = Utils.getNameSpace(res);
 		Concept c = OWLOntologyManager.getConcept(uri);
-		System.out.println(isJWOEnable() + ": " + ns);
+		
 		if (!isJWOEnable() && ns.equals(DODDLEConstants.JWO_URI)) {
 			return null;
 		}
-		System.out.println(c);
 		if (c != null) {
 			return c;
 		}
