@@ -88,6 +88,7 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveTermConceptMapAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveTermEvalConceptSetAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.SaveTermInfoTableAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowAllTermAction;
+import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowDODDLEDicConverterAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowLogConsoleAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowOptionDialogAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ShowVersionInfoAction;
@@ -144,6 +145,8 @@ public class DODDLE extends JFrame {
 	private SaveOntologyAction saveOWLOntologyAction;
 	private SaveOntologyAction saveFreeMindOntologyAction;
 	private ShowLogConsoleAction showLogConsoleAction;
+
+	private ShowDODDLEDicConverterAction showDODDLEDicConverterAction;
 
 	@Override
 	public Image getIconImage() {
@@ -203,9 +206,9 @@ public class DODDLE extends JFrame {
 				Translator.getDescription("ExitAction"), Translator.getTerm("ExitAction"),
 				JOptionPane.YES_NO_OPTION);
 		if (messageType == JOptionPane.YES_OPTION) {
-			DODDLE.getCurrentProject().getOntologySelectionPanel().closeDataset();
 			if (isExistingCurrentProject()) {
 				getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
+				getCurrentProject().getOntologySelectionPanel().closeDataset();
 			}
 			if (doddlePlugin == null) {
 				System.exit(0);
@@ -314,6 +317,7 @@ public class DODDLE extends JFrame {
 				LoadOntologyAction.FREEMIND_ONTOLOGY);
 		showLogConsoleAction = new ShowLogConsoleAction(Translator.getTerm("ShowLogConsoleAction"),
 				logConsole);
+		showDODDLEDicConverterAction = new ShowDODDLEDicConverterAction("DODDLE Dic Converter");
 		xgaLayoutDockingWindowAction = new LayoutDockingWindowAction(
 				LayoutDockingWindowAction.XGA_LAYOUT, Translator.getTerm("XGALayoutAction"));
 		uxgaLayoutDockingWindowAction = new LayoutDockingWindowAction(
@@ -373,6 +377,8 @@ public class DODDLE extends JFrame {
 		toolMenu.addSeparator();
 		toolMenu.add(new ConstructNounTreeAction());
 		toolMenu.add(new ConstructNounAndVerbTreeAction());
+		toolMenu.addSeparator();
+		toolMenu.add(showDODDLEDicConverterAction);
 		toolMenu.addSeparator();
 		toolMenu.add(showLogConsoleAction);
 		toolMenu.addSeparator();

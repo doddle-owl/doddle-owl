@@ -192,6 +192,7 @@ public class InputModule {
 			return;
 		}
 		Set<String> idSet = EDRDic.getEDRIDSet(subInputTerm);
+		// System.out.println(idSet);
 		if (idSet == null) {
 			return;
 		}
