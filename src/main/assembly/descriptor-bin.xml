@@ -15,12 +15,18 @@
 		<fileSet>
 			<directory>src/main/resources</directory>
 			<outputDirectory>resources</outputDirectory>
+			<includes>
+				<include>*.txt</include>
+				<include>*.ico</include>
+				<include>*.icns</include>
+			</includes>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/java/jp/ac/keio/ae/comp/yamaguti/doddle/resources</directory>
-			<outputDirectory>resources</outputDirectory>
+			<directory>src/main/resources</directory>
+            <outputDirectory>./</outputDirectory>
 			<includes>
-				<include>*.owl</include>
+				<include>*.xml</include>
+				<include>*.jar</include>
 			</includes>
 		</fileSet>
 		<fileSet>
