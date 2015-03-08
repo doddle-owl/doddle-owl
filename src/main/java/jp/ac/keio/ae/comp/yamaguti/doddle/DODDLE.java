@@ -61,6 +61,7 @@ import javax.swing.JRootPane;
 import javax.swing.JToolBar;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.AutomaticDisAmbiguationAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ConstructNounAndVerbTreeAction;
@@ -534,11 +535,13 @@ public class DODDLE extends JFrame {
 			getLogger().setLevel(Level.INFO);
 			setDefaultLoggerFormat();
 			String file = DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt";
-			FileAppender appender = new FileAppender(new PatternLayout(
-					"[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"), file);
-			appender.setName("LOG File");
-			appender.setAppend(true);
-			Logger.getRootLogger().addAppender(appender);
+			if (new File(file).exists()) {
+				FileAppender appender = new FileAppender(new PatternLayout(
+						"[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"), file);
+				appender.setName("LOG File");
+				appender.setAppend(true);
+				Logger.getRootLogger().addAppender(appender);
+			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}

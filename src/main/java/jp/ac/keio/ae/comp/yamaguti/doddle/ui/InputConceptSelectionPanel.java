@@ -268,6 +268,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 		buttonPanel.setLayout(new GridLayout(1, 2));
 		buttonPanel.add(constructNounTreeButton);
 		buttonPanel.add(constructNounAndVerbTreeButton);
+		JPanel buttonBorderPanel = new JPanel();
+		buttonBorderPanel.setLayout(new BorderLayout());
+		buttonBorderPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		JTabbedPane optionTab = new JTabbedPane();
 		optionTab.add(perfectlyMatchedOptionPanel,
@@ -278,7 +281,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 		optionPanel.setLayout(new BorderLayout());
 		// optionPanel.add(constructionTypePanel);
 		optionPanel.add(optionTab, BorderLayout.CENTER);
-		optionPanel.add(buttonPanel, BorderLayout.EAST);
+		optionPanel.add(buttonBorderPanel, BorderLayout.EAST);
 
 		mainViews = new View[7];
 		ViewMap viewMap = new ViewMap();
@@ -311,7 +314,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 		SplitWindow sw3 = new SplitWindow(true, mainViews[4], mainViews[5]);
 		SplitWindow sw4 = new SplitWindow(false, 0.6f, sw2, sw3);
 		SplitWindow sw5 = new SplitWindow(true, 0.3f, mainViews[0], sw4);
-		SplitWindow sw6 = new SplitWindow(false, 0.85f, sw5, mainViews[6]);
+		SplitWindow sw6 = new SplitWindow(false, 0.8f, sw5, mainViews[6]);
 		rootWindow.setWindow(sw6);
 	}
 
