@@ -51,7 +51,6 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.Concept;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.ConceptTreeNode;
 import jp.ac.keio.ae.comp.yamaguti.doddle.data.DODDLEConstants;
-import jp.ac.keio.ae.comp.yamaguti.doddle.ui.GeneralOntologySelectionPanel;
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.properties.RootWindowProperties;
 import net.infonode.docking.theme.DockingWindowsTheme;
@@ -77,7 +76,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
  * @author takeshi morita
  */
 public class Utils {
-	public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
+	public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/"; // 区切り文字にFile.separatorは使わない
 	public static final String TEMP_DIR = System.getProperty("java.io.tmpdir") + "DODDLE-OWL"
 			+ File.separator;
 	private static final String JPWN_TEMP_DIR = TEMP_DIR + "jpwn_dict_1.1" + File.separator;

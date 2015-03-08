@@ -35,9 +35,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
 import javax.swing.ButtonGroup;
@@ -61,6 +58,7 @@ import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Translator;
 import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Utils;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Level;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -328,13 +326,12 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 					File f = new File(JWO_HOME + File.separator + fname);
 					if (!f.exists()) {
 						URL url = DODDLE.class.getClassLoader().getResource(
-								Utils.RESOURCE_DIR + "jwo" + File.separator + f.getName());
+								Utils.RESOURCE_DIR + "jwo/" + f.getName());
 						try {
 							if (url != null) {
 								FileUtils.copyURLToFile(url, f);
+								DODDLE.getLogger().log(Level.INFO, "copy: " + f.getAbsolutePath());
 							}
-							// System.out.println("copy: " +
-							// f.getAbsolutePath());
 						} catch (IOException ioe) {
 							ioe.printStackTrace();
 						}

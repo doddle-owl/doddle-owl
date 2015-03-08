@@ -547,7 +547,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 			File modelFile = new File(modelPath);
 			if (!modelFile.exists()) {
 				URL url = DODDLE.class.getClassLoader().getResource(
-						RESOURCE_DIR + "stanford_parser_models" + File.separator + modelName);
+						Utils.RESOURCE_DIR + "stanford_parser_models/" + modelName);
 				if (url != null) {
 					FileUtils.copyURLToFile(url, modelFile);
 					// System.out.println("copy: " +
@@ -741,7 +741,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 	public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
 	public static String PERL_EXE = "C:/Perl/bin/perl.exe";
 	public static String STANFORD_PARSER_MODELS_HOME = Utils.TEMP_DIR + "stanford_parser_models";
-	public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
 	private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
 	private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
 	private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
@@ -825,7 +824,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 		File scriptFile = new File(taggerPath);
 		if (!scriptFile.exists()) {
 			URL url = DODDLE.class.getClassLoader().getResource(
-					RESOURCE_DIR + "TermExtractScripts" + File.separator + TERM_EXTRACT_TAGGER_PL);
+					Utils.RESOURCE_DIR + "TermExtractScripts/" + TERM_EXTRACT_TAGGER_PL);
 			if (url != null) {
 				FileUtils.copyURLToFile(url, scriptFile);
 				// System.out.println("copy: " + scriptFile.getAbsolutePath());
@@ -890,7 +889,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 		File scriptFile = new File(path);
 		if (!scriptFile.exists()) {
 			URL url = DODDLE.class.getClassLoader().getResource(
-					RESOURCE_DIR + "TermExtractScripts" + File.separator + TERM_EXTRACT_EXE);
+					Utils.RESOURCE_DIR + "TermExtractScripts/" + TERM_EXTRACT_EXE);
 			if (url != null) {
 				FileUtils.copyURLToFile(url, scriptFile);
 				// System.out.println("copy: " + scriptFile.getAbsolutePath());
