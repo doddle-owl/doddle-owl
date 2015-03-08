@@ -61,7 +61,6 @@ import javax.swing.JRootPane;
 import javax.swing.JToolBar;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.AutomaticDisAmbiguationAction;
 import jp.ac.keio.ae.comp.yamaguti.doddle.actions.ConstructNounAndVerbTreeAction;
@@ -191,6 +190,10 @@ public class DODDLE extends JFrame {
 		setIconImage(Utils.getImageIcon("application.png").getImage());
 		setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu")
 				+ ": " + DODDLEConstants.VERSION + " (" + DODDLEConstants.LAST_UPDATE + ")");
+		File tempDir = new File(Utils.TEMP_DIR);
+		if (!tempDir.exists()) {
+			tempDir.mkdir();
+		}
 		setVisible(true);
 	}
 
@@ -535,13 +538,14 @@ public class DODDLE extends JFrame {
 			getLogger().setLevel(Level.INFO);
 			setDefaultLoggerFormat();
 			String file = DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt";
-			if (new File(file).exists()) {
+			if (new File(DODDLEConstants.PROJECT_HOME).exists()) {
 				FileAppender appender = new FileAppender(new PatternLayout(
 						"[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"), file);
 				appender.setName("LOG File");
 				appender.setAppend(true);
 				Logger.getRootLogger().addAppender(appender);
 			}
+			getLogger().log(Level.INFO, "Resource Dir: " + Utils.RESOURCE_DIR);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}

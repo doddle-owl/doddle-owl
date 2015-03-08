@@ -23,137 +23,151 @@
 
 package jp.ac.keio.ae.comp.yamaguti.doddle.data;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
 
-import jp.ac.keio.ae.comp.yamaguti.doddle.*;
+import jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE;
+import jp.ac.keio.ae.comp.yamaguti.doddle.utils.Utils;
 
 /**
  * @author takeshi morita
  */
 public class OWLOntologyExtractionTemplate {
 
-    private File searchOWLMetaDataTemplate;
-    private File searchClassSetTemplate;
-    private File searchPropertySetTemplate;
-    private File searchConceptTemplate;
-    private File searchRegionSetTemplate;
-    private File searchSubConceptTemplate;
+	private File searchOWLMetaDataTemplate;
+	private File searchClassSetTemplate;
+	private File searchPropertySetTemplate;
+	private File searchConceptTemplate;
+	private File searchRegionSetTemplate;
+	private File searchSubConceptTemplate;
 
-    public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
+	public OWLOntologyExtractionTemplate() {
+		setSearchOWLMetaDataTemplate(new File("ontology_templates/SearchOWLMetaData.rq"));
+		setSearchClassSetTemplate(new File("ontology_templates/SearchClassSet.rq"));
+		setSearchPropertySetTemplate(new File("ontology_templates/SearchPropertySet.rq"));
+		setSearchConceptTemplate(new File("ontology_templates/SearchConcept.rq"));
+		setSearchRegionSetTemplate(new File("ontology_templates/SearchRegionSet.rq"));
+		setSearchSubConceptTemplate(new File("ontology_templates/SearchSubConcept.rq"));
+	}
 
-    public OWLOntologyExtractionTemplate() {
-        setSearchOWLMetaDataTemplate(new File("ontology_templates/SearchOWLMetaData.rq"));
-        setSearchClassSetTemplate(new File("ontology_templates/SearchClassSet.rq"));
-        setSearchPropertySetTemplate(new File("ontology_templates/SearchPropertySet.rq"));
-        setSearchConceptTemplate(new File("ontology_templates/SearchConcept.rq"));
-        setSearchRegionSetTemplate(new File("ontology_templates/SearchRegionSet.rq"));
-        setSearchSubConceptTemplate(new File("ontology_templates/SearchSubConcept.rq"));
-    }
+	public String getSearchOWLMetaDataTemplateLabel() {
+		if (searchOWLMetaDataTemplate.exists()) {
+			return searchOWLMetaDataTemplate.getAbsolutePath();
+		}
+		return "Default Search OWL Meta Data Template";
+	}
 
-    public String getSearchOWLMetaDataTemplateLabel() {
-        if (searchOWLMetaDataTemplate.exists()) { return searchOWLMetaDataTemplate.getAbsolutePath(); }
-        return "Default Search OWL Meta Data Template";
-    }
+	public File getSearchOWLMetaDataTemplate() {
+		return searchOWLMetaDataTemplate;
+	}
 
-    public File getSearchOWLMetaDataTemplate() {
-        return searchOWLMetaDataTemplate;
-    }
+	public InputStream getDefaultSearchOWLMetaDataTemplate() {
+		return DODDLE.class.getClassLoader().getResourceAsStream(
+				Utils.RESOURCE_DIR + "ontology_templates/SearchOWLMetaData.rq");
+	}
 
-    public InputStream getDefaultSearchOWLMetaDataTemplate() {
-        return DODDLE.class.getClassLoader().getResourceAsStream(
-                RESOURCE_DIR + "ontology_templates/SearchOWLMetaData.rq");
-    }
+	public void setSearchOWLMetaDataTemplate(File searchOWLMetaDataTemplate) {
+		this.searchOWLMetaDataTemplate = searchOWLMetaDataTemplate;
+	}
 
-    public void setSearchOWLMetaDataTemplate(File searchOWLMetaDataTemplate) {
-        this.searchOWLMetaDataTemplate = searchOWLMetaDataTemplate;
-    }
+	public String getSearchSubConceptTemplateLabel() {
+		if (searchSubConceptTemplate.exists()) {
+			return searchSubConceptTemplate.getAbsolutePath();
+		}
+		return "Default Search Sub Concept Template";
+	}
 
-    public String getSearchSubConceptTemplateLabel() {
-        if (searchSubConceptTemplate.exists()) { return searchSubConceptTemplate.getAbsolutePath(); }
-        return "Default Search Sub Concept Template";
-    }
+	public File getSearchSubConceptTemplate() {
+		return searchSubConceptTemplate;
+	}
 
-    public File getSearchSubConceptTemplate() {
-        return searchSubConceptTemplate;
-    }
+	public InputStream getDefaultSearchSubConceptTemplate() {
+		return DODDLE.class.getClassLoader().getResourceAsStream(
+				Utils.RESOURCE_DIR + "ontology_templates/SearchSubConcept.rq");
+	}
 
-    public InputStream getDefaultSearchSubConceptTemplate() {
-        return DODDLE.class.getClassLoader().getResourceAsStream(
-                RESOURCE_DIR + "ontology_templates/SearchSubConcept.rq");
-    }
+	public void setSearchSubConceptTemplate(File searchSubConceptTemplate) {
+		this.searchSubConceptTemplate = searchSubConceptTemplate;
+	}
 
-    public void setSearchSubConceptTemplate(File searchSubConceptTemplate) {
-        this.searchSubConceptTemplate = searchSubConceptTemplate;
-    }
+	public String getSearchClassSetTemplateLabel() {
+		if (searchClassSetTemplate.exists()) {
+			return searchClassSetTemplate.getAbsolutePath();
+		}
+		return "Default Search Class Set Template";
+	}
 
-    public String getSearchClassSetTemplateLabel() {
-        if (searchClassSetTemplate.exists()) { return searchClassSetTemplate.getAbsolutePath(); }
-        return "Default Search Class Set Template";
-    }
+	public File getSearchClassSetTemplate() {
+		return searchClassSetTemplate;
+	}
 
-    public File getSearchClassSetTemplate() {
-        return searchClassSetTemplate;
-    }
+	public InputStream getDefaultSearchClassSetTemplate() {
+		return DODDLE.class.getClassLoader().getResourceAsStream(
+				Utils.RESOURCE_DIR + "ontology_templates/SearchClassSet.rq");
+	}
 
-    public InputStream getDefaultSearchClassSetTemplate() {
-        return DODDLE.class.getClassLoader().getResourceAsStream(RESOURCE_DIR + "ontology_templates/SearchClassSet.rq");
-    }
+	public void setSearchClassSetTemplate(File searchClassSetTemplate) {
+		this.searchClassSetTemplate = searchClassSetTemplate;
+	}
 
-    public void setSearchClassSetTemplate(File searchClassSetTemplate) {
-        this.searchClassSetTemplate = searchClassSetTemplate;
-    }
+	public String getSearchConceptTemplateLabel() {
+		if (searchConceptTemplate.exists()) {
+			return searchConceptTemplate.getAbsolutePath();
+		}
+		return "Default Search Concept Template";
+	}
 
-    public String getSearchConceptTemplateLabel() {
-        if (searchConceptTemplate.exists()) { return searchConceptTemplate.getAbsolutePath(); }
-        return "Default Search Concept Template";
-    }
+	public File getSearchConceptTemplate() {
+		return searchConceptTemplate;
+	}
 
-    public File getSearchConceptTemplate() {
-        return searchConceptTemplate;
-    }
+	public InputStream getDefaultSearchConceptTemplate() {
+		return DODDLE.class.getClassLoader().getResourceAsStream(
+				Utils.RESOURCE_DIR + "ontology_templates/SearchConcept.rq");
+	}
 
-    public InputStream getDefaultSearchConceptTemplate() {
-        return DODDLE.class.getClassLoader().getResourceAsStream(RESOURCE_DIR + "ontology_templates/SearchConcept.rq");
-    }
+	public void setSearchConceptTemplate(File searchConceptTemplate) {
+		this.searchConceptTemplate = searchConceptTemplate;
+	}
 
-    public void setSearchConceptTemplate(File searchConceptTemplate) {
-        this.searchConceptTemplate = searchConceptTemplate;
-    }
+	public String getSearchPropertySetTemplateLabel() {
+		if (searchPropertySetTemplate.exists()) {
+			return searchPropertySetTemplate.getAbsolutePath();
+		}
+		return "Default Search Property Set Template";
+	}
 
-    public String getSearchPropertySetTemplateLabel() {
-        if (searchPropertySetTemplate.exists()) { return searchPropertySetTemplate.getAbsolutePath(); }
-        return "Default Search Property Set Template";
-    }
+	public File getSearchPropertySetTemplate() {
+		return searchPropertySetTemplate;
+	}
 
-    public File getSearchPropertySetTemplate() {
-        return searchPropertySetTemplate;
-    }
+	public InputStream getDefaultSearchPropertySetTemplate() {
+		return DODDLE.class.getClassLoader().getResourceAsStream(
+				Utils.RESOURCE_DIR + "ontology_templates/SearchPropertySet.rq");
+	}
 
-    public InputStream getDefaultSearchPropertySetTemplate() {
-        return DODDLE.class.getClassLoader().getResourceAsStream(
-                RESOURCE_DIR + "ontology_templates/SearchPropertySet.rq");
-    }
+	public void setSearchPropertySetTemplate(File searchPropertySetTemplate) {
+		this.searchPropertySetTemplate = searchPropertySetTemplate;
+	}
 
-    public void setSearchPropertySetTemplate(File searchPropertySetTemplate) {
-        this.searchPropertySetTemplate = searchPropertySetTemplate;
-    }
+	public String getSearchRegionSetTemplateLabel() {
+		if (searchRegionSetTemplate.exists()) {
+			return searchRegionSetTemplate.getAbsolutePath();
+		}
+		return "Default Search Region Set Template";
+	}
 
-    public String getSearchRegionSetTemplateLabel() {
-        if (searchRegionSetTemplate.exists()) { return searchRegionSetTemplate.getAbsolutePath(); }
-        return "Default Search Region Set Template";
-    }
+	public File getSearchRegionSetTemplate() {
+		return searchRegionSetTemplate;
+	}
 
-    public File getSearchRegionSetTemplate() {
-        return searchRegionSetTemplate;
-    }
+	public InputStream getDefaultSearchRegionSetTemplate() {
+		return DODDLE.class.getClassLoader().getResourceAsStream(
+				Utils.RESOURCE_DIR + "ontology_templates/SearchRegionSet.rq");
+	}
 
-    public InputStream getDefaultSearchRegionSetTemplate() {
-        return DODDLE.class.getClassLoader()
-                .getResourceAsStream(RESOURCE_DIR + "ontology_templates/SearchRegionSet.rq");
-    }
-
-    public void setSearchRegionSetTemplate(File searchRegionSetTemplate) {
-        this.searchRegionSetTemplate = searchRegionSetTemplate;
-    }
+	public void setSearchRegionSetTemplate(File searchRegionSetTemplate) {
+		this.searchRegionSetTemplate = searchRegionSetTemplate;
+	}
 
 }

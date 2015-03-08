@@ -120,8 +120,6 @@ public class SwoogleWebServiceWrapper {
 	private static final String FILE_TYPE = "file_type";
 	private static final String REFERENCE_TYPE = "reference_type";
 
-	public static final String RESOURCE_DIR = "jp/ac/keio/ae/comp/yamaguti/doddle/resources/";
-
 	public static SwoogleWebServiceData getSwoogleWebServiceData() {
 		return swoogleWebServiceData;
 	}
@@ -235,27 +233,27 @@ public class SwoogleWebServiceWrapper {
 
 	private static InputStream getSearchOntologyQuery() {
 		return DODDLE.class.getClassLoader().getResourceAsStream(
-				RESOURCE_DIR + "swoogle_queries/SearchOntology.rq");
+				Utils.RESOURCE_DIR + "swoogle_queries/" + "SearchOntology.rq");
 	}
 
 	private static InputStream getSearchTermQuery() {
 		return DODDLE.class.getClassLoader().getResourceAsStream(
-				RESOURCE_DIR + "swoogle_queries/SearchTerm.rq");
+				Utils.RESOURCE_DIR + "swoogle_queries/" + "SearchTerm.rq");
 	}
 
 	private static InputStream getListDocumentsUsingTermQuery() {
 		return DODDLE.class.getClassLoader().getResourceAsStream(
-				RESOURCE_DIR + "swoogle_queries/listDocumentsUsingTerm.rq");
+				Utils.RESOURCE_DIR + "swoogle_queries/" + "listDocumentsUsingTerm.rq");
 	}
 
 	private static InputStream getListPropertiesOfaRegionClassQuery() {
 		return DODDLE.class.getClassLoader().getResourceAsStream(
-				RESOURCE_DIR + "swoogle_queries/listPropertiesOfaRegionClass.rq");
+				Utils.RESOURCE_DIR + "swoogle_queries/" + "listPropertiesOfaRegionClass.rq");
 	}
 
 	private static InputStream getListRegionClassesOfaPropertyQuery() {
 		return DODDLE.class.getClassLoader().getResourceAsStream(
-				RESOURCE_DIR + "swoogle_queries/listRegionClassesOfaProperty.rq");
+				Utils.RESOURCE_DIR + "swoogle_queries/" + "listRegionClassesOfaProperty.rq");
 	}
 
 	private static Model getModel(InputStream inputStream, String baseURI) {

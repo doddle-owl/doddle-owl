@@ -77,7 +77,6 @@
 				<configuration>
 					<commandlineArgs></commandlineArgs>
 					<mainClass>${mainClass}</mainClass>
-					<!-- <mainClass>jp.ac.keio.ae.comp.yamaguti.doddle.ui.DODDLEDicConverterUI</mainClass> -->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -153,10 +152,6 @@
 						<program>
 							<mainClass>${mainClass}</mainClass>
 							<name>DODDLE</name>
-						</program>
-						<program>
-							<mainClass>jp.ac.keio.ae.comp.yamaguti.doddle.ui.DODDLEDicConverterUI</mainClass>
-							<name>DODDLE_DIC_Converter</name>
 						</program>
 					</programs>
 				</configuration>
