@@ -26,5 +26,5 @@ DODDLE-OWLは以下のライブラリを利用しています．
 * [Lombok](http://projectlombok.org/)([License](http://opensource.org/licenses/mit-license.php))
 * [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml)([License](http://www.gnu.org/licenses/gpl-2.0.html))
 * [Silk Icons](http://www.famfamfam.com)([License](http://creativecommons.org/licenses/by/2.5/))
-
+* [exewrap](http://exewrap.sourceforge.jp/)([License](http://exewrap.sourceforge.jp/#license))
 
