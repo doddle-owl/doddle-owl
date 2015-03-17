@@ -4,7 +4,7 @@
 	<groupId>jp.ac.keio.ae.comp.yamaguti</groupId>
 	<artifactId>doddle</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0RC1</version>
+	<version>1.0RC2</version>
 	<name>DODDLE-OWL</name>
 	<url>http://doddle-owl.sourceforge.net/</url>
 	<inceptionYear>2004</inceptionYear>
@@ -90,30 +90,12 @@
 					<debug>true</debug>
 				</configuration>
 			</plugin>
-			<!-- 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<author>true</author>
-					<source>1.8</source>
-					<showPackage>false</showPackage>
-					<showPrivate>true</showPrivate>
-					<encoding>UTF-8</encoding>
-					<charset>UTF-8</charset>
-					<docencoding>UTF-8</docencoding>
-					<bottom>Copyright (C) 2004-2015 DODDLE Project All rights reserved.</bottom>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>javadoc</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			 -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<configuration> <author>true</author> <source>1.8</source> <showPackage>false</showPackage> 
+				<showPrivate>true</showPrivate> <encoding>UTF-8</encoding> <charset>UTF-8</charset> 
+				<docencoding>UTF-8</docencoding> <bottom>Copyright (C) 2004-2015 DODDLE Project 
+				All rights reserved.</bottom> </configuration> <executions> <execution> <phase>package</phase> 
+				<goals> <goal>javadoc</goal> </goals> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -215,71 +197,65 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.8.7</version>
-        </dependency>
-        <dependency>
-            <groupId>gnu.getopt</groupId>
-            <artifactId>java-getopt</artifactId>
-            <version>1.0.13</version>
-        </dependency>
-        <!--
-            mvn install:install-file -Dfile=target/idw-1.6.1_gpl.jar
-            -DgroupId=net.infonode -DartifactId=idw -Dversion=1.6.1_gpl
-            -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true
-        -->
-        <dependency>
-            <groupId>net.infonode</groupId>
-            <artifactId>idw</artifactId>
-            <version>1.6.1_gpl</version>
-        </dependency>
-        <!--
-            mvn install:install-file -Dfile=target/mr3-1.0_rc5.jar
-            -DgroupId=jp.ac.keio.ae.comp.yamaguti -DartifactId=mr3
-            -Dversion=1.0_rc5 -Dpackaging=jar -DcreateChecksum=true
-            -DgeneratePom=true
-        -->
-        <dependency>
-            <groupId>jp.ac.keio.ae.comp.yamaguti</groupId>
-            <artifactId>mr3</artifactId>
-            <version>1.0_rc5</version>
-        </dependency>
-        <dependency>
-        	<groupId>pdfbox</groupId>
-        	<artifactId>pdfbox</artifactId>
-        	<version>0.7.3</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.projectlombok</groupId>
-        	<artifactId>lombok</artifactId>
-        	<version>1.16.2</version>
-        </dependency>
-        <dependency>
-        	<groupId>net.sf.extjwnl</groupId>
-        	<artifactId>extjwnl</artifactId>
-        	<version>1.8.0</version>
-        </dependency>
-        <dependency>
-        	<groupId>com.google.code</groupId>
-        	<artifactId>lucene-gosen-ipadic</artifactId>
-        	<version>1.2.1</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.apache.poi</groupId>
-        	<artifactId>poi-ooxml</artifactId>
-        	<version>3.11</version>
-        </dependency>
-        <dependency>
-        	<groupId>edu.stanford.nlp</groupId>
-        	<artifactId>stanford-parser</artifactId>
-        	<version>3.5.1</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.apache.jena</groupId>
-        	<artifactId>jena-tdb</artifactId>
-        	<version>1.1.1</version>
-        </dependency>
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.8.7</version>
+		</dependency>
+		<dependency>
+			<groupId>gnu.getopt</groupId>
+			<artifactId>java-getopt</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+		<!-- mvn install:install-file -Dfile=target/idw-1.6.1_gpl.jar -DgroupId=net.infonode 
+			-DartifactId=idw -Dversion=1.6.1_gpl -Dpackaging=jar -DcreateChecksum=true 
+			-DgeneratePom=true -->
+		<dependency>
+			<groupId>net.infonode</groupId>
+			<artifactId>idw</artifactId>
+			<version>1.6.1_gpl</version>
+		</dependency>
+		<!-- mvn install:install-file -Dfile=target/mr3-1.0.jar -DgroupId=net.sourceforge 
+			-DartifactId=mr3 -Dversion=1.0 -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -->
+		<dependency>
+			<groupId>jp.ac.keio.ae.comp.yamaguti</groupId>
+			<artifactId>mr3</artifactId>
+			<version>1.0_rc5</version>
+		</dependency>
+		<dependency>
+			<groupId>pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>0.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.extjwnl</groupId>
+			<artifactId>extjwnl</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code</groupId>
+			<artifactId>lucene-gosen-ipadic</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.11</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-parser</artifactId>
+			<version>3.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-tdb</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 	</dependencies>
 </project>

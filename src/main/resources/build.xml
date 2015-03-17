@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="DODDLE-OWL" default="default" basedir=".">
+<project name="DODDLE-OWL" default="bundle-DODDLE-OWL" basedir=".">
 
-<property environment="env" />
+	<property environment="env" />
 
-<taskdef name="bundleapp"
-         classname="com.oracle.appbundler.AppBundlerTask"
-         classpath="./appbundler-1.0.jar" />
+	<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="./appbundler-1.0.jar" />
 
-<target name="bundle-DODDLE-OWL">
-    <bundleapp outputdirectory="dist"
-        name="DODDLE-OWL_1.0RC1"
-        displayname="DODDLE-OWL"
-        shortversion="1.0RC1"
-        identifier="jp.ac.keio.ae.comp.yamaguti.DODDLE-OWL"
-        mainclassname="jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE"
-        icon="./resources/doddle.icns">
-        <runtime dir="${env.JAVA_HOME}" />
-        <classpath file="./lib/*.jar" />
-        <option value="-Xmx1024m"/>
-    </bundleapp>
-</target>
+	<target name="bundle-DODDLE-OWL">
+		<bundleapp outputdirectory="dist" name="DODDLE-OWL" displayname="DODDLE-OWL" shortversion="1.0RC2" identifier="net.sourceforge.doddle_owl" mainclassname="net.sourceforge.doddle_owl.DODDLE_OWL" icon="./resources/doddle.icns">
+			<runtime dir="${env.JAVA_HOME}" />
+			<classpath file="./lib/*.jar" />
+			<option value="-Xmx1024m" />
+		</bundleapp>
+	</target>
 
 </project>
