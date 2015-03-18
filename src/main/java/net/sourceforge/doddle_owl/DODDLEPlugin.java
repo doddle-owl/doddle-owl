@@ -29,8 +29,7 @@ import java.util.*;
 import net.sourceforge.doddle_owl.data.*;
 import net.sourceforge.doddle_owl.ui.*;
 import net.sourceforge.doddle_owl.utils.*;
-
-import org.semanticweb.mmm.mr3.plugin.*;
+import net.sourceforge.mr3.plugin.*;
 
 import com.hp.hpl.jena.rdf.model.*;
 
@@ -45,7 +44,7 @@ public class DODDLEPlugin extends MR3Plugin {
     }
 
     /**
-     * DODDLE-JをMR3のプラグインとして起動
+     * DODDLE-OWLをMR3のプラグインとして起動
      */
     public void exec() {
         DODDLE_OWL.doddlePlugin = this;

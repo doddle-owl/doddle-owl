@@ -46,11 +46,11 @@ public class VisualizationPanel extends JPanel implements ActionListener {
 
     public VisualizationPanel(DODDLEProject project) {
         currentProject = project;
-        toMR3Button = new JButton("<html><body>DODDLE → MR<sup>3</sup></body></html>");
+        toMR3Button = new JButton("<html><body>DODDLE-OWL to MR<sup>3</sup></body></html>");
         toMR3Button.addActionListener(this);
-        toMR3Button.setFont(new Font("Dialog", Font.BOLD, 25));
-        toDoddleButton = new JButton("<html><body>MR<sup>3</sup> → DODDLE</body></html>");
-        toDoddleButton.setFont(new Font("Dialog", Font.BOLD, 25));
+        toMR3Button.setFont(new Font("Dialog", Font.BOLD, 20));
+        toDoddleButton = new JButton("<html><body>MR<sup>3</sup> to DODDLE-OWL</body></html>");
+        toDoddleButton.setFont(new Font("Dialog", Font.BOLD, 20));
         toDoddleButton.addActionListener(this);
 
         JPanel mainPanel = new JPanel();
@@ -63,21 +63,21 @@ public class VisualizationPanel extends JPanel implements ActionListener {
     }
 
     public void toMR3() {
-        DODDLE_OWL.STATUS_BAR.setText("Loading DODDLE to MR3");
+        DODDLE_OWL.STATUS_BAR.setText("Loading DODDLE-OWL to MR^3");
         ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
         ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
-        Model ontology = JenaModelMaker.makeClassModel(constructClassPanel.getIsaTreeModelRoot(), ModelFactory
-                .createDefaultModel(), ConceptTreePanel.CLASS_ISA_TREE);
+        Model ontology = JenaModelMaker.makeClassModel(constructClassPanel.getIsaTreeModelRoot(),
+                ModelFactory.createDefaultModel(), ConceptTreePanel.CLASS_ISA_TREE);
         JenaModelMaker.makePropertyModel(constructPropertyPanel.getIsaTreeModelRoot(), ontology,
                 ConceptTreePanel.PROPERTY_ISA_TREE);
         conceptDefinitionPanel.addConceptDefinition(ontology);
         DODDLE_OWL.getDODDLEPlugin().replaceRDFSModel(ontology);
-        DODDLE_OWL.STATUS_BAR.setText("Loading DODDLE to MR3 Done");
+        DODDLE_OWL.STATUS_BAR.setText("Loading DODDLE-OWL to MR^3 Done");
     }
 
     public void toDODDLE() {
-        DODDLE_OWL.STATUS_BAR.setText("Loading MR3 to DODDLE");
+        DODDLE_OWL.STATUS_BAR.setText("Loading MR^3 to DODDLE-OWL");
         InputConceptSelectionPanel inputConceptSelectionPanel = currentProject.getInputConceptSelectionPanel();
         ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
         ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
@@ -92,9 +92,10 @@ public class VisualizationPanel extends JPanel implements ActionListener {
 
         Model model = DODDLE_OWL.getDODDLEPlugin().getModel();
         currentProject.initUserIDCount();
-        TreeNode rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject, model,
-                ResourceFactory.createResource(DODDLEConstants.BASE_URI + ConceptTreeMaker.DODDLE_CLASS_ROOT_URI),
-                ConceptTreePanel.CLASS_ISA_TREE);
+        TreeNode rootNode = ConceptTreeMaker.getInstance()
+                .getConceptTreeRoot(currentProject, model,
+                        ResourceFactory.createResource(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI),
+                        ConceptTreePanel.CLASS_ISA_TREE);
         DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
         treeModel = constructClassPanel.setConceptTreeModel(treeModel);
         constructClassPanel.setVisibleIsaTree(true);
@@ -105,7 +106,7 @@ public class VisualizationPanel extends JPanel implements ActionListener {
 
         currentProject.setUserIDCount(currentProject.getUserIDCount());
         rootNode = ConceptTreeMaker.getInstance().getPropertyTreeRoot(currentProject, model,
-                ResourceFactory.createResource(DODDLEConstants.BASE_URI + ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI),
+                ResourceFactory.createResource(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI),
                 ConceptTreePanel.PROPERTY_ISA_TREE);
         treeModel = new DefaultTreeModel(rootNode);
         treeModel = constructPropertyPanel.setConceptTreeModel(treeModel);
@@ -114,7 +115,7 @@ public class VisualizationPanel extends JPanel implements ActionListener {
         constructPropertyPanel.setConceptDriftManagementResult();
         treeModel.reload();
         currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
-        DODDLE_OWL.STATUS_BAR.setText("Loading MR3 to DODDLE Done");
+        DODDLE_OWL.STATUS_BAR.setText("Loading MR^3 to DODDLE-OWL Done");
     }
 
     public void actionPerformed(ActionEvent e) {

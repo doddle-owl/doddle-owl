@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>jp.ac.keio.ae.comp.yamaguti</groupId>
-	<artifactId>doddle</artifactId>
+	<groupId>net.sourceforge</groupId>
+	<artifactId>doddle-owl</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0RC2</version>
 	<name>DODDLE-OWL</name>
@@ -39,7 +39,7 @@
 	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mainClass>jp.ac.keio.ae.comp.yamaguti.doddle.DODDLE</mainClass>
+		<mainClass>net.sourceforge.doddle_owl.DODDLE_OWL</mainClass>
 		<organization>Yamaguchi Laboratory, Keio University, Japan</organization>
 	</properties>
 	<build>
@@ -108,11 +108,11 @@
 						</manifest>
 						<manifestSections>
 							<manifestSection>
-								<name>jp.ac.keio.ae.comp.yamaguti.doddle.DODDLEPlugin</name>
+								<name>net.sourceforge.doddle_owl.DODDLEPlugin</name>
 								<manifestEntries>
-									<menu-name>DODDLEPlugin</menu-name>
+									<menu-name>DODDLE-OWL Plugin</menu-name>
 									<creator>Takeshi Morita</creator>
-									<Date>2008-11-04</Date>
+									<Date>2015-03-18</Date>
 								</manifestEntries>
 							</manifestSection>
 						</manifestSections>
@@ -133,7 +133,7 @@
 					<programs>
 						<program>
 							<mainClass>${mainClass}</mainClass>
-							<name>DODDLE</name>
+							<name>DODDLE-OWL</name>
 						</program>
 					</programs>
 				</configuration>
@@ -215,13 +215,6 @@
 			<artifactId>idw</artifactId>
 			<version>1.6.1_gpl</version>
 		</dependency>
-		<!-- mvn install:install-file -Dfile=target/mr3-1.0.jar -DgroupId=net.sourceforge 
-			-DartifactId=mr3 -Dversion=1.0 -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -->
-		<dependency>
-			<groupId>jp.ac.keio.ae.comp.yamaguti</groupId>
-			<artifactId>mr3</artifactId>
-			<version>1.0_rc5</version>
-		</dependency>
 		<dependency>
 			<groupId>pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
@@ -256,6 +249,13 @@
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-tdb</artifactId>
 			<version>1.1.1</version>
+		</dependency>
+		<!-- mvn install:install-file -Dfile=target/mr3-1.0.jar -DgroupId=net.sourceforge 
+			-DartifactId=mr3 -Dversion=1.0 -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -->
+		<dependency>
+			<groupId>net.sourceforge</groupId>
+			<artifactId>mr3</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 </project>
