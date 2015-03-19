@@ -122,7 +122,7 @@ public class DODDLE_OWL extends JFrame {
         setLocationRelativeTo(null);
         setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
-                + DODDLEConstants.VERSION + " (" + DODDLEConstants.LAST_UPDATE + ")");
+                + DODDLEConstants.VERSION);
         File tempDir = new File(Utils.TEMP_DIR);
         if (!tempDir.exists()) {
             tempDir.mkdir();
