@@ -35,7 +35,7 @@
 		<connection>scm:git://doddle-owl.git.sourceforge.net/gitroot/doddle-owl/doddle-owl</connection>
 		<developerConnection>scm:ssh://doddle-owl.git.sourceforge.net/gitroot/doddle-owl/doddle-owl
         </developerConnection>
-		<url>http://doddle-owl.git.sourceforge.net/git/gitweb-index.cgi</url>
+		<url>https://sourceforge.net/p/doddle-owl/code</url>
 	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
