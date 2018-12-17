@@ -24,9 +24,10 @@
 package net.sourceforge.doddle_owl.data;
 
 import net.sourceforge.doddle_owl.ui.InputDocumentSelectionPanel;
+import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
@@ -78,7 +79,7 @@ public class Document implements Comparable<Document> {
 			if (fileName.matches(".*.txt")) {
 				return getTextString(new InputStreamReader(fis, "UTF-8"));
 			} else if (fileName.matches(".*.pdf")) {
-				PDFParser pdfParser = new PDFParser(fis);
+				PDFParser pdfParser = new PDFParser(new RandomAccessFile(file, "r"));
 				pdfParser.parse();
 				PDDocument pddoc = pdfParser.getPDDocument();
 				PDFTextStripper stripper = new PDFTextStripper();
