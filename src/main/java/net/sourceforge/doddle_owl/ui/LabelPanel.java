@@ -113,32 +113,34 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
 
     public void setLabelList() {
         super.setLabelList();
-        if (langJList.getSelectedValues().length == 0) {
+        if (langJList.getSelectedValuesList().isEmpty()) {
             langField.setText("");
-        } else if (langJList.getSelectedValues().length == 1) {
+        } else if (langJList.getSelectedValuesList().size() == 1) {
             langField.setText(langJList.getSelectedValue().toString());
         }
     }
 
     public void setField() {
-        if (literalJList.getSelectedValues().length == 0) {
+        if (literalJList.getSelectedValuesList().isEmpty()) {
             labelField.setText("");
-        } else if (literalJList.getSelectedValues().length == 1) {
-            DODDLELiteral label = (DODDLELiteral)literalJList.getSelectedValue();
+        } else if (literalJList.getSelectedValuesList().size() == 1) {
+            DODDLELiteral label = (DODDLELiteral) literalJList.getSelectedValue();
             labelField.setText(label.getString());
         }
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (selectedConcept == null) { return; }
+        if (selectedConcept == null) {
+            return;
+        }
         if (e.getSource() == addLabelButton) {
             selectedConcept.addLabel(new DODDLELiteral(langField.getText(), labelField.getText()));
             setLabelLangList();
             clearLabelField();
         } else if (e.getSource() == deleteLabelButton) {
-            Object[] labelList = literalJList.getSelectedValues();
-            for (int i = 0; i < labelList.length; i++) {
-                DODDLELiteral label = (DODDLELiteral) labelList[i];
+            java.util.List<DODDLELiteral> labelList = literalJList.getSelectedValuesList();
+            for (int i = 0; i < labelList.size(); i++) {
+                DODDLELiteral label = labelList.get(i);
                 if (label.getString().equals(preferentialTermValueLabel.getText())) {
                     conceptInfoPanel.setPreferentialTerm(selectedConcept, new DODDLELiteral("", ""));
                 }

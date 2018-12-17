@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.sourceforge.net/
- * 
- * Copyright (C) 2004-2015 Yamaguchi Laboratory, Keio University. All rights reserved. 
- * 
+ *
+ * Copyright (C) 2004-2015 Yamaguchi Laboratory, Keio University. All rights reserved.
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package net.sourceforge.doddle_owl.ui;
@@ -26,6 +26,7 @@ package net.sourceforge.doddle_owl.ui;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -106,7 +107,7 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
 
     public void setDomainList(Set<String> domainSet) {
         int num = 0;
-        for (String uri: domainSet) {
+        for (String uri : domainSet) {
             Concept c = project.getConcept(uri);
             if (c == null) {
                 c = OWLOntologyManager.getConcept(uri);
@@ -122,7 +123,7 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
 
     public void setRangeList(Set<String> rangeSet) {
         int num = 0;
-        for (String uri: rangeSet) {
+        for (String uri : rangeSet) {
             Concept c = project.getConcept(uri);
             if (c == null) {
                 c = OWLOntologyManager.getConcept(uri);
@@ -160,7 +161,7 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
             // System.out.println("add concept set: " + addConceptSet);
             ConceptTreeNode node = (ConceptTreeNode) verbConceptTree.getLastSelectedPathComponent();
             VerbConcept concept = (VerbConcept) node.getConcept();
-            for (Iterator i = addConceptSet.iterator(); i.hasNext();) {
+            for (Iterator i = addConceptSet.iterator(); i.hasNext(); ) {
                 Concept c = (Concept) i.next();
                 // System.out.println("add: " + c);
                 if (regionListModel == domainListModel && !concept.getDomainSet().contains(c.getURI())) {
@@ -184,9 +185,9 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
         JTree verbConceptTree = project.getConstructPropertyPanel().getIsaTree();
         ConceptTreeNode node = (ConceptTreeNode) verbConceptTree.getLastSelectedPathComponent();
         VerbConcept concept = (VerbConcept) node.getConcept();
-        Object[] removeValues = regionList.getSelectedValues();
-        for (int i = 0; i < removeValues.length; i++) {
-            Concept c = (Concept) removeValues[i];
+        List<Concept> removeValues = regionList.getSelectedValuesList();
+        for (int i = 0; i < removeValues.size(); i++) {
+            Concept c = removeValues.get(i);
             // System.out.println("remove: " + c);
             if (regionListModel == domainListModel) {
                 concept.deleteDomain(c.getURI());
