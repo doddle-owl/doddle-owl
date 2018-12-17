@@ -23,12 +23,14 @@
 
 package net.sourceforge.doddle_owl.data;
 
-import java.util.*;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.utils.OWLOntologyManager;
+import net.sourceforge.doddle_owl.utils.Utils;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.utils.*;
-
-import com.hp.hpl.jena.rdf.model.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Takeshi Morita

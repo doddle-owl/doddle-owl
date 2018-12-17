@@ -23,18 +23,26 @@
 
 package net.sourceforge.doddle_owl.utils;
 
+import net.sourceforge.doddle_owl.data.Concept;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.data.DODDLELiteral;
+import net.sourceforge.doddle_owl.ui.DODDLEDicConverterUI;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFWriter;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
 import java.io.*;
-import java.text.*;
+import java.text.DecimalFormat;
 import java.util.*;
-import java.util.Map.*;
-
-import javax.swing.tree.*;
-
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.ui.*;
-
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
+import java.util.Map.Entry;
 
 /**
  *

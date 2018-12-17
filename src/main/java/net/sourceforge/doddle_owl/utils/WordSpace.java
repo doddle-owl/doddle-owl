@@ -23,19 +23,15 @@
 
 package net.sourceforge.doddle_owl.utils;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import net.java.sen.SenFactory;
 import net.java.sen.StringTagger;
 import net.java.sen.dictionary.Token;
-import net.sourceforge.doddle_owl.*;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
 import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.ui.*;
+import net.sourceforge.doddle_owl.ui.ConceptDefinitionPanel;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author Takeshi Morita

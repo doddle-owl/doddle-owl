@@ -23,20 +23,28 @@
 
 package net.sourceforge.doddle_owl.utils;
 
-import java.io.*;
-import java.util.*;
-
-import javax.xml.parsers.*;
-
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-
-import org.w3c.dom.*;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.data.ConceptTreeNode;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.data.DODDLELiteral;
+import net.sourceforge.doddle_owl.data.VerbConcept;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import org.w3c.dom.Document;
-import org.xml.sax.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Takeshi Morita

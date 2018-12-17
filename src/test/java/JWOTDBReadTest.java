@@ -1,11 +1,11 @@
-import java.io.File;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.tdb.TDBFactory;
+import org.apache.jena.vocabulary.RDFS;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.tdb.TDBFactory;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import java.io.File;
 
 public class JWOTDBReadTest {
 	public static void main(String[] args) {

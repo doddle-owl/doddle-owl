@@ -23,14 +23,17 @@
 
 package net.sourceforge.doddle_owl.utils;
 
-import java.io.*;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.data.Concept;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.data.ReferenceOWLOntology;
+import net.sourceforge.doddle_owl.ui.NameSpaceTable;
+import org.apache.jena.rdf.model.Model;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.*;
-
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.ui.*;
-
-import com.hp.hpl.jena.rdf.model.*;
 
 /**
  * @author Takeshi Morita

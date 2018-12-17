@@ -23,26 +23,27 @@
 
 package net.sourceforge.doddle_owl.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.nio.file.*;
-import java.util.*;
+import net.sourceforge.doddle_owl.DODDLEProject;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.data.*;
+import net.sourceforge.doddle_owl.utils.OWLOntologyManager;
+import net.sourceforge.doddle_owl.utils.Translator;
+import net.sourceforge.doddle_owl.utils.Utils;
+import org.apache.commons.io.FileUtils;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.tdb.TDBFactory;
+import org.apache.log4j.Level;
 
 import javax.swing.*;
-import javax.swing.event.*;
-
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.utils.*;
-
-import org.apache.commons.io.*;
-import org.apache.log4j.*;
-
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.tdb.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.URL;
+import java.util.Properties;
 
 /**
  * @author Takeshi Morita

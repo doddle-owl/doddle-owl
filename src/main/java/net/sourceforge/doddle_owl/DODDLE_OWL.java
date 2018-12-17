@@ -24,31 +24,31 @@
 
 package net.sourceforge.doddle_owl;
 
-import gnu.getopt.*;
-
-import java.awt.*;
-import java.awt.Container;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
-import java.util.List;
-import java.util.prefs.*;
-
-import javax.swing.*;
-
 import net.sourceforge.doddle_owl.actions.*;
-import net.sourceforge.doddle_owl.data.*;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.data.InputModule;
+import net.sourceforge.doddle_owl.data.ProjectFileNames;
 import net.sourceforge.doddle_owl.ui.*;
-import net.sourceforge.doddle_owl.utils.*;
-
+import net.sourceforge.doddle_owl.utils.Translator;
+import net.sourceforge.doddle_owl.utils.UpperConceptManager;
+import net.sourceforge.doddle_owl.utils.Utils;
+import org.apache.commons.cli.*;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.log4j.*;
 
-import com.hp.hpl.jena.rdf.model.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.util.List;
+import java.util.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
- *
  * @author Takeshi Morita
- *
  */
 public class DODDLE_OWL extends JFrame {
 
@@ -159,7 +159,9 @@ public class DODDLE_OWL extends JFrame {
         List<String> recentProjects = new ArrayList<String>();
         try {
             File recentProjectFile = new File(DODDLEConstants.PROJECT_HOME, ProjectFileNames.RECENT_PROJECTS_FILE);
-            if (!recentProjectFile.exists()) { return recentProjects; }
+            if (!recentProjectFile.exists()) {
+                return recentProjects;
+            }
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(recentProjectFile), "UTF-8"));
             while (reader.ready()) {
                 recentProjects.add(reader.readLine());
@@ -181,7 +183,9 @@ public class DODDLE_OWL extends JFrame {
         BufferedWriter writer = null;
         try {
             File recentProjectFile = new File(DODDLEConstants.PROJECT_HOME, ProjectFileNames.RECENT_PROJECTS_FILE);
-            if (!recentProjectFile.exists()) { return; }
+            if (!recentProjectFile.exists()) {
+                return;
+            }
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recentProjectFile), "UTF-8"));
             int cnt = 0;
             DODDLE_OWL.recentProjectMenu.removeAll();
@@ -335,7 +339,9 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static DODDLEProject getCurrentProject() {
-        if (desktop == null) { return null; }
+        if (desktop == null) {
+            return null;
+        }
         DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
         if (currentProject == null) {
             currentProject = new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
@@ -344,7 +350,9 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static boolean isExistingCurrentProject() {
-        if (desktop == null) { return false; }
+        if (desktop == null) {
+            return false;
+        }
         DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
         return currentProject != null;
     }
@@ -379,7 +387,9 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public void loadBaseURI(File file) {
-        if (!file.exists()) { return; }
+        if (!file.exists()) {
+            return;
+        }
         BufferedReader reader = null;
         try {
             InputStream is = new FileInputStream(file);
@@ -439,7 +449,7 @@ public class DODDLE_OWL extends JFrame {
     }
 
     private static void setDefaultLoggerFormat() {
-        for (Enumeration enumeration = Logger.getRootLogger().getAllAppenders(); enumeration.hasMoreElements();) {
+        for (Enumeration enumeration = Logger.getRootLogger().getAllAppenders(); enumeration.hasMoreElements(); ) {
             Appender appender = (Appender) enumeration.nextElement();
             if (appender.getName().equals("stdout")) {
                 appender.setLayout(new PatternLayout("[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"));
@@ -466,39 +476,38 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static void initOptions(String[] args) {
-        LongOpt[] longopts = new LongOpt[4];
-        longopts[0] = new LongOpt("DEBUG", LongOpt.NO_ARGUMENT, null, 'g');
-        longopts[1] = new LongOpt("LANG", LongOpt.REQUIRED_ARGUMENT, null, 'l');
-        longopts[2] = new LongOpt("Swoogle", LongOpt.NO_ARGUMENT, null, 's');
-        Getopt g = new Getopt("DODDLE", args, "", longopts);
-        g.setOpterr(false);
-
-        setPath();
-        setProgressValue();
-        int c;
-        while ((c = g.getopt()) != -1) {
-            switch (c) {
-            case 'g':
+        Options options = new Options();
+        options.addOption("g", "DEBUG", false, "");
+        options.addOption("l", "LANG", true, "");
+        options.addOption("s", "Swoolgle", false, "");
+        CommandLineParser parser = new DefaultParser();
+        try {
+            CommandLine cmd = parser.parse(options, args);
+            setPath();
+            setProgressValue();
+            int c;
+            if (cmd.hasOption("g")) {
                 getLogger().setLevel(Level.DEBUG);
                 DODDLEConstants.DEBUG = true;
-                break;
-            case 'l':
-                DODDLEConstants.LANG = g.getOptarg();
-                break;
-            case 's':
-                DODDLEConstants.IS_INTEGRATING_SWOOGLE = true;
-                break;
-            default:
-                break;
             }
-        }
-        if (DODDLEConstants.LANG == null) {
-            DODDLEConstants.LANG = "ja";
+            if (cmd.hasOption("l")) {
+                DODDLEConstants.LANG = cmd.getOptionValue("l");
+            }
+            if (cmd.hasOption("s")) {
+                DODDLEConstants.IS_INTEGRATING_SWOOGLE = true;
+            }
+            if (DODDLEConstants.LANG == null) {
+                DODDLEConstants.LANG = "ja";
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
     public static String getExecPath() {
-        if (doddlePlugin == null) { return "." + File.separator; }
+        if (doddlePlugin == null) {
+            return "." + File.separator;
+        }
         String jarPath = DODDLE_OWL.class.getClassLoader().getResource("").getFile();
         File file = new File(jarPath);
         String configPath = file.getAbsolutePath() + File.separator;

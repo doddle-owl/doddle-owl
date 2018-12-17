@@ -109,6 +109,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 				inputConceptSelectionPanel = new InputConceptSelectionPanel(constructClassPanel,
 						constructPropertyPanel, project);
 				setProgress(currentTaskCnt++);
+
 				inputTermSelectinPanel = new InputTermSelectionPanel(inputConceptSelectionPanel);
 				setProgress(currentTaskCnt++);
 				docSelectionPanel = new InputDocumentSelectionPanel(inputTermSelectinPanel, project);
@@ -163,6 +164,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 						}
 					}
 				});
+
 				setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 				DODDLE_OWL.desktop.add(project);
 				project.toFront();

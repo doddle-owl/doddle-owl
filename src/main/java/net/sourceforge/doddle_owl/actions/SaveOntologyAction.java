@@ -23,25 +23,38 @@
 
 package net.sourceforge.doddle_owl.actions;
 
-import java.awt.event.*;
-import java.io.*;
+import net.sourceforge.doddle_owl.DODDLEProject;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.data.ConceptTreeNode;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.data.FreeMindFileFilter;
+import net.sourceforge.doddle_owl.data.OWLFileFilter;
+import net.sourceforge.doddle_owl.ui.ConceptDefinitionPanel;
+import net.sourceforge.doddle_owl.ui.ConceptTreePanel;
+import net.sourceforge.doddle_owl.ui.ConstructClassPanel;
+import net.sourceforge.doddle_owl.ui.ConstructPropertyPanel;
+import net.sourceforge.doddle_owl.utils.FreeMindModelMaker;
+import net.sourceforge.doddle_owl.utils.JenaModelMaker;
+import net.sourceforge.doddle_owl.utils.Translator;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFWriter;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
-
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.ui.*;
-import net.sourceforge.doddle_owl.utils.*;
-
-import org.w3c.dom.*;
-import org.w3c.dom.Document;
-
-import com.hp.hpl.jena.rdf.model.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.awt.event.ActionEvent;
+import java.io.*;
 
 /**
  * @author Takeshi Morita

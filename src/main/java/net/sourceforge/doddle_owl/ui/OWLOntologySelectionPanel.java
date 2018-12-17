@@ -23,23 +23,30 @@
 
 package net.sourceforge.doddle_owl.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.data.OWLOntologyExtractionTemplate;
+import net.sourceforge.doddle_owl.data.ProjectFileNames;
+import net.sourceforge.doddle_owl.data.ReferenceOWLOntology;
+import net.sourceforge.doddle_owl.utils.FreeMindModelMaker;
+import net.sourceforge.doddle_owl.utils.OWLOntologyManager;
+import net.sourceforge.doddle_owl.utils.Translator;
+import net.sourceforge.doddle_owl.utils.Utils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.util.FileUtils;
+import org.apache.log4j.Level;
 
 import javax.swing.*;
-import javax.swing.event.*;
-
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.utils.*;
-
-import org.apache.log4j.*;
-
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.util.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Properties;
 
 /**
  * @author Takeshi Morita

@@ -23,31 +23,28 @@
 
 package net.sourceforge.doddle_owl.actions;
 
-import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-
-import net.sourceforge.doddle_owl.*;
+import net.sourceforge.doddle_owl.DODDLEProject;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
 import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.ui.*;
-import net.sourceforge.doddle_owl.utils.*;
-
+import net.sourceforge.doddle_owl.ui.ConceptTreePanel;
+import net.sourceforge.doddle_owl.ui.ConstructClassPanel;
+import net.sourceforge.doddle_owl.ui.ConstructPropertyPanel;
+import net.sourceforge.doddle_owl.ui.InputConceptSelectionPanel;
+import net.sourceforge.doddle_owl.utils.ConceptTreeMaker;
+import net.sourceforge.doddle_owl.utils.FreeMindModelMaker;
+import net.sourceforge.doddle_owl.utils.Translator;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import java.awt.event.ActionEvent;
+import java.io.*;
 
 /**
  * @author Takeshi Morita

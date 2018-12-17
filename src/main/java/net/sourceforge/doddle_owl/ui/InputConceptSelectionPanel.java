@@ -23,30 +23,39 @@
 
 package net.sourceforge.doddle_owl.ui;
 
-import java.awt.*;
-import java.awt.Container;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.sql.*;
-import java.sql.Statement;
-import java.util.*;
-import java.util.List;
-import java.util.Map.*;
-
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.tree.*;
-
 import net.infonode.docking.*;
-import net.infonode.docking.util.*;
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.actions.*;
+import net.infonode.docking.util.ViewMap;
+import net.sourceforge.doddle_owl.DODDLEProject;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.actions.ConstructNounAndVerbTreeAction;
+import net.sourceforge.doddle_owl.actions.ConstructNounTreeAction;
+import net.sourceforge.doddle_owl.actions.ConstructTreeAction;
 import net.sourceforge.doddle_owl.data.*;
 import net.sourceforge.doddle_owl.utils.*;
+import org.apache.jena.rdf.model.ResourceFactory;
 
-import com.hp.hpl.jena.rdf.model.*;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * @author Takeshi Morita

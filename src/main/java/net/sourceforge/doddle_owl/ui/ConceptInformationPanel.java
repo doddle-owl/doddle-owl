@@ -23,19 +23,29 @@
 
 package net.sourceforge.doddle_owl.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.data.Concept;
+import net.sourceforge.doddle_owl.data.ConceptTreeNode;
+import net.sourceforge.doddle_owl.data.DODDLELiteral;
+import net.sourceforge.doddle_owl.data.VerbConcept;
+import net.sourceforge.doddle_owl.utils.Translator;
+import net.sourceforge.doddle_owl.utils.Utils;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.tree.*;
-
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.utils.*;
-
-import com.hp.hpl.jena.rdf.model.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Takeshi Morita

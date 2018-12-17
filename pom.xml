@@ -128,7 +128,6 @@
 					<repositoryName>lib</repositoryName>
 					<configurationDirectory>config</configurationDirectory>
 					<generateRepository>true</generateRepository>
-					<installArtifacts>false</installArtifacts>
 					<extraJvmArguments>-Xmx1024m</extraJvmArguments>
 					<programs>
 						<program>
@@ -172,20 +171,15 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>maven2-repository.dev.java.net</id>
-			<name>Java.net Repository for Maven</name>
-			<url>http://download.java.net/maven/2</url>
+			<id>com.mvnrepository</id>
+			<url>https://mvnrepository.com/artifact/</url>
 		</repository>
 		<repository>
-			<id>net.sourceforge.mr3</id>
-			<url>http://mr3.sourceforge.net/m2repository</url>
+			<id>org.mrcube</id>
+			<url>http://mrcube.org/mvn_repo/</url>
 		</repository>
 		<repository>
-			<id>net.sourceforge.doddle-owl</id>
-			<url>${pom.url}m2repository</url>
-		</repository>
-		<repository>
-			<id>repository.apache.org</id>
+			<id>org.apache.repository</id>
 			<name>Jena Repository</name>
 			<url>https://repository.apache.org/content/repositories/releases/</url>
 		</repository>
@@ -203,22 +197,24 @@
 			<version>3.8.7</version>
 		</dependency>
 		<dependency>
-			<groupId>gnu.getopt</groupId>
-			<artifactId>java-getopt</artifactId>
-			<version>1.0.13</version>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.4</version>
 		</dependency>
-		<!-- mvn install:install-file -Dfile=target/idw-1.6.1_gpl.jar -DgroupId=net.infonode 
-			-DartifactId=idw -Dversion=1.6.1_gpl -Dpackaging=jar -DcreateChecksum=true 
-			-DgeneratePom=true -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
 		<dependency>
 			<groupId>net.infonode</groupId>
 			<artifactId>idw</artifactId>
 			<version>1.6.1_gpl</version>
 		</dependency>
 		<dependency>
-			<groupId>pdfbox</groupId>
+			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
-			<version>0.7.3</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -228,7 +224,12 @@
 		<dependency>
 			<groupId>net.sf.extjwnl</groupId>
 			<artifactId>extjwnl</artifactId>
-			<version>1.8.0</version>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.extjwnl</groupId>
+			<artifactId>extjwnl-data-wn31</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code</groupId>
@@ -238,7 +239,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.11</version>
+			<version>3.7</version>
 		</dependency>
 		<dependency>
 			<groupId>edu.stanford.nlp</groupId>
@@ -248,14 +249,12 @@
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-tdb</artifactId>
-			<version>1.1.1</version>
+			<version>3.9.0</version>
 		</dependency>
-		<!-- mvn install:install-file -Dfile=target/mr3-1.0.jar -DgroupId=net.sourceforge 
-			-DartifactId=mr3 -Dversion=1.0 -Dpackaging=jar -DcreateChecksum=true -DgeneratePom=true -->
 		<dependency>
 			<groupId>net.sourceforge</groupId>
 			<artifactId>mr3</artifactId>
-			<version>1.0</version>
+			<version>1.0.2</version>
 		</dependency>
 	</dependencies>
 </project>

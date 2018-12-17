@@ -23,7 +23,8 @@
 
 package net.sourceforge.doddle_owl.data;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Resource;
 
 /**
  * @author Takeshi Morita

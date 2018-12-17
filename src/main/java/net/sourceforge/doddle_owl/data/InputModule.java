@@ -23,28 +23,22 @@
 
 package net.sourceforge.doddle_owl.data;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.swing.SwingWorker;
-
 import net.java.sen.SenFactory;
 import net.java.sen.StringTagger;
 import net.java.sen.dictionary.Token;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.Synset;
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.taskanalyzer.*;
-import net.sourceforge.doddle_owl.utils.*;
+import net.sourceforge.doddle_owl.DODDLEProject;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.taskanalyzer.Morpheme;
+import net.sourceforge.doddle_owl.utils.OWLOntologyManager;
+import net.sourceforge.doddle_owl.utils.Translator;
+
+import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.util.*;
 
 /**
  *

@@ -8,8 +8,9 @@ import net.java.sen.dictionary.Token;
 
 public class GoSenTest {
 	public static void main(String[] args) throws IOException {
+
 		StringTagger tagger = SenFactory.getStringTagger(null);
-		List<Token> tokens = new ArrayList<Token>();
+		List<Token> tokens = new ArrayList<>();
 		tagger.analyze("本を読んでいる", tokens);
 
 		// 解析結果の中身をいろいろ出力してみる

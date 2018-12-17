@@ -23,29 +23,42 @@
 
 package net.sourceforge.doddle_owl.utils;
 
-import java.awt.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.List;
+import net.infonode.docking.RootWindow;
+import net.infonode.docking.properties.RootWindowProperties;
+import net.infonode.docking.theme.DockingWindowsTheme;
+import net.infonode.docking.theme.ShapedGradientDockingTheme;
+import net.infonode.docking.util.DockingUtil;
+import net.infonode.docking.util.PropertiesUtil;
+import net.infonode.docking.util.ViewMap;
+import net.infonode.util.Direction;
+import net.java.sen.SenFactory;
+import net.java.sen.StringTagger;
+import net.java.sen.dictionary.Token;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
+import net.sourceforge.doddle_owl.data.Concept;
+import net.sourceforge.doddle_owl.data.ConceptTreeNode;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import org.apache.commons.io.FileUtils;
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 import javax.swing.*;
-import javax.swing.tree.*;
-
-import net.infonode.docking.*;
-import net.infonode.docking.properties.*;
-import net.infonode.docking.theme.*;
-import net.infonode.docking.util.*;
-import net.infonode.util.*;
-import net.java.sen.*;
-import net.java.sen.dictionary.*;
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-
-import org.apache.commons.io.*;
-
-import com.hp.hpl.jena.ontology.*;
-import com.hp.hpl.jena.rdf.model.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author Takeshi Morita

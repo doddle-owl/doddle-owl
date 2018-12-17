@@ -23,13 +23,17 @@
 
 package net.sourceforge.doddle_owl.utils;
 
-import java.io.*;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
-
-import net.sourceforge.doddle_owl.data.*;
-
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
 
 /*
  * 

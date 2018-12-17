@@ -843,7 +843,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
 	/**
 	 * @param text
-	 * @param rt
 	 * @return
 	 * @throws IOException
 	 */

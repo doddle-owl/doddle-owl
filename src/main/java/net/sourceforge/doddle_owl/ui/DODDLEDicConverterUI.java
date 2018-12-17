@@ -23,18 +23,19 @@
 
 package net.sourceforge.doddle_owl.ui;
 
-import java.awt.*;
-import java.awt.Container;
-import java.awt.event.*;
-import java.io.*;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.utils.ConceptTreeMaker;
+import net.sourceforge.doddle_owl.utils.EDR2DoddleDicConverter;
+import net.sourceforge.doddle_owl.utils.EDR2DoddleDicConverter.DictionaryType;
+import net.sourceforge.doddle_owl.utils.JPNWN2DODDLEDicConverter;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import javax.swing.*;
-
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.utils.*;
-import net.sourceforge.doddle_owl.utils.EDR2DoddleDicConverter.*;
-
-import com.hp.hpl.jena.rdf.model.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * @author Takeshi Morita

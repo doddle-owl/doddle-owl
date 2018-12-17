@@ -23,24 +23,28 @@
 
 package net.sourceforge.doddle_owl.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
+import net.sourceforge.doddle_owl.data.DODDLEConstants;
+import net.sourceforge.doddle_owl.data.PrefixNSInfo;
+import net.sourceforge.doddle_owl.utils.FreeMindModelMaker;
+import net.sourceforge.doddle_owl.utils.JenaModelMaker;
+import net.sourceforge.doddle_owl.utils.Translator;
+import net.sourceforge.doddle_owl.utils.Utils;
+import net.sourceforge.mr3.util.Utilities;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.data.PrefixNSInfo;
-import net.sourceforge.doddle_owl.utils.*;
-import net.sourceforge.doddle_owl.utils.Translator;
-import net.sourceforge.mr3.data.*;
-import net.sourceforge.mr3.util.*;
-
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author Takeshi Morita
@@ -233,10 +237,10 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
 
     private void setInputLayout() {
         prefixField = new JTextField(10);
-        JComponent prefixFieldP = Utilities.createTitledPanel(prefixField, Translator.getTerm("PrefixTextField"));
+        JComponent prefixFieldP = Utils.createTitledPanel(prefixField, Translator.getTerm("PrefixTextField"));
 
         nsField = new JTextField(30);
-        JComponent nsFieldP = Utilities.createTitledPanel(nsField, Translator.getTerm("NameSpaceTextField"));
+        JComponent nsFieldP = Utils.createTitledPanel(nsField, Translator.getTerm("NameSpaceTextField"));
 
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
@@ -261,7 +265,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         buttonPanel.add(addNSButton);
         buttonPanel.add(removeNSButton);
         buttonPanel.add(cancelButton);
-        return Utilities.createSouthPanel(buttonPanel);
+        return Utils.createSouthPanel(buttonPanel);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -328,7 +332,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     private void removeNameSpaceTable() {
         int[] removeList = nsTable.getSelectedRows();
         int length = removeList.length;
-        // どうやったら，複数のrowを消すせるのかがよくわからない．
+        // TODO 複数行を消せるようにする
         // modelから消した時点でrow番号が変わってしまうのが原因
         if (length == 0) { return; }
         int row = removeList[0];
@@ -339,7 +343,8 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (rmNS.equals(MR3Resource.DefaultURI.getNameSpace())) {
+        // TODO 要確認
+        if (rmNS.equals("http://doddle-owl.sourceforge.net#")) {
             JOptionPane.showMessageDialog(null, Translator.getTerm("SystemURIMessage"), WARNING,
                     JOptionPane.ERROR_MESSAGE);
             return;

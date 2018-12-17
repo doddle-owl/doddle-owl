@@ -23,24 +23,29 @@
 
 package net.sourceforge.doddle_owl.ui;
 
-import java.awt.*;
-import java.io.*;
-import java.sql.Statement;
-import java.util.*;
-import java.util.List;
+import net.infonode.docking.*;
+import net.infonode.docking.util.ViewMap;
+import net.sourceforge.doddle_owl.DODDLEProject;
+import net.sourceforge.doddle_owl.data.*;
+import net.sourceforge.doddle_owl.utils.OWLOntologyManager;
+import net.sourceforge.doddle_owl.utils.Translator;
+import net.sourceforge.doddle_owl.utils.Utils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-
-import net.infonode.docking.*;
-import net.infonode.docking.util.*;
-import net.sourceforge.doddle_owl.*;
-import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.utils.*;
-
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.io.File;
+import java.sql.Statement;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author shigeta

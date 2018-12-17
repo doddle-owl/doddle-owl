@@ -23,12 +23,12 @@
 
 package net.sourceforge.doddle_owl.data;
 
-import javax.swing.table.*;
+import net.sourceforge.doddle_owl.ui.NameSpaceTable;
+import net.sourceforge.doddle_owl.utils.Utils;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
-import net.sourceforge.doddle_owl.ui.*;
-import net.sourceforge.doddle_owl.utils.*;
-
-import com.hp.hpl.jena.rdf.model.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Takeshi Morita

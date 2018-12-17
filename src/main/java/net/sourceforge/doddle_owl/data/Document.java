@@ -23,25 +23,15 @@
 
 package net.sourceforge.doddle_owl.data;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-
-import javax.swing.UIManager;
-
-import net.sourceforge.doddle_owl.ui.*;
-
-import org.apache.poi.POITextExtractor;
-import org.apache.poi.extractor.ExtractorFactory;
+import net.sourceforge.doddle_owl.ui.InputDocumentSelectionPanel;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.pdfbox.pdfparser.PDFParser;
-import org.pdfbox.pdmodel.PDDocument;
-import org.pdfbox.util.PDFTextStripper;
+
+import javax.swing.*;
+import java.io.*;
 
 /**
  * @author Takeshi Morita

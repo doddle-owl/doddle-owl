@@ -23,16 +23,20 @@
 
 package net.sourceforge.doddle_owl.utils;
 
-import java.util.*;
-
-import javax.swing.tree.*;
-
-import net.sourceforge.doddle_owl.*;
+import net.sourceforge.doddle_owl.DODDLEProject;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
 import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.ui.*;
+import net.sourceforge.doddle_owl.ui.ConceptTreePanel;
+import net.sourceforge.doddle_owl.ui.InputConceptSelectionPanel;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+import java.util.*;
 
 /**
  * @author Takeshi Morita

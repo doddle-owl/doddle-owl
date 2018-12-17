@@ -23,18 +23,25 @@
 
 package net.sourceforge.doddle_owl.utils;
 
-/*
- *
- */
-import java.io.*;
-import java.util.*;
-
-import net.sourceforge.doddle_owl.*;
+import net.sourceforge.doddle_owl.DODDLE_OWL;
 import net.sourceforge.doddle_owl.data.*;
-import net.sourceforge.doddle_owl.ui.*;
+import net.sourceforge.doddle_owl.ui.ConceptTreePanel;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Takeshi Morita
