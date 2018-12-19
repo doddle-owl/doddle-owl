@@ -172,7 +172,7 @@ public class InputModule {
 			return;
 		}
 		for (String id : idSet) {
-			Concept c = JpnWordNetDic.getJPNWNConcept(id);
+			Concept c = JpnWordNetDic.getConcept(id);
 			if (c != null) {
 				conceptSet.add(c);
 			}

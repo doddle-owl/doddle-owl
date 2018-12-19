@@ -197,7 +197,7 @@ public class JPNWNTree {
     }
 
     private Concept getConcept(String id) {
-        return JpnWordNetDic.getJPNWNConcept(id);
+        return JpnWordNetDic.getConcept(id);
     }
 
     public Set<Set<String>> getSiblingURISet(String uri) {

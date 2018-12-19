@@ -80,10 +80,8 @@ public class JpnWordNetDic {
     }
 
     private static long getIndexFpListSize() {
-        RandomAccessFile indexFpListFile = null;
-        indexFpListFile = jpnwnWordIndexFile;
         try {
-            return indexFpListFile.length() / 10;
+            return jpnwnWordIndexFile.length() / 10;
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -91,12 +89,9 @@ public class JpnWordNetDic {
     }
 
     private static long getIndexFp(long fp) {
-        RandomAccessFile indexFpListFile = null;
-        indexFpListFile = jpnwnWordIndexFile;
-
         try {
-            indexFpListFile.seek(fp);
-            String fpStr = indexFpListFile.readLine();
+            jpnwnWordIndexFile.seek(fp);
+            String fpStr = jpnwnWordIndexFile.readLine();
             if (fpStr == null) {
                 return -1;
             }
@@ -117,17 +112,11 @@ public class JpnWordNetDic {
     }
 
     private static long getConceptIndexFileSize() {
-        RandomAccessFile indexFile = null;
-        indexFile = jpnwnConceptIndexFile;
-
-        return getIndexFileSize(indexFile);
+        return getIndexFileSize(jpnwnConceptIndexFile);
     }
 
     private static long getTreeIndexFileSize() {
-        RandomAccessFile indexFile = null;
-        indexFile = jpnwnTreeIndexFile;
-
-        return getIndexFileSize(indexFile);
+        return getIndexFileSize(jpnwnTreeIndexFile);
     }
 
     private static long getRelationIndexFileSize() {
@@ -145,16 +134,11 @@ public class JpnWordNetDic {
     }
 
     private static long getConceptDataFp(long fp) {
-        RandomAccessFile indexFile = null;
-        indexFile = jpnwnConceptIndexFile;
-
-        return getDataFp(fp, indexFile);
+        return getDataFp(fp, jpnwnConceptIndexFile);
     }
 
     private static long getTreeDataFp(long fp) {
-        RandomAccessFile indexFile = null;
-        indexFile = jpnwnTreeIndexFile;
-        return getDataFp(fp, indexFile);
+        return getDataFp(fp, jpnwnTreeIndexFile);
     }
 
     private static long getRelationDataFp(long fp) {
@@ -162,13 +146,10 @@ public class JpnWordNetDic {
     }
 
     private static String getTermAndIndexFpSet(long ifp) {
-        RandomAccessFile indexFile = null;
-        indexFile = jpnwnWordDataFile;
-
         try {
             // System.out.println("ifp: " + ifp);
-            indexFile.seek(ifp);
-            return new String(indexFile.readLine().getBytes("ISO8859_1"), "UTF-8");
+            jpnwnWordDataFile.seek(ifp);
+            return new String(jpnwnWordDataFile.readLine().getBytes("ISO8859_1"), "UTF-8");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -187,16 +168,11 @@ public class JpnWordNetDic {
     }
 
     private static String getConceptData(long dfp) {
-        RandomAccessFile dataFile = null;
-        dataFile = jpnwnConceptDataFile;
-        return getData(dfp, dataFile, "UTF-8");
+        return getData(dfp, jpnwnConceptDataFile, "UTF-8");
     }
 
     private static String getTreeData(long dfp) {
-        RandomAccessFile dataFile = null;
-        dataFile = jpnwnTreeDataFile;
-
-        return getData(dfp, dataFile, "ISO8859_1");
+        return getData(dfp, jpnwnTreeDataFile, "ISO8859_1");
     }
 
     private static String getRelationData(long dfp) {
@@ -211,7 +187,7 @@ public class JpnWordNetDic {
             long mid = (low + high) / 2;
             if (conceptIndexFileSize - 1 < mid) {
                 return null;
-            } // <= ---> <
+            }
             long conceptDataFP = getConceptDataFp(mid * 10);
             if (conceptDataFP == -1) {
                 return null;
@@ -314,10 +290,8 @@ public class JpnWordNetDic {
             String id = dataArray[0].replaceAll("\t", "");
             System.arraycopy(dataArray, 1, conceptData, 0, conceptData.length);
 
-            String uri = "";
-            Concept c = null;
-            uri = DODDLEConstants.JPN_WN_URI + id;
-            c = new Concept(uri, conceptData);
+            String uri = DODDLEConstants.JPN_WN_URI + id;
+            Concept c = new Concept(uri, conceptData);
             jpnwnURIConceptMap.put(uri, c);
 
             return c;
@@ -357,11 +331,8 @@ public class JpnWordNetDic {
     }
 
     public static Set<String> getSynsetSet(String word) {
-        Map<String, Set<String>> wordIDSetMap = null;
-        wordIDSetMap = jpnwnWordIDSetMap;
-
-        if (wordIDSetMap.get(word) != null) {
-            return wordIDSetMap.get(word);
+        if (jpnwnWordIDSetMap.get(word) != null) {
+            return jpnwnWordIDSetMap.get(word);
         }
         Set<Long> dataFpSet = getdataFpSet(getIndexFpListSize(), word);
         // System.out.println(dataFpSet);
@@ -372,7 +343,7 @@ public class JpnWordNetDic {
             // System.out.println(c.getLocalName());
             idSet.add(c.getLocalName());
         }
-        wordIDSetMap.put(word, idSet);
+        jpnwnWordIDSetMap.put(word, idSet);
 
         return idSet;
     }
@@ -435,14 +406,11 @@ public class JpnWordNetDic {
     }
 
     public static Concept getConcept(String id) {
-        Map<String, Concept> uriConceptMap = null;
         String ns = DODDLEConstants.JPN_WN_URI;
-        uriConceptMap = jpnwnURIConceptMap;
-
         String uri = ns + id;
         // System.out.println(uri);
-        if (uriConceptMap.get(uri) != null) {
-            return uriConceptMap.get(uri);
+        if (jpnwnURIConceptMap.get(uri) != null) {
+            return jpnwnURIConceptMap.get(uri);
         }
         String data = getConceptData(id);
         // System.out.println(id+": "+data);
@@ -454,37 +422,8 @@ public class JpnWordNetDic {
         System.arraycopy(dataArray, 1, conceptData, 0, conceptData.length);
 
         Concept c = new Concept(uri, conceptData);
-        uriConceptMap.put(uri, c);
+        jpnwnURIConceptMap.put(uri, c);
         return c;
-    }
-
-    public static Concept getJPNWNConcept(String synset) {
-        return getConcept(synset);
-    }
-
-    public static void main(String[] args) throws Exception {
-        JpnWordNetDic.initJPNWNDic();
-        String id1 = "08675967-n";
-        // String id1 = "JPNWN_ROOT";
-
-        Concept c = JpnWordNetDic.getConcept(id1);
-        System.out.println(c);
-
-        Set<String> idSet = new HashSet<String>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-                DODDLEConstants.JPWN_HOME + "tree.data"), "UTF-8"));
-        while (reader.ready()) {
-            String line = reader.readLine();
-            if (line.indexOf(id1) != -1) {
-                String id = line.split("\t\\|")[0];
-                idSet.add(id);
-            }
-        }
-        System.out.println(idSet);
-        for (String id : idSet) {
-            c = JpnWordNetDic.getConcept(id);
-            System.out.println(c);
-        }
     }
 
 }
