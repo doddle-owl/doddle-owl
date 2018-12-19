@@ -40,7 +40,7 @@ import java.util.*;
  */
 public class OWLOntologyManager {
 
-	private static Map<String, ReferenceOWLOntology> refOntMap = new HashMap<String, ReferenceOWLOntology>();
+	private static Map<String, ReferenceOWLOntology> refOntMap = new HashMap<>();
 
 	public static void addRefOntology(String uri, ReferenceOWLOntology ontInfo) {
 		refOntMap.put(uri, ontInfo);

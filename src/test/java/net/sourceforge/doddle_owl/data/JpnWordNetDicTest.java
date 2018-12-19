@@ -13,17 +13,21 @@ class JpnWordNetDicTest {
 
     @Test
     void getSynsetSet() {
+        assertTrue(false);
     }
 
     @Test
     void getJPNWNSynsetSet() {
+        assertTrue(false);
     }
 
     @Test
     void getConcept() {
+        assertTrue(false);
     }
 
     @Test
     void getJPNWNConcept() {
+        assertTrue(false);
     }
 }

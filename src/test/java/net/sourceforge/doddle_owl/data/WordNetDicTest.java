@@ -13,5 +13,6 @@ class WordNetDicTest {
 
     @Test
     void getWNConcept() {
+        assertTrue(false);
     }
 }

@@ -54,12 +54,14 @@ import org.apache.log4j.Level;
  */
 public class WordNetDic {
 
+	public static boolean isAvailable = false;
 	private static WordNetDic wordnetDic;
 	private static Dictionary dictionary;
 
 	public WordNetDic() {
 		try {
 			dictionary = Dictionary.getFileBackedInstance(Utils.getENWNFile().getAbsolutePath());
+			isAvailable = true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("WordNetLoadErrorMessage"));
@@ -255,7 +257,7 @@ public class WordNetDic {
 		return pathToRootSet;
 	}
 
-	private static Map<String, Concept> idConceptMap = new HashMap<String, Concept>();
+	private static Map<String, Concept> idConceptMap = new HashMap<>();
 
 	public static Concept getWNConcept(String id) {
 		if (dictionary == null) {

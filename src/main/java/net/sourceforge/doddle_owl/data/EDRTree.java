@@ -56,7 +56,7 @@ public class EDRTree {
 
     private EDRTree(boolean t) {
         isSpecial = t;
-        uriNodeSetMap = new HashMap<String, Set<TreeNode>>();
+        uriNodeSetMap = new HashMap<>();
     }
 
     public void clear() {

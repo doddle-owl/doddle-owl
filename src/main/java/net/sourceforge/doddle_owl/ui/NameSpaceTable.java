@@ -29,7 +29,6 @@ import net.sourceforge.doddle_owl.utils.FreeMindModelMaker;
 import net.sourceforge.doddle_owl.utils.JenaModelMaker;
 import net.sourceforge.doddle_owl.utils.Translator;
 import net.sourceforge.doddle_owl.utils.Utils;
-import net.sourceforge.mr3.util.Utilities;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
