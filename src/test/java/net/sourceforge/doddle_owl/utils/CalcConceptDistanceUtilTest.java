@@ -130,8 +130,7 @@ public class CalcConceptDistanceUtilTest {
         @DisplayName("日本語WordNetにおける平均概念間距離計算のテスト")
         void getAverageConceptDistanceInJpWordNet() {
             int expected = 1;
-            int actual = getAverageConceptDistance(WordNetDic.getInstance().getWNConcept("2001223"), WordNetDic
-                    .getInstance().getWNConcept("2037721"));
+            int actual = getAverageConceptDistance(WordNetDic.getWNConcept("2001223"), WordNetDic.getWNConcept("2037721"));
             assertEquals(expected, actual);
         }
     }
@@ -174,8 +173,7 @@ public class CalcConceptDistanceUtilTest {
 
 
     public static void testWNConceptDistance() {
-        System.out.println(getAverageConceptDistance(WordNetDic.getInstance().getWNConcept("2001223"), WordNetDic
-                .getInstance().getWNConcept("2037721")));
+        System.out.println(getAverageConceptDistance(WordNetDic.getWNConcept("2001223"), WordNetDic.getWNConcept("2037721")));
     }
 
     private static void testOwlLongestDepth(String[] args) {

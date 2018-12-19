@@ -59,6 +59,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * @author Takeshi Morita
@@ -80,11 +81,11 @@ public class Utils {
     public static File getENWNFile() {
         File wnDir = new File(TEMP_DIR + DODDLEConstants.ENWN_HOME);
         if (wnDir.exists()) {
-            // System.out.println("exist: " + wnDir.getAbsolutePath());
+            Logger.getGlobal().info("exist: " + wnDir.getAbsolutePath());
             return wnDir;
         }
         wnDir.mkdir();
-        String[] wnFiles = { "adj.exc", "adv.exc", "cntlist", "cntlist.rev", "data.adj", "data.noun", "data.verb",
+        String[] wnFiles = {"adj.exc", "adv.exc", "cntlist", "cntlist.rev", "data.adj", "data.noun", "data.verb",
                 "frames.vrb", "index.adj", "index.adv", "index.noun", "index.sense", "index.verb", "lexnames",
                 "log.grind.3.0", "noun.exc", "sentidx.vrb", "sents.vrb", "verb.exc", "verb.Framestext"};
         for (String wnf : wnFiles) {
@@ -94,12 +95,12 @@ public class Utils {
                 if (url != null) {
                     FileUtils.copyURLToFile(url, f);
                 }
-                // System.out.println("copy: " + f.getAbsolutePath());
+                Logger.getGlobal().info("copy: " + f.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        // System.out.println("created: " + wnDir.getAbsolutePath());
+        Logger.getGlobal().info("created: " + wnDir.getAbsolutePath());
         return wnDir;
     }
 
@@ -184,7 +185,7 @@ public class Utils {
     }
 
     private static void addCompoundWord(String compoundWord, List<String> compoundWordElementList,
-            List<String> tokenList, Set compoundWordSet) {
+                                        List<String> tokenList, Set compoundWordSet) {
         for (int i = 0; i < tokenList.size(); i++) {
             List<String> compoundWordSizeList = new ArrayList<String>();
             for (int j = 0; compoundWordSizeList.size() != compoundWordElementList.size(); j++) {
@@ -230,7 +231,9 @@ public class Utils {
 
     public static Set getAllConcept(TreeModel treeModel) {
         Set<Concept> conceptSet = new HashSet<Concept>();
-        if (!(treeModel.getRoot() instanceof ConceptTreeNode)) { return conceptSet; }
+        if (!(treeModel.getRoot() instanceof ConceptTreeNode)) {
+            return conceptSet;
+        }
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
         conceptSet.add(rootNode.getConcept());
         getAllConcept(rootNode, conceptSet);
@@ -247,14 +250,18 @@ public class Utils {
 
     public static double getChildCntAverage(TreeModel treeModel) {
         List<Integer> childNodeCntList = new ArrayList<Integer>();
-        if (!(treeModel.getRoot() instanceof ConceptTreeNode)) { return 0; }
+        if (!(treeModel.getRoot() instanceof ConceptTreeNode)) {
+            return 0;
+        }
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
         getChildCntAverage(rootNode, childNodeCntList);
         double totalChildNum = 0;
         for (int childNum : childNodeCntList) {
             totalChildNum += childNum;
         }
-        if (childNodeCntList.size() == 0) { return 0; }
+        if (childNodeCntList.size() == 0) {
+            return 0;
+        }
         return totalChildNum / childNodeCntList.size();
     }
 
@@ -296,12 +303,20 @@ public class Utils {
      */
     public static String getNameSpace(Resource res) {
         String ns = res.getNameSpace();
-        if (ns == null) { return ""; }
-        if (ns.matches(".*#$") || ns.matches(".*/$")) { return ns; }
+        if (ns == null) {
+            return "";
+        }
+        if (ns.matches(".*#$") || ns.matches(".*/$")) {
+            return ns;
+        }
         String ns2 = ns.split("#\\d*[^#/]*$")[0];
-        if (ns2 != null && !ns2.equals(ns)) { return ns2 + "#"; }
+        if (ns2 != null && !ns2.equals(ns)) {
+            return ns2 + "#";
+        }
         ns2 = ns.split("/\\d*[^#/]*$")[0];
-        if (ns2 != null && !ns2.equals(ns)) { return ns2 + "/"; }
+        if (ns2 != null && !ns2.equals(ns)) {
+            return ns2 + "/";
+        }
         return "";
     }
 
@@ -356,7 +371,9 @@ public class Utils {
             return "RDF/XML";
         } else if (rdfType.getURI().equals("http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#N3")) {
             return "N3";
-        } else if (rdfType.getURI().equals("http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#NTriples")) { return "N-Triple"; }
+        } else if (rdfType.getURI().equals("http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#NTriples")) {
+            return "N-Triple";
+        }
         return "RDF/XML";
     }
 
@@ -369,7 +386,9 @@ public class Utils {
             } else {
                 model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
                 model.read(inputStream, baseURI);
-                if (0 < model.listImportedOntologyURIs().size()) { return model; }
+                if (0 < model.listImportedOntologyURIs().size()) {
+                    return model;
+                }
             }
         } catch (Exception e) {
             System.out.println("RDF Parse Exception");
