@@ -574,16 +574,15 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private void setTermInfo(String term, String pos, String basicStr, File file, boolean isInputDoc) {
-        WordNetDic wordNetAPI = WordNetDic.getInstance();
         if (nounCheckBox.isSelected() && isEnNoun(pos)) {
-            IndexWord indexWord = wordNetAPI.getIndexWord(POS.NOUN, term.toLowerCase());
+            IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, term.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 // System.out.println("n: " + basicStr);
             }
             setTermInfoMap(basicStr, pos, file, isInputDoc);
         } else if (verbCheckBox.isSelected() && isEnVerb(pos)) {
-            IndexWord indexWord = wordNetAPI.getIndexWord(POS.VERB, term.toLowerCase());
+            IndexWord indexWord = WordNetDic.getIndexWord(POS.VERB, term.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 // System.out.println("v: " + basicStr);
@@ -595,9 +594,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private void setTermInfo(String word, String basicStr, File file, boolean isInputDoc) {
-        WordNetDic wordNetAPI = WordNetDic.getInstance();
         if (nounCheckBox.isSelected()) {
-            IndexWord indexWord = wordNetAPI.getIndexWord(POS.NOUN, word.toLowerCase());
+            IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 setTermInfoMap(basicStr, "noun", file, isInputDoc);
@@ -605,7 +603,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             }
         }
         if (verbCheckBox.isSelected()) {
-            IndexWord indexWord = wordNetAPI.getIndexWord(POS.VERB, word.toLowerCase());
+            IndexWord indexWord = WordNetDic.getIndexWord(POS.VERB, word.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 setTermInfoMap(basicStr, "verb", file, isInputDoc);

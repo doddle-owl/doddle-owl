@@ -303,13 +303,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 			String[] words = word.split("\\s+");
 			for (int i = 0; i < words.length; i++) {
 				String basic = "";
-				WordNetDic wordNetAPI = WordNetDic.getInstance();
-				IndexWord indexWord = wordNetAPI.getIndexWord(POS.NOUN, words[i].toLowerCase());
+				IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, words[i].toLowerCase());
 				if (indexWord != null && indexWord.getLemma() != null) {
 					basic = indexWord.getLemma().toLowerCase();
 				}
 				if (basic.equals("")) {
-					indexWord = wordNetAPI.getIndexWord(POS.VERB, words[i].toLowerCase());
+					indexWord = WordNetDic.getIndexWord(POS.VERB, words[i].toLowerCase());
 					if (indexWord != null && indexWord.getLemma() != null) {
 						basic = indexWord.getLemma().toLowerCase();
 					}
@@ -425,16 +424,15 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 		for (int i = 0; i < words.length; i++) {
 			String word = words[i];
 			String basic = "";
-			WordNetDic wordNetAPI = WordNetDic.getInstance();
 
-			IndexWord indexWord = wordNetAPI.getIndexWord(POS.NOUN, word.toLowerCase());
+			IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word.toLowerCase());
 			if (indexWord != null && indexWord.getLemma() != null) {
 				basic = indexWord.getLemma().toLowerCase();
 				basicWordList.add(basic);
 			}
 
 			if (basic.equals("")) {
-				indexWord = wordNetAPI.getIndexWord(POS.VERB, word.toLowerCase());
+				indexWord = WordNetDic.getIndexWord(POS.VERB, word.toLowerCase());
 				if (indexWord != null && indexWord.getLemma() != null) {
 					basic = indexWord.getLemma().toLowerCase();
 					basicWordList.add(basic);
@@ -489,15 +487,14 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 			String word = words[i];
 			String pos = "";
 			String basic = "";
-			WordNetDic wordNetAPI = WordNetDic.getInstance();
 			if (selectedPOS == DODDLE_POS.NOUN) {
-				IndexWord indexWord = wordNetAPI.getIndexWord(POS.NOUN, word.toLowerCase());
+				IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word.toLowerCase());
 				if (indexWord != null && indexWord.getLemma() != null) {
 					basic = indexWord.getLemma();
 					pos = "noun";
 				}
 			} else if (selectedPOS == DODDLE_POS.VERB) {
-				IndexWord indexWord = wordNetAPI.getIndexWord(POS.VERB, word.toLowerCase());
+				IndexWord indexWord = WordNetDic.getIndexWord(POS.VERB, word.toLowerCase());
 				if (indexWord != null && indexWord.getLemma() != null) {
 					basic = indexWord.getLemma();
 					pos = "verb";
@@ -608,7 +605,6 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 	}
 
 	private Set<List<String>> getTermInfoEnCompoundWordSet(Collection<TermInfo> termInfoSet) {
-		WordNetDic wordNetAPI = WordNetDic.getInstance();
 		Set<List<String>> termInfoCompoundWordSet = new HashSet<List<String>>();
 		for (TermInfo info : termInfoSet) {
 			String word = info.getTerm();
@@ -619,12 +615,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 					String[] words = word.split("\\s+");
 					for (int i = 0; i < words.length; i++) {
 						String basic = "";
-						IndexWord indexWord = wordNetAPI.getIndexWord(POS.NOUN, words[i]);
+						IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, words[i]);
 						if (indexWord != null && indexWord.getLemma() != null) {
 							basic = indexWord.getLemma();
 						}
 						if (basic.equals("")) {
-							indexWord = wordNetAPI.getIndexWord(POS.VERB, words[i]);
+							indexWord = WordNetDic.getIndexWord(POS.VERB, words[i]);
 							if (indexWord != null && indexWord.getLemma() != null) {
 								basic = indexWord.getLemma();
 							}
@@ -928,14 +924,13 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 				String[] words = word.split("\\s+");
 				String basicWord = "";
 				for (int i = 0; i < words.length; i++) {
-					WordNetDic wordNetAPI = WordNetDic.getInstance();
 					String basic = "";
-					IndexWord indexWord = wordNetAPI.getIndexWord(POS.NOUN, words[i].toLowerCase());
+					IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, words[i].toLowerCase());
 					if (indexWord != null && indexWord.getLemma() != null) {
 						basic = indexWord.getLemma();
 					}
 					if (basic.equals("")) {
-						indexWord = wordNetAPI.getIndexWord(POS.VERB, words[i].toLowerCase());
+						indexWord = WordNetDic.getIndexWord(POS.VERB, words[i].toLowerCase());
 						if (indexWord != null && indexWord.getLemma() != null) {
 							basic = indexWord.getLemma();
 						}

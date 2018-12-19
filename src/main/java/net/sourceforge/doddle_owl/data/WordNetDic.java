@@ -48,20 +48,9 @@ import org.apache.log4j.Level;
  */
 public class WordNetDic {
     public static boolean isAvailable = false;
-    private static WordNetDic wordnetDic;
     private static Dictionary dictionary;
 
-    private WordNetDic() {
-        try {
-            dictionary = Dictionary.getFileBackedInstance(Utils.getENWNFile().getAbsolutePath());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("WordNetLoadErrorMessage"));
-            JOptionPane.showMessageDialog(null, Translator.getTerm("WordNetLoadErrorMessage"));
-        }
-    }
-
-    public static void resetWordNet() {
+    public static void initWordNetDictionary() {
         try {
             dictionary = Dictionary.getFileBackedInstance(Utils.getENWNFile().getAbsolutePath());
         } catch (JWNLException e) {
@@ -71,14 +60,7 @@ public class WordNetDic {
         }
     }
 
-    public static WordNetDic getInstance() {
-        if (wordnetDic == null) {
-            wordnetDic = new WordNetDic();
-        }
-        return wordnetDic;
-    }
-
-    public IndexWord getIndexWord(POS pos, String word) {
+    public static IndexWord getIndexWord(POS pos, String word) {
         IndexWord indexWord = null;
         try {
             indexWord = dictionary.lookupIndexWord(pos, word);
@@ -215,7 +197,7 @@ public class WordNetDic {
         if (!isEnglish(word)) {
             return uriSet;
         }
-        IndexWord indexWord = WordNetDic.getInstance().getNounIndexWord(word);
+        IndexWord indexWord = WordNetDic.getNounIndexWord(word);
         if (indexWord == null) {
             return uriSet;
         }

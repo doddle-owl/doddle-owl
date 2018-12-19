@@ -151,7 +151,7 @@ public class InputModule {
 		if (!project.getOntologySelectionPanel().isWordNetEnable() || !isEnglish(subIW)) {
 			return;
 		}
-		IndexWord indexWord = WordNetDic.getInstance().getNounIndexWord(subIW);
+		IndexWord indexWord = WordNetDic.getNounIndexWord(subIW);
 		if (indexWord == null) {
 			return;
 		}

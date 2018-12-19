@@ -244,11 +244,10 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 
     private void enableWordNetDic(boolean t) {
         if (t) {
-            WordNetDic wnDic = WordNetDic.getInstance();
-            wnCheckBox.setEnabled(wnDic != null);
+            wnCheckBox.setEnabled(true);
             if (!wnCheckBox.isEnabled()) {
                 wnCheckBox.setSelected(false);
-                WordNetDic.resetWordNet();
+                WordNetDic.initWordNetDictionary();
             }
         }
     }
@@ -368,10 +367,10 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() == wn30RadioButton) {
             DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_0_HOME;
-            WordNetDic.resetWordNet();
+            WordNetDic.initWordNetDictionary();
         } else if (e.getSource() == wn31RadioButton) {
             DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
-            WordNetDic.resetWordNet();
+            WordNetDic.initWordNetDictionary();
         }
     }
 }
