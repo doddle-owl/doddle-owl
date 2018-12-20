@@ -6,7 +6,7 @@
 	<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="./appbundler-1.0.jar" />
 
 	<target name="bundle-DODDLE-OWL">
-		<bundleapp outputdirectory="dist" name="DODDLE-OWL" displayname="DODDLE-OWL" shortversion="1.0RC2" identifier="net.sourceforge.doddle_owl" mainclassname="net.sourceforge.doddle_owl.DODDLE_OWL" icon="./resources/doddle.icns">
+		<bundleapp outputdirectory="dist" name="DODDLE-OWL" displayname="DODDLE-OWL" shortversion="1.0RC3" identifier="net.sourceforge.doddle_owl" mainclassname="org.doddle_owl.DODDLE_OWL" icon="./resources/doddle.icns">
 			<runtime dir="${env.JAVA_HOME}" />
 			<classpath file="./lib/*.jar" />
 			<option value="-Xmx1024m" />

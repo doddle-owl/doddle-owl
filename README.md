@@ -1,7 +1,7 @@
 DODDLE-OWL
 ==========
 ## Web Site
-* <http://doddle-owl.github.io/>
+* <http://doddle-owl.org/>
 
 ## What is DODDLE-OWL ?
 DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension) is a domain ontology development tool for the Semantic Web. DODDLE-OWL makes reuse of existing ontologies and supports the semi-automatic construction of taxonomic and other relationships in domain ontologies from documents.
