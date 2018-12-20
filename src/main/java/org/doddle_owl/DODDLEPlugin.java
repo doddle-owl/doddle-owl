@@ -24,24 +24,21 @@
 
 package org.doddle_owl;
 
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.views.SplashWindow;
-import org.doddle_owl.utils.Translator;
-import net.sourceforge.mr3.plugin.MR3Plugin;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.utils.Translator;
+import org.doddle_owl.views.SplashWindow;
+import org.mrcube.plugin.MR3Plugin;
 
 import java.util.Set;
 
 /**
  * @author Takeshi Morita
- *
  */
 public class DODDLEPlugin extends MR3Plugin {
 
     public void replaceRDFSModel(Model model) {
-        // TODO MR3プラグインのJena APIを更新する
-        //mergeRDFSModel(model);
+        mergeRDFSModel(model);
     }
 
     /**
@@ -53,7 +50,7 @@ public class DODDLEPlugin extends MR3Plugin {
             public void run() {
                 SplashWindow splashWindow = new SplashWindow(null);
                 try {
-                    DODDLE_OWL.initOptions(new String[] {});
+                    DODDLE_OWL.initOptions(new String[]{});
                     Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
                     new DODDLE_OWL();
                 } catch (Exception e) {
@@ -82,8 +79,6 @@ public class DODDLEPlugin extends MR3Plugin {
     }
 
     public Model getModel() {
-        // MR3プラグインのJena APIを更新する
-        //return getRDFSModel();
-        return ModelFactory.createDefaultModel();
+        return getRDFSModel();
     }
 }

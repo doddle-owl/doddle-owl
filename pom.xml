@@ -199,14 +199,6 @@
             <url>https://repository.apache.org/content/repositories/releases/</url>
         </repository>
     </repositories>
-    <!--
-    <pluginRepositories>
-        <pluginRepository>
-            <id>Codehaus repository</id>
-            <url>http://repository.codehaus.org/</url>
-        </pluginRepository>
-    </pluginRepositories>
-    -->
     <dependencies>
         <dependency>
             <groupId>org.xerial</groupId>
@@ -265,9 +257,9 @@
             <version>3.9.0</version>
         </dependency>
         <dependency>
-            <groupId>net.sourceforge</groupId>
-            <artifactId>mr3</artifactId>
-            <version>1.0.2</version>
+            <groupId>org</groupId>
+            <artifactId>mrcube</artifactId>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
