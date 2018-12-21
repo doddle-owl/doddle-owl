@@ -74,7 +74,6 @@ public class EDRDic {
         edrURIConceptMap = new HashMap<>();
         edrWordIDSetMap = new HashMap<>();
         String baseDir = DODDLEConstants.EDR_HOME + File.separator;
-        System.out.println(baseDir);
         try {
             edrTreeDataFile = new RandomAccessFile(baseDir + TREE_DATA_FILE, "r");
             edrWordDataFile = new RandomAccessFile(baseDir + WORD_DATA_FILE, "r");
@@ -532,12 +531,10 @@ public class EDRDic {
         }
 
         String uri = ns + id;
-        System.out.println(uri);
         if (uriConceptMap.get(uri) != null) {
             return uriConceptMap.get(uri);
         }
         String data = getConceptData(isSpecial, id);
-        System.out.println(id + ": " + data);
         String[] dataArray = data.split("\\^");
         String[] conceptData = new String[4];
         System.arraycopy(dataArray, 1, conceptData, 0, conceptData.length);

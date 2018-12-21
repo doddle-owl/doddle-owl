@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.doddle_owl.utils.CalcConceptDistanceUtil.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CalcConceptDistanceUtilTest {
 
@@ -24,30 +23,31 @@ public class CalcConceptDistanceUtilTest {
     class CalcConceptDistanceInEDRTest {
         @BeforeEach
         void setup() {
+            DODDLEConstants.EDR_HOME = "/Users/t_morita/DODDLE-OWL/EDR-DIC/";
             EDRDic.initEDRDic();
         }
 
         @Test
         @DisplayName("EDRにおける最短概念間距離計算のテスト")
         void getShortestConceptDistanceInEDR() {
-            int expected = 1;
-            int actual = getShortestConceptDistance(EDRDic.getEDRConcept("3bdc67"), EDRDic.getEDRConcept("3bc83c"));
+            int expected = 11;
+            int actual = getShortestConceptDistance(EDRDic.getEDRConcept("ID3bdc67"), EDRDic.getEDRConcept("ID3bc83c"));
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("EDRにおける最長概念間距離計算のテスト")
         void getLongestConceptDistanceInEDR() {
-            int expected = 1;
-            int actual = getLongestConceptDistance(EDRDic.getEDRConcept("3bdc67"), EDRDic.getEDRConcept("3bc83c"));
+            int expected = 17;
+            int actual = getLongestConceptDistance(EDRDic.getEDRConcept("ID3bdc67"), EDRDic.getEDRConcept("ID3bc83c"));
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("EDRにおける平均概念間距離計算のテスト")
         void getAverageConceptDistanceInEDR() {
-            int expected = 1;
-            int actual = getAverageConceptDistance(EDRDic.getEDRConcept("3bdc67"), EDRDic.getEDRConcept("3bc83c"));
+            int expected = 14;
+            int actual = getAverageConceptDistance(EDRDic.getEDRConcept("ID3bdc67"), EDRDic.getEDRConcept("ID3bc83c"));
             assertEquals(expected, actual);
         }
 
@@ -58,25 +58,26 @@ public class CalcConceptDistanceUtilTest {
     class CalcConceptDistanceInEDRTTest {
         @BeforeEach
         void setup() {
+            DODDLEConstants.EDRT_HOME = "/Users/t_morita/DODDLE-OWL/EDRT-DIC/";
             EDRDic.initEDRTDic();
         }
 
         @Test
         @DisplayName("EDRTにおける最短概念間距離計算のテスト")
         void getShortestConceptDistanceInEDR() {
-
+            fail();
         }
 
         @Test
         @DisplayName("EDRTにおける最長概念間距離計算のテスト")
         void getLongestConceptDistanceInEDR() {
-
+            fail();
         }
 
         @Test
         @DisplayName("EDRTにおける平均概念間距離計算のテスト")
         void getAverageConceptDistanceInEDR() {
-
+            fail();
         }
 
     }
@@ -86,25 +87,27 @@ public class CalcConceptDistanceUtilTest {
     class CalcConceptDistanceInWordNetTest {
         @BeforeEach
         void setup() {
-
+            DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
+            WordNetDic.initWordNetDictionary();
+            WordNetDic.isAvailable = true;
         }
 
         @Test
         @DisplayName("WordNetにおける最短概念間距離計算のテスト")
         void getShortestConceptDistanceInWordNet() {
-            assertTrue(false);
+            fail();
         }
 
         @Test
         @DisplayName("WordNetにおける最長概念間距離計算のテスト")
         void getLongestConceptDistanceInWordNet() {
-            assertTrue(false);
+            fail();
         }
 
         @Test
         @DisplayName("WordNetにおける平均概念間距離計算のテスト")
         void getAverageConceptDistanceInWordNet() {
-            assertTrue(false);
+            fail();
         }
 
     }
@@ -115,27 +118,27 @@ public class CalcConceptDistanceUtilTest {
     class CalcConceptDistanceInJpWordNetTest {
         @BeforeEach
         void setup() {
-            assertTrue(false);
         }
 
         @Test
         @DisplayName("日本語WordNetにおける最短概念間距離計算のテスト")
         void getShortestConceptDistanceInJpWordNet() {
-            assertTrue(false);
+            fail();
         }
 
         @Test
         @DisplayName("日本語WordNetにおける最長概念間距離計算のテスト")
         void getLongestConceptDistanceInJpWordNet() {
-
+            fail();
         }
 
         @Test
         @DisplayName("日本語WordNetにおける平均概念間距離計算のテスト")
         void getAverageConceptDistanceInJpWordNet() {
-            int expected = 1;
-            int actual = getAverageConceptDistance(WordNetDic.getWNConcept("2001223"), WordNetDic.getWNConcept("2037721"));
-            assertEquals(expected, actual);
+            fail();
+//            int expected = 1;
+//            int actual = getAverageConceptDistance(JpnWordNetDic.getConcept("2001223"), JpnWordNetDic.getConcept("2037721"));
+//            assertEquals(expected, actual);
         }
     }
 

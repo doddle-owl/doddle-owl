@@ -14,7 +14,6 @@ class WordNetDicTest {
         void setUp() {
             DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_0_HOME;
             WordNetDic.initWordNetDictionary();
-            WordNetDic.isAvailable = true;
         }
 
         @Test
@@ -46,7 +45,6 @@ class WordNetDicTest {
         void setUp() {
             DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
             WordNetDic.initWordNetDictionary();
-            WordNetDic.isAvailable = true;
         }
 
         @Test

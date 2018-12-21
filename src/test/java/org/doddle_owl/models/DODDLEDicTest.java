@@ -10,25 +10,48 @@ class DODDLEDicTest {
 
     @BeforeEach
     public void setUp() {
+        DODDLEConstants.EDR_HOME = "/Users/t_morita/DODDLE-OWL/EDR-DIC/";
+        DODDLEConstants.EDRT_HOME = "/Users/t_morita/DODDLE-OWL/EDRT-DIC/";
+        DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
+        EDRDic.initEDRDic();
+        EDRDic.initEDRTDic();
+        JpnWordNetDic.initJPNWNDic();
+        WordNetDic.initWordNetDictionary();
+        EDRDic.isEDRAvailable = true;
+        EDRDic.isEDRTAvailable = true;
+        JpnWordNetDic.isAvailable = true;
+        WordNetDic.isAvailable = true;
     }
 
     @Test
     @DisplayName("DODDLEDicからEDRのConceptを取得")
     public void getEDRConcept() {
-        assertTrue(false);
+        String expected = "dog";
+        String actual = DODDLEDic.getConcept(DODDLEConstants.EDR_URI + "ID3bdc67").getWord();
+        assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("DODDLEDicからEDRのConceptを取得")
+    public void getEDRTConcept() {
+        String expected = "ツリー検索";
+        String actual = DODDLEDic.getConcept(DODDLEConstants.EDRT_URI + "ID2deac6").getWord();
+        assertEquals(expected, actual);
+    }
 
     @Test
     @DisplayName("DODDLEDicからWordNetのConceptを取得")
     public void getWordNetConcept() {
-        assertTrue(false);
+        String expected = "computer";
+        String actual = DODDLEDic.getConcept(DODDLEConstants.WN_URI + "03086983").getWord();
+        assertEquals(expected, actual);
     }
-
 
     @Test
     @DisplayName("DODDLEDicから日本語WordNetのConceptを取得")
     public void getJpWordNetConcept() {
-        assertTrue(false);
+        String expected = "urban_area";
+        String actual = DODDLEDic.getConcept(DODDLEConstants.JPN_WN_URI + "08675967-n").getWord();
+        assertEquals(expected, actual);
     }
 }
