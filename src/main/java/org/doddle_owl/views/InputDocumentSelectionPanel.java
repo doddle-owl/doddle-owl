@@ -507,8 +507,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             String modelPath = STANFORD_PARSER_MODELS_HOME + File.separator + modelName;
             File modelFile = new File(modelPath);
             if (!modelFile.exists()) {
-                URL url = DODDLE_OWL.class.getClassLoader().getResource(
-                        Utils.RESOURCE_DIR + "stanford_parser_models/" + modelName);
+                URL url = DODDLE_OWL.class.getClassLoader().getResource("stanford_parser_models/" + modelName);
                 if (url != null) {
                     FileUtils.copyURLToFile(url, modelFile);
                     // System.out.println("copy: " +
@@ -782,8 +781,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         String taggerPath = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_TAGGER_PL;
         File scriptFile = new File(taggerPath);
         if (!scriptFile.exists()) {
-            URL url = DODDLE_OWL.class.getClassLoader().getResource(
-                    Utils.RESOURCE_DIR + "TermExtractScripts/" + TERM_EXTRACT_TAGGER_PL);
+            URL url = DODDLE_OWL.class.getClassLoader().getResource("TermExtractScripts/" + TERM_EXTRACT_TAGGER_PL);
             if (url != null) {
                 FileUtils.copyURLToFile(url, scriptFile);
                 // System.out.println("copy: " + scriptFile.getAbsolutePath());
@@ -792,8 +790,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         ProcessBuilder processBuilder = new ProcessBuilder(PERL_EXE, taggerPath,
                 STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
         termExtractProcess = processBuilder.start();
-        return new BufferedReader(new InputStreamReader(termExtractProcess.getInputStream(),
-                "UTF-8"));
+        return new BufferedReader(new InputStreamReader(termExtractProcess.getInputStream(), "UTF-8"));
     }
 
     private File tmpFile;
@@ -846,8 +843,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         path = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_EXE;
         File scriptFile = new File(path);
         if (!scriptFile.exists()) {
-            URL url = DODDLE_OWL.class.getClassLoader().getResource(
-                    Utils.RESOURCE_DIR + "TermExtractScripts/" + TERM_EXTRACT_EXE);
+            URL url = DODDLE_OWL.class.getClassLoader().getResource("TermExtractScripts/" + TERM_EXTRACT_EXE);
             if (url != null) {
                 FileUtils.copyURLToFile(url, scriptFile);
                 // System.out.println("copy: " + scriptFile.getAbsolutePath());

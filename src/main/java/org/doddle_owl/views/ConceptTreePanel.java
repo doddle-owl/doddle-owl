@@ -1027,7 +1027,7 @@ public class ConceptTreePanel extends JPanel {
             super(title, copyIcon);
             this.title = title;
             setToolTipText(title);
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK);
             putValue(ACCELERATOR_KEY, keyStroke);
         }
 
@@ -1054,7 +1054,7 @@ public class ConceptTreePanel extends JPanel {
             super(title, cutIcon);
             this.title = title;
             setToolTipText(title);
-            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_MASK));
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -1107,7 +1107,7 @@ public class ConceptTreePanel extends JPanel {
             super(title, pasteIcon);
             this.title = title;
             setToolTipText(title);
-            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_MASK));
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK));
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -1153,7 +1153,7 @@ public class ConceptTreePanel extends JPanel {
             setToolTipText(title);
             setEnabled(false);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
@@ -1186,7 +1186,7 @@ public class ConceptTreePanel extends JPanel {
                 putValue(ACCELERATOR_KEY, keyStroke);
                 inputMap.put(keyStroke, title);
             } else {
-                KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_MASK);
+                KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_DOWN_MASK);
                 putValue(ACCELERATOR_KEY, keyStroke);
                 inputMap.put(keyStroke, title);
             }
@@ -1348,7 +1348,7 @@ public class ConceptTreePanel extends JPanel {
             this.title = title;
             setToolTipText(title);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.SHIFT_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.SHIFT_DOWN_MASK);
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
@@ -1396,7 +1396,7 @@ public class ConceptTreePanel extends JPanel {
             this.title = title;
             setToolTipText(title);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.CTRL_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.CTRL_DOWN_MASK);
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }

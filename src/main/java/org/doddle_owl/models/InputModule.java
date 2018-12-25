@@ -157,7 +157,7 @@ public class InputModule {
 		}
 		for (Synset synset : indexWord.getSenses()) {
 			if (synset.containsWord(subIW)) {
-				Concept c = WordNetDic.getWNConcept(new Long(synset.getOffset()).toString());
+				Concept c = WordNetDic.getWNConcept(Long.toString(synset.getOffset()));
 				conceptSet.add(c);
 			}
 		}

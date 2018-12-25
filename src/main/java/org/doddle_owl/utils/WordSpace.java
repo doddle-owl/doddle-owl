@@ -150,7 +150,7 @@ public class WordSpace {
 
 		int new_gram_number = 1;
 		int matrix[][] = new int[allGramNum][allGramNum];
-		gramNumMap.put(gramText.get(0), new Integer(0));
+		gramNumMap.put(gramText.get(0), 0);
 
 		for (int i = 0; i < gramText.size(); i++) {
 			int row = gramNumMap.get(gramText.get(i));
@@ -173,7 +173,7 @@ public class WordSpace {
 				if (gramNumMap.containsKey(gram)) {
 					col = gramNumMap.get(gram);
 				} else {
-					gramNumMap.put(gram, new Integer(new_gram_number));
+					gramNumMap.put(gram, new_gram_number);
 					col = new_gram_number;
 					new_gram_number++;
 				}

@@ -148,7 +148,7 @@ public class Apriori {
 				for (int k = 0; k < targetInputWordList.size(); k++) {
 					String word = targetInputWordList.get(k);
 					if (word.equals(lineWord)) {
-						itemList.add(new Integer(k));
+						itemList.add(k);
 						++conceptAppearence[k];
 						break;
 					}
@@ -219,7 +219,7 @@ public class Apriori {
 			}
 
 			if (aprioriValue > minConfidence) {
-				ConceptPair rp = new ConceptPair(word1, word2, new Double(aprioriValue));
+				ConceptPair rp = new ConceptPair(word1, word2, aprioriValue);
 				// rp.setrelationValue(value);
 				// System.out.println(conceptA + "<>" + rp.toString());
 				// System.out.println("Apriori:" + rp.toString());

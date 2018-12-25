@@ -317,7 +317,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == documentList && e.getModifiers() == InputEvent.BUTTON1_MASK) {
+		if (e.getSource() == documentList && e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK) {
 			Point p = e.getPoint();
 			int index = documentList.locationToIndex(p);
 			if (0 < documentList.getModel().getSize()) {
@@ -334,7 +334,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 				setDocumentAndLinkArea();
 			}
 			repaint();
-		} else if (e.getSource() == documentArea && e.getModifiers() == InputEvent.BUTTON3_MASK) {
+		} else if (e.getSource() == documentArea && e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
 			addUserDefinedWord(documentArea.getSelectedText());
 		}
 	}

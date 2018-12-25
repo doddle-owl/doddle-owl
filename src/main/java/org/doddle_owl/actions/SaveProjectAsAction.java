@@ -39,7 +39,7 @@ public class SaveProjectAsAction extends SaveProjectAction {
 
     public SaveProjectAsAction(String title, DODDLE_OWL ddl) {
         super(title, Utils.getImageIcon("page_save.png"), ddl);
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK + KeyEvent.SHIFT_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK + KeyEvent.SHIFT_DOWN_MASK));
     }
 
     public void actionPerformed(ActionEvent e) {

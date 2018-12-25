@@ -27,6 +27,7 @@ package org.doddle_owl;
 import org.apache.commons.cli.*;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.sys.JenaSystem;
 import org.apache.log4j.*;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.DODDLEConstants;
@@ -90,7 +91,7 @@ public class DODDLE_OWL extends JFrame {
     private LayoutDockingWindowAction xgaLayoutDockingWindowAction;
     private LayoutDockingWindowAction uxgaLayoutDockingWindowAction;
 
-    public static final Property HASA_PROPERTY = ResourceFactory.createProperty(DODDLEConstants.BASE_URI + "partOf");
+    public static Property HASA_PROPERTY;
 
     public DODDLE_OWL() {
         rootPane = getRootPane();
@@ -100,11 +101,12 @@ public class DODDLE_OWL extends JFrame {
         setFileLogger();
         logConsole = new LogConsole(this, Translator.getTerm("LogConsoleDialog"), null);
         STATUS_BAR = new StatusBarPanel();
-        GENERAL_ONTOLOGY_NAMESPACE_SET = new HashSet<String>();
+        GENERAL_ONTOLOGY_NAMESPACE_SET = new HashSet<>();
         GENERAL_ONTOLOGY_NAMESPACE_SET.add(DODDLEConstants.EDR_URI);
         GENERAL_ONTOLOGY_NAMESPACE_SET.add(DODDLEConstants.EDRT_URI);
         GENERAL_ONTOLOGY_NAMESPACE_SET.add(DODDLEConstants.WN_URI);
         GENERAL_ONTOLOGY_NAMESPACE_SET.add(DODDLEConstants.JPN_WN_URI);
+        HASA_PROPERTY = ResourceFactory.createProperty(DODDLEConstants.BASE_URI + "partOf");
 
         Container contentPane = getContentPane();
         makeActions();
@@ -469,7 +471,6 @@ public class DODDLE_OWL extends JFrame {
                 appender.setAppend(true);
                 Logger.getRootLogger().addAppender(appender);
             }
-            getLogger().log(Level.INFO, "Resource Dir: " + Utils.RESOURCE_DIR);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -515,6 +516,7 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static void main(String[] args) {
+        JenaSystem.init();
         SplashWindow splashWindow = new SplashWindow(null);
         DODDLE_OWL.initOptions(args);
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);

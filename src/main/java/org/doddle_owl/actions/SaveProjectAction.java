@@ -61,7 +61,7 @@ public class SaveProjectAction extends AbstractAction {
         super(title, Utils.getImageIcon("disk.png"));
         this.title = title;
         doddle = ddl;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
         doddleProjectFileFilter = new DODDLEProjectFileFilter();
         doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
     }

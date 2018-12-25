@@ -76,9 +76,9 @@ public class TermInfo {
     public void putDoc(File doc) {
         if (docTermFreqMap.get(doc) != null) {
             Integer freq = docTermFreqMap.get(doc);
-            docTermFreqMap.put(doc, new Integer(freq.intValue() + 1));
+            docTermFreqMap.put(doc, freq.intValue() + 1);
         } else {
-            docTermFreqMap.put(doc, new Integer(1));
+            docTermFreqMap.put(doc, 1);
         }
     }
 
@@ -90,9 +90,9 @@ public class TermInfo {
         isInputword = true;
         if (inputDocTermFreqMap.get(doc) != null) {
             Integer freq = inputDocTermFreqMap.get(doc);
-            inputDocTermFreqMap.put(doc, new Integer(freq.intValue() + 1));
+            inputDocTermFreqMap.put(doc, freq.intValue() + 1);
         } else {
-            inputDocTermFreqMap.put(doc, new Integer(1));
+            inputDocTermFreqMap.put(doc, 1);
         }
     }
 
@@ -165,8 +165,8 @@ public class TermInfo {
         }
         rowData.add(buf.toString());
         rowData.add(getTF());
-        rowData.add(new Double(getIDFString()));
-        rowData.add(new Double(getTFIDFString()));
+        rowData.add(Double.parseDouble(getIDFString()));
+        rowData.add(Double.parseDouble(getTFIDFString()));
         // buf = new StringBuffer("");
         // for (File doc : docTermFreqMap.keySet()) {
         // Integer num = docTermFreqMap.get(doc);

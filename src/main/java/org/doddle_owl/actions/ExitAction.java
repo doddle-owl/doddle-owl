@@ -40,7 +40,7 @@ public class ExitAction extends AbstractAction {
     public ExitAction(String title, DODDLE_OWL ddl) {
         super(title, Utils.getImageIcon("application_delete.png"));
         doddle = ddl;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
     }
     public void actionPerformed(ActionEvent e) {
         doddle.exit();

@@ -130,7 +130,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	public Model addConceptDefinition(Model ontology) {
 		for (int i = 0; i < resultPanel.getRelationCount(); i++) {
 			Object[] relation = resultPanel.getRelation(i);
-			boolean isMetaProperty = new Boolean((String) relation[0]);
+			boolean isMetaProperty = Boolean.valueOf((String) relation[0]);
 			String domainWord = (String) relation[1];
 			String rangeWord = (String) relation[3];
 			Concept property = (Concept) relation[2];

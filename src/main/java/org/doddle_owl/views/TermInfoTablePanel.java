@@ -208,7 +208,7 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
 			FileInputStream fis = new FileInputStream(loadFile);
 			reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
 			String line = reader.readLine();
-			docNum = new Integer(line.split("=")[1]).intValue();
+			docNum = Integer.valueOf(line.split("=")[1]);
 			while ((line = reader.readLine()) != null) {
 				String[] items = line.split("\t");
 				String term = items[0];
@@ -223,7 +223,7 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
 						String[] inputDocSet = items[5].split(":");
 						for (int i = 0; i < inputDocSet.length; i++) {
 							String inputDoc = inputDocSet[i].split("=")[0];
-							Integer num = new Integer(inputDocSet[i].split("=")[1]);
+							Integer num = Integer.valueOf(inputDocSet[i].split("=")[1]);
 							info.putInputDoc(new File(inputDoc), num);
 						}
 					}

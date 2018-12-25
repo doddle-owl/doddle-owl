@@ -245,7 +245,7 @@ public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
 				reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
 				Properties properties = new Properties();
 				properties.load(reader);
-				boolean isAvailable = new Boolean(properties.getProperty("isAvailable"));
+				boolean isAvailable = Boolean.valueOf(properties.getProperty("isAvailable"));
 				String uri = properties.getProperty("Location");
 				File file = new File(uri);
 				if (file.exists()) {

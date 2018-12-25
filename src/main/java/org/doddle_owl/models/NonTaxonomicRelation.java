@@ -101,7 +101,7 @@ public class NonTaxonomicRelation {
     }
 
     public Object[] getAcceptedTableData() {
-        return new Object[] { new Boolean(isMetaProperty), domain, relation, range};
+        return new Object[] {isMetaProperty, domain, relation, range};
     }
 
     public Object[] getWrongTableData() {

@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.utils;
@@ -37,6 +37,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Takeshi Morita
@@ -104,7 +105,7 @@ public class ConceptTreeMaker {
                 } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
                     pathSet.addAll(EDRTree.getEDRTTree().getConceptPathToRootSet(c.getLocalName()));
                 } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                    pathSet.addAll(WordNetDic.getPathToRootSet(new Long(c.getLocalName())));
+                    pathSet.addAll(WordNetDic.getPathToRootSet(Long.valueOf(c.getLocalName())));
                 } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
                     pathSet.addAll(JPNWNTree.getJPNWNTree().getConceptPathToRootSet(c.getLocalName()));
                 }
@@ -120,11 +121,9 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * 概念名(String)のリストを渡して,TreeModelを返す
-     * 
-     * @param pathSet
-     *            概念(String)のリスト
+     *
+     * @param pathSet 概念(String)のリスト
      * @return TreeModel
      */
     public TreeModel getDefaultConceptTreeModel(Set<List<Concept>> pathSet, DODDLEProject project, String type) {
@@ -166,11 +165,9 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * 概念名(String)のリストを渡して,TreeModelを返す 概念変動を行っている。
-     * 
-     * @param pathSet
-     *            概念(String)のリスト
+     *
+     * @param pathSet 概念(String)のリスト
      * @return TreeModel
      */
     public TreeModel getTrimmedTreeModel(Set<List<Concept>> pathSet, DODDLEProject project, String type) {
@@ -195,9 +192,9 @@ public class ConceptTreeMaker {
     /**
      * 不要な中間概念を剪定
      */
-    private void trimTree(DefaultMutableTreeNode treeNode) {
-        for (Enumeration<ConceptTreeNode> i = treeNode.children(); i.hasMoreElements();) {
-            ConceptTreeNode childNode = i.nextElement();
+    private void trimTree(ConceptTreeNode treeNode) {
+        for (TreeNode node : Collections.list(treeNode.children())) {
+            ConceptTreeNode childNode = (ConceptTreeNode) node;
             if (isUnnecessaryNode(childNode)) {
                 // 子供が一つしかない場合にしか，トリミングは行われないため，getChildAt(0)でよい
                 ConceptTreeNode grandChildNode = (ConceptTreeNode) childNode.getChildAt(0);
@@ -216,12 +213,12 @@ public class ConceptTreeMaker {
 
     /**
      * Trimmingしたことにより，同じレベルで同一の概念が含まれる場合があるため， それらを除去する．
-     * 
+     *
      * @param treeNode
      */
     private void removeSameNode(ConceptTreeNode treeNode) {
         Map<Concept, List<ConceptTreeNode>> sameNodeMap = new HashMap<Concept, List<ConceptTreeNode>>();
-        for (Enumeration i = treeNode.children(); i.hasMoreElements();) {
+        for (Enumeration i = treeNode.children(); i.hasMoreElements(); ) {
             ConceptTreeNode childNode = (ConceptTreeNode) i.nextElement();
             List<ConceptTreeNode> sameNodeList = sameNodeMap.get(childNode.getConcept());
             if (sameNodeList == null) {
@@ -251,17 +248,23 @@ public class ConceptTreeMaker {
 
     /**
      * 概念木のノードと概念Xを含む木をあらわすリストを渡して, リストを概念木の中の適切な場所に追加する
-     * 
+     * <p>
      * nodeList -> a > b > c > X
      */
     private boolean addTreeNode(ConceptTreeNode treeNode, List<Concept> nodeList, DODDLEProject project) {
-        if (nodeList.isEmpty()) { return false; }
-        if (treeNode.isLeaf()) { return insertTreeNodeList(treeNode, nodeList, project); }
-        for (Enumeration i = treeNode.children(); i.hasMoreElements();) {
+        if (nodeList.isEmpty()) {
+            return false;
+        }
+        if (treeNode.isLeaf()) {
+            return insertTreeNodeList(treeNode, nodeList, project);
+        }
+        for (Enumeration i = treeNode.children(); i.hasMoreElements(); ) {
             ConceptTreeNode node = (ConceptTreeNode) i.nextElement();
             Concept firstNode = nodeList.get(0);
-            if (firstNode != null && node.getConcept().getURI().equals(firstNode.getURI())) { return addTreeNode(node,
-                    nodeList.subList(1, nodeList.size()), project); }
+            if (firstNode != null && node.getConcept().getURI().equals(firstNode.getURI())) {
+                return addTreeNode(node,
+                        nodeList.subList(1, nodeList.size()), project);
+            }
         }
         return insertTreeNodeList(treeNode, nodeList, project);
     }
@@ -270,7 +273,9 @@ public class ConceptTreeMaker {
      * 概念Xを含む木をあらわすリストを概念木に挿入する
      */
     private boolean insertTreeNodeList(DefaultMutableTreeNode treeNode, List nodeList, DODDLEProject project) {
-        if (nodeList.isEmpty()) { return false; }
+        if (nodeList.isEmpty()) {
+            return false;
+        }
         Concept firstNode = (Concept) nodeList.get(0);
         if (firstNode != null) {
             boolean isInputConcept = !isSystemAddedConcept(firstNode) && isInputConcept(firstNode);
@@ -306,9 +311,7 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * TRA(Trimmed Result Analysis)を行う．
-     * 
      */
     public void trimmedResultAnalysis(ConceptTreeNode node, int trimmedCnt) {
         for (int i = 0; i < node.getChildCount(); i++) {
@@ -329,9 +332,7 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * MRA(Matched Result Analysis)を行う．
-     * 
      */
     public void matchedResultAnalysis(ConceptTreeNode rootNode) {
         List<ConceptTreeNode> sinNodeList = new ArrayList<ConceptTreeNode>();
@@ -352,11 +353,9 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * SINノードをソート
-     * 
+     *
      * @author Takeshi Morita
-     * 
      */
     class SinNodeListSorter implements Comparator {
         public int compare(Object o1, Object o2) {
@@ -367,9 +366,8 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * STM(Sub Trees manually Moved)を得る． MRA(Matched Result Analysis)で用いる．
-     * 
+     *
      * @param node
      * @param stm
      */
@@ -384,9 +382,8 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * SIN(a Salient Internal Nodes)の集合を得る．
-     * 
+     *
      * @param node
      * @param sinNodeSet
      */
@@ -411,9 +408,8 @@ public class ConceptTreeMaker {
     }
 
     /**
-     * 
      * 多重継承概念の集合を得る．
-     * 
+     *
      * @param node
      * @param sinNodeSet
      */
@@ -439,18 +435,28 @@ public class ConceptTreeMaker {
         InputConceptSelectionPanel inputConceptSelectionPanel = DODDLE_OWL.getCurrentProject()
                 .getInputConceptSelectionPanel();
         Set<Concept> systemAddedInputConceptSet = inputConceptSelectionPanel.getSystemAddedInputConceptSet();
-        if (systemAddedInputConceptSet == null) { return false; }
+        if (systemAddedInputConceptSet == null) {
+            return false;
+        }
         for (Concept saic : systemAddedInputConceptSet) {
-            if (saic != null && saic.getURI().equals(c.getURI())) { return true; }
+            if (saic != null && saic.getURI().equals(c.getURI())) {
+                return true;
+            }
         }
         return false;
     }
 
     public boolean isInputConcept(Concept c) {
-        if (inputConceptSet == null) { return false; }
+        if (inputConceptSet == null) {
+            return false;
+        }
         for (Concept ic : inputConceptSet) {
-            if (ic == null) { return false; }
-            if (ic.getURI().equals(c.getURI())) { return true; }
+            if (ic == null) {
+                return false;
+            }
+            if (ic.getURI().equals(c.getURI())) {
+                return true;
+            }
         }
         return false;
     }
@@ -472,9 +478,9 @@ public class ConceptTreeMaker {
             rootConcept.addLabel(new DODDLELiteral("en", "Has-a Root Class"));
         }
         supSubSetMap = new HashMap<Resource, Set<Resource>>();
-        for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext();) {
+        for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext(); ) {
             Resource resource = i.nextResource();
-            for (StmtIterator j = resource.listProperties(property); j.hasNext();) {
+            for (StmtIterator j = resource.listProperties(property); j.hasNext(); ) {
                 Statement stmt = j.nextStatement();
                 Resource supResource = (Resource) stmt.getObject();
                 Set<Resource> subResourceSet = supSubSetMap.get(supResource);
@@ -522,9 +528,9 @@ public class ConceptTreeMaker {
         }
 
         supSubSetMap = new HashMap<Resource, Set<Resource>>();
-        for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext();) {
+        for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext(); ) {
             Resource resource = i.nextResource();
-            for (StmtIterator j = resource.listProperties(property); j.hasNext();) {
+            for (StmtIterator j = resource.listProperties(property); j.hasNext(); ) {
                 Statement stmt = j.nextStatement();
                 Resource supResource = (Resource) stmt.getObject();
                 Set<Resource> subResourceSet = supSubSetMap.get(supResource);
@@ -559,19 +565,19 @@ public class ConceptTreeMaker {
                 Literal prefLabel = (Literal) prefLabelStmt.getObject();
                 concept.setInputLabel(new DODDLELiteral(prefLabel.getLanguage(), prefLabel.getString()));
             }
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.label); stmtIter.hasNext();) {
+            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.label); stmtIter.hasNext(); ) {
                 Statement stmt = stmtIter.nextStatement();
                 Literal lit = (Literal) stmt.getObject();
                 concept.addLabel(new DODDLELiteral(lit.getLanguage(), lit.getString()));
             }
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.comment); stmtIter.hasNext();) {
+            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.comment); stmtIter.hasNext(); ) {
                 Statement stmt = stmtIter.nextStatement();
                 Literal lit = (Literal) stmt.getObject();
                 concept.addDescription(new DODDLELiteral(lit.getLanguage(), lit.getString()));
             }
 
             Set<String> domainSet = new HashSet<String>();
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.domain); stmtIter.hasNext();) {
+            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.domain); stmtIter.hasNext(); ) {
                 Statement stmt = stmtIter.nextStatement();
                 Resource domain = (Resource) stmt.getObject();
                 domainSet.add(domain.getURI());
@@ -579,7 +585,7 @@ public class ConceptTreeMaker {
             concept.addAllDomain(domainSet);
 
             Set<String> rangeSet = new HashSet<String>();
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.range); stmtIter.hasNext();) {
+            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.range); stmtIter.hasNext(); ) {
                 Statement stmt = stmtIter.nextStatement();
                 Resource range = (Resource) stmt.getObject();
                 rangeSet.add(range.getURI());

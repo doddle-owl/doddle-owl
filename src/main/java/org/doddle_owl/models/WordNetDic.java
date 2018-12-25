@@ -130,7 +130,7 @@ public class WordNetDic {
             PointerTargetNodeList siblingNodeList = PointerUtils.getCoordinateTerms(synset);
             Set<String> idList = new HashSet<>();
             for (PointerTargetNode node : siblingNodeList) {
-                idList.add(new Long(node.getSynset().getOffset()).toString());
+                idList.add(Long.toString(node.getSynset().getOffset()));
             }
             siblingIDSet.add(idList);
         } catch (JWNLException jwnle) {
@@ -149,7 +149,7 @@ public class WordNetDic {
             for (PointerTargetNodeList nodeList : treeNodeLists) {
                 Set<String> idList = new HashSet<String>();
                 for (PointerTargetNode node : nodeList) {
-                    idList.add(new Long(node.getSynset().getOffset()).toString());
+                    idList.add(Long.toString(node.getSynset().getOffset()));
                 }
                 subIDSet.add(idList);
             }
@@ -169,7 +169,7 @@ public class WordNetDic {
             for (PointerTargetNodeList nodeList : treeNodeLists) {
                 List<Concept> conceptList = new ArrayList<>();
                 for (PointerTargetNode node : nodeList) {
-                    Concept c = getWNConcept(new Long(node.getSynset().getOffset()).toString());
+                    Concept c = getWNConcept(Long.toString(node.getSynset().getOffset()));
                     conceptList.add(c);
                 }
                 pathToRootSet.add(conceptList);
@@ -198,7 +198,7 @@ public class WordNetDic {
         }
         for (Synset synset : indexWord.getSenses()) {
             if (synset.containsWord(word)) {
-                uriSet.add(DODDLEConstants.WN_URI + new Long(synset.getOffset()).toString());
+                uriSet.add(DODDLEConstants.WN_URI + synset.getOffset());
             }
         }
         return uriSet;
@@ -214,8 +214,7 @@ public class WordNetDic {
             for (PointerTargetNodeList nodeList : treeNodeLists) {
                 List<String> uriList = new ArrayList<String>();
                 for (PointerTargetNode node : nodeList) {
-                    String uri = DODDLEConstants.WN_URI
-                            + new Long(node.getSynset().getOffset()).toString();
+                    String uri = DODDLEConstants.WN_URI + node.getSynset().getOffset();
                     uriList.add(uri);
                 }
                 pathToRootSet.add(uriList);
@@ -237,7 +236,7 @@ public class WordNetDic {
             if (idConceptMap.get(uri) != null) {
                 return idConceptMap.get(uri);
             }
-            Synset synset = dictionary.getSynsetAt(POS.NOUN, new Long(id).longValue());
+            Synset synset = dictionary.getSynsetAt(POS.NOUN, Long.valueOf(id));
             Concept c = new Concept(uri, "");
             for (Word word : synset.getWords()) {
                 c.addLabel(new DODDLELiteral("en", word.getLemma()));

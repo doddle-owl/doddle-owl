@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.views;
@@ -145,26 +145,28 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
     }
 
     public void loadGeneralOntologyInfo(File loadFile) {
-        if (!loadFile.exists()) { return; }
+        if (!loadFile.exists()) {
+            return;
+        }
         BufferedReader reader = null;
         try {
             FileInputStream fis = new FileInputStream(loadFile);
             reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
             Properties properties = new Properties();
             properties.load(reader);
-            boolean t = new Boolean(properties.getProperty("EDR(general)"));
+            boolean t = Boolean.valueOf(properties.getProperty("EDR(general)"));
             edrCheckBox.setSelected(t);
             enableEDRDic(t);
-            t = new Boolean(properties.getProperty("EDR(technical)"));
+            t = Boolean.valueOf(properties.getProperty("EDR(technical)"));
             edrtCheckBox.setSelected(t);
             enableEDRTDic(t);
-            t = new Boolean(properties.getProperty("WordNet"));
+            t = Boolean.valueOf(properties.getProperty("WordNet"));
             wnCheckBox.setSelected(t);
             enableWordNetDic(t);
-            t = new Boolean(properties.getProperty("JPN WordNet"));
+            t = Boolean.valueOf(properties.getProperty("JPN WordNet"));
             jpnWnCheckBox.setSelected(t);
             enableJpnWordNetDic(t);
-            t = new Boolean(properties.getProperty("JWO"));
+            t = Boolean.valueOf(properties.getProperty("JWO"));
             jwoCheckBox.setSelected(t);
             enableJWO(t);
         } catch (IOException ioex) {
@@ -283,7 +285,9 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 
     // 取り扱い注意メソッド
     private void deleteFile(File f) {
-        if (!f.exists()) { return; }
+        if (!f.exists()) {
+            return;
+        }
 
         if (f.isFile()) {
             DODDLE_OWL.getLogger().log(Level.INFO, "Delete: " + f.getAbsolutePath());
@@ -330,7 +334,7 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
                 if (!jwoDir.exists()) {
                     jwoDir.mkdir();
                 }
-                String[] tdbFiles = { "GOSP.dat", "GOSP.idn", "GOSP.info", "GPOS.dat", "GPOS.idn", "GPOS.info",
+                String[] tdbFiles = {"GOSP.dat", "GOSP.idn", "GOSP.info", "GPOS.dat", "GPOS.idn", "GPOS.info",
                         "GSPO.dat", "GSPO.idn", "GSPO.info", "node2id.dat", "node2id.idn", "node2id.info", "nodes.dat",
                         "nodes.info", "OSP.dat", "OSP.idn", "OSP.info", "OSPG.dat", "OSPG.idn", "OSPG.info", "POS.dat",
                         "POS.idn", "POS.info", "POSG.dat", "POSG.idn", "POSG.info", "prefix2id.dat", "prefix2id.idn",
@@ -340,8 +344,7 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
                 for (String fname : tdbFiles) {
                     File f = new File(JWO_HOME + File.separator + fname);
                     if (!f.exists()) {
-                        URL url = DODDLE_OWL.class.getClassLoader().getResource(
-                                Utils.RESOURCE_DIR + "jwo/" + f.getName());
+                        URL url = DODDLE_OWL.class.getClassLoader().getResource("jwo/" + f.getName());
                         try {
                             if (url != null) {
                                 FileUtils.copyURLToFile(url, f);

@@ -236,7 +236,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 			while (reader.ready()) {
 				String line = reader.readLine();
 				String[] lines = line.split("\t");
-				boolean isMetaProperty = new Boolean(lines[0]);
+				boolean isMetaProperty = Boolean.valueOf(lines[0]);
 				String domain = lines[1];
 				Concept relation = doddleProject.getConstructPropertyPanel().getConcept(lines[2]);
 				String range = lines[3];

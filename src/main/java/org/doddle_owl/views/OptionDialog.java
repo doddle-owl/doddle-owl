@@ -474,25 +474,20 @@ public class OptionDialog extends JDialog implements ActionListener {
 		InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
 				.getProperty("Japanese_Dependency_Structure_Analyzer");
 
-		boolean t = new Boolean(
-				properties.getProperty("AutomaticDisambiguation.useSiblingNodeCount"));
+		boolean t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.useSiblingNodeCount"));
 		siblingDisambiguationCheckBox.setSelected(t);
-		t = new Boolean(properties.getProperty("AutomaticDisambiguation.useChildNodeCount"));
+		t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.useChildNodeCount"));
 		subDisambiguationCheckBox.setSelected(t);
-		t = new Boolean(properties.getProperty("AutomaticDisambiguation.usePathToRootNodeCount"));
+		t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.usePathToRootNodeCount"));
 		supDisambiguationCheckBox.setSelected(t);
 
-		t = new Boolean(
-				properties.getProperty("AutomaticDisambiguation.isUsingSpreadActivationAlgorithm"));
+		t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.isUsingSpreadActivationAlgorithm"));
 		isUsingSpreadActivatingAlgorithmForDisambiguationBox.setSelected(t);
-		t = new Boolean(
-				properties.getProperty("AutomaticDisambiguation.isCheckShortestSpreadActivation"));
+		t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.isCheckShortestSpreadActivation"));
 		shortestSpreadActivatingAlgorithmForDisambiguationButton.setSelected(t);
-		t = new Boolean(
-				properties.getProperty("AutomaticDisambiguation.isCheckLongestSpreadActivation"));
+		t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.isCheckLongestSpreadActivation"));
 		longestSpreadActivatingAlgorithmForDisambiguationButton.setSelected(t);
-		t = new Boolean(
-				properties.getProperty("AutomaticDisambiguation.isCheckAverageSpreadActivation"));
+		t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.isCheckAverageSpreadActivation"));
 		averageSpreadActivatingAlgorithmForDisambiguationButton.setSelected(t);
 
 		String isSameConceptOrSubConcept = properties
@@ -502,7 +497,7 @@ public class OptionDialog extends JDialog implements ActionListener {
 			compoundWordSetSubConceptButton.setSelected(isSameConceptOrSubConcept.equals("SUB"));
 		}
 
-		t = new Boolean(properties.getProperty("DisplayQName"));
+		t = Boolean.valueOf(properties.getProperty("DisplayQName"));
 		showQNameCheckBox.setSelected(t);
 	}
 

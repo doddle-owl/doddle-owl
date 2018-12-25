@@ -561,7 +561,7 @@ public class LogConsole extends JDialog {
 	 * Shows the popup menu for the System.out textarea
 	 */
 	void stdoutText_mouseClicked(MouseEvent e) {
-		if (e.getModifiers() == MouseEvent.META_MASK) {
+		if (e.getModifiersEx() == MouseEvent.META_DOWN_MASK) {
 			popup.setTextArea(stdoutText);
 			popup.show(this.stdoutText, e.getX(), e.getY());
 		}
@@ -572,7 +572,7 @@ public class LogConsole extends JDialog {
 	 * Shows the popup menu for the System.err textarea
 	 */
 	void stderrText_mouseClicked(MouseEvent e) {
-		if (e.getModifiers() == MouseEvent.META_MASK) {
+		if (e.getModifiersEx() == MouseEvent.META_DOWN_MASK) {
 			popup.setTextArea(stderrText);
 			popup.show(this.stderrText, e.getX(), e.getY());
 		}

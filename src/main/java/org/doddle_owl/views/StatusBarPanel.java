@@ -114,7 +114,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
                     }
                 }
                 DODDLE_OWL.getLogger().log(Level.DEBUG,
-                        Translator.getTerm("TotalTimeMessage") + ": " + new Integer(elapsedTime).toString());
+                        Translator.getTerm("TotalTimeMessage") + ": " + elapsedTime);
                 setValue(lastMessage);
             }
         };
@@ -123,7 +123,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
 
     public void setCurrentTime() {
         elapsedTime = (int) (Calendar.getInstance().getTimeInMillis() - startTime) / 1000;
-        statusField.setText(lastMessage+": "+Translator.getTerm("ElapsedTimeMessage") + ": " + new Integer(elapsedTime).toString());
+        statusField.setText(lastMessage+": "+Translator.getTerm("ElapsedTimeMessage") + ": " + elapsedTime);
     }
 
     public void lock() {

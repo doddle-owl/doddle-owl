@@ -65,17 +65,15 @@ import java.util.logging.Logger;
  * @author Takeshi Morita
  */
 public class Utils {
-    public static final String RESOURCE_DIR = "org/doddle_owl/resources/"; // 区切り文字にFile.separatorは使わない
-    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir") + "org.doddle-owl"
-            + File.separator;
+    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir") + "org.doddle-owl" + File.separator;
     private static final String JPWN_TEMP_DIR = TEMP_DIR + "jpwn_dict_1.1" + File.separator;
 
     public static ImageIcon getImageIcon(String icon) {
-        return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource(RESOURCE_DIR + icon));
+        return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource(icon));
     }
 
     public static URL getURL(String icon) {
-        return DODDLE_OWL.class.getClassLoader().getResource(RESOURCE_DIR + icon);
+        return DODDLE_OWL.class.getClassLoader().getResource(icon);
     }
 
     public static File getENWNFile() {
@@ -89,7 +87,7 @@ public class Utils {
                 "frames.vrb", "index.adj", "index.adv", "index.noun", "index.sense", "index.verb", "lexnames",
                 "log.grind.3.0", "noun.exc", "sentidx.vrb", "sents.vrb", "verb.exc", "verb.Framestext"};
         for (String wnf : wnFiles) {
-            URL url = DODDLE_OWL.class.getClassLoader().getResource(RESOURCE_DIR + DODDLEConstants.ENWN_HOME + wnf);
+            URL url = DODDLE_OWL.class.getClassLoader().getResource(DODDLEConstants.ENWN_HOME + wnf);
             try {
                 File f = new File(wnDir.getAbsolutePath() + File.separator + wnf);
                 if (url != null) {
@@ -114,7 +112,7 @@ public class Utils {
             // System.out.println("exist: " + file.getAbsolutePath());
             return file;
         }
-        URL url = DODDLE_OWL.class.getClassLoader().getResource(RESOURCE_DIR + DODDLEConstants.JPWN_HOME + resName);
+        URL url = DODDLE_OWL.class.getClassLoader().getResource(DODDLEConstants.JPWN_HOME + resName);
         try {
             FileUtils.copyURLToFile(url, file);
         } catch (IOException e) {

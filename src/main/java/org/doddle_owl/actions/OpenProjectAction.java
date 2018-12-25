@@ -67,7 +67,7 @@ public class OpenProjectAction extends AbstractAction {
 		super(title, Utils.getImageIcon("folder_page_white.png"));
 		this.title = title;
 		doddle = ddl;
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
 		doddleProjectFileFilter = new DODDLEProjectFileFilter();
 		doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
 	}

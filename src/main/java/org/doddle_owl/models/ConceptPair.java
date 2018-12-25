@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.models;
@@ -31,20 +31,22 @@ public class ConceptPair implements Comparable {
 
     private String fromConcept;
     private String toConcept;
-    private Double relationValue = new Double(0);
+    private Double relationValue = 0.0;
 
-    private Double wsValue = new Double(0);
-    private Double arValue = new Double(0);
-    private Double nvValue = new Double(0);
-    private Double sumValue = new Double(0);
+    private Double wsValue = 0.0;
+    private Double arValue = 0.0;
+    private Double nvValue = 0.0;
+    private Double sumValue = 0.0;
 
     private boolean isCorrectPair = false;
     private boolean isNotFoundPair = false;
 
     public int compareTo(Object o) {
         ConceptPair pair = (ConceptPair) o;
-        if (pair.getRelatoinValue().equals(this.getRelatoinValue())) { return pair.getToConceptLabel().compareTo(
-                this.getToConceptLabel()); }
+        if (pair.getRelatoinValue().equals(this.getRelatoinValue())) {
+            return pair.getToConceptLabel().compareTo(
+                    this.getToConceptLabel());
+        }
         return pair.getRelatoinValue().compareTo(this.getRelatoinValue());
     }
 
@@ -100,7 +102,7 @@ public class ConceptPair implements Comparable {
 
     /**
      * 引数のNonTaxonomicRelationPair の値を加算
-     * 
+     *
      * @param aPair
      */
     public void addValues(ConceptPair aPair) {
