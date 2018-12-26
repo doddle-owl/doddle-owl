@@ -55,6 +55,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Takeshi Morita
@@ -123,12 +124,10 @@ public class SaveOntologyAction extends AbstractAction {
             Transformer transformer = tfactory.newTransformer();
             transformer.transform(new DOMSource(document), new StreamResult(file));
             transformer.reset();
-        } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
         } catch (TransformerConfigurationException tfe) {
             tfe.printStackTrace();
-        } catch (TransformerException te) {
-            te.printStackTrace();
+        } catch (ParserConfigurationException | TransformerException pce) {
+            pce.printStackTrace();
         }
     }
 
@@ -136,7 +135,7 @@ public class SaveOntologyAction extends AbstractAction {
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             Model ontModel = getOntology(project);
             RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);

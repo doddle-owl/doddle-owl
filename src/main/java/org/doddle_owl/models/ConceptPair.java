@@ -62,9 +62,9 @@ public class ConceptPair implements Comparable {
     }
 
     public void setSumValue() {
-        double sum = 0;
-        sum = wsValue.doubleValue() + arValue.doubleValue() + nvValue.doubleValue();
-        sumValue = new Double(sum);
+        double sum;
+        sum = wsValue + arValue + nvValue;
+        sumValue = sum;
     }
 
     public ConceptPair(String A, String B, Double value) {
@@ -88,7 +88,7 @@ public class ConceptPair implements Comparable {
     }
 
     public String getCombinationToString() {
-        return fromConcept.toString() + "->" + toConcept.toString();
+        return fromConcept + "->" + toConcept;
     }
 
     public String toString() {
@@ -111,15 +111,15 @@ public class ConceptPair implements Comparable {
         double nvDouble;
         double sumDouble;
 
-        wsDouble = wsValue.doubleValue() + aPair.getWsValue().doubleValue();
-        arDouble = arValue.doubleValue() + aPair.getArValue().doubleValue();
-        nvDouble = nvValue.doubleValue() + aPair.getNvValue().doubleValue();
+        wsDouble = wsValue + aPair.getWsValue();
+        arDouble = arValue + aPair.getArValue();
+        nvDouble = nvValue + aPair.getNvValue();
         sumDouble = wsDouble + arDouble + nvDouble;
 
-        wsValue = new Double(wsDouble);
-        arValue = new Double(arDouble);
-        nvValue = new Double(nvDouble);
-        sumValue = new Double(sumDouble);
+        wsValue = wsDouble;
+        arValue = arDouble;
+        nvValue = nvDouble;
+        sumValue = sumDouble;
     }
 
     public String toOffsetAndNameString() {
@@ -154,7 +154,7 @@ public class ConceptPair implements Comparable {
     }
 
     public double getRelationDoubleValue() {
-        return relationValue.doubleValue();
+        return relationValue;
     }
 
     public Double getArValue() {

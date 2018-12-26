@@ -46,8 +46,8 @@ public class Concept implements Serializable {
 	private Map<String, List<DODDLELiteral>> langDescriptionListMap;
 
 	public Concept() {
-		langLabelListMap = new HashMap<String, List<DODDLELiteral>>();
-		langDescriptionListMap = new HashMap<String, List<DODDLELiteral>>();
+		langLabelListMap = new HashMap<>();
+		langDescriptionListMap = new HashMap<>();
 	}
 
 	public Concept(Concept c) {
@@ -61,24 +61,24 @@ public class Concept implements Serializable {
 
 	public Concept(String uri, String word) {
 		setURI(uri);
-		langLabelListMap = new HashMap<String, List<DODDLELiteral>>();
+		langLabelListMap = new HashMap<>();
 		if (0 < word.length()) {
 			DODDLELiteral literal = new DODDLELiteral(DODDLEConstants.LANG, word);
-			List<DODDLELiteral> literalList = new ArrayList<DODDLELiteral>();
+			List<DODDLELiteral> literalList = new ArrayList<>();
 			literalList.add(literal);
 			langLabelListMap.put(DODDLEConstants.LANG, literalList);
 		}
-		langDescriptionListMap = new HashMap<String, List<DODDLELiteral>>();
+		langDescriptionListMap = new HashMap<>();
 	}
 
 	public Concept(String uri, String[] items) {
 		setURI(uri);
 
-		langLabelListMap = new HashMap<String, List<DODDLELiteral>>();
-		langDescriptionListMap = new HashMap<String, List<DODDLELiteral>>();
+		langLabelListMap = new HashMap<>();
+		langDescriptionListMap = new HashMap<>();
 
 		String jaWord = removeNullWords(items[0]);
-		List<DODDLELiteral> jaLabelLiteralList = new ArrayList<DODDLELiteral>();
+		List<DODDLELiteral> jaLabelLiteralList = new ArrayList<>();
 		for (String jw : jaWord.split("\t")) {
 			if (0 < jw.length()) {
 				DODDLELiteral literal = new DODDLELiteral("ja", jw);
@@ -90,7 +90,7 @@ public class Concept implements Serializable {
 		}
 
 		String enWord = removeNullWords(items[1]);
-		List<DODDLELiteral> enLabelLiteralList = new ArrayList<DODDLELiteral>();
+		List<DODDLELiteral> enLabelLiteralList = new ArrayList<>();
 		for (String ew : enWord.split("\t")) {
 			if (0 < ew.length()) {
 				DODDLELiteral literal = new DODDLELiteral("en", ew);
@@ -104,7 +104,7 @@ public class Concept implements Serializable {
 		String jaDescription = removeNullWords(items[2]);
 		jaDescription = jaDescription.replaceAll("\t", "");
 		if (0 < jaDescription.length()) {
-			List<DODDLELiteral> jaDescriptionLiteralList = new ArrayList<DODDLELiteral>();
+			List<DODDLELiteral> jaDescriptionLiteralList = new ArrayList<>();
 			DODDLELiteral jaDescriptionLiteral = new DODDLELiteral("ja", jaDescription);
 			jaDescriptionLiteralList.add(jaDescriptionLiteral);
 			langDescriptionListMap.put("ja", jaDescriptionLiteralList);
@@ -113,7 +113,7 @@ public class Concept implements Serializable {
 		String enDescription = removeNullWords(items[3]);
 		enDescription = enDescription.replaceAll("\t", "");
 		if (0 < enDescription.length()) {
-			List<DODDLELiteral> enDescriptionLiteralList = new ArrayList<DODDLELiteral>();
+			List<DODDLELiteral> enDescriptionLiteralList = new ArrayList<>();
 			DODDLELiteral enDescriptionLiteral = new DODDLELiteral("en", enDescription);
 			enDescriptionLiteralList.add(enDescriptionLiteral);
 			langDescriptionListMap.put("en", enDescriptionLiteralList);
@@ -171,7 +171,7 @@ public class Concept implements Serializable {
 				labelLiteralList.add(labelLiteral);
 			}
 		} else {
-			labelLiteralList = new ArrayList<DODDLELiteral>();
+			labelLiteralList = new ArrayList<>();
 			labelLiteralList.add(labelLiteral);
 			langLabelListMap.put(lang, labelLiteralList);
 		}
@@ -207,7 +207,7 @@ public class Concept implements Serializable {
 				descriptionLiteralList.add(descriptionLiteral);
 			}
 		} else {
-			descriptionLiteralList = new ArrayList<DODDLELiteral>();
+			descriptionLiteralList = new ArrayList<>();
 			descriptionLiteralList.add(descriptionLiteral);
 			langDescriptionListMap.put(descriptionLiteral.getLang(), descriptionLiteralList);
 		}

@@ -52,7 +52,7 @@ public class CalcConceptDistanceUtil {
         } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
             pathSet = EDRTree.getEDRTTree().getURIPathToRootSet(c.getLocalName());
         } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-            pathSet = WordNetDic.getURIPathToRootSet(new Long(c.getLocalName()));
+            pathSet = WordNetDic.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
         } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
             pathSet = JPNWNTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
         }
@@ -82,8 +82,8 @@ public class CalcConceptDistanceUtil {
             pathSet1 = EDRTree.getEDRTTree().getURIPathToRootSet(c1.getLocalName());
             pathSet2 = EDRTree.getEDRTTree().getURIPathToRootSet(c2.getLocalName());
         } else if (c1.getNameSpace().equals(DODDLEConstants.WN_URI) && c2.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-            pathSet1 = WordNetDic.getURIPathToRootSet(new Long(c1.getLocalName()));
-            pathSet2 = WordNetDic.getURIPathToRootSet(new Long(c2.getLocalName()));
+            pathSet1 = WordNetDic.getURIPathToRootSet(Long.valueOf(c1.getLocalName()));
+            pathSet2 = WordNetDic.getURIPathToRootSet(Long.valueOf(c2.getLocalName()));
         } else if (c1.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)
                 && c2.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
             pathSet1 = JPNWNTree.getJPNWNTree().getURIPathToRootSet(c1.getLocalName());
@@ -94,7 +94,7 @@ public class CalcConceptDistanceUtil {
 
     public static List<ConceptDistanceModel> getConceptDistanceModelList(Concept concept1, Concept concept2) {
         Set<List<String>[]> combinationSet = getCombinationSet(concept1, concept2);
-        List<ConceptDistanceModel> conceptDistanceModelList = new ArrayList<ConceptDistanceModel>();
+        List<ConceptDistanceModel> conceptDistanceModelList = new ArrayList<>();
         for (List<String>[] combination : combinationSet) {
             List<String> path1 = combination[0];
             List<String> path2 = combination[1];
@@ -108,7 +108,7 @@ public class CalcConceptDistanceUtil {
     private static List<ConceptDistanceModel> getExtendConceptDistanceModelList(Concept concept1, Concept concept2) {
         Set<List<String>[]> combinationSet = getCombinationSet(concept1, concept2);
 
-        List<ConceptDistanceModel> conceptDistanceModelList = new ArrayList<ConceptDistanceModel>();
+        List<ConceptDistanceModel> conceptDistanceModelList = new ArrayList<>();
         for (List<String>[] combination : combinationSet) {
             List<String> path1 = combination[0];
             List<String> path2 = combination[1];

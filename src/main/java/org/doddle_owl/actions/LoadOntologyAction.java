@@ -45,6 +45,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Takeshi Morita
@@ -141,7 +142,7 @@ public class LoadOntologyAction extends AbstractAction {
 		BufferedReader reader = null;
 		try {
 			InputStream is = new FileInputStream(file);
-			reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 			Model model = ModelFactory.createDefaultModel();
 			model.read(reader, DODDLEConstants.BASE_URI, "RDF/XML");
 			loadOWLOntology(currentProject, model);

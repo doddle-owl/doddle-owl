@@ -59,6 +59,7 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -117,8 +118,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     public InputDocumentSelectionPanel(InputTermSelectionPanel iwsPanel, DODDLEProject p) {
         project = p;
         inputTermSelectionPanel = iwsPanel;
-        termInfoMap = new HashMap<String, TermInfo>();
-        stopWordSet = new HashSet<String>();
+        termInfoMap = new HashMap<>();
+        stopWordSet = new HashSet<>();
         docList = new JList(new DefaultListModel());
         docList.addListSelectionListener(this);
         JScrollPane docListScroll = new JScrollPane(docList);
@@ -242,7 +243,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                 return;
             }
             FileInputStream fis = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String line = reader.readLine();
                 stopWordSet.add(line);
@@ -270,8 +271,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     private void deleteFiles(File file) {
         File[] files = file.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            files[i].delete();
+        for (File file1 : files) {
+            file1.delete();
         }
     }
 
@@ -290,7 +291,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                 String text = entrySet.getValue();
                 File saveFile = new File(saveDir, getTextFileName(file.getName()));
                 FileOutputStream fos = new FileOutputStream(saveFile);
-                writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+                writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
                 writer.write(text);
                 writer.close();
             }
@@ -308,7 +309,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private Map<File, String> getFileTextStringMap(ListModel listModel) {
-        Map<File, String> fileTextStringMap = new HashMap<File, String>();
+        Map<File, String> fileTextStringMap = new HashMap<>();
         for (int i = 0; i < listModel.getSize(); i++) {
             Document doc = (Document) listModel.getElementAt(i);
             fileTextStringMap.put(doc.getFile(), doc.getText());
@@ -341,7 +342,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         BufferedWriter writer = null;
         try {
             FileOutputStream fos = new FileOutputStream(docInfo);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
             // for (int i = 0; i < docList.getModel().getSize(); i++) {
             // Document doc = (Document) docList.getModel().getElementAt(i);
             // writer.write("doc," +
@@ -371,9 +372,9 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         try {
             for (int i = 0; i < inputDocList.getModel().getSize(); i++) {
                 Document doc = (Document) inputDocList.getModel().getElementAt(i);
-                String path = URLEncoder.encode(doc.getFile().getAbsolutePath(), "UTF8");
+                String path = URLEncoder.encode(doc.getFile().getAbsolutePath(), StandardCharsets.UTF_8);
                 String lang = doc.getLang();
-                String text = URLEncoder.encode(doc.getText(), "UTF8");
+                String text = URLEncoder.encode(doc.getText(), StandardCharsets.UTF_8);
                 String sql = "INSERT INTO doc_info (Project_ID,Doc_ID,Doc_Path,Language,Text) "
                         + "VALUES(" + projectID + "," + docID + ",'" + path + "','" + lang + "','"
                         + text + "')";
@@ -382,8 +383,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 
@@ -407,7 +406,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         BufferedReader reader = null;
         try {
             FileInputStream fis = new FileInputStream(docInfo);
-            reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String line = reader.readLine();
                 String[] info = line.split(",");
@@ -444,16 +443,14 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             String sql = "SELECT * from doc_info where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String docPath = URLDecoder.decode(rs.getString("Doc_Path"), "UTF8");
+                String docPath = URLDecoder.decode(rs.getString("Doc_Path"), StandardCharsets.UTF_8);
                 String lang = rs.getString("Language");
-                String text = URLDecoder.decode(rs.getString("Text"), "UTF8");
+                String text = URLDecoder.decode(rs.getString("Text"), StandardCharsets.UTF_8);
                 DefaultListModel model = (DefaultListModel) inputDocList.getModel();
                 model.addElement(new Document(lang, new File(docPath), text));
             }
             inputTermSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -475,7 +472,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private void setTermInfoMap(String term, String pos, File doc, boolean isInputDoc) {
-        TermInfo info = null;
+        TermInfo info;
         if (termInfoMap.get(term) != null) {
             info = termInfoMap.get(term);
         } else {
@@ -515,7 +512,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                 }
             }
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                    STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt"), "UTF-8"));
+                    STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt"), StandardCharsets.UTF_8));
             MaxentTagger tagger = new MaxentTagger(modelFile.getAbsolutePath());
             List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new BufferedReader(
                     new FileReader(docFile)));
@@ -591,8 +588,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             if (token == null) {
                 return;
             }
-            for (int i = 0; i < token.length; i++) {
-                String[] info = token[i].split("/");
+            for (String s : token) {
+                String[] info = s.split("/");
                 if (info.length != 2) {
                     continue;
                 }
@@ -610,8 +607,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             }
         } else {
             String[] words = doc.getText().split("\\s");
-            for (int i = 0; i < words.length; i++) {
-                String word = words[i];
+            for (String word : words) {
                 String basicStr = word.toLowerCase();
 
                 if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
@@ -636,7 +632,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         File file = doc.getFile();
         try {
             StringTagger tagger = SenFactory.getStringTagger(null);
-            List<Token> tokenList = new ArrayList<Token>();
+            List<Token> tokenList = new ArrayList<>();
             tagger.analyze(doc.getText(), tokenList);
             for (Token token : tokenList) {
                 String pos = token.getMorpheme().getPartOfSpeech();
@@ -723,7 +719,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     public Set<String> getGensenCompoundWordSet(Document doc) {
         String lang = doc.getLang();
-        Set<String> wordSet = new HashSet<String>();
+        Set<String> wordSet = new HashSet<>();
         BufferedReader reader = null;
         try {
             if (lang.equals("ja")) {
@@ -731,7 +727,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             } else if (lang.equals("en")) {
                 reader = getEnGensenReader();
             }
-            String line = "";
+            String line;
             String splitStr = "\\s+";
             if (lang.equals("en")) {
                 splitStr = "\t";
@@ -790,7 +786,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         ProcessBuilder processBuilder = new ProcessBuilder(PERL_EXE, taggerPath,
                 STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
         termExtractProcess = processBuilder.start();
-        return new BufferedReader(new InputStreamReader(termExtractProcess.getInputStream(), "UTF-8"));
+        return new BufferedReader(new InputStreamReader(termExtractProcess.getInputStream(), StandardCharsets.UTF_8));
     }
 
     private File tmpFile;
@@ -819,7 +815,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
         tmpJapaneseMorphologicalAnalyzerFile = File.createTempFile("tmpJpMorphologicalAnalyzer",
                 null);
-        ProcessBuilder processBuilder = null;
+        ProcessBuilder processBuilder;
         if (Japanese_Morphological_Analyzer.matches(".*mecab.*")) {
             processBuilder = new ProcessBuilder(Japanese_Morphological_Analyzer, "-o",
                     tmpJapaneseMorphologicalAnalyzerFile.getAbsolutePath(),
@@ -831,7 +827,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         }
 
         jaMorphologicalAnalyzerProcess = processBuilder.start();
-        String path = "";
         String TERM_EXTRACT_EXE = TERM_EXTRACT_CHASEN_PL;
         if (Japanese_Morphological_Analyzer.matches(".*mecab.*")) {
             TERM_EXTRACT_EXE = TERM_EXTRACT_MECAB_PL;
@@ -840,7 +835,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         if (!dir.exists()) {
             dir.mkdir();
         }
-        path = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_EXE;
+        String path = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_EXE;
         File scriptFile = new File(path);
         if (!scriptFile.exists()) {
             URL url = DODDLE_OWL.class.getClassLoader().getResource("TermExtractScripts/" + TERM_EXTRACT_EXE);
@@ -869,11 +864,11 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private boolean isEnNoun(String pos) {
-        return pos.indexOf("NN") != -1;
+        return pos.contains("NN");
     }
 
     private boolean isEnVerb(String pos) {
-        return pos.indexOf("VB") != -1;
+        return pos.contains("VB");
     }
 
     private boolean isEnOther(String pos) {
@@ -1001,7 +996,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private void removeDocWordSet() {
-        Set<String> docWordSet = new HashSet<String>();
+        Set<String> docWordSet = new HashSet<>();
         for (TermInfo info : termInfoMap.values()) {
             if (!info.isInputWord()) {
                 docWordSet.add(info.getTerm());
@@ -1027,8 +1022,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private Set getFiles(File[] files, Set fileSet) {
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
+        for (File file : files) {
             if (file.isFile()) {
                 fileSet.add(file);
             } else if (file.isDirectory()) {
@@ -1063,7 +1057,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                 String[] lines = text.split("\n");
                 for (int j = 0; j < lines.length; j++) {
                     String line = lines[j];
-                    if (line.indexOf(word) != -1) {
+                    if (line.contains(word)) {
                         writer.write((j + 1) + ": " + line + "\n");
                     }
                 }
@@ -1117,8 +1111,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     private void addDocuments(JList list, Set fileSet) {
         DefaultListModel model = (DefaultListModel) list.getModel();
-        for (Iterator i = fileSet.iterator(); i.hasNext(); ) {
-            File file = (File) i.next();
+        for (Object o : fileSet) {
+            File file = (File) o;
             Document doc = new Document(file);
             String text = doc.getText();
             if (30 < text.split(" ").length) { // 適当．スペース数が一定以上あれば英文とみなす
@@ -1167,8 +1161,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         public void actionPerformed(ActionEvent e) {
             List removeElements = docList.getSelectedValuesList();
             DefaultListModel model = (DefaultListModel) docList.getModel();
-            for (int i = 0; i < removeElements.size(); i++) {
-                model.removeElement(removeElements.get(i));
+            for (Object removeElement : removeElements) {
+                model.removeElement(removeElement);
             }
             inputDocArea.setText("");
         }
@@ -1182,8 +1176,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         public void actionPerformed(ActionEvent e) {
             List removeElements = inputDocList.getSelectedValuesList();
             DefaultListModel model = (DefaultListModel) inputDocList.getModel();
-            for (int i = 0; i < removeElements.size(); i++) {
-                model.removeElement(removeElements.get(i));
+            for (Object removeElement : removeElements) {
+                model.removeElement(removeElement);
             }
             inputDocArea.setText("");
             project.getConceptDefinitionPanel().setInputDocList();
@@ -1204,7 +1198,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     public Set<Document> getDocSet() {
-        TreeSet<Document> docSet = new TreeSet<Document>();
+        TreeSet<Document> docSet = new TreeSet<>();
         ListModel listModel = inputDocList.getModel();
         for (int i = 0; i < listModel.getSize(); i++) {
             Document doc = (Document) listModel.getElementAt(i);

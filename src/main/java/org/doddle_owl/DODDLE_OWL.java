@@ -25,9 +25,11 @@
 package org.doddle_owl;
 
 import org.apache.commons.cli.*;
+import org.apache.jena.query.ARQ;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.sys.JenaSystem;
+import org.apache.jena.tdb.TDB;
 import org.apache.log4j.*;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.DODDLEConstants;
@@ -43,6 +45,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
 import java.util.prefs.BackingStoreException;
@@ -158,13 +161,13 @@ public class DODDLE_OWL extends JFrame {
 
     public List<String> loadRecentProject() {
         BufferedReader reader = null;
-        List<String> recentProjects = new ArrayList<String>();
+        List<String> recentProjects = new ArrayList<>();
         try {
             File recentProjectFile = new File(DODDLEConstants.PROJECT_HOME, ProjectFileNames.RECENT_PROJECTS_FILE);
             if (!recentProjectFile.exists()) {
                 return recentProjects;
             }
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(recentProjectFile), "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(recentProjectFile), StandardCharsets.UTF_8));
             while (reader.ready()) {
                 recentProjects.add(reader.readLine());
             }
@@ -188,7 +191,7 @@ public class DODDLE_OWL extends JFrame {
             if (!recentProjectFile.exists()) {
                 return;
             }
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recentProjectFile), "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recentProjectFile), StandardCharsets.UTF_8));
             int cnt = 0;
             DODDLE_OWL.recentProjectMenu.removeAll();
             for (String project : recentProjects) {
@@ -395,7 +398,7 @@ public class DODDLE_OWL extends JFrame {
         BufferedReader reader = null;
         try {
             InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             DODDLEConstants.BASE_URI = reader.readLine();
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -431,8 +434,8 @@ public class DODDLE_OWL extends JFrame {
             String[] keys = userPrefs.keys();
             if (0 < keys.length) {
                 Properties properties = new Properties();
-                for (int i = 0; i < keys.length; i++) {
-                    properties.put(keys[i], userPrefs.get(keys[i], ""));
+                for (String key : keys) {
+                    properties.put(key, userPrefs.get(key, ""));
                 }
                 setPath(properties);
             }
@@ -516,7 +519,6 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static void main(String[] args) {
-        JenaSystem.init();
         SplashWindow splashWindow = new SplashWindow(null);
         DODDLE_OWL.initOptions(args);
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);

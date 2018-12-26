@@ -37,7 +37,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Takeshi Morita
@@ -49,7 +48,7 @@ public class ConceptTreeMaker {
     private List<ConceptTreeNode> traResultList;
     private Set<Concept> multipleInheritanceConceptSet;
     private Set<Concept> inputConceptSet;
-    private static Set<Concept> trimmedConceptSet = new HashSet<Concept>();
+    private static Set<Concept> trimmedConceptSet = new HashSet<>();
 
     private static ConceptTreeMaker maker = new ConceptTreeMaker();
     public static String EDR_CLASS_ROOT_ID = "ID3aa966";
@@ -61,11 +60,11 @@ public class ConceptTreeMaker {
     public static String DODDLE_PROPERTY_HASA_ROOT_URI = DODDLEConstants.BASE_URI + "PROPERTY_HASA_ROOT";
 
     private ConceptTreeMaker() {
-        inputConceptSet = new HashSet<Concept>();
-        mraResultList = new ArrayList<List<ConceptTreeNode>>();
+        inputConceptSet = new HashSet<>();
+        mraResultList = new ArrayList<>();
         sinNodeListSorter = new SinNodeListSorter();
-        traResultList = new ArrayList<ConceptTreeNode>();
-        multipleInheritanceConceptSet = new HashSet<Concept>();
+        traResultList = new ArrayList<>();
+        multipleInheritanceConceptSet = new HashSet<>();
     }
 
     public static boolean isDODDLEClassRootURI(String uri) {
@@ -81,7 +80,7 @@ public class ConceptTreeMaker {
     }
 
     public void init() {
-        inputConceptSet = new HashSet<Concept>();
+        inputConceptSet = new HashSet<>();
         mraResultList.clear();
         traResultList.clear();
         beforeTrimmingConceptNum = 0;
@@ -90,7 +89,7 @@ public class ConceptTreeMaker {
 
     public Set<List<Concept>> getPathListSet(Set<Concept> conceptSet) {
         inputConceptSet = conceptSet;
-        Set<List<Concept>> pathSet = new HashSet<List<Concept>>();
+        Set<List<Concept>> pathSet = new HashSet<>();
         for (Concept c : conceptSet) {
             Set<List<Concept>> tmpPathSet = OWLOntologyManager.getPathToRootSet(c.getURI());
             int pathSize = 0;
@@ -217,12 +216,12 @@ public class ConceptTreeMaker {
      * @param treeNode
      */
     private void removeSameNode(ConceptTreeNode treeNode) {
-        Map<Concept, List<ConceptTreeNode>> sameNodeMap = new HashMap<Concept, List<ConceptTreeNode>>();
+        Map<Concept, List<ConceptTreeNode>> sameNodeMap = new HashMap<>();
         for (Enumeration i = treeNode.children(); i.hasMoreElements(); ) {
             ConceptTreeNode childNode = (ConceptTreeNode) i.nextElement();
             List<ConceptTreeNode> sameNodeList = sameNodeMap.get(childNode.getConcept());
             if (sameNodeList == null) {
-                sameNodeList = new ArrayList<ConceptTreeNode>();
+                sameNodeList = new ArrayList<>();
             }
             sameNodeList.add(childNode);
             sameNodeMap.put(childNode.getConcept(), sameNodeList);
@@ -335,12 +334,12 @@ public class ConceptTreeMaker {
      * MRA(Matched Result Analysis)を行う．
      */
     public void matchedResultAnalysis(ConceptTreeNode rootNode) {
-        List<ConceptTreeNode> sinNodeList = new ArrayList<ConceptTreeNode>();
+        List<ConceptTreeNode> sinNodeList = new ArrayList<>();
         getSINNodeSet(rootNode, sinNodeList);
         Collections.sort(sinNodeList, sinNodeListSorter);
         ConceptTreeNode lastSinNode = null;
         for (ConceptTreeNode sinNode : sinNodeList) {
-            List<ConceptTreeNode> stm = new ArrayList<ConceptTreeNode>();
+            List<ConceptTreeNode> stm = new ArrayList<>();
             stm.add(sinNode);
             getSubTreesManuallyMoved(sinNode, stm);
             if (isSameSinNode(sinNode, lastSinNode)) {
@@ -411,7 +410,6 @@ public class ConceptTreeMaker {
      * 多重継承概念の集合を得る．
      *
      * @param node
-     * @param sinNodeSet
      */
     private void getMultipleInheritanceConceptSet(ConceptTreeNode node) {
         for (int i = 0; i < node.getChildCount(); i++) {
@@ -477,7 +475,7 @@ public class ConceptTreeMaker {
             rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (has-a)"));
             rootConcept.addLabel(new DODDLELiteral("en", "Has-a Root Class"));
         }
-        supSubSetMap = new HashMap<Resource, Set<Resource>>();
+        supSubSetMap = new HashMap<>();
         for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext(); ) {
             Resource resource = i.nextResource();
             for (StmtIterator j = resource.listProperties(property); j.hasNext(); ) {
@@ -485,7 +483,7 @@ public class ConceptTreeMaker {
                 Resource supResource = (Resource) stmt.getObject();
                 Set<Resource> subResourceSet = supSubSetMap.get(supResource);
                 if (subResourceSet == null) {
-                    subResourceSet = new HashSet<Resource>();
+                    subResourceSet = new HashSet<>();
                 }
                 subResourceSet.add(resource);
                 if (subResourceSet.contains(supResource)) {
@@ -527,7 +525,7 @@ public class ConceptTreeMaker {
             rootProperty.addLabel(new DODDLELiteral("en", "Has-a Root Property"));
         }
 
-        supSubSetMap = new HashMap<Resource, Set<Resource>>();
+        supSubSetMap = new HashMap<>();
         for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext(); ) {
             Resource resource = i.nextResource();
             for (StmtIterator j = resource.listProperties(property); j.hasNext(); ) {
@@ -535,7 +533,7 @@ public class ConceptTreeMaker {
                 Resource supResource = (Resource) stmt.getObject();
                 Set<Resource> subResourceSet = supSubSetMap.get(supResource);
                 if (subResourceSet == null) {
-                    subResourceSet = new HashSet<Resource>();
+                    subResourceSet = new HashSet<>();
                 }
                 subResourceSet.add(resource);
                 supSubSetMap.put(supResource, subResourceSet);
@@ -576,7 +574,7 @@ public class ConceptTreeMaker {
                 concept.addDescription(new DODDLELiteral(lit.getLanguage(), lit.getString()));
             }
 
-            Set<String> domainSet = new HashSet<String>();
+            Set<String> domainSet = new HashSet<>();
             for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.domain); stmtIter.hasNext(); ) {
                 Statement stmt = stmtIter.nextStatement();
                 Resource domain = (Resource) stmt.getObject();
@@ -584,7 +582,7 @@ public class ConceptTreeMaker {
             }
             concept.addAllDomain(domainSet);
 
-            Set<String> rangeSet = new HashSet<String>();
+            Set<String> rangeSet = new HashSet<>();
             for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.range); stmtIter.hasNext(); ) {
                 Statement stmt = stmtIter.nextStatement();
                 Resource range = (Resource) stmt.getObject();
@@ -595,7 +593,7 @@ public class ConceptTreeMaker {
             boolean isInputConcept = concept != null && isInputConcept(concept);
             ConceptTreeNode subNode = new ConceptTreeNode(concept, currentProject);
             subNode.setIsInputConcept(isInputConcept);
-            if (subRDFS.getNameSpace().equals(DODDLEConstants.BASE_URI) && subRDFS.getLocalName().indexOf("UID") != -1) {
+            if (subRDFS.getNameSpace().equals(DODDLEConstants.BASE_URI) && subRDFS.getLocalName().contains("UID")) {
                 currentProject.setUserIDCount(Integer.parseInt(subRDFS.getLocalName().split("UID")[1]));
                 subNode.setIsUserConcept(true);
             }

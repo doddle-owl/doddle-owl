@@ -58,7 +58,7 @@ public class Translator {
     private static Set<Locale> systemLocaleSet;
 
     static {
-        systemLocaleSet = new HashSet<Locale>();
+        systemLocaleSet = new HashSet<>();
         systemLocaleSet.add(Locale.JAPAN);
         systemLocaleSet.add(Locale.ENGLISH);
         systemLocaleSet.add(Locale.CHINA);

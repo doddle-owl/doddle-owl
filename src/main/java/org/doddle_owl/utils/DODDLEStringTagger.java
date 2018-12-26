@@ -26,6 +26,7 @@ package org.doddle_owl.utils;
 import org.doddle_owl.models.DODDLEToken;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +48,9 @@ public class DODDLEStringTagger {
 	private static DODDLEStringTagger tagger;
 
 	private DODDLEStringTagger() {
-		if (Japanese_Morphological_Analyzer.indexOf("chasen") != -1) {
+		if (Japanese_Morphological_Analyzer.contains("chasen")) {
 			type = MophologicalAnalyzerType.CHASEN;
-		} else if (Japanese_Morphological_Analyzer.indexOf("mecab") != -1) {
+		} else if (Japanese_Morphological_Analyzer.contains("mecab")) {
 			type = MophologicalAnalyzerType.MECAB;
 		}
 	}
@@ -72,7 +73,7 @@ public class DODDLEStringTagger {
 	}
 
 	public List<DODDLEToken> analyze(String text) {
-		List<DODDLEToken> tokenList = new ArrayList<DODDLEToken>();
+		List<DODDLEToken> tokenList = new ArrayList<>();
 		BufferedReader reader = null;
 		BufferedWriter writer = null;
 		try {
@@ -127,7 +128,7 @@ public class DODDLEStringTagger {
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-				"C:/DODDLE-OWL/InputDocument.txt"), "UTF-8"));
+				"C:/DODDLE-OWL/InputDocument.txt"), StandardCharsets.UTF_8));
 		String text = "";
 		while (reader.ready()) {
 			String line = reader.readLine();

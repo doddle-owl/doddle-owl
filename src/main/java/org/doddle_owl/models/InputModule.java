@@ -58,9 +58,9 @@ public class InputModule {
 	public InputModule(DODDLEProject p) {
 		project = p;
 		isLoadInputTermSet = false;
-		undefinedTermSet = new TreeSet<String>();
-		inputTermModelSet = new TreeSet<InputTermModel>();
-		termConceptSetMap = new HashMap<String, Set<Concept>>();
+		undefinedTermSet = new TreeSet<>();
+		inputTermModelSet = new TreeSet<>();
+		termConceptSetMap = new HashMap<>();
 	}
 
 	static class WordIDsLinesComparator implements Comparator<String> {
@@ -138,7 +138,7 @@ public class InputModule {
 	}
 
 	private Set<Concept> getConceptSet(String subInputTerm) {
-		Set<Concept> conceptSet = new HashSet<Concept>();
+		Set<Concept> conceptSet = new HashSet<>();
 		setEDRConceptSet(subInputTerm, conceptSet);
 		setEDRTConceptSet(subInputTerm, conceptSet);
 		setWordNetConceptSet(subInputTerm, conceptSet); // スペースを_に置き換えるとマッチしなくなる
@@ -224,8 +224,8 @@ public class InputModule {
 	}
 
 	private List<Morpheme> getEnMorphemeList(String iw) {
-		List<Morpheme> morphemeList = new ArrayList<Morpheme>();
-		if (iw.indexOf(" ") == -1) {
+		List<Morpheme> morphemeList = new ArrayList<>();
+		if (!iw.contains(" ")) {
 			Morpheme m = new Morpheme(iw, iw);
 			morphemeList.add(m);
 		}
@@ -240,10 +240,10 @@ public class InputModule {
 	 * @param iw
 	 */
 	private List<Morpheme> getJaMorphemeList(String iw) {
-		List<Morpheme> morphemeList = new ArrayList<Morpheme>();
+		List<Morpheme> morphemeList = new ArrayList<>();
 		try {
 			StringTagger tagger = SenFactory.getStringTagger(null);
-			List<Token> tokenList = new ArrayList<Token>();
+			List<Token> tokenList = new ArrayList<>();
 			tagger.analyze(iw, tokenList);
 			for (Token t : tokenList) {
 				String basicForm = t.getMorpheme().getBasicForm();
@@ -288,7 +288,7 @@ public class InputModule {
 		public String doInBackground() {
 			try {
 				clearData();
-				Set<String> matchedTermSet = new HashSet<String>();
+				Set<String> matchedTermSet = new HashSet<>();
 				int i = 0;
 				for (String term : termSet) {
 					i++;

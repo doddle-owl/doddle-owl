@@ -103,21 +103,19 @@ public class StatusBarPanel extends Panel implements ActionListener {
     }
     
     private void startTimer() {
-        timer = new Thread() {
-            public void run() {
-                while (progressBar.isVisible()) {
-                    try {
-                        sleep(1000);
-                        setCurrentTime();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        timer = new Thread(() -> {
+            while (progressBar.isVisible()) {
+                try {
+                    Thread.sleep(1000);
+                    setCurrentTime();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                DODDLE_OWL.getLogger().log(Level.DEBUG,
-                        Translator.getTerm("TotalTimeMessage") + ": " + elapsedTime);
-                setValue(lastMessage);
             }
-        };
+            DODDLE_OWL.getLogger().log(Level.DEBUG,
+                    Translator.getTerm("TotalTimeMessage") + ": " + elapsedTime);
+            setValue(lastMessage);
+        });
         timer.start();
     }
 

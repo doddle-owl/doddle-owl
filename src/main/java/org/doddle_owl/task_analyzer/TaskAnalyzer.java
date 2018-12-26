@@ -45,20 +45,20 @@ public class TaskAnalyzer {
     private Map<Segment, Set<Segment>> segmentMap; // 文節とその文節に係っている文節の集合を保存
 
     public TaskAnalyzer() {
-        cabochaDocList = new ArrayList<CabochaDocument>();
-        useCaseTaskList = new ArrayList<UseCaseTask>();
-        segmentMap = new HashMap<Segment, Set<Segment>>();
-        segmentSet = new HashSet<Segment>();
-        compoundWordCountMap = new HashMap<String, Integer>();
-        compoundWordWithNokakuCountMap = new HashMap<String, Integer>();
+        cabochaDocList = new ArrayList<>();
+        useCaseTaskList = new ArrayList<>();
+        segmentMap = new HashMap<>();
+        segmentSet = new HashSet<>();
+        compoundWordCountMap = new HashMap<>();
+        compoundWordWithNokakuCountMap = new HashMap<>();
     }
 
     public void loadUseCaseTask(String useCaseDir) {
         File docDir = new File(useCaseDir);
         File[] files = docDir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            System.out.println(files[i].getName());
-            loadUseCaseTask(files[i]);
+        for (File file : files) {
+            System.out.println(file.getName());
+            loadUseCaseTask(file);
         }
     }
     public CabochaDocument loadUseCaseTask(File file) {
@@ -189,13 +189,13 @@ public class TaskAnalyzer {
     public void printNounAndVerbSet() {
         System.out.println();
         System.out.println("<文節から抽出した形態素>");
-        Set<String> nounAndVerbSet = new HashSet<String>();
+        Set<String> nounAndVerbSet = new HashSet<>();
         for (Segment segment : segmentSet) {
             for (Morpheme m : segment.getMorphemeList()) {
                 if (m.getPos().equals(Morpheme.NOUN_NUM)) {
                     continue;
                 }
-                if (m.getPos().indexOf(Morpheme.NOUN) != -1 || m.getPos().indexOf(Morpheme.VERB) != -1) {
+                if (m.getPos().contains(Morpheme.NOUN) || m.getPos().contains(Morpheme.VERB)) {
                     nounAndVerbSet.add(m.getBasic());
                 }
             }

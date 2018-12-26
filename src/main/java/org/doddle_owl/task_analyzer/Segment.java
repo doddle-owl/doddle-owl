@@ -44,12 +44,12 @@ public class Segment {
     }
 
     public Segment(int num) {
-        morphemeList = new ArrayList<Morpheme>();
+        morphemeList = new ArrayList<>();
         modificationRelationNum = num;
     }
 
     public Segment(Segment toSeg) {
-        morphemeList = new ArrayList<Morpheme>();
+        morphemeList = new ArrayList<>();
         dependToSegment = toSeg;
     }
 
@@ -97,15 +97,15 @@ public class Segment {
     }
 
     public List<Morpheme> getNounMorphemeList() {
-        List<Morpheme> nounMorList = new ArrayList<Morpheme>();
+        List<Morpheme> nounMorList = new ArrayList<>();
         boolean isIncludeSymbolParenthesis = isIncludeSymbolParenthesis();
         for (Morpheme m : morphemeList) {
-            if (m.getPos().equals(Morpheme.NOUN_NUM) || m.getPos().indexOf(Morpheme.VERB) != -1) {
+            if (m.getPos().equals(Morpheme.NOUN_NUM) || m.getPos().contains(Morpheme.VERB)) {
                 continue;
             }
             if (m.getSurface().equals("・")) { // 中黒の場合は，名詞句リストに追加
                 nounMorList.add(m);
-            } else if (m.getPos().indexOf(Morpheme.NOUN) != -1 || m.getPos().indexOf(Morpheme.VERB) != -1
+            } else if (m.getPos().contains(Morpheme.NOUN) || m.getPos().contains(Morpheme.VERB)
                     || m.getPos().equals(Morpheme.UNKNOWN_WORD)) {
                 // || m.getPos().equals("助詞-接続助詞")
                 if (!m.getSurface().equals("他") && !m.getPos().equals("名詞-非自立-助動詞語幹")) {
@@ -152,7 +152,7 @@ public class Segment {
 
     public boolean isIncludingVerb() {
         for (Morpheme m : morphemeList) {
-            if (m.getPos().indexOf(Morpheme.VERB) != -1) { return true; }
+            if (m.getPos().contains(Morpheme.VERB)) { return true; }
         }
         return false;
     }
@@ -161,13 +161,13 @@ public class Segment {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < morphemeList.size(); i++) {
             Morpheme m = morphemeList.get(i);
-            if (m.getPos().indexOf(Morpheme.SYMBOL_ALPHABET) != -1) {
+            if (m.getPos().contains(Morpheme.SYMBOL_ALPHABET)) {
                 continue;
             }
             if (i == 0 && (m.getSurface().equals("　") || m.getSurface().equals("・"))) {
                 continue;
             }
-            if (i == 0 && m.getPos().indexOf(Morpheme.NOUN_NUM) != -1) {
+            if (i == 0 && m.getPos().contains(Morpheme.NOUN_NUM)) {
                 continue;
             }
             if (m.getSurface().equals("他")) {
@@ -189,7 +189,7 @@ public class Segment {
         List<Morpheme> nounMorphemeList = getNounMorphemeList();
         for (int i = 0; i < nounMorphemeList.size(); i++) {
             Morpheme m = nounMorphemeList.get(i);
-            if (i == nounMorphemeList.size() - 1 && m.getPos().indexOf(Morpheme.VERB) != -1) {
+            if (i == nounMorphemeList.size() - 1 && m.getPos().contains(Morpheme.VERB)) {
                 builder.append(m.getBasic());
             } else {
                 builder.append(m.getSurface());
@@ -201,7 +201,7 @@ public class Segment {
     public boolean isNounPhrase() {
         boolean isNounPhrase = true;
         for (Morpheme m : morphemeList) {
-            if (m.getPos().indexOf(Morpheme.NOUN) == -1) { return false; }
+            if (!m.getPos().contains(Morpheme.NOUN)) { return false; }
         }
         return isNounPhrase;
     }

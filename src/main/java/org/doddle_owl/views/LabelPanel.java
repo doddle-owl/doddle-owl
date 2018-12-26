@@ -140,8 +140,7 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
             clearLabelField();
         } else if (e.getSource() == deleteLabelButton) {
             java.util.List<DODDLELiteral> labelList = literalJList.getSelectedValuesList();
-            for (int i = 0; i < labelList.size(); i++) {
-                DODDLELiteral label = labelList.get(i);
+            for (DODDLELiteral label : labelList) {
                 if (label.getString().equals(preferentialTermValueLabel.getText())) {
                     conceptInfoPanel.setPreferentialTerm(selectedConcept, new DODDLELiteral("", ""));
                 }

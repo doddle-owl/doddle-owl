@@ -32,6 +32,7 @@ import org.doddle_owl.views.InputConceptSelectionPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Takeshi Morita
@@ -53,7 +54,7 @@ public class SaveMatchedTermListAction extends AbstractAction {
             BufferedWriter writer = null;
             try {
                 OutputStream os = new FileOutputStream(file);
-                writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
                 for (InputTermModel iwModel : inputConceptSelectionPanel.getInputTermModelSet()) {
                     writer.write(iwModel.getTerm() + "\n");
                 }

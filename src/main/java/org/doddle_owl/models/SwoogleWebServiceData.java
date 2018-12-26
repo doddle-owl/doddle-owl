@@ -50,16 +50,16 @@ public class SwoogleWebServiceData {
     private static Map<String, ReferenceOWLOntology> uriRefOntologyMap;
 
     public SwoogleWebServiceData() {
-        swtTermRankMap = new HashMap<String, Double>();
-        classSet = new HashSet<Resource>();
-        expandClassSet = new HashSet<Resource>();
-        propertySet = new HashSet<Resource>();
-        relatedPropertySet = new HashSet<Resource>();
-        propertyDomainSetMap = new HashMap<Resource, Set<Resource>>();
-        propertyRangeSetMap = new HashMap<Resource, Set<Resource>>();
-        uriSwoogleOWLMetaDataMap = new HashMap<String, SwoogleOWLMetaData>();
-        uriRefOntologyMap = new HashMap<String, ReferenceOWLOntology>();
-        conceptInputWordSetMap = new HashMap<Resource, Set<String>>();
+        swtTermRankMap = new HashMap<>();
+        classSet = new HashSet<>();
+        expandClassSet = new HashSet<>();
+        propertySet = new HashSet<>();
+        relatedPropertySet = new HashSet<>();
+        propertyDomainSetMap = new HashMap<>();
+        propertyRangeSetMap = new HashMap<>();
+        uriSwoogleOWLMetaDataMap = new HashMap<>();
+        uriRefOntologyMap = new HashMap<>();
+        conceptInputWordSetMap = new HashMap<>();
     }
 
     public void initData() {
@@ -117,7 +117,7 @@ public class SwoogleWebServiceData {
             Set<String> inputWordSet = conceptInputWordSetMap.get(cls);
             inputWordSet.add(inputWord);
         } else {
-            Set<String> inputWordSet = new HashSet<String>();
+            Set<String> inputWordSet = new HashSet<>();
             inputWordSet.add(inputWord);
             conceptInputWordSetMap.put(cls, inputWordSet);
         }
@@ -144,14 +144,14 @@ public class SwoogleWebServiceData {
     }
 
     public Set<Resource> getAllProperty() {
-        Set<Resource> allPropertySet = new HashSet<Resource>();
+        Set<Resource> allPropertySet = new HashSet<>();
         allPropertySet.addAll(propertySet);
         allPropertySet.addAll(relatedPropertySet);
         return allPropertySet;
     }
 
     public Set<Resource> getConceptSet() {
-        Set<Resource> conceptSet = new HashSet<Resource>();
+        Set<Resource> conceptSet = new HashSet<>();
         conceptSet.addAll(classSet);
         conceptSet.addAll(propertySet);
         conceptSet.addAll(relatedPropertySet);
@@ -163,7 +163,7 @@ public class SwoogleWebServiceData {
             Set<Resource> regionSet = propertyRegionSetMap.get(property);
             regionSet.add(region);
         } else {
-            Set<Resource> regionSet = new HashSet<Resource>();
+            Set<Resource> regionSet = new HashSet<>();
             regionSet.add(region);
             propertyRegionSetMap.put(property, regionSet);
         }
@@ -178,7 +178,7 @@ public class SwoogleWebServiceData {
     }
 
     private Set<Resource> getExpandClassSet(Resource cls) {
-        Set<Resource> expandClassSet = new HashSet<Resource>();
+        Set<Resource> expandClassSet = new HashSet<>();
         for (String uri : uriRefOntologyMap.keySet()) {
             ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
             Set<List<Concept>> pathToRoot = refOnto.getPathToRootSet(cls.getURI());
@@ -190,7 +190,7 @@ public class SwoogleWebServiceData {
                         Set<String> extInputWordSet = conceptInputWordSetMap.get(c.getResource());
                         extInputWordSet.addAll(inputWordSet);
                     } else {
-                        Set<String> extInputWordSet = new HashSet<String>();
+                        Set<String> extInputWordSet = new HashSet<>();
                         extInputWordSet.addAll(inputWordSet);
                         conceptInputWordSetMap.put(c.getResource(), extInputWordSet);
                     }
@@ -208,7 +208,7 @@ public class SwoogleWebServiceData {
 
     private void removeUnnecessaryRegionSet(Map<Resource, Set<Resource>> propertyRegionSetMap) {
         for (Resource property : propertyRegionSetMap.keySet()) {
-            Set<Resource> unnecessaryRegionSet = new HashSet<Resource>();
+            Set<Resource> unnecessaryRegionSet = new HashSet<>();
             Set<Resource> regionSet = propertyRegionSetMap.get(property);
             for (Resource region : regionSet) {
                 if (!expandClassSet.contains(region)) {
@@ -312,8 +312,8 @@ public class SwoogleWebServiceData {
 
     public int getValidRelationCount() {
         int relCnt = 0;
-        Map<String, Set<Resource>> pairPropertySetMap = new HashMap<String, Set<Resource>>();
-        Map<String, Set<Resource>> extPairPropertySetMap = new HashMap<String, Set<Resource>>();
+        Map<String, Set<Resource>> pairPropertySetMap = new HashMap<>();
+        Map<String, Set<Resource>> extPairPropertySetMap = new HashMap<>();
         for (Resource property : propertySet) {
             if (propertyDomainSetMap.get(property) != null && propertyRangeSetMap.get(property) != null) {
                 int cnt = propertyDomainSetMap.get(property).size() * propertyRangeSetMap.get(property).size();
@@ -328,7 +328,7 @@ public class SwoogleWebServiceData {
                                         Set<Resource> propertySet = pairPropertySetMap.get(pair);
                                         propertySet.add(property);
                                     } else {
-                                        Set<Resource> propertySet = new HashSet<Resource>();
+                                        Set<Resource> propertySet = new HashSet<>();
                                         propertySet.add(property);
                                         pairPropertySetMap.put(pair, propertySet);
                                     }
@@ -337,7 +337,7 @@ public class SwoogleWebServiceData {
                                         Set<Resource> propertySet = extPairPropertySetMap.get(pair);
                                         propertySet.add(property);
                                     } else {
-                                        Set<Resource> propertySet = new HashSet<Resource>();
+                                        Set<Resource> propertySet = new HashSet<>();
                                         propertySet.add(property);
                                         extPairPropertySetMap.put(pair, propertySet);
                                     }
@@ -364,7 +364,7 @@ public class SwoogleWebServiceData {
     }
 
     public int getDefinedRelationCount() {
-        Set<String> relSet = new HashSet<String>();
+        Set<String> relSet = new HashSet<>();
         for (String uri : uriRefOntologyMap.keySet()) {
             ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
             // System.out.println("onturi: "+uri);
@@ -407,7 +407,7 @@ public class SwoogleWebServiceData {
         } else if (type.equals("property")) {
             conceptSet = propertySet;
         }
-        Set<Resource> validConceptSet = new HashSet<Resource>();
+        Set<Resource> validConceptSet = new HashSet<>();
         for (Resource concept : conceptSet) {
             Set<String> refOntoURISet = uriRefOntologyMap.keySet();
             for (String uri : refOntoURISet) {                
@@ -436,7 +436,7 @@ public class SwoogleWebServiceData {
      * 
      */
     public void calcOntologyRank(Set<String> inputWordSet) {
-        Set<String> unnecessaryOntologyURISet = new HashSet<String>();
+        Set<String> unnecessaryOntologyURISet = new HashSet<>();
         for (String uri : uriRefOntologyMap.keySet()) {
             ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
             double inputConceptCnt = 0;

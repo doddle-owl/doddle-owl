@@ -59,8 +59,8 @@ public class ConceptTreeNode extends DefaultMutableTreeNode implements Comparabl
     }
 
     public void initTrimmedConceptList() {
-        trimmedConceptList = new ArrayList<List<Concept>>();
-        trimmedConceptList.add(new ArrayList<Concept>());
+        trimmedConceptList = new ArrayList<>();
+        trimmedConceptList.add(new ArrayList<>());
     }
 
     /**
@@ -122,7 +122,7 @@ public class ConceptTreeNode extends DefaultMutableTreeNode implements Comparabl
     }
 
     public List<Integer> getTrimmedCountList() {
-        List<Integer> trimmedCountList = new ArrayList<Integer>();
+        List<Integer> trimmedCountList = new ArrayList<>();
         for (List<Concept> tcList : trimmedConceptList) {
             trimmedCountList.add(tcList.size());
         }

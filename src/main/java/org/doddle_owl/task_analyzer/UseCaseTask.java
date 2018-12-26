@@ -24,6 +24,7 @@
 package org.doddle_owl.task_analyzer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.*;
 
@@ -48,13 +49,13 @@ public class UseCaseTask {
             this.description = description;
             this.id = id;
         }
-        primitiveTaskList = new ArrayList<PrimitiveTask>();
+        primitiveTaskList = new ArrayList<>();
     }
 
     public UseCaseTask(String description, String id) {
         this.description = description;
         this.id = id;
-        primitiveTaskList = new ArrayList<PrimitiveTask>();
+        primitiveTaskList = new ArrayList<>();
     }
 
     public String getID() {
@@ -85,9 +86,8 @@ public class UseCaseTask {
         try {
             File taskSetDir = new File("task_set");
             File[] taskFiles = taskSetDir.listFiles();
-            List<UseCaseTask> useCaseTaskList = new ArrayList<UseCaseTask>();
-            for (int i = 0; i < taskFiles.length; i++) {
-                File file = taskFiles[i];
+            List<UseCaseTask> useCaseTaskList = new ArrayList<>();
+            for (File file : taskFiles) {
                 // System.out.println(file);
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 reader.readLine(); // 1行?ﾇ?ﾌてる
@@ -121,12 +121,12 @@ public class UseCaseTask {
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("input_word_set.txt"),
-                    "UTF8"));
+                    StandardCharsets.UTF_8));
             // BufferedReader reader = new BufferedReader(new
             // InputStreamReader(new FileInputStream(
             // "auto_extracted_term_set.txt"), "UTF8"));
 
-            Set<String> termSet = new HashSet<String>();
+            Set<String> termSet = new HashSet<>();
             while (reader.ready()) {
                 String line = reader.readLine();
                 termSet.add(line);
@@ -135,7 +135,7 @@ public class UseCaseTask {
             System.out.println("ユースケース記述数: " + useCaseTaskList.size());
             int taskNum = 0;
             int validTaskNum = 0;
-            Set<String> undefinedTermSet = new HashSet<String>();
+            Set<String> undefinedTermSet = new HashSet<>();
             for (UseCaseTask useCaseTask : useCaseTaskList) {
                 System.out.println(useCaseTask);
                 for (PrimitiveTask task : useCaseTask.getPrimitiveTaskList()) {
@@ -168,9 +168,9 @@ public class UseCaseTask {
             System.out.println(validTaskNum + "/" + taskNum);
 
             System.out.println("未定義語数: "+undefinedTermSet.size());
-            Set<String> undefinedTermWithCaseSet = new HashSet<String>();
+            Set<String> undefinedTermWithCaseSet = new HashSet<>();
             for (String term : undefinedTermSet) {
-                if (term.indexOf("(") != -1 || term.indexOf(")") != -1) {
+                if (term.contains("(") || term.contains(")")) {
                     undefinedTermWithCaseSet.add(term);
                 } else {
                     System.out.println(term);

@@ -24,7 +24,6 @@
 package org.doddle_owl.models;
 
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.utils.Utils;
 
 import java.io.File;
 import java.io.InputStream;

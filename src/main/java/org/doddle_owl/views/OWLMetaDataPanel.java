@@ -168,7 +168,7 @@ public class OWLMetaDataPanel extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (refOnt == null) { return; }
-        String templateFileName = "";
+        String templateFileName;
         OWLOntologyExtractionTemplate owlExtractionTemplate = refOnt.getOWLOntologyExtractionTemplate();
         if (e.getSource() == setSearchClassSetTemplateButton) {
             templateFileName = getTemplateFileName(searchClassSetTemplateField.getText());

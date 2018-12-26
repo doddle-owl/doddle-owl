@@ -42,6 +42,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -51,7 +52,7 @@ public class SwoogleWebServiceWrapper {
 
     private static final int MAX_CNT = 5;
 
-    private static Set<Resource> literalResourceSet = new HashSet<Resource>();
+    private static Set<Resource> literalResourceSet = new HashSet<>();
 
     static {
         literalResourceSet.add(ResourceFactory
@@ -106,11 +107,11 @@ public class SwoogleWebServiceWrapper {
         }
         File file = new File(OWL_ONTOLOGIES_DIR + File.separator + OWL_ONTOLOGY_RESULT_LIST_FILE);
         // System.out.println(file.getAbsolutePath());
-        owlOntologyList = new ArrayList<String>();
+        owlOntologyList = new ArrayList<>();
         if (!file.exists()) {
             return;
         }
-        BufferedReader reader = null;
+        BufferedReader reader;
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             while (reader.ready()) {
@@ -130,11 +131,11 @@ public class SwoogleWebServiceWrapper {
         File file = new File(SWOOGLE_QUERY_RESULTS_DIR + File.separator
                 + SWOOGLE_QUERY_RESULT_LIST_FILE);
         // System.out.println(file.getAbsolutePath());
-        swoogleQueryList = new ArrayList<String>();
+        swoogleQueryList = new ArrayList<>();
         if (!file.exists()) {
             return;
         }
-        BufferedReader reader = null;
+        BufferedReader reader;
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             while (reader.ready()) {
@@ -158,8 +159,8 @@ public class SwoogleWebServiceWrapper {
             for (int i = 0; i < swoogleQueryList.size(); i++) {
                 String queryTypeAndSearchString = swoogleQueryList.get(i);
                 int index = swoogleQueryList.lastIndexOf(queryTypeAndSearchString);
-                if (queryTypeAndSearchString.indexOf("queryType=search_swd_ontology") != -1
-                        || queryTypeAndSearchString.indexOf("queryType=digest_swd") != -1) {
+                if (queryTypeAndSearchString.contains("queryType=search_swd_ontology")
+                        || queryTypeAndSearchString.contains("queryType=digest_swd")) {
                     File file = new File(SWOOGLE_QUERY_RESULTS_DIR + File.separator + "query_"
                             + (index + 1));
                     if (!file.exists()) {
@@ -243,17 +244,15 @@ public class SwoogleWebServiceWrapper {
             writer = new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(file), encoding));
             reader = new BufferedReader(new InputStreamReader(inputStream, encoding));
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) { // reader.ready()を使うと書き込み途中で終了する場合がある.
                 writer.write(line);
                 writer.write("\n");
             }
         } catch (FileNotFoundException fne) {
             System.out.println("fileName error: " + file);
-        } catch (UnsupportedEncodingException uee) {
+        } catch (IOException uee) {
             uee.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             try {
                 if (reader != null) {
@@ -336,12 +335,10 @@ public class SwoogleWebServiceWrapper {
                 saveQueryResult(queryTypeAndSearchString, queryCachFile, url.openStream());
                 model = getModel(url.openStream(), DODDLEConstants.BASE_URI);
             }
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
         } catch (FileNotFoundException fne) {
             fne.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException uee) {
+            uee.printStackTrace();
         }
         if (model == null) {
             model = ModelFactory.createDefaultModel();
@@ -485,8 +482,8 @@ public class SwoogleWebServiceWrapper {
         }
     }
 
-    private static Set<String> classWordSet = new HashSet<String>();
-    private static Set<String> propertyWordSet = new HashSet<String>();
+    private static Set<String> classWordSet = new HashSet<>();
+    private static Set<String> propertyWordSet = new HashSet<>();
 
     /**
      * 入力単語に関連するSWTを獲得
@@ -498,7 +495,7 @@ public class SwoogleWebServiceWrapper {
     public static void searchTerms(int maxCnt, boolean isSearchLabel, String inputWord, String type) {
         QueryExecution qexec = null;
         try {
-            String searchString = "";
+            String searchString;
             if (isSearchLabel) {
                 searchString = "(localname:" + inputWord + " OR label:" + inputWord + ") ";
             } else {
@@ -508,7 +505,7 @@ public class SwoogleWebServiceWrapper {
                     + ")";
 
             String queryTypeAndSearchString = "queryType=search_swt&searchString="
-                    + URLEncoder.encode(searchString, "UTF-8");
+                    + URLEncoder.encode(searchString, StandardCharsets.UTF_8);
             DODDLE_OWL.getLogger().log(Level.DEBUG, "Search Terms: " + inputWord);
             DODDLE_OWL.STATUS_BAR.setText("Search Terms: " + inputWord);
             Model model = getSwoogleQueryResultModel(queryTypeAndSearchString);
@@ -538,8 +535,6 @@ public class SwoogleWebServiceWrapper {
                 }
                 swoogleWebServiceData.putTermRank(swtURI.getURI(), termRank.getDouble());
             }
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
         } finally {
             if (qexec != null) {
                 qexec.close();
@@ -579,32 +574,24 @@ public class SwoogleWebServiceWrapper {
      * 入力したクラスを定義域とするプロパティを獲得
      */
     public static void searchListPropertiesOfaDomainClass(String domainURI) {
-        try {
-            String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_c2p&searchString="
-                    + URLEncoder.encode(domainURI, "UTF-8");
-            DODDLE_OWL.getLogger().log(Level.DEBUG,
-                    "Search List Properties Of a Domain Class: " + domainURI);
-            DODDLE_OWL.STATUS_BAR.setText("Search List Properties Of a Domain Class: " + domainURI);
-            searchListPropertiesOfaRegionClass(queryTypeAndSearchString, domainURI, RDFS.domain);
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
-        }
+        String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_c2p&searchString="
+                + URLEncoder.encode(domainURI, StandardCharsets.UTF_8);
+        DODDLE_OWL.getLogger().log(Level.DEBUG,
+                "Search List Properties Of a Domain Class: " + domainURI);
+        DODDLE_OWL.STATUS_BAR.setText("Search List Properties Of a Domain Class: " + domainURI);
+        searchListPropertiesOfaRegionClass(queryTypeAndSearchString, domainURI, RDFS.domain);
     }
 
     /**
      * 入力したクラスを値域とするプロパティを獲得
      */
     public static void searchListPropertiesOfaRangeClass(String rangeURI) {
-        try {
-            String queryTypeAndSearchString = "queryType=rel_swd_instance_range_c2p&searchString="
-                    + URLEncoder.encode(rangeURI, "UTF-8");
-            DODDLE_OWL.getLogger().log(Level.DEBUG,
-                    "Search List Properties Of a Range Class: " + rangeURI);
-            DODDLE_OWL.STATUS_BAR.setText("Search List Properties Of a Range Class: " + rangeURI);
-            searchListPropertiesOfaRegionClass(queryTypeAndSearchString, rangeURI, RDFS.range);
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
-        }
+        String queryTypeAndSearchString = "queryType=rel_swd_instance_range_c2p&searchString="
+                + URLEncoder.encode(rangeURI, StandardCharsets.UTF_8);
+        DODDLE_OWL.getLogger().log(Level.DEBUG,
+                "Search List Properties Of a Range Class: " + rangeURI);
+        DODDLE_OWL.STATUS_BAR.setText("Search List Properties Of a Range Class: " + rangeURI);
+        searchListPropertiesOfaRegionClass(queryTypeAndSearchString, rangeURI, RDFS.range);
     }
 
     private static void searchListRegionClassOfaProperty(String queryTypeAndSearchString,
@@ -639,32 +626,24 @@ public class SwoogleWebServiceWrapper {
      * プロパティのURIを入力として，そのプロパティの定義域を獲得
      */
     public static void searchListDomainClassOfaProperty(String propertyURI) {
-        try {
-            String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_p2c&searchString="
-                    + URLEncoder.encode(propertyURI, "UTF-8");
-            DODDLE_OWL.getLogger().log(Level.DEBUG,
-                    "Search List Domain Class Of a Property: " + propertyURI);
-            DODDLE_OWL.STATUS_BAR.setText("Search List Domain Class Of a Property: " + propertyURI);
-            searchListRegionClassOfaProperty(queryTypeAndSearchString, propertyURI, RDFS.domain);
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
-        }
+        String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_p2c&searchString="
+                + URLEncoder.encode(propertyURI, StandardCharsets.UTF_8);
+        DODDLE_OWL.getLogger().log(Level.DEBUG,
+                "Search List Domain Class Of a Property: " + propertyURI);
+        DODDLE_OWL.STATUS_BAR.setText("Search List Domain Class Of a Property: " + propertyURI);
+        searchListRegionClassOfaProperty(queryTypeAndSearchString, propertyURI, RDFS.domain);
     }
 
     /**
      * プロパティのURIを入力として，そのプロパティの値域を獲得
      */
     public static void searchListRangeClassOfaProperty(String propertyURI) {
-        try {
-            String queryTypeAndSearchString = "queryType=rel_swd_instance_range_p2c&searchString="
-                    + URLEncoder.encode(propertyURI, "UTF-8");
-            DODDLE_OWL.getLogger().log(Level.DEBUG,
-                    "Search List Range Class Of a Property: " + propertyURI);
-            DODDLE_OWL.STATUS_BAR.setText("Search List Range Class Of a Property: " + propertyURI);
-            searchListRegionClassOfaProperty(queryTypeAndSearchString, propertyURI, RDFS.range);
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
-        }
+        String queryTypeAndSearchString = "queryType=rel_swd_instance_range_p2c&searchString="
+                + URLEncoder.encode(propertyURI, StandardCharsets.UTF_8);
+        DODDLE_OWL.getLogger().log(Level.DEBUG,
+                "Search List Range Class Of a Property: " + propertyURI);
+        DODDLE_OWL.STATUS_BAR.setText("Search List Range Class Of a Property: " + propertyURI);
+        searchListRegionClassOfaProperty(queryTypeAndSearchString, propertyURI, RDFS.range);
     }
 
     /**
@@ -674,7 +653,7 @@ public class SwoogleWebServiceWrapper {
         QueryExecution qexec = null;
         try {
             String queryTypeAndSearchString = "queryType=rel_swt_swd&searchString="
-                    + URLEncoder.encode(swtURI, "UTF-8");
+                    + URLEncoder.encode(swtURI, StandardCharsets.UTF_8);
             DODDLE_OWL.getLogger().log(Level.DEBUG, "Search List Documents Using Term: " + swtURI);
             DODDLE_OWL.STATUS_BAR.setText("Search List Documents Using Term: " + swtURI);
             Model model = getSwoogleQueryResultModel(queryTypeAndSearchString);
@@ -701,8 +680,6 @@ public class SwoogleWebServiceWrapper {
                     }
                 }
             }
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
         } finally {
             if (qexec != null) {
                 qexec.close();
@@ -717,7 +694,7 @@ public class SwoogleWebServiceWrapper {
         QueryExecution qexec = null;
         try {
             String queryTypeAndSearchString = "queryType=digest_swd&searchString="
-                    + URLEncoder.encode(swdURI, "UTF-8");
+                    + URLEncoder.encode(swdURI, StandardCharsets.UTF_8);
             DODDLE_OWL.getLogger().log(Level.DEBUG, "Search Digest Semantic Web Document: " + swdURI);
             Model model = getSwoogleQueryResultModel(queryTypeAndSearchString);
             String sparqlQueryString = SPARQLQueryUtil.getQueryString(getSearchOntologyQuery());
@@ -729,8 +706,6 @@ public class SwoogleWebServiceWrapper {
                 saveOntology(qs);
                 break; // 補助的に利用しているので１つでも見つかったらbreak
             }
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
         } finally {
             if (qexec != null) {
                 qexec.close();
@@ -791,7 +766,7 @@ public class SwoogleWebServiceWrapper {
     }
 
     private static Set<String> getRelatedWordSet(Set<String> inputWordSet) {
-        Set<String> relatedWordSet = new HashSet<String>();
+        Set<String> relatedWordSet = new HashSet<>();
         relatedWordSet.addAll(inputWordSet);
         for (Resource property : swoogleWebServiceData.getAllProperty()) {
             relatedWordSet.add(Utils.getLocalName(property));
@@ -896,8 +871,8 @@ public class SwoogleWebServiceWrapper {
         Object[] refOntologies = swoogleWebServiceData.getRefOntologies().toArray();
         Arrays.sort(refOntologies);
         DODDLE_OWL.getLogger().log(Level.INFO, "獲得オントロジー数: " + refOntologies.length);
-        for (int i = 0; i < refOntologies.length; i++) {
-            DODDLE_OWL.getLogger().log(Level.INFO, refOntologies[i]);
+        for (Object refOntology : refOntologies) {
+            DODDLE_OWL.getLogger().log(Level.INFO, refOntology);
         }
         DODDLE_OWL.getLogger().log(Level.INFO,
                 "概念定義数： " + swoogleWebServiceData.getValidRelationCount());
@@ -957,9 +932,9 @@ public class SwoogleWebServiceWrapper {
          */
         // inputWords = new String[] {"mail", "name", "address"};
         String[] inputWords = new String[]{"tennis_club"};
-        Set<String> inputWordSet = new HashSet<String>();
-        for (int i = 0; i < inputWords.length; i++) {
-            inputWordSet.add(inputWords[i]);
+        Set<String> inputWordSet = new HashSet<>();
+        for (String inputWord : inputWords) {
+            inputWordSet.add(inputWord);
         }
         SwoogleWebServiceWrapper.acquireRelevantOWLOntologies(inputWordSet, false);
     }

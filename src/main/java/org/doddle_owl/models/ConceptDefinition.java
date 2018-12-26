@@ -57,17 +57,17 @@ public class ConceptDefinition {
 
     private ConceptDefinition() {
 
-        agentMap = new HashMap<String, Set<String>>();
-        objectMap = new HashMap<String, Set<String>>();
-        goalMap = new HashMap<String, Set<String>>();
-        implementMap = new HashMap<String, Set<String>>();
-        a_objectMap = new HashMap<String, Set<String>>();
-        placeMap = new HashMap<String, Set<String>>();
-        sceneMap = new HashMap<String, Set<String>>();
-        causeMap = new HashMap<String, Set<String>>();
-        verbSet = new TreeSet<String>();
+        agentMap = new HashMap<>();
+        objectMap = new HashMap<>();
+        goalMap = new HashMap<>();
+        implementMap = new HashMap<>();
+        a_objectMap = new HashMap<>();
+        placeMap = new HashMap<>();
+        sceneMap = new HashMap<>();
+        causeMap = new HashMap<>();
+        verbSet = new TreeSet<>();
         Map[] relationMapList = { agentMap, objectMap, goalMap, implementMap, a_objectMap, placeMap, sceneMap, causeMap};
-        relationMap = new HashMap<String, Map<String, Set<String>>>();
+        relationMap = new HashMap<>();
         for (int i = 0; i < relationList.length; i++) {
             relationMap.put(relationList[i], relationMapList[i]);
         }
@@ -80,7 +80,7 @@ public class ConceptDefinition {
             int n = 0;
             // System.out.println(verbSet.size());
             for (String verbID : verbSet) {
-                StringBuffer buf = new StringBuffer("");
+                StringBuilder buf = new StringBuilder();
                 buf.append(verbID + "||");
                 for (String relation : relationList) {
                     buf.append(relation + "\t");
@@ -135,7 +135,7 @@ public class ConceptDefinition {
     }
 
     public Set<String> makeIDSet(String[] idArray) {
-        Set<String> idSet = new HashSet<String>();
+        Set<String> idSet = new HashSet<>();
         if (1 < idArray.length) {
             for (String id : idArray) {
                 idSet.add(id);
@@ -145,7 +145,7 @@ public class ConceptDefinition {
     }
 
     public Set<String> makeExpandIDSet(String[] uriArray) {
-        Set<String> uriSet = new HashSet<String>();
+        Set<String> uriSet = new HashSet<>();
         if (1 < uriArray.length) {
             for (String uri : uriArray) {
                 uriSet.add(uri);
@@ -159,7 +159,7 @@ public class ConceptDefinition {
      * IDと関係子を受け取り，関係の値としてIDを含む動詞的概念の セットを返す
      */
     public Set<String> getVerbIDSet(String id, String relation) {
-        Set<String> verbIDSet = new HashSet<String>();
+        Set<String> verbIDSet = new HashSet<>();
         Map<String, Set<String>> map = relationMap.get(relation);
         for (Entry<String, Set<String>> entry : map.entrySet()) {
             String verbID = entry.getKey();
@@ -184,7 +184,7 @@ public class ConceptDefinition {
      * idを受け取り，そのIDのルートまでのパスに存在するURIのセットを返す
      */
     public Set<String> getSupURISet(String id) {
-        Set<String> uriSet = new HashSet<String>();
+        Set<String> uriSet = new HashSet<>();
         for (List<String> supIDList : EDRTree.getEDRTree().getURIPathToRootSet(id)) {
             uriSet.addAll(supIDList);
         }
@@ -197,7 +197,7 @@ public class ConceptDefinition {
      * @param uri
      */
     public Set<String> getSubURISet(String uri) {
-        Set<String> uriSet = new HashSet<String>();
+        Set<String> uriSet = new HashSet<>();
         for (Set<String> subURISet : EDRTree.getEDRTree().getSubURISet(uri)) {
             uriSet.addAll(subURISet);
         }
@@ -220,7 +220,7 @@ public class ConceptDefinition {
         Map<String, Set<String>> map = relationMap.get(relation);
         // System.out.println(relation + " map key size: " +
         // map.keySet().size());
-        Set<String> uriSet = new HashSet<String>();
+        Set<String> uriSet = new HashSet<>();
         if (map.get(verbID) != null) {
             Set<String> idSet = map.get(verbID);
             for (String id : idSet) {

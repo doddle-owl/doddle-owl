@@ -41,7 +41,7 @@ public class NewProjectAction extends AbstractAction {
 	public NewProjectAction(String title) {
 		super(title, Utils.getImageIcon("page_white.png"));
 		this.title = title;
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 	}
 
 	public String getTitle() {

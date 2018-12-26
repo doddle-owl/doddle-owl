@@ -65,8 +65,8 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     private static final String WARNING = Translator.getTerm("WarningMessage");
 
     public NameSpaceTable() {
-        prefixNSMap = new HashMap<String, String>();
-        nsInfoMap = new HashMap<String, PrefixNSInfo>();
+        prefixNSMap = new HashMap<>();
+        nsInfoMap = new HashMap<>();
         initTable();
         setLayout(new BorderLayout());
         setTableLayout();
@@ -76,7 +76,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     }
 
     private void initKnownPrefixNSMap() {
-        knownNSPrefixMap = new HashMap<String, String>();
+        knownNSPrefixMap = new HashMap<>();
         knownNSPrefixMap.put("http://purl.org/dc/elements/1.1/", "dc");
         knownNSPrefixMap.put("http://purl.org/rss/1.0/", "rss");
         knownNSPrefixMap.put("http://xmlns.com/foaf/0.1/", "foaf");
@@ -97,7 +97,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
             prefix = getMR3Prefix(addNS);
         }
         if (isValidNS(addNS)) {
-            addNameSpaceTable(new Boolean(true), prefix, addNS);
+            addNameSpaceTable(Boolean.TRUE, prefix, addNS);
         }
     }
 
@@ -120,13 +120,17 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         String prefix = model.getNsURIPrefix(ns);
         // System.out.println(ns);
         // System.out.println(prefix);
-        if (prefix != null && (!prefix.equals(""))) { return prefix; }
+        if (prefix != null && (!prefix.equals(""))) {
+            return prefix;
+        }
         return getKnownPrefix(ns);
     }
 
     public String getPrefix(String ns) {
         PrefixNSInfo info = nsInfoMap.get(ns);
-        if (info != null && info.isAvailable()) { return info.getPrefix(); }
+        if (info != null && info.isAvailable()) {
+            return info.getPrefix();
+        }
         return ns;
     }
 
@@ -156,8 +160,8 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     }
 
     public void setCurrentNSPrefix(Model model) {
-        Set<String> nsSet = new HashSet<String>();
-        for (StmtIterator i = model.listStatements(); i.hasNext();) {
+        Set<String> nsSet = new HashSet<>();
+        for (StmtIterator i = model.listStatements(); i.hasNext(); ) {
             Statement stmt = i.nextStatement();
             String ns = Utils.getNameSpace(stmt.getSubject());
             if (ns != null) {
@@ -176,9 +180,9 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
             if (isValidNS(ns)) {
                 String knownPrefix = getKnownPrefix(model, ns);
                 if (isValidPrefix(knownPrefix) && (!knownPrefix.equals(PREFIX))) {
-                    addNameSpaceTable(new Boolean(true), knownPrefix, ns);
+                    addNameSpaceTable(Boolean.TRUE, knownPrefix, ns);
                 } else {
-                    addNameSpaceTable(new Boolean(true), getMR3Prefix(getKnownPrefix(ns)), ns);
+                    addNameSpaceTable(Boolean.TRUE, getMR3Prefix(getKnownPrefix(ns)), ns);
                 }
             }
         }
@@ -206,7 +210,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     }
 
     public void resetNSTable() {
-        prefixNSMap = new HashMap<String, String>();
+        prefixNSMap = new HashMap<>();
         // 一気にすべて削除する方法がわからない．
         while (nsTableModel.getRowCount() != 0) {
             nsTableModel.removeRow(nsTableModel.getRowCount() - 1);
@@ -215,7 +219,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     }
 
     private void initTable() {
-        Object[] columnNames = new Object[] { Translator.getTerm("ValidLabel"), Translator.getTerm("PrefixLabel"),
+        Object[] columnNames = new Object[]{Translator.getTerm("ValidLabel"), Translator.getTerm("PrefixLabel"),
                 Translator.getTerm("URILabel")};
         nsTableModel = new NSTableModel(columnNames, 0);
         nsTableModel.addTableModelListener(this);
@@ -269,7 +273,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addNSButton) {
-            addNameSpaceTable(new Boolean(true), prefixField.getText(), nsField.getText());
+            addNameSpaceTable(Boolean.TRUE, prefixField.getText(), nsField.getText());
             setNSInfoMap();
         } else if (e.getSource() == removeNSButton) {
             removeNameSpaceTable();
@@ -292,7 +296,9 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
      * prefix が空でなくかつ，すでに登録されていない場合true
      */
     private boolean isValidPrefixWithWarning(String prefix) {
-        if (isValidPrefix(prefix)) { return true; }
+        if (isValidPrefix(prefix)) {
+            return true;
+        }
         JOptionPane.showMessageDialog(null, Translator.getTerm("NotValidPrefixMessage"), WARNING,
                 JOptionPane.ERROR_MESSAGE);
         return false;
@@ -302,14 +308,18 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
      * nsが空でもnullでもなく，すでに登録されてない場合 true
      */
     private boolean isValidNSWithWarning(String ns) {
-        if (isValidNS(ns)) { return true; }
+        if (isValidNS(ns)) {
+            return true;
+        }
         JOptionPane.showMessageDialog(null, Translator.getTerm("NotValidNameSpaceMessage"), WARNING,
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
 
     public void addNameSpaceTable(String ns) {
-        if (!isValidNS(ns)) { return; }
+        if (!isValidNS(ns)) {
+            return;
+        }
         String prefix = "ns1";
         for (int i = 1; !isValidPrefix(prefix); i++) {
             prefix = "ns" + i;
@@ -321,7 +331,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     public void addNameSpaceTable(Boolean isAvailable, String prefix, String ns) {
         if (isValidPrefixWithWarning(prefix) && isValidNSWithWarning(ns)) {
             prefixNSMap.put(prefix, ns);
-            Object[] list = new Object[] { isAvailable, prefix, ns};
+            Object[] list = new Object[]{isAvailable, prefix, ns};
             nsTableModel.insertRow(nsTableModel.getRowCount(), list);
             prefixField.setText("");
             nsField.setText("");
@@ -333,7 +343,9 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         int length = removeList.length;
         // TODO 複数行を消せるようにする
         // modelから消した時点でrow番号が変わってしまうのが原因
-        if (length == 0) { return; }
+        if (length == 0) {
+            return;
+        }
         int row = removeList[0];
         String rmPrefix = (String) nsTableModel.getValueAt(row, 1);
         String rmNS = (String) nsTableModel.getValueAt(row, 2);
@@ -381,7 +393,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
      */
     private boolean isPrefixAvailable(int row, int column) {
         Boolean isPrefixAvailable = (Boolean) nsTableModel.getValueAt(row, column);
-        return isPrefixAvailable.booleanValue();
+        return isPrefixAvailable;
     }
 
     public void tableChanged(TableModelEvent e) {
@@ -406,7 +418,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         }
 
         public Class getColumnClass(int column) {
-            Vector v = (Vector) dataVector.elementAt(0);
+            Vector v = dataVector.elementAt(0);
             return v.elementAt(column).getClass();
         }
 

@@ -24,6 +24,7 @@
 package org.doddle_owl.utils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Takeshi Morita
@@ -35,7 +36,7 @@ public class SPARQLQueryUtil {
         StringBuilder builder = new StringBuilder();
         try {
             // UTF-8にすると一行目がうまく解析できない
-            reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String line = reader.readLine();
                 builder.append(line);

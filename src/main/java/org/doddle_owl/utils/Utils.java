@@ -34,10 +34,6 @@ import net.infonode.util.Direction;
 import net.java.sen.SenFactory;
 import net.java.sen.StringTagger;
 import net.java.sen.dictionary.Token;
-import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.Concept;
-import org.doddle_owl.models.ConceptTreeNode;
-import org.doddle_owl.models.DODDLEConstants;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
@@ -45,6 +41,10 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.doddle_owl.DODDLE_OWL;
+import org.doddle_owl.models.Concept;
+import org.doddle_owl.models.ConceptTreeNode;
+import org.doddle_owl.models.DODDLEConstants;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -54,9 +54,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
 import java.util.logging.Logger;
@@ -135,18 +135,18 @@ public class Utils {
     }
 
     public static void addJaCompoundWord(List tokenList, List<String> inputWordList) {
-        Set<String> compoundWordSet = new HashSet<String>();
-        Map<String, List<String>> compoundWordElementListMap = new HashMap<String, List<String>>();
+        Set<String> compoundWordSet = new HashSet<>();
+        Map<String, List<String>> compoundWordElementListMap = new HashMap<>();
         for (String compoundWord : inputWordList) {
             try {
                 StringTagger tagger = SenFactory.getStringTagger(null);
-                List<Token> compoundWordTokenList = new ArrayList<Token>();
+                List<Token> compoundWordTokenList = new ArrayList<>();
                 tagger.analyze(compoundWord, compoundWordTokenList);
                 if (compoundWordTokenList.size() == 1) {
                     continue; // 複合ではない
                 }
                 compoundWordSet.add(compoundWord);
-                List<String> compoundWordElementList = new ArrayList<String>();
+                List<String> compoundWordElementList = new ArrayList<>();
                 for (Token compoundWordToken : compoundWordTokenList) {
                     String bf = compoundWordToken.getMorpheme().getBasicForm();
                     if (bf.equals("*")) {
@@ -166,8 +166,8 @@ public class Utils {
     }
 
     public static void addEnCompoundWord(List<String> tokenList, List<String> inputWordList) {
-        Set<String> compoundWordSet = new HashSet<String>();
-        Map<String, List<String>> compoundWordElementListMap = new HashMap<String, List<String>>();
+        Set<String> compoundWordSet = new HashSet<>();
+        Map<String, List<String>> compoundWordElementListMap = new HashMap<>();
         for (String compoundWord : inputWordList) {
             List<String> compoundWordElementList = Arrays.asList(compoundWord.split("\\s+"));
             if (compoundWordElementList.size() == 1) {
@@ -185,7 +185,7 @@ public class Utils {
     private static void addCompoundWord(String compoundWord, List<String> compoundWordElementList,
                                         List<String> tokenList, Set compoundWordSet) {
         for (int i = 0; i < tokenList.size(); i++) {
-            List<String> compoundWordSizeList = new ArrayList<String>();
+            List<String> compoundWordSizeList = new ArrayList<>();
             for (int j = 0; compoundWordSizeList.size() != compoundWordElementList.size(); j++) {
                 if ((i + j) == tokenList.size()) {
                     break;
@@ -228,7 +228,7 @@ public class Utils {
     }
 
     public static Set getAllConcept(TreeModel treeModel) {
-        Set<Concept> conceptSet = new HashSet<Concept>();
+        Set<Concept> conceptSet = new HashSet<>();
         if (!(treeModel.getRoot() instanceof ConceptTreeNode)) {
             return conceptSet;
         }
@@ -247,7 +247,7 @@ public class Utils {
     }
 
     public static double getChildCntAverage(TreeModel treeModel) {
-        List<Integer> childNodeCntList = new ArrayList<Integer>();
+        List<Integer> childNodeCntList = new ArrayList<>();
         if (!(treeModel.getRoot() instanceof ConceptTreeNode)) {
             return 0;
         }
@@ -281,11 +281,7 @@ public class Utils {
         String ns = getNameSpace(res);
         String localName = res.getURI().replaceAll(ns, "");
         if (ns.equals(DODDLEConstants.JWO_URI)) {
-            try {
-                localName = URLDecoder.decode(localName, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            localName = URLDecoder.decode(localName, StandardCharsets.UTF_8);
         }
         return localName;
     }

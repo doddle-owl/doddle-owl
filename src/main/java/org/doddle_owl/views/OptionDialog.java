@@ -35,6 +35,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -348,7 +349,7 @@ public class OptionDialog extends JDialog implements ActionListener {
 		properties.setProperty("AutomaticDisambiguation.isCheckAverageSpreadActivation",
 				String.valueOf(isCheckAverageSpreadActivation()));
 
-		String isSameConceptOrSubConcept = "";
+		String isSameConceptOrSubConcept;
 		if (compoundWordSetSameConceptButton.isSelected()) {
 			isSameConceptOrSubConcept = "SAME";
 		} else {
@@ -366,7 +367,7 @@ public class OptionDialog extends JDialog implements ActionListener {
 		try {
 			Properties properties = getProperties();
 			OutputStream os = new FileOutputStream(file);
-			writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 			properties.store(writer, "DODDLE-OWL Option");
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -507,9 +508,9 @@ public class OptionDialog extends JDialog implements ActionListener {
 			String[] keys = userPrefs.keys();
 			if (0 < keys.length) {
 				Properties properties = new Properties();
-				for (int i = 0; i < keys.length; i++) {
-					properties.put(keys[i], userPrefs.get(keys[i], ""));
-				}
+                for (String key : keys) {
+                    properties.put(key, userPrefs.get(key, ""));
+                }
 				loadConfig(properties);
 			}
 		} catch (BackingStoreException bse) {
@@ -522,10 +523,10 @@ public class OptionDialog extends JDialog implements ActionListener {
 			applyConfig();
 			Properties properties = getProperties();
 			Preferences userPrefs = Preferences.userNodeForPackage(DODDLE_OWL.class);
-			for (Iterator i = properties.entrySet().iterator(); i.hasNext();) {
-				Entry<String, String> entry = (Entry) i.next();
-				userPrefs.put(entry.getKey(), entry.getValue());
-			}
+            for (Entry<Object, Object> objectObjectEntry : properties.entrySet()) {
+                Entry<String, String> entry = (Entry) objectObjectEntry;
+                userPrefs.put(entry.getKey(), entry.getValue());
+            }
 			DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveButton"));
 		} else if (e.getSource() == applyButton) {
 			applyConfig();

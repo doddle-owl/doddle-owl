@@ -43,10 +43,10 @@ public class TermInfo {
     public TermInfo(String w, int dn) {
         docNum = dn;
         word = w;
-        posSet = new HashSet<String>();
-        docTermFreqMap = new HashMap<File, Integer>();
-        inputDocTermFreqMap = new HashMap<File, Integer>();
-        upperConceptLabelSet = new HashSet<String>();
+        posSet = new HashSet<>();
+        docTermFreqMap = new HashMap<>();
+        inputDocTermFreqMap = new HashMap<>();
+        upperConceptLabelSet = new HashSet<>();
     }
 
     public void setPosSet(Set<String> pset) {
@@ -76,7 +76,7 @@ public class TermInfo {
     public void putDoc(File doc) {
         if (docTermFreqMap.get(doc) != null) {
             Integer freq = docTermFreqMap.get(doc);
-            docTermFreqMap.put(doc, freq.intValue() + 1);
+            docTermFreqMap.put(doc, freq + 1);
         } else {
             docTermFreqMap.put(doc, 1);
         }
@@ -90,7 +90,7 @@ public class TermInfo {
         isInputword = true;
         if (inputDocTermFreqMap.get(doc) != null) {
             Integer freq = inputDocTermFreqMap.get(doc);
-            inputDocTermFreqMap.put(doc, freq.intValue() + 1);
+            inputDocTermFreqMap.put(doc, freq + 1);
         } else {
             inputDocTermFreqMap.put(doc, 1);
         }
@@ -124,11 +124,11 @@ public class TermInfo {
         int termFreq = 0;
         for (File doc : docTermFreqMap.keySet()) {
             Integer freq = docTermFreqMap.get(doc);
-            termFreq += freq.intValue();
+            termFreq += freq;
         }
         for (File doc : inputDocTermFreqMap.keySet()) {
             Integer freq = inputDocTermFreqMap.get(doc);
-            termFreq += freq.intValue();
+            termFreq += freq;
         }
         return termFreq;
     }
@@ -159,7 +159,7 @@ public class TermInfo {
     public Vector getRowData() {
         Vector rowData = new Vector();
         rowData.add(word);
-        StringBuffer buf = new StringBuffer("");
+        StringBuffer buf = new StringBuffer();
         for (String pos : posSet) {
             buf.append(pos + ":");
         }
@@ -173,7 +173,7 @@ public class TermInfo {
         // buf.append(doc.getName() + "=" + num + ":");
         // }
         // rowData.add(buf.toString());
-        buf = new StringBuffer("");
+        buf = new StringBuffer();
         for (String concept : upperConceptLabelSet) {
             buf.append("[");
             buf.append(concept);

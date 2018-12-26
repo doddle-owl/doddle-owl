@@ -124,10 +124,10 @@ public class ConceptTreePanel extends JPanel {
                     "Property Is-a Selection Dialog");
         }
         undefinedTermListPanel = undefPanel;
-        abstractLabelSet = new HashSet<String>();
-        idConceptMap = new HashMap<String, Concept>();
-        conceptSameConceptTreeNodeMap = new HashMap<Concept, Set<ConceptTreeNode>>();
-        compoundWordConceptMap = new HashMap<String, Concept>();
+        abstractLabelSet = new HashSet<>();
+        idConceptMap = new HashMap<>();
+        conceptSameConceptTreeNodeMap = new HashMap<>();
+        compoundWordConceptMap = new HashMap<>();
         Action searchAction = new SearchAction();
         searchConceptField = new JTextField(15);
         searchConceptField.addActionListener(searchAction);
@@ -149,13 +149,13 @@ public class ConceptTreePanel extends JPanel {
         searchCheckBoxPanel.add(searchURICheckBox);
         searchCheckBoxPanel.add(caseSensitivityCheckBox);
 
-        labelLangJList = new JList(new String[] { "en", "ja", "ALL", "NULL"});
+        labelLangJList = new JList(new String[]{"en", "ja", "ALL", "NULL"});
         labelLangJList.setSelectedValue("ALL", true);
         JScrollPane labelLangJListScroll = new JScrollPane(labelLangJList);
         labelLangJListScroll.setPreferredSize(new Dimension(LANG_SIZE, 70));
         labelLangJListScroll.setMinimumSize(new Dimension(LANG_SIZE, 70));
         labelLangJListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("LabelLangList")));
-        descriptionLangJList = new JList(new String[] { "en", "ja", "ALL", "NULL"});
+        descriptionLangJList = new JList(new String[]{"en", "ja", "ALL", "NULL"});
         JScrollPane descriptionLangJListScroll = new JScrollPane(descriptionLangJList);
         descriptionLangJListScroll.setBorder(BorderFactory
                 .createTitledBorder(Translator.getTerm("DescriptionLangList")));
@@ -325,7 +325,9 @@ public class ConceptTreePanel extends JPanel {
 
         public void mouseClicked(MouseEvent e) {
             if (SwingUtilities.isRightMouseButton(e)) {
-                if (!(conceptTree.getSelectionCount() == 1)) { return; }
+                if (!(conceptTree.getSelectionCount() == 1)) {
+                    return;
+                }
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
@@ -336,7 +338,9 @@ public class ConceptTreePanel extends JPanel {
     }
 
     public boolean isConceptContains(Concept c) {
-        if (!(conceptTree.getModel().getRoot() instanceof ConceptTreeNode)) { return false; }
+        if (!(conceptTree.getModel().getRoot() instanceof ConceptTreeNode)) {
+            return false;
+        }
         ConceptTreeNode rootNode = (ConceptTreeNode) conceptTree.getModel().getRoot();
         return isConceptContains(c, rootNode);
     }
@@ -344,7 +348,9 @@ public class ConceptTreePanel extends JPanel {
     private boolean isConceptContains(Concept c, ConceptTreeNode node) {
         for (int i = 0; i < node.getChildCount(); i++) {
             ConceptTreeNode childNode = (ConceptTreeNode) node.getChildAt(i);
-            if (c == childNode.getConcept()) { return true; }
+            if (c == childNode.getConcept()) {
+                return true;
+            }
             return isConceptContains(c, childNode);
         }
         return false;
@@ -371,7 +377,9 @@ public class ConceptTreePanel extends JPanel {
                 }
                 if (perfectlyMatchedSearchOptionCheckBox.isSelected() && c.getURI().equals(searchKeyWord)) {
                     return true;
-                } else if (c.getURI().matches(searchKeyWord)) { return true; }
+                } else if (c.getURI().matches(searchKeyWord)) {
+                    return true;
+                }
             }
             return false;
         }
@@ -380,12 +388,12 @@ public class ConceptTreePanel extends JPanel {
             boolean checkAllLabel = false;
             boolean checkNullLabel = false;
 
-            Object[] selectedLabelLangList = labelLangJList.getSelectedValues();
-            for (int i = 0; i < selectedLabelLangList.length; i++) {
-                if (selectedLabelLangList[i].equals("ALL")) {
+            List selectedLabelLangList = labelLangJList.getSelectedValuesList();
+            for (Object labelLang : selectedLabelLangList) {
+                if (labelLang.equals("ALL")) {
                     checkAllLabel = true;
                 }
-                if (selectedLabelLangList[i].equals("NULL")) {
+                if (labelLang.equals("NULL")) {
                     checkNullLabel = true;
                 }
             }
@@ -400,25 +408,33 @@ public class ConceptTreePanel extends JPanel {
                                 targetString = targetString.toLowerCase();
                                 searchKeyWord = searchKeyWord.toLowerCase();
                             }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) { return targetString
-                                    .matches(searchKeyWord); }
-                            if (targetString.indexOf(searchKeyWord) != -1) { return true; }
+                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
+                                return targetString
+                                        .matches(searchKeyWord);
+                            }
+                            if (targetString.contains(searchKeyWord)) {
+                                return true;
+                            }
                         }
                     }
                 } else {
-                    for (int i = 0; i < selectedLabelLangList.length; i++) {
-                        if (langLabelListMap.get(selectedLabelLangList[i]) == null) {
+                    for (Object selectedLabelLang : selectedLabelLangList) {
+                        if (langLabelListMap.get(selectedLabelLang) == null) {
                             continue;
                         }
-                        for (DODDLELiteral label : langLabelListMap.get(selectedLabelLangList[i])) {
+                        for (DODDLELiteral label : langLabelListMap.get(selectedLabelLang)) {
                             String targetString = label.getString();
                             if (!caseSensitivityCheckBox.isSelected()) {
                                 targetString = targetString.toLowerCase();
                                 searchKeyWord = searchKeyWord.toLowerCase();
                             }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) { return targetString
-                                    .matches(searchKeyWord); }
-                            if (targetString.indexOf(searchKeyWord) != -1) { return true; }
+                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
+                                return targetString
+                                        .matches(searchKeyWord);
+                            }
+                            if (targetString.contains(searchKeyWord)) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -430,12 +446,12 @@ public class ConceptTreePanel extends JPanel {
             boolean checkAllDescription = false;
             boolean checkNullDescription = false;
 
-            Object[] selectedDescriptionLangList = descriptionLangJList.getSelectedValues();
-            for (int i = 0; i < selectedDescriptionLangList.length; i++) {
-                if (selectedDescriptionLangList[i].equals("ALL")) {
+            List selectedDescriptionLangList = descriptionLangJList.getSelectedValuesList();
+            for (Object lang : selectedDescriptionLangList) {
+                if (lang.equals("ALL")) {
                     checkAllDescription = true;
                 }
-                if (selectedDescriptionLangList[i].equals("NULL")) {
+                if (lang.equals("NULL")) {
                     checkNullDescription = true;
                 }
             }
@@ -449,25 +465,33 @@ public class ConceptTreePanel extends JPanel {
                                 targetString = targetString.toLowerCase();
                                 searchKeyWord = searchKeyWord.toLowerCase();
                             }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) { return targetString
-                                    .matches(searchKeyWord); }
-                            if (targetString.indexOf(searchKeyWord) != -1) { return true; }
+                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
+                                return targetString
+                                        .matches(searchKeyWord);
+                            }
+                            if (targetString.contains(searchKeyWord)) {
+                                return true;
+                            }
                         }
                     }
                 } else {
-                    for (int i = 0; i < selectedDescriptionLangList.length; i++) {
-                        if (langDescriptionListMap.get(selectedDescriptionLangList[i]) == null) {
+                    for (Object selectedDescriptionLang : selectedDescriptionLangList) {
+                        if (langDescriptionListMap.get(selectedDescriptionLangList) == null) {
                             continue;
                         }
-                        for (DODDLELiteral description : langDescriptionListMap.get(selectedDescriptionLangList[i])) {
+                        for (DODDLELiteral description : langDescriptionListMap.get(selectedDescriptionLangList)) {
                             String targetString = description.getString();
                             if (!caseSensitivityCheckBox.isSelected()) {
                                 targetString = targetString.toLowerCase();
                                 searchKeyWord = searchKeyWord.toLowerCase();
                             }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) { return targetString
-                                    .matches(searchKeyWord); }
-                            if (targetString.indexOf(searchKeyWord) != -1) { return true; }
+                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
+                                return targetString
+                                        .matches(searchKeyWord);
+                            }
+                            if (targetString.contains(searchKeyWord)) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -476,9 +500,15 @@ public class ConceptTreePanel extends JPanel {
         }
 
         private boolean isSearchConcept(Concept c) {
-            if (isSearchURI(c)) { return true; }
-            if (isSearchLabel(c)) { return true; }
-            if (isSearchDescription(c)) { return true; }
+            if (isSearchURI(c)) {
+                return true;
+            }
+            if (isSearchLabel(c)) {
+                return true;
+            }
+            if (isSearchDescription(c)) {
+                return true;
+            }
             return false;
         }
 
@@ -519,7 +549,9 @@ public class ConceptTreePanel extends JPanel {
         }
 
         private void searchPrevious() {
-            if (searchNodeList.size() == 0) { return; }
+            if (searchNodeList.size() == 0) {
+                return;
+            }
             if (0 <= index - 1 && index - 1 < searchNodeList.size()) {
                 index--;
             } else {
@@ -529,7 +561,9 @@ public class ConceptTreePanel extends JPanel {
         }
 
         private void searchNext() {
-            if (searchNodeList.size() == 0) { return; }
+            if (searchNodeList.size() == 0) {
+                return;
+            }
             if (0 <= index + 1 && index + 1 < searchNodeList.size()) {
                 index++;
             } else {
@@ -543,11 +577,15 @@ public class ConceptTreePanel extends JPanel {
             searchNodeList.clear();
             searchKeyWord = searchConceptField.getText();
             DefaultTreeModel model = (DefaultTreeModel) conceptTree.getModel();
-            if (!(model.getRoot() instanceof ConceptTreeNode)) { return; }
+            if (!(model.getRoot() instanceof ConceptTreeNode)) {
+                return;
+            }
             ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
             searchConcept(rootNode);
             setSearchFieldTitle();
-            if (searchNodeList.size() == 0) { return; }
+            if (searchNodeList.size() == 0) {
+                return;
+            }
             selectSearchNode();
         }
 
@@ -576,7 +614,9 @@ public class ConceptTreePanel extends JPanel {
 
         private ConceptTreeNode getSelectedNode(Point p) {
             TreePath path = conceptTree.getPathForLocation(p.x, p.y);
-            if (path == null || path.getLastPathComponent() == null) { return null; }
+            if (path == null || path.getLastPathComponent() == null) {
+                return null;
+            }
             return (ConceptTreeNode) path.getLastPathComponent();
         }
 
@@ -599,7 +639,7 @@ public class ConceptTreePanel extends JPanel {
             } else if (UndefinedTermListPanel.isDragUndefinedList) {
                 DefaultListModel listModel = undefinedTermListPanel.getModel();
                 DefaultListModel viewListModel = undefinedTermListPanel.getViewModel();
-                for (Object selectedValue : undefinedTermListPanel.getSelectedValues()) {
+                for (Object selectedValue : undefinedTermListPanel.getSelectedValuesList()) {
                     ConceptTreeNode parent = (ConceptTreeNode) conceptTree.getLastSelectedPathComponent();
                     insertNewConceptTreeNode(selectedValue.toString(), parent.getConcept());
                     listModel.removeElement(selectedValue);
@@ -611,8 +651,8 @@ public class ConceptTreePanel extends JPanel {
                 UndefinedTermListPanel.isDragUndefinedList = false;
             } else {
                 DefaultTreeModel treeModel = (DefaultTreeModel) conceptTree.getModel();
-                for (int i = 0; i < dragPaths.length; i++) {
-                    DefaultMutableTreeNode movedNode = (DefaultMutableTreeNode) dragPaths[i].getLastPathComponent();
+                for (TreePath dragPath : dragPaths) {
+                    DefaultMutableTreeNode movedNode = (DefaultMutableTreeNode) dragPath.getLastPathComponent();
                     if (movedNode == dropNode) {
                         continue;
                     }
@@ -645,8 +685,8 @@ public class ConceptTreePanel extends JPanel {
 
     private boolean hasMultipleParent(Set sameConceptTreeNodeSet) {
         ConceptTreeNode parentTreeNode = null;
-        for (Iterator i = sameConceptTreeNodeSet.iterator(); i.hasNext();) {
-            ConceptTreeNode node = (ConceptTreeNode) i.next();
+        for (Object o : sameConceptTreeNodeSet) {
+            ConceptTreeNode node = (ConceptTreeNode) o;
             if (parentTreeNode == null) {
                 parentTreeNode = (ConceptTreeNode) node.getParent();
             } else {
@@ -698,13 +738,13 @@ public class ConceptTreePanel extends JPanel {
         Set sameConceptTreeNodeSet = new HashSet();
         searchSameConceptTreeNode(c, rootNode, sameConceptTreeNodeSet);
         if (hasMultipleParent(sameConceptTreeNodeSet)) {
-            for (Iterator j = sameConceptTreeNodeSet.iterator(); j.hasNext();) {
-                ConceptTreeNode node = (ConceptTreeNode) j.next();
+            for (Object o : sameConceptTreeNodeSet) {
+                ConceptTreeNode node = (ConceptTreeNode) o;
                 node.setIsMultipleInheritance(true);
             }
         } else {
-            for (Iterator j = sameConceptTreeNodeSet.iterator(); j.hasNext();) {
-                ConceptTreeNode node = (ConceptTreeNode) j.next();
+            for (Object o : sameConceptTreeNodeSet) {
+                ConceptTreeNode node = (ConceptTreeNode) o;
                 node.setIsMultipleInheritance(false);
             }
         }
@@ -728,7 +768,7 @@ public class ConceptTreePanel extends JPanel {
     }
 
     public Set<String> getAllConceptURI() {
-        Set<String> uriSet = new HashSet<String>();
+        Set<String> uriSet = new HashSet<>();
         TreeModel treeModel = conceptTree.getModel();
         if (treeModel.getRoot() instanceof ConceptTreeNode) {
             ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
@@ -748,7 +788,7 @@ public class ConceptTreePanel extends JPanel {
 
     private void deleteConcept(DefaultTreeModel model, ConceptTreeNode deleteNode) {
         ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
-        Set<ConceptTreeNode> sameConceptSet = new HashSet<ConceptTreeNode>();
+        Set<ConceptTreeNode> sameConceptSet = new HashSet<>();
         searchSameConceptTreeNode(deleteNode.getConcept(), rootNode, sameConceptSet);
         for (ConceptTreeNode delNode : sameConceptSet) {
             if (delNode.getParent() != null) {
@@ -779,7 +819,7 @@ public class ConceptTreePanel extends JPanel {
 
     public Set getSupConceptSet(String id) {
         DefaultTreeModel model = (DefaultTreeModel) conceptTree.getModel();
-        supConceptSet = new HashSet<Concept>();
+        supConceptSet = new HashSet<>();
         if (model.getRoot() instanceof ConceptTreeNode) {
             ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
             searchSupConcept(id, rootNode);
@@ -872,10 +912,10 @@ public class ConceptTreePanel extends JPanel {
     }
 
     public void addCompoundWordConcept(String identity, TreeNode node, ConceptTreeNode conceptTreeRootNode,
-            Map<DefaultMutableTreeNode, String> abstractNodeLabelMap) {
+                                       Map<DefaultMutableTreeNode, String> abstractNodeLabelMap) {
         for (int i = 0; i < node.getChildCount(); i++) {
             DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) node.getChildAt(i);
-            String newWord = "";
+            String newWord;
             if (childNode.getUserObject() instanceof Concept) {
                 Concept c = (Concept) childNode.getUserObject();
                 searchedConcept = null;
@@ -922,7 +962,7 @@ public class ConceptTreePanel extends JPanel {
     }
 
     public void addCompoundWordConcept(Map matchedTermIDMap, TreeNode node, ConceptTreeNode conceptTreeRootNode,
-            Map abstractNodeLabelMap) {
+                                       Map abstractNodeLabelMap) {
         idConceptMap.clear();
         abstractLabelSet.clear();
         conceptSameConceptTreeNodeMap.clear();
@@ -951,10 +991,10 @@ public class ConceptTreePanel extends JPanel {
     }
 
     private Set<ConceptTreeNode> insertConceptTreeNode(Concept insertConcept, Concept parentConcept,
-            boolean isInputConcept, boolean isUserConcept) {
+                                                       boolean isInputConcept, boolean isUserConcept) {
         DefaultTreeModel model = (DefaultTreeModel) conceptTree.getModel();
         ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
-        Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<ConceptTreeNode>();
+        Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<>();
         if (parentConcept.getURI().equals(rootNode.getConcept().getURI())) {
             sameConceptTreeNodeSet.add(rootNode);
         } else {
@@ -965,7 +1005,7 @@ public class ConceptTreePanel extends JPanel {
                 conceptSameConceptTreeNodeMap.put(parentConcept, sameConceptTreeNodeSet);
             }
         }
-        Set<ConceptTreeNode> insertedConceptTreeNodeSet = new HashSet<ConceptTreeNode>();
+        Set<ConceptTreeNode> insertedConceptTreeNodeSet = new HashSet<>();
         for (ConceptTreeNode parentNode : sameConceptTreeNodeSet) {
             if (!hasSameChildNode(parentNode, insertConcept)) {
                 ConceptTreeNode insertNode = new ConceptTreeNode(insertConcept, project);
@@ -1001,7 +1041,9 @@ public class ConceptTreePanel extends JPanel {
     private boolean hasSameChildNode(ConceptTreeNode parentNode, Concept insertNodeConcept) {
         for (int i = 0; i < parentNode.getChildCount(); i++) {
             ConceptTreeNode childNode = (ConceptTreeNode) parentNode.getChildAt(i);
-            if (childNode.getConcept().equals(insertNodeConcept)) { return true; }
+            if (childNode.getConcept().equals(insertNodeConcept)) {
+                return true;
+            }
         }
         return false;
     }
@@ -1129,7 +1171,7 @@ public class ConceptTreePanel extends JPanel {
             setToolTipText(title);
             setEnabled(false);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
@@ -1206,12 +1248,14 @@ public class ConceptTreePanel extends JPanel {
             conceptSelectionDialog.setTreeModel(isaTreeModel);
             conceptSelectionDialog.setVisible(true);
             Set<Concept> addConceptSet = conceptSelectionDialog.getConceptSet();
-            if (addConceptSet.size() == 0) { return; }
+            if (addConceptSet.size() == 0) {
+                return;
+            }
             ConceptTreeNode parentNode = (ConceptTreeNode) conceptTree.getLastSelectedPathComponent();
             if (parentNode != null) {
                 ConceptTreeNode rootNode = (ConceptTreeNode) isaTreeModel.getRoot();
                 for (Concept isaConcept : addConceptSet) {
-                    Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<ConceptTreeNode>();
+                    Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<>();
                     searchSameConceptTreeNode(isaConcept, rootNode, sameConceptTreeNodeSet);
                     ConceptTreeNode treeNode = (ConceptTreeNode) sameConceptTreeNodeSet.toArray()[0];
                     if (!isAddSubConcept && treeNode != rootNode) {
@@ -1274,7 +1318,7 @@ public class ConceptTreePanel extends JPanel {
         Concept parentConcept = null;
         if (targetNode != null) {
             targetConcept = targetNode.getConcept();
-            ConceptTreeNode parentNode = null;
+            ConceptTreeNode parentNode;
             if (targetNode.getParent() != null) {
                 parentNode = (ConceptTreeNode) targetNode.getParent();
                 parentConcept = parentNode.getConcept();
@@ -1293,7 +1337,7 @@ public class ConceptTreePanel extends JPanel {
         if (targetDeleteNode != null && targetDeleteNode.getParent() != null) {
             ConceptTreeNode targetDeleteNodeParent = (ConceptTreeNode) targetDeleteNode.getParent();
 
-            Set<ConceptTreeNode> targetDeleteNodeChildren = new TreeSet<ConceptTreeNode>();
+            Set<ConceptTreeNode> targetDeleteNodeChildren = new TreeSet<>();
             for (int i = 0; i < targetDeleteNode.getChildCount(); i++) {
                 targetDeleteNodeChildren.add((ConceptTreeNode) targetDeleteNode.getChildAt(i));
             }
@@ -1319,7 +1363,7 @@ public class ConceptTreePanel extends JPanel {
         if (targetDeleteNode != null && targetDeleteNode.getParent() != null) {
             ConceptTreeNode targetDeleteNodeParent = (ConceptTreeNode) targetDeleteNode.getParent();
             ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
-            Set<ConceptTreeNode> deleteTreeNodeSet = new HashSet<ConceptTreeNode>();
+            Set<ConceptTreeNode> deleteTreeNodeSet = new HashSet<>();
             searchSameConceptTreeNode(targetDeleteNode.getConcept(), rootNode, deleteTreeNodeSet);
             for (ConceptTreeNode deleteTreeNode : deleteTreeNodeSet) {
                 ConceptTreeNode deleteTreeNodeParent = (ConceptTreeNode) deleteTreeNode.getParent();
@@ -1430,7 +1474,7 @@ public class ConceptTreePanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             DefaultListModel listModel = undefinedTermListPanel.getModel();
             DefaultListModel viewListModel = undefinedTermListPanel.getViewModel();
-            for (Object selectedValue : undefinedTermListPanel.getSelectedValues()) {
+            for (Object selectedValue : undefinedTermListPanel.getSelectedValuesList()) {
                 ConceptTreeNode parent = (ConceptTreeNode) conceptTree.getLastSelectedPathComponent();
                 if (parent != null) {
                     insertNewConceptTreeNode(selectedValue.toString(), parent.getConcept());

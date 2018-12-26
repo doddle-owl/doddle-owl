@@ -147,8 +147,8 @@ public class ConceptSelectionDialog extends JDialog implements ActionListener, L
                 selectedConceptSet.add(predefinedRelationJList.getSelectedValue());
             } else {
                 TreePath[] paths = conceptTree.getSelectionPaths();
-                for (int i = 0; i < paths.length; i++) {
-                    ConceptTreeNode node = (ConceptTreeNode) paths[i].getLastPathComponent();
+                for (TreePath path : paths) {
+                    ConceptTreeNode node = (ConceptTreeNode) path.getLastPathComponent();
                     selectedConceptSet.add(node.getConcept());
                 }
             }

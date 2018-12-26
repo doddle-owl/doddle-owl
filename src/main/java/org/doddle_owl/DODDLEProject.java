@@ -46,6 +46,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
 
@@ -105,8 +106,8 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 				undoManager = new UndoManager(project);
 
 				userIDCount = 0;
-				uriConceptMap = new HashMap<String, Concept>();
-				logList = new ArrayList<String>();
+				uriConceptMap = new HashMap<>();
+				logList = new ArrayList<>();
 
 				addLog("NewProjectAction");
 				constructClassPanel = new ConstructClassPanel(project);
@@ -235,7 +236,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 		BufferedWriter writer = null;
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
-			writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 			for (String log : logList) {
 				writer.write(log);
 				writer.write("\n");
@@ -260,7 +261,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 		BufferedReader reader = null;
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
 			while (reader.ready()) {
 				String line = reader.readLine();
 				logList.add(line);
@@ -395,7 +396,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 	}
 
 	public String getUserIDStr() {
-		return "UID" + Integer.toString(userIDCount++);
+		return "UID" + (userIDCount++);
 	}
 
 	public void setUserIDCount(int id) {

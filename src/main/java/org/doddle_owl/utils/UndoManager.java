@@ -52,7 +52,7 @@ public class UndoManager {
     
     public UndoManager(DODDLEProject project) {
         index = -1;
-        commandList = new ArrayList<Command>();
+        commandList = new ArrayList<>();
         loadOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenOWLOntologyAction"),
                 LoadOntologyAction.OWL_ONTOLOGY);
         saveOntologyAction = new SaveOntologyAction(Translator.getTerm("SaveOWLOntologyAction"),

@@ -31,6 +31,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * @author Takeshi Morita
@@ -68,9 +69,9 @@ public class DescriptionPanel extends LiteralPanel implements ActionListener {
             selectedConcept.addDescription(editDescriptionDialog.getDescription());
             setDescriptionLangList();
         } else if (e.getSource() == deleteDescriptionButton) {
-            Object[] descriptionList = literalJList.getSelectedValues();
-            for (int i = 0; i < descriptionList.length; i++) {
-                selectedConcept.removeDescription((DODDLELiteral) descriptionList[i]);
+            List<DODDLELiteral> descriptionList = literalJList.getSelectedValuesList();
+            for (DODDLELiteral literal: descriptionList)  {
+                selectedConcept.removeDescription(literal);
             }
             setDescriptionLangList();
         } else if (e.getSource() == editDescriptionButton) {

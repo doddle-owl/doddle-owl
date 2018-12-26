@@ -55,8 +55,8 @@ public class OWLMetaDataTableModel extends DefaultTableModel {
     }
 
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Object newValue = null;
-        String resourceStr = "";
+        Object newValue;
+        String resourceStr;
         Resource resource = null;
         if (aValue instanceof Resource) {
             resource = (Resource) aValue;
@@ -64,7 +64,7 @@ public class OWLMetaDataTableModel extends DefaultTableModel {
         } else {
             resourceStr = aValue.toString();
         }
-        if (getColumnName(columnIndex).equals("Property") && resourceStr.indexOf("http:") != -1) {
+        if (getColumnName(columnIndex).equals("Property") && resourceStr.contains("http:")) {
             if (resource == null) {
                 resource = ResourceFactory.createResource(resourceStr);
             }

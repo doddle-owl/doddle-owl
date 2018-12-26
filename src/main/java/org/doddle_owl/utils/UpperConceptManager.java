@@ -26,6 +26,7 @@ package org.doddle_owl.utils;
 import org.doddle_owl.models.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -38,27 +39,25 @@ public class UpperConceptManager {
     public static String UPPER_CONCEPT_LIST = "C:/DODDLE-OWL/upperConceptList.txt";
 
     public static void makeUpperOntologyList() {
-        upperConceptLabelURIMap = new TreeMap<String, String>();
+        upperConceptLabelURIMap = new TreeMap<>();
 
         File file = new File(UPPER_CONCEPT_LIST);
         if (file.exists()) {
             BufferedReader reader = null;
             try {
                 FileInputStream fis = new FileInputStream(file);
-                reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
                 while (reader.ready()) {
                     String line = reader.readLine();
                     String[] labelAndURI = line.replaceAll("\n", "").split(",");
                     // System.out.println(labelAndURI[0] + ":" + labelAndURI[1]
                     // + ": " + labelAndURI[0].indexOf("//"));
-                    if (labelAndURI[0].indexOf("//") == -1) {
+                    if (!labelAndURI[0].contains("//")) {
                         upperConceptLabelURIMap.put(labelAndURI[0], labelAndURI[1]);
                     }
                 }
-            } catch (FileNotFoundException fnfe) {
+            } catch (IOException fnfe) {
                 fnfe.printStackTrace();
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
             } finally {
                 try {
                     if (reader != null) {
@@ -78,7 +77,7 @@ public class UpperConceptManager {
 
     public static Set<String> getUpperConceptLabelSet(String word) {
         Set<String> uriSet = DODDLEDic.getURISet(word);
-        Set<String> upperURISet = new HashSet<String>();
+        Set<String> upperURISet = new HashSet<>();
         for (String uri : uriSet) {
             String ns = Utils.getNameSpace(uri);
             String id = Utils.getLocalName(uri);
@@ -92,7 +91,7 @@ public class UpperConceptManager {
                     upperURISet.addAll(path);
                 }
             } else if (ns.equals(DODDLEConstants.WN_URI)) {
-                for (List<String> path : WordNetDic.getURIPathToRootSet(new Long(id))) {
+                for (List<String> path : WordNetDic.getURIPathToRootSet(Long.valueOf(id))) {
                     upperURISet.addAll(path);
                 }
             } else if (ns.equals(DODDLEConstants.JPN_WN_URI)) {
@@ -105,7 +104,7 @@ public class UpperConceptManager {
                 }
             }
         }
-        Set<String> upperConceptLabelSet = new HashSet<String>();
+        Set<String> upperConceptLabelSet = new HashSet<>();
         for (Entry<String, String> entry : upperConceptLabelURIMap.entrySet()) {
             String ucLabel = entry.getKey();
             String ucURI = entry.getValue();

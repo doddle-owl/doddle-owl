@@ -51,11 +51,11 @@ public class CabochaDocument {
 
     public CabochaDocument(Process cp) {
         cabochaProcess = cp;
-        sentenceList = new ArrayList<Sentence>();
-        segmentSet = new HashSet<Segment>();
-        compoundWordCountMap = new HashMap<String, Integer>();
-        compoundWordWithNokakuCountMap = new HashMap<String, Integer>();
-        segmentMap = new HashMap<Segment, Set<Segment>>();
+        sentenceList = new ArrayList<>();
+        segmentSet = new HashSet<>();
+        compoundWordCountMap = new HashMap<>();
+        compoundWordWithNokakuCountMap = new HashMap<>();
+        segmentMap = new HashMap<>();
     }
 
     public CabochaDocument(Document doc, Process cp) {
@@ -118,12 +118,8 @@ public class CabochaDocument {
                 sentenceList.add(sentence);
                 sentence = new Sentence();
             }
-        } catch (ParserConfigurationException pce) {
+        } catch (ParserConfigurationException | SAXException | IOException pce) {
             pce.printStackTrace();
-        } catch (SAXException saxe) {
-            saxe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         }
     }
 
@@ -137,7 +133,7 @@ public class CabochaDocument {
                     CabochaDocument.CHARSET));
             tmpWriter.write("<?xml version=\"1.0\" encoding=\"" + CHARSET + "\" ?>");
             tmpWriter.write("<root>");
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) {
                 tmpWriter.write(line);
             }
@@ -231,7 +227,7 @@ public class CabochaDocument {
     }
 
     public List<PrimitiveTask> getPrimitiveTaskList() {
-        List<PrimitiveTask> primitiveTaskList = new ArrayList<PrimitiveTask>();
+        List<PrimitiveTask> primitiveTaskList = new ArrayList<>();
         for (Sentence sentence : sentenceList) {
             primitiveTaskList.addAll(sentence.getTaskDescriptionSet());
         }
@@ -244,7 +240,7 @@ public class CabochaDocument {
             for (PrimitiveTask taskDescription : sentence.getTaskDescriptionSet()) {
                 System.out.println(taskDescription);
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 

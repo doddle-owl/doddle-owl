@@ -72,7 +72,7 @@ public class OWLOntologyManager {
 	}
 
 	public static Set<List<Concept>> getPathToRootSet(String uri) {
-		Set<List<Concept>> pathToRootSet = new HashSet<List<Concept>>();
+		Set<List<Concept>> pathToRootSet = new HashSet<>();
 		for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
 			if (refOnt.isAvailable()) {
 				Set<List<Concept>> set = refOnt.getPathToRootSet(uri);
@@ -85,7 +85,7 @@ public class OWLOntologyManager {
 	}
 
 	public static Set<List<String>> getURIPathToRootSet(String uri) {
-		Set<List<String>> pathToRootSet = new HashSet<List<String>>();
+		Set<List<String>> pathToRootSet = new HashSet<>();
 		for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
 			if (refOnt.isAvailable()) {
 				Set<List<String>> set = refOnt.getURIPathToRootSet(uri);
@@ -98,7 +98,7 @@ public class OWLOntologyManager {
 	}
 
 	public static Set<Concept> getVerbConceptSet(Set<Concept> inputConceptSet) {
-		Set<Concept> verbConceptSet = new HashSet<Concept>();
+		Set<Concept> verbConceptSet = new HashSet<>();
 		for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
 			if (refOnt.isAvailable()) {
 				for (String uri : refOnt.getPropertySet()) {
@@ -123,7 +123,7 @@ public class OWLOntologyManager {
 	}
 
 	public static Set<String> getDomainSet(Concept c, List<List<Concept>> trimmedConceptList) {
-		Set<String> domainSet = new HashSet<String>();
+		Set<String> domainSet = new HashSet<>();
 		for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
 			if (refOnt.isAvailable()) {
 				domainSet.addAll(refOnt.getDomainSet(c.getURI()));
@@ -138,7 +138,7 @@ public class OWLOntologyManager {
 	}
 
 	public static Set<String> getRangeSet(Concept c, List<List<Concept>> trimmedConceptList) {
-		Set<String> rangeSet = new HashSet<String>();
+		Set<String> rangeSet = new HashSet<>();
 		for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
 			if (refOnt.isAvailable()) {
 				rangeSet.addAll(refOnt.getRangeSet(c.getURI()));
@@ -153,10 +153,10 @@ public class OWLOntologyManager {
 	}
 
 	public static Set<String> getSubURISet(String uri, Set<String> nounURISet) {
-		Set<String> subURISet = new HashSet<String>();
+		Set<String> subURISet = new HashSet<>();
 		for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
 			if (refOnt.isAvailable()) {
-				Set<String> uriSet = new HashSet<String>();
+				Set<String> uriSet = new HashSet<>();
 				refOnt.getSubURISet(uri, nounURISet, uriSet);
 				subURISet.addAll(uriSet);
 			}
@@ -165,7 +165,7 @@ public class OWLOntologyManager {
 	}
 
 	public static Set<String> getURISet(String word) {
-		Set<String> uriSet = new HashSet<String>();
+		Set<String> uriSet = new HashSet<>();
 		for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
 			if (refOnt.isAvailable()) {
 				Set<String> set = refOnt.getURISet(word);
@@ -178,7 +178,7 @@ public class OWLOntologyManager {
 		if (DODDLE_OWL.getCurrentProject().getOntologySelectionPanel().isJWOEnable()) {
 			return uriSet;
 		}
-		Set<String> newURISet = new HashSet<String>();
+		Set<String> newURISet = new HashSet<>();
 		for (String uri : uriSet) {
 			if (!uri.contains(DODDLEConstants.JWO_URI)) {
 				newURISet.add(uri);

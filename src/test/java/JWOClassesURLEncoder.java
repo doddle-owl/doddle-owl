@@ -5,8 +5,8 @@ import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class JWOClassesURLEncoder {
 	public static void main(String[] args) {
@@ -21,36 +21,28 @@ public class JWOClassesURLEncoder {
 			RDFNode object = stmt.getObject();
 			if (predicate.equals(RDF.type) || predicate.equals(RDFS.label)
 					|| predicate.equals(RDFS.comment) || predicate.equals(RDFS.subClassOf)) {
-				Resource objectRes = null;
+				Resource objectRes;
 				Resource encodedObjectRes = null;
 				if (predicate.equals(RDFS.subClassOf)) {
 					objectRes = (Resource) object;
 					String[] nsAndLocalName = objectRes.getURI().split("class/");
 					if (nsAndLocalName.length == 2) {
 						String localName = nsAndLocalName[1];
-						try {
-							String encodedLocalName = URLEncoder.encode(localName, "UTF-8");
-							encodedObjectRes = ResourceFactory.createResource(jwoNS
-									+ encodedLocalName);
-						} catch (UnsupportedEncodingException e) {
-							e.printStackTrace();
-						}
+						String encodedLocalName = URLEncoder.encode(localName, StandardCharsets.UTF_8);
+						encodedObjectRes = ResourceFactory.createResource(jwoNS
+								+ encodedLocalName);
 					}
 				}
 				String[] nsAndLocalName = subject.getURI().split("class/");
 				if (nsAndLocalName.length == 2) {
 					String localName = nsAndLocalName[1];
-					try {
-						String encodedLocalName = URLEncoder.encode(localName, "UTF-8");
-						Resource encodedRes = ResourceFactory.createResource(jwoNS
-								+ encodedLocalName);
-						if (encodedObjectRes != null) {
-							refinedModel.add(encodedRes, predicate, encodedObjectRes);
-						} else {
-							refinedModel.add(encodedRes, predicate, object);
-						}
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+					String encodedLocalName = URLEncoder.encode(localName, StandardCharsets.UTF_8);
+					Resource encodedRes = ResourceFactory.createResource(jwoNS
+							+ encodedLocalName);
+					if (encodedObjectRes != null) {
+						refinedModel.add(encodedRes, predicate, encodedObjectRes);
+					} else {
+						refinedModel.add(encodedRes, predicate, object);
 					}
 				}
 			}

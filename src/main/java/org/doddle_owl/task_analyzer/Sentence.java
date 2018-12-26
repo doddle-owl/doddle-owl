@@ -38,11 +38,11 @@ public class Sentence {
     private Map<Segment, Set<Segment>> segmentMap;
 
     public Sentence() {
-        segmentList = new ArrayList<Segment>();
-        segmentTaskDescriptionMap = new HashMap<Segment, PrimitiveTask>();
-        compoundWordCountMap = new HashMap<String, Integer>();
-        compoundWordWithNokakuCountMap = new HashMap<String, Integer>();
-        segmentMap = new HashMap<Segment, Set<Segment>>();
+        segmentList = new ArrayList<>();
+        segmentTaskDescriptionMap = new HashMap<>();
+        compoundWordCountMap = new HashMap<>();
+        compoundWordWithNokakuCountMap = new HashMap<>();
+        segmentMap = new HashMap<>();
     }
 
     public void addSegment(Segment seg) {
@@ -85,7 +85,7 @@ public class Sentence {
 
     public void mergeSegments() {
         setDependToSegment();
-        List<Segment> newSegmentList = new ArrayList<Segment>();
+        List<Segment> newSegmentList = new ArrayList<>();
         for (int i = 1; i < segmentList.size(); i++) {
             Segment seg1 = segmentList.get(i - 1);
             Segment seg2 = segmentList.get(i);
@@ -159,7 +159,7 @@ public class Sentence {
                     Set<Segment> segmentSet = segmentMap.get(targetSeg);
                     segmentSet.add(seg);
                 } else {
-                    Set<Segment> segmentSet = new HashSet<Segment>();
+                    Set<Segment> segmentSet = new HashSet<>();
                     segmentSet.add(seg);
                     segmentMap.put(targetSeg, segmentSet);
                 }
@@ -210,9 +210,9 @@ public class Sentence {
                 putCompoundWord(compoundWord);
                 if (seg.isIncludeSymbolParenthesis()) {
                     String[] words = compoundWord.split("[（）()\\[\\]{}【】［］”“（）]");
-                    for (int i = 0; i < words.length; i++) {
-                        if (0 < words[i].length()) {
-                            putCompoundWord(words[i]); // A(B)において，A,Bが複合語の時，それらを登録する
+                    for (String word : words) {
+                        if (0 < word.length()) {
+                            putCompoundWord(word); // A(B)において，A,Bが複合語の時，それらを登録する
                         }
                     }
                 }

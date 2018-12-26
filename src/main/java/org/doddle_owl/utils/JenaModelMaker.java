@@ -38,6 +38,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -177,7 +178,7 @@ public class JenaModelMaker {
         ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(ontFile.getAbsolutePath());
 
         Collection<String> classSet = refOnt.getClassSet();
-        StringBuilder builder = new StringBuilder("");
+        StringBuilder builder = new StringBuilder();
         for (String uri : classSet) {
             Concept c = refOnt.getConcept(uri);
             builder.append(uri);
@@ -198,7 +199,7 @@ public class JenaModelMaker {
         }
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFileName),
-                    "UTF-8"));
+                    StandardCharsets.UTF_8));
             writer.write(builder.toString());
             writer.close();
         } catch (Exception e) {

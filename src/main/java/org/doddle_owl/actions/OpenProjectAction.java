@@ -100,10 +100,8 @@ public class OpenProjectAction extends AbstractAction {
 				bis.close();
 				bos.close();
 			}
-		} catch (ZipException ze) {
+		} catch (IOException ze) {
 			ze.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		} finally {
 			try {
 				if (bis != null) {
@@ -129,10 +127,8 @@ public class OpenProjectAction extends AbstractAction {
 				getEntry(projectFile, entry);
 			}
 			openDir = new File(entry.getName()).getParentFile();
-		} catch (FileNotFoundException fnfe) {
+		} catch (IOException fnfe) {
 			fnfe.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		} finally {
 			try {
 				if (bis != null) {
@@ -187,7 +183,7 @@ public class OpenProjectAction extends AbstractAction {
 						.getInputTermSelectionPanel();
 				ConceptDefinitionPanel conceptDefinitionPanel = currentProject
 						.getConceptDefinitionPanel();
-				File openDir = null;
+				File openDir;
 				List<String> recentProjects = doddle.loadRecentProject();
 				recentProjects.remove(openFile.getAbsolutePath());
 				recentProjects.add(0, openFile.getAbsolutePath());
@@ -292,7 +288,7 @@ public class OpenProjectAction extends AbstractAction {
 				constructPropertyPanel.expandIsaTree();
 
 				if (!openFile.isDirectory()) {
-					List<File> allFile = new ArrayList<File>();
+					List<File> allFile = new ArrayList<>();
 					getAllProjectFile(openDir, allFile);
 					for (File file : allFile) {
 						file.delete();

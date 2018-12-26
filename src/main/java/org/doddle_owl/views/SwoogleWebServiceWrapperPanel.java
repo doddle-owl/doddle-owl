@@ -39,6 +39,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -218,24 +219,24 @@ public class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListe
 
 	private void acquireOntologies() {
 		initListData();
-		Set<String> inputWordSet = new HashSet<String>();
+		Set<String> inputWordSet = new HashSet<>();
 		String[] inputWords = inputWordArea.getText().split("\n");
-		for (int i = 0; i < inputWords.length; i++) {
-			inputWordSet.add(inputWords[i]);
+		for (String inputWord : inputWords) {
+			inputWordSet.add(inputWord);
 		}
 		SwoogleWebServiceWrapper.acquireRelevantOWLOntologies(inputWordSet, true);
 		SwoogleWebServiceData swServiceData = SwoogleWebServiceWrapper.getSwoogleWebServiceData();
 
 		Object[] refOntologies = swServiceData.getRefOntologies().toArray();
 		Arrays.sort(refOntologies);
-		for (int i = 0; i < refOntologies.length; i++) {
-			acquiredOntologyModel.addElement(refOntologies[i]);
+		for (Object refOntology : refOntologies) {
+			acquiredOntologyModel.addElement(refOntology);
 		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == acquireOntologiesButton) {
-			SwingWorker<String, String> worker = new SwingWorker<String, String>() {
+			SwingWorker<String, String> worker = new SwingWorker<>() {
 				public String doInBackground() {
 					acquireOntologies();
 					return "done";
@@ -244,16 +245,16 @@ public class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListe
 			DODDLE_OWL.STATUS_BAR.setSwingWorker(worker);
 			worker.execute();
 		} else if (e.getSource() == removeOntologyButton) {
-			Object[] selectedOntologies = acquiredOntologyJList.getSelectedValues();
-			for (int i = 0; i < selectedOntologies.length; i++) {
-				removedOntologyModel.addElement(selectedOntologies[i]);
-				acquiredOntologyModel.removeElement(selectedOntologies[i]);
+			List selectedOntologies = acquiredOntologyJList.getSelectedValuesList();
+			for (Object ont: selectedOntologies) {
+				removedOntologyModel.addElement(ont);
+				acquiredOntologyModel.removeElement(ont);
 			}
 		} else if (e.getSource() == returnOntologyButton) {
-			Object[] selectedOntologies = removedOntologyJList.getSelectedValues();
-			for (int i = 0; i < selectedOntologies.length; i++) {
-				acquiredOntologyModel.addElement(selectedOntologies[i]);
-				removedOntologyModel.removeElement(selectedOntologies[i]);
+			List selectedOntologies = removedOntologyJList.getSelectedValuesList();
+			for (Object ont: selectedOntologies) {
+				acquiredOntologyModel.addElement(ont);
+				removedOntologyModel.removeElement(ont);
 			}
 		} else if (e.getSource() == setOWLOntologiesButton) {
 			for (int i = 0; i < acquiredOntologyModel.getSize(); i++) {

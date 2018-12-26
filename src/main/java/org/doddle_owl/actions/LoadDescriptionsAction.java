@@ -31,6 +31,7 @@ import org.doddle_owl.views.ConstructPropertyPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,11 +51,11 @@ public class LoadDescriptionsAction extends AbstractAction {
         ConstructClassPanel classPanel = DODDLE_OWL.getCurrentProject().getConstructClassPanel();
         ConstructPropertyPanel propertyPanel = DODDLE_OWL.getCurrentProject().getConstructPropertyPanel();
 
-        Map<String, DODDLELiteral> classWordDescriptionMap = new HashMap<String, DODDLELiteral>();
-        Map<String, DODDLELiteral> propertyWordDescriptionMap = new HashMap<String, DODDLELiteral>();
-        BufferedReader reader = null;
+        Map<String, DODDLELiteral> classWordDescriptionMap = new HashMap<>();
+        Map<String, DODDLELiteral> propertyWordDescriptionMap = new HashMap<>();
+        BufferedReader reader;
         try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(chooser.getSelectedFile()), "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(chooser.getSelectedFile()), StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String line = reader.readLine();
                 String[] lines = line.split("\t");
@@ -71,12 +72,10 @@ public class LoadDescriptionsAction extends AbstractAction {
                     }
                 }
             }
-        } catch (FileNotFoundException fne) {
-            fne.printStackTrace();
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException fne) {
+            fne.printStackTrace();
         }
         classPanel.loadDescriptions(classWordDescriptionMap);
         propertyPanel.loadDescriptions(propertyWordDescriptionMap);

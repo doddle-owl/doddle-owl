@@ -209,15 +209,12 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
     }
 
     private void setTreeConfig(JTree tree, DefaultTreeCellRenderer renderer) {
-        tree.addTreeSelectionListener(new TreeSelectionListener() {
-
-            public void valueChanged(TreeSelectionEvent e) {
-                TreePath path = e.getNewLeadSelectionPath();
-                if (path == null) { return; }
-                ConceptTreeNode conceptTreeNode = (ConceptTreeNode) path.getLastPathComponent();
-                if (conceptTreeNode != null) {
-                    setConceptInformation(conceptTreeNode);
-                }
+        tree.addTreeSelectionListener(e -> {
+            TreePath path = e.getNewLeadSelectionPath();
+            if (path == null) { return; }
+            ConceptTreeNode conceptTreeNode = (ConceptTreeNode) path.getLastPathComponent();
+            if (conceptTreeNode != null) {
+                setConceptInformation(conceptTreeNode);
             }
         });
 
@@ -272,7 +269,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
     private void reloadConceptTreeNode(Concept concept, JTree tree) {
         DefaultTreeModel treeModel = (DefaultTreeModel) tree.getModel();
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
-        Set<ConceptTreeNode> sameConceptSet = new HashSet<ConceptTreeNode>();
+        Set<ConceptTreeNode> sameConceptSet = new HashSet<>();
         searchSameConceptTreeNode(concept, rootNode, sameConceptSet);
         for (ConceptTreeNode node : sameConceptSet) {
             treeModel.reload(node);

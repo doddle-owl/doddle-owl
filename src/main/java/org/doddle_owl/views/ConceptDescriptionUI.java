@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.views;
@@ -34,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -128,7 +129,7 @@ public class ConceptDescriptionUI extends JPanel implements ListSelectionListene
             setVerbIDList();
         } else if (e.getSource() == verbIDJList) {
             setSubVerbIDList();
-            setToRelationList();            
+            setToRelationList();
         } else if (e.getSource() == toRelationJList) {
             setNounIDList();
         } else if (e.getSource() == nounIDJList) {
@@ -153,14 +154,14 @@ public class ConceptDescriptionUI extends JPanel implements ListSelectionListene
 
     private void setVerbIDList() {
         Set verbIDSet = new TreeSet();
-        Object[] relationList = fromRelationJList.getSelectedValues();
-        for (int i = 0; i < relationList.length; i++) {
-            verbIDSet.addAll(conceptDescription.getVerbIDSet(idLabel.getText(), (String) relationList[i]));
+        List<String> relationList = fromRelationJList.getSelectedValuesList();
+        for (String relation : relationList) {
+            verbIDSet.addAll(conceptDescription.getVerbIDSet(idLabel.getText(), relation));
         }
         if (showOnlyInputConceptsButton.isSelected()) {
             Set inputVerbIDSet = new TreeSet();
-            for (Iterator i = verbIDSet.iterator(); i.hasNext();) {
-                String verbID = (String) i.next();
+            for (Object o : verbIDSet) {
+                String verbID = (String) o;
                 if (inputConceptSet.contains(verbID)) {
                     inputVerbIDSet.add(verbID);
                 }
@@ -173,9 +174,9 @@ public class ConceptDescriptionUI extends JPanel implements ListSelectionListene
 
     private void setSubVerbIDList() {
         String verbID = (String) verbIDJList.getSelectedValue();
-        Set<String> subVerbURISet = new TreeSet<String>(conceptDescription.getSubURISet(verbID));
+        Set<String> subVerbURISet = new TreeSet<>(conceptDescription.getSubURISet(verbID));
         if (showOnlyInputConceptsButton.isSelected()) {
-            Set<String> inputSubVerbIDSet = new TreeSet<String>();
+            Set<String> inputSubVerbIDSet = new TreeSet<>();
             for (String subVerbID : subVerbURISet) {
                 if (inputConceptSet.contains(subVerbID)) {
                     inputSubVerbIDSet.add(subVerbID);
@@ -192,8 +193,8 @@ public class ConceptDescriptionUI extends JPanel implements ListSelectionListene
         Set subNounIDSet = new TreeSet(conceptDescription.getSubURISet(nounID));
         if (showOnlyInputConceptsButton.isSelected()) {
             Set inputSubNounIDSet = new TreeSet();
-            for (Iterator i = subNounIDSet.iterator(); i.hasNext();) {
-                String subNounID = (String) i.next();
+            for (Object o : subNounIDSet) {
+                String subNounID = (String) o;
                 if (inputConceptSet.contains(subNounID)) {
                     inputSubNounIDSet.add(subNounID);
                 }
@@ -220,17 +221,16 @@ public class ConceptDescriptionUI extends JPanel implements ListSelectionListene
     private void setNounIDList() {
         Set nounIDSet = new TreeSet();
         String verbID = (String) verbIDJList.getSelectedValue();
-        Object[] toRelationList = toRelationJList.getSelectedValues();
-        for (int i = 0; i < toRelationList.length; i++) {
-            String relation = (String) toRelationList[i];
+        List<String> toRelationList = toRelationJList.getSelectedValuesList();
+        for (String relation : toRelationList) {
             if (conceptDescription.getIDSet(verbID, relation) != null) {
                 nounIDSet.addAll(conceptDescription.getIDSet(verbID, relation));
             }
         }
         if (showOnlyInputConceptsButton.isSelected()) {
             Set inputNounIDSet = new TreeSet();
-            for (Iterator i = nounIDSet.iterator(); i.hasNext();) {
-                String nounID = (String) i.next();
+            for (Object o : nounIDSet) {
+                String nounID = (String) o;
                 if (inputConceptSet.contains(nounID)) {
                     inputNounIDSet.add(nounID);
                 }

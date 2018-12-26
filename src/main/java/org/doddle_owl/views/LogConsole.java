@@ -67,7 +67,7 @@ public class LogConsole extends JDialog {
 	 * Title of the Frame
 	 * 
 	 */
-	private String frameTitle = "";
+	private String frameTitle;
 
 	/**
 	 * Card Layout for the Window
@@ -97,7 +97,7 @@ public class LogConsole extends JDialog {
 	/**
 	 * Icon for the Window
 	 */
-	Image myIcon = null;
+	Image myIcon;
 	/** PopUpMenu for save and clear the output textareas */
 	InternalPopupMenu popup = new InternalPopupMenu();
 
@@ -271,20 +271,20 @@ public class LogConsole extends JDialog {
 		/**
 		 * the target for this printstream
 		 */
-		private JTextArea target = null;
+		private JTextArea target;
 
 		/**
 		 * the original PrintStream to forward this stream to the original
 		 * stream
 		 */
-		private PrintStream orig = null;
+		private PrintStream orig;
 
 		/**
 		 * Flag is true if the stream should forward the output to the original
 		 * stream
 		 * 
 		 */
-		private boolean showOrig = false;
+		private boolean showOrig;
 
 		/**
 		 * creates an instance
@@ -399,7 +399,7 @@ public class LogConsole extends JDialog {
 			if (showOrig)
 				orig.println(d);
 
-			target.append(Double.toString(d) + "\n");
+			target.append(d + "\n");
 			target.setCaretPosition(target.getText().length());
 		}
 
@@ -423,7 +423,7 @@ public class LogConsole extends JDialog {
 			if (showOrig)
 				orig.println(f);
 
-			target.append(Float.toString(f) + "\n");
+			target.append(f + "\n");
 			target.setCaretPosition(target.getText().length());
 		}
 
@@ -447,7 +447,7 @@ public class LogConsole extends JDialog {
 			if (showOrig)
 				orig.println(i);
 
-			target.append(Integer.toString(i) + "\n");
+			target.append(i + "\n");
 			target.setCaretPosition(target.getText().length());
 		}
 
@@ -471,7 +471,7 @@ public class LogConsole extends JDialog {
 			if (showOrig)
 				orig.println(l);
 
-			target.append(Long.toString(l) + "\n");
+			target.append(l + "\n");
 			target.setCaretPosition(target.getText().length());
 		}
 
@@ -537,7 +537,7 @@ public class LogConsole extends JDialog {
 			if (showOrig)
 				orig.println();
 
-			target.append(new String("\n"));
+			target.append("\n");
 			target.setCaretPosition(target.getText().length());
 		}
 	}
@@ -590,11 +590,11 @@ class MyDocumentListener implements DocumentListener {
 	/**
 	 * The Tabbed pane to switch the right one text area to front
 	 */
-	private JTabbedPane paneToSwitch = null;
+	private JTabbedPane paneToSwitch;
 	/**
 	 * The component which is in front
 	 */
-	private Component componentInFront = null;
+	private Component componentInFront;
 
 	/**
 	 * creats an instance of this listener
@@ -672,16 +672,8 @@ class InternalPopupMenu extends JPopupMenu {
 		this.addSeparator();
 		this.add(jMenuItemSaveToFile);
 
-		jMenuItemClearWindow.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clearWindow();
-			}
-		});
-		jMenuItemSaveToFile.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				saveWindowToFile();
-			}
-		});
+		jMenuItemClearWindow.addActionListener(e -> clearWindow());
+		jMenuItemSaveToFile.addActionListener(e -> saveWindowToFile());
 		// jMenuItemSaveToFile.setEnabled(false);//.disable();
 	}
 

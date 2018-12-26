@@ -57,10 +57,10 @@ public class Apriori {
 	public Apriori(ConceptDefinitionPanel cdp, Document doc) {
 		document = doc;
 		conceptDefinitionPanel = cdp;
-		pairSet = new HashSet<List<Integer>>();
-		aprioriResult = new HashMap<String, List<ConceptPair>>();
-		indexPairAppearence = new HashMap<List<Integer>, Integer>();
-		allRelation = new ArrayList<ConceptPair>();
+		pairSet = new HashSet<>();
+		aprioriResult = new HashMap<>();
+		indexPairAppearence = new HashMap<>();
+		allRelation = new ArrayList<>();
 		inputWordList = conceptDefinitionPanel.getInputTermList();
 		makeLineList();
 	}
@@ -76,10 +76,10 @@ public class Apriori {
 
 	// 1行単位での形態素解析
 	private List<String> getJaLineWordList(String line) {
-		List<String> lineWordList = new ArrayList<String>();
+		List<String> lineWordList = new ArrayList<>();
 		try {
 			StringTagger tagger = SenFactory.getStringTagger(null);
-			List<Token> tokenList = new ArrayList<Token>();
+			List<Token> tokenList = new ArrayList<>();
 			tagger.analyze(line, tokenList);
 			for (Token token : tokenList) {
 				String basicStr = token.getMorpheme().getBasicForm();
@@ -99,7 +99,7 @@ public class Apriori {
 	// 1行単位での形態素解析
 	private List<String> getEnLineWordList(String line) {
 		line = line.replaceAll("\\.|．", "");
-		List<String> lineWordList = new ArrayList<String>();
+		List<String> lineWordList = new ArrayList<>();
 		for (String lineWord : line.split("\\s+")) {
 			lineWordList.add(lineWord.toLowerCase());
 		}
@@ -111,18 +111,18 @@ public class Apriori {
 	 * 入力概念がセットされた時に一度だけ実行され， 入力単語リストのリストを生成する
 	 */
 	private void makeLineList() {
-		lineList = new ArrayList<List<String>>();
+		lineList = new ArrayList<>();
 		// String corpusString = DocumentSelectionPanel.getTextString(document);
 		String corpusString = document.getText();
 		if (corpusString == null) {
 			return;
 		}
 		String[] lines = corpusString.split("\n");
-		for (int i = 0; i < lines.length; i++) {
+		for (String line : lines) {
 			if (document.getLang().equals("en")) {
-				lineList.add(getEnLineWordList(lines[i]));
+				lineList.add(getEnLineWordList(line));
 			} else if (document.getLang().equals("ja")) {
-				lineList.add(getJaLineWordList(lines[i]));
+				lineList.add(getJaLineWordList(line));
 			}
 		}
 	}
@@ -138,9 +138,9 @@ public class Apriori {
 		if (targetInputWordList == null) {
 			return aprioriResult;
 		}
-		int conceptAppearence[] = new int[targetInputWordList.size()];
+		int[] conceptAppearence = new int[targetInputWordList.size()];
 
-		List<Integer> itemList = new ArrayList<Integer>();
+		List<Integer> itemList = new ArrayList<>();
 		int lineNum = lineList.size();
 		// System.out.println("line_num: " + lineNum);
 		for (List<String> lineWordList : lineList) {
@@ -168,7 +168,7 @@ public class Apriori {
 		for (int i = 0; i < itemList.size(); i++) {
 			for (int j = 0; j < itemList.size(); j++) {
 				if (i != j) {
-					List<Integer> pair = new ArrayList<Integer>();
+					List<Integer> pair = new ArrayList<>();
 					pair.add(itemList.get(i));
 					pair.add(itemList.get(j));
 					pairSet.add(pair);
@@ -196,7 +196,7 @@ public class Apriori {
 	 * @param conceptAppearence
 	 * @param lineNum
 	 */
-	private void makePair(int conceptAppearence[], double lineNum, List<String> inputWordList) {
+	private void makePair(int[] conceptAppearence, double lineNum, List<String> inputWordList) {
 		List<ConceptPair> rpList;
 		for (List<Integer> pair : pairSet) {
 			int conceptAIndex = pair.get(0);
@@ -230,7 +230,7 @@ public class Apriori {
 					rpList.add(rp);
 					aprioriResult.put(word1, rpList);
 				} else {
-					rpList = new ArrayList<ConceptPair>();
+					rpList = new ArrayList<>();
 					rpList.add(rp);
 					aprioriResult.put(word1, rpList);
 				}

@@ -40,7 +40,7 @@ public class ConstructNounAndVerbTreeAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        SwingWorker<String, String> worker = new SwingWorker<String, String>() {
+        SwingWorker<String, String> worker = new SwingWorker<>() {
             public String doInBackground() {
                 DODDLE_OWL.STATUS_BAR.initNormal(10);
                 DODDLE_OWL.STATUS_BAR.startTime();

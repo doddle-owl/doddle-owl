@@ -80,7 +80,9 @@ public class LiteralPanel extends JPanel implements ListSelectionListener {
 
     private void setLangList(Set<String> langSet) {
         langJList.setListData(langSet.toArray());
-        if (langSet.size() == 0) { return; }
+        if (langSet.size() == 0) {
+            return;
+        }
         langJList.setSelectedValue(DODDLEConstants.LANG, true);
         if (langJList.getSelectedValue() == null) {
             langJList.setSelectedIndex(0);
@@ -101,11 +103,11 @@ public class LiteralPanel extends JPanel implements ListSelectionListener {
 
     public void setDescriptionList() {
         DefaultListModel listModel = new DefaultListModel();
-        Object[] langList = langJList.getSelectedValues();
+        List langList = langJList.getSelectedValuesList();
         Map<String, List<DODDLELiteral>> langDescriptionListMap = selectedConcept.getLangDescriptionListMap();
-        for (int i = 0; i < langList.length; i++) {
-            if (langDescriptionListMap.get(langList[i]) != null) {
-                for (DODDLELiteral description : langDescriptionListMap.get(langList[i])) {
+        for (Object lang : langList) {
+            if (langDescriptionListMap.get(lang) != null) {
+                for (DODDLELiteral description : langDescriptionListMap.get(lang)) {
                     listModel.addElement(description);
                 }
             }
@@ -115,11 +117,11 @@ public class LiteralPanel extends JPanel implements ListSelectionListener {
 
     public void setLabelList() {
         DefaultListModel listModel = new DefaultListModel();
-        Object[] langList = langJList.getSelectedValues();
+        List langList = langJList.getSelectedValuesList();
         Map<String, List<DODDLELiteral>> langLabelListMap = selectedConcept.getLangLabelListMap();
-        for (int i = 0; i < langList.length; i++) {
-            if (langLabelListMap.get(langList[i]) != null) {
-                for (DODDLELiteral label : langLabelListMap.get(langList[i])) {
+        for (Object lang : langList) {
+            if (langLabelListMap.get(lang) != null) {
+                for (DODDLELiteral label : langLabelListMap.get(lang)) {
                     if (0 < label.getString().length()) {
                         listModel.addElement(label);
                     }

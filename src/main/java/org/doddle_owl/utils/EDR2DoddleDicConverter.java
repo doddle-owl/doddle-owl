@@ -40,6 +40,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.Map.Entry;
@@ -52,7 +53,7 @@ import java.util.Map.Entry;
  */
 public class EDR2DoddleDicConverter {
 
-	public static enum DictionaryType {
+	public enum DictionaryType {
 		EDR, EDRT, JPNWN
 	}
 
@@ -75,25 +76,25 @@ public class EDR2DoddleDicConverter {
 	private static String CPT_DIC_PATH = EDR_HOME + "CPT.DIC";
 
 	private static TreeModel edrTreeModel;
-	private static Map<String, Set<String>> idSubIDSetMap = new HashMap<String, Set<String>>();
-	private static TreeMap<String, Set<TreeNode>> idNodeSetMap = new TreeMap<String, Set<TreeNode>>();
+	private static Map<String, Set<String>> idSubIDSetMap = new HashMap<>();
+	private static TreeMap<String, Set<TreeNode>> idNodeSetMap = new TreeMap<>();
 
-	private static TreeSet<String> relationConceptIDSet = new TreeSet<String>();
+	private static TreeSet<String> relationConceptIDSet = new TreeSet<>();
 
-	private static List<Long> dataFilePointerList = new ArrayList<Long>();
-	private static Map<String, Long> idFilePointerMap = new HashMap<String, Long>();
-	private static TreeMap<String, Concept> idDefinitionMap = new TreeMap<String, Concept>();
-	private static TreeMap<String, Set<String>> wordIDSetMap = new TreeMap<String, Set<String>>();
-	private static TreeMap<String, Set<Long>> wordFilePointerSetMap = new TreeMap<String, Set<Long>>();
+	private static List<Long> dataFilePointerList = new ArrayList<>();
+	private static Map<String, Long> idFilePointerMap = new HashMap<>();
+	private static TreeMap<String, Concept> idDefinitionMap = new TreeMap<>();
+	private static TreeMap<String, Set<String>> wordIDSetMap = new TreeMap<>();
+	private static TreeMap<String, Set<Long>> wordFilePointerSetMap = new TreeMap<>();
 
-	private static Map<String, Set<String>> agentMap = new HashMap<String, Set<String>>();
-	private static Map<String, Set<String>> objectMap = new HashMap<String, Set<String>>();
-	private static Map<String, Set<String>> goalMap = new HashMap<String, Set<String>>();
-	private static Map<String, Set<String>> placeMap = new HashMap<String, Set<String>>();
-	private static Map<String, Set<String>> implementMap = new HashMap<String, Set<String>>();
-	private static Map<String, Set<String>> a_objectMap = new HashMap<String, Set<String>>();
-	private static Map<String, Set<String>> sceneMap = new HashMap<String, Set<String>>();
-	private static Map<String, Set<String>> causeMap = new HashMap<String, Set<String>>();
+	private static Map<String, Set<String>> agentMap = new HashMap<>();
+	private static Map<String, Set<String>> objectMap = new HashMap<>();
+	private static Map<String, Set<String>> goalMap = new HashMap<>();
+	private static Map<String, Set<String>> placeMap = new HashMap<>();
+	private static Map<String, Set<String>> implementMap = new HashMap<>();
+	private static Map<String, Set<String>> a_objectMap = new HashMap<>();
+	private static Map<String, Set<String>> sceneMap = new HashMap<>();
+	private static Map<String, Set<String>> causeMap = new HashMap<>();
 
 	public static void clearRelationMaps() {
 		agentMap.clear();
@@ -182,13 +183,13 @@ public class EDR2DoddleDicConverter {
 					subIDSet.add(subID);
 					idSubIDSetMap.put(id, subIDSet);
 				} else {
-					Set<String> subIDSet = new HashSet<String>();
+					Set<String> subIDSet = new HashSet<>();
 					subIDSet.add(subID);
 					idSubIDSetMap.put(id, subIDSet);
 				}
 			}
 			DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(rootID);
-			Set<TreeNode> nodeSet = new HashSet<TreeNode>();
+			Set<TreeNode> nodeSet = new HashSet<>();
 			nodeSet.add(rootNode);
 			idNodeSetMap.put(rootID, nodeSet);
 			makeEDRTree(rootID, rootNode);
@@ -211,7 +212,7 @@ public class EDR2DoddleDicConverter {
 		for (String subID : idSubIDSetMap.get(id)) {
 			DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(subID);
 			if (idNodeSetMap.get(subID) == null) {
-				Set<TreeNode> nodeSet = new HashSet<TreeNode>();
+				Set<TreeNode> nodeSet = new HashSet<>();
 				nodeSet.add(subNode);
 				idNodeSetMap.put(subID, nodeSet);
 			} else {
@@ -227,16 +228,16 @@ public class EDR2DoddleDicConverter {
 
 	private static Set<List<String>> getIDPathToRootSet(String id) {
 		Set<TreeNode> nodeSet = idNodeSetMap.get(id);
-		Set<List<String>> pathToRootSet = new HashSet<List<String>>();
+		Set<List<String>> pathToRootSet = new HashSet<>();
 		if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-			pathToRootSet.add(Arrays.asList(new String[] { id }));
+			pathToRootSet.add(Arrays.asList(id));
 			return pathToRootSet;
 		}
 		for (TreeNode node : nodeSet) {
 			TreeNode[] pathToRoot = ((DefaultTreeModel) edrTreeModel).getPathToRoot(node);
-			List<String> path = new ArrayList<String>();
-			for (int i = 0; i < pathToRoot.length; i++) {
-				DefaultMutableTreeNode n = (DefaultMutableTreeNode) pathToRoot[i];
+			List<String> path = new ArrayList<>();
+			for (TreeNode treeNode : pathToRoot) {
+				DefaultMutableTreeNode n = (DefaultMutableTreeNode) treeNode;
 				String nid = (String) n.getUserObject();
 				path.add(nid);
 			}
@@ -316,10 +317,10 @@ public class EDR2DoddleDicConverter {
 		try {
 			int i = 0;
 			RandomAccessFile raf = new RandomAccessFile(DODDLE_DIC_HOME + CONCEPT_DATA, "r");
-			String line = "";
+			String line;
 			long dfp = 0;
 			while ((line = raf.readLine()) != null) {
-				line = new String(line.getBytes("ISO8859_1"), "UTF-8");
+				line = new String(line.getBytes("ISO8859_1"), StandardCharsets.UTF_8);
 				String id = line.split("\t\\^")[0];
 				idFilePointerMap.put(id, dfp);
 				dataFilePointerList.add(dfp);
@@ -379,10 +380,8 @@ public class EDR2DoddleDicConverter {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			DODDLEDicConverterUI.initProgressBar(e.getMessage());
-		} catch (UnsupportedEncodingException uee) {
+		} catch (IOException uee) {
 			uee.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		}
 	}
 
@@ -390,7 +389,7 @@ public class EDR2DoddleDicConverter {
 		BufferedWriter writer = null;
 		try {
 			FileOutputStream fos = new FileOutputStream(DODDLE_DIC_HOME + CONCEPT_DATA);
-			writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 			System.out.println("Make Concept Data: Writing concept.data");
 			DODDLEDicConverterUI.setProgressText("Make Concept Data: Writing concept.data");
 			for (Entry<String, Concept> entry : idDefinitionMap.entrySet()) {
@@ -410,10 +409,8 @@ public class EDR2DoddleDicConverter {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			DODDLEDicConverterUI.initProgressBar(e.getMessage());
-		} catch (UnsupportedEncodingException uee) {
+		} catch (IOException uee) {
 			uee.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		} finally {
 			if (writer != null) {
 				try {
@@ -767,7 +764,7 @@ public class EDR2DoddleDicConverter {
 			Set<Long> idSet = wordFilePointerSetMap.get(word);
 			idSet.add(idFilePointerMap.get(id));
 		} else {
-			Set<Long> idSet = new HashSet<Long>();
+			Set<Long> idSet = new HashSet<>();
 			// System.out.println(word+": "+id+": "+idFilePointerMap.get(id));
 			idSet.add(idFilePointerMap.get(id));
 			wordFilePointerSetMap.put(word, idSet);
@@ -800,7 +797,7 @@ public class EDR2DoddleDicConverter {
 		BufferedWriter writer = null;
 		try {
 			FileOutputStream fos = new FileOutputStream(DODDLE_DIC_HOME + WORD_DATA);
-			writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 			for (Entry<String, Set<Long>> entry : wordFilePointerSetMap.entrySet()) {
 				String word = entry.getKey();
 				Set<Long> filePointerSet = entry.getValue();
@@ -905,7 +902,7 @@ public class EDR2DoddleDicConverter {
 			idSet.add(tid);
 			map.put(fid, idSet);
 		} else {
-			Set<String> idSet = new HashSet<String>();
+			Set<String> idSet = new HashSet<>();
 			idSet.add(tid);
 			map.put(fid, idSet);
 		}
@@ -1110,7 +1107,7 @@ public class EDR2DoddleDicConverter {
 		BufferedWriter writer = null;
 		try {
 			OutputStream os = new FileOutputStream(DODDLE_DIC_HOME + fileName);
-			writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 			RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
 			rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
 			rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);

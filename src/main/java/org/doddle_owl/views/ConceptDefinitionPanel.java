@@ -256,53 +256,47 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 
 	private void setTableAction() {
 		resultPanel.getWordSpaceSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
-					public void valueChanged(ListSelectionEvent e) {
-						if (e.getValueIsAdjusting())
-							return;
-						ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-						if (lsm.isSelectionEmpty()) {
-						} else {
-							int selectedRow = lsm.getMinSelectionIndex();
-							// System.out.println(lsm.getMinSelectionIndex());
-							String c1 = inputConceptJList.getSelectedValue().toString();
-							String c2 = resultPanel.getWSTableRowConceptName(selectedRow);
-							conceptDefinitionPanel.setCText(c1, c2);
-						}
+				e -> {
+					if (e.getValueIsAdjusting())
+						return;
+					ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+					if (lsm.isSelectionEmpty()) {
+					} else {
+						int selectedRow = lsm.getMinSelectionIndex();
+						// System.out.println(lsm.getMinSelectionIndex());
+						String c1 = inputConceptJList.getSelectedValue().toString();
+						String c2 = resultPanel.getWSTableRowConceptName(selectedRow);
+						conceptDefinitionPanel.setCText(c1, c2);
 					}
 				});
 
 		resultPanel.getAprioriSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
-					public void valueChanged(ListSelectionEvent e) {
-						if (e.getValueIsAdjusting())
-							return;
-						ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-						if (lsm.isSelectionEmpty()) {
-						} else {
-							int selectedRow = lsm.getMinSelectionIndex();
-							String c1 = inputConceptJList.getSelectedValue().toString();
-							String c2 = resultPanel.getARTableRowConceptName(selectedRow);
-							conceptDefinitionPanel.setCText(c1, c2);
-							// System.out.println("-----" + selectedRow);
-						}
+				e -> {
+					if (e.getValueIsAdjusting())
+						return;
+					ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+					if (lsm.isSelectionEmpty()) {
+					} else {
+						int selectedRow = lsm.getMinSelectionIndex();
+						String c1 = inputConceptJList.getSelectedValue().toString();
+						String c2 = resultPanel.getARTableRowConceptName(selectedRow);
+						conceptDefinitionPanel.setCText(c1, c2);
+						// System.out.println("-----" + selectedRow);
 					}
 				});
 
-		resultPanel.getWASelectionModel().addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				if (e.getValueIsAdjusting())
-					return;
-				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-				if (lsm.isSelectionEmpty()) {
-				} else {
-					int selectedRow = lsm.getMinSelectionIndex();
-					// String c1 = comboBox.getSelectedItem().toString();
-					String c1 = inputConceptJList.getSelectedValue().toString();
-					String c2 = resultPanel.getWATableRowConceptName(selectedRow);
-					conceptDefinitionPanel.setCText(c1, c2);
-					// System.out.println("-----" + selectedRow);
-				}
+		resultPanel.getWASelectionModel().addListSelectionListener(e -> {
+			if (e.getValueIsAdjusting())
+				return;
+			ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+			if (lsm.isSelectionEmpty()) {
+			} else {
+				int selectedRow = lsm.getMinSelectionIndex();
+				// String c1 = comboBox.getSelectedItem().toString();
+				String c1 = inputConceptJList.getSelectedValue().toString();
+				String c2 = resultPanel.getWATableRowConceptName(selectedRow);
+				conceptDefinitionPanel.setCText(c1, c2);
+				// System.out.println("-----" + selectedRow);
 			}
 		});
 
@@ -410,17 +404,17 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	}
 
 	public ConceptPair getPair(String str, List list) {
-		for (int i = 0; i < list.size(); i++) {
-			if (((ConceptPair) list.get(i)).getCombinationToString().equals(str)) {
-				return (ConceptPair) list.get(i);
+		for (Object o : list) {
+			if (((ConceptPair) o).getCombinationToString().equals(str)) {
+				return (ConceptPair) o;
 			}
 		}
 		return null;
 	}
 
 	public boolean contains(List list, ConceptPair pair) {
-		for (int i = 0; i < list.size(); i++) {
-			if (pair.isSameCombination((ConceptPair) list.get(i))) {
+		for (Object o : list) {
+			if (pair.isSameCombination((ConceptPair) o)) {
 				return true;
 			}
 		}
@@ -431,8 +425,8 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 		List returnList = new ArrayList();
 		List resultA = (ArrayList) list.get(0);
 		boolean flag = false;
-		for (int j = 0; j < resultA.size(); j++) {
-			ConceptPair pair = (ConceptPair) resultA.get(j);
+		for (Object o : resultA) {
+			ConceptPair pair = (ConceptPair) o;
 			for (int i = 1; i < list.size(); i++) {
 				List resultB = (List) list.get(i);
 				flag = contains(resultB, pair);
@@ -445,8 +439,8 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	}
 
 	public ConceptPair getSameCombination(ConceptPair pair, List list) {
-		for (int i = 0; i < list.size(); i++) {
-			ConceptPair item = (ConceptPair) list.get(i);
+		for (Object o : list) {
+			ConceptPair item = (ConceptPair) o;
 			if (item.isSameCombination(pair)) {
 				return item;
 			}
@@ -459,7 +453,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	}
 
 	public List<String> getInputTermList() {
-		List<String> inputTermList = new ArrayList<String>();
+		List<String> inputTermList = new ArrayList<>();
 		wordCorrespondConceptSetMap = inputConceptSelectionPanel.getTermCorrespondConceptSetMap();
 		if (wordCorrespondConceptSetMap != null) {
 			termConceptSetMap = inputConceptSelectionPanel.getTermConceptSetMap();
@@ -484,10 +478,10 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	}
 
 	public Set<String> getCompoundWordSet() {
-		Set<String> compoundWordSet = new HashSet<String>();
+		Set<String> compoundWordSet = new HashSet<>();
 		Set<String> termSet = termConceptSetMap.keySet();
 		for (String w : termSet) {
-			if (w.indexOf(" ") != -1) {
+			if (w.contains(" ")) {
 				compoundWordSet.add(w);
 			}
 		}

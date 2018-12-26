@@ -41,7 +41,7 @@ public class AccentSymbolConverter {
     private static Map<String, String> accentSymbolTable;
 
     static {
-        accentSymbolTable = new HashMap<String, String>();
+        accentSymbolTable = new HashMap<>();
         accentSymbolTable.put("@~A", "Ā");
         accentSymbolTable.put("@~a", "ā");
         accentSymbolTable.put("@~E", "Ē");

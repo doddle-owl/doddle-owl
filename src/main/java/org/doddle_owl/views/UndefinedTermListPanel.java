@@ -34,6 +34,7 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * @author Takeshi Morita
@@ -104,8 +105,8 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
         }
     }
 
-    public Object[] getSelectedValues() {
-        return undefinedTermJList.getSelectedValues();
+    public List getSelectedValuesList() {
+        return undefinedTermJList.getSelectedValuesList();
     }
 
     public DefaultListModel getModel() {
@@ -173,10 +174,10 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
             }
         } else if (e.getSource() == removeButton) {
             DefaultListModel model = (DefaultListModel) undefinedTermJList.getModel();
-            Object[] removeWordList = undefinedTermJList.getSelectedValues();
-            for (int i = 0; i < removeWordList.length; i++) {
-                model.removeElement(removeWordList[i]);
-                ((DefaultListModel) undefinedTermListModel).removeElement(removeWordList[i]);
+            List removeWordList = undefinedTermJList.getSelectedValuesList();
+            for (Object word: removeWordList) {
+                model.removeElement(word);
+                ((DefaultListModel) undefinedTermListModel).removeElement(word);
             }
             setTitleWithSize();
         }

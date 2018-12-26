@@ -48,7 +48,7 @@ public class JPNWNTree {
 
 
     private JPNWNTree() {
-        uriNodeSetMap = new HashMap<String, Set<TreeNode>>();
+        uriNodeSetMap = new HashMap<>();
     }
 
     public void clear() {
@@ -60,16 +60,16 @@ public class JPNWNTree {
         String id = Utils.getLocalName(uri);
         Concept c = getConcept(id);
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
-        Set<List<Concept>> pathToRootSet = new HashSet<List<Concept>>();
+        Set<List<Concept>> pathToRootSet = new HashSet<>();
         if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(new Concept[] { c}));
+            pathToRootSet.add(Arrays.asList(c));
             return pathToRootSet;
         }
         for (TreeNode node : nodeSet) {
             TreeNode[] pathToRoot = jpnwnTreeModel.getPathToRoot(node);
-            List<Concept> path = new ArrayList<Concept>();
-            for (int i = 0; i < pathToRoot.length; i++) {
-                DefaultMutableTreeNode n = (DefaultMutableTreeNode) pathToRoot[i];
+            List<Concept> path = new ArrayList<>();
+            for (TreeNode treeNode : pathToRoot) {
+                DefaultMutableTreeNode n = (DefaultMutableTreeNode) treeNode;
                 String nuri = (String) n.getUserObject();
                 String nid = Utils.getLocalName(nuri);
                 path.add(getConcept(nid));
@@ -81,16 +81,16 @@ public class JPNWNTree {
 
     private Set<List<String>> getURIPathToRootSetUsingTree(String uri) {
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
-        Set<List<String>> pathToRootSet = new HashSet<List<String>>();
+        Set<List<String>> pathToRootSet = new HashSet<>();
         if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(new String[] { uri}));
+            pathToRootSet.add(Arrays.asList(uri));
             return pathToRootSet;
         }
         for (TreeNode node : nodeSet) {
             TreeNode[] pathToRoot = jpnwnTreeModel.getPathToRoot(node);
-            List<String> path = new ArrayList<String>();
-            for (int i = 0; i < pathToRoot.length; i++) {
-                DefaultMutableTreeNode n = (DefaultMutableTreeNode) pathToRoot[i];
+            List<String> path = new ArrayList<>();
+            for (TreeNode treeNode : pathToRoot) {
+                DefaultMutableTreeNode n = (DefaultMutableTreeNode) treeNode;
                 String nuri = (String) n.getUserObject();
                 path.add(nuri);
             }        
@@ -101,11 +101,11 @@ public class JPNWNTree {
 
     public Set<List<String>> getURIPathToRootSet(String id) {
         if (jpnwnTreeModel != null && 0 < uriNodeSetMap.size()) { return getURIPathToRootSetUsingTree(getURI(id)); }
-        Set<List<String>> pathToRootSet = new HashSet<List<String>>();
+        Set<List<String>> pathToRootSet = new HashSet<>();
         String treeData = JpnWordNetDic.getTreeData(id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(new String[] { getURI(id)}));
+            pathToRootSet.add(Arrays.asList(getURI(id)));
             return pathToRootSet;
         }
 
@@ -113,7 +113,7 @@ public class JPNWNTree {
         for (int i = 1; i < pathArray.length; i++) {
             String path = pathArray[i];
             String[] idArray = path.split("\t");
-            List<String> uriPath = new ArrayList<String>();
+            List<String> uriPath = new ArrayList<>();
             for (String nid : idArray) {
                 uriPath.add(getURI(nid));
             }
@@ -125,11 +125,11 @@ public class JPNWNTree {
     public Set<List<Concept>> getConceptPathToRootSet(String id) {
         if (jpnwnTreeModel != null && 0 < uriNodeSetMap.size()) { return getConceptPathToRootSetUsingTree(getURI(id)); }
         Concept c = getConcept(id);        
-        Set<List<Concept>> pathToRootSet = new HashSet<List<Concept>>();
+        Set<List<Concept>> pathToRootSet = new HashSet<>();
         String treeData = JpnWordNetDic.getTreeData(id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(new Concept[] { c}));
+            pathToRootSet.add(Arrays.asList(c));
             return pathToRootSet;
         }
 
@@ -137,7 +137,7 @@ public class JPNWNTree {
         for (int i = 1; i < pathArray.length; i++) {
             String path = pathArray[i];
             String[] idArray = path.split("\t");
-            List<Concept> conceptPath = new ArrayList<Concept>();
+            List<Concept> conceptPath = new ArrayList<>();
             for (String nid : idArray) {
                 conceptPath.add(getConcept(nid));
             }
@@ -164,7 +164,7 @@ public class JPNWNTree {
     }
 
     public void getSubURISet(String uri, Set<String> nounURISet, Set<String> refineSubURISet) {
-        Set<String> subURISet = new HashSet<String>();
+        Set<String> subURISet = new HashSet<>();
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
         if (nodeSet == null) { return; }
         for (TreeNode node : nodeSet) {
@@ -184,10 +184,10 @@ public class JPNWNTree {
 
     public Set<Set<String>> getSubURISet(String uri) {
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
-        Set<Set<String>> subURIsSet = new HashSet<Set<String>>();
+        Set<Set<String>> subURIsSet = new HashSet<>();
         if (nodeSet == null) { return subURIsSet; }
         for (TreeNode node : nodeSet) {
-            Set<String> subURISet = new HashSet<String>();
+            Set<String> subURISet = new HashSet<>();
             getSubURI(node, subURISet);
             subURIsSet.add(subURISet);
         }
@@ -204,10 +204,10 @@ public class JPNWNTree {
 
     public Set<Set<String>> getSiblingURISet(String uri) {
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
-        Set<Set<String>> siblingIDsSet = new HashSet<Set<String>>();
+        Set<Set<String>> siblingIDsSet = new HashSet<>();
         if (nodeSet == null) { return siblingIDsSet; }
         for (TreeNode node : nodeSet) {
-            Set<String> siblingIDSet = new HashSet<String>();
+            Set<String> siblingIDSet = new HashSet<>();
             // System.out.println("NODE: " + node);
             TreeNode parentNode = node.getParent();
             // System.out.println("PARENT_NODE: " + parentNode);
@@ -227,7 +227,7 @@ public class JPNWNTree {
 
     public void makeJPNWNTree(Set<String> idSet) {
         if (0 < uriNodeSetMap.size()) { return; }
-        Set<List<String>> pathSet = new HashSet<List<String>>();
+        Set<List<String>> pathSet = new HashSet<>();
         int i = 0;
         for (String id : idSet) {
             i++;
@@ -239,7 +239,7 @@ public class JPNWNTree {
         String rootURI = DODDLEConstants.JPN_WN_URI + ConceptTreeMaker.JPNWN_CLASS_ROOT_ID;
 
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(rootURI);
-        Set<TreeNode> nodeSet = new HashSet<TreeNode>();
+        Set<TreeNode> nodeSet = new HashSet<>();
         nodeSet.add(rootNode);
         uriNodeSetMap.put(rootURI, nodeSet);
 
@@ -277,7 +277,7 @@ public class JPNWNTree {
             DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(firstNode);
             treeNode.add(childNode);
             if (uriNodeSetMap.get(firstNode) == null) {
-                Set<TreeNode> nodeSet = new HashSet<TreeNode>();
+                Set<TreeNode> nodeSet = new HashSet<>();
                 nodeSet.add(childNode);
                 uriNodeSetMap.put(firstNode, nodeSet);
             } else {

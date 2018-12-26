@@ -150,7 +150,7 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
 
     public void setInputTermInfoTableModel(Map<String, TermInfo> termInfoMap, int docNum) {
         inputTermInfoTablePanel.setTermInfoTableModel(termInfoMap, docNum);
-        removedTermInfoTablePanel.setTermInfoTableModel(new HashMap<String, TermInfo>(), docNum);
+        removedTermInfoTablePanel.setTermInfoTableModel(new HashMap<>(), docNum);
         setWindowTitle();
     }
 
@@ -194,23 +194,23 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
     private void setInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("SetInputTermListButton"));
         String[] inputTerms = inputTermArea.getText().split("\n");
-        Set<String> inputTermSet = new HashSet<String>(Arrays.asList(inputTerms));
+        Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         inputConceptSelectionPanel.loadInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("AddInputTermListButton"));
         String[] inputTerms = inputTermArea.getText().split("\n");
-        Set<String> inputTermSet = new HashSet<String>(Arrays.asList(inputTerms));
+        Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         inputConceptSelectionPanel.addInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTerms() {
         JTable termInfoTable = inputTermInfoTablePanel.getTermInfoTable();
         int[] rows = termInfoTable.getSelectedRows();
-        StringBuilder inputTerms = new StringBuilder("");
-        for (int i = 0; i < rows.length; i++) {
-            String term = (String) termInfoTable.getValueAt(rows[i], getColumnNamePosition(termInfoTable, Translator
+        StringBuilder inputTerms = new StringBuilder();
+        for (int row : rows) {
+            String term = (String) termInfoTable.getValueAt(row, getColumnNamePosition(termInfoTable, Translator
                     .getTerm("TermLabel"))); // 現在選択されている行のデータがほしいのでTableを使う
             inputTerms.append(term + "\n");
         }
@@ -259,7 +259,7 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
     }
 
     private Map<String, Integer> getColumnNamePositionMap(JTable table) {
-        Map<String, Integer> columnNamePositionMap = new HashMap<String, Integer>();
+        Map<String, Integer> columnNamePositionMap = new HashMap<>();
         String columnName = Translator.getTerm("TermLabel");
         columnNamePositionMap.put(columnName, getColumnNamePosition(table, columnName));
         columnName = Translator.getTerm("POSLabel");

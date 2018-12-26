@@ -38,6 +38,7 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -81,7 +82,7 @@ public class SaveProjectAction extends AbstractAction {
     }
 
     public void saveProject(File saveFile, DODDLEProject currentProject) {
-        File saveDir = null;
+        File saveDir;
         if (saveFile.isDirectory()) {
             saveDir = saveFile;
         } else {
@@ -151,7 +152,7 @@ public class SaveProjectAction extends AbstractAction {
         BufferedWriter writer = null;
         try {
             FileOutputStream fos = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 
             StringBuffer buf = new StringBuffer();
             buf.append(DODDLEConstants.BASE_URI + "\n");
@@ -232,10 +233,8 @@ public class SaveProjectAction extends AbstractAction {
                     + constructPropertyPanel.getChildCntAverage() + "\n");
 
             writer.write(buf.toString());
-        } catch (FileNotFoundException fnfe) {
+        } catch (IOException fnfe) {
             fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             if (writer != null) {
                 try {
@@ -254,14 +253,14 @@ public class SaveProjectAction extends AbstractAction {
         BufferedInputStream bis = null;
         try {
             zos = new ZipOutputStream(new FileOutputStream(saveFile));
-            List<File> allFile = new ArrayList<File>();
+            List<File> allFile = new ArrayList<>();
             getAllProjectFile(saveDir, allFile);
             for (File file : allFile) {
                 ZipEntry entry = new ZipEntry(file.getPath());
                 zos.putNextEntry(entry);
                 bis = new BufferedInputStream(new FileInputStream(file));
                 int count;
-                byte buf[] = new byte[1024];
+                byte[] buf = new byte[1024];
                 while ((count = bis.read(buf, 0, 104)) != EOF) {
                     zos.write(buf, 0, count);
                 }
@@ -273,10 +272,8 @@ public class SaveProjectAction extends AbstractAction {
                 dir.delete();
             }
             saveDir.delete();
-        } catch (FileNotFoundException fnfe) {
+        } catch (IOException fnfe) {
             fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             try {
                 if (bis != null) {
@@ -327,7 +324,7 @@ public class SaveProjectAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
         if (currentProject == null) { return; }
-        File saveFile = null;
+        File saveFile;
         if (!currentProject.getTitle().equals(Translator.getTerm("NewProjectAction"))) {
             saveFile = new File(currentProject.getTitle());
         } else {

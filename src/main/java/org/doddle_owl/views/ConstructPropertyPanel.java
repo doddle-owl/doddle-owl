@@ -188,13 +188,13 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
      * @return
      */
     private Set<String> refineRegion(Set<String> regionSet, Set<String> nounURISet) {
-        Set<String> refineRegionSet = new HashSet<String>();
+        Set<String> refineRegionSet = new HashSet<>();
         for (String uri : regionSet) {
             if (nounURISet.contains(uri)) {
                 refineRegionSet.add(uri);
             } else if (Utils.getNameSpace(uri).equals(DODDLEConstants.EDR_URI)) { // EDRに関する定義域，値域
                 if (project.getOntologySelectionPanel().isEDREnable()) {
-                    Set<String> subURISet = new HashSet<String>();
+                    Set<String> subURISet = new HashSet<>();
                     EDRTree.getEDRTree().getSubURISet(uri, nounURISet, subURISet);
                     if (0 < subURISet.size()) {
                         for (String subURI : subURISet) {
@@ -217,7 +217,6 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
      * プロパティの定義域と値域をEDR概念記述辞書，OWLオントロジーのプロパティを 参照して定義する
      * 
      * @param node
-     * @param conceptDefinition
      * @param nounURISet
      */
     private void setRegion(TreeNode node, Set<String> nounURISet) {
@@ -236,7 +235,7 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
 
     private void setDomainSet(VerbConcept c, ConceptTreeNode childNode, Set<String> nounURISet) {
         String vid = c.getLocalName();
-        Set<String> domainSet = new HashSet<String>();
+        Set<String> domainSet = new HashSet<>();
         domainSet.addAll(OWLOntologyManager.getDomainSet(c, childNode.getTrimmedConceptList()));
         if (project.getOntologySelectionPanel().isEDREnable()) {
             domainSet.addAll(EDRDic.getRelationValueSet("agent", vid, childNode.getTrimmedConceptList()));
@@ -246,7 +245,7 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
 
     private void setRangeSet(VerbConcept c, ConceptTreeNode childNode, Set<String> nounURISet) {
         String vid = c.getLocalName();
-        Set<String> rangeSet = new HashSet<String>();
+        Set<String> rangeSet = new HashSet<>();
         rangeSet.addAll(OWLOntologyManager.getRangeSet(c, childNode.getTrimmedConceptList()));
         if (project.getOntologySelectionPanel().isEDREnable()) {
             rangeSet.addAll(EDRDic.getRelationValueSet("object", vid, childNode.getTrimmedConceptList()));

@@ -69,13 +69,13 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		owlExtractionTemplate = new OWLOntologyExtractionTemplate();
 		nsTable = nst;
 		ontModel = model;
-		wordURIsMap = new HashMap<String, Set<String>>();
-		uriConceptMap = new HashMap<String, Concept>();
-		classSet = new HashSet<String>();
-		propertySet = new HashSet<String>();
-		conceptResourceSet = new HashSet<Resource>();
-		domainMap = new HashMap<String, Set<String>>();
-		rangeMap = new HashMap<String, Set<String>>();
+		wordURIsMap = new HashMap<>();
+		uriConceptMap = new HashMap<>();
+		classSet = new HashSet<>();
+		propertySet = new HashSet<>();
+		conceptResourceSet = new HashSet<>();
+		domainMap = new HashMap<>();
+		rangeMap = new HashMap<>();
 		Object[] columnNames = new Object[] { "Property", "Value" };
 		owlMetaDataTableModel = new OWLMetaDataTableModel(nsTable, columnNames, 0);
 
@@ -157,7 +157,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		}
 		try {
 			ResultSet results = qexec.execSelect();
-			Map<Resource, Set<RDFNode>> propertyRDFNodeSetMap = new HashMap<Resource, Set<RDFNode>>();
+			Map<Resource, Set<RDFNode>> propertyRDFNodeSetMap = new HashMap<>();
 			while (results.hasNext()) {
 				QuerySolution qs = results.nextSolution();
 				Resource propertyRes = (Resource) qs.get(PROPERTY_QUERY_STRING);
@@ -170,7 +170,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 					Set<RDFNode> rdfNodeSet = propertyRDFNodeSetMap.get(propertyRes);
 					rdfNodeSet.add(value);
 				} else {
-					Set<RDFNode> rdfNodeSet = new HashSet<RDFNode>();
+					Set<RDFNode> rdfNodeSet = new HashSet<>();
 					rdfNodeSet.add(value);
 					propertyRDFNodeSetMap.put(propertyRes, rdfNodeSet);
 				}
@@ -255,7 +255,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 				Set<String> uris = wordURIsMap.get(localName);
 				uris.add(conceptResource.getURI());
 			} else {
-				Set<String> uris = new HashSet<String>();
+				Set<String> uris = new HashSet<>();
 				uris.add(conceptResource.getURI());
 				wordURIsMap.put(localName, uris);
 			}
@@ -318,7 +318,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 			Set<String> uris = wordURIsMap.get(labelStr);
 			uris.add(uri);
 		} else {
-			Set<String> uris = new HashSet<String>();
+			Set<String> uris = new HashSet<>();
 			uris.add(uri);
 			wordURIsMap.put(labelStr, uris);
 		}
@@ -378,7 +378,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 			Set<String> regionSet = regionMap.get(propertyRes.getURI());
 			regionSet.add(regionRes.getURI());
 		} else {
-			Set<String> regionSet = new HashSet<String>();
+			Set<String> regionSet = new HashSet<>();
 			regionSet.add(regionRes.getURI());
 			regionMap.put(propertyRes.getURI(), regionSet);
 		}
@@ -391,7 +391,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 	}
 
 	private Set<String> getRegionSet(String uri, Map<String, Set<String>> regionMap) {
-		Set<String> regionSet = new HashSet<String>();
+		Set<String> regionSet = new HashSet<>();
 		// 上位概念で定義されている定義域，値域も獲得
 		for (List<Concept> cList : getPathToRootSet(uri)) {
 			for (Concept c : cList) {
@@ -422,7 +422,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 					Set<String> uris = wordURIsMap.get(word);
 					uris.add(res.getURI());
 				} else {
-					Set<String> uris = new HashSet<String>();
+					Set<String> uris = new HashSet<>();
 					uris.add(res.getURI());
 					wordURIsMap.put(word, uris);
 				}
@@ -457,9 +457,8 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		}
 		queryString = queryString.replaceAll("\\?concept", "<" + uri + ">"); // ?conceptを<概念URI>に置換
 		Query query = QueryFactory.create(queryString);
-		QueryExecution qexec = QueryExecutionFactory.create(query, ontModel);
 
-		try {
+		try (QueryExecution qexec = QueryExecutionFactory.create(query, ontModel)) {
 			ResultSet results = qexec.execSelect();
 			while (results.hasNext()) {
 				QuerySolution qs = results.nextSolution();
@@ -474,23 +473,19 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 							.getString()));
 				}
 			}
-		} finally {
-			if (qexec != null) {
-				qexec.close();
-			}
 		}
 		uriConceptMap.put(uri, concept);
 		return concept;
 	}
 
 	public Set<List<Concept>> getPathToRootSet(String uri) {
-		Set<List<Concept>> pathToRootSet = new HashSet<List<Concept>>();
-		ArrayList<Concept> pathToRoot = new ArrayList<Concept>();
+		Set<List<Concept>> pathToRootSet = new HashSet<>();
+		ArrayList<Concept> pathToRoot = new ArrayList<>();
 		Concept c = getConcept(uri);
 		if (c != null) {
 			pathToRoot.add(c);
 		}
-		Property subConceptOf = null;
+		Property subConceptOf;
 		if (propertySet.contains(uri)) {
 			subConceptOf = RDFS.subPropertyOf;
 		} else {
@@ -503,13 +498,13 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 	}
 
 	public Set<List<String>> getURIPathToRootSet(String uri) {
-		Set<List<String>> pathToRootSet = new HashSet<List<String>>();
-		ArrayList<String> pathToRoot = new ArrayList<String>();
+		Set<List<String>> pathToRootSet = new HashSet<>();
+		ArrayList<String> pathToRoot = new ArrayList<>();
 		Concept c = getConcept(uri);
 		if (c != null) {
 			pathToRoot.add(uri);
 		}
-		Property subConceptOf = null;
+		Property subConceptOf;
 		if (propertySet.contains(uri)) {
 			subConceptOf = RDFS.subPropertyOf;
 		} else {
@@ -523,7 +518,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 
 	public Set<List<Concept>> setPathToRoot(int depth, Resource conceptRes,
 			List<Concept> pathToRoot, Property subConceptOf) {
-		Set<List<Concept>> pathToRootSet = new HashSet<List<Concept>>();
+		Set<List<Concept>> pathToRootSet = new HashSet<>();
 		if (!ontModel.listObjectsOfProperty(conceptRes, subConceptOf).hasNext()) {
 			pathToRootSet.add(pathToRoot);
 			return pathToRootSet;
@@ -536,7 +531,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		for (NodeIterator i = ontModel.listObjectsOfProperty(conceptRes, subConceptOf); i.hasNext();) {
 			RDFNode node = i.nextNode();
 			if (node instanceof Resource && !node.isAnon()) {
-				List<Concept> pathToRootClone = new ArrayList<Concept>(pathToRoot);
+				List<Concept> pathToRootClone = new ArrayList<>(pathToRoot);
 				Resource supConceptRes = (Resource) node;
 				if (!(ConceptTreeMaker.isDODDLEClassRootURI(supConceptRes.getURI()) || ConceptTreeMaker
 						.isDODDLEPropertyRootURI(supConceptRes.getURI()))) {
@@ -555,7 +550,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 
 	public Set<List<String>> setURIPathToRoot(int depth, Resource conceptRes,
 			List<String> pathToRoot, Property subConceptOf) {
-		Set<List<String>> pathToRootSet = new HashSet<List<String>>();
+		Set<List<String>> pathToRootSet = new HashSet<>();
 		if (!ontModel.listObjectsOfProperty(conceptRes, subConceptOf).hasNext()) {
 			pathToRootSet.add(pathToRoot);
 			return pathToRootSet;
@@ -568,7 +563,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		for (NodeIterator i = ontModel.listObjectsOfProperty(conceptRes, subConceptOf); i.hasNext();) {
 			RDFNode node = i.nextNode();
 			if (node instanceof Resource && !node.isAnon()) {
-				List<String> pathToRootClone = new ArrayList<String>(pathToRoot);
+				List<String> pathToRootClone = new ArrayList<>(pathToRoot);
 				Resource supConceptRes = (Resource) node;
 				if (!(ConceptTreeMaker.isDODDLEClassRootURI(supConceptRes.getURI()) || ConceptTreeMaker
 						.isDODDLEPropertyRootURI(supConceptRes.getURI()))) {
@@ -586,7 +581,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 	}
 
 	public Set<String> getSubURISet(String uri) {
-		Set<String> subURISet = new HashSet<String>();
+		Set<String> subURISet = new HashSet<>();
 		String queryString = "";
 		if (owlExtractionTemplate.getSearchSubConceptTemplate().exists()) {
 			try {
@@ -601,16 +596,13 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 		}
 		queryString = queryString.replaceAll("\\?concept", "<" + uri + ">"); // ?conceptを<概念URI>に置換
 		Query query = QueryFactory.create(queryString);
-		QueryExecution qexec = QueryExecutionFactory.create(query, ontModel);
-		try {
+		try (QueryExecution qexec = QueryExecutionFactory.create(query, ontModel)) {
 			ResultSet results = qexec.execSelect();
 			while (results.hasNext()) {
 				QuerySolution qs = results.nextSolution();
 				Resource subConcept = (Resource) qs.get(SUB_CONCEPT_QUERY_STRING);
 				subURISet.add(subConcept.getURI());
 			}
-		} finally {
-			qexec.close();
 		}
 		return subURISet;
 	}

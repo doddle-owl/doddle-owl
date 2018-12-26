@@ -40,6 +40,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -122,8 +123,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		constructPropertyTreePanel = project.getConstructPropertyPanel();
 		inputConceptJList = icList;
 
-		nonTaxRelSet = new HashSet<NonTaxonomicRelation>();
-		wrongPairSet = new HashSet<WrongPair>();
+		nonTaxRelSet = new HashSet<>();
+		wrongPairSet = new HashSet<>();
 
 		definePanel = new ConceptDefinitionPanel();
 		DefaultTableModel resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
@@ -201,19 +202,15 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		BufferedWriter writer = null;
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
-			writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 			StringBuilder builder = new StringBuilder();
 			for (NonTaxonomicRelation nonTaxRel : nonTaxRelSet) {
 				builder.append(nonTaxRel);
 				builder.append("\n");
 			}
 			writer.write(builder.toString());
-		} catch (FileNotFoundException fnfe) {
+		} catch (IOException fnfe) {
 			fnfe.printStackTrace();
-		} catch (UnsupportedEncodingException uee) {
-			uee.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		} finally {
 			if (writer != null) {
 				try {
@@ -232,7 +229,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		BufferedReader reader = null;
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
 			while (reader.ready()) {
 				String line = reader.readLine();
 				String[] lines = line.split("\t");
@@ -244,12 +241,10 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 				nonTaxRel.setMetaProperty(isMetaProperty);
 				addNonTaxonomicRelation(nonTaxRel);
 			}
-		} catch (FileNotFoundException fnfe) {
-			fnfe.printStackTrace();
 		} catch (UnsupportedEncodingException uee) {
 			uee.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
+		} catch (IOException fnfe) {
+			fnfe.printStackTrace();
 		} finally {
 			try {
 				if (reader != null) {
@@ -265,7 +260,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		BufferedWriter writer = null;
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
-			writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 			StringBuilder builder = new StringBuilder();
 			for (WrongPair wp : wrongPairSet) {
 				builder.append(wp.getDomain());
@@ -274,12 +269,10 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 				builder.append("\n");
 			}
 			writer.write(builder.toString());
-		} catch (FileNotFoundException fnfe) {
-			fnfe.printStackTrace();
 		} catch (UnsupportedEncodingException uee) {
 			uee.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
+		} catch (IOException fnfe) {
+			fnfe.printStackTrace();
 		} finally {
 			if (writer != null) {
 				try {
@@ -298,19 +291,17 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		BufferedReader reader = null;
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
 			while (reader.ready()) {
 				String line = reader.readLine();
 				String[] lines = line.split("\t");
 				WrongPair wp = new WrongPair(lines[0], lines[1]);
 				addWrongPair(wp);
 			}
-		} catch (FileNotFoundException fnfe) {
-			fnfe.printStackTrace();
 		} catch (UnsupportedEncodingException uee) {
 			uee.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
+		} catch (IOException fnfe) {
+			fnfe.printStackTrace();
 		} finally {
 			try {
 				if (reader != null) {
@@ -327,14 +318,12 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 			String sql = "SELECT * from wrong_pair where Project_ID=" + projectID;
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				String term1 = URLDecoder.decode(rs.getString("Term1"), "UTF8");
-				String term2 = URLDecoder.decode(rs.getString("Term2"), "UTF8");
+				String term1 = URLDecoder.decode(rs.getString("Term1"), StandardCharsets.UTF_8);
+				String term2 = URLDecoder.decode(rs.getString("Term2"), StandardCharsets.UTF_8);
 				WrongPair wp = new WrongPair(term1, term2);
 				addWrongPair(wp);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -385,7 +374,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 	}
 
 	private void setWAResultTable(Set<ConceptPair> validWSPairSet, Set<ConceptPair> validARPairSet) {
-		Set<String[]> validDataSet = new HashSet<String[]>();
+		Set<String[]> validDataSet = new HashSet<>();
 		for (ConceptPair wsPair : validWSPairSet) {
 			for (ConceptPair arPair : validARPairSet) {
 				if (wsPair.getToConceptLabel().equals(arPair.getToConceptLabel())) {
@@ -397,8 +386,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
 		String[][] data = new String[validDataSet.size()][3];
 		int cnt = 0;
-		for (Iterator i = validDataSet.iterator(); i.hasNext();) {
-			data[cnt++] = (String[]) i.next();
+		for (String[] strings : validDataSet) {
+			data[cnt++] = strings;
 		}
 		setWAResultTable(new DefaultTableModel(data, ConceptDefinitionResultPanel.WA_COLUMN_NAMES));
 	}
@@ -454,7 +443,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 	 */
 	public Set<ConceptPair> setWSResultTable(String selectedInputConcept,
 			List<ConceptPair> wsConceptPairList) {
-		Set<ConceptPair> validPairSet = new TreeSet<ConceptPair>();
+		Set<ConceptPair> validPairSet = new TreeSet<>();
 		for (ConceptPair pair : wsConceptPairList) {
 			String[] data = pair.getTableData();
 			WrongPair wp = new WrongPair(selectedInputConcept, data[0]);
@@ -480,7 +469,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 	}
 
 	public Set<ConceptPair> setARResultTable(String inputConcept, List<ConceptPair> arConceptPairSet) {
-		Set<ConceptPair> validPairSet = new TreeSet<ConceptPair>();
+		Set<ConceptPair> validPairSet = new TreeSet<>();
 		for (ConceptPair pair : arConceptPairSet) {
 			String[] data = pair.getTableData();
 			WrongPair wp = new WrongPair(inputConcept, data[0]);
@@ -518,15 +507,15 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 	}
 
 	public String getWSTableRowConceptName(int row) {
-		return (String) ((DefaultTableModel) wsResultTable.getModel()).getValueAt(row, 0);
+		return (String) wsResultTable.getModel().getValueAt(row, 0);
 	}
 
 	public String getARTableRowConceptName(int row) {
-		return (String) ((DefaultTableModel) arResultTable.getModel()).getValueAt(row, 0);
+		return (String) arResultTable.getModel().getValueAt(row, 0);
 	}
 
 	public String getWATableRowConceptName(int row) {
-		return (String) ((DefaultTableModel) waResultTable.getModel()).getValueAt(row, 0);
+		return (String) waResultTable.getModel().getValueAt(row, 0);
 	}
 
 	public int getWSTableSelectedRow() {
@@ -627,21 +616,21 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 		}
 
 		public Class getColumnClass(int column) {
-			Vector v = (Vector) dataVector.elementAt(0);
+			Vector v = dataVector.elementAt(0);
 			return v.elementAt(column).getClass();
 		}
 	}
 
 	private void deleteConceptDefinition() {
 		DefaultTableModel definedTableModel = (DefaultTableModel) conceptDefinitionTable.getModel();
-		Set<NonTaxonomicRelation> deleteNonTaxRelSet = new HashSet<NonTaxonomicRelation>();
-		int row[] = conceptDefinitionTable.getSelectedRows();
+		Set<NonTaxonomicRelation> deleteNonTaxRelSet = new HashSet<>();
+		int[] row = conceptDefinitionTable.getSelectedRows();
 
 		if (row != null) {
-			for (int i = 0; i < row.length; i++) {
-				String domain = (String) definedTableModel.getValueAt(row[i], 1);
-				Concept rel = (Concept) definedTableModel.getValueAt(row[i], 2);
-				String range = (String) definedTableModel.getValueAt(row[i], 3);
+			for (int i1 : row) {
+				String domain = (String) definedTableModel.getValueAt(i1, 1);
+				Concept rel = (Concept) definedTableModel.getValueAt(i1, 2);
+				String range = (String) definedTableModel.getValueAt(i1, 3);
 				NonTaxonomicRelation delNonTaxRel = new NonTaxonomicRelation(domain, rel, range);
 				deleteNonTaxRelSet.add(delNonTaxRel);
 				nonTaxRelSet.remove(delNonTaxRel);
@@ -663,13 +652,13 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
 	private void deleteWrongPair() {
 		DefaultTableModel wrongPairTableModel = (DefaultTableModel) wrongPairTable.getModel();
-		Set<WrongPair> deleteWrongPairSet = new HashSet<WrongPair>();
-		int row[] = wrongPairTable.getSelectedRows();
+		Set<WrongPair> deleteWrongPairSet = new HashSet<>();
+		int[] row = wrongPairTable.getSelectedRows();
 
 		if (row != null) {
-			for (int i = 0; i < row.length; i++) {
-				String c1 = (String) wrongPairTableModel.getValueAt(row[i], 0);
-				String c2 = (String) wrongPairTableModel.getValueAt(row[i], 1);
+			for (int i1 : row) {
+				String c1 = (String) wrongPairTableModel.getValueAt(i1, 0);
+				String c2 = (String) wrongPairTableModel.getValueAt(i1, 1);
 				WrongPair delWp = new WrongPair(c1, c2);
 				deleteWrongPairSet.add(delWp);
 				wrongPairSet.remove(delWp);

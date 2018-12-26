@@ -97,7 +97,7 @@ public class ConceptDistanceModel implements Comparable<ConceptDistanceModel> {
     }
 
     public String toString() {
-        StringBuilder builder = new StringBuilder("");
+        StringBuilder builder = new StringBuilder();
         // String firstLabel = commonAncestor.getURI();
         // if (commonAncestor.getLangLabelListMap().get("ja") != null) {
         // for (DODDLELiteral literal :

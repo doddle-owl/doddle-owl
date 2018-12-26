@@ -50,6 +50,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -163,12 +164,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         project = p;
         constructClassPanel = tp;
         constructPropertyPanel = pp;
-        inputConceptSet = new HashSet<Concept>();
-        systemAddedInputConceptSet = new HashSet<Concept>();
+        inputConceptSet = new HashSet<>();
+        systemAddedInputConceptSet = new HashSet<>();
         nullConcept = new Concept("null", Translator.getTerm("NotAvailableLabel"));
         inputModule = new InputModule(project);
-        termCorrespondConceptSetMap = new HashMap<String, Set<Concept>>();
-        compoundConstructTreeOptionMap = new HashMap<InputTermModel, ConstructTreeOption>();
+        termCorrespondConceptSetMap = new HashMap<>();
+        compoundConstructTreeOptionMap = new HashMap<>();
 
         // conceptDescriptionFrame = new ConceptDescriptionFrame();
 
@@ -343,7 +344,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (!isInputConcept || perfectlyMatchedOptionPanel.isIncludeRefOntConceptLabel()) {
             return;
         }
-        Set<DODDLELiteral> removedLabelSet = new HashSet<DODDLELiteral>();
+        Set<DODDLELiteral> removedLabelSet = new HashSet<>();
         for (String lang : c.getLangLabelListMap().keySet()) {
             for (DODDLELiteral label : c.getLangLabelListMap().get(lang)) {
                 if (!(termSet.contains(label.getString()) || systemAddedTermSet.contains(label
@@ -387,22 +388,19 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
 
         public void actionPerformed(ActionEvent e) {
-            JList termJList = null;
-            Set<InputTermModel> termModelSet = null;
-            termJList = getTargetTermJList();
-            termModelSet = getTargetTermModelSet();
+            JList termJList = getTargetTermJList();
+            Set<InputTermModel> termModelSet = getTargetTermModelSet();
 
             if (e.getSource() == addInputTermButton) {
-                Set<String> inputTermSet = new HashSet<String>();
+                Set<String> inputTermSet = new HashSet<>();
                 if (0 < inputTermField.getText().length()) {
                     inputTermSet.add(inputTermField.getText());
                     addInputTermSet(inputTermSet, 0);
                     inputTermField.setText("");
                 }
             } else if (e.getSource() == removeInputTermButton) {
-                Object[] values = termJList.getSelectedValues();
-                for (int i = 0; i < values.length; i++) {
-                    InputTermModel removeTermModel = (InputTermModel) values[i];
+                List<InputTermModel> values = termJList.getSelectedValuesList();
+                for (InputTermModel removeTermModel : values) {
                     termSet.remove(removeTermModel.getTerm());
                     termModelSet.remove(removeTermModel);
                     inputTermModelSet.remove(removeTermModel);
@@ -417,7 +415,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     public Set<String> getURISetForReplaceSubConcepts() {
-        Set<String> uriSet = new HashSet<String>();
+        Set<String> uriSet = new HashSet<>();
         for (ConstructTreeOption option : compoundConstructTreeOptionMap.values()) {
             if (option.isReplaceSubConcepts()) {
                 uriSet.add(option.getConcept().getURI());
@@ -799,8 +797,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 return;
             }
             Set searchedPartiallyMatchedTermModelSet = new TreeSet();
-            for (Iterator i = partiallyMatchedTermModelSet.iterator(); i.hasNext(); ) {
-                InputTermModel iwModel = (InputTermModel) i.next();
+            for (InputTermModel iwModel : partiallyMatchedTermModelSet) {
                 if (iwModel.getMatchedTerm().equals(targetIWModel.getMatchedTerm())) {
                     searchedPartiallyMatchedTermModelSet.add(iwModel);
                 }
@@ -866,7 +863,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 Set searchedPerfectlyMatchedTermModelSet = new TreeSet();
                 Set searchedPartiallyMatchedTermModelSet = new TreeSet();
                 for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
-                    if (iwModel.getTerm().indexOf(keyWord) != -1) {
+                    if (iwModel.getTerm().contains(keyWord)) {
                         searchedPerfectlyMatchedTermModelSet.add(iwModel);
                     }
                 }
@@ -889,7 +886,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     perfectlyMatchedTermJList.setSelectedValue(targetIWModel, true);
                 }
                 for (InputTermModel iwModel : partiallyMatchedTermModelSet) {
-                    if (iwModel.getTerm().indexOf(keyWord) != -1) {
+                    if (iwModel.getTerm().contains(keyWord)) {
                         if (partiallyMatchedShowOnlyRelatedCompoundWordsCheckBox.isSelected()) {
                             if (targetIWModel != null
                                     && iwModel.getMatchedTerm().equals(
@@ -998,8 +995,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedReader reader = null;
         try {
             FileInputStream fis = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
-            Set<String> inputTermSet = new HashSet<String>();
+            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
+            Set<String> inputTermSet = new HashSet<>();
             while (inputTermModelSet == null) {
                 try {
                     Thread.sleep(1000);
@@ -1019,7 +1016,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     String term = termURI[0];
                     InputTermModel iwModel = inputModule.makeInputTermModel(term);
                     if (iwModel != null && inputTermSet.contains(iwModel.getTerm())) {
-                        Set<Concept> correspondConceptSet = new HashSet<Concept>();
+                        Set<Concept> correspondConceptSet = new HashSet<>();
                         for (int i = 1; i < termURI.length; i++) {
                             String uri = termURI[i];
                             Concept c = DODDLEDic.getConcept(uri);
@@ -1037,10 +1034,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             try {
                 if (reader != null) {
@@ -1054,7 +1049,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     public void loadTermCorrespondConceptSetMap(int projectID, Statement stmt) {
         try {
-            Set<String> inputTermSet = new HashSet<String>();
+            Set<String> inputTermSet = new HashSet<>();
             while (inputTermModelSet == null) {
                 try {
                     Thread.sleep(1000);
@@ -1069,16 +1064,16 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             String sql = "SELECT * from input_term_concept_map where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String inputTerm = URLDecoder.decode(rs.getString("Input_Term"), "UTF8");
+                String inputTerm = URLDecoder.decode(rs.getString("Input_Term"), StandardCharsets.UTF_8);
                 String inputConcept = rs.getString("Input_Concept");
 
                 InputTermModel iwModel = inputModule.makeInputTermModel(inputTerm);
                 if (iwModel != null && inputTermSet.contains(iwModel.getTerm())) {
-                    Set<Concept> correspondConceptSet = null;
+                    Set<Concept> correspondConceptSet;
                     if (termCorrespondConceptSetMap.get(iwModel.getTerm()) != null) {
                         correspondConceptSet = termCorrespondConceptSetMap.get(iwModel.getTerm());
                     } else {
-                        correspondConceptSet = new HashSet<Concept>();
+                        correspondConceptSet = new HashSet<>();
                     }
                     Concept c = DODDLEDic.getConcept(inputConcept);
                     if (c != null) { // 参照していないオントロジーの概念と対応づけようとした場合にnullとなる
@@ -1094,8 +1089,6 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 
@@ -1108,7 +1101,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         for (InputTermModel iwModel : inputTermModelSet) {
             Set<Concept> correspondConceptSet = termCorrespondConceptSetMap.get(iwModel.getTerm());
             if (correspondConceptSet == null) {
-                correspondConceptSet = new HashSet<Concept>();
+                correspondConceptSet = new HashSet<>();
             }
             if (iwModel.isPartiallyMatchTerm()) {
                 termCorrespondConceptSetMap.put(iwModel.getTerm(), correspondConceptSet);
@@ -1162,7 +1155,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             String selectedTerm = ((InputTermModel) termJList.getSelectedValue()).getMatchedTerm();
             Set<Concept> conceptSet = termConceptSetMap.get(selectedTerm);
 
-            Set<EvalConcept> evalConceptSet = null;
+            Set<EvalConcept> evalConceptSet;
 
             if (!(termEvalConceptSetMap == null || termEvalConceptSetMap.get(selectedTerm) == null)) {
                 evalConceptSet = termEvalConceptSetMap.get(selectedTerm);
@@ -1196,7 +1189,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             } else {
                 conceptSetJList.setSelectedIndex(0);
                 EvalConcept evalConcept = (EvalConcept) conceptSetJList.getSelectedValue();
-                correspondConceptSet = new HashSet<Concept>();
+                correspondConceptSet = new HashSet<>();
                 correspondConceptSet.add(evalConcept.getConcept());
                 termCorrespondConceptSetMap.put(orgTerm, correspondConceptSet);
             }
@@ -1254,7 +1247,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
      * @return
      */
     private Set<EvalConcept> getEvalConceptSet(Set<Concept> conceptSet) {
-        Set<EvalConcept> evalConceptSet = new TreeSet<EvalConcept>();
+        Set<EvalConcept> evalConceptSet = new TreeSet<>();
         for (Concept c : conceptSet) {
             evalConceptSet.add(new EvalConcept(c, 0));
         }
@@ -1304,11 +1297,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     private void selectCorrectConcept(JList termJList) {
         if (!termJList.isSelectionEmpty() && !conceptSetJList.isSelectionEmpty()) {
             InputTermModel iwModel = (InputTermModel) termJList.getSelectedValue();
-            Object[] evalConcepts = conceptSetJList.getSelectedValues();
+            List<EvalConcept> evalConcepts = conceptSetJList.getSelectedValuesList();
             String term = iwModel.getTerm();
-            for (int i = 0; i < evalConcepts.length; i++) {
-                if (evalConcepts[i] == nullEvalConcept) {
-                    Set<Concept> correspondConceptSet = new HashSet<Concept>();
+            for (EvalConcept evalConcept : evalConcepts) {
+                if (evalConcept == nullEvalConcept) {
+                    Set<Concept> correspondConceptSet = new HashSet<>();
                     correspondConceptSet.add(nullConcept);
                     termCorrespondConceptSetMap.put(term, correspondConceptSet);
                     syncPartiallyMatchedAmbiguousConceptSet(term, correspondConceptSet);
@@ -1326,13 +1319,14 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 switchConstructTreeOptionPanel(partiallyMatchedConstructTreeOptionPanel);
             }
 
-            Set<Concept> correspondConceptSet = new HashSet<Concept>();
-            for (int i = 0; i < evalConcepts.length; i++) {
-                correspondConceptSet.add(((EvalConcept) evalConcepts[i]).getConcept());
+            Set<Concept> correspondConceptSet = new HashSet<>();
+
+            for (EvalConcept evalConcept : evalConcepts) {
+                correspondConceptSet.add(evalConcept.getConcept());
             }
             termCorrespondConceptSetMap.put(term, correspondConceptSet);
             syncPartiallyMatchedAmbiguousConceptSet(term, correspondConceptSet);
-            selectedConcept = ((EvalConcept) evalConcepts[0]).getConcept();
+            selectedConcept = evalConcepts.get(0).getConcept();
             if (selectedConcept != null) {
                 labelPanel.setSelectedConcept(selectedConcept);
                 descriptionPanel.setSelectedConcept(selectedConcept);
@@ -1359,10 +1353,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
      */
     private void showAroundConceptTree() {
         if (showAroundConceptTreeCheckBox.isSelected()) {
-            Object[] ecs = conceptSetJList.getSelectedValues();
-            Set<List<Concept>> pathToRootSet = new HashSet<List<Concept>>();
-            for (int i = 0; i < ecs.length; i++) {
-                EvalConcept ec = (EvalConcept) ecs[i];
+            List<EvalConcept> evalConceptList = conceptSetJList.getSelectedValuesList();
+            Set<List<Concept>> pathToRootSet = new HashSet<>();
+            for (EvalConcept ec : evalConceptList) {
                 pathToRootSet.addAll(OWLOntologyManager.getPathToRootSet(ec.getConcept().getURI()));
                 int pathSize = 0;
                 for (List<Concept> pathToRoot : pathToRootSet) {
@@ -1456,15 +1449,15 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         documentArea.scrollRectToVisible(rect);
         int lineHeight = documentArea.getFontMetrics(documentArea.getFont()).getHeight();
         // System.out.println(lineHeight);
-        rect.y = (lineNum.intValue() + 1) * lineHeight;
+        rect.y = (lineNum + 1) * lineHeight;
         documentArea.scrollRectToVisible(rect);
     }
 
     public void initTermList() {
-        systemAddedTermSet = new HashSet<String>();
+        systemAddedTermSet = new HashSet<>();
         inputTermModelSet = inputModule.getInputTermModelSet();
-        perfectlyMatchedTermModelSet = new TreeSet<InputTermModel>();
-        partiallyMatchedTermModelSet = new TreeSet<InputTermModel>();
+        perfectlyMatchedTermModelSet = new TreeSet<>();
+        partiallyMatchedTermModelSet = new TreeSet<>();
 
         for (InputTermModel itModel : inputTermModelSet) {
             if (itModel.isPartiallyMatchTerm()) {
@@ -1512,11 +1505,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             return;
         }
         inputFile = file;
-        Set<String> termSet = new HashSet<String>();
+        Set<String> termSet = new HashSet<>();
         BufferedReader reader = null;
         try {
             FileInputStream fis = new FileInputStream(inputFile);
-            reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String line = reader.readLine();
                 String term = line.replaceAll("\n", "");
@@ -1537,17 +1530,15 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     public void loadInputTermSet(int projectID, Statement stmt, int taskCnt) {
-        Set<String> inputTermSet = new HashSet<String>();
+        Set<String> inputTermSet = new HashSet<>();
         try {
             String sql = "SELECT * from input_term_set where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String inputTerm = URLDecoder.decode(rs.getString("Input_Term"), "UTF8");
+                String inputTerm = URLDecoder.decode(rs.getString("Input_Term"), StandardCharsets.UTF_8);
                 inputTermSet.add(inputTerm);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         loadInputTermSet(inputTermSet, taskCnt);
@@ -1578,7 +1569,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     private Set<String> getIDSet(String ns) {
-        Set<String> idSet = new HashSet<String>();
+        Set<String> idSet = new HashSet<>();
         for (InputTermModel itModel : perfectlyMatchedTermModelSet) {
             String term = itModel.getTerm();
             Set<Concept> conceptSet = termConceptSetMap.get(term);
@@ -1597,7 +1588,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     public void addInputTermSet(Set<String> addedTermSet, int taskCnt) {
         clearPanel();
         if (termSet == null) {
-            termSet = new HashSet<String>();
+            termSet = new HashSet<>();
         }
         termSet.addAll(addedTermSet);
         inputModule.initData(termSet, taskCnt);
@@ -1674,7 +1665,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
 
         private Map<Concept, EvalConcept> getConceptEvalConceptMap() {
-            Map<Concept, EvalConcept> conceptEvalConceptMap = new HashMap<Concept, EvalConcept>();
+            Map<Concept, EvalConcept> conceptEvalConceptMap = new HashMap<>();
             for (InputTermModel inputTermModel : perfectlyMatchedTermModelSet) {
                 String inputTerm = inputTermModel.getMatchedTerm();
                 for (Concept c : termConceptSetMap.get(inputTerm)) {
@@ -1730,11 +1721,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             if (inputTermModelSet == null) {
                 return;
             }
-            termSet = new HashSet<String>();
+            termSet = new HashSet<>();
             for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
                 termSet.add(iwModel.getTerm());
             }
-            termEvalConceptSetMap = new HashMap<String, Set<EvalConcept>>();
+            termEvalConceptSetMap = new HashMap<>();
             Map<Concept, EvalConcept> conceptEvalConceptMap = getConceptEvalConceptMap();
 
             DODDLE_OWL.STATUS_BAR.setLastMessage(Translator
@@ -1762,7 +1753,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             for (InputTermModel inputTermModel : perfectlyMatchedTermModelSet) {
                 String inputTerm = inputTermModel.getMatchedTerm();
                 Set<Concept> conceptSet = termConceptSetMap.get(inputTerm);
-                Set<EvalConcept> evalConceptSet = new TreeSet<EvalConcept>();
+                Set<EvalConcept> evalConceptSet = new TreeSet<>();
                 for (Concept c : conceptSet) {
                     if (conceptEvalConceptMap.get(c) != null) {
                         evalConceptSet.add(conceptEvalConceptMap.get(c));
@@ -1879,7 +1870,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
 
         public void doAutomaticDisambiguation() {
-            SwingWorker<String, String> worker = new SwingWorker<String, String>() {
+            SwingWorker<String, String> worker = new SwingWorker<>() {
                 public String doInBackground() {
                     makeEDRTree();
                     setTermEvalConceptSetMap();
@@ -1891,46 +1882,44 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
 
         public void doDisambiguationTest() {
-            new Thread() {
-                public void run() {
-                    OptionDialog.setUsingSpreadActivationAlgorithmForDisambiguation(false);
-                    boolean[][] pattern = {{true, false, false}, {false, true, false},
-                            {false, false, true}, {true, true, false}, {true, false, true},
-                            {false, true, true}, {true, true, true}};
-                    String[] patternName = {"Sup.txt", "Sub.txt", "Sib.txt", "Sup_Sub.txt",
-                            "Sup_Sib.txt", "Sib_Sub.txt", "Sup_Sub_Sib.txt"};
+            new Thread(() -> {
+                OptionDialog.setUsingSpreadActivationAlgorithmForDisambiguation(false);
+                boolean[][] pattern = {{true, false, false}, {false, true, false},
+                        {false, false, true}, {true, true, false}, {true, false, true},
+                        {false, true, true}, {true, true, true}};
+                String[] patternName = {"Sup.txt", "Sub.txt", "Sib.txt", "Sup_Sub.txt",
+                        "Sup_Sib.txt", "Sib_Sub.txt", "Sup_Sub_Sib.txt"};
 
-                    for (int i = 0; i < pattern.length; i++) {
-                        System.out.println(pattern[i][0] + " " + pattern[i][1] + " "
-                                + pattern[i][2]);
-                        OptionDialog.setSupDisambiguation(pattern[i][0]);
-                        OptionDialog.setSubDisambiguation(pattern[i][1]);
-                        OptionDialog.setSiblingDisambiguation(pattern[i][2]);
-                        setTermEvalConceptSetMap();
-                        saveTermEvalConceptSet(new File(patternName[i]));
-                    }
-                    OptionDialog.setSupDisambiguation(false);
-                    OptionDialog.setSubDisambiguation(false);
-                    OptionDialog.setSiblingDisambiguation(false);
-                    OptionDialog.setUsingSpreadActivationAlgorithmForDisambiguation(true);
-
-                    OptionDialog.setShortestSpreadActivatingAlgorithmforDisambiguation(true);
-                    System.out.println("shortest");
+                for (int i = 0; i < pattern.length; i++) {
+                    System.out.println(pattern[i][0] + " " + pattern[i][1] + " "
+                            + pattern[i][2]);
+                    OptionDialog.setSupDisambiguation(pattern[i][0]);
+                    OptionDialog.setSubDisambiguation(pattern[i][1]);
+                    OptionDialog.setSiblingDisambiguation(pattern[i][2]);
                     setTermEvalConceptSetMap();
-                    saveTermEvalConceptSet(new File("shortest.txt"));
-
-                    OptionDialog.setLongestSpreadActivatingAlgorithmforDisambiguation(true);
-                    System.out.println("longest");
-                    setTermEvalConceptSetMap();
-                    saveTermEvalConceptSet(new File("longest.txt"));
-
-                    OptionDialog.setAverageSpreadActivatingAlgorithmforDisambiguation(true);
-                    System.out.println("average");
-                    setTermEvalConceptSetMap();
-                    saveTermEvalConceptSet(new File("average.txt"));
-
+                    saveTermEvalConceptSet(new File(patternName[i]));
                 }
-            }.start();
+                OptionDialog.setSupDisambiguation(false);
+                OptionDialog.setSubDisambiguation(false);
+                OptionDialog.setSiblingDisambiguation(false);
+                OptionDialog.setUsingSpreadActivationAlgorithmForDisambiguation(true);
+
+                OptionDialog.setShortestSpreadActivatingAlgorithmforDisambiguation(true);
+                System.out.println("shortest");
+                setTermEvalConceptSetMap();
+                saveTermEvalConceptSet(new File("shortest.txt"));
+
+                OptionDialog.setLongestSpreadActivatingAlgorithmforDisambiguation(true);
+                System.out.println("longest");
+                setTermEvalConceptSetMap();
+                saveTermEvalConceptSet(new File("longest.txt"));
+
+                OptionDialog.setAverageSpreadActivatingAlgorithmforDisambiguation(true);
+                System.out.println("average");
+                setTermEvalConceptSetMap();
+                saveTermEvalConceptSet(new File("average.txt"));
+
+            }).start();
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -1971,7 +1960,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             properties.setProperty("ConstructTree.isAddAbstractConceptWithCompoundWordTree",
                     String.valueOf(partiallyMatchedOptionPanel.isAddAbstractConcept()));
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             properties.store(writer, "Construct Tree Option");
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -1998,7 +1987,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         try {
             Properties properties = new Properties();
             InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             properties.load(reader);
             boolean t = Boolean.valueOf(properties.getProperty("ConstructTree.isTreeConstruction"));
             perfectlyMatchedOptionPanel.setConstruction(t);
@@ -2030,8 +2019,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            StringBuffer buf = new StringBuffer();
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+            StringBuilder buf = new StringBuilder();
             for (InputTermModel iwModel : compoundConstructTreeOptionMap.keySet()) {
                 ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
                 if (iwModel != null && ctOption != null && ctOption.getConcept() != null) {
@@ -2060,14 +2049,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     + "VALUES("
                     + projectID
                     + ",'"
-                    + URLEncoder.encode(inputTerm, "UTF8")
+                    + URLEncoder.encode(inputTerm, StandardCharsets.UTF_8)
                     + "','"
                     + concept + "','" + option + "')";
             stmt.executeUpdate(sql);
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 
@@ -2075,11 +2062,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (!file.exists()) {
             return;
         }
-        compoundConstructTreeOptionMap = new HashMap<InputTermModel, ConstructTreeOption>();
+        compoundConstructTreeOptionMap = new HashMap<>();
         BufferedReader reader = null;
         try {
             InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String line = reader.readLine();
                 String[] strs = line.split("\t");
@@ -2106,13 +2093,13 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     public void loadInputTermConstructTreeOptionSet(int projectID, Statement stmt) {
-        compoundConstructTreeOptionMap = new HashMap<InputTermModel, ConstructTreeOption>();
+        compoundConstructTreeOptionMap = new HashMap<>();
         try {
             String sql = "SELECT * from input_term_construct_tree_option where Project_ID="
                     + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String inputTerm = URLDecoder.decode(rs.getString("Input_Term"), "UTF8");
+                String inputTerm = URLDecoder.decode(rs.getString("Input_Term"), StandardCharsets.UTF_8);
                 String inputConcept = rs.getString("Input_Concept");
                 String treeOption = rs.getString("Tree_Option");
                 if (0 < inputTerm.length()) {
@@ -2124,8 +2111,6 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -2141,8 +2126,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            StringBuffer buf = new StringBuffer();
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+            StringBuilder buf = new StringBuilder();
             for (InputTermModel iwModel : inputTermModelSet) {
                 if (!iwModel.isSystemAdded()) {
                     buf.append(iwModel.getTerm());
@@ -2170,12 +2155,10 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     public void insertInputTerm(int projectID, Statement stmt, String inputTerm) {
         try {
             String sql = "INSERT INTO input_term_set (Project_ID,Input_Term) " + "VALUES("
-                    + projectID + ",'" + URLEncoder.encode(inputTerm, "UTF8") + "')";
+                    + projectID + ",'" + URLEncoder.encode(inputTerm, StandardCharsets.UTF_8) + "')";
             stmt.executeUpdate(sql);
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 
@@ -2188,7 +2171,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedReader reader = null;
         try {
             InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String line = reader.readLine();
                 if (line != null) {
@@ -2217,14 +2200,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             String sql = "SELECT * from undefined_term_set where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                String term = URLDecoder.decode(rs.getString("Term"), "UTF8");
+                String term = URLDecoder.decode(rs.getString("Term"), StandardCharsets.UTF_8);
                 if (term != null) {
                     undefinedTermListModel.addElement(term);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         constructClassPanel.setUndefinedTermListModel(undefinedTermListModel);
@@ -2235,11 +2216,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (!file.exists()) {
             return;
         }
-        inputConceptSet = new HashSet<Concept>();
+        inputConceptSet = new HashSet<>();
         BufferedReader reader = null;
         try {
             InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             while (reader.ready()) {
                 String uri = reader.readLine();
                 Concept c = DODDLEDic.getConcept(uri);
@@ -2261,7 +2242,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     public void loadInputConceptSet(int projectID, Statement stmt) {
-        inputConceptSet = new HashSet<Concept>();
+        inputConceptSet = new HashSet<>();
         try {
             String sql = "SELECT * from input_concept_set where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
@@ -2284,7 +2265,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
             StringBuilder buf = new StringBuilder();
             for (int i = 0; i < undefinedTermListModel.getSize(); i++) {
                 String undefinedTerm = (String) undefinedTermListModel.getElementAt(i);
@@ -2312,8 +2293,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            StringBuffer buf = new StringBuffer();
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+            StringBuilder buf = new StringBuilder();
             for (Concept c : inputConceptSet) {
                 if (!systemAddedInputConceptSet.contains(c)) {
                     buf.append(c.getURI());
@@ -2350,11 +2331,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 
-            StringBuffer buf = new StringBuffer();
-            for (Iterator i = getTermCorrespondConceptSetMap().entrySet().iterator(); i.hasNext(); ) {
-                Map.Entry entry = (Map.Entry) i.next();
+            StringBuilder buf = new StringBuilder();
+            for (Entry<String, Set<Concept>> stringSetEntry : getTermCorrespondConceptSetMap().entrySet()) {
+                Entry entry = (Entry) stringSetEntry;
                 String term = (String) entry.getKey();
                 Set<Concept> conceptSet = (Set<Concept>) entry.getValue();
                 buf.append(term + ",");
@@ -2385,14 +2366,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                         + "VALUES("
                         + projectID
                         + ",'"
-                        + URLEncoder.encode(inputTerm, "UTF8")
+                        + URLEncoder.encode(inputTerm, StandardCharsets.UTF_8)
                         + "','" + c.getURI() + "')";
                 stmt.executeUpdate(sql);
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 
@@ -2412,9 +2391,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             for (InputTermModel iwModel : inputTermModelSet) {
                 Set<EvalConcept> evalConceptSet = termEvalConceptSetMap.get(iwModel
                         .getMatchedTerm());
@@ -2462,7 +2441,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 
             for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
                 writer.write(iwModel.getTerm() + "\n");
@@ -2493,7 +2472,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
 
             Map perfectlyMatchedTermWithCompoundWordMap = new TreeMap();
             for (InputTermModel iwModel : inputTermModelSet) {
@@ -2511,15 +2490,14 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 }
             }
 
-            StringBuffer buf = new StringBuffer();
-            for (Iterator i = perfectlyMatchedTermWithCompoundWordMap.keySet().iterator(); i
-                    .hasNext(); ) {
-                String matchedTerm = (String) i.next();
+            StringBuilder buf = new StringBuilder();
+            for (Object o1 : perfectlyMatchedTermWithCompoundWordMap.keySet()) {
+                String matchedTerm = (String) o1;
                 buf.append(matchedTerm + "=>");
                 Set compoundWordSet = (Set) perfectlyMatchedTermWithCompoundWordMap
                         .get(matchedTerm);
-                for (Iterator j = compoundWordSet.iterator(); j.hasNext(); ) {
-                    String compoundWord = (String) j.next();
+                for (Object o : compoundWordSet) {
+                    String compoundWord = (String) o;
                     buf.append(compoundWord + ",");
                 }
                 buf.append("\n");
@@ -2562,13 +2540,13 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-            termEvalConceptSetMap = new HashMap<String, Set<EvalConcept>>();
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+            termEvalConceptSetMap = new HashMap<>();
             while (reader.ready()) {
                 String line = reader.readLine();
                 String[] termAndResults = line.split("\\|\\|");
                 String term = termAndResults[0];
-                Set<EvalConcept> evalConceptSet = new TreeSet<EvalConcept>();
+                Set<EvalConcept> evalConceptSet = new TreeSet<>();
                 for (int i = 1; i < termAndResults.length; i++) {
                     String[] valueAndURIs = termAndResults[i].split("\t");
                     double value = Double.parseDouble(valueAndURIs[0]);
@@ -2596,12 +2574,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     public void loadTermEvalConceptSet(int projectID, java.sql.Statement stmt) {
         try {
-            termEvalConceptSetMap = new HashMap<String, Set<EvalConcept>>();
+            termEvalConceptSetMap = new HashMap<>();
             String sql = "SELECT * from term_eval_concept_set where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
-            Map<Integer, String> termIDMap = new HashMap<Integer, String>();
+            Map<Integer, String> termIDMap = new HashMap<>();
             while (rs.next()) {
-                String term = URLDecoder.decode(rs.getString("Term"), "UTF8");
+                String term = URLDecoder.decode(rs.getString("Term"), StandardCharsets.UTF_8);
                 int termID = rs.getInt("Term_ID");
                 termIDMap.put(termID, term);
             }
@@ -2612,7 +2590,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 sql = "SELECT * from eval_concept_set where Project_ID=" + projectID
                         + " and Term_ID=" + termID;
                 rs = stmt.executeQuery(sql);
-                Set<EvalConcept> evalConceptSet = new TreeSet<EvalConcept>();
+                Set<EvalConcept> evalConceptSet = new TreeSet<>();
                 while (rs.next()) {
                     String concept = rs.getString("Concept");
                     double evalValue = rs.getDouble("Eval_Value");
@@ -2623,8 +2601,6 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 termEvalConceptSetMap.put(term, evalConceptSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

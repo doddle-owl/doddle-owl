@@ -26,6 +26,7 @@ package org.doddle_owl.models;
 import org.doddle_owl.utils.Utils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -149,7 +150,7 @@ public class JpnWordNetDic {
         try {
             // System.out.println("ifp: " + ifp);
             jpnwnWordDataFile.seek(ifp);
-            return new String(jpnwnWordDataFile.readLine().getBytes("ISO8859_1"), "UTF-8");
+            return new String(jpnwnWordDataFile.readLine().getBytes("ISO8859_1"), StandardCharsets.UTF_8);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -279,11 +280,11 @@ public class JpnWordNetDic {
     }
 
     private static Concept getConcept(long dfp) {
-        RandomAccessFile dataFile = null;
+        RandomAccessFile dataFile;
         try {
             dataFile = jpnwnConceptDataFile;
             dataFile.seek(dfp);
-            String data = new String(dataFile.readLine().getBytes("ISO8859_1"), "UTF-8");
+            String data = new String(dataFile.readLine().getBytes("ISO8859_1"), StandardCharsets.UTF_8);
             // System.out.println(data);
             String[] dataArray = data.split("\\^");
             String[] conceptData = new String[4];
@@ -303,7 +304,7 @@ public class JpnWordNetDic {
 
     private static Set<Long> getdataFpSet(long high, String term) {
         long low = 0;
-        Set<Long> dataFpSet = new HashSet<Long>();
+        Set<Long> dataFpSet = new HashSet<>();
         while (low <= high) {
             long mid = (low + high) / 2;
             // System.out.println("mid: " + mid);
@@ -336,7 +337,7 @@ public class JpnWordNetDic {
         }
         Set<Long> dataFpSet = getdataFpSet(getIndexFpListSize(), word);
         // System.out.println(dataFpSet);
-        Set<String> idSet = new HashSet<String>();
+        Set<String> idSet = new HashSet<>();
         for (Long dfp : dataFpSet) {
             // System.out.println(dfp);
             Concept c = getConcept(dfp);
@@ -355,7 +356,7 @@ public class JpnWordNetDic {
     private static void addURISet(String data, String relation, Set<String> uriSet) {
         String[] idSet = data.split("\\|" + relation)[1].split("\t");
         for (String id : idSet) {
-            if (id.indexOf("|") != -1) {
+            if (id.contains("|")) {
                 break;
             }
             if (!id.equals("")) {
@@ -368,11 +369,11 @@ public class JpnWordNetDic {
      * 入力概念集合を入力として，その中から動詞的概念の集合を返す
      */
     public static Set<Concept> getVerbConceptSet(Set<Concept> inputConceptSet) {
-        Set<Concept> verbConceptSet = new HashSet<Concept>();
+        Set<Concept> verbConceptSet = new HashSet<>();
         for (Concept c : inputConceptSet) {
             String id = c.getLocalName();
             String data = getRelationData(id);
-            if (data != null && (data.indexOf("|agent") != -1 || data.indexOf("|object") != -1)) { // agentとobjectの場合のみを考慮
+            if (data != null && (data.contains("|agent") || data.contains("|object"))) { // agentとobjectの場合のみを考慮
                 verbConceptSet.add(c);
             }
         }
@@ -381,10 +382,10 @@ public class JpnWordNetDic {
 
     public static Set<String> getRelationValueSet(String relation, String vid,
                                                   List<List<Concept>> trimmedConceptList) {
-        Set<String> uriSet = new HashSet<String>();
+        Set<String> uriSet = new HashSet<>();
         String data = getRelationData(vid);
         if (data != null) {
-            if (data.indexOf("|" + relation) == -1) {
+            if (!data.contains("|" + relation)) {
                 return uriSet;
             }
             addURISet(data, relation, uriSet);
@@ -396,7 +397,7 @@ public class JpnWordNetDic {
                 if (data == null) {
                     continue;
                 }
-                if (data.indexOf("|" + relation) == -1) {
+                if (!data.contains("|" + relation)) {
                     continue;
                 }
                 addURISet(data, relation, uriSet);

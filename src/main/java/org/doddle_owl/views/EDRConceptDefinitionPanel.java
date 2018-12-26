@@ -164,8 +164,8 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
             // System.out.println("add concept set: " + addConceptSet);
             ConceptTreeNode node = (ConceptTreeNode) verbConceptTree.getLastSelectedPathComponent();
             VerbConcept concept = (VerbConcept) node.getConcept();
-            for (Iterator i = addConceptSet.iterator(); i.hasNext(); ) {
-                Concept c = (Concept) i.next();
+            for (Object o : addConceptSet) {
+                Concept c = (Concept) o;
                 // System.out.println("add: " + c);
                 if (regionListModel == domainListModel && !concept.getDomainSet().contains(c.getURI())) {
                     concept.addDomain(c.getURI());
@@ -189,8 +189,7 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
         ConceptTreeNode node = (ConceptTreeNode) verbConceptTree.getLastSelectedPathComponent();
         VerbConcept concept = (VerbConcept) node.getConcept();
         List<Concept> removeValues = regionList.getSelectedValuesList();
-        for (int i = 0; i < removeValues.size(); i++) {
-            Concept c = removeValues.get(i);
+        for (Concept c : removeValues) {
             // System.out.println("remove: " + c);
             if (regionListModel == domainListModel) {
                 concept.deleteDomain(c.getURI());

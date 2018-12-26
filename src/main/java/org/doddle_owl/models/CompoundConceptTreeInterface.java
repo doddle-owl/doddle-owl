@@ -31,7 +31,7 @@ import javax.swing.tree.*;
  * @author Takeshi Morita
  */
 public interface CompoundConceptTreeInterface {
-    public void addJPWord(String id, String word);
-    public void addSubConcept(String id, String word);
-    public void addCompoundWordConcept(Map matchedWordIDMap, Map<DefaultMutableTreeNode, String> abstractNodeLabelMap, TreeNode rootNode);
+    void addJPWord(String id, String word);
+    void addSubConcept(String id, String word);
+    void addCompoundWordConcept(Map matchedWordIDMap, Map<DefaultMutableTreeNode, String> abstractNodeLabelMap, TreeNode rootNode);
 }

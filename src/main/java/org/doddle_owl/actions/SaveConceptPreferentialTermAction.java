@@ -32,6 +32,7 @@ import org.doddle_owl.views.ConstructPropertyPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -50,21 +51,19 @@ public class SaveConceptPreferentialTermAction extends AbstractAction {
         BufferedWriter writer = null;
         try {
             FileOutputStream fos = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 
             Map uriPreferentialTermMap = constructClassPanel.getIDPreferentialTermMap();
             uriPreferentialTermMap.putAll(constructPropertyPanel.getIDPreferentialTermMap());
             StringBuffer buf = new StringBuffer();
-            for (Iterator i = uriPreferentialTermMap.keySet().iterator(); i.hasNext();) {
-                String id = (String) i.next();
+            for (Object o : uriPreferentialTermMap.keySet()) {
+                String id = (String) o;
                 String preferentialTerm = (String) uriPreferentialTermMap.get(id);
                 buf.append(id + "\t" + preferentialTerm + "\n");
             }
             writer.write(buf.toString());
-        } catch (FileNotFoundException fnfe) {
+        } catch (IOException fnfe) {
             fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             if (writer != null) {
                 try {

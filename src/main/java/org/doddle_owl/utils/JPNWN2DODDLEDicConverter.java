@@ -40,6 +40,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -68,25 +69,25 @@ public class JPNWN2DODDLEDicConverter {
     private static String JPNWN_PATH = "C:/DODDLE-OWL/wnjpn-0.9_addindex.db";
 
     private static TreeModel jpnwnTreeModel;
-    private static Map<String, Set<String>> idSubIDSetMap = new HashMap<String, Set<String>>();
-    private static Map<String, Set<String>> idSupIDSetMap = new HashMap<String, Set<String>>();
-    private static TreeMap<String, Set<TreeNode>> idNodeSetMap = new TreeMap<String, Set<TreeNode>>();
+    private static Map<String, Set<String>> idSubIDSetMap = new HashMap<>();
+    private static Map<String, Set<String>> idSupIDSetMap = new HashMap<>();
+    private static TreeMap<String, Set<TreeNode>> idNodeSetMap = new TreeMap<>();
 
-    private static TreeSet<String> relationConceptIDSet = new TreeSet<String>();
+    private static TreeSet<String> relationConceptIDSet = new TreeSet<>();
 
-    private static List<Long> dataFilePointerList = new ArrayList<Long>();
-    private static Map<String, Long> idFilePointerMap = new HashMap<String, Long>();
-    private static TreeMap<String, Concept> idDefinitionMap = new TreeMap<String, Concept>();
-    private static TreeMap<String, Set<String>> wordIDSetMap = new TreeMap<String, Set<String>>();
-    private static TreeMap<String, Set<Long>> wordFilePointerSetMap = new TreeMap<String, Set<Long>>();
+    private static List<Long> dataFilePointerList = new ArrayList<>();
+    private static Map<String, Long> idFilePointerMap = new HashMap<>();
+    private static TreeMap<String, Concept> idDefinitionMap = new TreeMap<>();
+    private static TreeMap<String, Set<String>> wordIDSetMap = new TreeMap<>();
+    private static TreeMap<String, Set<Long>> wordFilePointerSetMap = new TreeMap<>();
 
-    private static Map<String, Set<String>> agentMap = new HashMap<String, Set<String>>();
-    private static Map<String, Set<String>> objectMap = new HashMap<String, Set<String>>();
+    private static Map<String, Set<String>> agentMap = new HashMap<>();
+    private static Map<String, Set<String>> objectMap = new HashMap<>();
 
     private static java.sql.Statement stmt;
 
     public static boolean initJPNWNDB() {
-        Connection connection = null;
+        Connection connection;
         try {
             // load the sqlite-JDBC driver using the current class loader
             Class.forName("org.sqlite.JDBC");
@@ -96,11 +97,8 @@ public class JPNWN2DODDLEDicConverter {
             stmt.setQueryTimeout(30); // set timeout to 30 sec.
 
             createIndex();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            return false;
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
             return false;
         }
         return true;
@@ -178,7 +176,7 @@ public class JPNWN2DODDLEDicConverter {
             subIDSet.add(subID);
             idSubIDSetMap.put(id, subIDSet);
         } else {
-            Set<String> subIDSet = new HashSet<String>();
+            Set<String> subIDSet = new HashSet<>();
             subIDSet.add(subID);
             idSubIDSetMap.put(id, subIDSet);
         }
@@ -190,7 +188,7 @@ public class JPNWN2DODDLEDicConverter {
             supIDSet.add(supID);
             idSupIDSetMap.put(id, supIDSet);
         } else {
-            Set<String> supIDSet = new HashSet<String>();
+            Set<String> supIDSet = new HashSet<>();
             supIDSet.add(supID);
             idSupIDSetMap.put(id, supIDSet);
         }
@@ -208,7 +206,7 @@ public class JPNWN2DODDLEDicConverter {
                 setIDSubIDSetMap(id, subID);
                 setIDSupIDSetMap(subID, id);
             }
-            Set<String> rootIDSet = new HashSet<String>();
+            Set<String> rootIDSet = new HashSet<>();
             for (String id : idSubIDSetMap.keySet()) {
                 if (idSupIDSetMap.get(id) == null) {
                     rootIDSet.add(id);
@@ -216,7 +214,7 @@ public class JPNWN2DODDLEDicConverter {
             }
             idSubIDSetMap.put(rootID, rootIDSet);
             DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(rootID);
-            Set<TreeNode> nodeSet = new HashSet<TreeNode>();
+            Set<TreeNode> nodeSet = new HashSet<>();
             nodeSet.add(rootNode);
             idNodeSetMap.put(rootID, nodeSet);
             makeJPNWNTree(rootID, rootNode);
@@ -240,7 +238,7 @@ public class JPNWN2DODDLEDicConverter {
         for (String subID : idSubIDSetMap.get(id)) {
             DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(subID);
             if (idNodeSetMap.get(subID) == null) {
-                Set<TreeNode> nodeSet = new HashSet<TreeNode>();
+                Set<TreeNode> nodeSet = new HashSet<>();
                 nodeSet.add(subNode);
                 idNodeSetMap.put(subID, nodeSet);
             } else {
@@ -256,16 +254,16 @@ public class JPNWN2DODDLEDicConverter {
 
     private static Set<List<String>> getIDPathToRootSet(String id) {
         Set<TreeNode> nodeSet = idNodeSetMap.get(id);
-        Set<List<String>> pathToRootSet = new HashSet<List<String>>();
+        Set<List<String>> pathToRootSet = new HashSet<>();
         if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(new String[] { id}));
+            pathToRootSet.add(Arrays.asList(id));
             return pathToRootSet;
         }
         for (TreeNode node : nodeSet) {
             TreeNode[] pathToRoot = ((DefaultTreeModel) jpnwnTreeModel).getPathToRoot(node);
-            List<String> path = new ArrayList<String>();
-            for (int i = 0; i < pathToRoot.length; i++) {
-                DefaultMutableTreeNode n = (DefaultMutableTreeNode) pathToRoot[i];
+            List<String> path = new ArrayList<>();
+            for (TreeNode treeNode : pathToRoot) {
+                DefaultMutableTreeNode n = (DefaultMutableTreeNode) treeNode;
                 String nid = (String) n.getUserObject();
                 path.add(nid);
             }
@@ -344,10 +342,10 @@ public class JPNWN2DODDLEDicConverter {
         try {
             int i = 0;
             RandomAccessFile raf = new RandomAccessFile(DODDLE_DIC_HOME + CONCEPT_DATA, "r");
-            String line = "";
+            String line;
             long dfp = 0;
             while ((line = raf.readLine()) != null) {
-                line = new String(line.getBytes("ISO8859_1"), "UTF-8");
+                line = new String(line.getBytes("ISO8859_1"), StandardCharsets.UTF_8);
                 String id = line.split("\t\\^")[0];
                 // System.out.println(line);
                 // System.out.println(id + ":" + raf.getFilePointer());
@@ -398,7 +396,7 @@ public class JPNWN2DODDLEDicConverter {
         try {
             System.out.println("Make Concept Data");
             DODDLEDicConverterUI.setProgressText("Make Concept Data");
-            List<String> synsetList = new ArrayList<String>();
+            List<String> synsetList = new ArrayList<>();
             ResultSet rs = stmt.executeQuery("select * from synset");
             while (rs.next()) {
                 String pos = rs.getString("pos");
@@ -425,7 +423,7 @@ public class JPNWN2DODDLEDicConverter {
                     }
                 }
 
-                List<String> wordIDList = new ArrayList<String>();
+                List<String> wordIDList = new ArrayList<>();
                 rs = stmt.executeQuery("select * from sense where synset='" + synset + "'");
                 while (rs.next()) {
                     wordIDList.add(rs.getString("wordid"));
@@ -479,7 +477,7 @@ public class JPNWN2DODDLEDicConverter {
         BufferedWriter writer = null;
         try {
             FileOutputStream fos = new FileOutputStream(DODDLE_DIC_HOME + CONCEPT_DATA);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
             System.out.println("Make Concept Data: Writing concept.data");
             DODDLEDicConverterUI.setProgressText("Make Concept Data: Writing concept.data");
             for (Entry<String, Concept> entry : idDefinitionMap.entrySet()) {
@@ -498,10 +496,8 @@ public class JPNWN2DODDLEDicConverter {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             DODDLEDicConverterUI.initProgressBar(e.getMessage());
-        } catch (UnsupportedEncodingException uee) {
+        } catch (IOException uee) {
             uee.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             if (writer != null) {
                 try {
@@ -591,7 +587,7 @@ public class JPNWN2DODDLEDicConverter {
             Set<Long> idSet = wordFilePointerSetMap.get(word);
             idSet.add(idFilePointerMap.get(id));
         } else {
-            Set<Long> idSet = new HashSet<Long>();
+            Set<Long> idSet = new HashSet<>();
             // System.out.println(word+": "+id+": "+idFilePointerMap.get(id));
             idSet.add(idFilePointerMap.get(id));
             wordFilePointerSetMap.put(word, idSet);
@@ -625,7 +621,7 @@ public class JPNWN2DODDLEDicConverter {
         BufferedWriter writer = null;
         try {
             FileOutputStream fos = new FileOutputStream(DODDLE_DIC_HOME + WORD_DATA);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
             for (Entry<String, Set<Long>> entry : wordFilePointerSetMap.entrySet()) {
                 String word = entry.getKey();
                 Set<Long> filePointerSet = entry.getValue();
@@ -760,7 +756,7 @@ public class JPNWN2DODDLEDicConverter {
         BufferedWriter writer = null;
         try {
             OutputStream os = new FileOutputStream(DODDLE_DIC_HOME + fileName);
-            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
             rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);

@@ -35,14 +35,14 @@ public class VerbConcept extends Concept {
 
     public VerbConcept(Concept c) {
         super(c);
-        domainSet = new TreeSet<String>();
-        rangeSet = new TreeSet<String>();
+        domainSet = new TreeSet<>();
+        rangeSet = new TreeSet<>();
     }
 
     public VerbConcept(String uri, String concept) {
         super(uri, concept);
-        domainSet = new TreeSet<String>();
-        rangeSet = new TreeSet<String>();
+        domainSet = new TreeSet<>();
+        rangeSet = new TreeSet<>();
     }
 
     public void addAllDomain(Set<String> set) {

@@ -33,6 +33,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import javax.swing.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Takeshi Morita
@@ -77,7 +78,7 @@ public class Document implements Comparable<Document> {
 			FileInputStream fis = new FileInputStream(file);
 			String fileName = file.getName().toLowerCase();
 			if (fileName.matches(".*.txt")) {
-				return getTextString(new InputStreamReader(fis, "UTF-8"));
+				return getTextString(new InputStreamReader(fis, StandardCharsets.UTF_8));
 			} else if (fileName.matches(".*.pdf")) {
 				PDFParser pdfParser = new PDFParser(new RandomAccessFile(file, "r"));
 				pdfParser.parse();
@@ -104,7 +105,7 @@ public class Document implements Comparable<Document> {
 	private String getTextString(Reader reader) throws IOException {
 		BufferedReader bufReader = new BufferedReader(reader);
 		StringWriter writer = new StringWriter();
-		String line = "";
+		String line;
 		while ((line = bufReader.readLine()) != null) {
 			writer.write(line);
 			writer.write(System.getProperty("line.separator"));

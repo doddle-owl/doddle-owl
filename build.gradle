@@ -45,6 +45,7 @@ jar {
 }
 
 shadowJar {
+    mergeServiceFiles()
     manifest {
         attributes 'Main-Class': 'org.doddle_owl.DODDLE_OWL'
     }
@@ -72,7 +73,7 @@ dependencies {
     compile 'com.google.code:lucene-gosen-ipadic:1.2.1'
     compile 'org.apache.poi:poi-ooxml:3.7'
     compile 'edu.stanford.nlp:stanford-parser:3.5.1'
-    compile 'org.apache.jena:jena-tdb:3.9.0'
+    compile 'org.apache.jena:apache-jena-libs:3.9.0'
     compile 'org.mrcube:mrcube:1.0.3'
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'org.slf4j:slf4j-log4j12:1.7.5'

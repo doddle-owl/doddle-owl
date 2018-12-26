@@ -46,20 +46,18 @@ public class DODDLEPlugin extends MR3Plugin {
      */
     public void exec() {
         DODDLE_OWL.doddlePlugin = this;
-        new Thread() {
-            public void run() {
-                SplashWindow splashWindow = new SplashWindow(null);
-                try {
-                    DODDLE_OWL.initOptions(new String[]{});
-                    Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
-                    new DODDLE_OWL();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    splashWindow.setVisible(false);
-                }
+        new Thread(() -> {
+            SplashWindow splashWindow = new SplashWindow(null);
+            try {
+                DODDLE_OWL.initOptions(new String[]{});
+                Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
+                new DODDLE_OWL();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                splashWindow.setVisible(false);
             }
-        }.start();
+        }).start();
     }
 
     public void selectClasses(Set nodes) {

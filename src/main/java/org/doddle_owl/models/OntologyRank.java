@@ -76,13 +76,7 @@ public class OntologyRank  implements Comparable{
             } else if (ontoRank.getRelationCount() > relationCount) {
                 return -1;
             } else {
-                if (ontoRank.getSwoogleOntoRank() < swoogleOntoRank) {
-                    return 1;
-                } else if (ontoRank.getSwoogleOntoRank() > swoogleOntoRank) {
-                    return -1;
-                } else {
-                    return 0;
-                }
+                return Double.compare(swoogleOntoRank, ontoRank.getSwoogleOntoRank());
             }
         }
     }

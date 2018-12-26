@@ -126,7 +126,7 @@ public class WordNetDic {
     public static Set<Set<String>> getSiblingConceptSet(Long offset) {
         Set<Set<String>> siblingIDSet = new HashSet<>();
         try {
-            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset.longValue());
+            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset);
             PointerTargetNodeList siblingNodeList = PointerUtils.getCoordinateTerms(synset);
             Set<String> idList = new HashSet<>();
             for (PointerTargetNode node : siblingNodeList) {
@@ -142,12 +142,12 @@ public class WordNetDic {
     public static Set<Set<String>> getSubIDSet(Long offset) {
         Set<Set<String>> subIDSet = new HashSet<>();
         try {
-            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset.longValue());
+            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset);
             PointerTargetTree hyponymTree = PointerUtils.getHyponymTree(synset);
             // 多重継承を許すようにしている
             List<PointerTargetNodeList> treeNodeLists = hyponymTree.reverse();
             for (PointerTargetNodeList nodeList : treeNodeLists) {
-                Set<String> idList = new HashSet<String>();
+                Set<String> idList = new HashSet<>();
                 for (PointerTargetNode node : nodeList) {
                     idList.add(Long.toString(node.getSynset().getOffset()));
                 }
@@ -162,7 +162,7 @@ public class WordNetDic {
     public static Set<List<Concept>> getPathToRootSet(Long offset) {
         Set<List<Concept>> pathToRootSet = new HashSet<>();
         try {
-            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset.longValue());
+            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset);
             PointerTargetTree hypernymTree = PointerUtils.getHypernymTree(synset);
             // 多重継承を許すようにしている
             List<PointerTargetNodeList> treeNodeLists = hypernymTree.reverse();
@@ -207,12 +207,12 @@ public class WordNetDic {
     public static Set<List<String>> getURIPathToRootSet(Long offset) {
         Set<List<String>> pathToRootSet = new HashSet<>();
         try {
-            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset.longValue());
+            Synset synset = dictionary.getSynsetAt(POS.NOUN, offset);
             PointerTargetTree hypernymTree = PointerUtils.getHypernymTree(synset);
             // 多重継承を許すようにしている
             List<PointerTargetNodeList> treeNodeLists = hypernymTree.reverse();
             for (PointerTargetNodeList nodeList : treeNodeLists) {
-                List<String> uriList = new ArrayList<String>();
+                List<String> uriList = new ArrayList<>();
                 for (PointerTargetNode node : nodeList) {
                     String uri = DODDLEConstants.WN_URI + node.getSynset().getOffset();
                     uriList.add(uri);
@@ -244,10 +244,8 @@ public class WordNetDic {
             c.addDescription(new DODDLELiteral("en", synset.getGloss()));
             idConceptMap.put(uri, c);
             return c;
-        } catch (JWNLException jwnle) {
+        } catch (JWNLException | NumberFormatException jwnle) {
             jwnle.printStackTrace();
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
         }
         return null;
     }

@@ -121,7 +121,7 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
     public Set<Concept> getConceptSet() {
         TreeModel treeModel = getConceptTreeModel();
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
-        Set<Concept> conceptSet = new HashSet<Concept>();
+        Set<Concept> conceptSet = new HashSet<>();
         getConceptSet(rootNode, conceptSet);
         return conceptSet;
     }
@@ -225,7 +225,7 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
     }
     
     private void makeSortedTreeModel(ConceptTreeNode node, ConceptTreeNode sortedNode) {
-        TreeSet<ConceptTreeNode> sortedChildNodeSet = new TreeSet<ConceptTreeNode>();
+        TreeSet<ConceptTreeNode> sortedChildNodeSet = new TreeSet<>();
         for (int i = 0; i < node.getChildCount(); i++) {
             sortedChildNodeSet.add((ConceptTreeNode)node.getChildAt(i));
         }

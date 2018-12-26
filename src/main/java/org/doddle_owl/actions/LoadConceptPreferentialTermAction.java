@@ -32,6 +32,7 @@ import org.doddle_owl.views.ConstructPropertyPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,8 +53,8 @@ public class LoadConceptPreferentialTermAction extends AbstractAction {
         BufferedReader reader = null;
         try {
             FileInputStream fis = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
-            Map<String, String> idPreferentialTermMap = new HashMap<String, String>();
+            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
+            Map<String, String> idPreferentialTermMap = new HashMap<>();
             while (reader.ready()) {
                 String line = reader.readLine();
                 String[] idInputWord = line.replaceAll("\n", "").split("\t");
@@ -63,10 +64,8 @@ public class LoadConceptPreferentialTermAction extends AbstractAction {
             }
             constructClassPanel.loadIDPreferentialTerm(idPreferentialTermMap);
             constructPropertyPanel.loadIDPreferentialTerm(idPreferentialTermMap);
-        } catch (FileNotFoundException fnfe) {
+        } catch (IOException fnfe) {
             fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             try {
                 if (reader != null) {

@@ -41,6 +41,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -90,10 +91,10 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         inputConceptJList = list;
         doddleProject = project;
 
-        wordSpaceSet = new HashSet<WordSpace>();
-        aprioriSet = new HashSet<Apriori>();
-        docWSResultMap = new TreeMap<Document, Map<String, List<ConceptPair>>>();
-        docAprioriResultMap = new TreeMap<Document, Map<String, List<ConceptPair>>>();
+        wordSpaceSet = new HashSet<>();
+        aprioriSet = new HashSet<>();
+        docWSResultMap = new TreeMap<>();
+        docAprioriResultMap = new TreeMap<>();
 
         wordSpaceValueSlider = new JSlider();
         wordSpaceValueSlider.addChangeListener(this);
@@ -364,11 +365,11 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         if (inputWordList == null) {
             return null;
         }
-        List<String> targetInputWordList = new ArrayList<String>();
+        List<String> targetInputWordList = new ArrayList<>();
         for (String iw : inputWordList) {
             String text = doc.getText();
             // '_'が入力単語に含まれている場合には，スペースに変換した場合もチェックする
-            if (text.indexOf(iw.replaceAll("_", " ")) != -1 || text.indexOf(iw) != -1) {
+            if (text.contains(iw.replaceAll("_", " ")) || text.contains(iw)) {
                 targetInputWordList.add(iw);
             } else {
                 // System.out.println("文書中に存在しない入力単語: " + iw);
@@ -399,7 +400,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 }
                 FileOutputStream fos = new FileOutputStream(dir.getPath() + File.separator
                         + doc.getFile().getName());
-                writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+                writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
                 for (List<ConceptPair> pairList : map.values()) {
                     Collections.sort(pairList);
                     for (ConceptPair pair : pairList) {
@@ -413,12 +414,8 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 }
                 writer.close(); // ここでファイルを閉じないと，結果が書き込まれない場合がある
             }
-        } catch (FileNotFoundException fnfe) {
+        } catch (IOException fnfe) {
             fnfe.printStackTrace();
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         } finally {
             if (writer != null) {
                 try {
@@ -452,8 +449,8 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                     Collections.sort(pairList);
                     for (ConceptPair pair : pairList) {
                         String fromConceptLabel = URLEncoder.encode(pair.getFromConceptLabel(),
-                                "UTF8");
-                        String toConceptLabel = URLEncoder.encode(pair.getToConceptLabel(), "UTF8");
+                                StandardCharsets.UTF_8);
+                        String toConceptLabel = URLEncoder.encode(pair.getToConceptLabel(), StandardCharsets.UTF_8);
                         String sql = "INSERT INTO " + algorithmTable
                                 + " (Project_ID,Doc_ID,Term1,Term2,Value) " + "VALUES(" + projectID
                                 + "," + docID + ",'" + fromConceptLabel + "','" + toConceptLabel
@@ -465,8 +462,6 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 
@@ -486,8 +481,8 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                     continue;
                 }
                 FileInputStream fis = new FileInputStream(file);
-                reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
-                Map<String, List<ConceptPair>> wordCPListMap = new HashMap<String, List<ConceptPair>>();
+                reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
+                Map<String, List<ConceptPair>> wordCPListMap = new HashMap<>();
                 while (reader.ready()) {
                     String line = reader.readLine();
                     String[] lines = line.split("\t");
@@ -511,12 +506,10 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 }
                 docResultMap.put(doc, wordCPListMap);
             }
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException fnfe) {
+            fnfe.printStackTrace();
         } finally {
             try {
                 if (reader != null) {
@@ -540,12 +533,12 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         }
 
         try {
-            Map<String, Integer> docIDMap = new HashMap<String, Integer>();
+            Map<String, Integer> docIDMap = new HashMap<>();
             String sql = "SELECT * from doc_info where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 int docID = rs.getInt("Doc_ID");
-                String path = URLDecoder.decode(rs.getString("Doc_Path"), "UTF8");
+                String path = URLDecoder.decode(rs.getString("Doc_Path"), StandardCharsets.UTF_8);
                 docIDMap.put(path, docID);
             }
 
@@ -555,17 +548,17 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 sql = "SELECT * from " + resultTable + " where Project_ID=" + projectID
                         + " and Doc_ID=" + docID;
                 rs = stmt.executeQuery(sql);
-                Map<String, List<ConceptPair>> wordCPListMap = new HashMap<String, List<ConceptPair>>();
+                Map<String, List<ConceptPair>> wordCPListMap = new HashMap<>();
                 while (rs.next()) {
-                    String term1 = URLDecoder.decode(rs.getString("Term1"), "UTF8");
-                    String term2 = URLDecoder.decode(rs.getString("Term2"), "UTF8");
+                    String term1 = URLDecoder.decode(rs.getString("Term1"), StandardCharsets.UTF_8);
+                    String term2 = URLDecoder.decode(rs.getString("Term2"), StandardCharsets.UTF_8);
                     double value = rs.getDouble("Value");
                     ConceptPair cp = new ConceptPair(term1, term2, value);
                     if (wordCPListMap.get(term1) != null) {
                         List<ConceptPair> cpList = wordCPListMap.get(term1);
                         cpList.add(cp);
                     } else {
-                        List<ConceptPair> cpList = new ArrayList<ConceptPair>();
+                        List<ConceptPair> cpList = new ArrayList<>();
                         cpList.add(cp);
                         wordCPListMap.put(term1, cpList);
                     }
@@ -573,8 +566,6 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 docResultMap.put(doc, wordCPListMap);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -593,14 +584,12 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
             properties.setProperty("Minimum_Confidence",
                     String.valueOf(minConfidenceSlider.getValue()));
             FileOutputStream fos = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
             properties.store(writer, "Concept Definition Parameters");
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException fnfe) {
+            fnfe.printStackTrace();
         } finally {
             if (writer != null) {
                 try {
@@ -664,12 +653,10 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
             minSupportField.setText(properties.getProperty("Minimum_Support"));
             minConfidenceSlider.setValue(Integer.parseInt(properties
                     .getProperty("Minimum_Confidence")));
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException fnfe) {
+            fnfe.printStackTrace();
         } finally {
             try {
                 if (reader != null) {

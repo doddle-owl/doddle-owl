@@ -101,12 +101,8 @@ public class FreeMindModelMaker {
             DocumentBuilder docbuilder = dbfactory.newDocumentBuilder();
             Document document = docbuilder.parse(file);
             docElement = document.getDocumentElement();
-        } catch (ParserConfigurationException pce) {
+        } catch (ParserConfigurationException | SAXException | IOException pce) {
             pce.printStackTrace();
-        } catch (SAXException saxe) {
-            saxe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         }
         return docElement;
     }
@@ -143,7 +139,7 @@ public class FreeMindModelMaker {
         NodeList childNodeList = element.getChildNodes();
         for (int i = 0; i < childNodeList.getLength(); i++) {
             Node childNode = childNodeList.item(i);
-            Element childElement = null;
+            Element childElement;
             if (childNode instanceof Element) {
                 childElement = (Element) childNode;
             } else {
@@ -205,7 +201,7 @@ public class FreeMindModelMaker {
         NodeList childNodeList = element.getChildNodes();
         for (int i = 0; i < childNodeList.getLength(); i++) {
             Node childNode = childNodeList.item(i);
-            Element childElement = null;
+            Element childElement;
             if (childNode instanceof Element) {
                 childElement = (Element) childNode;
             } else {
@@ -241,7 +237,7 @@ public class FreeMindModelMaker {
                             }
                             String word = attrElement.getAttribute("VALUE");
                             concept.addLabel(new DODDLELiteral(lang, word));
-                            if (word.indexOf(inputWord) == -1) {
+                            if (!word.contains(inputWord)) {
                                 concept.addLabel(new DODDLELiteral(lang, inputWord));
                             }
                         } else if (attrName.matches(".*_DESCRIPTION")) {

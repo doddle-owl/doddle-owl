@@ -56,9 +56,9 @@ public class WordSpace {
 		conceptDefinitionPanel = cdp;
 		inputWordList = conceptDefinitionPanel.getInputTermList();
 
-		gramNumMap = new HashMap<String, Integer>();
-		wordSpaceResult = new HashMap<String, List<ConceptPair>>();
-		allConceptPairs = new ArrayList<ConceptPair>();
+		gramNumMap = new HashMap<>();
+		wordSpaceResult = new HashMap<>();
+		allConceptPairs = new ArrayList<>();
 		makeTokenList(doc, inputWordList);
 	}
 
@@ -85,7 +85,7 @@ public class WordSpace {
 		if (text == null) {
 			return;
 		}
-		corpusTokenList = new ArrayList<String>();
+		corpusTokenList = new ArrayList<>();
 		text = text.replaceAll("\\.|．", "");
 		for (String token : text.split("\\s+")) {
 			corpusTokenList.add(token.toLowerCase());
@@ -94,13 +94,13 @@ public class WordSpace {
 	}
 
 	private void makeJaTokenList(String text, List<String> inputWordList) {
-		corpusTokenList = new ArrayList<String>();
+		corpusTokenList = new ArrayList<>();
 		if (text == null) {
 			return;
 		}
 		try {
 			StringTagger tagger = SenFactory.getStringTagger(null);
-			List<Token> tokenList = new ArrayList<Token>();
+			List<Token> tokenList = new ArrayList<>();
 			tagger.analyze(text, tokenList);
 			for (Token token : tokenList) {
 				String basicStr = token.getMorpheme().getBasicForm();
@@ -149,7 +149,7 @@ public class WordSpace {
 		// System.out.println("Gram Text Size: " + gramText.size());
 
 		int new_gram_number = 1;
-		int matrix[][] = new int[allGramNum][allGramNum];
+		int[][] matrix = new int[allGramNum][allGramNum];
 		gramNumMap.put(gramText.get(0), 0);
 
 		for (int i = 0; i < gramText.size(); i++) {
@@ -183,13 +183,13 @@ public class WordSpace {
 		return matrix;
 	}
 
-	private Map<String, List<ConceptPair>> getWordSpaceResult(int matrix[][], int allGramNum,
-			List<String> targetInputWordList) {
-		Map<String, List<ConceptPair>> wordPairMap = new HashMap<String, List<ConceptPair>>();
+	private Map<String, List<ConceptPair>> getWordSpaceResult(int[][] matrix, int allGramNum,
+															  List<String> targetInputWordList) {
+		Map<String, List<ConceptPair>> wordPairMap = new HashMap<>();
 
 		for (int i = 0; i < targetInputWordList.size(); i++) {
 			String w1 = targetInputWordList.get(i);
-			List<ConceptPair> pairList = new ArrayList<ConceptPair>();
+			List<ConceptPair> pairList = new ArrayList<>();
 			for (int j = 0; j < targetInputWordList.size(); j++) {
 				String w2 = targetInputWordList.get(j);
 				if (i != j) {
@@ -205,7 +205,7 @@ public class WordSpace {
 					}
 					Double similarity = getSimilarityValue(c1, c2, matrix, allGramNum);
 					// System.out.println(c1 + "=>" + c2 + " = " + similarity);
-					if (wsData.getUnderValue() <= similarity.doubleValue()) {
+					if (wsData.getUnderValue() <= similarity) {
 						ConceptPair pair = new ConceptPair(w1, w2, similarity);
 						allConceptPairs.add(pair);
 						pairList.add(pair);
@@ -219,8 +219,7 @@ public class WordSpace {
 	}
 
 	private void setVec(int[] vec, List<String> cLabelList, int[][] matrix, int allGramNum) {
-		for (int i = 0; i < cLabelList.size(); i++) {
-			String w1 = cLabelList.get(i);
+		for (String w1 : cLabelList) {
 			// System.out.println("----" + w1);
 			if (gramNumMap.containsKey(w1)) {
 				for (int j = 0; j < allGramNum; j++) {
@@ -246,9 +245,9 @@ public class WordSpace {
 		}
 	}
 
-	private Double getSimilarityValue(Concept c1, Concept c2, int matrix[][], int allGramNum) {
-		List<String> c1LabelList = new ArrayList<String>();
-		List<String> c2LabelList = new ArrayList<String>();
+	private Double getSimilarityValue(Concept c1, Concept c2, int[][] matrix, int allGramNum) {
+		List<String> c1LabelList = new ArrayList<>();
+		List<String> c2LabelList = new ArrayList<>();
 
 		setLabelList(c1, c1LabelList);
 		setLabelList(c2, c2LabelList);
@@ -289,7 +288,7 @@ public class WordSpace {
 	 */
 	private void setGram(int gramNum, List<String> tokenList) {
 		for (Iterator<String> i = tokenList.iterator(); i.hasNext();) {
-			StringBuffer gramBuf = new StringBuffer("");
+			StringBuffer gramBuf = new StringBuffer();
 			for (int j = 0; j < gramNum; j++) {
 				if (i.hasNext()) {
 					gramBuf.append(i.next());
@@ -307,9 +306,9 @@ public class WordSpace {
 	}
 
 	public List<String> makeGramText(List<String> tokenList) {
-		List<String> gramText = new ArrayList<String>();
+		List<String> gramText = new ArrayList<>();
 		for (Iterator<String> i = tokenList.iterator(); i.hasNext();) {
-			List<String> gramList = new ArrayList<String>();
+			List<String> gramList = new ArrayList<>();
 			for (int j = 0; j < wsData.getGramNumber(); j++) {
 				if (i.hasNext()) {
 					gramList.add(i.next());
@@ -338,7 +337,7 @@ public class WordSpace {
 	private List<String> addUsableGramToList(List<String> gramList, List<String> gramText) {
 		for (int i = 1; i <= wsData.getGramNumber(); i++) {
 			for (int j = 0; j <= wsData.getGramNumber() - i; j++) {
-				StringBuffer gramBuf = new StringBuffer("");
+				StringBuffer gramBuf = new StringBuffer();
 				for (int k = 0; k < i; k++) {
 					if ((k + j) < gramList.size()) {
 						gramBuf.append(gramList.get(k + j));

@@ -43,6 +43,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
@@ -123,7 +124,7 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
     public void saveGeneralOntologyInfo(File saveFile) {
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(saveFile), "UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(saveFile), StandardCharsets.UTF_8));
             Properties properties = new Properties();
             properties.setProperty("EDR(general)", String.valueOf(isEDREnable()));
             properties.setProperty("EDR(technical)", String.valueOf(isEDRTEnable()));
@@ -151,7 +152,7 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
         BufferedReader reader = null;
         try {
             FileInputStream fis = new FileInputStream(loadFile);
-            reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
             Properties properties = new Properties();
             properties.load(reader);
             boolean t = Boolean.valueOf(properties.getProperty("EDR(general)"));

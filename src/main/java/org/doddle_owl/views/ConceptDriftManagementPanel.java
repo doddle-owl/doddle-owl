@@ -43,6 +43,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -82,13 +83,13 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 		project = p;
 		conceptTree = tree;
 		conceptTreeType = type;
-		mraList = new ArrayList<List<ConceptTreeNode>>();
+		mraList = new ArrayList<>();
 		mraJList = new JList();
 		mraJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mraJList.addListSelectionListener(this);
 		checkMRAButton = new JButton(Translator.getTerm("CheckMRAButton"));
 		checkMRAButton.addActionListener(this);
-		traList = new ArrayList<ConceptTreeNode>();
+		traList = new ArrayList<>();
 		traJList = new JList();
 		traJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		traJList.addListSelectionListener(this);
@@ -187,12 +188,12 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 	public void resetMatchedResultAnalysis() {
 		maker.resetMRA();
 		maker.matchedResultAnalysis((ConceptTreeNode) conceptTree.getModel().getRoot());
-		mraList = new ArrayList<List<ConceptTreeNode>>(maker.getMRAresult());
+		mraList = new ArrayList<>(maker.getMRAresult());
 		setMRADefaultValue();
 	}
 
 	public void resetTrimmedResultAnalysis() {
-		int trimmedNum = 3;
+		int trimmedNum;
 		try {
 			trimmedNum = Integer.parseInt(trimmedNumField.getText());
 		} catch (NumberFormatException nfe) {
@@ -202,7 +203,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 		}
 		maker.resetTRA();
 		maker.trimmedResultAnalysis((ConceptTreeNode) conceptTree.getModel().getRoot(), trimmedNum);
-		traList = new ArrayList<ConceptTreeNode>(maker.getTRAresult());
+		traList = new ArrayList<>(maker.getTRAresult());
 		setTRADefaultValue();
 	}
 
@@ -236,7 +237,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 			}
 			ConceptTreeNode traNode = traList.get(index);
 			if (DODDLE_OWL.doddlePlugin != null) {
-				List<ConceptTreeNode> set = new ArrayList<ConceptTreeNode>();
+				List<ConceptTreeNode> set = new ArrayList<>();
 				set.add(traNode);
 				if (traNode.getParent() != null) {
 					set.add((ConceptTreeNode) traNode.getParent());
@@ -321,7 +322,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 	 * 名前空間を付与する
 	 */
 	private Set<String> changeToURISet(List<ConceptTreeNode> stm) {
-		Set<String> uriSet = new HashSet<String>();
+		Set<String> uriSet = new HashSet<>();
 		for (ConceptTreeNode node : stm) {
 			Concept c = node.getConcept();
 			uriSet.add(c.getURI());
@@ -367,8 +368,8 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 	 * 初期値をセットする
 	 */
 	public void setConceptDriftManagementResult() {
-		mraList = new ArrayList<List<ConceptTreeNode>>(maker.getMRAresult());
-		traList = new ArrayList<ConceptTreeNode>(maker.getTRAresult());
+		mraList = new ArrayList<>(maker.getMRAresult());
+		traList = new ArrayList<>(maker.getTRAresult());
 		trimmedNodeTree.setModel(new DefaultTreeModel(null));
 		rmMultipleInheritancePanel.setMultipleInheritanceConceptSet(maker
 				.getMulipleInheritanceConceptSet());
@@ -380,7 +381,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 	}
 
 	private void setMRADefaultValue() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		for (int i = 0; i < mraList.size(); i++) {
 			List<ConceptTreeNode> nodeList = mraList.get(i);
 			ConceptTreeNode sinNode = nodeList.get(0); // 0番目にSINノードが格納されている
@@ -392,7 +393,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 	}
 
 	public void setTRADefaultValue() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		for (int i = 0; i < traList.size(); i++) {
 			ConceptTreeNode traNode = traList.get(i);
 			list.add(i + 1 + ": " + traNode.getConcept() + " (" + traNode.getTrimmedCountList()
@@ -460,7 +461,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 					Set<ConceptTreeNode> sameConceptTreeNodeSet = getSameConceptTreeNodeSet(
 							conceptTreePanel, model, c);
 					DefaultListModel listModel = new DefaultListModel();
-					Set<Concept> sameUpperConceptSet = new HashSet<Concept>();
+					Set<Concept> sameUpperConceptSet = new HashSet<>();
 					for (ConceptTreeNode node : sameConceptTreeNodeSet) {
 						ConceptTreeNode upperConcept = (ConceptTreeNode) node.getParent();
 						if (!sameUpperConceptSet.contains(upperConcept.getConcept())) {
@@ -483,7 +484,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 							conceptTree.scrollPathToVisible(path);
 							conceptTree.setSelectionPath(path);
 							if (DODDLE_OWL.doddlePlugin != null) {
-								List<ConceptTreeNode> set = new ArrayList<ConceptTreeNode>();
+								List<ConceptTreeNode> set = new ArrayList<>();
 								set.add(multipleInheritanceNode);
 								set.add(upperTreeNode);
 								if (isClass()) {
@@ -508,7 +509,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 		private Set<ConceptTreeNode> getSameConceptTreeNodeSet(
 				ConstructConceptTreePanel conceptTreePanel, DefaultTreeModel model, Concept c) {
 			ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
-			Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<ConceptTreeNode>();
+			Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<>();
 			conceptTreePanel.searchSameConceptTreeNode(c, rootNode, sameConceptTreeNodeSet);
 			return sameConceptTreeNodeSet;
 		}
@@ -570,7 +571,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 		BufferedWriter writer = null;
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
-			writer = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 			StringBuilder builder = new StringBuilder();
 
 			List<ConceptTreeNode> conceptTreeNodeList = getTRAResult();
@@ -594,10 +595,8 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 				builder.append("\n");
 			}
 			writer.write(builder.toString());
-		} catch (FileNotFoundException fnfe) {
+		} catch (IOException fnfe) {
 			fnfe.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		} finally {
 			if (writer != null) {
 				try {
@@ -649,18 +648,18 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 		BufferedReader reader = null;
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
-			Map<String, List<List<Concept>>> idTrimmedConceptListMap = new HashMap<String, List<List<Concept>>>();
+			reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
+			Map<String, List<List<Concept>>> idTrimmedConceptListMap = new HashMap<>();
 			while (reader.ready()) {
 				String line = reader.readLine();
 				String[] lines = line.split("\\|");
 				String[] concepts = lines[0].split(",");
-				List<List<Concept>> trimmedConceptList = new ArrayList<List<Concept>>();
+				List<List<Concept>> trimmedConceptList = new ArrayList<>();
 				for (int i = 1; i < lines.length; i++) {
 					String[] conceptStrs = lines[i].split(",");
-					List<Concept> list = new ArrayList<Concept>();
-					for (int j = 0; j < conceptStrs.length; j++) {
-						list.add(DODDLEDic.getConcept(conceptStrs[j]));
+					List<Concept> list = new ArrayList<>();
+					for (String conceptStr : conceptStrs) {
+						list.add(DODDLEDic.getConcept(conceptStr));
 					}
 					trimmedConceptList.add(list);
 				}
@@ -670,10 +669,8 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 			ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
 			loadTrimmedResultAnalysis(rootNode, idTrimmedConceptListMap);
 			setTRADefaultValue();
-		} catch (FileNotFoundException fnfe) {
+		} catch (IOException fnfe) {
 			fnfe.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		} finally {
 			try {
 				if (reader != null) {
@@ -688,7 +685,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 	public void loadTrimmedResultAnalysis(int projectID, Statement stmt,
 			String trimmedAnalysisTable, String trimmedConceptListTable) {
 		try {
-			Map<Integer, String> conceptListIDConceptMap = new HashMap<Integer, String>();
+			Map<Integer, String> conceptListIDConceptMap = new HashMap<>();
 			String sql = "SELECT * from " + trimmedAnalysisTable + " where Project_ID=" + projectID;
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -697,7 +694,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 				String targetParentConcept = rs.getString("Target_Parent_Concept");
 				conceptListIDConceptMap.put(conceptListID, targetConcept + targetParentConcept);
 			}
-			Map<String, List<List<Concept>>> idTrimmedConceptListMap = new HashMap<String, List<List<Concept>>>();
+			Map<String, List<List<Concept>>> idTrimmedConceptListMap = new HashMap<>();
 			for (Entry<Integer, String> entry : conceptListIDConceptMap.entrySet()) {
 				int conceptListID = entry.getKey();
 				String conceptID = entry.getValue();
@@ -705,12 +702,12 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 				if (idTrimmedConceptListMap.get(conceptID) != null) {
 					trimmedConceptList = idTrimmedConceptListMap.get(conceptID);
 				} else {
-					trimmedConceptList = new ArrayList<List<Concept>>();
+					trimmedConceptList = new ArrayList<>();
 				}
 				sql = "SELECT * from " + trimmedConceptListTable + " where Project_ID=" + projectID
 						+ " and Concept_List_ID=" + conceptListID;
 				rs = stmt.executeQuery(sql);
-				List<Concept> list = new ArrayList<Concept>();
+				List<Concept> list = new ArrayList<>();
 				while (rs.next()) {
 					String concept = rs.getString("Concept");
 					list.add(DODDLEDic.getConcept(concept));

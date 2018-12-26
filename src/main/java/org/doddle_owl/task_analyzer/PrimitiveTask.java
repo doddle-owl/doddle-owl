@@ -36,8 +36,8 @@ public class PrimitiveTask {
 
     public PrimitiveTask(Segment predicate) {
         this.predicate = predicate;
-        subjectList = new ArrayList<Segment>();
-        objectList = new ArrayList<Segment>();
+        subjectList = new ArrayList<>();
+        objectList = new ArrayList<>();
     }
 
     public List<Segment> getObjectList() {
