@@ -24,7 +24,7 @@
 package org.doddle_owl.views;
 
 import edu.stanford.nlp.ling.HasWord;
-import edu.stanford.nlp.ling.Sentence;
+import edu.stanford.nlp.ling.SentenceUtils;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import net.infonode.docking.RootWindow;
@@ -491,8 +491,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                         new FileReader(docFile)));
                 for (List<HasWord> sentence : sentences) {
                     List<TaggedWord> tSentence = tagger.tagSentence(sentence);
-                    writer.write(Sentence.listToString(tSentence, false));
-                    builder.append(Sentence.listToString(tSentence, false));
+                    writer.write(SentenceUtils.listToString(tSentence, false));
+                    builder.append(SentenceUtils.listToString(tSentence, false));
                 }
             }
         } catch (IOException ioe) {
