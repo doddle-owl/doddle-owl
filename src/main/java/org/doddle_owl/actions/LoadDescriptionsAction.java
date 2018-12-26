@@ -72,10 +72,8 @@ public class LoadDescriptionsAction extends AbstractAction {
                     }
                 }
             }
-        } catch (UnsupportedEncodingException uee) {
+        } catch (IOException uee) {
             uee.printStackTrace();
-        } catch (IOException fne) {
-            fne.printStackTrace();
         }
         classPanel.loadDescriptions(classWordDescriptionMap);
         propertyPanel.loadDescriptions(propertyWordDescriptionMap);

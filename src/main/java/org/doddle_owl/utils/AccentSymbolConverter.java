@@ -24,6 +24,7 @@
 package org.doddle_owl.utils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -117,7 +118,7 @@ public class AccentSymbolConverter {
         try {
             Reader reader = new InputStreamReader(new FileInputStream(args[0]), "SJIS");
             br = new BufferedReader(reader);
-            Writer writer = new OutputStreamWriter(new FileOutputStream(args[1]), "UTF16");
+            Writer writer = new OutputStreamWriter(new FileOutputStream(args[1]), StandardCharsets.UTF_16);
             BufferedWriter bw = new BufferedWriter(writer);
 
             while (br.ready()) {

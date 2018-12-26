@@ -212,7 +212,7 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
         for (int row : rows) {
             String term = (String) termInfoTable.getValueAt(row, getColumnNamePosition(termInfoTable, Translator
                     .getTerm("TermLabel"))); // 現在選択されている行のデータがほしいのでTableを使う
-            inputTerms.append(term + "\n");
+            inputTerms.append(term).append(System.lineSeparator());
         }
         inputTermArea.setText(inputTermArea.getText() + inputTerms.toString());
     }

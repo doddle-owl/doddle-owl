@@ -112,8 +112,7 @@ public class Document implements Comparable<Document> {
 		}
 		writer.close();
 		reader.close();
-		String text = writer.toString();
-		return text;
+		return writer.toString();
 	}
 
 	private boolean isWindowsOS() {

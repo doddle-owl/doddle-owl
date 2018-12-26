@@ -42,6 +42,8 @@ import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -204,51 +206,43 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
         if (!loadFile.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
-            FileInputStream fis = new FileInputStream(loadFile);
-            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
-            String line = reader.readLine();
-            docNum = Integer.valueOf(line.split("=")[1]);
-            while ((line = reader.readLine()) != null) {
-                String[] items = line.split("\t");
-                String term = items[0];
-                TermInfo info = new TermInfo(term, docNum);
-                String[] posSet = items[1].split(":");
-                for (String s1 : posSet) {
-                    info.addPos(s1);
-                }
-                try {
-                    // 以下，docsを処理する場合には，5, 6, 7を一つずつインクリメントする必要あり
-                    if (5 < items.length) {
-                        String[] inputDocSet = items[5].split(":");
-                        for (String s : inputDocSet) {
-                            String inputDoc = s.split("=")[0];
-                            Integer num = Integer.valueOf(s.split("=")[1]);
-                            info.putInputDoc(new File(inputDoc), num);
-                        }
+            BufferedReader reader = Files.newBufferedReader(Paths.get(loadFile.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                String line = reader.readLine();
+                docNum = Integer.valueOf(line.split("=")[1]);
+                while ((line = reader.readLine()) != null) {
+                    String[] items = line.split("\t");
+                    String term = items[0];
+                    TermInfo info = new TermInfo(term, docNum);
+                    String[] posSet = items[1].split(":");
+                    for (String s1 : posSet) {
+                        info.addPos(s1);
                     }
-                    if (items.length == 7) {
-                        String[] upperConceptSet = items[6].split(":");
-                        for (String s : upperConceptSet) {
-                            info.addUpperConcept(s);
+                    try {
+                        // 以下，docsを処理する場合には，5, 6, 7を一つずつインクリメントする必要あり
+                        if (5 < items.length) {
+                            String[] inputDocSet = items[5].split(":");
+                            for (String s : inputDocSet) {
+                                String inputDoc = s.split("=")[0];
+                                Integer num = Integer.valueOf(s.split("=")[1]);
+                                info.putInputDoc(new File(inputDoc), num);
+                            }
                         }
+                        if (items.length == 7) {
+                            String[] upperConceptSet = items[6].split(":");
+                            for (String s : upperConceptSet) {
+                                info.addUpperConcept(s);
+                            }
+                        }
+                    } catch (ArrayIndexOutOfBoundsException aiobe) {
+                        // 無視
                     }
-                } catch (ArrayIndexOutOfBoundsException aiobe) {
-                    // 無視
+                    termInfoMap.put(term, info);
                 }
-                termInfoMap.put(term, info);
             }
         } catch (IOException ioex) {
             ioex.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
         setTermInfoTableModel(termInfoMap, docNum);
     }

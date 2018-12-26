@@ -1,29 +1,32 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.models;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map.*;
 
@@ -44,7 +47,7 @@ public class ConceptDefinition {
     private Set<String> verbSet;
 
     private Map<String, Map<String, Set<String>>> relationMap;
-    public static final String[] relationList = { "agent", "object", "goal", "implement", "a-object", "place", "scene",
+    public static final String[] relationList = {"agent", "object", "goal", "implement", "a-object", "place", "scene",
             "cause"};
     private static ConceptDefinition conceptDefintion;
 
@@ -66,7 +69,7 @@ public class ConceptDefinition {
         sceneMap = new HashMap<>();
         causeMap = new HashMap<>();
         verbSet = new TreeSet<>();
-        Map[] relationMapList = { agentMap, objectMap, goalMap, implementMap, a_objectMap, placeMap, sceneMap, causeMap};
+        Map[] relationMapList = {agentMap, objectMap, goalMap, implementMap, a_objectMap, placeMap, sceneMap, causeMap};
         relationMap = new HashMap<>();
         for (int i = 0; i < relationList.length; i++) {
             relationMap.put(relationList[i], relationMapList[i]);
@@ -74,50 +77,47 @@ public class ConceptDefinition {
     }
 
     public void printMap() {
-        BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter("conceptDescription3.1ex.txt"));
             int n = 0;
             // System.out.println(verbSet.size());
             for (String verbID : verbSet) {
                 StringBuilder buf = new StringBuilder();
-                buf.append(verbID + "||");
+                buf.append(verbID).append("||");
                 for (String relation : relationList) {
-                    buf.append(relation + "\t");
+                    buf.append(relation).append("\t");
                     Map<String, Set<String>> map = relationMap.get(relation);
                     if (map.get(verbID) == null) {
                         buf.append("||");
                     } else {
                         Set<String> idSet = map.get(verbID);
                         for (String id : idSet) {
-                            buf.append(id + "\t");
+                            buf.append(id).append("\t");
                         }
                     }
                 }
                 System.out.println(n++);
-                buf.append("\n");
-                writer.write(buf.toString());
+                buf.append(System.lineSeparator());
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get("conceptDescription3.1ex.txt"), StandardCharsets.UTF_8);
+                try (writer) {
+                    writer.write(buf.toString());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 
     private void putVerbID(Map<String, Set<String>> map, String verbID, Set<String> idSet) {
-        if (idSet.size() == 0) { return; }
+        if (idSet.size() == 0) {
+            return;
+        }
         map.put(verbID, idSet);
     }
 
     private void putExpandVerbID(Map<String, Set<String>> map, String verbID, Set<String> idSet) {
-        if (idSet.size() == 0) { return; }
+        if (idSet.size() == 0) {
+            return;
+        }
         Set<String> verbIDSet = getSubURISet(verbID);
         verbIDSet.add(verbID);
         for (String vid : verbIDSet) {
@@ -193,7 +193,7 @@ public class ConceptDefinition {
 
     /**
      * idを受け取り，そのIDの下位に存在するURIのセットを返す
-     * 
+     *
      * @param uri
      */
     public Set<String> getSubURISet(String uri) {
@@ -206,14 +206,13 @@ public class ConceptDefinition {
 
     /**
      * 動詞的概念と関係子を引数として受け取り，動詞的概念と関係子を 通して関係のある名詞的概念のセットを返す
-     * 
+     *
      * @param verbID
      * @param relation
      */
     public Set<String> getIDSet(String verbID, String relation) {
         Map<String, Set<String>> map = relationMap.get(relation);
-        Set<String> idSet = map.get(verbID);
-        return idSet;
+        return map.get(verbID);
     }
 
     public Set<String> getURISet(String relation, String verbID, List<List<Concept>> trimmedConceptList) {

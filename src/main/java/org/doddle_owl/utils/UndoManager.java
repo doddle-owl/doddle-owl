@@ -86,14 +86,19 @@ public class UndoManager {
         classPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getClassTRAFile());
         propertyPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getPropertyTRAFile());
         if (lastCommand.getTargetConcept() != null) {
-            if (lastCommand.getTreeType().equals(ConceptTreePanel.CLASS_ISA_TREE)) {
-                classPanel.selectIsaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
-            } else if (lastCommand.getTreeType().equals(ConceptTreePanel.CLASS_HASA_TREE)) {
-                classPanel.selectHasaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
-            } else if (lastCommand.getTreeType().equals(ConceptTreePanel.PROPERTY_ISA_TREE)) {
-                propertyPanel.selectIsaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
-            } else if (lastCommand.getTreeType().equals(ConceptTreePanel.PROPERTY_HASA_TREE)) {
-                propertyPanel.selectHasaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
+            switch (lastCommand.getTreeType()) {
+                case ConceptTreePanel.CLASS_ISA_TREE:
+                    classPanel.selectIsaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
+                    break;
+                case ConceptTreePanel.CLASS_HASA_TREE:
+                    classPanel.selectHasaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
+                    break;
+                case ConceptTreePanel.PROPERTY_ISA_TREE:
+                    propertyPanel.selectIsaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
+                    break;
+                case ConceptTreePanel.PROPERTY_HASA_TREE:
+                    propertyPanel.selectHasaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
+                    break;
             }
         }
     }

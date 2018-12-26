@@ -140,8 +140,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
 	private QueryExecution getQueryExcecution(InputStream inputStream) {
 		String queryString = SPARQLQueryUtil.getQueryString(inputStream);
 		Query query = QueryFactory.create(queryString);
-		QueryExecution qexec = QueryExecutionFactory.create(query, ontModel);
-		return qexec;
+		return QueryExecutionFactory.create(query, ontModel);
 	}
 
 	private void setOWLMetaData(File searchOWLMetaDataTemplate) {

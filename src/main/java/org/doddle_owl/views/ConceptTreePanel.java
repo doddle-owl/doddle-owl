@@ -377,8 +377,8 @@ public class ConceptTreePanel extends JPanel {
                 }
                 if (perfectlyMatchedSearchOptionCheckBox.isSelected() && c.getURI().equals(searchKeyWord)) {
                     return true;
-                } else if (c.getURI().matches(searchKeyWord)) {
-                    return true;
+                } else {
+                    return c.getURI().matches(searchKeyWord);
                 }
             }
             return false;
@@ -506,10 +506,7 @@ public class ConceptTreePanel extends JPanel {
             if (isSearchLabel(c)) {
                 return true;
             }
-            if (isSearchDescription(c)) {
-                return true;
-            }
-            return false;
+            return isSearchDescription(c);
         }
 
         private void searchConcept(ConceptTreeNode node) {

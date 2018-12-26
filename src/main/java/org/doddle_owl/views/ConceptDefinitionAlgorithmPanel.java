@@ -42,6 +42,9 @@ import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -390,7 +393,6 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         } else if (algorithm == WORDSPACE) {
             docResultMap = docWSResultMap;
         }
-        BufferedWriter writer = null;
         try {
             for (Entry<Document, Map<String, List<ConceptPair>>> entry : docResultMap.entrySet()) {
                 Document doc = entry.getKey();
@@ -398,32 +400,24 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 if (map == null) {
                     continue;
                 }
-                FileOutputStream fos = new FileOutputStream(dir.getPath() + File.separator
-                        + doc.getFile().getName());
-                writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
-                for (List<ConceptPair> pairList : map.values()) {
-                    Collections.sort(pairList);
-                    for (ConceptPair pair : pairList) {
-                        writer.write(pair.getFromConceptLabel());
-                        writer.write("\t");
-                        writer.write(pair.getToConceptLabel());
-                        writer.write("\t");
-                        writer.write(pair.getRelatoinValue().toString());
-                        writer.newLine();
+                Path path = Paths.get(dir.getPath() + File.separator + doc.getFile().getName());
+                BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
+                try (writer) {
+                    for (List<ConceptPair> pairList : map.values()) {
+                        Collections.sort(pairList);
+                        for (ConceptPair pair : pairList) {
+                            writer.write(pair.getFromConceptLabel());
+                            writer.write("\t");
+                            writer.write(pair.getToConceptLabel());
+                            writer.write("\t");
+                            writer.write(pair.getRelatoinValue().toString());
+                            writer.newLine();
+                        }
                     }
                 }
-                writer.close(); // ここでファイルを閉じないと，結果が書き込まれない場合がある
             }
-        } catch (IOException fnfe) {
-            fnfe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close(); // 途中で例外が発生した場合に対処
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -472,7 +466,6 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         } else if (algorithm == WORDSPACE) {
             docResultMap = docWSResultMap;
         }
-        BufferedReader reader = null;
         try {
             Set<Document> docSet = doddleProject.getDocumentSelectionPanel().getDocSet();
             for (Document doc : docSet) {
@@ -480,44 +473,35 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 if (!file.exists()) {
                     continue;
                 }
-                FileInputStream fis = new FileInputStream(file);
-                reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
-                Map<String, List<ConceptPair>> wordCPListMap = new HashMap<>();
-                while (reader.ready()) {
-                    String line = reader.readLine();
-                    String[] lines = line.split("\t");
-                    if (lines.length != 3) { // ファイルが正常に保存できなかった場合の対応
-                        // System.out.println(file.getAbsolutePath() + ": " +
-                        // line);
-                        continue;
+                BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+                try (reader) {
+                    Map<String, List<ConceptPair>> wordCPListMap = new HashMap<>();
+                    while (reader.ready()) {
+                        String line = reader.readLine();
+                        String[] lines = line.split("\t");
+                        if (lines.length != 3) { // ファイルが正常に保存できなかった場合の対応
+                            // System.out.println(file.getAbsolutePath() + ": " +
+                            // line);
+                            continue;
+                        }
+                        String toC = lines[0];
+                        String fromC = lines[1];
+                        Double relVal = Double.parseDouble(lines[2]);
+                        ConceptPair cp = new ConceptPair(toC, fromC, relVal);
+                        if (wordCPListMap.get(toC) != null) {
+                            List<ConceptPair> cpList = wordCPListMap.get(toC);
+                            cpList.add(cp);
+                        } else {
+                            List<ConceptPair> cpList = new ArrayList<>();
+                            cpList.add(cp);
+                            wordCPListMap.put(toC, cpList);
+                        }
                     }
-                    String toC = lines[0];
-                    String fromC = lines[1];
-                    Double relVal = Double.parseDouble(lines[2]);
-                    ConceptPair cp = new ConceptPair(toC, fromC, relVal);
-                    if (wordCPListMap.get(toC) != null) {
-                        List<ConceptPair> cpList = wordCPListMap.get(toC);
-                        cpList.add(cp);
-                    } else {
-                        List<ConceptPair> cpList = new ArrayList<>();
-                        cpList.add(cp);
-                        wordCPListMap.put(toC, cpList);
-                    }
+                    docResultMap.put(doc, wordCPListMap);
                 }
-                docResultMap.put(doc, wordCPListMap);
             }
-        } catch (UnsupportedEncodingException uee) {
+        } catch (IOException uee) {
             uee.printStackTrace();
-        } catch (IOException fnfe) {
-            fnfe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 
@@ -571,7 +555,6 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
     }
 
     public void saveConceptDefinitionParameters(File file) {
-        BufferedWriter writer = null;
         try {
             Properties properties = new Properties();
             properties.setProperty("N-Gram", gramNumberField.getText());
@@ -583,21 +566,12 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
             properties.setProperty("Minimum_Support", minSupportField.getText());
             properties.setProperty("Minimum_Confidence",
                     String.valueOf(minConfidenceSlider.getValue()));
-            FileOutputStream fos = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
-            properties.store(writer, "Concept Definition Parameters");
-        } catch (UnsupportedEncodingException uee) {
-            uee.printStackTrace();
-        } catch (IOException fnfe) {
-            fnfe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                properties.store(writer, "Concept Definition Parameters");
             }
+        } catch (IOException uee) {
+            uee.printStackTrace();
         }
     }
 
@@ -638,12 +612,12 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         if (!file.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
-            FileInputStream fis = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             Properties properties = new Properties();
-            properties.load(reader);
+            try (reader) {
+                properties.load(reader);
+            }
             gramNumberField.setText(properties.getProperty("N-Gram"));
             gramCountField.setText(properties.getProperty("Gram_Count"));
             frontScopeField.setText(properties.getProperty("Front_Scope"));
@@ -653,18 +627,8 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
             minSupportField.setText(properties.getProperty("Minimum_Support"));
             minConfidenceSlider.setValue(Integer.parseInt(properties
                     .getProperty("Minimum_Confidence")));
-        } catch (UnsupportedEncodingException uee) {
+        } catch (IOException uee) {
             uee.printStackTrace();
-        } catch (IOException fnfe) {
-            fnfe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 

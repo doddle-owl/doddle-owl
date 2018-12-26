@@ -34,8 +34,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -174,7 +172,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
         labelPanel.setPreferentialTerm(conceptTreeNode.getInputWord());
         StringBuilder trimmedCntStr = new StringBuilder();
         for (int trimmedCnt : conceptTreeNode.getTrimmedCountList()) {
-            trimmedCntStr.append(trimmedCnt + ", ");
+            trimmedCntStr.append(trimmedCnt).append(", ");
         }
         if (conceptTreeNode.isSINNode()) {
             nodeTypeBox.setSelectedItem(Translator.getTerm("SINLabel"));

@@ -60,6 +60,9 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -236,28 +239,20 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     private void setStopWordSet() {
         stopWordSet.clear();
-        BufferedReader reader = null;
         try {
             File file = new File(STOP_WORD_LIST_FILE);
             if (!file.exists()) {
                 return;
             }
-            FileInputStream fis = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                stopWordSet.add(line);
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    stopWordSet.add(line);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 
@@ -284,27 +279,18 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private void saveFiles(Map<File, String> fileTextStringMap, File saveDir) {
-        BufferedWriter writer = null;
         try {
             for (Entry<File, String> entrySet : fileTextStringMap.entrySet()) {
                 File file = entrySet.getKey();
                 String text = entrySet.getValue();
                 File saveFile = new File(saveDir, getTextFileName(file.getName()));
-                FileOutputStream fos = new FileOutputStream(saveFile);
-                writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
-                writer.write(text);
-                writer.close();
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get(saveFile.getAbsolutePath()), StandardCharsets.UTF_8);
+                try (writer) {
+                    writer.write(text);
+                }
             }
         } catch (IOException ioex) {
             ioex.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 
@@ -339,31 +325,26 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     public void saveDocumentInfo(File saveDir) {
         File docInfo = new File(saveDir, ProjectFileNames.DOC_INFO_FILE);
-        BufferedWriter writer = null;
         try {
-            FileOutputStream fos = new FileOutputStream(docInfo);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(docInfo.getAbsolutePath()), StandardCharsets.UTF_8);
             // for (int i = 0; i < docList.getModel().getSize(); i++) {
             // Document doc = (Document) docList.getModel().getElementAt(i);
             // writer.write("doc," +
             // getTextFileName(doc.getFile().getAbsolutePath()) + "," +
             // doc.getLang() + "\n");
             // }
-            for (int i = 0; i < inputDocList.getModel().getSize(); i++) {
-                Document doc = (Document) inputDocList.getModel().getElementAt(i);
-                writer.write("inputDoc," + doc.getFile().getAbsolutePath() + "," + doc.getLang()
-                        + "\n");
-            }
-        } catch (IOException ioex) {
-            ioex.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
+            try (writer) {
+                for (int i = 0; i < inputDocList.getModel().getSize(); i++) {
+                    Document doc = (Document) inputDocList.getModel().getElementAt(i);
+                    writer.write("inputDoc,");
+                    writer.write(doc.getFile().getAbsolutePath());
+                    writer.write(",");
+                    writer.write(doc.getLang());
+                    writer.newLine();
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -403,38 +384,30 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         if (!docInfo.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
-            FileInputStream fis = new FileInputStream(docInfo);
-            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                String[] info = line.split(",");
-                if (info.length != 3) {
-                    continue;
-                }
-                String type = info[0];
-                String fileName = info[1];
-                String lang = info[2];
-                if (type.equals("doc")) {
-                    DefaultListModel model = (DefaultListModel) docList.getModel();
-                    model.addElement(new Document(lang, new File(fileName)));
-                } else if (type.equals("inputDoc")) {
-                    DefaultListModel model = (DefaultListModel) inputDocList.getModel();
-                    model.addElement(new Document(lang, new File(fileName)));
+            BufferedReader reader = Files.newBufferedReader(Paths.get(docInfo.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    String[] info = line.split(",");
+                    if (info.length != 3) {
+                        continue;
+                    }
+                    String type = info[0];
+                    String fileName = info[1];
+                    String lang = info[2];
+                    if (type.equals("doc")) {
+                        DefaultListModel model = (DefaultListModel) docList.getModel();
+                        model.addElement(new Document(lang, new File(fileName)));
+                    } else if (type.equals("inputDoc")) {
+                        DefaultListModel model = (DefaultListModel) inputDocList.getModel();
+                        model.addElement(new Document(lang, new File(fileName)));
+                    }
                 }
             }
             inputTermSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
-        } catch (IOException ioex) {
-            ioex.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -497,7 +470,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         if (!dir.exists()) {
             dir.mkdir();
         }
-        BufferedWriter bw = null;
         StringBuilder builder = new StringBuilder();
         try {
             String modelName = "english-left3words-distsim.tagger";
@@ -511,29 +483,22 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                     // modelFile.getAbsolutePath());
                 }
             }
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                    STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt"), StandardCharsets.UTF_8));
-            MaxentTagger tagger = new MaxentTagger(modelFile.getAbsolutePath());
-            List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new BufferedReader(
-                    new FileReader(docFile)));
-            for (List<HasWord> sentence : sentences) {
-                List<TaggedWord> tSentence = tagger.tagSentence(sentence);
-                bw.write(Sentence.listToString(tSentence, false));
-                builder.append(Sentence.listToString(tSentence, false));
+            Path path = Paths.get(STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
+            BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
+            try (writer) {
+                MaxentTagger tagger = new MaxentTagger(modelFile.getAbsolutePath());
+                List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new BufferedReader(
+                        new FileReader(docFile)));
+                for (List<HasWord> sentence : sentences) {
+                    List<TaggedWord> tSentence = tagger.tagSentence(sentence);
+                    writer.write(Sentence.listToString(tSentence, false));
+                    builder.append(Sentence.listToString(tSentence, false));
+                }
             }
-            bw.close();
         } catch (IOException ioe) {
             DODDLE_OWL.getLogger().log(Level.DEBUG, "Stanford Parser can not be executed.");
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (bw != null) {
-                    bw.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
         return builder.toString();
     }

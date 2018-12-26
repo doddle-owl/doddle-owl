@@ -288,7 +288,7 @@ public class WordSpace {
 	 */
 	private void setGram(int gramNum, List<String> tokenList) {
 		for (Iterator<String> i = tokenList.iterator(); i.hasNext();) {
-			StringBuffer gramBuf = new StringBuffer();
+			StringBuilder gramBuf = new StringBuilder();
 			for (int j = 0; j < gramNum; j++) {
 				if (i.hasNext()) {
 					gramBuf.append(i.next());
@@ -337,7 +337,7 @@ public class WordSpace {
 	private List<String> addUsableGramToList(List<String> gramList, List<String> gramText) {
 		for (int i = 1; i <= wsData.getGramNumber(); i++) {
 			for (int j = 0; j <= wsData.getGramNumber() - i; j++) {
-				StringBuffer gramBuf = new StringBuffer();
+				StringBuilder gramBuf = new StringBuilder();
 				for (int k = 0; k < i; k++) {
 					if ((k + j) < gramList.size()) {
 						gramBuf.append(gramList.get(k + j));

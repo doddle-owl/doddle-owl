@@ -46,6 +46,8 @@ import javax.swing.tree.TreeNode;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author Takeshi Morita
@@ -139,23 +141,15 @@ public class LoadOntologyAction extends AbstractAction {
 		if (!file.exists()) {
 			return;
 		}
-		BufferedReader reader = null;
 		try {
-			InputStream is = new FileInputStream(file);
-			reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 			Model model = ModelFactory.createDefaultModel();
-			model.read(reader, DODDLEConstants.BASE_URI, "RDF/XML");
-			loadOWLOntology(currentProject, model);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (IOException ioe2) {
-				ioe2.printStackTrace();
+			BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+			try (reader) {
+				model.read(reader, DODDLEConstants.BASE_URI, "RDF/XML");
 			}
+			loadOWLOntology(currentProject, model);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

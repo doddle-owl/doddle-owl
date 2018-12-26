@@ -25,11 +25,8 @@
 package org.doddle_owl;
 
 import org.apache.commons.cli.*;
-import org.apache.jena.query.ARQ;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.sys.JenaSystem;
-import org.apache.jena.tdb.TDB;
 import org.apache.log4j.*;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.DODDLEConstants;
@@ -46,6 +43,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.*;
 import java.util.prefs.BackingStoreException;
@@ -160,60 +159,49 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public List<String> loadRecentProject() {
-        BufferedReader reader = null;
         List<String> recentProjects = new ArrayList<>();
         try {
             File recentProjectFile = new File(DODDLEConstants.PROJECT_HOME, ProjectFileNames.RECENT_PROJECTS_FILE);
             if (!recentProjectFile.exists()) {
                 return recentProjects;
             }
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(recentProjectFile), StandardCharsets.UTF_8));
-            while (reader.ready()) {
-                recentProjects.add(reader.readLine());
+            BufferedReader reader = Files.newBufferedReader(Paths.get(recentProjectFile.getAbsolutePath()),
+                    StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    recentProjects.add(reader.readLine());
+                }
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (Exception e) {
-                }
-            }
         }
         return recentProjects;
     }
 
     public void saveRecentProject(List<String> recentProjects) {
-        BufferedWriter writer = null;
         try {
             File recentProjectFile = new File(DODDLEConstants.PROJECT_HOME, ProjectFileNames.RECENT_PROJECTS_FILE);
             if (!recentProjectFile.exists()) {
                 return;
             }
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recentProjectFile), StandardCharsets.UTF_8));
-            int cnt = 0;
-            DODDLE_OWL.recentProjectMenu.removeAll();
-            for (String project : recentProjects) {
-                if (cnt == 10) {
-                    break;
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recentProjectFile), StandardCharsets.UTF_8));
+            try (writer) {
+                int cnt = 0;
+                DODDLE_OWL.recentProjectMenu.removeAll();
+                for (String project : recentProjects) {
+                    if (cnt == 10) {
+                        break;
+                    }
+                    writer.write(project);
+                    writer.write("\n");
+                    JMenuItem item = new JMenuItem(project);
+                    item.addActionListener(new OpenRecentProjectAction(project, this));
+                    DODDLE_OWL.recentProjectMenu.add(item);
+                    cnt++;
                 }
-                writer.write(project);
-                writer.write("\n");
-                JMenuItem item = new JMenuItem(project);
-                item.addActionListener(new OpenRecentProjectAction(project, this));
-                DODDLE_OWL.recentProjectMenu.add(item);
-                cnt++;
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (Exception e) {
-                }
-            }
         }
     }
 
@@ -395,21 +383,14 @@ public class DODDLE_OWL extends JFrame {
         if (!file.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
             InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            DODDLEConstants.BASE_URI = reader.readLine();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            try (reader) {
+                DODDLEConstants.BASE_URI = reader.readLine();
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 
@@ -514,8 +495,7 @@ public class DODDLE_OWL extends JFrame {
         }
         String jarPath = DODDLE_OWL.class.getClassLoader().getResource("").getFile();
         File file = new File(jarPath);
-        String configPath = file.getAbsolutePath() + File.separator;
-        return configPath;
+        return file.getAbsolutePath() + File.separator;
     }
 
     public static void main(String[] args) {

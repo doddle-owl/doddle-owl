@@ -392,8 +392,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
      * テーブルのチェックボックスがチェックされたかどうか
      */
     private boolean isPrefixAvailable(int row, int column) {
-        Boolean isPrefixAvailable = (Boolean) nsTableModel.getValueAt(row, column);
-        return isPrefixAvailable;
+        return (Boolean) nsTableModel.getValueAt(row, column);
     }
 
     public void tableChanged(TableModelEvent e) {
@@ -413,8 +412,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         }
 
         public boolean isCellEditable(int row, int col) {
-            if (col == 2) return false;
-            return true;
+            return col != 2;
         }
 
         public Class getColumnClass(int column) {

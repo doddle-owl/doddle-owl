@@ -336,7 +336,7 @@ public class ConceptTreeMaker {
     public void matchedResultAnalysis(ConceptTreeNode rootNode) {
         List<ConceptTreeNode> sinNodeList = new ArrayList<>();
         getSINNodeSet(rootNode, sinNodeList);
-        Collections.sort(sinNodeList, sinNodeListSorter);
+        sinNodeList.sort(sinNodeListSorter);
         ConceptTreeNode lastSinNode = null;
         for (ConceptTreeNode sinNode : sinNodeList) {
             List<ConceptTreeNode> stm = new ArrayList<>();

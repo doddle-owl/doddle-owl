@@ -44,6 +44,8 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -122,26 +124,19 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
     }
 
     public void saveGeneralOntologyInfo(File saveFile) {
-        BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(saveFile), StandardCharsets.UTF_8));
             Properties properties = new Properties();
             properties.setProperty("EDR(general)", String.valueOf(isEDREnable()));
             properties.setProperty("EDR(technical)", String.valueOf(isEDRTEnable()));
             properties.setProperty("WordNet", String.valueOf(isWordNetEnable()));
             properties.setProperty("JPN WordNet", String.valueOf(isJpnWordNetEnable()));
             properties.setProperty("JWO", String.valueOf(isJWOEnable()));
-            properties.store(writer, "Ontology Info");
-        } catch (IOException ioex) {
-            ioex.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(saveFile.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                properties.store(writer, "Ontology Info");
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -149,12 +144,12 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
         if (!loadFile.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
-            FileInputStream fis = new FileInputStream(loadFile);
-            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
+            BufferedReader reader = Files.newBufferedReader(Paths.get(loadFile.getAbsolutePath()), StandardCharsets.UTF_8);
             Properties properties = new Properties();
-            properties.load(reader);
+            try (reader) {
+                properties.load(reader);
+            }
             boolean t = Boolean.valueOf(properties.getProperty("EDR(general)"));
             edrCheckBox.setSelected(t);
             enableEDRDic(t);
@@ -170,16 +165,8 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
             t = Boolean.valueOf(properties.getProperty("JWO"));
             jwoCheckBox.setSelected(t);
             enableJWO(t);
-        } catch (IOException ioex) {
-            ioex.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

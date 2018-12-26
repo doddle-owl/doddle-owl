@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.actions;
@@ -56,6 +56,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author Takeshi Morita
@@ -124,33 +126,23 @@ public class SaveOntologyAction extends AbstractAction {
             Transformer transformer = tfactory.newTransformer();
             transformer.transform(new DOMSource(document), new StreamResult(file));
             transformer.reset();
-        } catch (TransformerConfigurationException tfe) {
+        } catch (ParserConfigurationException | TransformerException tfe) {
             tfe.printStackTrace();
-        } catch (ParserConfigurationException | TransformerException pce) {
-            pce.printStackTrace();
         }
     }
 
     public void saveOWLOntology(DODDLEProject project, File file) {
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             Model ontModel = getOntology(project);
             RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
             rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
-            rdfWriter.write(ontModel, writer, DODDLEConstants.BASE_URI);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                rdfWriter.write(ontModel, writer, DODDLEConstants.BASE_URI);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

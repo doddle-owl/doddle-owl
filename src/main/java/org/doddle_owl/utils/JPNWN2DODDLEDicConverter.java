@@ -41,6 +41,9 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -474,38 +477,31 @@ public class JPNWN2DODDLEDicConverter {
     }
 
     public static void writeConceptData() {
-        BufferedWriter writer = null;
         try {
-            FileOutputStream fos = new FileOutputStream(DODDLE_DIC_HOME + CONCEPT_DATA);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
+            Path path = Paths.get(DODDLE_DIC_HOME + CONCEPT_DATA);
+            BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
             System.out.println("Make Concept Data: Writing concept.data");
             DODDLEDicConverterUI.setProgressText("Make Concept Data: Writing concept.data");
-            for (Entry<String, Concept> entry : idDefinitionMap.entrySet()) {
-                String id = entry.getKey();
-                Concept concept = entry.getValue();
-                writer.write(id);
-                writer.write("\t^");
-                Map<String, List<DODDLELiteral>> langLabelListMap = concept.getLangLabelListMap();
-                writerLiteralString(writer, langLabelListMap.get("ja"));
-                writerLiteralString(writer, langLabelListMap.get("en"));
-                Map<String, List<DODDLELiteral>> langDescriptionListMap = concept.getLangDescriptionListMap();
-                writerLiteralString(writer, langDescriptionListMap.get("ja"));
-                writerLiteralString(writer, langDescriptionListMap.get("en"));
-                writer.newLine();
+            try (writer) {
+                for (Entry<String, Concept> entry : idDefinitionMap.entrySet()) {
+                    String id = entry.getKey();
+                    Concept concept = entry.getValue();
+                    writer.write(id);
+                    writer.write("\t^");
+                    Map<String, List<DODDLELiteral>> langLabelListMap = concept.getLangLabelListMap();
+                    writerLiteralString(writer, langLabelListMap.get("ja"));
+                    writerLiteralString(writer, langLabelListMap.get("en"));
+                    Map<String, List<DODDLELiteral>> langDescriptionListMap = concept.getLangDescriptionListMap();
+                    writerLiteralString(writer, langDescriptionListMap.get("ja"));
+                    writerLiteralString(writer, langDescriptionListMap.get("en"));
+                    writer.newLine();
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             DODDLEDicConverterUI.initProgressBar(e.getMessage());
         } catch (IOException uee) {
             uee.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
         DODDLEDicConverterUI.addProgressValue();
     }
@@ -753,25 +749,17 @@ public class JPNWN2DODDLEDicConverter {
     public static void saveOntology(Model ontModel, String fileName) {
         System.out.println("Save " + fileName);
         DODDLEDicConverterUI.setProgressText("Save " + fileName);
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(DODDLE_DIC_HOME + fileName);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
             rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
-            rdfWriter.write(ontModel, writer, DODDLEConstants.BASE_URI);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                    ontModel.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            Path path = Paths.get(DODDLE_DIC_HOME + fileName);
+            BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
+            try (writer) {
+                rdfWriter.write(ontModel, writer, DODDLEConstants.BASE_URI);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         DODDLEDicConverterUI.addProgressValue();
     }

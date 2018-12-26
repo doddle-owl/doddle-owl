@@ -47,6 +47,9 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.List;
 
@@ -194,12 +197,9 @@ public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
     }
 
     public void saveOWLMetaDataSet(File saveDir) {
-        BufferedWriter writer = null;
         try {
             for (int i = 0; i < listModel.getSize(); i++) {
                 int num = i + 1;
-                writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(saveDir
-                        + "/" + ProjectFileNames.OWL_META_DATA_FILE + num + ".txt"), StandardCharsets.UTF_8));
                 String uri = (String) listModel.getElementAt(i);
                 ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(uri);
                 Properties properties = new Properties();
@@ -216,19 +216,14 @@ public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
                         .getSearchPropertySetTemplate().getAbsolutePath());
                 properties.setProperty("SearchRegionSetTemplate", template
                         .getSearchRegionSetTemplate().getAbsolutePath());
-                properties.store(writer, "Save OWL Meta Data" + num);
-                writer.close();
+                Path path = Paths.get(saveDir + "/" + ProjectFileNames.OWL_META_DATA_FILE + num + ".txt");
+                BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
+                try (writer) {
+                    properties.store(writer, "Save OWL Meta Data" + num);
+                }
             }
         } catch (IOException ioex) {
             ioex.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 

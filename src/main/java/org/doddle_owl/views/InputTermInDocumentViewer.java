@@ -669,8 +669,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                         basicWord += " ";
                     }
                 }
-                builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR
-                        + "\"><a href=\"inputTerm:" + basicWord + "\">" + word + "</a></font> ");
+                builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR + "\"><a href=\"inputTerm:").append(basicWord).append("\">").append(word).append("</a></font> ");
                 i += compoundWordSize - 1;
             } else if (0 < removedCompoundWordSize) {
                 for (int j = i; j < i + removedCompoundWordSize; j++) {
@@ -682,8 +681,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                     }
                 }
                 basicWord = basicWord.replace("\\s+$", "");
-                builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR
-                        + "\"><a href=\"removedTerm:" + basicWord + "\">" + word + "</a></font> ");
+                builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR + "\"><a href=\"removedTerm:").append(basicWord).append("\">").append(word).append("</a></font> ");
                 i += removedCompoundWordSize - 1;
             } else {
                 word = texts[i] + " ";
@@ -718,8 +716,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                     basicWord += basicStringList.get(j);
                 }
                 if (inputTermSelectionPanel.getInputTermInfo(basicWord) != null) {
-                    builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR
-                            + "\"><a href=\"inputTerm:" + basicWord + "\">" + word + "</a></font>");
+                    builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR + "\"><a href=\"inputTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
                     i += compoundWordSize - 1;
                 } else {
                     word = surfaceList.get(i);
@@ -731,9 +728,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                     basicWord += basicStringList.get(j);
                 }
                 if (inputTermSelectionPanel.getRemovedTermInfo(basicWord) != null) {
-                    builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR
-                            + "\"><a href=\"removedTerm:" + basicWord + "\">" + word
-                            + "</a></font>");
+                    builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR + "\"><a href=\"removedTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
                     i += removedCompoundWordSize - 1;
                 } else {
                     word = surfaceList.get(i);
@@ -841,11 +836,9 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
         if (selectedDoc != null) {
             for (int j = 0; j < selectedDoc.getSize(); j += DISPLAY_LINE_NUM) {
                 if (j == lineNum) {
-                    linkBuilder.append("<font size=5 color=red><a href=\"" + j + "\">" + (j + 1)
-                            + "-" + (j + DISPLAY_LINE_NUM) + "</a></font><br>");
+                    linkBuilder.append("<font size=5 color=red><a href=\"").append(j).append("\">").append(j + 1).append("-").append(j + DISPLAY_LINE_NUM).append("</a></font><br>");
                 } else {
-                    linkBuilder.append("<font color=" + CORRECT_WORD_LINK_COLOR + "><a href=\"" + j
-                            + "\">" + (j + 1) + "-" + (j + DISPLAY_LINE_NUM) + "</a></font><br>");
+                    linkBuilder.append("<font color=" + CORRECT_WORD_LINK_COLOR + "><a href=\"").append(j).append("\">").append(j + 1).append("-").append(j + DISPLAY_LINE_NUM).append("</a></font><br>");
                 }
             }
         }

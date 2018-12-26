@@ -161,7 +161,7 @@ public class TermInfo {
         rowData.add(word);
         StringBuffer buf = new StringBuffer();
         for (String pos : posSet) {
-            buf.append(pos + ":");
+            buf.append(pos).append(":");
         }
         rowData.add(buf.toString());
         rowData.add(getTF());
@@ -184,23 +184,23 @@ public class TermInfo {
     }
 
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append(word + "\t");
+        StringBuilder buf = new StringBuilder();
+        buf.append(word).append("\t");
         for (String pos : posSet) {
-            buf.append(pos + ":");
+            buf.append(pos).append(":");
         }
         buf.append("\t");
-        buf.append(getTF() + "\t");
-        buf.append(getIDFString() + "\t");
-        buf.append(getTFIDFString() + "\t");
+        buf.append(getTF()).append("\t");
+        buf.append(getIDFString()).append("\t");
+        buf.append(getTFIDFString()).append("\t");
         for (Entry<File, Integer> entry : inputDocTermFreqMap.entrySet()) {
             File doc = entry.getKey();
             Integer num = entry.getValue();
-            buf.append(doc.getName() + "=" + num + ":");
+            buf.append(doc.getName()).append("=").append(num).append(":");
         }
         buf.append("\t");
         for (String ucLabel : upperConceptLabelSet) {
-            buf.append(ucLabel + ":");
+            buf.append(ucLabel).append(":");
         }
         return buf.toString();
     }

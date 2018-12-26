@@ -112,7 +112,7 @@ public class InputModule {
 			for (Morpheme morpheme : subList) {
 				String basicForm = morpheme.getBasic();
 				if (isEnglish) {
-					subInputTermBuilder.append(basicForm + " ");
+					subInputTermBuilder.append(basicForm).append(" ");
 				} else {
 					subInputTermBuilder.append(basicForm);
 				}
@@ -131,9 +131,7 @@ public class InputModule {
 		}
 		InputTermModel itModel = new InputTermModel(inputTerm, morphemeList,
 				subInputTermBuilder.toString(), conceptSet.size(), matchedPoint, project);
-		if (termConceptSetMap.get(itModel.getMatchedTerm()) == null) {
-			termConceptSetMap.put(itModel.getMatchedTerm(), conceptSet);
-		}
+		termConceptSetMap.putIfAbsent(itModel.getMatchedTerm(), conceptSet);
 		return itModel;
 	}
 

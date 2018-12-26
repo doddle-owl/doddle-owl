@@ -361,12 +361,13 @@ public class Utils {
     }
 
     public static String getRDFType(Resource rdfType) {
-        if (rdfType.getURI().equals("http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#RDFXML")) {
-            return "RDF/XML";
-        } else if (rdfType.getURI().equals("http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#N3")) {
-            return "N3";
-        } else if (rdfType.getURI().equals("http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#NTriples")) {
-            return "N-Triple";
+        switch (rdfType.getURI()) {
+            case "http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#RDFXML":
+                return "RDF/XML";
+            case "http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#N3":
+                return "N3";
+            case "http://daml.umbc.edu/ontologies/webofbelief/1.4/wob.owl#NTriples":
+                return "N-Triple";
         }
         return "RDF/XML";
     }

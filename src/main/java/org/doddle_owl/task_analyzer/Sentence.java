@@ -172,12 +172,7 @@ public class Sentence {
             for (Segment seg : entry.getValue()) {
                 if (seg.isIncludingNoKaku()) {
                     String compoundWordWithNokaku = seg.getRefinedPhrase() + entry.getKey().getNounPhrase();
-                    if (compoundWordWithNokakuCountMap.get(compoundWordWithNokaku) != null) {
-                        compoundWordWithNokakuCountMap.put(compoundWordWithNokaku, compoundWordWithNokakuCountMap
-                                .get(compoundWordWithNokaku) + 1);
-                    } else {
-                        compoundWordWithNokakuCountMap.put(compoundWordWithNokaku, 1);
-                    }
+                    compoundWordWithNokakuCountMap.merge(compoundWordWithNokaku, 1, (a, b) -> a + b);
                 }
             }
         }
@@ -221,10 +216,6 @@ public class Sentence {
     }
 
     private void putCompoundWord(String compoundWord) {
-        if (compoundWordCountMap.get(compoundWord) != null) {
-            compoundWordCountMap.put(compoundWord, compoundWordCountMap.get(compoundWord) + 1);
-        } else {
-            compoundWordCountMap.put(compoundWord, 1);
-        }
+        compoundWordCountMap.merge(compoundWord, 1, (a, b) -> a + b);
     }
 }

@@ -51,14 +51,14 @@ public class InputTermModel implements Comparable {
 		inputWord = w;
 		morphemeList = mList;
 		matchedInputWord = miw;
-		StringBuffer buf = new StringBuffer("(");
+		StringBuilder buf = new StringBuilder("(");
 		for (Iterator i = morphemeList.iterator(); i.hasNext();) {
 			Morpheme m = (Morpheme) i.next();
 			String word = m.getBasic();
 			if (i.hasNext()) {
-				buf.append(word + "+");
+				buf.append(word).append("+");
 			} else {
-				buf.append(word + ")");
+				buf.append(word).append(")");
 			}
 		}
 		wordListStr = buf.toString();
@@ -136,21 +136,21 @@ public class InputTermModel implements Comparable {
 	}
 
 	public String toString() {
-		StringBuffer buf = new StringBuffer(inputWord);
+		StringBuilder buf = new StringBuilder(inputWord);
 		if (isPartiallyMatchTerm() && project.isPartiallyMatchedCompoundWordCheckBox()) {
-			buf.append(" " + wordListStr);
+			buf.append(" ").append(wordListStr);
 		}
 		if (isPartiallyMatchTerm() && project.isPartiallyMatchedMatchedWordBox()) {
-			buf.append(" (" + matchedInputWord + ") ");
+			buf.append(" (").append(matchedInputWord).append(") ");
 		}
 		if (isPartiallyMatchTerm() && project.isPartiallyMatchedAmbiguityCntCheckBox()) {
-			buf.append(" (" + ambiguousCnt + ")");
+			buf.append(" (").append(ambiguousCnt).append(")");
 		}
 		if (isPerfectlyMatchWord() && project.isPerfectlyMatchedAmbiguityCntCheckBox()) {
-			buf.append(" (" + ambiguousCnt + ")");
+			buf.append(" (").append(ambiguousCnt).append(")");
 		}
 		if (isSystemAdded() && project.isPerfectlyMatchedSystemAddedWordCheckBox()) {
-			buf.append(" (" + Translator.getTerm("SystemAddedLabel") + ")");
+			buf.append(" (").append(Translator.getTerm("SystemAddedLabel")).append(")");
 		}
 		return buf.toString();
 	}

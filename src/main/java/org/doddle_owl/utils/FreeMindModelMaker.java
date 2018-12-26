@@ -170,25 +170,31 @@ public class FreeMindModelMaker {
                     if (attrNode instanceof Element && attrNode.getNodeName().equals("attribute")) {
                         Element attrElement = (Element) attrNode;
                         String attrName = attrElement.getAttribute("NAME");
-                        if (attrName.equals("URI")) {
-                            uri = attrElement.getAttribute("VALUE");
-                            ontModel.add(ResourceFactory.createResource(uri), RDF.type, type);
-                        } else if (attrName.equals(".*_LABEL")) {
-                            String lang = attrName.split("_")[0];
-                            if (lang.equals("default")) {
-                                lang = "";
+                        switch (attrName) {
+                            case "URI":
+                                uri = attrElement.getAttribute("VALUE");
+                                ontModel.add(ResourceFactory.createResource(uri), RDF.type, type);
+                                break;
+                            case ".*_LABEL": {
+                                String lang = attrName.split("_")[0];
+                                if (lang.equals("default")) {
+                                    lang = "";
+                                }
+                                String word = attrElement.getAttribute("VALUE");
+                                literal = ontModel.createLiteral(word.replaceAll("\t", ""), lang);
+                                ontModel.add(ResourceFactory.createResource(uri), RDFS.label, literal);
+                                break;
                             }
-                            String word = attrElement.getAttribute("VALUE");
-                            literal = ontModel.createLiteral(word.replaceAll("\t", ""), lang);
-                            ontModel.add(ResourceFactory.createResource(uri), RDFS.label, literal);
-                        } else if (attrName.equals(".*_DESCRIPTION")) {
-                            String lang = attrName.split("_")[0];
-                            if (lang.equals("default")) {
-                                lang = "";
+                            case ".*_DESCRIPTION": {
+                                String lang = attrName.split("_")[0];
+                                if (lang.equals("default")) {
+                                    lang = "";
+                                }
+                                String description = attrElement.getAttribute("VALUE");
+                                literal = ontModel.createLiteral(description.replaceAll("\t", ""), lang);
+                                ontModel.add(ResourceFactory.createResource(uri), RDFS.comment, literal);
+                                break;
                             }
-                            String description = attrElement.getAttribute("VALUE");
-                            literal = ontModel.createLiteral(description.replaceAll("\t", ""), lang);
-                            ontModel.add(ResourceFactory.createResource(uri), RDFS.comment, literal);
                         }
                     }
                 }

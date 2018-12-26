@@ -44,9 +44,8 @@ public class UseCaseTask {
             String title = matcher.group(1);
             String[] elems = title.split("：");
             String id = elems[0];
-            String description = elems[1];
 
-            this.description = description;
+            this.description = elems[1];
             this.id = id;
         }
         primitiveTaskList = new ArrayList<>();

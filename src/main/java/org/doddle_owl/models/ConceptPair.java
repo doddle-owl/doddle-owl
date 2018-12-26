@@ -52,12 +52,16 @@ public class ConceptPair implements Comparable {
 
     public void setRelationValue(String method) {
         // method == ws or ar or nv
-        if (method.equals("ws")) {
-            wsValue = relationValue;
-        } else if (method.equals("ar")) {
-            arValue = relationValue;
-        } else if (method.equals("nv")) {
-            nvValue = relationValue;
+        switch (method) {
+            case "ws":
+                wsValue = relationValue;
+                break;
+            case "ar":
+                arValue = relationValue;
+                break;
+            case "nv":
+                nvValue = relationValue;
+                break;
         }
     }
 
@@ -96,8 +100,7 @@ public class ConceptPair implements Comparable {
     }
 
     public String toIdentifier() {
-        String identifier = fromConcept + ":" + toConcept;
-        return identifier;
+        return fromConcept + ":" + toConcept;
     }
 
     /**

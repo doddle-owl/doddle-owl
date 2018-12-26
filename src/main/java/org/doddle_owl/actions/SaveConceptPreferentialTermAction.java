@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.actions;
@@ -33,7 +33,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Iterator;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 /**
@@ -48,37 +49,34 @@ public class SaveConceptPreferentialTermAction extends AbstractAction {
     public void saveIDPreferentialTerm(DODDLEProject currentProject, File file) {
         ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
         ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
-        BufferedWriter writer = null;
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
 
             Map uriPreferentialTermMap = constructClassPanel.getIDPreferentialTermMap();
             uriPreferentialTermMap.putAll(constructPropertyPanel.getIDPreferentialTermMap());
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             for (Object o : uriPreferentialTermMap.keySet()) {
                 String id = (String) o;
                 String preferentialTerm = (String) uriPreferentialTermMap.get(id);
-                buf.append(id + "\t" + preferentialTerm + "\n");
+                buf.append(id);
+                buf.append("\t");
+                buf.append(preferentialTerm);
+                buf.append(System.lineSeparator());
             }
-            writer.write(buf.toString());
-        } catch (IOException fnfe) {
-            fnfe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                writer.write(buf.toString());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     public void actionPerformed(ActionEvent e) {
         JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
         int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
-        if (retval != JFileChooser.APPROVE_OPTION) { return; }
+        if (retval != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
         DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
         saveIDPreferentialTerm(currentProject, chooser.getSelectedFile());
     }

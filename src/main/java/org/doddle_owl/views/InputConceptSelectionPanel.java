@@ -51,6 +51,8 @@ import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -992,15 +994,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (!file.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
-            FileInputStream fis = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
             Set<String> inputTermSet = new HashSet<>();
             while (inputTermModelSet == null) {
                 try {
                     Thread.sleep(1000);
-                    // System.out.println("sleep");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1009,41 +1007,36 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 inputTermSet.add(iwModel.getTerm());
             }
 
-            while (reader.ready()) {
-                String line = reader.readLine();
-                String[] termURI = line.replaceAll("\n", "").split(",");
-                if (0 < termURI[0].length()) {
-                    String term = termURI[0];
-                    InputTermModel iwModel = inputModule.makeInputTermModel(term);
-                    if (iwModel != null && inputTermSet.contains(iwModel.getTerm())) {
-                        Set<Concept> correspondConceptSet = new HashSet<>();
-                        for (int i = 1; i < termURI.length; i++) {
-                            String uri = termURI[i];
-                            Concept c = DODDLEDic.getConcept(uri);
-                            if (c != null) { // 参照していないオントロジーの概念と対応づけようとした場合にnullとなる
-                                correspondConceptSet.add(c);
-                            } else if (uri.equals("null")) {
-                                correspondConceptSet.add(nullConcept);
-                                break;
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    String[] termURI = line.replaceAll("\n", "").split(",");
+                    if (0 < termURI[0].length()) {
+                        String term = termURI[0];
+                        InputTermModel iwModel = inputModule.makeInputTermModel(term);
+                        if (iwModel != null && inputTermSet.contains(iwModel.getTerm())) {
+                            Set<Concept> correspondConceptSet = new HashSet<>();
+                            for (int i = 1; i < termURI.length; i++) {
+                                String uri = termURI[i];
+                                Concept c = DODDLEDic.getConcept(uri);
+                                // 参照していないオントロジーの概念と対応づけようとした場合にnullとなる
+                                if (c != null) {
+                                    correspondConceptSet.add(c);
+                                } else if (uri.equals("null")) {
+                                    correspondConceptSet.add(nullConcept);
+                                    break;
+                                }
                             }
-                        }
-                        if (0 < correspondConceptSet.size()) {
-                            termCorrespondConceptSetMap
-                                    .put(iwModel.getTerm(), correspondConceptSet);
+                            if (0 < correspondConceptSet.size()) {
+                                termCorrespondConceptSetMap.put(iwModel.getTerm(), correspondConceptSet);
+                            }
                         }
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 
@@ -1506,25 +1499,17 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
         inputFile = file;
         Set<String> termSet = new HashSet<>();
-        BufferedReader reader = null;
         try {
-            FileInputStream fis = new FileInputStream(inputFile);
-            reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                String term = line.replaceAll("\n", "");
-                termSet.add(term);
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    String term = line.replaceAll("\n", "");
+                    termSet.add(term);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
         loadInputTermSet(termSet, taskCnt);
     }
@@ -1946,7 +1931,6 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     public void saveConstructTreeOption(File file) {
-        BufferedWriter writer = null;
         try {
             Properties properties = new Properties();
             properties.setProperty("ConstructTree.isTreeConstruction",
@@ -1959,19 +1943,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     String.valueOf(partiallyMatchedOptionPanel.isTrimming()));
             properties.setProperty("ConstructTree.isAddAbstractConceptWithCompoundWordTree",
                     String.valueOf(partiallyMatchedOptionPanel.isAddAbstractConcept()));
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-            properties.store(writer, "Construct Tree Option");
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                properties.store(writer, "Construct Tree Option");
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -1983,12 +1960,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (!file.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
             Properties properties = new Properties();
-            InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            properties.load(reader);
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                properties.load(reader);
+            }
             boolean t = Boolean.valueOf(properties.getProperty("ConstructTree.isTreeConstruction"));
             perfectlyMatchedOptionPanel.setConstruction(t);
             t = Boolean.valueOf(properties.getProperty("ConstructTree.isTrimmingInternalNode"));
@@ -2001,14 +1978,6 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             partiallyMatchedOptionPanel.setAddAbstractConcept(t);
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 
@@ -2016,29 +1985,25 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (compoundConstructTreeOptionMap == null) {
             return;
         }
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             StringBuilder buf = new StringBuilder();
             for (InputTermModel iwModel : compoundConstructTreeOptionMap.keySet()) {
                 ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
                 if (iwModel != null && ctOption != null && ctOption.getConcept() != null) {
-                    buf.append(iwModel.getTerm() + "\t" + ctOption.getConcept().getURI() + "\t"
-                            + ctOption.getOption() + "\n");
+                    buf.append(iwModel.getTerm());
+                    buf.append("\t");
+                    buf.append(ctOption.getConcept().getURI());
+                    buf.append("\t");
+                    buf.append(ctOption.getOption());
+                    buf.append(System.lineSeparator());
                 }
             }
-            writer.write(buf.toString());
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                writer.write(buf.toString());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -2063,32 +2028,24 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             return;
         }
         compoundConstructTreeOptionMap = new HashMap<>();
-        BufferedReader reader = null;
         try {
-            InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                String[] strs = line.split("\t");
-                String iw = strs[0];
-                String uri = strs[1];
-                String opt = strs[2];
-                if (0 < iw.length()) {
-                    InputTermModel iwModel = inputModule.makeInputTermModel(iw);
-                    compoundConstructTreeOptionMap.put(iwModel,
-                            new ConstructTreeOption(DODDLEDic.getConcept(uri), opt));
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    String[] strs = line.split("\t");
+                    String iw = strs[0];
+                    String uri = strs[1];
+                    String opt = strs[2];
+                    if (0 < iw.length()) {
+                        InputTermModel iwModel = inputModule.makeInputTermModel(iw);
+                        compoundConstructTreeOptionMap.put(iwModel,
+                                new ConstructTreeOption(DODDLEDic.getConcept(uri), opt));
+                    }
                 }
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 
@@ -2123,32 +2080,24 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (inputTermModelSet == null) {
             return;
         }
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             StringBuilder buf = new StringBuilder();
             for (InputTermModel iwModel : inputTermModelSet) {
                 if (!iwModel.isSystemAdded()) {
                     buf.append(iwModel.getTerm());
-                    buf.append("\n");
+                    buf.append(System.lineSeparator());
                 }
             }
             for (String inputTerm : inputModule.getUndefinedTermSet()) {
                 buf.append(inputTerm);
-                buf.append("\n");
+                buf.append(System.lineSeparator());
             }
-            writer.write(buf.toString());
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                writer.write(buf.toString());
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 
@@ -2168,26 +2117,18 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
         DefaultListModel undefinedTermListModel = undefinedTermListPanel.getModel();
         undefinedTermListModel.clear();
-        BufferedReader reader = null;
         try {
-            InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                if (line != null) {
-                    undefinedTermListModel.addElement(line);
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    if (line != null) {
+                        undefinedTermListModel.addElement(line);
+                    }
                 }
             }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         constructClassPanel.setUndefinedTermListModel(undefinedTermListModel);
         constructPropertyPanel.setUndefinedTermListModel(undefinedTermListModel);
@@ -2217,27 +2158,19 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             return;
         }
         inputConceptSet = new HashSet<>();
-        BufferedReader reader = null;
         try {
-            InputStream is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            while (reader.ready()) {
-                String uri = reader.readLine();
-                Concept c = DODDLEDic.getConcept(uri);
-                if (c != null) {
-                    inputConceptSet.add(c);
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String uri = reader.readLine();
+                    Concept c = DODDLEDic.getConcept(uri);
+                    if (c != null) {
+                        inputConceptSet.add(c);
+                    }
                 }
             }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -2263,26 +2196,19 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (undefinedTermListModel == null) {
             return;
         }
-        BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
             StringBuilder buf = new StringBuilder();
             for (int i = 0; i < undefinedTermListModel.getSize(); i++) {
                 String undefinedTerm = (String) undefinedTermListModel.getElementAt(i);
                 buf.append(undefinedTerm);
                 buf.append("\n");
             }
-            writer.write(buf.toString());
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                writer.write(buf.toString());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -2328,33 +2254,23 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     public void saveTermCorrespondConceptSetMap(File file) {
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-
             StringBuilder buf = new StringBuilder();
             for (Entry<String, Set<Concept>> stringSetEntry : getTermCorrespondConceptSetMap().entrySet()) {
-                Entry entry = (Entry) stringSetEntry;
-                String term = (String) entry.getKey();
-                Set<Concept> conceptSet = (Set<Concept>) entry.getValue();
-                buf.append(term + ",");
+                String term = stringSetEntry.getKey();
+                Set<Concept> conceptSet = stringSetEntry.getValue();
+                buf.append(term).append(",");
                 for (Concept c : conceptSet) {
-                    buf.append(c.getURI() + ",");
+                    buf.append(c.getURI()).append(",");
                 }
-                buf.append("\n");
+                buf.append(System.lineSeparator());
             }
-            writer.write(buf.toString());
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                writer.write(buf.toString());
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 
@@ -2388,11 +2304,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (termEvalConceptSetMap == null || inputTermModelSet == null) {
             return;
         }
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-
             StringBuilder buf = new StringBuilder();
             for (InputTermModel iwModel : inputTermModelSet) {
                 Set<EvalConcept> evalConceptSet = termEvalConceptSetMap.get(iwModel
@@ -2404,27 +2316,22 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 double evalValue = -1;
                 for (EvalConcept ec : evalConceptSet) {
                     if (evalValue == ec.getEvalValue()) {
-                        buf.append("\t" + ec.getConcept().getURI());
+                        buf.append("\t").append(ec.getConcept().getURI());
                     } else {
                         if (ec.getConcept() != null) {
-                            buf.append("||" + ec.getEvalValue() + "\t" + ec.getConcept().getURI());
+                            buf.append("||").append(ec.getEvalValue()).append("\t").append(ec.getConcept().getURI());
                             evalValue = ec.getEvalValue();
                         }
                     }
                 }
-                buf.append("\n");
+                buf.append(System.lineSeparator());
             }
-            writer.write(buf.toString());
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                writer.write(buf.toString());
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 
@@ -2438,24 +2345,16 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     private void savePerfectlyMatchedTerm(File file) {
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-
-            for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
-                writer.write(iwModel.getTerm() + "\n");
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
+                    writer.write(iwModel.getTerm());
+                    writer.newLine();
+                }
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 
@@ -2469,11 +2368,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     private void savePerfectlyMatchedTermWithCompoundWord(File file) {
-        BufferedWriter writer = null;
         try {
-            OutputStream os = new FileOutputStream(file);
-            writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-
             Map perfectlyMatchedTermWithCompoundWordMap = new TreeMap();
             for (InputTermModel iwModel : inputTermModelSet) {
                 if (perfectlyMatchedTermWithCompoundWordMap.get(iwModel.getMatchedTerm()) != null) {
@@ -2493,26 +2388,20 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             StringBuilder buf = new StringBuilder();
             for (Object o1 : perfectlyMatchedTermWithCompoundWordMap.keySet()) {
                 String matchedTerm = (String) o1;
-                buf.append(matchedTerm + "=>");
-                Set compoundWordSet = (Set) perfectlyMatchedTermWithCompoundWordMap
-                        .get(matchedTerm);
+                buf.append(matchedTerm).append("=>");
+                Set compoundWordSet = (Set) perfectlyMatchedTermWithCompoundWordMap.get(matchedTerm);
                 for (Object o : compoundWordSet) {
                     String compoundWord = (String) o;
-                    buf.append(compoundWord + ",");
+                    buf.append(compoundWord).append(",");
                 }
-                buf.append("\n");
+                buf.append(System.lineSeparator());
             }
-            writer.write(buf.toString());
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (writer) {
+                writer.write(buf.toString());
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ioe2) {
-                    ioe2.printStackTrace();
-                }
-            }
         }
     }
 
@@ -2538,37 +2427,30 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (!file.exists()) {
             return;
         }
-        BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
             termEvalConceptSetMap = new HashMap<>();
-            while (reader.ready()) {
-                String line = reader.readLine();
-                String[] termAndResults = line.split("\\|\\|");
-                String term = termAndResults[0];
-                Set<EvalConcept> evalConceptSet = new TreeSet<>();
-                for (int i = 1; i < termAndResults.length; i++) {
-                    String[] valueAndURIs = termAndResults[i].split("\t");
-                    double value = Double.parseDouble(valueAndURIs[0]);
-                    for (int j = 1; j < valueAndURIs.length; j++) {
-                        String uri = valueAndURIs[j];
-                        Concept c = DODDLEDic.getConcept(uri);
-                        evalConceptSet.add(new EvalConcept(c, value));
+            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
+            try (reader) {
+                while (reader.ready()) {
+                    String line = reader.readLine();
+                    String[] termAndResults = line.split("\\|\\|");
+                    String term = termAndResults[0];
+                    Set<EvalConcept> evalConceptSet = new TreeSet<>();
+                    for (int i = 1; i < termAndResults.length; i++) {
+                        String[] valueAndURIs = termAndResults[i].split("\t");
+                        double value = Double.parseDouble(valueAndURIs[0]);
+                        for (int j = 1; j < valueAndURIs.length; j++) {
+                            String uri = valueAndURIs[j];
+                            Concept c = DODDLEDic.getConcept(uri);
+                            evalConceptSet.add(new EvalConcept(c, value));
+                        }
                     }
+                    evalConceptSet.add(nullEvalConcept);
+                    termEvalConceptSetMap.put(term, evalConceptSet);
                 }
-                evalConceptSet.add(nullEvalConcept);
-                termEvalConceptSetMap.put(term, evalConceptSet);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException ioe2) {
-                ioe2.printStackTrace();
-            }
         }
     }
 

@@ -335,10 +335,8 @@ public class SwoogleWebServiceWrapper {
                 saveQueryResult(queryTypeAndSearchString, queryCachFile, url.openStream());
                 model = getModel(url.openStream(), DODDLEConstants.BASE_URI);
             }
-        } catch (FileNotFoundException fne) {
+        } catch (IOException fne) {
             fne.printStackTrace();
-        } catch (IOException uee) {
-            uee.printStackTrace();
         }
         if (model == null) {
             model = ModelFactory.createDefaultModel();
@@ -368,20 +366,19 @@ public class SwoogleWebServiceWrapper {
             Resource rdfType = (Resource) qs.get(RDF_TYPE);
 
             DODDLE_OWL.getLogger().log(Level.INFO, "Try to save: " + ontologyURL.getURI());
-            if (ontologyURL.getURI().equals(
-                    "http://c703-deri03.uibk.ac.at:8080/people/mappings.owl")) {
-                System.out.println("skip: http://c703-deri03.uibk.ac.at:8080/people/mappings.owl");
-                return;
-            } else if (ontologyURL.getURI().equals("http://www.daml.org/2004/05/unspsc/unspsc.owl")) {
-                System.out.println("skip: http://www.daml.org/2004/05/unspsc/unspsc.owl");
-                return;
-            } else if (ontologyURL.getURI().equals("http://www.daml.org/2004/05/unspsc/unspsc")) {
-                System.out.println("skip: http://www.daml.org/2004/05/unspsc/unspsc");
-                return;
-            } else if (ontologyURL.getURI().equals(
-                    "http://dmag.upf.edu/ontologies/2004/10/ODRL-DD-11.owl")) {
-                System.out.println("skip: http://dmag.upf.edu/ontologies/2004/10/ODRL-DD-11.owl");
-                return;
+            switch (ontologyURL.getURI()) {
+                case "http://c703-deri03.uibk.ac.at:8080/people/mappings.owl":
+                    System.out.println("skip: http://c703-deri03.uibk.ac.at:8080/people/mappings.owl");
+                    return;
+                case "http://www.daml.org/2004/05/unspsc/unspsc.owl":
+                    System.out.println("skip: http://www.daml.org/2004/05/unspsc/unspsc.owl");
+                    return;
+                case "http://www.daml.org/2004/05/unspsc/unspsc":
+                    System.out.println("skip: http://www.daml.org/2004/05/unspsc/unspsc");
+                    return;
+                case "http://dmag.upf.edu/ontologies/2004/10/ODRL-DD-11.owl":
+                    System.out.println("skip: http://dmag.upf.edu/ontologies/2004/10/ODRL-DD-11.owl");
+                    return;
             }
             SwoogleOWLMetaData owlMetaData = new SwoogleOWLMetaData(ontologyURL, encoding,
                     fileType, rdfType, ontoRank);
