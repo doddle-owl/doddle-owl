@@ -1,3 +1,13 @@
 *.iml
+src/test/java/CalcConceptDistanceInJWN.java
+doddle_log.txt
 .idea/
+.gradle/
+gradle/
 target/
+build/
+out/
+*.iml
+gradlew
+gradlew.bat
+.DS_Store
