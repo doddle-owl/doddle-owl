@@ -137,9 +137,7 @@ public class ConceptDefinition {
     public Set<String> makeIDSet(String[] idArray) {
         Set<String> idSet = new HashSet<>();
         if (1 < idArray.length) {
-            for (String id : idArray) {
-                idSet.add(id);
-            }
+            Collections.addAll(idSet, idArray);
         }
         return idSet;
     }

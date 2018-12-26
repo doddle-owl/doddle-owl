@@ -39,10 +39,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 import java.util.List;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Takeshi Morita
@@ -221,9 +219,7 @@ public class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListe
 		initListData();
 		Set<String> inputWordSet = new HashSet<>();
 		String[] inputWords = inputWordArea.getText().split("\n");
-		for (String inputWord : inputWords) {
-			inputWordSet.add(inputWord);
-		}
+		Collections.addAll(inputWordSet, inputWords);
 		SwoogleWebServiceWrapper.acquireRelevantOWLOntologies(inputWordSet, true);
 		SwoogleWebServiceData swServiceData = SwoogleWebServiceWrapper.getSwoogleWebServiceData();
 

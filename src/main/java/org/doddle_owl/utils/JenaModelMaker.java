@@ -87,9 +87,9 @@ public class JenaModelMaker {
     }
 
     private static void addClassStatement(String type, Model ontology, Resource child, Resource parent) {
-        if (type == ConceptTreePanel.CLASS_ISA_TREE) {
+        if (type.equals(ConceptTreePanel.CLASS_ISA_TREE)) {
             ontology.add(child, RDFS.subClassOf, parent);
-        } else if (type == ConceptTreePanel.CLASS_HASA_TREE) {
+        } else if (type.equals(ConceptTreePanel.CLASS_HASA_TREE)) {
             ontology.add(child, DODDLE_OWL.HASA_PROPERTY, parent);
         }
     }
@@ -128,9 +128,9 @@ public class JenaModelMaker {
     }
 
     private static void addPropertyStatement(String type, Model ontology, Resource child, Resource parent) {
-        if (type == ConceptTreePanel.PROPERTY_ISA_TREE) {
+        if (type.equals(ConceptTreePanel.PROPERTY_ISA_TREE)) {
             ontology.add(child, RDFS.subPropertyOf, parent);
-        } else if (type == ConceptTreePanel.PROPERTY_HASA_TREE) {
+        } else if (type.equals(ConceptTreePanel.PROPERTY_HASA_TREE)) {
             ontology.add(child, DODDLE_OWL.HASA_PROPERTY, parent);
         }
     }

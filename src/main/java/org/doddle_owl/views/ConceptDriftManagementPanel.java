@@ -680,7 +680,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             for (Entry<Integer, String> entry : conceptListIDConceptMap.entrySet()) {
                 int conceptListID = entry.getKey();
                 String conceptID = entry.getValue();
-                List<List<Concept>> trimmedConceptList = null;
+                List<List<Concept>> trimmedConceptList;
                 if (idTrimmedConceptListMap.get(conceptID) != null) {
                     trimmedConceptList = idTrimmedConceptListMap.get(conceptID);
                 } else {

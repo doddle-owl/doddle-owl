@@ -469,7 +469,7 @@ public class ConceptTreeMaker {
             rootConcept = new VerbConcept(DODDLE_CLASS_ROOT_URI, "");
             rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (Is-a)"));
             rootConcept.addLabel(new DODDLELiteral("en", "Is-a Root Class"));
-        } else if (type == ConceptTreePanel.CLASS_HASA_TREE) {
+        } else if (type.equals(ConceptTreePanel.CLASS_HASA_TREE)) {
             property = DODDLE_OWL.HASA_PROPERTY;
             rootConcept = new VerbConcept(DODDLE_CLASS_HASA_ROOT_URI, "");
             rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (has-a)"));
@@ -513,12 +513,12 @@ public class ConceptTreeMaker {
     public TreeNode getPropertyTreeRoot(DODDLEProject currentProject, Model model, Resource rootResource, String type) {
         Concept rootProperty = null;
         Property property = null;
-        if (type == ConceptTreePanel.PROPERTY_ISA_TREE) {
+        if (type.equals(ConceptTreePanel.PROPERTY_ISA_TREE)) {
             property = RDFS.subPropertyOf;
             rootProperty = new VerbConcept(DODDLE_PROPERTY_ROOT_URI, "");
             rootProperty.addLabel(new DODDLELiteral("ja", "動詞的概念"));
             rootProperty.addLabel(new DODDLELiteral("en", "Root Property"));
-        } else if (type == ConceptTreePanel.PROPERTY_HASA_TREE) {
+        } else if (type.equals(ConceptTreePanel.PROPERTY_HASA_TREE)) {
             property = DODDLE_OWL.HASA_PROPERTY;
             rootProperty = new VerbConcept(DODDLE_PROPERTY_HASA_ROOT_URI, "");
             rootProperty.addLabel(new DODDLELiteral("ja", "動詞的概念 (has-a)"));

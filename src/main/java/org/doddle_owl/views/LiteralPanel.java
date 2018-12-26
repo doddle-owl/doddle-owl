@@ -135,13 +135,13 @@ public class LiteralPanel extends JPanel implements ListSelectionListener {
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        if (literalType == LABEL) {
+        if (literalType.equals(LABEL)) {
             if (e.getSource() == langJList) {
                 setLabelList();
             } else if (e.getSource() == literalJList) {
                 setField();
             }
-        } else if (literalType == DESCRIPTION) {
+        } else if (literalType.equals(DESCRIPTION)) {
             if (e.getSource() == langJList) {
                 setDescriptionList();
             }

@@ -930,9 +930,7 @@ public class SwoogleWebServiceWrapper {
         // inputWords = new String[] {"mail", "name", "address"};
         String[] inputWords = new String[]{"tennis_club"};
         Set<String> inputWordSet = new HashSet<>();
-        for (String inputWord : inputWords) {
-            inputWordSet.add(inputWord);
-        }
+        Collections.addAll(inputWordSet, inputWords);
         SwoogleWebServiceWrapper.acquireRelevantOWLOntologies(inputWordSet, false);
     }
 }

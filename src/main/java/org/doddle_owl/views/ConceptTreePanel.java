@@ -116,10 +116,10 @@ public class ConceptTreePanel extends JPanel {
     public ConceptTreePanel(String title, String type, UndefinedTermListPanel undefPanel, DODDLEProject p) {
         project = p;
         treeType = type;
-        if (type == CLASS_HASA_TREE) {
+        if (type.equals(CLASS_HASA_TREE)) {
             conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE,
                     "Class Is-a Selection Dialog");
-        } else if (type == PROPERTY_HASA_TREE) {
+        } else if (type.equals(PROPERTY_HASA_TREE)) {
             conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.VERB_CONCEPT_TREE,
                     "Property Is-a Selection Dialog");
         }
@@ -254,7 +254,7 @@ public class ConceptTreePanel extends JPanel {
         toolBar.add(pasteConceptAction).setToolTipText(pasteConceptAction.getTitle());
         toolBar.add(deleteLinkToUpperConceptAction).setToolTipText(deleteLinkToUpperConceptAction.getTitle());
         toolBar.add(deleteInternalConceptAction).setToolTipText(deleteInternalConceptAction.getTitle());
-        if (treeType == CLASS_ISA_TREE || treeType == PROPERTY_ISA_TREE) {
+        if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
             toolBar.add(deleteConceptAction).setToolTipText(deleteConceptAction.getTitle());
         }
         toolBar.add(undoAction);
@@ -313,7 +313,7 @@ public class ConceptTreePanel extends JPanel {
             popupMenu.add(deleteMenu);
             deleteMenu.add(deleteLinkToUpperConceptAction);
             deleteMenu.add(deleteInternalConceptAction);
-            if (treeType == CLASS_ISA_TREE || treeType == PROPERTY_ISA_TREE) {
+            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
                 deleteMenu.add(deleteConceptAction);
                 popupMenu.add(addUndefinedTermListAction);
                 // popupMenu.add(moveUndefinedTermListAction);
@@ -372,7 +372,6 @@ public class ConceptTreePanel extends JPanel {
             if (searchURICheckBox.isSelected()) {
                 String searchString = c.getURI();
                 if (!caseSensitivityCheckBox.isSelected()) {
-                    searchString = searchString.toLowerCase();
                     searchKeyWord = searchKeyWord.toLowerCase();
                 }
                 if (perfectlyMatchedSearchOptionCheckBox.isSelected() && c.getURI().equals(searchKeyWord)) {
@@ -1237,9 +1236,9 @@ public class ConceptTreePanel extends JPanel {
 
         private void insertIsaTreeConcept() {
             TreeModel isaTreeModel = null;
-            if (treeType == CLASS_HASA_TREE) {
+            if (treeType.equals(CLASS_HASA_TREE)) {
                 isaTreeModel = project.getConstructClassPanel().getIsaTree().getModel();
-            } else if (treeType == PROPERTY_HASA_TREE) {
+            } else if (treeType.equals(PROPERTY_HASA_TREE)) {
                 isaTreeModel = project.getConstructPropertyPanel().getIsaTree().getModel();
             }
             conceptSelectionDialog.setTreeModel(isaTreeModel);
@@ -1287,11 +1286,11 @@ public class ConceptTreePanel extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (treeType == CLASS_ISA_TREE || treeType == PROPERTY_ISA_TREE) {
+            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
                 addCommand();
                 insertNewConcept();
                 project.addLog(getTitle(), treeType);
-            } else if (treeType == CLASS_HASA_TREE || treeType == PROPERTY_HASA_TREE) {
+            } else if (treeType.equals(CLASS_HASA_TREE) || treeType.equals(PROPERTY_HASA_TREE)) {
                 addCommand();
                 insertIsaTreeConcept();
                 project.addLog(getTitle(), treeType);
@@ -1345,7 +1344,7 @@ public class ConceptTreePanel extends JPanel {
                 }
             }
             model.removeNodeFromParent(targetDeleteNode);
-            if (treeType == CLASS_ISA_TREE || treeType == PROPERTY_ISA_TREE) {
+            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
                 checkMultipleInheritanceNode(targetDeleteNode.getConcept());
                 conceptDriftManagementPanel.resetConceptDriftManagementResult((ConceptTreeNode) model.getRoot());
             }
@@ -1369,7 +1368,7 @@ public class ConceptTreePanel extends JPanel {
                     model.removeNodeFromParent(deleteTreeNode);
                 }
             }
-            if (treeType == CLASS_ISA_TREE || treeType == PROPERTY_ISA_TREE) {
+            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
                 checkMultipleInheritanceNode(targetDeleteNode.getConcept());
                 conceptDriftManagementPanel.resetConceptDriftManagementResult(rootNode);
             }
