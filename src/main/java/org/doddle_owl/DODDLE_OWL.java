@@ -38,6 +38,7 @@ import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.*;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -504,8 +505,17 @@ public class DODDLE_OWL extends JFrame {
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
         try {
             ToolTipManager.sharedInstance().setEnabled(true);
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("TitledBorder.border", new LineBorder(new Color(200, 200, 200), 1));
+            try {
+                for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             new DODDLE_OWL();
         } catch (Exception e) {
             e.printStackTrace();
