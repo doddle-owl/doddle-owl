@@ -74,29 +74,7 @@ public class Utils {
     }
 
     public static File getENWNFile() {
-        File wnDir = new File(DODDLEConstants.ENWN_HOME);
-        if (wnDir.exists()) {
-            Logger.getGlobal().info("exist: " + wnDir.getAbsolutePath());
-            return wnDir;
-        }
-        wnDir.mkdir();
-        String[] wnFiles = {"adj.exc", "adv.exc", "cntlist", "cntlist.rev", "data.adj", "data.noun", "data.verb",
-                "frames.vrb", "index.adj", "index.adv", "index.noun", "index.sense", "index.verb", "lexnames",
-                "log.grind.3.0", "noun.exc", "sentidx.vrb", "sents.vrb", "verb.exc", "verb.Framestext"};
-        for (String wnf : wnFiles) {
-            URL url = DODDLE_OWL.class.getClassLoader().getResource(DODDLEConstants.ENWN_HOME + wnf);
-            try {
-                File f = new File(wnDir.getAbsolutePath() + File.separator + wnf);
-                if (url != null) {
-                    FileUtils.copyURLToFile(url, f);
-                }
-                Logger.getGlobal().info("copy: " + f.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Logger.getGlobal().info("created: " + wnDir.getAbsolutePath());
-        return wnDir;
+        return new File(DODDLEConstants.ENWN_HOME);
     }
 
     public static RootWindow createDODDLERootWindow(ViewMap viewMap) {
