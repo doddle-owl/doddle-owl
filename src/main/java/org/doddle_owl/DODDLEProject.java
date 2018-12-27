@@ -45,7 +45,10 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -68,7 +71,6 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
     private ConstructClassPanel constructClassPanel;
     private ConstructPropertyPanel constructPropertyPanel;
     private ConceptDefinitionPanel conceptDefinitionPanel;
-    private VisualizationPanel visualizationPanel;
 
     private int userIDCount;
     private Map<String, Concept> uriConceptMap;
@@ -76,8 +78,6 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
     private UndoManager undoManager;
 
     private JCheckBoxMenuItem projectMenuItem;
-
-    private View visualizationPanelView;
 
     private static final int WINDOW_WIDTH = 1024;
     private static final int WINDOW_HEIGHT = 768;
@@ -128,10 +128,6 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
                 setProgress(currentTaskCnt++);
                 conceptDefinitionPanel = new ConceptDefinitionPanel(project);
                 setProgress(currentTaskCnt++);
-                if (DODDLE_OWL.getDODDLEPlugin() != null) {
-                    visualizationPanel = new VisualizationPanel(project);
-                }
-                setProgress(currentTaskCnt++);
                 inputConceptSelectionPanel.setDocumentSelectionPanel(docSelectionPanel);
 
                 views = new View[7];
@@ -154,11 +150,6 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
 
                 for (int i = 0; i < views.length; i++) {
                     viewMap.addView(i, views[i]);
-                }
-                if (DODDLE_OWL.getDODDLEPlugin() != null) {
-                    visualizationPanelView = new View(Translator.getTerm("VisualizationPanel"),
-                            Utils.getImageIcon("mr3_logo.png"), visualizationPanel);
-                    viewMap.addView(7, visualizationPanelView);
                 }
 
                 rootWindow = Utils.createDODDLERootWindow(viewMap);
@@ -304,13 +295,8 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
     }
 
     public void setXGALayout() {
-        if (visualizationPanelView != null) {
-            rootWindow.setWindow(new TabWindow(new DockingWindow[]{views[0], views[1], views[2],
-                    views[3], views[4], views[5], views[6], visualizationPanelView}));
-        } else {
-            rootWindow.setWindow(new TabWindow(new DockingWindow[]{views[0], views[1], views[2],
-                    views[3], views[4], views[5], views[6]}));
-        }
+        rootWindow.setWindow(new TabWindow(new DockingWindow[]{views[0], views[1], views[2],
+                views[3], views[4], views[5], views[6]}));
         views[0].restoreFocus();
     }
 

@@ -59,8 +59,6 @@ public class DODDLE_OWL extends JFrame {
     private OptionDialog optionDialog;
     private LogConsole logConsole;
 
-    public static DODDLEPlugin doddlePlugin;
-
     public static Frame rootFrame;
     public static JRootPane rootPane;
     public static JDesktopPane desktop;
@@ -135,10 +133,6 @@ public class DODDLE_OWL extends JFrame {
         setVisible(true);
     }
 
-    public static DODDLEPlugin getDODDLEPlugin() {
-        return doddlePlugin;
-    }
-
     public OptionDialog getOptionDialog() {
         return optionDialog;
     }
@@ -151,11 +145,7 @@ public class DODDLE_OWL extends JFrame {
                 getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
                 getCurrentProject().getOntologySelectionPanel().closeDataset();
             }
-            if (doddlePlugin == null) {
-                System.exit(0);
-            } else {
-                dispose();
-            }
+            dispose();
         }
     }
 
@@ -491,9 +481,6 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static String getExecPath() {
-        if (doddlePlugin == null) {
-            return "." + File.separator;
-        }
         String jarPath = DODDLE_OWL.class.getClassLoader().getResource("").getFile();
         File file = new File(jarPath);
         return file.getAbsolutePath() + File.separator;

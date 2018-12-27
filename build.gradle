@@ -21,9 +21,6 @@ repositories {
     maven {
         url 'http://mrcube.org/mvn_repo/'
     }
-    maven {
-        url 'http://jfontchooser.sourceforge.jp/repository/'
-    }
 }
 
 wrapper {
@@ -77,7 +74,7 @@ dependencies {
     compile 'org.apache.poi:poi-ooxml:3.7'
     compile 'edu.stanford.nlp:stanford-parser:3.9.2'
     compile 'org.apache.jena:apache-jena-libs:3.9.0'
-    compile 'org.mrcube:mrcube:1.0.3'
+    compile 'net.infonode:idw:1.6.1_gpl'
     compileOnly 'org.projectlombok:lombok:1.18.4'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
