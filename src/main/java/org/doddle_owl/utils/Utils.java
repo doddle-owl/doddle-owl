@@ -65,9 +65,6 @@ import java.util.logging.Logger;
  * @author Takeshi Morita
  */
 public class Utils {
-    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir") + "org.doddle-owl" + File.separator;
-    private static final String JPWN_TEMP_DIR = TEMP_DIR + "jpwn_dict_1.1" + File.separator;
-
     public static ImageIcon getImageIcon(String icon) {
         return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource(icon));
     }
@@ -77,7 +74,7 @@ public class Utils {
     }
 
     public static File getENWNFile() {
-        File wnDir = new File(TEMP_DIR + DODDLEConstants.ENWN_HOME);
+        File wnDir = new File(DODDLEConstants.ENWN_HOME);
         if (wnDir.exists()) {
             Logger.getGlobal().info("exist: " + wnDir.getAbsolutePath());
             return wnDir;
@@ -100,26 +97,6 @@ public class Utils {
         }
         Logger.getGlobal().info("created: " + wnDir.getAbsolutePath());
         return wnDir;
-    }
-
-    public static File getJPWNFile(String resName) {
-        File dir = new File(JPWN_TEMP_DIR);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        File file = new File(JPWN_TEMP_DIR + resName);
-        if (file.exists()) {
-            // System.out.println("exist: " + file.getAbsolutePath());
-            return file;
-        }
-        URL url = DODDLE_OWL.class.getClassLoader().getResource(DODDLEConstants.JPWN_HOME + resName);
-        try {
-            FileUtils.copyURLToFile(url, file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // System.out.println("created: " + file.getAbsolutePath());
-        return file;
     }
 
     public static RootWindow createDODDLERootWindow(ViewMap viewMap) {
@@ -390,4 +367,9 @@ public class Utils {
         }
         return model;
     }
+
+    public static File getJPWNFile(String resName) {
+        return new File(DODDLEConstants.JPWN_HOME + File.separator + resName);
+    }
+
 }

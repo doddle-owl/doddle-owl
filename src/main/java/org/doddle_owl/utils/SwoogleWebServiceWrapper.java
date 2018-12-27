@@ -79,10 +79,9 @@ public class SwoogleWebServiceWrapper {
 
     private static final String SWOOGLE_WEB_SERVICE_URI = " http://sparql.cs.umbc.edu:80/swoogle31/q?";
     private static final String SWOOGLE_WEB_SERVICE_KEY = "&key=demo";
-    public static String SWOOGLE_QUERY_RESULTS_DIR = Utils.TEMP_DIR + File.separator
-            + "swoogle_query_results_tmp";
+    public static String SWOOGLE_QUERY_RESULTS_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "swoogle_query_results_tmp";
     private static String SWOOGLE_QUERY_RESULT_LIST_FILE = "swoogle_query_files.txt";
-    public static String OWL_ONTOLOGIES_DIR = Utils.TEMP_DIR + File.separator + "owl_ontologies";
+    public static String OWL_ONTOLOGIES_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "owl_ontologies";
     private static String OWL_ONTOLOGY_RESULT_LIST_FILE = "owl_files.txt";
 
     private static final String ONTOLOGY_URL = "ontology_url";

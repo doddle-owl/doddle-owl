@@ -310,6 +310,12 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         properties.setProperty("EDR_HOME", directoryPanel.getEDRDicDir());
         properties.setProperty("EDRT_HOME", directoryPanel.getEDRTDicDir());
+
+        properties.setProperty("ENWN_3_0_HOME", directoryPanel.getWn30DicDir());
+        properties.setProperty("ENWN_3_1_HOME", directoryPanel.getWn31DicDir());
+        properties.setProperty("JPWN_HOME", directoryPanel.getJpwnDicDir());
+        properties.setProperty("JWO_HOME", directoryPanel.getJwoDicDir());
+
         properties.setProperty("PERL_EXE", directoryPanel.getPerlDir());
         properties.setProperty("CHASEN_EXE", directoryPanel.getJapaneseMorphologicalAnalyzer());
         properties.setProperty("PROJECT_DIR", directoryPanel.getProjectDir());
@@ -383,6 +389,11 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.EDR_HOME = directoryPanel.getEDRDicDir();
         DODDLEConstants.EDRT_HOME = directoryPanel.getEDRTDicDir();
 
+        DODDLEConstants.ENWN_3_0_HOME = directoryPanel.getWn30DicDir();
+        DODDLEConstants.ENWN_3_1_HOME = directoryPanel.getWn31DicDir();
+        DODDLEConstants.JPWN_HOME = directoryPanel.getJpwnDicDir();
+        DODDLEConstants.JWO_HOME = directoryPanel.getJwoDicDir();
+
         InputDocumentSelectionPanel.PERL_EXE = directoryPanel.getPerlDir();
         InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = directoryPanel
                 .getJapaneseMorphologicalAnalyzer();
@@ -418,6 +429,10 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setJapaneseDependencyStructureAnalyzer("");
         directoryPanel.setEDRDicDir("");
         directoryPanel.setEDRTDicDir("");
+        directoryPanel.setWn30DicDir("");
+        directoryPanel.setWn31DicDir("");
+        directoryPanel.setJpwnDicDir("");
+        directoryPanel.setJwoDicDir("");
         directoryPanel.setPerlDir("");
         directoryPanel.setProjectDir("");
         directoryPanel.setUpperCnceptList("");
@@ -436,6 +451,14 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setEDRDicDir(DODDLEConstants.EDR_HOME);
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         directoryPanel.setEDRTDicDir(DODDLEConstants.EDRT_HOME);
+        DODDLEConstants.ENWN_3_0_HOME = properties.getProperty("ENWN_3_0_HOME");
+        directoryPanel.setWn30DicDir(DODDLEConstants.ENWN_3_0_HOME);
+        DODDLEConstants.ENWN_3_1_HOME = properties.getProperty("ENWN_3_1_HOME");
+        directoryPanel.setWn31DicDir(DODDLEConstants.ENWN_3_1_HOME);
+        DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
+        directoryPanel.setJpwnDicDir(DODDLEConstants.JPWN_HOME);
+        DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
+        directoryPanel.setJwoDicDir(DODDLEConstants.JWO_HOME);
 
         InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         directoryPanel.setPerlDir(InputDocumentSelectionPanel.PERL_EXE);
@@ -543,73 +566,117 @@ public class OptionDialog extends JDialog implements ActionListener {
     class DirectoryPanel extends JPanel {
         private JTextField japaneseMorphologicalAnalyzerField;
         private JTextField japaneseDependencyStructureAnalyzerField;
-        private JTextField perlDirField;
         private JTextField edrDicDirField;
         private JTextField edrtDicDirField;
+        private JTextField wn30DicDirField;
+        private JTextField wn31DicDirField;
+        private JTextField jpwnDicDirField;
+        private JTextField jwoDicDirField;
         private JTextField projectDirField;
+        private JTextField perlDirField;
         private JTextField upperConceptListField;
         private JTextField stopWordListField;
 
         private JButton browseJapaneseMorphologicalAnalyzerButton;
         private JButton browseJapaneseDependencyStructureAnalyzerButton;
-        private JButton browsePerlDirButton;
         private JButton browseEDRDicDirButton;
         private JButton browseEDRTDicDirButton;
+        private JButton browseWn30DicDirButton;
+        private JButton browseWn31DicDirButton;
+        private JButton browseJpwnDicDirButton;
+        private JButton browseJwoDicDirButton;
         private JButton browseProjectDirButton;
+        private JButton browsePerlDirButton;
         private JButton browseUpperConceptListButton;
         private JButton browseStopWordListButton;
 
         public DirectoryPanel() {
             japaneseMorphologicalAnalyzerField = new JTextField(FIELD_SIZE);
-            browseJapaneseMorphologicalAnalyzerButton = new JButton(
-                    Translator.getTerm("ReferenceButton"));
+            browseJapaneseMorphologicalAnalyzerButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(japaneseMorphologicalAnalyzerField,
                     browseJapaneseMorphologicalAnalyzerButton,
                     InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
+
             japaneseDependencyStructureAnalyzerField = new JTextField(FIELD_SIZE);
-            browseJapaneseDependencyStructureAnalyzerButton = new JButton(
-                    Translator.getTerm("ReferenceButton"));
+            browseJapaneseDependencyStructureAnalyzerButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(japaneseDependencyStructureAnalyzerField,
                     browseJapaneseDependencyStructureAnalyzerButton,
                     InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
 
-            perlDirField = new JTextField(FIELD_SIZE);
-            browsePerlDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-            initComponent(perlDirField, browsePerlDirButton, InputDocumentSelectionPanel.PERL_EXE);
             edrDicDirField = new JTextField(FIELD_SIZE);
             browseEDRDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(edrDicDirField, browseEDRDicDirButton, DODDLEConstants.EDR_HOME);
+
             edrtDicDirField = new JTextField(FIELD_SIZE);
             browseEDRTDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(edrtDicDirField, browseEDRTDicDirButton, DODDLEConstants.EDRT_HOME);
+
+
+            wn30DicDirField = new JTextField(FIELD_SIZE);
+            browseWn30DicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(wn30DicDirField, browseWn30DicDirButton, DODDLEConstants.ENWN_3_0_HOME);
+
+            wn31DicDirField = new JTextField(FIELD_SIZE);
+            browseWn31DicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(wn31DicDirField, browseWn31DicDirButton, DODDLEConstants.ENWN_3_1_HOME);
+
+
+            jpwnDicDirField = new JTextField(FIELD_SIZE);
+            browseJpwnDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(jpwnDicDirField, browseJpwnDicDirButton, DODDLEConstants.JPWN_HOME);
+
+            jwoDicDirField = new JTextField(FIELD_SIZE);
+            browseJwoDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(jwoDicDirField, browseJwoDicDirButton, DODDLEConstants.JWO_HOME);
+
             projectDirField = new JTextField(FIELD_SIZE);
             browseProjectDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(projectDirField, browseProjectDirButton, DODDLEConstants.PROJECT_HOME);
+
             upperConceptListField = new JTextField(FIELD_SIZE);
             browseUpperConceptListButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(upperConceptListField, browseUpperConceptListButton,
                     UpperConceptManager.UPPER_CONCEPT_LIST);
+
+            perlDirField = new JTextField(FIELD_SIZE);
+            browsePerlDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(perlDirField, browsePerlDirButton, InputDocumentSelectionPanel.PERL_EXE);
+
             stopWordListField = new JTextField(FIELD_SIZE);
             browseStopWordListButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(stopWordListField, browseStopWordListButton,
                     InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(4, 2));
+            panel.setLayout(new GridLayout(6, 2));
+
             panel.add(getPanel(projectDirField, browseProjectDirButton,
                     Translator.getTerm("ProjectFolderTextField")));
             panel.add(getPanel(stopWordListField, browseStopWordListButton,
                     Translator.getTerm("StopWordsTextField")));
+
+            panel.add(getPanel(wn30DicDirField, browseWn30DicDirButton,
+                    Translator.getTerm("WordNet30FolderTextField")));
+            panel.add(getPanel(wn31DicDirField, browseWn31DicDirButton,
+                    Translator.getTerm("WordNet31FolderTextField")));
+
+            panel.add(getPanel(jpwnDicDirField, browseJpwnDicDirButton,
+                    Translator.getTerm("JPNWNFolderTextField")));
+            panel.add(getPanel(jwoDicDirField, browseJwoDicDirButton,
+                    Translator.getTerm("JWOFolderTextField")));
+
             panel.add(getPanel(edrDicDirField, browseEDRDicDirButton,
                     Translator.getTerm("EDRDicFolderTextField")));
             panel.add(getPanel(edrtDicDirField, browseEDRTDicDirButton,
                     Translator.getTerm("EDRTDicFolderTextField")));
+
             panel.add(getPanel(japaneseMorphologicalAnalyzerField,
                     browseJapaneseMorphologicalAnalyzerButton,
                     Translator.getTerm("JapaneseMorphologicalAnalyzerTextField")));
             panel.add(getPanel(japaneseDependencyStructureAnalyzerField,
                     browseJapaneseDependencyStructureAnalyzerButton,
                     Translator.getTerm("JapaneseDependencyStructureAnalyzerTextField")));
+
             panel.add(getPanel(perlDirField, browsePerlDirButton,
                     Translator.getTerm("PerlTextField")));
             panel.add(getPanel(upperConceptListField, browseUpperConceptListButton,
@@ -658,6 +725,38 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         public String getEDRTDicDir() {
             return edrtDicDirField.getText();
+        }
+
+        public void setWn30DicDir(String dir) {
+            wn30DicDirField.setText(dir);
+        }
+
+        public String getWn30DicDir() {
+            return wn30DicDirField.getText();
+        }
+
+        public void setWn31DicDir(String dir) {
+            wn31DicDirField.setText(dir);
+        }
+
+        public String getWn31DicDir() {
+            return wn31DicDirField.getText();
+        }
+
+        public void setJpwnDicDir(String dir) {
+            jpwnDicDirField.setText(dir);
+        }
+
+        public String getJpwnDicDir() {
+            return jpwnDicDirField.getText();
+        }
+
+        public void setJwoDicDir(String dir) {
+            jwoDicDirField.setText(dir);
+        }
+
+        public String getJwoDicDir() {
+            return jwoDicDirField.getText();
         }
 
         public void setProjectDir(String dir) {
@@ -735,6 +834,14 @@ public class OptionDialog extends JDialog implements ActionListener {
                         DODDLEConstants.EDR_HOME = fileOrDirectoryName;
                     } else if (directoryField == edrtDicDirField) {
                         DODDLEConstants.EDRT_HOME = fileOrDirectoryName;
+                    } else if (directoryField == wn30DicDirField) {
+                        DODDLEConstants.ENWN_3_0_HOME = fileOrDirectoryName;
+                    } else if (directoryField == wn31DicDirField) {
+                        DODDLEConstants.ENWN_3_1_HOME = fileOrDirectoryName;
+                    } else if (directoryField == jpwnDicDirField) {
+                        DODDLEConstants.JPWN_HOME = fileOrDirectoryName;
+                    } else if (directoryField == jwoDicDirField) {
+                        DODDLEConstants.JWO_HOME = fileOrDirectoryName;
                     } else if (directoryField == projectDirField) {
                         DODDLEConstants.PROJECT_HOME = fileOrDirectoryName;
                     } else if (directoryField == upperConceptListField) {

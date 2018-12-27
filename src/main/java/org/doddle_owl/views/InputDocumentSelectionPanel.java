@@ -659,12 +659,11 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     public static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
     public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
     public static String PERL_EXE = "C:/Perl/bin/perl.exe";
-    public static String STANFORD_PARSER_MODELS_HOME = Utils.TEMP_DIR + "stanford_parser_models";
+    public static String STANFORD_PARSER_MODELS_HOME = "stanford_parser_models";
     private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
     private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
     private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
-    public static String TERM_EXTRACT_SCRIPTS_DIR = Utils.TEMP_DIR + "TermExtractScripts"
-            + File.separator;
+    public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
     public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
 
     public void destroyProcesses() {
@@ -778,8 +777,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         bw.write(text);
         bw.close();
 
-        tmpJapaneseMorphologicalAnalyzerFile = File.createTempFile("tmpJpMorphologicalAnalyzer",
-                null);
+        tmpJapaneseMorphologicalAnalyzerFile = File.createTempFile("tmpJpMorphologicalAnalyzer", null);
         ProcessBuilder processBuilder;
         if (Japanese_Morphological_Analyzer.matches(".*mecab.*")) {
             processBuilder = new ProcessBuilder(Japanese_Morphological_Analyzer, "-o",

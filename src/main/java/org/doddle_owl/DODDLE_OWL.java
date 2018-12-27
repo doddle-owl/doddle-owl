@@ -126,10 +126,6 @@ public class DODDLE_OWL extends JFrame {
         setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
                 + DODDLEConstants.VERSION);
-        File tempDir = new File(Utils.TEMP_DIR);
-        if (!tempDir.exists()) {
-            tempDir.mkdir();
-        }
         setVisible(true);
     }
 
@@ -146,6 +142,7 @@ public class DODDLE_OWL extends JFrame {
                 getCurrentProject().getOntologySelectionPanel().closeDataset();
             }
             dispose();
+            System.exit(0);
         }
     }
 
@@ -388,6 +385,10 @@ public class DODDLE_OWL extends JFrame {
     public static void setPath(Properties properties) {
         DODDLEConstants.EDR_HOME = properties.getProperty("EDR_HOME");
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
+        DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
+        DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
+        DODDLEConstants.ENWN_3_0_HOME = properties.getProperty("ENWN_3_0_HOME");
+        DODDLEConstants.ENWN_3_1_HOME = properties.getProperty("ENWN_3_1_HOME");
         InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");
@@ -418,7 +419,6 @@ public class DODDLE_OWL extends JFrame {
 
     public static void setProgressValue() {
         InputModule.INIT_PROGRESS_VALUE = 887253;
-        // InputModule.INIT_PROGRESS_VALUE = 283517;
     }
 
     public static Logger getLogger() {
