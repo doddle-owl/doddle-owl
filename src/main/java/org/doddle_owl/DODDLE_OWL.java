@@ -127,6 +127,7 @@ public class DODDLE_OWL extends JFrame {
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
                 + DODDLEConstants.VERSION);
         setVisible(true);
+        new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
     }
 
     public OptionDialog getOptionDialog() {
@@ -306,6 +307,7 @@ public class DODDLE_OWL extends JFrame {
 
     private JToolBar getToolBar() {
         JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);
         toolBar.add(newProjectAction).setToolTipText(newProjectAction.getTitle());
         toolBar.add(openProjectAction).setToolTipText(openProjectAction.getTitle());
         toolBar.add(saveProjectAction).setToolTipText(saveProjectAction.getTitle());

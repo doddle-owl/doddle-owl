@@ -12,3 +12,4 @@ gradlew
 gradlew.bat
 .DS_Store
 ./src/main/resources/catalog-v001.xml
+gradle.properties

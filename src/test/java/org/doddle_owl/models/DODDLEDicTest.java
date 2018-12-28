@@ -12,7 +12,9 @@ class DODDLEDicTest {
     public void setUp() {
         DODDLEConstants.EDR_HOME = "/Users/t_morita/DODDLE-OWL/EDR-DIC/";
         DODDLEConstants.EDRT_HOME = "/Users/t_morita/DODDLE-OWL/EDRT-DIC/";
+        DODDLEConstants.ENWN_3_1_HOME = "/Users/t_morita/DODDLE-OWL/enwn_dict_3.1";
         DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
+        DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
         EDRDic.initEDRDic();
         EDRDic.initEDRTDic();
         JpnWordNetDic.initJPNWNDic();
