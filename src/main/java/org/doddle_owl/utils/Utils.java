@@ -66,7 +66,8 @@ import java.util.logging.Logger;
  */
 public class Utils {
     public static ImageIcon getImageIcon(String icon) {
-        return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource(icon));
+        return new ImageIcon(DODDLE_OWL.class.getClassLoader()
+                .getResource("images" + File.separator + icon));
     }
 
     public static URL getURL(String icon) {
