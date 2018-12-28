@@ -322,6 +322,9 @@ public class OptionDialog extends JDialog implements ActionListener {
         properties.setProperty("STOP_WORD_LIST", directoryPanel.getStopWordList());
         properties.setProperty("UPPER_CONCEPT_LIST", directoryPanel.getUpperConceptList());
 
+        properties.setProperty("STANFORD_PARSER_MODEL_DIR", directoryPanel.getStanfordParserModelDir());
+        properties.setProperty("TERM_EXTRACT_SCRIPTS_DIR", directoryPanel.getTermExtractScriptDir());
+
         if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
             properties.setProperty("Japanese_Morphological_Analyzer",
                     InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
@@ -402,6 +405,10 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.PROJECT_HOME = directoryPanel.getProjectDir();
         UpperConceptManager.UPPER_CONCEPT_LIST = directoryPanel.getUpperConceptList();
         InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = directoryPanel.getStopWordList();
+
+        InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME = directoryPanel.getStanfordParserModelDir();
+        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = directoryPanel.getTermExtractScriptDir();
+
         // 汎用オントロジーパネルのチェックボックスを有効化する
         DODDLEProject currentProject = (DODDLEProject) DODDLE_OWL.desktop.getSelectedFrame();
         if (currentProject != null) {
@@ -437,6 +444,8 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setProjectDir("");
         directoryPanel.setUpperCnceptList("");
         directoryPanel.setStopWordList("");
+        directoryPanel.setStanfordParserModelDir("");
+        directoryPanel.setTermExtractScriptDir("");
     }
 
     public void loadConfig(Properties properties) {
@@ -469,12 +478,15 @@ public class OptionDialog extends JDialog implements ActionListener {
         InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = properties.getProperty("STOP_WORD_LIST");
         directoryPanel.setStopWordList(InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
+        InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME = properties.getProperty("STANFORD_PARSER_MODEL_DIR");
+        directoryPanel.setStanfordParserModelDir(InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME);
+        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
+        directoryPanel.setTermExtractScriptDir(InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
+
         if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
             properties.setProperty("Japanese_Morphological_Analyzer",
                     InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
         } else {
-            // properties.setProperty("Japanese_Morphological_Analyzer","C:/Program
-            // Files/Mecab/bin/mecab.exe -Ochasen");
             properties.setProperty("Japanese_Morphological_Analyzer",
                     "C:/Program Files/Chasen/bin/chasen.exe");
         }
@@ -576,6 +588,8 @@ public class OptionDialog extends JDialog implements ActionListener {
         private JTextField perlDirField;
         private JTextField upperConceptListField;
         private JTextField stopWordListField;
+        private JTextField stanfordParserModelDirField;
+        private JTextField termExtractScriptDirField;
 
         private JButton browseJapaneseMorphologicalAnalyzerButton;
         private JButton browseJapaneseDependencyStructureAnalyzerButton;
@@ -589,6 +603,8 @@ public class OptionDialog extends JDialog implements ActionListener {
         private JButton browsePerlDirButton;
         private JButton browseUpperConceptListButton;
         private JButton browseStopWordListButton;
+        private JButton browseStanfordParserModelDirButton;
+        private JButton browseTermExtractScriptDirButton;
 
         public DirectoryPanel() {
             japaneseMorphologicalAnalyzerField = new JTextField(FIELD_SIZE);
@@ -647,8 +663,19 @@ public class OptionDialog extends JDialog implements ActionListener {
             initComponent(stopWordListField, browseStopWordListButton,
                     InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
+
+            stanfordParserModelDirField = new JTextField(FIELD_SIZE);
+            browseStanfordParserModelDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(stanfordParserModelDirField, browseStanfordParserModelDirButton,
+                    InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME);
+
+            termExtractScriptDirField = new JTextField(FIELD_SIZE);
+            browseTermExtractScriptDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(termExtractScriptDirField, browseTermExtractScriptDirButton,
+                    InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
+
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(6, 2));
+            panel.setLayout(new GridLayout(7, 2));
 
             panel.add(getPanel(projectDirField, browseProjectDirButton,
                     Translator.getTerm("ProjectFolderTextField")));
@@ -681,6 +708,11 @@ public class OptionDialog extends JDialog implements ActionListener {
                     Translator.getTerm("PerlTextField")));
             panel.add(getPanel(upperConceptListField, browseUpperConceptListButton,
                     Translator.getTerm("UpperConceptListTextField")));
+
+            panel.add(getPanel(stanfordParserModelDirField, browseStanfordParserModelDirButton,
+                    Translator.getTerm("StanfordParserModelFolderTextField")));
+            panel.add(getPanel(termExtractScriptDirField, browseTermExtractScriptDirButton,
+                    Translator.getTerm("CompoundWordExtractionScriptFolderTextField")));
 
             setLayout(new BorderLayout());
             setBorder(BorderFactory.createEtchedBorder());
@@ -783,6 +815,24 @@ public class OptionDialog extends JDialog implements ActionListener {
             return stopWordListField.getText();
         }
 
+
+        public void setStanfordParserModelDir(String file) {
+            stanfordParserModelDirField.setText(file);
+        }
+
+        public String getStanfordParserModelDir() {
+            return stanfordParserModelDirField.getText();
+        }
+
+
+        public void setTermExtractScriptDir(String file) {
+            termExtractScriptDirField.setText(file);
+        }
+
+        public String getTermExtractScriptDir() {
+            return termExtractScriptDirField.getText();
+        }
+
         private static final int FIELD_SIZE = 20;
 
         private void initComponent(JTextField textField, JButton button, String value) {
@@ -846,6 +896,10 @@ public class OptionDialog extends JDialog implements ActionListener {
                         DODDLEConstants.PROJECT_HOME = fileOrDirectoryName;
                     } else if (directoryField == upperConceptListField) {
                         UpperConceptManager.UPPER_CONCEPT_LIST = fileOrDirectoryName;
+                    } else if (directoryField == stanfordParserModelDirField) {
+                        InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME = fileOrDirectoryName;
+                    } else if (directoryField == termExtractScriptDirField) {
+                        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = fileOrDirectoryName;
                     }
                 }
             }

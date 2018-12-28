@@ -466,23 +466,11 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private String runStanfordParser(File docFile) {
-        File dir = new File(STANFORD_PARSER_MODELS_HOME);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
         StringBuilder builder = new StringBuilder();
         try {
             String modelName = "english-left3words-distsim.tagger";
             String modelPath = STANFORD_PARSER_MODELS_HOME + File.separator + modelName;
             File modelFile = new File(modelPath);
-            if (!modelFile.exists()) {
-                URL url = DODDLE_OWL.class.getClassLoader().getResource("stanford_parser_models/" + modelName);
-                if (url != null) {
-                    FileUtils.copyURLToFile(url, modelFile);
-                    // System.out.println("copy: " +
-                    // modelFile.getAbsolutePath());
-                }
-            }
             Path path = Paths.get(STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
             BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
             try (writer) {
@@ -659,10 +647,10 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     public static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
     public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
     public static String PERL_EXE = "C:/Perl/bin/perl.exe";
-    public static String STANFORD_PARSER_MODELS_HOME = "stanford_parser_models";
     private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
     private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
     private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
+    public static String STANFORD_PARSER_MODELS_HOME = "stanford_parser_models";
     public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
     public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
 
