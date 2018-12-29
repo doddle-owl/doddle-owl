@@ -23,6 +23,8 @@
 
 package org.doddle_owl.utils;
 
+import com.atilika.kuromoji.ipadic.Token;
+import com.atilika.kuromoji.ipadic.Tokenizer;
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.properties.RootWindowProperties;
 import net.infonode.docking.theme.DockingWindowsTheme;
@@ -31,10 +33,6 @@ import net.infonode.docking.util.DockingUtil;
 import net.infonode.docking.util.PropertiesUtil;
 import net.infonode.docking.util.ViewMap;
 import net.infonode.util.Direction;
-import net.java.sen.SenFactory;
-import net.java.sen.StringTagger;
-import net.java.sen.dictionary.Token;
-import org.apache.commons.io.FileUtils;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
@@ -52,14 +50,12 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * @author Takeshi Morita
@@ -94,26 +90,21 @@ public class Utils {
         Set<String> compoundWordSet = new HashSet<>();
         Map<String, List<String>> compoundWordElementListMap = new HashMap<>();
         for (String compoundWord : inputWordList) {
-            try {
-                StringTagger tagger = SenFactory.getStringTagger(null);
-                List<Token> compoundWordTokenList = new ArrayList<>();
-                tagger.analyze(compoundWord, compoundWordTokenList);
-                if (compoundWordTokenList.size() == 1) {
-                    continue; // 複合ではない
-                }
-                compoundWordSet.add(compoundWord);
-                List<String> compoundWordElementList = new ArrayList<>();
-                for (Token compoundWordToken : compoundWordTokenList) {
-                    String bf = compoundWordToken.getMorpheme().getBasicForm();
-                    if (bf.equals("*")) {
-                        bf = compoundWordToken.getSurface();
-                    }
-                    compoundWordElementList.add(bf);
-                }
-                compoundWordElementListMap.put(compoundWord, compoundWordElementList);
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
+            Tokenizer tokenizer = new Tokenizer();
+            List<Token> compoundWordTokenList = tokenizer.tokenize(compoundWord);
+            if (compoundWordTokenList.size() == 1) {
+                continue; // 複合ではない
             }
+            compoundWordSet.add(compoundWord);
+            List<String> compoundWordElementList = new ArrayList<>();
+            for (Token compoundWordToken : compoundWordTokenList) {
+                String bf = compoundWordToken.getBaseForm();
+                if (bf.equals("*")) {
+                    bf = compoundWordToken.getSurface();
+                }
+                compoundWordElementList.add(bf);
+            }
+            compoundWordElementListMap.put(compoundWord, compoundWordElementList);
         }
         for (String compoundWord : compoundWordSet) {
             List<String> compoundWordElementList = compoundWordElementListMap.get(compoundWord);

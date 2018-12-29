@@ -23,11 +23,6 @@
 
 package org.doddle_owl.views;
 
-/*
- *
- */
-
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
@@ -37,6 +32,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
@@ -112,7 +108,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
                     e.printStackTrace();
                 }
             }
-            DODDLE_OWL.getLogger().log(Level.DEBUG,
+            DODDLE_OWL.getLogger().log(Level.SEVERE,
                     Translator.getTerm("TotalTimeMessage") + ": " + elapsedTime);
             setValue(lastMessage);
         });

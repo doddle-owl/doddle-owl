@@ -27,7 +27,6 @@ package org.doddle_owl;
 import org.apache.commons.cli.*;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.log4j.*;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.DODDLEConstants;
 import org.doddle_owl.models.InputModule;
@@ -48,6 +47,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.*;
+import java.util.logging.*;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -424,29 +424,17 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static Logger getLogger() {
-        return Logger.getLogger(DODDLE_OWL.class);
-    }
-
-    private static void setDefaultLoggerFormat() {
-        for (Enumeration enumeration = Logger.getRootLogger().getAllAppenders(); enumeration.hasMoreElements(); ) {
-            Appender appender = (Appender) enumeration.nextElement();
-            if (appender.getName().equals("stdout")) {
-                appender.setLayout(new PatternLayout("[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"));
-            }
-        }
+        return Logger.getLogger(DODDLE_OWL.class.getName());
     }
 
     public static void setFileLogger() {
         try {
             getLogger().setLevel(Level.INFO);
-            setDefaultLoggerFormat();
             String file = DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt";
             if (new File(DODDLEConstants.PROJECT_HOME).exists()) {
-                FileAppender appender = new FileAppender(new PatternLayout(
-                        "[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"), file);
-                appender.setName("LOG File");
-                appender.setAppend(true);
-                Logger.getRootLogger().addAppender(appender);
+                Handler handler = new FileHandler(file);
+                handler.setFormatter(new SimpleFormatter());
+                getLogger().addHandler(handler);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -463,9 +451,8 @@ public class DODDLE_OWL extends JFrame {
             CommandLine cmd = parser.parse(options, args);
             setPath();
             setProgressValue();
-            int c;
             if (cmd.hasOption("g")) {
-                getLogger().setLevel(Level.DEBUG);
+                getLogger().setLevel(Level.SEVERE);
                 DODDLEConstants.DEBUG = true;
             }
             if (cmd.hasOption("l")) {

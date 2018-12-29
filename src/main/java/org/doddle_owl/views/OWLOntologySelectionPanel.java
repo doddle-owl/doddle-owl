@@ -35,7 +35,6 @@ import org.doddle_owl.utils.Utils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.util.FileUtils;
-import org.apache.log4j.Level;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -52,6 +51,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita

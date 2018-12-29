@@ -23,7 +23,6 @@
 
 package org.doddle_owl.views;
 
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
@@ -41,6 +40,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -925,7 +925,7 @@ public class ConceptTreePanel extends JPanel {
                 abstractNodeCnt++;
                 abstractLabelSet.add(newWord);
                 totalAbstractNodeGroupSiblingNodeCnt += childNode.getChildCount();
-                DODDLE_OWL.getLogger().log(Level.DEBUG,
+                DODDLE_OWL.getLogger().log(Level.SEVERE,
                         "[" + abstractNodeCnt + "] 抽象概念(兄弟数)： " + newWord + " (" + childNode.getChildCount() + ")");
             } else {
                 newWord = childNode.toString();

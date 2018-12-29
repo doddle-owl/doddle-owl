@@ -26,13 +26,11 @@ package org.doddle_owl.views;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.tdb.TDBFactory;
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -48,6 +46,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
