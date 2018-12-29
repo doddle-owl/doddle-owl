@@ -23,21 +23,19 @@
 
 package org.doddle_owl.views;
 
+import com.atilika.kuromoji.ipadic.Token;
+import com.atilika.kuromoji.ipadic.Tokenizer;
 import edu.stanford.nlp.ling.HasWord;
-import edu.stanford.nlp.ling.Sentence;
+import edu.stanford.nlp.ling.SentenceUtils;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.SplitWindow;
 import net.infonode.docking.View;
 import net.infonode.docking.util.ViewMap;
-import net.java.sen.SenFactory;
-import net.java.sen.StringTagger;
-import net.java.sen.dictionary.Token;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
@@ -69,6 +67,9 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * @author Takeshi Morita
@@ -192,7 +193,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         genSenCheckBox = new JCheckBox(Translator.getTerm("GensenCheckBox"));
         genSenCheckBox.setSelected(false);
         cabochaCheckBox = new JCheckBox(Translator.getTerm("CabochaCheckBox"));
-        cabochaCheckBox.setSelected(true);
+        cabochaCheckBox.setSelected(false);
         showImportanceCheckBox = new JCheckBox("重要度");
         nounCheckBox = new JCheckBox(Translator.getTerm("NounCheckBox"));
         nounCheckBox.setSelected(true);
@@ -466,23 +467,11 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     private String runStanfordParser(File docFile) {
-        File dir = new File(STANFORD_PARSER_MODELS_HOME);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
         StringBuilder builder = new StringBuilder();
         try {
             String modelName = "english-left3words-distsim.tagger";
             String modelPath = STANFORD_PARSER_MODELS_HOME + File.separator + modelName;
             File modelFile = new File(modelPath);
-            if (!modelFile.exists()) {
-                URL url = DODDLE_OWL.class.getClassLoader().getResource("stanford_parser_models/" + modelName);
-                if (url != null) {
-                    FileUtils.copyURLToFile(url, modelFile);
-                    // System.out.println("copy: " +
-                    // modelFile.getAbsolutePath());
-                }
-            }
             Path path = Paths.get(STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
             BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
             try (writer) {
@@ -491,12 +480,12 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                         new FileReader(docFile)));
                 for (List<HasWord> sentence : sentences) {
                     List<TaggedWord> tSentence = tagger.tagSentence(sentence);
-                    writer.write(Sentence.listToString(tSentence, false));
-                    builder.append(Sentence.listToString(tSentence, false));
+                    writer.write(SentenceUtils.listToString(tSentence, false));
+                    builder.append(SentenceUtils.listToString(tSentence, false));
                 }
             }
         } catch (IOException ioe) {
-            DODDLE_OWL.getLogger().log(Level.DEBUG, "Stanford Parser can not be executed.");
+            DODDLE_OWL.getLogger().log(Level.SEVERE, "Stanford Parser can not be executed.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -595,43 +584,38 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     private void jaTermExtraction(Document doc, boolean isInputDoc) {
         File file = doc.getFile();
-        try {
-            StringTagger tagger = SenFactory.getStringTagger(null);
-            List<Token> tokenList = new ArrayList<>();
-            tagger.analyze(doc.getText(), tokenList);
-            for (Token token : tokenList) {
-                String pos = token.getMorpheme().getPartOfSpeech();
-                String basicStr = token.getMorpheme().getBasicForm();
-                if (basicStr.equals("*")) {
-                    basicStr = token.getSurface();
-                }
-                if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
-                    continue;
-                }
-                if (isStopWord(basicStr)) {
-                    continue;
-                }
-                if (nounCheckBox.isSelected() && isJaNoun(pos)) {
-                    setTermInfoMap(basicStr, pos, file, isInputDoc);
-                } else if (verbCheckBox.isSelected() && isJaVerb(pos)) {
-                    setTermInfoMap(basicStr, pos, file, isInputDoc);
-                } else if (otherCheckBox.isSelected() && isJaOther(pos)) {
-                    setTermInfoMap(basicStr, pos, file, isInputDoc);
-                }
+        Tokenizer tokenizer = new Tokenizer();
+        List<Token> tokenList = tokenizer.tokenize(doc.getText());
+        for (Token token : tokenList) {
+            String pos = token.getPartOfSpeechLevel1();
+            String basicStr = token.getBaseForm();
+            if (basicStr.equals("*")) {
+                basicStr = token.getSurface();
             }
-            if (genSenCheckBox.isSelected()) {
-                Set<String> compoundWordSet = getGensenCompoundWordSet(doc);
-                for (String compoundWord : compoundWordSet) {
-                    setTermInfoMap(compoundWord, COMPOUND_WORD_JA, file, isInputDoc);
-                }
+            if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
+                continue;
             }
-            if (cabochaCheckBox.isSelected()) {
-                CabochaDocument cabochaDoc = taskAnalyzer.loadUseCaseTask(doc.getFile());
-                setWordInfoForCabochaDoc(cabochaDoc.getCompoundWordCountMap(), doc);
-                setWordInfoForCabochaDoc(cabochaDoc.getCompoundWordWithNokakuCountMap(), doc);
+            if (isStopWord(basicStr)) {
+                continue;
             }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            if (nounCheckBox.isSelected() && isJaNoun(pos)) {
+                setTermInfoMap(basicStr, pos, file, isInputDoc);
+            } else if (verbCheckBox.isSelected() && isJaVerb(pos)) {
+                setTermInfoMap(basicStr, pos, file, isInputDoc);
+            } else if (otherCheckBox.isSelected() && isJaOther(pos)) {
+                setTermInfoMap(basicStr, pos, file, isInputDoc);
+            }
+        }
+        if (genSenCheckBox.isSelected()) {
+            Set<String> compoundWordSet = getGensenCompoundWordSet(doc);
+            for (String compoundWord : compoundWordSet) {
+                setTermInfoMap(compoundWord, COMPOUND_WORD_JA, file, isInputDoc);
+            }
+        }
+        if (cabochaCheckBox.isSelected()) {
+            CabochaDocument cabochaDoc = taskAnalyzer.loadUseCaseTask(doc.getFile());
+            setWordInfoForCabochaDoc(cabochaDoc.getCompoundWordCountMap(), doc);
+            setWordInfoForCabochaDoc(cabochaDoc.getCompoundWordWithNokakuCountMap(), doc);
         }
     }
 
@@ -659,12 +643,11 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     public static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
     public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
     public static String PERL_EXE = "C:/Perl/bin/perl.exe";
-    public static String STANFORD_PARSER_MODELS_HOME = Utils.TEMP_DIR + "stanford_parser_models";
     private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
     private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
     private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
-    public static String TERM_EXTRACT_SCRIPTS_DIR = Utils.TEMP_DIR + "TermExtractScripts"
-            + File.separator;
+    public static String STANFORD_PARSER_MODELS_HOME = "stanford_parser_models";
+    public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
     public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
 
     public void destroyProcesses() {
@@ -778,8 +761,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         bw.write(text);
         bw.close();
 
-        tmpJapaneseMorphologicalAnalyzerFile = File.createTempFile("tmpJpMorphologicalAnalyzer",
-                null);
+        tmpJapaneseMorphologicalAnalyzerFile = File.createTempFile("tmpJpMorphologicalAnalyzer", null);
         ProcessBuilder processBuilder;
         if (Japanese_Morphological_Analyzer.matches(".*mecab.*")) {
             processBuilder = new ProcessBuilder(Japanese_Morphological_Analyzer, "-o",
@@ -1044,23 +1026,27 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                 String[] lines = text.split("\n");
                 for (int j = 0; j < lines.length; j++) {
                     String line = lines[j];
-                    if (line.matches(".*" + word + ".*")) {
-                        line = line.replaceAll(word, "<b><font size=3 color=red>" + word
-                                + "</font></b>");
-                        buf.append("<b><font size=3 color=navy>");
-                        if (DODDLEConstants.LANG.equals("en")) {
-                            buf.append(Translator.getTerm("LineMessage"));
-                            buf.append(" ");
-                            buf.append((j + 1));
-                        } else {
-                            buf.append((j + 1));
-                            buf.append(Translator.getTerm("LineMessage"));
+                    try {
+                        if (line.matches(".*" + word + ".*")) {
+                            line = line.replaceAll(word, "<b><font size=3 color=red>" + word
+                                    + "</font></b>");
+                            buf.append("<b><font size=3 color=navy>");
+                            if (DODDLEConstants.LANG.equals("en")) {
+                                buf.append(Translator.getTerm("LineMessage"));
+                                buf.append(" ");
+                                buf.append((j + 1));
+                            } else {
+                                buf.append((j + 1));
+                                buf.append(Translator.getTerm("LineMessage"));
+                            }
+                            buf.append(": </font></b>");
+                            buf.append("<font size=3>");
+                            buf.append(line);
+                            buf.append("</font>");
+                            buf.append("<br>");
                         }
-                        buf.append(": </font></b>");
-                        buf.append("<font size=3>");
-                        buf.append(line);
-                        buf.append("</font>");
-                        buf.append("<br>");
+                    } catch (PatternSyntaxException e) {
+                        e.printStackTrace();
                     }
                 }
             }

@@ -23,7 +23,6 @@
 
 package org.doddle_owl.actions;
 
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
@@ -43,6 +42,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
@@ -307,7 +307,7 @@ public class ConstructTreeAction {
                 addCompoundWordNode(0, iwModel, rootNode);
             }
         }
-        DODDLE_OWL.getLogger().log(Level.DEBUG,
+        DODDLE_OWL.getLogger().log(Level.SEVERE,
                 Translator.getTerm("ConstructConceptTreeFromCompoundWordsMessage"));
 
         // printDebugTree(rootNode, "before trimming");
@@ -317,7 +317,7 @@ public class ConstructTreeAction {
                 DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) rootNode.getChildAt(i);
                 trimCompoundWordNode(childNode);
             }
-            DODDLE_OWL.getLogger().log(Level.DEBUG, Translator.getTerm("TrimmingCompoundWordsMessage"));
+            DODDLE_OWL.getLogger().log(Level.SEVERE, Translator.getTerm("TrimmingCompoundWordsMessage"));
         }
 
         if (project.getInputConceptSelectionPanel().getPartiallyMatchedOptionPanel()
@@ -325,7 +325,7 @@ public class ConstructTreeAction {
             addAbstractTreeNode(rootNode);
             trimAbstractNode(rootNode);
             trimLeafAbstractNode();
-            DODDLE_OWL.getLogger().log(Level.DEBUG,
+            DODDLE_OWL.getLogger().log(Level.SEVERE,
                     Translator.getTerm("AddAbstractInternalConceptsMessage"));
         }
 
@@ -379,7 +379,7 @@ public class ConstructTreeAction {
         abstractNodeLabelMap = new HashMap<>();
         tmpcnt = 0;
         for (int i = 0; i < rootNode.getChildCount(); i++) {
-            DODDLE_OWL.getLogger().log(Level.DEBUG,
+            DODDLE_OWL.getLogger().log(Level.SEVERE,
                     rootNode.getChildAt(i) + ": " + (i + 1) + "/" + rootNode.getChildCount());
             reconstructCompoundTree(1, (DefaultMutableTreeNode) rootNode.getChildAt(i));
             // 多重継承している場合もあるので，一度クローンを抽象ノードに挿入した後に，

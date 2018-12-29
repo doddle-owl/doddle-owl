@@ -9,6 +9,7 @@ class JpnWordNetDicTest {
 
     @BeforeEach
     void setUp() {
+        DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
         JpnWordNetDic.initJPNWNDic();
     }
 

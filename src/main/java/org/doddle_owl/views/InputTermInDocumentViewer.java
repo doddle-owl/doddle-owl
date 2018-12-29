@@ -23,9 +23,8 @@
 
 package org.doddle_owl.views;
 
-import net.java.sen.SenFactory;
-import net.java.sen.StringTagger;
-import net.java.sen.dictionary.Token;
+import com.atilika.kuromoji.ipadic.Token;
+import com.atilika.kuromoji.ipadic.Tokenizer;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
 import org.doddle_owl.DODDLE_OWL;
@@ -46,7 +45,6 @@ import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.List;
 import java.util.*;
 
@@ -261,19 +259,14 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
         word = word.replaceAll(">", "");
         String basicWord = "";
         if (selectedDoc.getLang().equals("ja")) {
-            try {
-                StringTagger tagger = SenFactory.getStringTagger(null);
-                List<Token> tokenList = new ArrayList<>();
-                tagger.analyze(word, tokenList);
-                for (Token token : tokenList) {
-                    String bw = token.getMorpheme().getBasicForm();
-                    if (bw.equals("*")) {
-                        bw = token.getSurface();
-                    }
-                    basicWord += bw;
+            Tokenizer tokenizer = new Tokenizer();
+            List<Token> tokenList = tokenizer.tokenize(word);
+            for (Token token : tokenList) {
+                String bw = token.getBaseForm();
+                if (bw.equals("*")) {
+                    bw = token.getSurface();
                 }
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
+                basicWord += bw;
             }
         } else if (selectedDoc.getLang().equals("en")) {
             String[] words = word.split("\\s+");
@@ -317,7 +310,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == documentList && e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK) {
+        if (e.getSource() == documentList) {
             Point p = e.getPoint();
             int index = documentList.locationToIndex(p);
             if (0 < documentList.getModel().getSize()) {
@@ -334,7 +327,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                 setDocumentAndLinkArea();
             }
             repaint();
-        } else if (e.getSource() == documentArea && e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
+        } else if (e.getSource() == documentArea) {
             addUserDefinedWord(documentArea.getSelectedText());
         }
     }
@@ -421,34 +414,24 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 
     private List<String> getJaBasicWordList(String text) {
         List<String> basicWordList = new ArrayList<>();
-        try {
-            StringTagger tagger = SenFactory.getStringTagger(null);
-            List<Token> tokenList = new ArrayList<>();
-            tagger.analyze(text, tokenList);
-            for (Token token : tokenList) {
-                String basicForm = token.getMorpheme().getBasicForm();
-                if (basicForm.equals("*")) {
-                    basicForm = token.getSurface();
-                }
-                basicWordList.add(basicForm);
+        Tokenizer tokenizer = new Tokenizer();
+        List<Token> tokenList = tokenizer.tokenize(text);
+        for (Token token : tokenList) {
+            String basicForm = token.getBaseForm();
+            if (basicForm.equals("*")) {
+                basicForm = token.getSurface();
             }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            basicWordList.add(basicForm);
         }
         return basicWordList;
     }
 
     private List<String> getJaSurfaceWordList(String text) {
         List<String> surfaceList = new ArrayList<>();
-        try {
-            StringTagger tagger = SenFactory.getStringTagger(null);
-            List<Token> tokenList = new ArrayList<>();
-            tagger.analyze(text, tokenList);
-            for (Token token : tokenList) {
-                surfaceList.add(token.getSurface());
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        Tokenizer tokenizer = new Tokenizer();
+        List<Token> tokenList = tokenizer.tokenize(text);
+        for (Token token : tokenList) {
+            surfaceList.add(token.getSurface());
         }
         return surfaceList;
     }
@@ -515,52 +498,47 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
 
     private String highlightJaText(String text) {
         StringBuilder builder = new StringBuilder();
-        try {
-            StringTagger tagger = SenFactory.getStringTagger(null);
-            List<Token> tokenList = new ArrayList<>();
-            tagger.analyze(text, tokenList);
-            for (Token token : tokenList) {
-                String basic = token.getMorpheme().getBasicForm();
-                if (basic.equals("*")) {
-                    basic = token.getSurface();
-                }
-                String pos = token.getMorpheme().getPartOfSpeech();
-                String word = token.getSurface();
-                InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
-                        .getInputTermSelectionPanel();
-                InputDocumentSelectionPanel docSelectionPanel = DODDLE_OWL.getCurrentProject()
-                        .getDocumentSelectionPanel();
-                if (!docSelectionPanel.isOneWordChecked() && basic.length() == 1) {
-                    builder.append(word);
-                    continue;
-                }
-                if (docSelectionPanel.isStopWord(basic)) {
-                    builder.append(word);
-                    continue;
-                }
-
-                TermInfo termInfo = inputTermSelectionPanel.getInputTermInfo(basic);
-                TermInfo removedTermInfo = inputTermSelectionPanel.getRemovedTermInfo(basic);
-                String type = "";
-                if (termInfo != null) {
-                    type = "inputTerm";
-                } else if (removedTermInfo != null) {
-                    type = "removedTerm";
-                }
-                if (type.equals("")) {
-                    builder.append(word);
-                } else if (selectedPOS == DODDLE_POS.NOUN && isNoun(pos)) {
-                    builder.append(getHighlightWord(basic, word, type));
-                } else if (selectedPOS == DODDLE_POS.VERB && isVerb(pos)) {
-                    builder.append(getHighlightWord(basic, word, type));
-                } else if (selectedPOS == DODDLE_POS.OTHER && isOther(pos)) {
-                    builder.append(getHighlightWord(basic, word, type));
-                } else {
-                    builder.append(word);
-                }
+        Tokenizer tokenizer = new Tokenizer();
+        List<Token> tokenList = tokenizer.tokenize(text);
+        for (Token token : tokenList) {
+            String basic = token.getBaseForm();
+            if (basic.equals("*")) {
+                basic = token.getSurface();
             }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            String pos = token.getPartOfSpeechLevel1();
+            String word = token.getSurface();
+            InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+                    .getInputTermSelectionPanel();
+            InputDocumentSelectionPanel docSelectionPanel = DODDLE_OWL.getCurrentProject()
+                    .getDocumentSelectionPanel();
+            if (!docSelectionPanel.isOneWordChecked() && basic.length() == 1) {
+                builder.append(word);
+                continue;
+            }
+            if (docSelectionPanel.isStopWord(basic)) {
+                builder.append(word);
+                continue;
+            }
+
+            TermInfo termInfo = inputTermSelectionPanel.getInputTermInfo(basic);
+            TermInfo removedTermInfo = inputTermSelectionPanel.getRemovedTermInfo(basic);
+            String type = "";
+            if (termInfo != null) {
+                type = "inputTerm";
+            } else if (removedTermInfo != null) {
+                type = "removedTerm";
+            }
+            if (type.equals("")) {
+                builder.append(word);
+            } else if (selectedPOS == DODDLE_POS.NOUN && isNoun(pos)) {
+                builder.append(getHighlightWord(basic, word, type));
+            } else if (selectedPOS == DODDLE_POS.VERB && isVerb(pos)) {
+                builder.append(getHighlightWord(basic, word, type));
+            } else if (selectedPOS == DODDLE_POS.OTHER && isOther(pos)) {
+                builder.append(getHighlightWord(basic, word, type));
+            } else {
+                builder.append(word);
+            }
         }
         return builder.toString();
     }
@@ -619,19 +597,14 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
             for (String pos : posSet) {
                 if (isCompoundWord(pos) || isUserDefinedWord(pos)) {
                     List<String> compoundWordList = new ArrayList<>();
-                    try {
-                        StringTagger tagger = SenFactory.getStringTagger(null);
-                        List<Token> tokenList = new ArrayList<>();
-                        tagger.analyze(word, tokenList);
-                        for (Token token : tokenList) {
-                            String bf = token.getMorpheme().getBasicForm();
-                            if (bf.equals("*")) {
-                                bf = token.getSurface();
-                            }
-                            compoundWordList.add(bf);
+                    Tokenizer tokenizer = new Tokenizer();
+                    List<Token> tokenList = tokenizer.tokenize(word);
+                    for (Token token : tokenList) {
+                        String bf = token.getBaseForm();
+                        if (bf.equals("*")) {
+                            bf = token.getSurface();
                         }
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
+                        compoundWordList.add(bf);
                     }
                     termInfoCompoundWordSet.add(compoundWordList);
                     break;
@@ -858,32 +831,27 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
     private String getSelectedLinkText(String type, String word) {
         if (!isRegisteredWord(word, type)) {
             if (selectedDoc.getLang().equals("ja")) {
-                try {
-                    StringTagger tagger = SenFactory.getStringTagger(null);
-                    int num = 0;
-                    String text = "";
-                    for (int i = lineNum; i < selectedDoc.getSize(); i++, num++) {
-                        if (num == DISPLAY_LINE_NUM) {
+                int num = 0;
+                String text = "";
+                for (int i = lineNum; i < selectedDoc.getSize(); i++, num++) {
+                    if (num == DISPLAY_LINE_NUM) {
+                        break;
+                    }
+                    text += selectedDoc.getTexts()[i] + "<br>";
+                }
+                Tokenizer tokenizer = new Tokenizer();
+                List<Token> tokenList = tokenizer.tokenize(text);
+                for (Token token : tokenList) {
+                    if (token.getSurface().equals(word)) {
+                        String basic = token.getBaseForm();
+                        if (basic.equals("*")) {
+                            basic = token.getSurface();
+                        }
+                        if (isRegisteredWord(basic, type)) {
+                            word = basic;
                             break;
                         }
-                        text += selectedDoc.getTexts()[i] + "<br>";
                     }
-                    List<Token> tokenList = new ArrayList<>();
-                    tagger.analyze(text, tokenList);
-                    for (Token token : tokenList) {
-                        if (token.getSurface().equals(word)) {
-                            String basic = token.getMorpheme().getBasicForm();
-                            if (basic.equals("*")) {
-                                basic = token.getSurface();
-                            }
-                            if (isRegisteredWord(basic, type)) {
-                                word = basic;
-                                break;
-                            }
-                        }
-                    }
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
                 }
             } else if (selectedDoc.getLang().equals("en")) {
                 String[] words = word.split("\\s+");

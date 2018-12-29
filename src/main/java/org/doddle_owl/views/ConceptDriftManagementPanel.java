@@ -236,18 +236,6 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                 return;
             }
             ConceptTreeNode traNode = traList.get(index);
-            if (DODDLE_OWL.doddlePlugin != null) {
-                List<ConceptTreeNode> set = new ArrayList<>();
-                set.add(traNode);
-                if (traNode.getParent() != null) {
-                    set.add((ConceptTreeNode) traNode.getParent());
-                }
-                if (isClass()) {
-                    DODDLE_OWL.doddlePlugin.selectClasses(changeToURISet(set));
-                } else {
-                    DODDLE_OWL.doddlePlugin.selectProperties(changeToURISet(set));
-                }
-            }
             DefaultTreeModel treeModel = (DefaultTreeModel) conceptTree.getModel();
             TreeNode[] nodes = treeModel.getPathToRoot(traNode);
             TreePath path = new TreePath(nodes);
@@ -300,13 +288,6 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                 return;
             }
             List<ConceptTreeNode> stm = mraList.get(index);
-            if (DODDLE_OWL.doddlePlugin != null) {
-                if (isClass()) {
-                    DODDLE_OWL.doddlePlugin.selectClasses(changeToURISet(stm));
-                } else {
-                    DODDLE_OWL.doddlePlugin.selectProperties(changeToURISet(stm));
-                }
-            }
             TreePath[] paths = new TreePath[stm.size()];
             for (int i = 0; i < paths.length; i++) {
                 paths[i] = new TreePath(stm.get(i).getPath());
@@ -481,16 +462,6 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                             TreePath path = new TreePath(nodes);
                             conceptTree.scrollPathToVisible(path);
                             conceptTree.setSelectionPath(path);
-                            if (DODDLE_OWL.doddlePlugin != null) {
-                                List<ConceptTreeNode> set = new ArrayList<>();
-                                set.add(multipleInheritanceNode);
-                                set.add(upperTreeNode);
-                                if (isClass()) {
-                                    DODDLE_OWL.doddlePlugin.selectClasses(changeToURISet(set));
-                                } else {
-                                    DODDLE_OWL.doddlePlugin.selectProperties(changeToURISet(set));
-                                }
-                            }
                             break;
                         }
                     }
@@ -545,9 +516,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         public void resetMutipleInheritanceConceptJListTitle() {
             DefaultListModel listModel = (DefaultListModel) multipleInheritanceConceptJList
                     .getModel();
-            mainViews[2].getViewProperties().setTitle(
-                    Translator.getTerm("RemoveMultipleInheritanceBorder") + " (" + listModel.size()
-                            + ")");
+            mainViews[2].getViewProperties().setTitle(Translator.getTerm("RemoveMultipleInheritanceBorder") + " (" + listModel.size() + ")");
             rootWindow.repaint();
         }
 
@@ -590,7 +559,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                 builder.append(System.lineSeparator());
             }
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
-            try(writer) {
+            try (writer) {
                 writer.write(builder.toString());
             }
         } catch (IOException e) {

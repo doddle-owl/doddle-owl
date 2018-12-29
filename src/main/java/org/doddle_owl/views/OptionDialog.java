@@ -310,11 +310,20 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         properties.setProperty("EDR_HOME", directoryPanel.getEDRDicDir());
         properties.setProperty("EDRT_HOME", directoryPanel.getEDRTDicDir());
+
+        properties.setProperty("ENWN_3_0_HOME", directoryPanel.getWn30DicDir());
+        properties.setProperty("ENWN_3_1_HOME", directoryPanel.getWn31DicDir());
+        properties.setProperty("JPWN_HOME", directoryPanel.getJpwnDicDir());
+        properties.setProperty("JWO_HOME", directoryPanel.getJwoDicDir());
+
         properties.setProperty("PERL_EXE", directoryPanel.getPerlDir());
         properties.setProperty("CHASEN_EXE", directoryPanel.getJapaneseMorphologicalAnalyzer());
         properties.setProperty("PROJECT_DIR", directoryPanel.getProjectDir());
         properties.setProperty("STOP_WORD_LIST", directoryPanel.getStopWordList());
         properties.setProperty("UPPER_CONCEPT_LIST", directoryPanel.getUpperConceptList());
+
+        properties.setProperty("STANFORD_PARSER_MODEL_DIR", directoryPanel.getStanfordParserModelDir());
+        properties.setProperty("TERM_EXTRACT_SCRIPTS_DIR", directoryPanel.getTermExtractScriptDir());
 
         if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
             properties.setProperty("Japanese_Morphological_Analyzer",
@@ -383,6 +392,11 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.EDR_HOME = directoryPanel.getEDRDicDir();
         DODDLEConstants.EDRT_HOME = directoryPanel.getEDRTDicDir();
 
+        DODDLEConstants.ENWN_3_0_HOME = directoryPanel.getWn30DicDir();
+        DODDLEConstants.ENWN_3_1_HOME = directoryPanel.getWn31DicDir();
+        DODDLEConstants.JPWN_HOME = directoryPanel.getJpwnDicDir();
+        DODDLEConstants.JWO_HOME = directoryPanel.getJwoDicDir();
+
         InputDocumentSelectionPanel.PERL_EXE = directoryPanel.getPerlDir();
         InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = directoryPanel
                 .getJapaneseMorphologicalAnalyzer();
@@ -391,6 +405,10 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.PROJECT_HOME = directoryPanel.getProjectDir();
         UpperConceptManager.UPPER_CONCEPT_LIST = directoryPanel.getUpperConceptList();
         InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = directoryPanel.getStopWordList();
+
+        InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME = directoryPanel.getStanfordParserModelDir();
+        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = directoryPanel.getTermExtractScriptDir();
+
         // 汎用オントロジーパネルのチェックボックスを有効化する
         DODDLEProject currentProject = (DODDLEProject) DODDLE_OWL.desktop.getSelectedFrame();
         if (currentProject != null) {
@@ -418,10 +436,16 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setJapaneseDependencyStructureAnalyzer("");
         directoryPanel.setEDRDicDir("");
         directoryPanel.setEDRTDicDir("");
+        directoryPanel.setWn30DicDir("");
+        directoryPanel.setWn31DicDir("");
+        directoryPanel.setJpwnDicDir("");
+        directoryPanel.setJwoDicDir("");
         directoryPanel.setPerlDir("");
         directoryPanel.setProjectDir("");
         directoryPanel.setUpperCnceptList("");
         directoryPanel.setStopWordList("");
+        directoryPanel.setStanfordParserModelDir("");
+        directoryPanel.setTermExtractScriptDir("");
     }
 
     public void loadConfig(Properties properties) {
@@ -436,6 +460,14 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setEDRDicDir(DODDLEConstants.EDR_HOME);
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         directoryPanel.setEDRTDicDir(DODDLEConstants.EDRT_HOME);
+        DODDLEConstants.ENWN_3_0_HOME = properties.getProperty("ENWN_3_0_HOME");
+        directoryPanel.setWn30DicDir(DODDLEConstants.ENWN_3_0_HOME);
+        DODDLEConstants.ENWN_3_1_HOME = properties.getProperty("ENWN_3_1_HOME");
+        directoryPanel.setWn31DicDir(DODDLEConstants.ENWN_3_1_HOME);
+        DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
+        directoryPanel.setJpwnDicDir(DODDLEConstants.JPWN_HOME);
+        DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
+        directoryPanel.setJwoDicDir(DODDLEConstants.JWO_HOME);
 
         InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         directoryPanel.setPerlDir(InputDocumentSelectionPanel.PERL_EXE);
@@ -446,12 +478,15 @@ public class OptionDialog extends JDialog implements ActionListener {
         InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = properties.getProperty("STOP_WORD_LIST");
         directoryPanel.setStopWordList(InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
+        InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME = properties.getProperty("STANFORD_PARSER_MODEL_DIR");
+        directoryPanel.setStanfordParserModelDir(InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME);
+        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
+        directoryPanel.setTermExtractScriptDir(InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
+
         if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
             properties.setProperty("Japanese_Morphological_Analyzer",
                     InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
         } else {
-            // properties.setProperty("Japanese_Morphological_Analyzer","C:/Program
-            // Files/Mecab/bin/mecab.exe -Ochasen");
             properties.setProperty("Japanese_Morphological_Analyzer",
                     "C:/Program Files/Chasen/bin/chasen.exe");
         }
@@ -543,77 +578,141 @@ public class OptionDialog extends JDialog implements ActionListener {
     class DirectoryPanel extends JPanel {
         private JTextField japaneseMorphologicalAnalyzerField;
         private JTextField japaneseDependencyStructureAnalyzerField;
-        private JTextField perlDirField;
         private JTextField edrDicDirField;
         private JTextField edrtDicDirField;
+        private JTextField wn30DicDirField;
+        private JTextField wn31DicDirField;
+        private JTextField jpwnDicDirField;
+        private JTextField jwoDicDirField;
         private JTextField projectDirField;
+        private JTextField perlDirField;
         private JTextField upperConceptListField;
         private JTextField stopWordListField;
+        private JTextField stanfordParserModelDirField;
+        private JTextField termExtractScriptDirField;
 
         private JButton browseJapaneseMorphologicalAnalyzerButton;
         private JButton browseJapaneseDependencyStructureAnalyzerButton;
-        private JButton browsePerlDirButton;
         private JButton browseEDRDicDirButton;
         private JButton browseEDRTDicDirButton;
+        private JButton browseWn30DicDirButton;
+        private JButton browseWn31DicDirButton;
+        private JButton browseJpwnDicDirButton;
+        private JButton browseJwoDicDirButton;
         private JButton browseProjectDirButton;
+        private JButton browsePerlDirButton;
         private JButton browseUpperConceptListButton;
         private JButton browseStopWordListButton;
+        private JButton browseStanfordParserModelDirButton;
+        private JButton browseTermExtractScriptDirButton;
 
         public DirectoryPanel() {
             japaneseMorphologicalAnalyzerField = new JTextField(FIELD_SIZE);
-            browseJapaneseMorphologicalAnalyzerButton = new JButton(
-                    Translator.getTerm("ReferenceButton"));
+            browseJapaneseMorphologicalAnalyzerButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(japaneseMorphologicalAnalyzerField,
                     browseJapaneseMorphologicalAnalyzerButton,
                     InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
+
             japaneseDependencyStructureAnalyzerField = new JTextField(FIELD_SIZE);
-            browseJapaneseDependencyStructureAnalyzerButton = new JButton(
-                    Translator.getTerm("ReferenceButton"));
+            browseJapaneseDependencyStructureAnalyzerButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(japaneseDependencyStructureAnalyzerField,
                     browseJapaneseDependencyStructureAnalyzerButton,
                     InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
 
-            perlDirField = new JTextField(FIELD_SIZE);
-            browsePerlDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-            initComponent(perlDirField, browsePerlDirButton, InputDocumentSelectionPanel.PERL_EXE);
             edrDicDirField = new JTextField(FIELD_SIZE);
             browseEDRDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(edrDicDirField, browseEDRDicDirButton, DODDLEConstants.EDR_HOME);
+
             edrtDicDirField = new JTextField(FIELD_SIZE);
             browseEDRTDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(edrtDicDirField, browseEDRTDicDirButton, DODDLEConstants.EDRT_HOME);
+
+
+            wn30DicDirField = new JTextField(FIELD_SIZE);
+            browseWn30DicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(wn30DicDirField, browseWn30DicDirButton, DODDLEConstants.ENWN_3_0_HOME);
+
+            wn31DicDirField = new JTextField(FIELD_SIZE);
+            browseWn31DicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(wn31DicDirField, browseWn31DicDirButton, DODDLEConstants.ENWN_3_1_HOME);
+
+
+            jpwnDicDirField = new JTextField(FIELD_SIZE);
+            browseJpwnDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(jpwnDicDirField, browseJpwnDicDirButton, DODDLEConstants.JPWN_HOME);
+
+            jwoDicDirField = new JTextField(FIELD_SIZE);
+            browseJwoDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(jwoDicDirField, browseJwoDicDirButton, DODDLEConstants.JWO_HOME);
+
             projectDirField = new JTextField(FIELD_SIZE);
             browseProjectDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(projectDirField, browseProjectDirButton, DODDLEConstants.PROJECT_HOME);
+
             upperConceptListField = new JTextField(FIELD_SIZE);
             browseUpperConceptListButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(upperConceptListField, browseUpperConceptListButton,
                     UpperConceptManager.UPPER_CONCEPT_LIST);
+
+            perlDirField = new JTextField(FIELD_SIZE);
+            browsePerlDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(perlDirField, browsePerlDirButton, InputDocumentSelectionPanel.PERL_EXE);
+
             stopWordListField = new JTextField(FIELD_SIZE);
             browseStopWordListButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(stopWordListField, browseStopWordListButton,
                     InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
+
+            stanfordParserModelDirField = new JTextField(FIELD_SIZE);
+            browseStanfordParserModelDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(stanfordParserModelDirField, browseStanfordParserModelDirButton,
+                    InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME);
+
+            termExtractScriptDirField = new JTextField(FIELD_SIZE);
+            browseTermExtractScriptDirButton = new JButton(Translator.getTerm("ReferenceButton"));
+            initComponent(termExtractScriptDirField, browseTermExtractScriptDirButton,
+                    InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
+
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(4, 2));
+            panel.setLayout(new GridLayout(7, 2));
+
             panel.add(getPanel(projectDirField, browseProjectDirButton,
                     Translator.getTerm("ProjectFolderTextField")));
             panel.add(getPanel(stopWordListField, browseStopWordListButton,
                     Translator.getTerm("StopWordsTextField")));
+
+            panel.add(getPanel(wn30DicDirField, browseWn30DicDirButton,
+                    Translator.getTerm("WordNet30FolderTextField")));
+            panel.add(getPanel(wn31DicDirField, browseWn31DicDirButton,
+                    Translator.getTerm("WordNet31FolderTextField")));
+
+            panel.add(getPanel(jpwnDicDirField, browseJpwnDicDirButton,
+                    Translator.getTerm("JPNWNFolderTextField")));
+            panel.add(getPanel(jwoDicDirField, browseJwoDicDirButton,
+                    Translator.getTerm("JWOFolderTextField")));
+
             panel.add(getPanel(edrDicDirField, browseEDRDicDirButton,
                     Translator.getTerm("EDRDicFolderTextField")));
             panel.add(getPanel(edrtDicDirField, browseEDRTDicDirButton,
                     Translator.getTerm("EDRTDicFolderTextField")));
+
             panel.add(getPanel(japaneseMorphologicalAnalyzerField,
                     browseJapaneseMorphologicalAnalyzerButton,
                     Translator.getTerm("JapaneseMorphologicalAnalyzerTextField")));
             panel.add(getPanel(japaneseDependencyStructureAnalyzerField,
                     browseJapaneseDependencyStructureAnalyzerButton,
                     Translator.getTerm("JapaneseDependencyStructureAnalyzerTextField")));
+
             panel.add(getPanel(perlDirField, browsePerlDirButton,
                     Translator.getTerm("PerlTextField")));
             panel.add(getPanel(upperConceptListField, browseUpperConceptListButton,
                     Translator.getTerm("UpperConceptListTextField")));
+
+            panel.add(getPanel(stanfordParserModelDirField, browseStanfordParserModelDirButton,
+                    Translator.getTerm("StanfordParserModelFolderTextField")));
+            panel.add(getPanel(termExtractScriptDirField, browseTermExtractScriptDirButton,
+                    Translator.getTerm("CompoundWordExtractionScriptFolderTextField")));
 
             setLayout(new BorderLayout());
             setBorder(BorderFactory.createEtchedBorder());
@@ -660,6 +759,38 @@ public class OptionDialog extends JDialog implements ActionListener {
             return edrtDicDirField.getText();
         }
 
+        public void setWn30DicDir(String dir) {
+            wn30DicDirField.setText(dir);
+        }
+
+        public String getWn30DicDir() {
+            return wn30DicDirField.getText();
+        }
+
+        public void setWn31DicDir(String dir) {
+            wn31DicDirField.setText(dir);
+        }
+
+        public String getWn31DicDir() {
+            return wn31DicDirField.getText();
+        }
+
+        public void setJpwnDicDir(String dir) {
+            jpwnDicDirField.setText(dir);
+        }
+
+        public String getJpwnDicDir() {
+            return jpwnDicDirField.getText();
+        }
+
+        public void setJwoDicDir(String dir) {
+            jwoDicDirField.setText(dir);
+        }
+
+        public String getJwoDicDir() {
+            return jwoDicDirField.getText();
+        }
+
         public void setProjectDir(String dir) {
             projectDirField.setText(dir);
         }
@@ -682,6 +813,24 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         public String getStopWordList() {
             return stopWordListField.getText();
+        }
+
+
+        public void setStanfordParserModelDir(String file) {
+            stanfordParserModelDirField.setText(file);
+        }
+
+        public String getStanfordParserModelDir() {
+            return stanfordParserModelDirField.getText();
+        }
+
+
+        public void setTermExtractScriptDir(String file) {
+            termExtractScriptDirField.setText(file);
+        }
+
+        public String getTermExtractScriptDir() {
+            return termExtractScriptDirField.getText();
         }
 
         private static final int FIELD_SIZE = 20;
@@ -735,10 +884,22 @@ public class OptionDialog extends JDialog implements ActionListener {
                         DODDLEConstants.EDR_HOME = fileOrDirectoryName;
                     } else if (directoryField == edrtDicDirField) {
                         DODDLEConstants.EDRT_HOME = fileOrDirectoryName;
+                    } else if (directoryField == wn30DicDirField) {
+                        DODDLEConstants.ENWN_3_0_HOME = fileOrDirectoryName;
+                    } else if (directoryField == wn31DicDirField) {
+                        DODDLEConstants.ENWN_3_1_HOME = fileOrDirectoryName;
+                    } else if (directoryField == jpwnDicDirField) {
+                        DODDLEConstants.JPWN_HOME = fileOrDirectoryName;
+                    } else if (directoryField == jwoDicDirField) {
+                        DODDLEConstants.JWO_HOME = fileOrDirectoryName;
                     } else if (directoryField == projectDirField) {
                         DODDLEConstants.PROJECT_HOME = fileOrDirectoryName;
                     } else if (directoryField == upperConceptListField) {
                         UpperConceptManager.UPPER_CONCEPT_LIST = fileOrDirectoryName;
+                    } else if (directoryField == stanfordParserModelDirField) {
+                        InputDocumentSelectionPanel.STANFORD_PARSER_MODELS_HOME = fileOrDirectoryName;
+                    } else if (directoryField == termExtractScriptDirField) {
+                        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = fileOrDirectoryName;
                     }
                 }
             }

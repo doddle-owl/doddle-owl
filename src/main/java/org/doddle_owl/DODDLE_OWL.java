@@ -27,7 +27,6 @@ package org.doddle_owl;
 import org.apache.commons.cli.*;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.log4j.*;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.DODDLEConstants;
 import org.doddle_owl.models.InputModule;
@@ -38,6 +37,7 @@ import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.*;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -47,6 +47,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.*;
+import java.util.logging.*;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -57,8 +58,6 @@ public class DODDLE_OWL extends JFrame {
 
     private OptionDialog optionDialog;
     private LogConsole logConsole;
-
-    public static DODDLEPlugin doddlePlugin;
 
     public static Frame rootFrame;
     public static JRootPane rootPane;
@@ -127,15 +126,8 @@ public class DODDLE_OWL extends JFrame {
         setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
                 + DODDLEConstants.VERSION);
-        File tempDir = new File(Utils.TEMP_DIR);
-        if (!tempDir.exists()) {
-            tempDir.mkdir();
-        }
         setVisible(true);
-    }
-
-    public static DODDLEPlugin getDODDLEPlugin() {
-        return doddlePlugin;
+        new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
     }
 
     public OptionDialog getOptionDialog() {
@@ -150,11 +142,8 @@ public class DODDLE_OWL extends JFrame {
                 getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
                 getCurrentProject().getOntologySelectionPanel().closeDataset();
             }
-            if (doddlePlugin == null) {
-                System.exit(0);
-            } else {
-                dispose();
-            }
+            dispose();
+            System.exit(0);
         }
     }
 
@@ -318,6 +307,7 @@ public class DODDLE_OWL extends JFrame {
 
     private JToolBar getToolBar() {
         JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);
         toolBar.add(newProjectAction).setToolTipText(newProjectAction.getTitle());
         toolBar.add(openProjectAction).setToolTipText(openProjectAction.getTitle());
         toolBar.add(saveProjectAction).setToolTipText(saveProjectAction.getTitle());
@@ -397,6 +387,10 @@ public class DODDLE_OWL extends JFrame {
     public static void setPath(Properties properties) {
         DODDLEConstants.EDR_HOME = properties.getProperty("EDR_HOME");
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
+        DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
+        DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
+        DODDLEConstants.ENWN_3_0_HOME = properties.getProperty("ENWN_3_0_HOME");
+        DODDLEConstants.ENWN_3_1_HOME = properties.getProperty("ENWN_3_1_HOME");
         InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");
@@ -427,33 +421,20 @@ public class DODDLE_OWL extends JFrame {
 
     public static void setProgressValue() {
         InputModule.INIT_PROGRESS_VALUE = 887253;
-        // InputModule.INIT_PROGRESS_VALUE = 283517;
     }
 
     public static Logger getLogger() {
-        return Logger.getLogger(DODDLE_OWL.class);
-    }
-
-    private static void setDefaultLoggerFormat() {
-        for (Enumeration enumeration = Logger.getRootLogger().getAllAppenders(); enumeration.hasMoreElements(); ) {
-            Appender appender = (Appender) enumeration.nextElement();
-            if (appender.getName().equals("stdout")) {
-                appender.setLayout(new PatternLayout("[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"));
-            }
-        }
+        return Logger.getLogger(DODDLE_OWL.class.getName());
     }
 
     public static void setFileLogger() {
         try {
             getLogger().setLevel(Level.INFO);
-            setDefaultLoggerFormat();
             String file = DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt";
             if (new File(DODDLEConstants.PROJECT_HOME).exists()) {
-                FileAppender appender = new FileAppender(new PatternLayout(
-                        "[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"), file);
-                appender.setName("LOG File");
-                appender.setAppend(true);
-                Logger.getRootLogger().addAppender(appender);
+                Handler handler = new FileHandler(file);
+                handler.setFormatter(new SimpleFormatter());
+                getLogger().addHandler(handler);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -470,9 +451,8 @@ public class DODDLE_OWL extends JFrame {
             CommandLine cmd = parser.parse(options, args);
             setPath();
             setProgressValue();
-            int c;
             if (cmd.hasOption("g")) {
-                getLogger().setLevel(Level.DEBUG);
+                getLogger().setLevel(Level.SEVERE);
                 DODDLEConstants.DEBUG = true;
             }
             if (cmd.hasOption("l")) {
@@ -490,9 +470,6 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static String getExecPath() {
-        if (doddlePlugin == null) {
-            return "." + File.separator;
-        }
         String jarPath = DODDLE_OWL.class.getClassLoader().getResource("").getFile();
         File file = new File(jarPath);
         return file.getAbsolutePath() + File.separator;
@@ -504,8 +481,17 @@ public class DODDLE_OWL extends JFrame {
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
         try {
             ToolTipManager.sharedInstance().setEnabled(true);
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("TitledBorder.border", new LineBorder(new Color(200, 200, 200), 1));
+            try {
+                for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             new DODDLE_OWL();
         } catch (Exception e) {
             e.printStackTrace();

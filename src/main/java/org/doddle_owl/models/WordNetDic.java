@@ -29,13 +29,13 @@ import net.sf.extjwnl.data.list.PointerTargetNode;
 import net.sf.extjwnl.data.list.PointerTargetNodeList;
 import net.sf.extjwnl.data.list.PointerTargetTree;
 import net.sf.extjwnl.dictionary.Dictionary;
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * @author shigeta

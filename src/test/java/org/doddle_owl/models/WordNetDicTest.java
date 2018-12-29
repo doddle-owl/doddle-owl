@@ -12,6 +12,7 @@ class WordNetDicTest {
     class WordNetDic30Test {
         @BeforeEach
         void setUp() {
+            DODDLEConstants.ENWN_3_0_HOME = "/Users/t_morita/DODDLE-OWL/enwn_dict_3.0";
             DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_0_HOME;
             WordNetDic.initWordNetDictionary();
         }
@@ -43,6 +44,7 @@ class WordNetDicTest {
     class WordNetDic31Test {
         @BeforeEach
         void setUp() {
+            DODDLEConstants.ENWN_3_1_HOME = "/Users/t_morita/DODDLE-OWL/enwn_dict_3.1";
             DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
             WordNetDic.initWordNetDictionary();
         }

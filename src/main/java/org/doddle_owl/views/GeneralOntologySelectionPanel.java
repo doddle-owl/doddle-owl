@@ -23,17 +23,14 @@
 
 package org.doddle_owl.views;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.tdb.TDBFactory;
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -41,12 +38,15 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
-import java.net.URL;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
@@ -63,10 +63,8 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
     private JPanel wnVersionSelectionPanel;
 
     private JLabel generalOntologyDirLabel;
-    private JButton removeGeneralOntologyDirButton;
 
     private NameSpaceTable nameSpaceTable;
-    public static final String JWO_HOME = Utils.TEMP_DIR + "jwo";
 
     private Dataset dataset;
 
@@ -106,15 +104,6 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
         checkPanel.add(edrtCheckBox);
         setLayout(new BorderLayout());
         add(checkPanel, BorderLayout.WEST);
-
-        generalOntologyDirLabel = new JLabel(Utils.TEMP_DIR);
-        removeGeneralOntologyDirButton = new JButton(Translator.getTerm("RemoveGeneralOntologyDirectoryButton"));
-        removeGeneralOntologyDirButton.addActionListener(this);
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BorderLayout());
-        buttonPanel.add(generalOntologyDirLabel, BorderLayout.CENTER);
-        buttonPanel.add(removeGeneralOntologyDirButton, BorderLayout.WEST);
-        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     public void closeDataSet() {
@@ -293,17 +282,7 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProject project = DODDLE_OWL.getCurrentProject();
-        if (e.getSource() == removeGeneralOntologyDirButton) {
-            int result = JOptionPane.showConfirmDialog(this, Translator.getTerm("RemoveGeneralOntologyDirectoryButton")
-                    + ": " + System.lineSeparator() + Utils.TEMP_DIR);
-            if (result == JOptionPane.YES_OPTION) {
-                String tmpDirName = "net.sourceforge.doddle-owl"; // tmpDirNameが含まれていないフォルダは削除しない
-                File tmpDir = new File(Utils.TEMP_DIR);
-                if (tmpDir.getAbsolutePath().contains(tmpDirName)) {
-                    deleteFile(tmpDir); // 指定フォルダについては要確認
-                }
-            }
-        } else if (e.getSource() == edrCheckBox) {
+        if (e.getSource() == edrCheckBox) {
             enableEDRDic(edrCheckBox.isSelected());
             project.addLog("GenericEDRCheckBox", edrCheckBox.isSelected());
         } else if (e.getSource() == edrtCheckBox) {
@@ -318,31 +297,7 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
             project.addLog("JpnWordNetCheckBox", jpnWnCheckBox.isSelected());
         } else if (e.getSource() == jwoCheckBox) {
             if (jwoCheckBox.isSelected()) {
-                File jwoDir = new File(JWO_HOME);
-                if (!jwoDir.exists()) {
-                    jwoDir.mkdir();
-                }
-                String[] tdbFiles = {"GOSP.dat", "GOSP.idn", "GOSP.info", "GPOS.dat", "GPOS.idn", "GPOS.info",
-                        "GSPO.dat", "GSPO.idn", "GSPO.info", "node2id.dat", "node2id.idn", "node2id.info", "nodes.dat",
-                        "nodes.info", "OSP.dat", "OSP.idn", "OSP.info", "OSPG.dat", "OSPG.idn", "OSPG.info", "POS.dat",
-                        "POS.idn", "POS.info", "POSG.dat", "POSG.idn", "POSG.info", "prefix2id.dat", "prefix2id.idn",
-                        "prefix2id.info", "prefixes.dat", "prefixes.info", "prefixIdx.dat", "prefixIdx.idn",
-                        "prefixIdx.info", "SPO.dat", "SPO.idn", "SPO.info", "SPOG.dat", "SPOG.idn", "SPOG.info",
-                        "this.info"};
-                for (String fname : tdbFiles) {
-                    File f = new File(JWO_HOME + File.separator + fname);
-                    if (!f.exists()) {
-                        URL url = DODDLE_OWL.class.getClassLoader().getResource("jwo/" + f.getName());
-                        try {
-                            if (url != null) {
-                                FileUtils.copyURLToFile(url, f);
-                                DODDLE_OWL.getLogger().log(Level.INFO, "copy: " + f.getAbsolutePath());
-                            }
-                        } catch (IOException ioe) {
-                            ioe.printStackTrace();
-                        }
-                    }
-                }
+                File jwoDir = new File(DODDLEConstants.JWO_HOME);
                 if (OWLOntologyManager.getRefOntology(jwoDir.getAbsolutePath()) == null) {
                     dataset = TDBFactory.createDataset(jwoDir.getAbsolutePath());
                     Model ontModel = dataset.getDefaultModel();

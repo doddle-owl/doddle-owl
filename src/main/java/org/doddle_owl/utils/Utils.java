@@ -23,6 +23,8 @@
 
 package org.doddle_owl.utils;
 
+import com.atilika.kuromoji.ipadic.Token;
+import com.atilika.kuromoji.ipadic.Tokenizer;
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.properties.RootWindowProperties;
 import net.infonode.docking.theme.DockingWindowsTheme;
@@ -31,10 +33,6 @@ import net.infonode.docking.util.DockingUtil;
 import net.infonode.docking.util.PropertiesUtil;
 import net.infonode.docking.util.ViewMap;
 import net.infonode.util.Direction;
-import net.java.sen.SenFactory;
-import net.java.sen.StringTagger;
-import net.java.sen.dictionary.Token;
-import org.apache.commons.io.FileUtils;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
@@ -52,24 +50,20 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * @author Takeshi Morita
  */
 public class Utils {
-    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir") + "org.doddle-owl" + File.separator;
-    private static final String JPWN_TEMP_DIR = TEMP_DIR + "jpwn_dict_1.1" + File.separator;
-
     public static ImageIcon getImageIcon(String icon) {
-        return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource(icon));
+        return new ImageIcon(DODDLE_OWL.class.getClassLoader()
+                .getResource("images" + File.separator + icon));
     }
 
     public static URL getURL(String icon) {
@@ -77,49 +71,7 @@ public class Utils {
     }
 
     public static File getENWNFile() {
-        File wnDir = new File(TEMP_DIR + DODDLEConstants.ENWN_HOME);
-        if (wnDir.exists()) {
-            Logger.getGlobal().info("exist: " + wnDir.getAbsolutePath());
-            return wnDir;
-        }
-        wnDir.mkdir();
-        String[] wnFiles = {"adj.exc", "adv.exc", "cntlist", "cntlist.rev", "data.adj", "data.noun", "data.verb",
-                "frames.vrb", "index.adj", "index.adv", "index.noun", "index.sense", "index.verb", "lexnames",
-                "log.grind.3.0", "noun.exc", "sentidx.vrb", "sents.vrb", "verb.exc", "verb.Framestext"};
-        for (String wnf : wnFiles) {
-            URL url = DODDLE_OWL.class.getClassLoader().getResource(DODDLEConstants.ENWN_HOME + wnf);
-            try {
-                File f = new File(wnDir.getAbsolutePath() + File.separator + wnf);
-                if (url != null) {
-                    FileUtils.copyURLToFile(url, f);
-                }
-                Logger.getGlobal().info("copy: " + f.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Logger.getGlobal().info("created: " + wnDir.getAbsolutePath());
-        return wnDir;
-    }
-
-    public static File getJPWNFile(String resName) {
-        File dir = new File(JPWN_TEMP_DIR);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        File file = new File(JPWN_TEMP_DIR + resName);
-        if (file.exists()) {
-            // System.out.println("exist: " + file.getAbsolutePath());
-            return file;
-        }
-        URL url = DODDLE_OWL.class.getClassLoader().getResource(DODDLEConstants.JPWN_HOME + resName);
-        try {
-            FileUtils.copyURLToFile(url, file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // System.out.println("created: " + file.getAbsolutePath());
-        return file;
+        return new File(DODDLEConstants.ENWN_HOME);
     }
 
     public static RootWindow createDODDLERootWindow(ViewMap viewMap) {
@@ -138,26 +90,21 @@ public class Utils {
         Set<String> compoundWordSet = new HashSet<>();
         Map<String, List<String>> compoundWordElementListMap = new HashMap<>();
         for (String compoundWord : inputWordList) {
-            try {
-                StringTagger tagger = SenFactory.getStringTagger(null);
-                List<Token> compoundWordTokenList = new ArrayList<>();
-                tagger.analyze(compoundWord, compoundWordTokenList);
-                if (compoundWordTokenList.size() == 1) {
-                    continue; // 複合ではない
-                }
-                compoundWordSet.add(compoundWord);
-                List<String> compoundWordElementList = new ArrayList<>();
-                for (Token compoundWordToken : compoundWordTokenList) {
-                    String bf = compoundWordToken.getMorpheme().getBasicForm();
-                    if (bf.equals("*")) {
-                        bf = compoundWordToken.getSurface();
-                    }
-                    compoundWordElementList.add(bf);
-                }
-                compoundWordElementListMap.put(compoundWord, compoundWordElementList);
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
+            Tokenizer tokenizer = new Tokenizer();
+            List<Token> compoundWordTokenList = tokenizer.tokenize(compoundWord);
+            if (compoundWordTokenList.size() == 1) {
+                continue; // 複合ではない
             }
+            compoundWordSet.add(compoundWord);
+            List<String> compoundWordElementList = new ArrayList<>();
+            for (Token compoundWordToken : compoundWordTokenList) {
+                String bf = compoundWordToken.getBaseForm();
+                if (bf.equals("*")) {
+                    bf = compoundWordToken.getSurface();
+                }
+                compoundWordElementList.add(bf);
+            }
+            compoundWordElementListMap.put(compoundWord, compoundWordElementList);
         }
         for (String compoundWord : compoundWordSet) {
             List<String> compoundWordElementList = compoundWordElementListMap.get(compoundWord);
@@ -390,4 +337,9 @@ public class Utils {
         }
         return model;
     }
+
+    public static File getJPWNFile(String resName) {
+        return new File(DODDLEConstants.JPWN_HOME + File.separator + resName);
+    }
+
 }

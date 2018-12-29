@@ -23,12 +23,12 @@
 
 package org.doddle_owl.models;
 
-import org.doddle_owl.DODDLE_OWL;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.log4j.Level;
+import org.doddle_owl.DODDLE_OWL;
 
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita

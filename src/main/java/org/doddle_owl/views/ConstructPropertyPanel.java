@@ -28,7 +28,6 @@ import net.infonode.docking.SplitWindow;
 import net.infonode.docking.TabWindow;
 import net.infonode.docking.View;
 import net.infonode.docking.util.ViewMap;
-import org.apache.log4j.Level;
 import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
@@ -44,6 +43,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
@@ -131,7 +131,7 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
         // DODDLE.getLogger().log(Level.INFO, "追加した抽象中間ノード数: " +
         // isaTreePanel.getAbstractNodeCnt());
         addedAbstractCompoundConceptCnt = isaTreePanel.getAbstractConceptCnt();
-        DODDLE_OWL.getLogger().log(Level.DEBUG,
+        DODDLE_OWL.getLogger().log(Level.SEVERE,
                 Translator.getTerm("AbstractInternalPropertyCountMessage") + ": " + addedAbstractCompoundConceptCnt);
         if (addedAbstractCompoundConceptCnt == 0) {
             averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
