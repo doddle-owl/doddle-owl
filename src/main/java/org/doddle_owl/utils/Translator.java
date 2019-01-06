@@ -23,11 +23,11 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.models.DODDLEConstants;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
+import org.doddle_owl.models.DODDLEConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -112,38 +112,29 @@ public class Translator {
     public static void loadDODDLEComponentOntology(String lang) {
         uriTermMap = new HashMap<>();
         uriDescriptionMap = new HashMap<>();
-        try {
-            File componentOntFile = new File("./resources/DODDLEComponent.owl");
-            Model ontModel = ModelFactory.createDefaultModel();
-            if (componentOntFile.exists()) {
-                ontModel.read(new FileInputStream(componentOntFile), DODDLEConstants.BASE_URI);
-            } else {
-                InputStream ins = Utils.class.getClassLoader().getResourceAsStream("DODDLEComponent.owl");
-                ontModel.read(ins, DODDLEConstants.BASE_URI);
-            }
+        Model ontModel = ModelFactory.createDefaultModel();
+        InputStream ins = Utils.class.getClassLoader().getResourceAsStream("doddle_components.owl");
+        ontModel.read(ins, DODDLEConstants.BASE_URI, "TURTLE");
 
-            for (ResIterator resItor = ontModel.listSubjectsWithProperty(RDF.type, OWL.Class); resItor
-                    .hasNext(); ) {
-                Resource res = resItor.nextResource();
-                for (StmtIterator stmtItor = res.listProperties(RDFS.label); stmtItor.hasNext(); ) {
-                    Statement stmt = stmtItor.nextStatement();
-                    Literal label = (Literal) stmt.getObject();
-                    if (label.getLanguage().equals(lang)) {
-                        uriTermMap.put(res.getURI(), label.getString());
-                    }
-                }
-                for (StmtIterator stmtItor = res.listProperties(RDFS.comment); stmtItor.hasNext(); ) {
-                    Statement stmt = stmtItor.nextStatement();
-                    Literal description = (Literal) stmt.getObject();
-                    if (description != null && description.getLanguage().equals(lang)) {
-                        uriDescriptionMap.put(res.getURI(), description.getString());
-                    }
+        for (ResIterator resItor = ontModel.listSubjectsWithProperty(RDF.type, OWL.Class); resItor
+                .hasNext(); ) {
+            Resource res = resItor.nextResource();
+            for (StmtIterator stmtItor = res.listProperties(RDFS.label); stmtItor.hasNext(); ) {
+                Statement stmt = stmtItor.nextStatement();
+                Literal label = (Literal) stmt.getObject();
+                if (label.getLanguage().equals(lang)) {
+                    uriTermMap.put(res.getURI(), label.getString());
                 }
             }
-            ontModel.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            for (StmtIterator stmtItor = res.listProperties(RDFS.comment); stmtItor.hasNext(); ) {
+                Statement stmt = stmtItor.nextStatement();
+                Literal description = (Literal) stmt.getObject();
+                if (description != null && description.getLanguage().equals(lang)) {
+                    uriDescriptionMap.put(res.getURI(), description.getString());
+                }
+            }
         }
+        ontModel.close();
     }
 
     public static String getTerm(String key) {
