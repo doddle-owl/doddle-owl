@@ -1,5 +1,4 @@
 *.iml
-src/test/java/CalcConceptDistanceInJWN.java
 doddle_log.txt
 .idea/
 .gradle/
