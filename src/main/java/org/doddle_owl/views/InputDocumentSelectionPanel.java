@@ -25,10 +25,7 @@ package org.doddle_owl.views;
 
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
-import edu.stanford.nlp.ling.HasWord;
-import edu.stanford.nlp.ling.SentenceUtils;
-import edu.stanford.nlp.ling.TaggedWord;
-import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+import edu.stanford.nlp.simple.Sentence;
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.SplitWindow;
 import net.infonode.docking.View;
@@ -67,8 +64,6 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -466,32 +461,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         termInfoMap.put(term, info);
     }
 
-    private String runStanfordParser(File docFile) {
-        StringBuilder builder = new StringBuilder();
-        try {
-            String modelName = "english-left3words-distsim.tagger";
-            String modelPath = STANFORD_PARSER_MODELS_HOME + File.separator + modelName;
-            File modelFile = new File(modelPath);
-            Path path = Paths.get(STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
-            BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
-            try (writer) {
-                MaxentTagger tagger = new MaxentTagger(modelFile.getAbsolutePath());
-                List<List<HasWord>> sentences = MaxentTagger.tokenizeText(new BufferedReader(
-                        new FileReader(docFile)));
-                for (List<HasWord> sentence : sentences) {
-                    List<TaggedWord> tSentence = tagger.tagSentence(sentence);
-                    writer.write(SentenceUtils.listToString(tSentence, false));
-                    builder.append(SentenceUtils.listToString(tSentence, false));
-                }
-            }
-        } catch (IOException ioe) {
-            DODDLE_OWL.getLogger().log(Level.SEVERE, "Stanford Parser can not be executed.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return builder.toString();
-    }
-
     private void setTermInfo(String term, String pos, String basicStr, File file, boolean isInputDoc) {
         if (nounCheckBox.isSelected() && isEnNoun(pos)) {
             IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, term.toLowerCase());
@@ -536,43 +505,30 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     private void enTermExtraction(Document doc, boolean isInputDoc) {
         File file = doc.getFile();
-        String taggedText = runStanfordParser(file);
-        if (taggedText.length() != 0) {
-            String[] token = taggedText.split("\\s");
-            if (token == null) {
-                return;
-            }
-            for (String s : token) {
-                String[] info = s.split("/");
-                if (info.length != 2) {
-                    continue;
-                }
-                String word = info[0];
-                String pos = info[1];
-                String basicStr = word.toLowerCase();
+        edu.stanford.nlp.simple.Document stanfordDoc = new edu.stanford.nlp.simple.Document(doc.getText());
+        Path taggerOutPath = Paths.get(DODDLEConstants.PROJECT_HOME + File.separator + "tmpTagger.txt");
+        try (BufferedWriter writer = Files.newBufferedWriter(taggerOutPath);) {
+            for (Sentence sentence : stanfordDoc.sentences()) {
+                for (int i = 0; i < sentence.words().size(); i++) {
+                    String word = sentence.word(i);
+                    String pos = sentence.posTag(i);
+                    String basicStr = sentence.lemma(i);
+                    writer.write(word);
+                    writer.write("/");
+                    writer.write(pos);
+                    writer.write(" ");
 
-                if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
-                    continue;
+                    if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
+                        continue;
+                    }
+                    if (isStopWord(basicStr)) {
+                        continue;
+                    }
+                    setTermInfo(word, pos, basicStr, file, isInputDoc);
                 }
-                if (isStopWord(basicStr)) {
-                    continue;
-                }
-                setTermInfo(word, pos, basicStr, file, isInputDoc);
             }
-        } else {
-            String[] words = doc.getText().split("\\s");
-            for (String word : words) {
-                String basicStr = word.toLowerCase();
-
-                if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
-                    continue;
-                }
-
-                if (isStopWord(basicStr)) {
-                    continue;
-                }
-                setTermInfo(word, basicStr, file, isInputDoc);
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         if (genSenCheckBox.isSelected()) {
             Set<String> comoundWordSet = getGensenCompoundWordSet(doc);
@@ -646,7 +602,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
     private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
     private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
-    public static String STANFORD_PARSER_MODELS_HOME = "stanford_parser_models";
     public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
     public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
 
@@ -732,7 +687,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             }
         }
         ProcessBuilder processBuilder = new ProcessBuilder(PERL_EXE, taggerPath,
-                STANFORD_PARSER_MODELS_HOME + File.separator + "tmpTagger.txt");
+                DODDLEConstants.PROJECT_HOME + File.separator + "tmpTagger.txt");
         termExtractProcess = processBuilder.start();
         return new BufferedReader(new InputStreamReader(termExtractProcess.getInputStream(), StandardCharsets.UTF_8));
     }
