@@ -311,8 +311,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         properties.setProperty("EDR_HOME", directoryPanel.getEDRDicDir());
         properties.setProperty("EDRT_HOME", directoryPanel.getEDRTDicDir());
 
-        properties.setProperty("ENWN_3_0_HOME", directoryPanel.getWn30DicDir());
-        properties.setProperty("ENWN_3_1_HOME", directoryPanel.getWn31DicDir());
         properties.setProperty("JPWN_HOME", directoryPanel.getJpwnDicDir());
         properties.setProperty("JWO_HOME", directoryPanel.getJwoDicDir());
 
@@ -392,8 +390,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.EDR_HOME = directoryPanel.getEDRDicDir();
         DODDLEConstants.EDRT_HOME = directoryPanel.getEDRTDicDir();
 
-        DODDLEConstants.ENWN_3_0_HOME = directoryPanel.getWn30DicDir();
-        DODDLEConstants.ENWN_3_1_HOME = directoryPanel.getWn31DicDir();
         DODDLEConstants.JPWN_HOME = directoryPanel.getJpwnDicDir();
         DODDLEConstants.JWO_HOME = directoryPanel.getJwoDicDir();
 
@@ -436,8 +432,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setJapaneseDependencyStructureAnalyzer("");
         directoryPanel.setEDRDicDir("");
         directoryPanel.setEDRTDicDir("");
-        directoryPanel.setWn30DicDir("");
-        directoryPanel.setWn31DicDir("");
         directoryPanel.setJpwnDicDir("");
         directoryPanel.setJwoDicDir("");
         directoryPanel.setPerlDir("");
@@ -460,10 +454,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setEDRDicDir(DODDLEConstants.EDR_HOME);
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         directoryPanel.setEDRTDicDir(DODDLEConstants.EDRT_HOME);
-        DODDLEConstants.ENWN_3_0_HOME = properties.getProperty("ENWN_3_0_HOME");
-        directoryPanel.setWn30DicDir(DODDLEConstants.ENWN_3_0_HOME);
-        DODDLEConstants.ENWN_3_1_HOME = properties.getProperty("ENWN_3_1_HOME");
-        directoryPanel.setWn31DicDir(DODDLEConstants.ENWN_3_1_HOME);
         DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
         directoryPanel.setJpwnDicDir(DODDLEConstants.JPWN_HOME);
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
@@ -580,8 +570,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         private JTextField japaneseDependencyStructureAnalyzerField;
         private JTextField edrDicDirField;
         private JTextField edrtDicDirField;
-        private JTextField wn30DicDirField;
-        private JTextField wn31DicDirField;
         private JTextField jpwnDicDirField;
         private JTextField jwoDicDirField;
         private JTextField projectDirField;
@@ -595,8 +583,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         private JButton browseJapaneseDependencyStructureAnalyzerButton;
         private JButton browseEDRDicDirButton;
         private JButton browseEDRTDicDirButton;
-        private JButton browseWn30DicDirButton;
-        private JButton browseWn31DicDirButton;
         private JButton browseJpwnDicDirButton;
         private JButton browseJwoDicDirButton;
         private JButton browseProjectDirButton;
@@ -626,16 +612,6 @@ public class OptionDialog extends JDialog implements ActionListener {
             edrtDicDirField = new JTextField(FIELD_SIZE);
             browseEDRTDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(edrtDicDirField, browseEDRTDicDirButton, DODDLEConstants.EDRT_HOME);
-
-
-            wn30DicDirField = new JTextField(FIELD_SIZE);
-            browseWn30DicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-            initComponent(wn30DicDirField, browseWn30DicDirButton, DODDLEConstants.ENWN_3_0_HOME);
-
-            wn31DicDirField = new JTextField(FIELD_SIZE);
-            browseWn31DicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-            initComponent(wn31DicDirField, browseWn31DicDirButton, DODDLEConstants.ENWN_3_1_HOME);
-
 
             jpwnDicDirField = new JTextField(FIELD_SIZE);
             browseJpwnDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
@@ -681,11 +657,6 @@ public class OptionDialog extends JDialog implements ActionListener {
                     Translator.getTerm("ProjectFolderTextField")));
             panel.add(getPanel(stopWordListField, browseStopWordListButton,
                     Translator.getTerm("StopWordsTextField")));
-
-            panel.add(getPanel(wn30DicDirField, browseWn30DicDirButton,
-                    Translator.getTerm("WordNet30FolderTextField")));
-            panel.add(getPanel(wn31DicDirField, browseWn31DicDirButton,
-                    Translator.getTerm("WordNet31FolderTextField")));
 
             panel.add(getPanel(jpwnDicDirField, browseJpwnDicDirButton,
                     Translator.getTerm("JPNWNFolderTextField")));
@@ -757,22 +728,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         public String getEDRTDicDir() {
             return edrtDicDirField.getText();
-        }
-
-        public void setWn30DicDir(String dir) {
-            wn30DicDirField.setText(dir);
-        }
-
-        public String getWn30DicDir() {
-            return wn30DicDirField.getText();
-        }
-
-        public void setWn31DicDir(String dir) {
-            wn31DicDirField.setText(dir);
-        }
-
-        public String getWn31DicDir() {
-            return wn31DicDirField.getText();
         }
 
         public void setJpwnDicDir(String dir) {
@@ -884,10 +839,6 @@ public class OptionDialog extends JDialog implements ActionListener {
                         DODDLEConstants.EDR_HOME = fileOrDirectoryName;
                     } else if (directoryField == edrtDicDirField) {
                         DODDLEConstants.EDRT_HOME = fileOrDirectoryName;
-                    } else if (directoryField == wn30DicDirField) {
-                        DODDLEConstants.ENWN_3_0_HOME = fileOrDirectoryName;
-                    } else if (directoryField == wn31DicDirField) {
-                        DODDLEConstants.ENWN_3_1_HOME = fileOrDirectoryName;
                     } else if (directoryField == jpwnDicDirField) {
                         DODDLEConstants.JPWN_HOME = fileOrDirectoryName;
                     } else if (directoryField == jwoDicDirField) {

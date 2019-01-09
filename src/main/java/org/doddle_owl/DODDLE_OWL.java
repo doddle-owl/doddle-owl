@@ -30,6 +30,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.DODDLEConstants;
 import org.doddle_owl.models.InputModule;
+import org.doddle_owl.models.JWODic;
 import org.doddle_owl.models.ProjectFileNames;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UpperConceptManager;
@@ -140,7 +141,7 @@ public class DODDLE_OWL extends JFrame {
         if (messageType == JOptionPane.YES_OPTION) {
             if (isExistingCurrentProject()) {
                 getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
-                getCurrentProject().getOntologySelectionPanel().closeDataset();
+                JWODic.closeDataSet();
             }
             dispose();
             System.exit(0);
@@ -389,8 +390,6 @@ public class DODDLE_OWL extends JFrame {
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
         DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
-        DODDLEConstants.ENWN_3_0_HOME = properties.getProperty("ENWN_3_0_HOME");
-        DODDLEConstants.ENWN_3_1_HOME = properties.getProperty("ENWN_3_1_HOME");
         InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");

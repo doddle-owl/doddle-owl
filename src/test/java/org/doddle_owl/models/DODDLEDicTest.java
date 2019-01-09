@@ -1,9 +1,15 @@
 package org.doddle_owl.models;
 
+import org.doddle_owl.utils.OWLOntologyManager;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import static org.doddle_owl.utils.OWLOntologyManager.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DODDLEDicTest {
@@ -12,17 +18,14 @@ class DODDLEDicTest {
     public void setUp() {
         DODDLEConstants.EDR_HOME = "/Users/t_morita/DODDLE-OWL/EDR-DIC/";
         DODDLEConstants.EDRT_HOME = "/Users/t_morita/DODDLE-OWL/EDRT-DIC/";
-        DODDLEConstants.ENWN_3_1_HOME = "/Users/t_morita/DODDLE-OWL/enwn_dict_3.1";
-        DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
         DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
+        DODDLEConstants.JWO_HOME = "/Users/t_morita/DODDLE-OWL/jwo";
+
         EDRDic.initEDRDic();
         EDRDic.initEDRTDic();
         JpnWordNetDic.initJPNWNDic();
         WordNetDic.initWordNetDictionary();
-        EDRDic.isEDRAvailable = true;
-        EDRDic.isEDRTAvailable = true;
-        JpnWordNetDic.isAvailable = true;
-        WordNetDic.isAvailable = true;
+        JWODic.initJWODic(null);
     }
 
     @Test
@@ -55,5 +58,18 @@ class DODDLEDicTest {
         String expected = "urban_area";
         String actual = DODDLEDic.getConcept(DODDLEConstants.JPN_WN_URI + "08675967-n").getWord();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("DODDLEDicから日本語WikipediaオントロジーのConceptを取得")
+    public void getJWOConcept() {
+        String expected = "大学";
+        String actual = null;
+        try {
+            actual = DODDLEDic.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", "UTF-8")).getWord();
+            assertEquals(expected, actual);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -88,10 +88,7 @@ public class CalcConceptDistanceUtilTest {
     class CalcConceptDistanceInWordNetTest {
         @BeforeEach
         void setup() {
-            DODDLEConstants.ENWN_3_1_HOME = "/Users/t_morita/DODDLE-OWL/enwn_dict_3.1";
-            DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
             WordNetDic.initWordNetDictionary();
-            WordNetDic.isAvailable = true;
         }
 
         @Test

@@ -29,7 +29,7 @@ package org.doddle_owl.models;
 public class DODDLEConstants {
 
     public static int DIVIDER_SIZE = 10;
-    public static final String VERSION = "1.0RC3";
+    public static final String VERSION = "1.0RC4";
 
     public static boolean DEBUG = false;
     public static boolean IS_INTEGRATING_SWOOGLE = true;
@@ -52,9 +52,6 @@ public class DODDLEConstants {
 
     public static String EDR_HOME = "C:/DODDLE-OWL/EDR_DIC/";
     public static String EDRT_HOME = "C:/DODDLE-OWL/EDRT_DIC/";
-    public static String ENWN_3_0_HOME = "enwn_dict_3.0/";
-    public static String ENWN_3_1_HOME = "enwn_dict_3.1/";
-    public static String ENWN_HOME = ENWN_3_1_HOME;
     public static String JPWN_HOME = "jpwn_dict_1.1/";
     public static String JWO_HOME = "jwo/";
     public static String PROJECT_HOME = "./";

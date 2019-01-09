@@ -66,14 +66,6 @@ public class Utils {
                 .getResource("images" + File.separator + icon));
     }
 
-    public static URL getURL(String icon) {
-        return DODDLE_OWL.class.getClassLoader().getResource(icon);
-    }
-
-    public static File getENWNFile() {
-        return new File(DODDLEConstants.ENWN_HOME);
-    }
-
     public static RootWindow createDODDLERootWindow(ViewMap viewMap) {
         RootWindow rootWindow = DockingUtil.createRootWindow(viewMap, true);
         rootWindow.getWindowBar(Direction.DOWN).setEnabled(true);

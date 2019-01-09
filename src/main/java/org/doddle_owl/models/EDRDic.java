@@ -70,7 +70,7 @@ public class EDRDic {
 
     public static boolean initEDRDic() {
         if (edrURIConceptMap != null) {
-            return true;
+            return isEDRAvailable;
         }
         edrURIConceptMap = new HashMap<>();
         edrWordIDSetMap = new HashMap<>();
@@ -88,14 +88,14 @@ public class EDRDic {
             isEDRAvailable = true;
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            return false;
+            isEDRAvailable = false;
         }
-        return true;
+        return isEDRAvailable;
     }
 
     public static boolean initEDRTDic() {
         if (edrtURIConceptMap != null) {
-            return true;
+            return isEDRTAvailable;
         }
         edrtURIConceptMap = new HashMap<>();
         edrtWordIDSetMap = new HashMap<>();
@@ -111,9 +111,9 @@ public class EDRDic {
             isEDRTAvailable = true;
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            return false;
+            isEDRTAvailable = false;
         }
-        return true;
+        return isEDRTAvailable;
     }
 
     private static long getIndexFpListSize(boolean isSpecial) {

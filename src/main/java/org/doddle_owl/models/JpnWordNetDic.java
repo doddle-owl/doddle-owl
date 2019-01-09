@@ -61,7 +61,7 @@ public class JpnWordNetDic {
 
     public static boolean initJPNWNDic() {
         if (jpnwnURIConceptMap != null && 0 < jpnwnURIConceptMap.size()) {
-            return true;
+            return isAvailable;
         }
         jpnwnURIConceptMap = new HashMap<>();
         jpnwnWordIDSetMap = new HashMap<>();
@@ -75,9 +75,9 @@ public class JpnWordNetDic {
             isAvailable = true;
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            return false;
+            isAvailable = false;
         }
-        return true;
+        return isAvailable;
     }
 
     private static long getIndexFpListSize() {

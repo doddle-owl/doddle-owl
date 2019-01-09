@@ -45,14 +45,17 @@ public class WordNetDic {
     public static boolean isAvailable = false;
     private static Dictionary dictionary;
 
-    public static void initWordNetDictionary() {
+    public static boolean initWordNetDictionary() {
         try {
-            dictionary = Dictionary.getFileBackedInstance(Utils.getENWNFile().getAbsolutePath());
+            dictionary = Dictionary.getDefaultResourceInstance();
+            isAvailable = true;
         } catch (JWNLException e) {
             e.printStackTrace();
             DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("WordNetLoadErrorMessage"));
             JOptionPane.showMessageDialog(null, Translator.getTerm("WordNetLoadErrorMessage"));
+            isAvailable = false;
         }
+        return isAvailable;
     }
 
     public static IndexWord getIndexWord(POS pos, String word) {

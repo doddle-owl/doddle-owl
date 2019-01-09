@@ -232,8 +232,12 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
                 Resource classRes = (Resource) qs.get(CLASS_QUERY_STRING);
                 classSet.add(classRes.getURI());
                 conceptResourceSet.add(classRes);
-                nsTable.addNameSpaceTable(Utils.getNameSpace(classRes));
+                if (nsTable != null) {
+                    nsTable.addNameSpaceTable(Utils.getNameSpace(classRes));
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (qexec != null) {
                 qexec.close();
@@ -258,8 +262,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
                 uris.add(conceptResource.getURI());
                 wordURIsMap.put(localName, uris);
             }
-            setWordURIsMap(conceptResource.getURI(),
-                    owlExtractionTemplate.getSearchConceptTemplate());
+            setWordURIsMap(conceptResource.getURI(), owlExtractionTemplate.getSearchConceptTemplate());
         }
     }
 

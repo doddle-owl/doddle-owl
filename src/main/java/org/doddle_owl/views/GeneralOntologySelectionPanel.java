@@ -23,21 +23,15 @@
 
 package org.doddle_owl.views;
 
-import org.apache.jena.query.Dataset;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.tdb.TDBFactory;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.*;
-import org.doddle_owl.utils.OWLOntologyManager;
+import org.doddle_owl.models.EDRDic;
+import org.doddle_owl.models.JWODic;
+import org.doddle_owl.models.JpnWordNetDic;
+import org.doddle_owl.models.WordNetDic;
 import org.doddle_owl.utils.Translator;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -46,70 +40,39 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
  */
-public class GeneralOntologySelectionPanel extends JPanel implements ActionListener, ChangeListener {
+public class GeneralOntologySelectionPanel extends JPanel {
     private JCheckBox edrCheckBox;
     private JCheckBox edrtCheckBox;
     private JCheckBox wnCheckBox;
     private JCheckBox jpnWnCheckBox;
     private JCheckBox jwoCheckBox;
 
-    private JRadioButton wn30RadioButton;
-    private JRadioButton wn31RadioButton;
-    private JPanel wnVersionSelectionPanel;
-
-    private JLabel generalOntologyDirLabel;
-
     private NameSpaceTable nameSpaceTable;
-
-    private Dataset dataset;
 
     public GeneralOntologySelectionPanel(NameSpaceTable nsTable) {
         nameSpaceTable = nsTable;
-        edrCheckBox = new JCheckBox(Translator.getTerm("GenericEDRCheckBox"), false);
-        edrCheckBox.addActionListener(this);
-        edrtCheckBox = new JCheckBox(Translator.getTerm("TechnicalEDRCheckBox"), false);
-        edrtCheckBox.addActionListener(this);
         wnCheckBox = new JCheckBox(Translator.getTerm("WordNetCheckBox"), false);
-        wnCheckBox.addActionListener(this);
-        wnVersionSelectionPanel = new JPanel();
-        wn30RadioButton = new JRadioButton("3.0");
-        wn30RadioButton.addChangeListener(this);
-        wn31RadioButton = new JRadioButton("3.1");
-        wn31RadioButton.setSelected(true);
-        wn31RadioButton.addChangeListener(this);
-        ButtonGroup group = new ButtonGroup();
-        group.add(wn30RadioButton);
-        group.add(wn31RadioButton);
-        wnVersionSelectionPanel.add(wnCheckBox);
-        wnVersionSelectionPanel.add(wn30RadioButton);
-        wnVersionSelectionPanel.add(wn31RadioButton);
-        JPanel borderPanel = new JPanel();
-        borderPanel.setLayout(new BorderLayout());
-        borderPanel.add(wnVersionSelectionPanel, BorderLayout.WEST);
-
+        wnCheckBox.addActionListener(e -> enableWordNetDic(wnCheckBox.isSelected()));
+        edrCheckBox = new JCheckBox(Translator.getTerm("GenericEDRCheckBox"), false);
+        edrCheckBox.addActionListener(e -> enableEDRDic(edrCheckBox.isSelected()));
+        edrtCheckBox = new JCheckBox(Translator.getTerm("TechnicalEDRCheckBox"), false);
+        edrtCheckBox.addActionListener(e -> enableEDRTDic(edrtCheckBox.isSelected()));
         jpnWnCheckBox = new JCheckBox(Translator.getTerm("JpnWordNetCheckBox"), false);
-        jpnWnCheckBox.addActionListener(this);
+        jpnWnCheckBox.addActionListener(e -> enableJpnWordNetDic(jpnWnCheckBox.isSelected()));
         jwoCheckBox = new JCheckBox(Translator.getTerm("JWOCheckBox"), false);
-        jwoCheckBox.addActionListener(this);
+        jwoCheckBox.addActionListener(e -> enableJWO(jwoCheckBox.isSelected()));
         JPanel checkPanel = new JPanel();
-        checkPanel.add(borderPanel);
+        checkPanel.add(wnCheckBox);
         checkPanel.add(jpnWnCheckBox);
-        checkPanel.add(jwoCheckBox);
         checkPanel.add(edrCheckBox);
         checkPanel.add(edrtCheckBox);
+        checkPanel.add(jwoCheckBox);
         setLayout(new BorderLayout());
         add(checkPanel, BorderLayout.WEST);
-    }
-
-    public void closeDataSet() {
-        if (dataset != null) {
-            dataset.close();
-        }
     }
 
     public void saveGeneralOntologyInfo(File saveFile) {
@@ -199,55 +162,61 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
         return jwoCheckBox.isEnabled() && jwoCheckBox.isSelected();
     }
 
-    private void enableEDRDic(boolean t) {
-        if (t) {
-            boolean isInitEDRDic = EDRDic.initEDRDic();
-            EDRTree edrTree = EDRTree.getEDRTree();
-            boolean isInitEDRTree = (edrTree != null);
-            edrCheckBox.setEnabled(isInitEDRDic && isInitEDRTree);
-            if (!edrCheckBox.isEnabled()) {
-                edrCheckBox.setSelected(false);
-            }
+    private void enableEDRDic(boolean isEnable) {
+        if (isEnable) {
+            edrCheckBox.setSelected(EDRDic.initEDRDic());
+            edrCheckBox.setEnabled(EDRDic.isEDRAvailable);
             DODDLE_OWL.STATUS_BAR.addValue();
+        } else {
+            EDRDic.isEDRAvailable = false;
         }
+        DODDLE_OWL.STATUS_BAR.setText("Init EDR: " + edrCheckBox.isSelected());
+        DODDLE_OWL.getCurrentProject().addLog("Init EDR", edrCheckBox.isSelected());
     }
 
-    private void enableEDRTDic(boolean t) {
-        if (t) {
-            edrtCheckBox.setEnabled(EDRDic.initEDRTDic());
-            if (!edrtCheckBox.isEnabled()) {
-                edrtCheckBox.setSelected(false);
-            }
+    private void enableEDRTDic(boolean isEnable) {
+        if (isEnable) {
+            edrtCheckBox.setSelected(EDRDic.initEDRTDic());
+            edrtCheckBox.setEnabled(EDRDic.isEDRTAvailable);
+        } else {
+            EDRDic.isEDRTAvailable = false;
         }
+        DODDLE_OWL.STATUS_BAR.setText("Init EDRT: " + edrtCheckBox.isSelected());
+        DODDLE_OWL.getCurrentProject().addLog("Init EDRT", edrtCheckBox.isSelected());
     }
 
-    private void enableWordNetDic(boolean t) {
-        if (t) {
-            wnCheckBox.setEnabled(true);
-            if (!wnCheckBox.isEnabled()) {
-                wnCheckBox.setSelected(false);
-                WordNetDic.initWordNetDictionary();
-            }
+    private void enableWordNetDic(boolean isEnable) {
+        if (isEnable) {
+            wnCheckBox.setSelected(WordNetDic.initWordNetDictionary());
+            wnCheckBox.setEnabled(WordNetDic.isAvailable);
+        } else {
+            WordNetDic.isAvailable = false;
         }
+        DODDLE_OWL.STATUS_BAR.setText("Init WordNet: " + wnCheckBox.isSelected());
+        DODDLE_OWL.getCurrentProject().addLog("Init WordNet", wnCheckBox.isSelected());
     }
 
-    private void enableJpnWordNetDic(boolean t) {
-        if (t) {
-            boolean isInitJPNWNDic = JpnWordNetDic.initJPNWNDic();
-            JPNWNTree jpnWnTree = JPNWNTree.getJPNWNTree();
-            boolean isInitJPNWNTree = (jpnWnTree != null);
-            jpnWnCheckBox.setEnabled(isInitJPNWNDic && isInitJPNWNTree);
-            if (!jpnWnCheckBox.isEnabled()) {
-                jpnWnCheckBox.setSelected(false);
-            }
+    private void enableJpnWordNetDic(boolean isEnable) {
+        if (isEnable) {
+            jpnWnCheckBox.setSelected(JpnWordNetDic.initJPNWNDic());
+            jpnWnCheckBox.setEnabled(JpnWordNetDic.isAvailable);
             DODDLE_OWL.STATUS_BAR.addValue();
+        } else {
+            JpnWordNetDic.isAvailable = false;
         }
+        DODDLE_OWL.STATUS_BAR.setText("Init Japanese WordNet: " + jpnWnCheckBox.isSelected());
+        DODDLE_OWL.getCurrentProject().addLog("Init Japanese WordNet", jpnWnCheckBox.isSelected());
     }
 
-    private void enableJWO(boolean t) {
-        if (t) {
-            jwoCheckBox.setSelected(t);
+    private void enableJWO(boolean isEnable) {
+        if (isEnable) {
+            jwoCheckBox.setSelected(JWODic.initJWODic(nameSpaceTable));
+            jwoCheckBox.setEnabled(JWODic.isAvailable);
+        } else {
+            JWODic.isAvailable = false;
         }
+        DODDLE_OWL.STATUS_BAR.setText("Init JWO: " + jwoCheckBox.isSelected());
+        DODDLE_OWL.getCurrentProject().addLog("Init JWO", jwoCheckBox.isSelected());
     }
 
     /**
@@ -258,65 +227,6 @@ public class GeneralOntologySelectionPanel extends JPanel implements ActionListe
         edrtCheckBox.setEnabled(true);
         wnCheckBox.setEnabled(true);
         jpnWnCheckBox.setEnabled(true);
-    }
-
-    // 取り扱い注意メソッド
-    private void deleteFile(File f) {
-        if (!f.exists()) {
-            return;
-        }
-
-        if (f.isFile()) {
-            DODDLE_OWL.getLogger().log(Level.INFO, "Delete: " + f.getAbsolutePath());
-            f.delete();
-        }
-
-        if (f.isDirectory()) {
-            for (File file : f.listFiles()) {
-                deleteFile(file);
-            }
-            DODDLE_OWL.getLogger().log(Level.INFO, "Delete: " + f.getAbsolutePath());
-            f.delete();
-        }
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        DODDLEProject project = DODDLE_OWL.getCurrentProject();
-        if (e.getSource() == edrCheckBox) {
-            enableEDRDic(edrCheckBox.isSelected());
-            project.addLog("GenericEDRCheckBox", edrCheckBox.isSelected());
-        } else if (e.getSource() == edrtCheckBox) {
-            enableEDRTDic(edrtCheckBox.isSelected());
-            project.addLog("TechnicalEDRCheckBox", edrtCheckBox.isSelected());
-        } else if (e.getSource() == wnCheckBox) {
-            enableWordNetDic(wnCheckBox.isSelected());
-            wnVersionSelectionPanel.setEnabled(wnCheckBox.isSelected());
-            project.addLog("WordNetCheckBox", wnCheckBox.isSelected());
-        } else if (e.getSource() == jpnWnCheckBox) {
-            enableJpnWordNetDic(jpnWnCheckBox.isSelected());
-            project.addLog("JpnWordNetCheckBox", jpnWnCheckBox.isSelected());
-        } else if (e.getSource() == jwoCheckBox) {
-            if (jwoCheckBox.isSelected()) {
-                File jwoDir = new File(DODDLEConstants.JWO_HOME);
-                if (OWLOntologyManager.getRefOntology(jwoDir.getAbsolutePath()) == null) {
-                    dataset = TDBFactory.createDataset(jwoDir.getAbsolutePath());
-                    Model ontModel = dataset.getDefaultModel();
-                    ReferenceOWLOntology refOnt = new ReferenceOWLOntology(ontModel, jwoDir.getAbsolutePath(),
-                            nameSpaceTable);
-                    OWLOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        if (e.getSource() == wn30RadioButton) {
-            DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_0_HOME;
-            WordNetDic.initWordNetDictionary();
-        } else if (e.getSource() == wn31RadioButton) {
-            DODDLEConstants.ENWN_HOME = DODDLEConstants.ENWN_3_1_HOME;
-            WordNetDic.initWordNetDictionary();
-        }
+        jwoCheckBox.setEnabled(true);
     }
 }

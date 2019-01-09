@@ -27,6 +27,7 @@ import net.infonode.docking.*;
 import net.infonode.docking.util.ViewMap;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.models.JWODic;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
 
@@ -164,7 +165,4 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
 		generalOntologySelectionPanel.resetCheckBoxes();
 	}
 
-	public void closeDataset() {
-		generalOntologySelectionPanel.closeDataSet();
-	}
 }

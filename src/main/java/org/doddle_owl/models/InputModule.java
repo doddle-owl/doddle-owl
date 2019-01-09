@@ -308,6 +308,8 @@ public class InputModule {
                 project.getInputConceptSelectionPanel().initTermList();
                 project.getConceptDefinitionPanel().setInputConceptSet();
                 DODDLE_OWL.setSelectedIndex(DODDLEConstants.DISAMBIGUATION_PANEL);
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 if (initialTaskCnt == 0) {
                     DODDLE_OWL.STATUS_BAR.unLock();
