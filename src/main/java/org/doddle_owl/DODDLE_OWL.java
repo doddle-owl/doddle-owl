@@ -62,8 +62,7 @@ public class DODDLE_OWL extends JFrame {
 
     public static Frame rootFrame;
     public static JRootPane rootPane;
-    public static JDesktopPane desktop;
-    public static JMenu projectMenu;
+    public static DODDLEProjectPanel doddleProjectPanel;
     public static JMenu recentProjectMenu;
     public static StatusBarPanel STATUS_BAR;
     public static Set<String> GENERAL_ONTOLOGY_NAMESPACE_SET;
@@ -98,7 +97,6 @@ public class DODDLE_OWL extends JFrame {
     public DODDLE_OWL() {
         rootPane = getRootPane();
         rootFrame = this;
-        desktop = new JDesktopPane();
         optionDialog = new OptionDialog(this);
         setFileLogger();
         logConsole = new LogConsole(this, Translator.getTerm("LogConsoleDialog"), null);
@@ -114,7 +112,7 @@ public class DODDLE_OWL extends JFrame {
         makeActions();
         makeMenuBar();
         contentPane.add(getToolBar(), BorderLayout.NORTH);
-        contentPane.add(desktop, BorderLayout.CENTER);
+        doddleProjectPanel = new DODDLEProjectPanel(11);
         contentPane.add(STATUS_BAR, BorderLayout.SOUTH);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -126,9 +124,8 @@ public class DODDLE_OWL extends JFrame {
         setLocationRelativeTo(null);
         setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
-                + DODDLEConstants.VERSION);
+                + DODDLEConstants.VERSION + " - " + Translator.getTerm("NewProjectAction"));
         setVisible(true);
-        new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
     }
 
     public OptionDialog getOptionDialog() {
@@ -192,19 +189,6 @@ public class DODDLE_OWL extends JFrame {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        }
-    }
-
-    public static void finishNewProject(DODDLEProject project) {
-        try {
-            desktop.add(project);
-            project.toFront();
-            desktop.setSelectedFrame(project);
-            project.setVisible(true);
-            project.setMaximum(true); // setVisibleより前にしてしまうと，初期サイズ(800x600)
-            // で最大化されてしまう
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -294,8 +278,6 @@ public class DODDLE_OWL extends JFrame {
         toolMenu.add(showOptionDialogAction);
         menuBar.add(toolMenu);
 
-        projectMenu = new JMenu(Translator.getTerm("ProjectMenu"));
-        menuBar.add(projectMenu);
         menuBar.add(getHelpMenu());
         setJMenuBar(menuBar);
     }
@@ -322,52 +304,32 @@ public class DODDLE_OWL extends JFrame {
         return toolBar;
     }
 
-    public static DODDLEProject getCurrentProject() {
-        if (desktop == null) {
-            return null;
-        }
-        DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
-        if (currentProject == null) {
-            currentProject = new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
-        }
-        return currentProject;
+    public static DODDLEProjectPanel getCurrentProject() {
+        return doddleProjectPanel;
     }
 
     public static boolean isExistingCurrentProject() {
-        if (desktop == null) {
-            return false;
-        }
-        DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
-        return currentProject != null;
+        return doddleProjectPanel != null;
     }
 
-    public static void addProjectMenuItem(JMenuItem item) {
-        projectMenu.add(item);
-    }
-
-    public static void removeProjectMenuItem(JMenuItem item) {
-        projectMenu.remove(item);
-    }
-
-    public void loadConceptDisplayTerm(DODDLEProject currentProject, File file) {
+    public void loadConceptDisplayTerm(DODDLEProjectPanel currentProject, File file) {
         loadConceptDisplayTermAction.loadIDPreferentialTerm(currentProject, file);
     }
 
-    public void saveConceptDisplayTerm(DODDLEProject currentProject, File file) {
+    public void saveConceptDisplayTerm(DODDLEProjectPanel currentProject, File file) {
         saveConceptDisplayTermAction.saveIDPreferentialTerm(currentProject, file);
     }
 
-    public void saveOntology(DODDLEProject currentProject, File file) {
+    public void saveOntology(DODDLEProjectPanel currentProject, File file) {
         saveOWLOntologyAction.saveOWLOntology(currentProject, file);
     }
 
-    public void loadOntology(DODDLEProject currentProject, File file) {
+    public void loadOntology(DODDLEProjectPanel currentProject, File file) {
         loadOWLOntologyAction.loadOWLOntology(currentProject, file);
     }
 
     public static void setSelectedIndex(int index) {
-        DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
-        currentProject.setSelectedIndex(index);
+        doddleProjectPanel.setSelectedIndex(index);
     }
 
     public void loadBaseURI(File file) {

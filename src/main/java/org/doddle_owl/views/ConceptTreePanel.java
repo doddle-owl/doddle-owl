@@ -23,7 +23,6 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.Translator;
@@ -47,7 +46,7 @@ import java.util.regex.PatternSyntaxException;
  * @author Takeshi Morita
  */
 public class ConceptTreePanel extends JPanel {
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
     private JTextField searchConceptField;
     private TitledBorder searchConceptFieldBorder;
@@ -113,7 +112,7 @@ public class ConceptTreePanel extends JPanel {
     public static final String CLASS_HASA_TREE = "clas has-a Tree";
     public static final String PROPERTY_HASA_TREE = "property has-a Tree";
 
-    public ConceptTreePanel(String title, String type, UndefinedTermListPanel undefPanel, DODDLEProject p) {
+    public ConceptTreePanel(String title, String type, UndefinedTermListPanel undefPanel, DODDLEProjectPanel p) {
         project = p;
         treeType = type;
         if (type.equals(CLASS_HASA_TREE)) {

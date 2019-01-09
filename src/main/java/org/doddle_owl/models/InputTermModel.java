@@ -23,7 +23,7 @@
 
 package org.doddle_owl.models;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.task_analyzer.Morpheme;
 import org.doddle_owl.utils.Translator;
 
@@ -43,10 +43,10 @@ public class InputTermModel implements Comparable {
 	private String wordListStr;
 	private boolean isSystemAdded;
 
-	private DODDLEProject project;
+	private DODDLEProjectPanel project;
 
 	public InputTermModel(String w, List<Morpheme> mList, String miw, int ac, int mp,
-			DODDLEProject p) {
+			DODDLEProjectPanel p) {
 		project = p;
 		inputWord = w;
 		morphemeList = mList;

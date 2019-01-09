@@ -23,7 +23,6 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.ConceptPair;
 import org.doddle_owl.models.Document;
@@ -88,11 +87,11 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
     private JComponent wordSpaceParamPanel;
     private JComponent aprioriParamPanel;
 
-    private DODDLEProject doddleProject;
+    private DODDLEProjectPanel doddleProjectPanel;
 
-    public ConceptDefinitionAlgorithmPanel(JList list, DODDLEProject project) {
+    public ConceptDefinitionAlgorithmPanel(JList list, DODDLEProjectPanel project) {
         inputConceptJList = list;
-        doddleProject = project;
+        doddleProjectPanel = project;
 
         wordSpaceSet = new HashSet<>();
         aprioriSet = new HashSet<>();
@@ -352,10 +351,10 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
     public void setInputConcept() {
         wordSpaceSet.clear();
         aprioriSet.clear();
-        ConceptDefinitionPanel conceptDefinitionPanel = doddleProject.getConceptDefinitionPanel();
+        ConceptDefinitionPanel conceptDefinitionPanel = doddleProjectPanel.getConceptDefinitionPanel();
         conceptDefinitionPanel.setInputConceptJList();
         if (0 < conceptDefinitionPanel.getInputTermList().size()) {
-            Set<Document> docSet = doddleProject.getDocumentSelectionPanel().getDocSet();
+            Set<Document> docSet = doddleProjectPanel.getDocumentSelectionPanel().getDocSet();
             for (Document doc : docSet) {
                 wordSpaceSet.add(new WordSpace(conceptDefinitionPanel, doc));
                 aprioriSet.add(new Apriori(conceptDefinitionPanel, doc));
@@ -364,7 +363,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
     }
 
     private List<String> getTargetInputWordList(Document doc) {
-        List<String> inputWordList = doddleProject.getConceptDefinitionPanel().getInputTermList();
+        List<String> inputWordList = doddleProjectPanel.getConceptDefinitionPanel().getInputTermList();
         if (inputWordList == null) {
             return null;
         }
@@ -467,7 +466,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
             docResultMap = docWSResultMap;
         }
         try {
-            Set<Document> docSet = doddleProject.getDocumentSelectionPanel().getDocSet();
+            Set<Document> docSet = doddleProjectPanel.getDocumentSelectionPanel().getDocSet();
             for (Document doc : docSet) {
                 File file = new File(dir.getPath() + File.separator + doc.getFile().getName());
                 if (!file.exists()) {
@@ -526,7 +525,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
                 docIDMap.put(path, docID);
             }
 
-            Set<Document> docSet = doddleProject.getDocumentSelectionPanel().getDocSet();
+            Set<Document> docSet = doddleProjectPanel.getDocumentSelectionPanel().getDocSet();
             for (Document doc : docSet) {
                 int docID = docIDMap.get(doc.getFile().getAbsolutePath());
                 sql = "SELECT * from " + resultTable + " where Project_ID=" + projectID

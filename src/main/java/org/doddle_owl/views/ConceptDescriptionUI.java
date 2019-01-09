@@ -241,7 +241,7 @@ public class ConceptDescriptionUI extends JPanel implements ListSelectionListene
     }
 
     public static void main(String[] args) {
-        // EDRTree.init();
+        // EDRTree.initialize();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(50, 50, 800, 600);

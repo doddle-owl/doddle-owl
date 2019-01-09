@@ -23,7 +23,7 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.DODDLEConstants;
 import org.doddle_owl.views.ConstructClassPanel;
@@ -47,7 +47,7 @@ public class LoadConceptPreferentialTermAction extends AbstractAction {
         super(title);
     }
 
-    public void loadIDPreferentialTerm(DODDLEProject currentProject, File file) {
+    public void loadIDPreferentialTerm(DODDLEProjectPanel currentProject, File file) {
         ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
         ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
@@ -79,7 +79,7 @@ public class LoadConceptPreferentialTermAction extends AbstractAction {
         if (retval != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
         loadIDPreferentialTerm(currentProject, chooser.getSelectedFile());
     }
 }

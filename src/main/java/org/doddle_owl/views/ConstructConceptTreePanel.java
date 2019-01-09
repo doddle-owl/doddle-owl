@@ -1,31 +1,30 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.views;
 
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.View;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.Utils;
@@ -59,13 +58,13 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
     protected View[] mainViews;
     protected RootWindow rootWindow;
 
-    protected DODDLEProject project;
+    protected DODDLEProjectPanel project;
 
     public void initUndo() {
         isaTreePanel.initUndo();
         hasaTreePanel.initUndo();
     }
-    
+
     public void clearPanel() {
         conceptInfoPanel.clearPanel();
     }
@@ -74,7 +73,7 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
         return conceptInfoPanel.getSelectedConcept();
     }
 
-    
+
     public ConceptDriftManagementPanel getConceptDriftManagementPanel() {
         return conceptDriftManagementPanel;
     }
@@ -103,10 +102,14 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
     public Concept getConcept(String uri) {
         if (uri.equals(DODDLEConstants.BASE_URI + "DID0")) {
             return ConceptSelectionDialog.agentConcept;
-        } else if (uri.equals(DODDLEConstants.BASE_URI + "DID1")) { return ConceptSelectionDialog.objectConcept; }
+        } else if (uri.equals(DODDLEConstants.BASE_URI + "DID1")) {
+            return ConceptSelectionDialog.objectConcept;
+        }
         TreeModel treeModel = getConceptTreeModel();
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
-        if (rootNode.getURI().equals(uri)) { return rootNode.getConcept(); }
+        if (rootNode.getURI().equals(uri)) {
+            return rootNode.getConcept();
+        }
         Concept concept = null;
         Set<Concept> allConcept = getConceptSet();
         for (Concept c : allConcept) {
@@ -158,7 +161,7 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
         return averageAbstracCompoundConceptGroupSiblingConceptCnt;
     }
 
-    public void init() {
+    public void initialize() {
         addedAbstractCompoundConceptCnt = 0;
         averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
         ConceptTreeMaker.getInstance().init();
@@ -196,10 +199,12 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
 
     public ConceptTreeNode getIsaTreeModelRoot() {
         JTree conceptTree = isaTreePanel.getConceptTree();
-        if (conceptTree.getModel().getRoot() instanceof ConceptTreeNode) { return (ConceptTreeNode) conceptTree
-                .getModel().getRoot(); }
+        if (conceptTree.getModel().getRoot() instanceof ConceptTreeNode) {
+            return (ConceptTreeNode) conceptTree
+                    .getModel().getRoot();
+        }
         return null;
-    }   
+    }
 
     public void expandIsaTree() {
         JTree conceptTree = isaTreePanel.getConceptTree();
@@ -219,25 +224,25 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
     public void setVisibleIsaTree(boolean isVisible) {
         isaTreePanel.getConceptTree().setVisible(isVisible);
     }
-    
+
     public void setConceptDriftManagementResult() {
         conceptDriftManagementPanel.setConceptDriftManagementResult();
     }
-    
+
     private void makeSortedTreeModel(ConceptTreeNode node, ConceptTreeNode sortedNode) {
         TreeSet<ConceptTreeNode> sortedChildNodeSet = new TreeSet<>();
         for (int i = 0; i < node.getChildCount(); i++) {
-            sortedChildNodeSet.add((ConceptTreeNode)node.getChildAt(i));
+            sortedChildNodeSet.add((ConceptTreeNode) node.getChildAt(i));
         }
-        for (ConceptTreeNode childNode: sortedChildNodeSet) {
+        for (ConceptTreeNode childNode : sortedChildNodeSet) {
             ConceptTreeNode sortedChildNode = new ConceptTreeNode(childNode, project);
             sortedNode.add(sortedChildNode);
             makeSortedTreeModel(childNode, sortedChildNode);
         }
     }
-    
+
     public DefaultTreeModel setConceptTreeModel(TreeModel model) {
-        ConceptTreeNode rootNode = (ConceptTreeNode)model.getRoot();
+        ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
         ConceptTreeNode sortedRootNode = new ConceptTreeNode(rootNode, project);
         DefaultTreeModel sortedTreeModel = new DefaultTreeModel(sortedRootNode);
         makeSortedTreeModel(rootNode, sortedRootNode);
@@ -259,7 +264,7 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
     public void deleteLinkToUpperConcept(ConceptTreeNode targetDeleteNode) {
         isaTreePanel.deleteLinkToUpperConcept(targetDeleteNode);
     }
-    
+
     public void setHasaTreeModel(TreeModel model) {
         hasaTreePanel.getConceptTree().setModel(model);
     }
@@ -267,30 +272,32 @@ public abstract class ConstructConceptTreePanel extends JPanel implements Compou
     public void setVisibleHasaTree(boolean isVisible) {
         hasaTreePanel.getConceptTree().setVisible(isVisible);
     }
-    
+
     public void expandHasaTree() {
         JTree conceptTree = hasaTreePanel.getConceptTree();
         for (int i = 0; i < conceptTree.getRowCount(); i++) {
             conceptTree.expandPath(conceptTree.getPathForRow(i));
         }
     }
-    
+
     public ConceptTreeNode getHasaTreeModelRoot() {
         JTree conceptTree = hasaTreePanel.getConceptTree();
-        if (conceptTree.getModel().getRoot() instanceof ConceptTreeNode) { return (ConceptTreeNode) conceptTree
-                .getModel().getRoot(); }
+        if (conceptTree.getModel().getRoot() instanceof ConceptTreeNode) {
+            return (ConceptTreeNode) conceptTree
+                    .getModel().getRoot();
+        }
         return null;
     }
-    
+
     public JTree getHasaTree() {
         return hasaTreePanel.getConceptTree();
     }
-    
+
     public void selectIsaTreeNode(Concept targetConcept, Concept parentConcept) {
-        ConceptTreeNode rootNode = (ConceptTreeNode) isaTreePanel.getConceptTree().getModel().getRoot();        
+        ConceptTreeNode rootNode = (ConceptTreeNode) isaTreePanel.getConceptTree().getModel().getRoot();
         isaTreePanel.selectConceptTreeNode(rootNode, targetConcept, parentConcept);
     }
-    
+
     public void selectHasaTreeNode(Concept targetConcept, Concept parentConcept) {
         ConceptTreeNode rootNode = (ConceptTreeNode) hasaTreePanel.getConceptTree().getModel().getRoot();
         hasaTreePanel.selectConceptTreeNode(rootNode, targetConcept, parentConcept);

@@ -67,6 +67,11 @@ public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
     private JButton deleteButton;
     private NameSpaceTable nsTable;
 
+
+    public void initialize() {
+
+    }
+
     public OWLOntologySelectionPanel(NameSpaceTable nst) {
         nsTable = nst;
         listModel = new DefaultListModel();

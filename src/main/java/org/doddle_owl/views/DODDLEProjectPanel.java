@@ -22,29 +22,24 @@
  *
  */
 
-package org.doddle_owl;
+package org.doddle_owl.views;
 
 import net.infonode.docking.DockingWindow;
 import net.infonode.docking.RootWindow;
 import net.infonode.docking.TabWindow;
 import net.infonode.docking.View;
 import net.infonode.docking.util.ViewMap;
+import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.Concept;
 import org.doddle_owl.models.InputTermModel;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UndoManager;
 import org.doddle_owl.utils.Utils;
-import org.doddle_owl.views.*;
 
 import javax.swing.*;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -52,13 +47,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author Takeshi Morita
  */
-public class DODDLEProject extends JInternalFrame implements ActionListener {
+public class DODDLEProjectPanel extends JPanel {
 
     private boolean isInitialized;
 
@@ -77,18 +72,26 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
     private List<String> logList;
     private UndoManager undoManager;
 
-    private JCheckBoxMenuItem projectMenuItem;
-
     private static final int WINDOW_WIDTH = 1024;
     private static final int WINDOW_HEIGHT = 768;
+
+    public void initProject() {
+        ontSelectionPanel.initialize();
+        docSelectionPanel.initialize();
+        inputTermSelectinPanel.initialize();
+        inputConceptSelectionPanel.initialize();
+        constructClassPanel.initialize();
+        constructPropertyPanel.initialize();
+        conceptDefinitionPanel.initialize();
+    }
 
     class NewProjectWorker extends SwingWorker<String, String> implements PropertyChangeListener {
 
         private int taskCnt;
         private int currentTaskCnt;
-        private DODDLEProject project;
+        private DODDLEProjectPanel project;
 
-        public NewProjectWorker(int taskCnt, DODDLEProject project) {
+        public NewProjectWorker(int taskCnt, DODDLEProjectPanel project) {
             this.taskCnt = taskCnt;
             currentTaskCnt = 1;
             this.project = project;
@@ -103,8 +106,6 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
         protected String doInBackground() {
             try {
                 ToolTipManager.sharedInstance().setEnabled(false);
-                projectMenuItem = new JCheckBoxMenuItem(title);
-                projectMenuItem.addActionListener(project);
                 undoManager = new UndoManager(project);
 
                 userIDCount = 0;
@@ -153,28 +154,11 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
                 }
 
                 rootWindow = Utils.createDODDLERootWindow(viewMap);
-                getContentPane().add(rootWindow, BorderLayout.CENTER);
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                addInternalFrameListener(new InternalFrameAdapter() {
-                    public void internalFrameClosing(InternalFrameEvent e) {
-                        int messageType = JOptionPane.showConfirmDialog(rootWindow, getTitle()
-                                        + "\n" + Translator.getTerm("ExitProjectMessage"), getTitle(),
-                                JOptionPane.YES_NO_OPTION);
-                        if (messageType == JOptionPane.YES_OPTION) {
-                            DODDLE_OWL.removeProjectMenuItem(projectMenuItem);
-                            dispose();
-                        }
-                    }
-                });
 
                 setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-                DODDLE_OWL.desktop.add(project);
-                project.toFront();
-                DODDLE_OWL.desktop.setSelectedFrame(project);
-                DODDLE_OWL.addProjectMenuItem(projectMenuItem);
                 setProgress(currentTaskCnt++);
                 setXGALayoutForAll();
+                DODDLE_OWL.rootPane.getContentPane().add(rootWindow, BorderLayout.CENTER);
             } catch (NullPointerException npe) {
                 setXGALayoutForAll();
             } catch (Exception e) {
@@ -183,12 +167,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
                 setProgress(currentTaskCnt++);
                 isInitialized = true;
                 if (taskCnt == 11) {
-                    try {
-                        project.setVisible(true); // かならず表示させるため
-                        project.setMaximum(true); // setVisibleより前にしてしまうと，初期サイズで最大化されてしまう
-                    } catch (PropertyVetoException pve) {
-                        pve.printStackTrace();
-                    }
+                    project.setVisible(true); // かならず表示させるため
                     DODDLE_OWL.STATUS_BAR.unLock();
                     DODDLE_OWL.STATUS_BAR.hideProgressBar();
                 }
@@ -260,8 +239,7 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
         return isInitialized;
     }
 
-    public DODDLEProject(String title, int taskCnt) {
-        super(title, true, true, true, true);
+    public DODDLEProjectPanel(int taskCnt) {
         NewProjectWorker worker = new NewProjectWorker(taskCnt, this);
         worker.execute();
     }
@@ -290,10 +268,6 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
         return undoManager.canRedo();
     }
 
-    public JMenuItem getProjectMenuItem() {
-        return projectMenuItem;
-    }
-
     public void setXGALayout() {
         rootWindow.setWindow(new TabWindow(new DockingWindow[]{views[0], views[1], views[2],
                 views[3], views[4], views[5], views[6]}));
@@ -320,27 +294,6 @@ public class DODDLEProject extends JInternalFrame implements ActionListener {
         constructClassPanel.setUXGALayout();
         constructPropertyPanel.setUXGALayout();
         conceptDefinitionPanel.setUXGALayout();
-    }
-
-    public void setProjectName(String name) {
-        projectMenuItem.setText(name);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == projectMenuItem) {
-            JMenu projectMenu = DODDLE_OWL.projectMenu;
-            for (int i = 0; i < projectMenu.getItemCount(); i++) {
-                JCheckBoxMenuItem item = (JCheckBoxMenuItem) projectMenu.getItem(i);
-                item.setSelected(false);
-            }
-            projectMenuItem.setSelected(true);
-            toFront();
-            try {
-                setSelected(true);
-            } catch (PropertyVetoException pve) {
-                pve.printStackTrace();
-            }
-        }
     }
 
     public void resetURIConceptMap() {

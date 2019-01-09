@@ -73,6 +73,10 @@ public class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListe
 
 	private OWLOntologySelectionPanel owlOntologySelectionPanel;
 
+	public void initialize() {
+
+	}
+
 	public SwoogleWebServiceWrapperPanel(NameSpaceTable nsTable, OWLOntologySelectionPanel owlPanel) {
 		owlOntologySelectionPanel = owlPanel;
 

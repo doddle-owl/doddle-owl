@@ -23,7 +23,7 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Translator;
 
@@ -40,7 +40,7 @@ public class LoadTermConceptMapAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
         currentProject.getInputConceptSelectionPanel().loadTermConceptMap();
         DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenInputTermConceptMapAction"));
     }

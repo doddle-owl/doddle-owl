@@ -27,7 +27,7 @@ import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.Synset;
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.task_analyzer.Morpheme;
 import org.doddle_owl.utils.OWLOntologyManager;
@@ -49,14 +49,18 @@ public class InputModule {
     private Map<String, Set<Concept>> termConceptSetMap;
 
     public static int INIT_PROGRESS_VALUE = 887253;
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
-    public InputModule(DODDLEProject p) {
-        project = p;
+    public void initialize() {
         isLoadInputTermSet = false;
         undefinedTermSet = new TreeSet<>();
         inputTermModelSet = new TreeSet<>();
         termConceptSetMap = new HashMap<>();
+    }
+
+    public InputModule(DODDLEProjectPanel p) {
+        project = p;
+        initialize();
     }
 
     static class WordIDsLinesComparator implements Comparator<String> {

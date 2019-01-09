@@ -23,7 +23,6 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
@@ -75,7 +74,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     private JTable wrongPairTable;
     private JButton deleteWrongPairButton;
 
-    private DODDLEProject doddleProject;
+    private DODDLEProjectPanel doddleProjectPanel;
     private ConstructPropertyPanel constructPropertyTreePanel;
 
     private static final String[] WS_COLUMN_NAMES = {Translator.getTerm("RelatedConceptList"),
@@ -119,9 +118,9 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public ConceptDefinitionResultPanel(JList icList, ConceptDefinitionAlgorithmPanel ap,
-                                        DODDLEProject project) {
+                                        DODDLEProjectPanel project) {
         algorithmPanel = ap;
-        doddleProject = project;
+        doddleProjectPanel = project;
         constructPropertyTreePanel = project.getConstructPropertyPanel();
         inputConceptJList = icList;
 
@@ -229,7 +228,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                     String[] lines = line.split("\t");
                     boolean isMetaProperty = Boolean.valueOf(lines[0]);
                     String domain = lines[1];
-                    Concept relation = doddleProject.getConstructPropertyPanel().getConcept(lines[2]);
+                    Concept relation = doddleProjectPanel.getConstructPropertyPanel().getConcept(lines[2]);
                     String range = lines[3];
                     NonTaxonomicRelation nonTaxRel = new NonTaxonomicRelation(domain, relation, range);
                     nonTaxRel.setMetaProperty(isMetaProperty);
@@ -298,7 +297,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void setInputDocList() {
-        inputDocJList.setListData(doddleProject.getDocumentSelectionPanel().getDocSet().toArray());
+        inputDocJList.setListData(doddleProjectPanel.getDocumentSelectionPanel().getDocSet().toArray());
     }
 
     public void calcWSandARValue(String selectedInputConcept) {
@@ -564,13 +563,13 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == setRelationButton) {
             setRelation();
-            doddleProject.addLog("SetPropertyButton");
+            doddleProjectPanel.addLog("SetPropertyButton");
         } else if (e.getSource() == deleteAcceptedPairButton) {
             deleteConceptDefinition();
-            doddleProject.addLog("RemoveCorrectConceptPairButton");
+            doddleProjectPanel.addLog("RemoveCorrectConceptPairButton");
         } else if (e.getSource() == deleteWrongPairButton) {
             deleteWrongPair();
-            doddleProject.addLog("RemoveWrongConceptPairButton");
+            doddleProjectPanel.addLog("RemoveWrongConceptPairButton");
         }
     }
 
@@ -692,7 +691,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                 reverseAction();
             } else if (e.getSource() == addAcceptedPairButton) {
                 addNonTaxonomicRelation(getNonTaxonomicRelation());
-                doddleProject.addLog("AddCorrectConceptPairButton");
+                doddleProjectPanel.addLog("AddCorrectConceptPairButton");
             } else if (e.getSource() == addWrongPairButton) {
                 String c1 = c1Label.getText();
                 String c2 = c2Label.getText();
@@ -701,7 +700,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                 }
                 WrongPair wp = new WrongPair(c1, c2);
                 addWrongPair(wp);
-                doddleProject.addLog("AddWrongConceptPairButton");
+                doddleProjectPanel.addLog("AddWrongConceptPairButton");
             }
         }
 

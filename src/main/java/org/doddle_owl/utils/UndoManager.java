@@ -23,7 +23,7 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.actions.LoadOntologyAction;
 import org.doddle_owl.actions.SaveOntologyAction;
 import org.doddle_owl.models.Concept;
@@ -46,11 +46,11 @@ public class UndoManager {
     private List<Command> commandList;
     private LoadOntologyAction loadOntologyAction;
     private SaveOntologyAction saveOntologyAction;
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
     
     private static int MAX_COMMAND_CNT = 50;
     
-    public UndoManager(DODDLEProject project) {
+    public UndoManager(DODDLEProjectPanel project) {
         index = -1;
         commandList = new ArrayList<>();
         loadOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenOWLOntologyAction"),

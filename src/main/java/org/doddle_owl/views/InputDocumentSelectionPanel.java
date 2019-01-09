@@ -33,7 +33,6 @@ import net.infonode.docking.util.ViewMap;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
 import org.apache.commons.io.FileUtils;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
 import org.doddle_owl.task_analyzer.CabochaDocument;
@@ -69,8 +68,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * @author Takeshi Morita
  */
-public class InputDocumentSelectionPanel extends JPanel implements ListSelectionListener,
-        ActionListener {
+public class InputDocumentSelectionPanel extends JPanel implements ListSelectionListener, ActionListener {
 
     private Set<String> stopWordSet;
 
@@ -109,16 +107,50 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     private Map<String, TermInfo> termInfoMap;
 
     private InputTermSelectionPanel inputTermSelectionPanel;
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
     private View[] mainViews;
     private RootWindow rootWindow;
 
-    public InputDocumentSelectionPanel(InputTermSelectionPanel iwsPanel, DODDLEProject p) {
+    private Process jaMorphologicalAnalyzerProcess;
+    private Process termExtractProcess;
+    public static String Japanese_Morphological_Analyzer = "C:/Program Files/Chasen/chasen.exe";
+    public static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
+    public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
+    public static String PERL_EXE = "C:/Perl/bin/perl.exe";
+    private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
+    private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
+    private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
+    public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
+    public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
+
+    public void initialize() {
+        if (termInfoMap == null) {
+            termInfoMap = new HashMap<>();
+        } else {
+            termInfoMap.clear();
+        }
+        if (stopWordSet == null) {
+            stopWordSet = new HashSet<>();
+        } else {
+            stopWordSet.clear();
+        }
+        docList.removeAll();
+        inputDocList.removeAll();
+        genSenCheckBox.setSelected(false);
+        cabochaCheckBox.setSelected(false);
+        showImportanceCheckBox.setSelected(false);
+        nounCheckBox.setSelected(true);
+        verbCheckBox.setSelected(false);
+        otherCheckBox.setSelected(false);
+        oneWordCheckBox.setSelected(false);
+        punctuationField.setText(PUNCTUATION_CHARS);
+        inputDocArea.setText("");
+    }
+
+    public InputDocumentSelectionPanel(InputTermSelectionPanel iwsPanel, DODDLEProjectPanel p) {
         project = p;
         inputTermSelectionPanel = iwsPanel;
-        termInfoMap = new HashMap<>();
-        stopWordSet = new HashSet<>();
         docList = new JList(new DefaultListModel());
         docList.addListSelectionListener(this);
         JScrollPane docListScroll = new JScrollPane(docList);
@@ -130,16 +162,12 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         docLangBox = new JComboBox(docLangBoxModel);
         docLangBox.addActionListener(this);
         addDocButton = new JButton(new AddDocAction(Translator.getTerm("AddDocumentButton")));
-        removeDocButton = new JButton(new RemoveDocAction(
-                Translator.getTerm("RemoveDocumentButton")));
-        DefaultComboBoxModel inputDocLangBoxModel = new DefaultComboBoxModel(new Object[]{"en",
-                "ja"});
+        removeDocButton = new JButton(new RemoveDocAction(Translator.getTerm("RemoveDocumentButton")));
+        DefaultComboBoxModel inputDocLangBoxModel = new DefaultComboBoxModel(new Object[]{"en", "ja"});
         inputDocLangBox = new JComboBox(inputDocLangBoxModel);
         inputDocLangBox.addActionListener(this);
-        addInputDocButton = new JButton(new AddInputDocAction(
-                Translator.getTerm("AddInputDocumentButton")));
-        removeInputDocButton = new JButton(new RemoveInputDocAction(
-                Translator.getTerm("RemoveInputDocumentButton")));
+        addInputDocButton = new JButton(new AddInputDocAction(Translator.getTerm("AddInputDocumentButton")));
+        removeInputDocButton = new JButton(new RemoveInputDocAction(Translator.getTerm("RemoveInputDocumentButton")));
 
         inputDocArea = new JTextArea();
         inputDocArea.setLineWrap(true);
@@ -157,7 +185,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         docPanel.add(docButtonPanel, BorderLayout.SOUTH);
 
         punctuationField = new JTextField(10);
-        punctuationField.setText(PUNCTUATION_CHARS);
         setPunctuationButton = new JButton(Translator.getTerm("SetPunctuationCharacterButton"));
         setPunctuationButton.addActionListener(this);
 
@@ -186,14 +213,10 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         termExtractionButton.addActionListener(this);
 
         genSenCheckBox = new JCheckBox(Translator.getTerm("GensenCheckBox"));
-        genSenCheckBox.setSelected(false);
         cabochaCheckBox = new JCheckBox(Translator.getTerm("CabochaCheckBox"));
-        cabochaCheckBox.setSelected(false);
         showImportanceCheckBox = new JCheckBox("重要度");
         nounCheckBox = new JCheckBox(Translator.getTerm("NounCheckBox"));
-        nounCheckBox.setSelected(true);
         verbCheckBox = new JCheckBox(Translator.getTerm("VerbCheckBox"));
-        verbCheckBox.setSelected(false);
         otherCheckBox = new JCheckBox(Translator.getTerm("OtherPOSCheckBox"));
         oneWordCheckBox = new JCheckBox(Translator.getTerm("OneCharacterCheckBox"));
 
@@ -212,14 +235,13 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
         mainViews = new View[2];
         ViewMap viewMap = new ViewMap();
-        // mainViews[0] = new View(Translator.getTerm("DocumentList"), null,
-        // docPanel);
         mainViews[0] = new View(Translator.getTerm("InputDocumentList"), null, inputDocPanel);
         mainViews[1] = new View(Translator.getTerm("InputDocumentArea"), null, inputDocAreaScroll);
 
         for (int i = 0; i < mainViews.length; i++) {
             viewMap.addView(i, mainViews[i]);
         }
+        initialize();
         rootWindow = Utils.createDODDLERootWindow(viewMap);
         setLayout(new BorderLayout());
         add(rootWindow, BorderLayout.CENTER);
@@ -227,8 +249,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     }
 
     public void setXGALayout() {
-        // SplitWindow sw1 = new SplitWindow(true, 0.5f, mainViews[0],
-        // mainViews[1]);
         SplitWindow sw2 = new SplitWindow(false, 0.4f, mainViews[0], mainViews[1]);
         rootWindow.setWindow(sw2);
     }
@@ -593,17 +613,6 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         }
     }
 
-    private Process jaMorphologicalAnalyzerProcess;
-    private Process termExtractProcess;
-    public static String Japanese_Morphological_Analyzer = "C:/Program Files/Chasen/chasen.exe";
-    public static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
-    public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
-    public static String PERL_EXE = "C:/Perl/bin/perl.exe";
-    private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
-    private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
-    private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
-    public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
-    public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
 
     public void destroyProcesses() {
         if (jaMorphologicalAnalyzerProcess != null) {

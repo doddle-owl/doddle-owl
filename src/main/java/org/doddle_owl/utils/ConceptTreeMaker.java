@@ -26,7 +26,7 @@ package org.doddle_owl.utils;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
 import org.doddle_owl.views.ConceptTreePanel;
@@ -125,7 +125,7 @@ public class ConceptTreeMaker {
      * @param pathSet 概念(String)のリスト
      * @return TreeModel
      */
-    public TreeModel getDefaultConceptTreeModel(Set<List<Concept>> pathSet, DODDLEProject project, String type) {
+    public TreeModel getDefaultConceptTreeModel(Set<List<Concept>> pathSet, DODDLEProjectPanel project, String type) {
         Concept rootConcept = null;
         if (type.equals(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI)) {
             rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI, "");
@@ -169,7 +169,7 @@ public class ConceptTreeMaker {
      * @param pathSet 概念(String)のリスト
      * @return TreeModel
      */
-    public TreeModel getTrimmedTreeModel(Set<List<Concept>> pathSet, DODDLEProject project, String type) {
+    public TreeModel getTrimmedTreeModel(Set<List<Concept>> pathSet, DODDLEProjectPanel project, String type) {
         TreeModel treeModel = getDefaultConceptTreeModel(pathSet, project, type);
         beforeTrimmingConceptNum = Utils.getAllConcept(treeModel).size();
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
@@ -250,7 +250,7 @@ public class ConceptTreeMaker {
      * <p>
      * nodeList -> a > b > c > X
      */
-    private boolean addTreeNode(ConceptTreeNode treeNode, List<Concept> nodeList, DODDLEProject project) {
+    private boolean addTreeNode(ConceptTreeNode treeNode, List<Concept> nodeList, DODDLEProjectPanel project) {
         if (nodeList.isEmpty()) {
             return false;
         }
@@ -271,7 +271,7 @@ public class ConceptTreeMaker {
     /**
      * 概念Xを含む木をあらわすリストを概念木に挿入する
      */
-    private boolean insertTreeNodeList(DefaultMutableTreeNode treeNode, List nodeList, DODDLEProject project) {
+    private boolean insertTreeNodeList(DefaultMutableTreeNode treeNode, List nodeList, DODDLEProjectPanel project) {
         if (nodeList.isEmpty()) {
             return false;
         }
@@ -461,7 +461,7 @@ public class ConceptTreeMaker {
 
     private static Map<Resource, Set<Resource>> supSubSetMap;
 
-    public TreeNode getConceptTreeRoot(DODDLEProject currentProject, Model model, Resource rootResource, String type) {
+    public TreeNode getConceptTreeRoot(DODDLEProjectPanel currentProject, Model model, Resource rootResource, String type) {
         Concept rootConcept = null;
         Property property = null;
         if (type == ConceptTreePanel.CLASS_ISA_TREE) {
@@ -510,7 +510,7 @@ public class ConceptTreeMaker {
         return rootNode;
     }
 
-    public TreeNode getPropertyTreeRoot(DODDLEProject currentProject, Model model, Resource rootResource, String type) {
+    public TreeNode getPropertyTreeRoot(DODDLEProjectPanel currentProject, Model model, Resource rootResource, String type) {
         Concept rootProperty = null;
         Property property = null;
         if (type.equals(ConceptTreePanel.PROPERTY_ISA_TREE)) {
@@ -554,7 +554,7 @@ public class ConceptTreeMaker {
         return rootNode;
     }
 
-    private void makeTree(DODDLEProject currentProject, Resource resource, DefaultMutableTreeNode node) {
+    private void makeTree(DODDLEProjectPanel currentProject, Resource resource, DefaultMutableTreeNode node) {
         Set<Resource> subRDFSSet = supSubSetMap.get(resource);
         for (Resource subRDFS : subRDFSSet) {
             VerbConcept concept = new VerbConcept(subRDFS.getURI(), "");

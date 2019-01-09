@@ -23,7 +23,7 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.ConceptTreeNode;
 import org.doddle_owl.models.DODDLEConstants;
@@ -48,7 +48,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -77,7 +76,7 @@ public class SaveOntologyAction extends AbstractAction {
         freeMindFileFilter = new FreeMindFileFilter();
     }
 
-    public static Model getOntology(DODDLEProject currentProject) {
+    public static Model getOntology(DODDLEProjectPanel currentProject) {
         ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
         ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
@@ -94,7 +93,7 @@ public class SaveOntologyAction extends AbstractAction {
         return ontology;
     }
 
-    public void saveFreeMindOntology(DODDLEProject project, File file) {
+    public void saveFreeMindOntology(DODDLEProjectPanel project, File file) {
         try {
             ConstructClassPanel constructClassPanel = project.getConstructClassPanel();
             ConstructPropertyPanel constructPropertyPanel = project.getConstructPropertyPanel();
@@ -131,7 +130,7 @@ public class SaveOntologyAction extends AbstractAction {
         }
     }
 
-    public void saveOWLOntology(DODDLEProject project, File file) {
+    public void saveOWLOntology(DODDLEProjectPanel project, File file) {
         try {
             Model ontModel = getOntology(project);
             RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
@@ -155,7 +154,7 @@ public class SaveOntologyAction extends AbstractAction {
         }
         int retval = chooser.showSaveDialog(DODDLE_OWL.rootPane);
         if (retval == JFileChooser.APPROVE_OPTION) {
-            DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+            DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
             if (conversionType.equals(OWL_ONTOLOGY)) {
                 File file = chooser.getSelectedFile();
                 if (!file.getName().endsWith(".owl")) {

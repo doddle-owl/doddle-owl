@@ -31,7 +31,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
@@ -57,7 +56,6 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	private Map<String, Concept> compoundWordConceptMap;
 	private Map<String, Set<Concept>> termConceptSetMap;
 
-	public String corpusString;
 	public List<String> inputWordList;
 
 	private JList inputConceptJList;
@@ -65,12 +63,16 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	private ConceptDefinitionAlgorithmPanel algorithmPanel;
 	private ConceptDefinitionResultPanel.ConceptDefinitionPanel conceptDefinitionPanel;
 
-	private DODDLEProject doddleProject;
+	private DODDLEProjectPanel doddleProjectPanel;
 	private InputDocumentSelectionPanel docSelectionPanel;
 	private InputConceptSelectionPanel inputConceptSelectionPanel;
 
 	private View[] mainViews;
 	private RootWindow rootWindow;
+
+	public void initialize() {
+
+	}
 
 	public void setInputConceptJList() {
 		inputWordList = getInputTermList();
@@ -100,7 +102,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 		if (c == null) {
 			return null;
 		}
-		Concept concept = doddleProject.getConcept(c.getURI());
+		Concept concept = doddleProjectPanel.getConcept(c.getURI());
 		if (concept != null) {
 			return concept;
 		}
@@ -165,17 +167,17 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 		return ontology;
 	}
 
-	public ConceptDefinitionPanel(DODDLEProject project) {
-		doddleProject = project;
+	public ConceptDefinitionPanel(DODDLEProjectPanel project) {
+		doddleProjectPanel = project;
 		docSelectionPanel = project.getDocumentSelectionPanel();
 		inputConceptSelectionPanel = project.getInputConceptSelectionPanel();
 
 		inputConceptJList = new JList(new DefaultListModel());
 		inputConceptJList.addListSelectionListener(this);
 
-		algorithmPanel = new ConceptDefinitionAlgorithmPanel(inputConceptJList, doddleProject);
+		algorithmPanel = new ConceptDefinitionAlgorithmPanel(inputConceptJList, doddleProjectPanel);
 		resultPanel = new ConceptDefinitionResultPanel(inputConceptJList, algorithmPanel,
-				doddleProject);
+                doddleProjectPanel);
 		conceptDefinitionPanel = resultPanel.getDefinePanel();
 
 		mainViews = new View[10];
@@ -457,7 +459,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 		wordCorrespondConceptSetMap = inputConceptSelectionPanel.getTermCorrespondConceptSetMap();
 		if (wordCorrespondConceptSetMap != null) {
 			termConceptSetMap = inputConceptSelectionPanel.getTermConceptSetMap();
-			compoundWordConceptMap = doddleProject.getConstructClassPanel()
+			compoundWordConceptMap = doddleProjectPanel.getConstructClassPanel()
 					.getCompoundWordConceptMap();
 			Set<InputTermModel> inputWordModelSet = inputConceptSelectionPanel
 					.getInputTermModelSet();

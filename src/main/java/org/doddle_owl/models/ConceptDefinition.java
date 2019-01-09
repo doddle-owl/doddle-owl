@@ -241,9 +241,9 @@ public class ConceptDefinition {
     }
 
     public static void main(String[] args) {
-        // EDRTree.init();
+        // EDRTree.initialize();
         ConceptDefinition cd = ConceptDefinition.getInstance();
-        // System.out.println("init done");
+        // System.out.println("initialize done");
         Set<String> verbIDSet = cd.getVerbIDSet("ID0a78fb", "agent");
         // System.out.println(verbIDSet.size());
         for (String verbID : verbIDSet) {

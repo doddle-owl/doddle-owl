@@ -53,6 +53,10 @@ public class GeneralOntologySelectionPanel extends JPanel {
 
     private NameSpaceTable nameSpaceTable;
 
+    public void initialize() {
+        resetCheckBoxes();
+    }
+
     public GeneralOntologySelectionPanel(NameSpaceTable nsTable) {
         nameSpaceTable = nsTable;
         wnCheckBox = new JCheckBox(Translator.getTerm("WordNetCheckBox"), false);

@@ -77,6 +77,14 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
     private static final String REMOVED_WORD_LINK_COLOR = "gray";
     private static int DISPLAY_LINE_NUM = 20;
 
+
+    public void initialize() {
+        documentList.removeAll();
+        documentArea.setText("");
+        linkArea.setText("");
+        searchField.setText("");
+    }
+
     public InputTermInDocumentViewer() {
         documentList = new JList();
         documentList.addMouseListener(this);

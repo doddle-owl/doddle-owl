@@ -23,7 +23,6 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
@@ -51,9 +50,9 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
     private JButton deleteRangeButton;
 
     private static ConceptSelectionDialog conceptSelectionDialog;
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
-    public EDRConceptDefinitionPanel(DODDLEProject p) {
+    public EDRConceptDefinitionPanel(DODDLEProjectPanel p) {
         project = p;
         conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE,
                 "Class Selection Dialog");

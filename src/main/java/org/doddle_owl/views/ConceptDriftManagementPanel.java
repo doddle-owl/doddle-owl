@@ -25,7 +25,6 @@ package org.doddle_owl.views;
 
 import net.infonode.docking.*;
 import net.infonode.docking.util.ViewMap;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.Concept;
 import org.doddle_owl.models.ConceptTreeCellRenderer;
@@ -79,9 +78,19 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
     private View[] mainViews;
     private RootWindow rootWindow;
 
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
-    public ConceptDriftManagementPanel(String type, JTree tree, DODDLEProject p) {
+    public void initialize() {
+        System.out.println("initialize concept drift");
+        resetMatchedResultAnalysis();
+        System.out.println("##");
+        resetTrimmedResultAnalysis();
+        System.out.println("##2");
+        rmMultipleInheritancePanel.initialize();
+        System.out.println("##3");
+    }
+
+    public ConceptDriftManagementPanel(String type, JTree tree, DODDLEProjectPanel p) {
         project = p;
         conceptTree = tree;
         conceptTreeType = type;
@@ -390,6 +399,11 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         private JList multipleInheritanceConceptJList;
         private JList multipleInheritanceUpperConceptJList;
         private JButton removeUpperConceptLinkButton;
+
+        public void initialize() {
+            multipleInheritanceConceptJList.setListData(new ArrayList<>().toArray());
+            multipleInheritanceUpperConceptJList.setListData(new ArrayList<>().toArray());
+        }
 
         public RemoveMultipleInheritancePanel() {
             multipleInheritanceConceptJList = new JList();

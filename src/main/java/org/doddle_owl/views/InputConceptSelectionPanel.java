@@ -26,7 +26,6 @@ package org.doddle_owl.views;
 import net.infonode.docking.*;
 import net.infonode.docking.util.ViewMap;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.actions.ConstructNounAndVerbTreeAction;
 import org.doddle_owl.actions.ConstructNounTreeAction;
@@ -66,7 +65,6 @@ import java.util.Map.Entry;
 public class InputConceptSelectionPanel extends JPanel implements ListSelectionListener,
         ActionListener, TreeSelectionListener {
 
-    private File inputFile;
     private Set<String> termSet;
     private Set<String> systemAddedTermSet;
     private Set<Concept> inputConceptSet; // 入力概念のセット
@@ -151,7 +149,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     private InputDocumentSelectionPanel docSelectionPanel;
 
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
     private boolean isConstructNounAndVerbTree;
 
@@ -161,19 +159,65 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     public static Concept nullConcept;
     public static EvalConcept nullEvalConcept = new EvalConcept(null, -1);
 
+
+    public void initialize() {
+        if (termSet != null) {
+            termSet.clear();
+        } else {
+            termSet = new HashSet<>();
+        }
+        if (inputConceptSet != null) {
+            inputConceptSet.clear();
+        } else {
+            inputConceptSet = new HashSet<>();
+        }
+        if (systemAddedInputConceptSet != null) {
+            systemAddedInputConceptSet.clear();
+        } else {
+            systemAddedInputConceptSet = new HashSet<>();
+        }
+        if (termConceptSetMap != null) {
+            termConceptSetMap.clear();
+        } else {
+            termConceptSetMap = new HashMap<>();
+        }
+        if (termCorrespondConceptSetMap != null) {
+            termCorrespondConceptSetMap.clear();
+        } else {
+            termCorrespondConceptSetMap = new HashMap<>();
+        }
+        if (termEvalConceptSetMap != null) {
+            termEvalConceptSetMap.clear();
+        } else {
+            termEvalConceptSetMap = new HashMap<>();
+        }
+        if (compoundConstructTreeOptionMap != null) {
+            compoundConstructTreeOptionMap.clear();
+        } else {
+            compoundConstructTreeOptionMap = new HashMap<>();
+        }
+        perfectlyMatchedAmbiguityCntCheckBox.setSelected(false);
+        perfectlyMatchedIsSyncCheckBox.setSelected(false);
+        perfectlyMatchedIsSystemAddedTermCheckBox.setSelected(false);
+        partiallyMatchedCompoundWordCheckBox.setSelected(false);
+        partiallyMatchedMatchedTermBox.setSelected(false);
+        partiallyMatchedAmbiguityCntCheckBox.setSelected(false);
+        partiallyMatchedShowOnlyRelatedCompoundWordsCheckBox.setSelected(false);
+        searchTermField.setText("");
+        inputModule.initialize();
+        initTermList();
+        clearPanel();
+        labelPanel.clearData();
+        descriptionPanel.clearData();
+    }
+
     public InputConceptSelectionPanel(ConstructClassPanel tp, ConstructPropertyPanel pp,
-                                      DODDLEProject p) {
+                                      DODDLEProjectPanel p) {
         project = p;
         constructClassPanel = tp;
         constructPropertyPanel = pp;
-        inputConceptSet = new HashSet<>();
-        systemAddedInputConceptSet = new HashSet<>();
         nullConcept = new Concept("null", Translator.getTerm("NotAvailableLabel"));
         inputModule = new InputModule(project);
-        termCorrespondConceptSetMap = new HashMap<>();
-        compoundConstructTreeOptionMap = new HashMap<>();
-
-        // conceptDescriptionFrame = new ConceptDescriptionFrame();
 
         conceptSetJList = new JList();
         conceptSetJList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -230,9 +274,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         highlightPartJListScroll.setBorder(BorderFactory.createTitledBorder("行番号"));
         highlightPartJListScroll.setPreferredSize(new Dimension(100, 100));
         documentArea = new JEditorPane("text/html", "");
-        // documentArea = new JTextArea();
         documentArea.setEditable(false);
-        // documentArea.setLineWrap(true);
         JScrollPane documentAreaScroll = new JScrollPane(documentArea);
         highlightInputTermCheckBox = new JCheckBox(
                 Translator.getTerm("HighlightInputTermCheckBox"), true);
@@ -258,16 +300,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         documentPanel.setLayout(new BorderLayout());
         documentPanel.add(documentAreaScroll, BorderLayout.CENTER);
         documentPanel.add(highlightInputTermCheckBox, BorderLayout.SOUTH);
-        // documentPanel.add(hilightPartJListScroll, BorderLayout.WEST);
 
         automaticDisAmbiguationAction = new AutomaticDisAmbiguationAction(
                 Translator.getTerm("AutomaticInputConceptSelectionAction"));
-        // showConceptDescriptionButton = new JButton(new
-        // ShowConceptDescriptionAction("概念記述を表示"));
-
-        // JPanel p1 = new JPanel();
-        // p1.add(automaticDisAmbiguationButton);
-        // p1.add(showConceptDescriptionButton);
 
         constructionTypePanel = new ConstructionTypePanel();
         perfectlyMatchedOptionPanel = new PerfectlyMatchedOptionPanel();
@@ -290,7 +325,6 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 Translator.getTerm("PartiallyMatchedOptionBorder"));
         JPanel optionPanel = new JPanel();
         optionPanel.setLayout(new BorderLayout());
-        // optionPanel.add(constructionTypePanel);
         optionPanel.add(optionTab, BorderLayout.CENTER);
         optionPanel.add(buttonBorderPanel, BorderLayout.EAST);
 
@@ -313,6 +347,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         rootWindow = Utils.createDODDLERootWindow(viewMap);
         setLayout(new BorderLayout());
         add(rootWindow, BorderLayout.CENTER);
+        initialize();
     }
 
     public void setXGALayout() {
@@ -1497,7 +1532,6 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             inputModule.setIsLoadInputTermSet();
             return;
         }
-        inputFile = file;
         Set<String> termSet = new HashSet<>();
         try {
             BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);

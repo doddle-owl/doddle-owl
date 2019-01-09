@@ -23,7 +23,6 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.DODDLEConstants;
 import org.doddle_owl.utils.Translator;
@@ -404,10 +403,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = directoryPanel.getTermExtractScriptDir();
 
         // 汎用オントロジーパネルのチェックボックスを有効化する
-        DODDLEProject currentProject = (DODDLEProject) DODDLE_OWL.desktop.getSelectedFrame();
-        if (currentProject != null) {
-            currentProject.getOntologySelectionPanel().resetGeneralOntologiesCheckBoxes();
-        }
+        DODDLE_OWL.doddleProjectPanel.getOntologySelectionPanel().resetGeneralOntologiesCheckBoxes();
     }
 
     public void removeConfig() {

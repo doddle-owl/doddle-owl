@@ -23,7 +23,7 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
 import org.doddle_owl.task_analyzer.Morpheme;
@@ -58,9 +58,9 @@ public class ConstructTreeAction {
 
     private DefaultListModel undefinedTermListModel;
 
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
-    public ConstructTreeAction(boolean isNounAndVerbTree, DODDLEProject p) {
+    public ConstructTreeAction(boolean isNounAndVerbTree, DODDLEProjectPanel p) {
         project = p;
         inputConceptSelectionPanel = p.getInputConceptSelectionPanel();
         constructClassPanel = p.getConstructClassPanel();
@@ -570,7 +570,7 @@ public class ConstructTreeAction {
     private TreeModel makeClassTreeModel(Set<Concept> nounConceptSet) {
         TreeModel classTreeModel;
         if (project.getInputConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
-            constructClassPanel.init();
+            constructClassPanel.initialize();
             if (project.getInputConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
                     .isConstruction()) {
                 classTreeModel = constructClassPanel.getTreeModel(nounConceptSet);
@@ -635,7 +635,7 @@ public class ConstructTreeAction {
     private TreeModel makePropertyTreeModel(Set<Concept> verbConceptSet) {
         TreeModel propertyTreeModel;
         if (project.getInputConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
-            constructPropertyPanel.init();
+            constructPropertyPanel.initialize();
             if (project.getInputConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
                     .isConstruction()) {
                 propertyTreeModel = constructPropertyPanel.getTreeModel(

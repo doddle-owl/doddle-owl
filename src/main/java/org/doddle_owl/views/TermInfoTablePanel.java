@@ -69,6 +69,16 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
 
     private boolean isDeletingTableItems;
 
+
+    public void initialize() {
+        if (termInfoMap != null) {
+            termInfoMap.clear();
+        }
+        searchTermField.setText("");
+        searchPOSField.setText("");
+        docArea.setText("");
+    }
+
     public TermInfoTablePanel() {
         searchTermField = new JTextField(20);
         searchTermField.addActionListener(this);

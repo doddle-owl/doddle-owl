@@ -23,7 +23,7 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.DODDLEConstants;
 import org.doddle_owl.models.DODDLEProjectFileFilter;
@@ -83,7 +83,7 @@ public class SaveProjectAction extends AbstractAction {
         }
     }
 
-    public void saveProject(File saveFile, DODDLEProject currentProject) {
+    public void saveProject(File saveFile, DODDLEProjectPanel currentProject) {
         File saveDir;
         if (saveFile.isDirectory()) {
             saveDir = saveFile;
@@ -96,8 +96,7 @@ public class SaveProjectAction extends AbstractAction {
         InputDocumentSelectionPanel docSelectionPanel = currentProject.getDocumentSelectionPanel();
         InputTermSelectionPanel inputTermSelectionPanel = currentProject.getInputTermSelectionPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
-        currentProject.setTitle(saveFile.getAbsolutePath());
-        currentProject.setProjectName(saveFile.getAbsolutePath());
+        DODDLE_OWL.rootFrame.setTitle(saveFile.getAbsolutePath());
         ontSelectionPanel.saveGeneralOntologyInfo(new File(saveDir, ProjectFileNames.GENERAL_ONTOLOGY_INFO_FILE));
         File owlMetaDataSetDir = new File(saveDir, ProjectFileNames.OWL_META_DATA_SET_DIR);
         owlMetaDataSetDir.mkdir();
@@ -143,10 +142,10 @@ public class SaveProjectAction extends AbstractAction {
             zipProjectDir(saveFile, saveDir);
         }
         DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveProjectDoneMessage") + " ----- "
-                + java.util.Calendar.getInstance().getTime() + ": " + currentProject.getTitle());
+                + java.util.Calendar.getInstance().getTime() + ": " + DODDLE_OWL.rootFrame.getTitle());
     }
 
-    public void saveProjectInfo(DODDLEProject currentProject, File file) {
+    public void saveProjectInfo(DODDLEProjectPanel currentProject, File file) {
         ReferenceOntologySelectionPanel ontSelectionPanel = currentProject.getOntologySelectionPanel();
         InputConceptSelectionPanel inputConceptSelectionPanel = currentProject.getInputConceptSelectionPanel();
         ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
@@ -292,13 +291,13 @@ public class SaveProjectAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
         if (currentProject == null) {
             return;
         }
         File saveFile;
-        if (!currentProject.getTitle().equals(Translator.getTerm("NewProjectAction"))) {
-            saveFile = new File(currentProject.getTitle());
+        if (!DODDLE_OWL.rootFrame.getTitle().equals(Translator.getTerm("NewProjectAction"))) {
+            saveFile = new File(DODDLE_OWL.rootFrame.getTitle());
         } else {
             saveFile = getSaveFile();
         }

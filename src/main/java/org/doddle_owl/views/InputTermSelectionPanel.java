@@ -1,31 +1,30 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.views;
 
 import net.infonode.docking.*;
 import net.infonode.docking.util.ViewMap;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.TermInfo;
 import org.doddle_owl.utils.Translator;
@@ -63,6 +62,13 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
     private View[] mainViews;
     private RootWindow rootWindow;
     private InputConceptSelectionPanel inputConceptSelectionPanel;
+
+    public void initialize() {
+        inputTermArea.setText("");
+        inputTermInfoTablePanel.initialize();
+        removedTermInfoTablePanel.initialize();
+        documentViewer.initialize();
+    }
 
     public InputTermSelectionPanel(InputConceptSelectionPanel ui) {
         inputTermInfoTablePanel = new TermInfoTablePanel();
@@ -126,7 +132,7 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
     }
 
     public void setXGALayout() {
-        TabWindow tabWindow = new TabWindow(new DockingWindow[] { mainViews[0], mainViews[1], mainViews[2]});
+        TabWindow tabWindow = new TabWindow(new DockingWindow[]{mainViews[0], mainViews[1], mainViews[2]});
         SplitWindow sw1 = new SplitWindow(true, 0.8f, tabWindow, mainViews[3]);
         rootWindow.setWindow(sw1);
         mainViews[0].restoreFocus();
@@ -253,7 +259,9 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
 
     private int getColumnNamePosition(JTable table, String columnName) {
         for (int i = 0; i < table.getColumnCount(); i++) {
-            if (table.getColumnName(i).equals(columnName)) { return i; }
+            if (table.getColumnName(i).equals(columnName)) {
+                return i;
+            }
         }
         return 0;
     }
@@ -408,7 +416,7 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject project = DODDLE_OWL.getCurrentProject();
+        DODDLEProjectPanel project = DODDLE_OWL.getCurrentProject();
 
         if (e.getSource() == setInputTermSetButton) {
             setInputTermSet(0);

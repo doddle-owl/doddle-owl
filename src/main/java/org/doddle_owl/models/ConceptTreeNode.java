@@ -23,7 +23,7 @@
 
 package org.doddle_owl.models;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.views.OptionDialog;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -46,9 +46,9 @@ public class ConceptTreeNode extends DefaultMutableTreeNode implements Comparabl
 
     private List<List<Concept>> trimmedConceptList;
 
-    private DODDLEProject project;
+    private DODDLEProjectPanel project;
 
-    public ConceptTreeNode(Concept c, DODDLEProject p) {
+    public ConceptTreeNode(Concept c, DODDLEProjectPanel p) {
         super();
         project = p;
         uri = c.getURI();
@@ -66,7 +66,7 @@ public class ConceptTreeNode extends DefaultMutableTreeNode implements Comparabl
     /**
      * コピー用のコンストラクタ このコンストラクタ内では，初期化処理はしないこと
      */
-    public ConceptTreeNode(ConceptTreeNode ctn, DODDLEProject p) {
+    public ConceptTreeNode(ConceptTreeNode ctn, DODDLEProjectPanel p) {
         super();
         project = p;
         Concept c = ctn.getConcept();

@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.views;
@@ -28,7 +28,6 @@ import net.infonode.docking.SplitWindow;
 import net.infonode.docking.TabWindow;
 import net.infonode.docking.View;
 import net.infonode.docking.util.ViewMap;
-import org.doddle_owl.DODDLEProject;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.*;
 import org.doddle_owl.utils.OWLOntologyManager;
@@ -66,7 +65,13 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
         return isaTreePanel.isConceptContains(c);
     }
 
-    public ConstructPropertyPanel(DODDLEProject p) {
+    public void initialize() {
+        super.initialize();
+        treeMaker.init();
+        edrConceptDefinitionPanel.init();
+    }
+
+    public ConstructPropertyPanel(DODDLEProjectPanel p) {
         project = p;
         undefinedTermListPanel = new UndefinedTermListPanel();
         isaTreePanel = new ConceptTreePanel(Translator.getTerm("IsaTreeBorder"), ConceptTreePanel.PROPERTY_ISA_TREE,
@@ -102,9 +107,9 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
 
     public void setXGALayout() {
         conceptDriftManagementPanel.setXGALayout();
-        TabWindow t1 = new TabWindow(new DockingWindow[] { mainViews[1], mainViews[2]});
+        TabWindow t1 = new TabWindow(new DockingWindow[]{mainViews[1], mainViews[2]});
         SplitWindow sw1 = new SplitWindow(false, 0.3f, mainViews[0], t1);
-        TabWindow t2 = new TabWindow(new DockingWindow[] { mainViews[4], mainViews[5]});
+        TabWindow t2 = new TabWindow(new DockingWindow[]{mainViews[4], mainViews[5]});
         SplitWindow sw2 = new SplitWindow(false, 0.5f, mainViews[3], t2);
         SplitWindow sw3 = new SplitWindow(true, 0.3f, sw1, sw2);
         rootWindow.setWindow(sw3);
@@ -114,7 +119,7 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
 
     public void setUXGALayout() {
         conceptDriftManagementPanel.setUXGALayout();
-        TabWindow t1 = new TabWindow(new DockingWindow[] { mainViews[1], mainViews[2]});
+        TabWindow t1 = new TabWindow(new DockingWindow[]{mainViews[1], mainViews[2]});
         SplitWindow sw1 = new SplitWindow(false, 0.3f, mainViews[0], t1);
         SplitWindow sw2 = new SplitWindow(true, mainViews[4], mainViews[5]);
         SplitWindow sw3 = new SplitWindow(false, 0.5f, mainViews[3], sw2);
@@ -146,13 +151,6 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
                         + averageAbstracCompoundConceptGroupSiblingConceptCnt);
     }
 
-    public void init() {
-        addedAbstractCompoundConceptCnt = 0;
-        averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
-        treeMaker.init();
-        isaTreePanel.getConceptTree().setModel(new DefaultTreeModel(null));
-        edrConceptDefinitionPanel.init();
-    }
 
     public TreeModel getTreeModel(Set<String> nounURISet, Set<Concept> verbConceptSet, String type) {
         Set<List<Concept>> pathSet = treeMaker.getPathListSet(verbConceptSet);
@@ -179,10 +177,10 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
 
     /**
      * EDR概念ついて 獲得した定義域または値域を洗練する
-     * 
+     * <p>
      * １．名詞的概念階層に含まれる定義域，値域の値はそのまま利用する
      * ２．名詞的概念階層に含まれていない定義域，値域の値は対象概念の下位概念が存在すればその概念と置換
-     * 
+     *
      * @param regionSet
      * @param nounURISet
      * @return
@@ -213,14 +211,15 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
     }
 
     /**
-     * 
      * プロパティの定義域と値域をEDR概念記述辞書，OWLオントロジーのプロパティを 参照して定義する
-     * 
+     *
      * @param node
      * @param nounURISet
      */
     private void setRegion(TreeNode node, Set<String> nounURISet) {
-        if (node.getChildCount() == 0) { return; }
+        if (node.getChildCount() == 0) {
+            return;
+        }
         for (int i = 0; i < node.getChildCount(); i++) {
             ConceptTreeNode childNode = (ConceptTreeNode) node.getChildAt(i);
             if (childNode.getConcept() instanceof VerbConcept) {
