@@ -114,7 +114,7 @@ public class EDRTree {
     public Set<List<String>> getURIPathToRootSet(String id) {
         if (edrTreeModel != null && 0 < uriNodeSetMap.size()) { return getURIPathToRootSetUsingTree(getURI(id)); }
         Set<List<String>> pathToRootSet = new HashSet<>();
-        String treeData = EDRDic.getTreeData(isSpecial, id);
+        String treeData = EDR.getTreeData(isSpecial, id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
             pathToRootSet.add(Arrays.asList(getURI(id)));
@@ -139,7 +139,7 @@ public class EDRTree {
         if (edrTreeModel != null && 0 < uriNodeSetMap.size()) { return getConceptPathToRootSetUsingTree(getURI(id)); }
         Concept c = getConcept(id);
         Set<List<Concept>> pathToRootSet = new HashSet<>();
-        String treeData = EDRDic.getTreeData(isSpecial, id);
+        String treeData = EDR.getTreeData(isSpecial, id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
             pathToRootSet.add(Arrays.asList(c));
@@ -214,8 +214,8 @@ public class EDRTree {
     }
 
     private Concept getConcept(String id) {
-        if (isSpecial) { return EDRDic.getEDRTConcept(id); }
-        return EDRDic.getEDRConcept(id);
+        if (isSpecial) { return EDR.getEDRTConcept(id); }
+        return EDR.getEDRConcept(id);
     }
 
     public Set<Set<String>> getSiblingURISet(String uri) {

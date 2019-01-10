@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * @author Takeshi Morita
  */
-public class DODDLEDic {
+public class ReferenceOntology {
 
     public static Concept getConcept(String uri) {
         Resource res = ResourceFactory.createResource(uri);
@@ -47,34 +47,34 @@ public class DODDLEDic {
         if (c != null) {
             return c;
         }
-        if (EDRDic.isEDRAvailable && ns.equals(DODDLEConstants.EDR_URI)) {
-            return EDRDic.getEDRConcept(id);
-        } else if (EDRDic.isEDRTAvailable && ns.equals(DODDLEConstants.EDRT_URI)) {
-            return EDRDic.getEDRTConcept(id);
-        } else if (WordNetDic.isAvailable && ns.equals(DODDLEConstants.WN_URI)) {
-            return WordNetDic.getWNConcept(id);
-        } else if (JpnWordNetDic.isAvailable && ns.equals(DODDLEConstants.JPN_WN_URI)) {
-            return JpnWordNetDic.getConcept(id);
+        if (EDR.isEDRAvailable && ns.equals(DODDLEConstants.EDR_URI)) {
+            return EDR.getEDRConcept(id);
+        } else if (EDR.isEDRTAvailable && ns.equals(DODDLEConstants.EDRT_URI)) {
+            return EDR.getEDRTConcept(id);
+        } else if (WordNet.isAvailable && ns.equals(DODDLEConstants.WN_URI)) {
+            return WordNet.getWNConcept(id);
+        } else if (JaWordNet.isAvailable && ns.equals(DODDLEConstants.JPN_WN_URI)) {
+            return JaWordNet.getConcept(id);
         }
         return null;
     }
 
     public static Set<String> getURISet(String word) {
         Set<String> uriSet = new HashSet<>();
-        if (EDRDic.isEDRAvailable) {
-            Set<String> idSet = EDRDic.getEDRIDSet(word);
+        if (EDR.isEDRAvailable) {
+            Set<String> idSet = EDR.getEDRIDSet(word);
             for (String id : idSet) {
                 uriSet.add(DODDLEConstants.EDR_URI + id);
             }
         }
-        if (EDRDic.isEDRTAvailable) {
-            Set<String> idSet = EDRDic.getEDRTIDSet(word);
+        if (EDR.isEDRTAvailable) {
+            Set<String> idSet = EDR.getEDRTIDSet(word);
             for (String id : idSet) {
                 uriSet.add(DODDLEConstants.EDRT_URI + id);
             }
         }
-        uriSet.addAll(WordNetDic.getURISet(word));
-        uriSet.addAll(JpnWordNetDic.getSynsetSet(word));
+        uriSet.addAll(WordNet.getURISet(word));
+        uriSet.addAll(JaWordNet.getSynsetSet(word));
         uriSet.addAll(OWLOntologyManager.getURISet(word));
         return uriSet;
     }

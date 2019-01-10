@@ -51,14 +51,14 @@ import java.util.logging.Level;
 /**
  * @author Takeshi Morita
  */
-public class ConstructClassPanel extends ConstructConceptTreePanel {
+public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
 
     @Override
     public void initialize() {
         super.initialize();
     }
 
-    public ConstructClassPanel(DODDLEProjectPanel p) {
+    public ClassTreeConstructionPanel(DODDLEProjectPanel p) {
         project = p;
         undefinedTermListPanel = new UndefinedTermListPanel();
         isaTreePanel = new ConceptTreePanel(Translator.getTerm("IsaTreeBorder"), ConceptTreePanel.CLASS_ISA_TREE,

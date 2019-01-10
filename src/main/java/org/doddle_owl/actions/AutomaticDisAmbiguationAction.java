@@ -39,6 +39,6 @@ public class AutomaticDisAmbiguationAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().getAutomaticDisAmbiguationAction().doAutomaticDisambiguation();
+        currentProject.getConceptSelectionPanel().getAutomaticDisAmbiguationAction().doAutomaticDisambiguation();
     }
 }

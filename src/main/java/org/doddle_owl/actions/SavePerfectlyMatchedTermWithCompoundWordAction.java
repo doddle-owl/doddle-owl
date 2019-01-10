@@ -41,7 +41,7 @@ public class SavePerfectlyMatchedTermWithCompoundWordAction extends AbstractActi
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().savePerfectlyMatchedTermWithCompoundWord();
+        currentProject.getConceptSelectionPanel().savePerfectlyMatchedTermWithCompoundWord();
     }
 }
 

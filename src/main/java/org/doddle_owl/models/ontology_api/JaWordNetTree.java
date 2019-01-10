@@ -36,20 +36,20 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class JPNWNTree {
-    private static JPNWNTree jpnwnTree;
+public class JaWordNetTree {
+    private static JaWordNetTree jaWordNetTree;
     private DefaultTreeModel jpnwnTreeModel;
     private Map<String, Set<TreeNode>> uriNodeSetMap;
 
-    public static JPNWNTree getJPNWNTree() {
-        if (jpnwnTree == null) {
-            jpnwnTree = new JPNWNTree();
+    public static JaWordNetTree getJPNWNTree() {
+        if (jaWordNetTree == null) {
+            jaWordNetTree = new JaWordNetTree();
         }
-        return jpnwnTree;
+        return jaWordNetTree;
     }
 
 
-    private JPNWNTree() {
+    private JaWordNetTree() {
         uriNodeSetMap = new HashMap<>();
     }
 
@@ -104,7 +104,7 @@ public class JPNWNTree {
     public Set<List<String>> getURIPathToRootSet(String id) {
         if (jpnwnTreeModel != null && 0 < uriNodeSetMap.size()) { return getURIPathToRootSetUsingTree(getURI(id)); }
         Set<List<String>> pathToRootSet = new HashSet<>();
-        String treeData = JpnWordNetDic.getTreeData(id);
+        String treeData = JaWordNet.getTreeData(id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
             pathToRootSet.add(Arrays.asList(getURI(id)));
@@ -128,7 +128,7 @@ public class JPNWNTree {
         if (jpnwnTreeModel != null && 0 < uriNodeSetMap.size()) { return getConceptPathToRootSetUsingTree(getURI(id)); }
         Concept c = getConcept(id);        
         Set<List<Concept>> pathToRootSet = new HashSet<>();
-        String treeData = JpnWordNetDic.getTreeData(id);
+        String treeData = JaWordNet.getTreeData(id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
             pathToRootSet.add(Arrays.asList(c));
@@ -201,7 +201,7 @@ public class JPNWNTree {
     }
 
     private Concept getConcept(String id) {
-        return JpnWordNetDic.getConcept(id);
+        return JaWordNet.getConcept(id);
     }
 
     public Set<Set<String>> getSiblingURISet(String uri) {

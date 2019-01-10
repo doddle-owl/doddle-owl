@@ -27,7 +27,7 @@ import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.models.concept_tree.VerbConcept;
-import org.doddle_owl.models.ontology_api.EDRDic;
+import org.doddle_owl.models.ontology_api.EDR;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
@@ -120,7 +120,7 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
                 c = OWLOntologyManager.getConcept(uri);
             }
             if (project.getOntologySelectionPanel().isEDREnable() && c == null) {
-                c = EDRDic.getEDRConcept(Utils.getLocalName(uri));
+                c = EDR.getEDRConcept(Utils.getLocalName(uri));
             }
             if (c != null) {
                 domainListModel.add(num++, c);
@@ -136,7 +136,7 @@ public class EDRConceptDefinitionPanel extends JPanel implements ActionListener 
                 c = OWLOntologyManager.getConcept(uri);
             }
             if (project.getOntologySelectionPanel().isEDREnable() && c == null) {
-                c = EDRDic.getEDRConcept(Utils.getLocalName(uri));
+                c = EDR.getEDRConcept(Utils.getLocalName(uri));
             }
             if (c != null) {
                 rangeListModel.add(num++, c);

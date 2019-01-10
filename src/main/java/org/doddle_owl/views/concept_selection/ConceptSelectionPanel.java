@@ -33,21 +33,21 @@ import org.doddle_owl.actions.ConstructTreeAction;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.common.DODDLELiteral;
 import org.doddle_owl.models.concept_selection.Concept;
-import org.doddle_owl.models.concept_selection.ConstructTreeOption;
+import org.doddle_owl.models.concept_selection.TreeConstructionOption;
 import org.doddle_owl.models.concept_selection.EvalConcept;
 import org.doddle_owl.models.concept_selection.InputModule;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
-import org.doddle_owl.models.ontology_api.DODDLEDic;
+import org.doddle_owl.models.ontology_api.ReferenceOntology;
 import org.doddle_owl.models.ontology_api.EDRTree;
-import org.doddle_owl.models.ontology_api.JPNWNTree;
-import org.doddle_owl.models.ontology_api.WordNetDic;
-import org.doddle_owl.models.term_selection.InputTermModel;
+import org.doddle_owl.models.ontology_api.JaWordNetTree;
+import org.doddle_owl.models.ontology_api.WordNet;
+import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.utils.*;
 import org.doddle_owl.views.*;
 import org.doddle_owl.views.common.UndefinedTermListPanel;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -78,7 +78,7 @@ import java.util.Map.Entry;
 /**
  * @author Takeshi Morita
  */
-public class InputConceptSelectionPanel extends JPanel implements ListSelectionListener,
+public class ConceptSelectionPanel extends JPanel implements ListSelectionListener,
         ActionListener, TreeSelectionListener {
 
     private Set<String> termSet;
@@ -88,11 +88,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     private Set<Concept> inputNounConceptSet; // 入力名詞的概念のセット
     private Set<Concept> inputVerbConceptSet; // 入力動詞的概念のセット
 
-    private Set<InputTermModel> inputTermModelSet; // 入力単語モデルのセット
+    private Set<TermModel> termModelSet; // 入力単語モデルのセット
     private Map<String, Set<Concept>> termConceptSetMap; // 入力単語と入力単語を見出しとして含む概念のマッピング
     private Map<String, Set<Concept>> termCorrespondConceptSetMap; // 入力単語と適切に対応する概念のマッピング
     private Map<String, Set<EvalConcept>> termEvalConceptSetMap;
-    private Map<InputTermModel, ConstructTreeOption> compoundConstructTreeOptionMap;
+    private Map<TermModel, TreeConstructionOption> compoundConstructTreeOptionMap;
 
     private TitledBorder perfectlyMatchedTermJListTitle;
     private TitledBorder partiallyMatchedTermJListTitle;
@@ -106,9 +106,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     private JButton searchTermButton;
 
     private JList perfectlyMatchedTermJList; // 完全照合した単語リスト
-    private Set<InputTermModel> perfectlyMatchedTermModelSet;
+    private Set<TermModel> perfectlyMatchedTermModelSet;
     private JList partiallyMatchedTermJList; // 部分照合した単語リスト
-    private Set<InputTermModel> partiallyMatchedTermModelSet;
+    private Set<TermModel> partiallyMatchedTermModelSet;
     private JList conceptSetJList;
     private UndefinedTermListPanel undefinedTermListPanel;
 
@@ -144,8 +144,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     private TreeModel aroundConceptTreeModel;
 
     private InputModule inputModule;
-    private ConstructClassPanel constructClassPanel;
-    private ConstructPropertyPanel constructPropertyPanel;
+    private ClassTreeConstructionPanel constructClassPanel;
+    private PropertyTreeConstructionPanel constructPropertyPanel;
 
     private JButton constructNounTreeButton;
     private JButton constructNounAndVerbTreeButton;
@@ -163,7 +163,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     // private ConceptDescriptionFrame conceptDescriptionFrame;
 
-    private InputDocumentSelectionPanel docSelectionPanel;
+    private DocumentSelectionPanel docSelectionPanel;
 
     private DODDLEProjectPanel project;
 
@@ -227,8 +227,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         descriptionPanel.clearData();
     }
 
-    public InputConceptSelectionPanel(ConstructClassPanel tp, ConstructPropertyPanel pp,
-                                      DODDLEProjectPanel p) {
+    public ConceptSelectionPanel(ClassTreeConstructionPanel tp, PropertyTreeConstructionPanel pp,
+                                 DODDLEProjectPanel p) {
         project = p;
         constructClassPanel = tp;
         constructPropertyPanel = pp;
@@ -442,7 +442,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
         public void actionPerformed(ActionEvent e) {
             JList termJList = getTargetTermJList();
-            Set<InputTermModel> termModelSet = getTargetTermModelSet();
+            Set<TermModel> termModelSet = getTargetTermModelSet();
 
             if (e.getSource() == addInputTermButton) {
                 Set<String> inputTermSet = new HashSet<>();
@@ -452,11 +452,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     inputTermField.setText("");
                 }
             } else if (e.getSource() == removeInputTermButton) {
-                List<InputTermModel> values = termJList.getSelectedValuesList();
-                for (InputTermModel removeTermModel : values) {
+                List<TermModel> values = termJList.getSelectedValuesList();
+                for (TermModel removeTermModel : values) {
                     termSet.remove(removeTermModel.getTerm());
                     termModelSet.remove(removeTermModel);
-                    inputTermModelSet.remove(removeTermModel);
+                    ConceptSelectionPanel.this.termModelSet.remove(removeTermModel);
                     termCorrespondConceptSetMap.remove(removeTermModel.getTerm());
                     compoundConstructTreeOptionMap.remove(removeTermModel);
                 }
@@ -469,7 +469,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     public Set<String> getURISetForReplaceSubConcepts() {
         Set<String> uriSet = new HashSet<>();
-        for (ConstructTreeOption option : compoundConstructTreeOptionMap.values()) {
+        for (TreeConstructionOption option : compoundConstructTreeOptionMap.values()) {
             if (option.isReplaceSubConcepts()) {
                 uriSet.add(option.getConcept().getURI());
             }
@@ -626,7 +626,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
     }
 
-    public Map<InputTermModel, ConstructTreeOption> getCompoundConstructTreeOptionMap() {
+    public Map<TermModel, TreeConstructionOption> getCompoundConstructTreeOptionMap() {
         return compoundConstructTreeOptionMap;
     }
 
@@ -752,7 +752,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             return 0;
         }
         int num = 0;
-        for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
+        for (TermModel iwModel : perfectlyMatchedTermModelSet) {
             if (isSystemAdded) {
                 if (iwModel.isSystemAdded()) {
                     num++;
@@ -791,7 +791,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         return undefinedTermListPanel;
     }
 
-    public void setDocumentSelectionPanel(InputDocumentSelectionPanel p) {
+    public void setDocumentSelectionPanel(DocumentSelectionPanel p) {
         docSelectionPanel = p;
     }
 
@@ -824,9 +824,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     private void saveCompoundOption(String option) {
         JList termJList = getTargetTermJList();
-        InputTermModel iwModel = (InputTermModel) termJList.getSelectedValue();
+        TermModel iwModel = (TermModel) termJList.getSelectedValue();
         if (iwModel != null && iwModel.isPartiallyMatchTerm()) {
-            ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
+            TreeConstructionOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
             ctOption.setOption(option);
             compoundConstructTreeOptionMap.put(iwModel, ctOption);
         }
@@ -834,9 +834,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     private void saveReplaceSubConceptsOption() {
         JList termJList = getTargetTermJList();
-        InputTermModel iwModel = (InputTermModel) termJList.getSelectedValue();
+        TermModel iwModel = (TermModel) termJList.getSelectedValue();
         if (iwModel != null && iwModel.isSystemAdded()) {
-            ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
+            TreeConstructionOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
             ctOption.setIsReplaceSubConcepts(replaceSubClassesCheckBox.isSelected());
             compoundConstructTreeOptionMap.put(iwModel, ctOption);
         }
@@ -844,13 +844,13 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     private void showOnlyRelatedCompoundWords() {
         if (partiallyMatchedShowOnlyRelatedCompoundWordsCheckBox.isSelected()) {
-            InputTermModel targetIWModel = (InputTermModel) perfectlyMatchedTermJList
+            TermModel targetIWModel = (TermModel) perfectlyMatchedTermJList
                     .getSelectedValue();
             if (targetIWModel == null) {
                 return;
             }
             Set searchedPartiallyMatchedTermModelSet = new TreeSet();
-            for (InputTermModel iwModel : partiallyMatchedTermModelSet) {
+            for (TermModel iwModel : partiallyMatchedTermModelSet) {
                 if (iwModel.getMatchedTerm().equals(targetIWModel.getMatchedTerm())) {
                     searchedPartiallyMatchedTermModelSet.add(iwModel);
                 }
@@ -915,7 +915,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             } else {
                 Set searchedPerfectlyMatchedTermModelSet = new TreeSet();
                 Set searchedPartiallyMatchedTermModelSet = new TreeSet();
-                for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
+                for (TermModel iwModel : perfectlyMatchedTermModelSet) {
                     if (iwModel.getTerm().contains(keyWord)) {
                         searchedPerfectlyMatchedTermModelSet.add(iwModel);
                     }
@@ -931,14 +931,14 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 termListViews[0].getViewProperties().setTitle(
                         perfectlyMatchedTermJListTitle.getTitle());
 
-                InputTermModel targetIWModel = (InputTermModel) perfectlyMatchedTermJList
+                TermModel targetIWModel = (TermModel) perfectlyMatchedTermJList
                         .getSelectedValue();
                 if (targetIWModel == null && 0 < perfectlyMatchedTermJList.getModel().getSize()) {
-                    targetIWModel = (InputTermModel) perfectlyMatchedTermJList.getModel()
+                    targetIWModel = (TermModel) perfectlyMatchedTermJList.getModel()
                             .getElementAt(0);
                     perfectlyMatchedTermJList.setSelectedValue(targetIWModel, true);
                 }
-                for (InputTermModel iwModel : partiallyMatchedTermModelSet) {
+                for (TermModel iwModel : partiallyMatchedTermModelSet) {
                     if (iwModel.getTerm().contains(keyWord)) {
                         if (partiallyMatchedShowOnlyRelatedCompoundWordsCheckBox.isSelected()) {
                             if (targetIWModel != null
@@ -974,7 +974,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     private void highlightInputTerm() {
         if (highlightInputTermCheckBox.isSelected()) {
             JList termJList = getTargetTermJList();
-            InputTermModel iwModel = (InputTermModel) termJList.getSelectedValue();
+            TermModel iwModel = (TermModel) termJList.getSelectedValue();
             if (iwModel != null) {
                 // String targetLines =
                 // docSelectionPanel.getTargetTextLines(iwModel.getWord());
@@ -1047,14 +1047,14 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
         try {
             Set<String> inputTermSet = new HashSet<>();
-            while (inputTermModelSet == null) {
+            while (termModelSet == null) {
                 try {
                     Thread.sleep(1000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            for (InputTermModel iwModel : inputTermModelSet) {
+            for (TermModel iwModel : termModelSet) {
                 inputTermSet.add(iwModel.getTerm());
             }
 
@@ -1065,12 +1065,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     String[] termURI = line.replaceAll("\n", "").split(",");
                     if (0 < termURI[0].length()) {
                         String term = termURI[0];
-                        InputTermModel iwModel = inputModule.makeInputTermModel(term);
+                        TermModel iwModel = inputModule.makeInputTermModel(term);
                         if (iwModel != null && inputTermSet.contains(iwModel.getTerm())) {
                             Set<Concept> correspondConceptSet = new HashSet<>();
                             for (int i = 1; i < termURI.length; i++) {
                                 String uri = termURI[i];
-                                Concept c = DODDLEDic.getConcept(uri);
+                                Concept c = ReferenceOntology.getConcept(uri);
                                 // 参照していないオントロジーの概念と対応づけようとした場合にnullとなる
                                 if (c != null) {
                                     correspondConceptSet.add(c);
@@ -1094,14 +1094,14 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     public void loadTermCorrespondConceptSetMap(int projectID, Statement stmt) {
         try {
             Set<String> inputTermSet = new HashSet<>();
-            while (inputTermModelSet == null) {
+            while (termModelSet == null) {
                 try {
                     Thread.sleep(1000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            for (InputTermModel iwModel : inputTermModelSet) {
+            for (TermModel iwModel : termModelSet) {
                 inputTermSet.add(iwModel.getTerm());
             }
 
@@ -1111,7 +1111,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 String inputTerm = URLDecoder.decode(rs.getString("Input_Term"), StandardCharsets.UTF_8);
                 String inputConcept = rs.getString("Input_Concept");
 
-                InputTermModel iwModel = inputModule.makeInputTermModel(inputTerm);
+                TermModel iwModel = inputModule.makeInputTermModel(inputTerm);
                 if (iwModel != null && inputTermSet.contains(iwModel.getTerm())) {
                     Set<Concept> correspondConceptSet;
                     if (termCorrespondConceptSetMap.get(iwModel.getTerm()) != null) {
@@ -1119,7 +1119,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     } else {
                         correspondConceptSet = new HashSet<>();
                     }
-                    Concept c = DODDLEDic.getConcept(inputConcept);
+                    Concept c = ReferenceOntology.getConcept(inputConcept);
                     if (c != null) { // 参照していないオントロジーの概念と対応づけようとした場合にnullとなる
                         correspondConceptSet.add(c);
                     } else if (inputConcept.equals("null")) {
@@ -1139,10 +1139,10 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     public void setInputConceptSet() {
         inputConceptSet.clear();
         systemAddedInputConceptSet.clear();
-        if (inputTermModelSet == null) {
+        if (termModelSet == null) {
             return;
         }
-        for (InputTermModel iwModel : inputTermModelSet) {
+        for (TermModel iwModel : termModelSet) {
             Set<Concept> correspondConceptSet = termCorrespondConceptSetMap.get(iwModel.getTerm());
             if (correspondConceptSet == null) {
                 correspondConceptSet = new HashSet<>();
@@ -1164,7 +1164,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             }
             if (iwModel.isPartiallyMatchTerm()) {
                 for (Concept c : correspondConceptSet) { // 最初の概念だけを扱っても良い．
-                    ConstructTreeOption ctOption = new ConstructTreeOption(c);
+                    TreeConstructionOption ctOption = new TreeConstructionOption(c);
                     compoundConstructTreeOptionMap.put(iwModel, ctOption);
                 }
             }
@@ -1195,8 +1195,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     private void selectAmbiguousConcept(JList termJList) {
         if (!termJList.isSelectionEmpty()) {
-            String orgTerm = ((InputTermModel) termJList.getSelectedValue()).getTerm();
-            String selectedTerm = ((InputTermModel) termJList.getSelectedValue()).getMatchedTerm();
+            String orgTerm = ((TermModel) termJList.getSelectedValue()).getTerm();
+            String selectedTerm = ((TermModel) termJList.getSelectedValue()).getMatchedTerm();
             Set<Concept> conceptSet = termConceptSetMap.get(selectedTerm);
 
             Set<EvalConcept> evalConceptSet;
@@ -1241,11 +1241,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
             // 完全照合単語，システムが追加した完全照合単語，部分照合単語に応じて
             // 階層構築オプションパネルを切り替える
-            InputTermModel iwModel = (InputTermModel) termJList.getSelectedValue();
+            TermModel iwModel = (TermModel) termJList.getSelectedValue();
             if (iwModel.isPartiallyMatchTerm()) {
                 switchConstructTreeOptionPanel(partiallyMatchedConstructTreeOptionPanel);
                 setPartiallyMatchedOptionButton(true);
-                ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
+                TreeConstructionOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
                 if (ctOption != null) {
                     if (ctOption.getOption().equals("SAME")) {
                         addAsSameConceptRadioButton.setSelected(true);
@@ -1255,7 +1255,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 } else {
                     EvalConcept evalConcept = (EvalConcept) conceptSetJList.getSelectedValue();
                     if (evalConcept != null) {
-                        ctOption = new ConstructTreeOption(evalConcept.getConcept());
+                        ctOption = new TreeConstructionOption(evalConcept.getConcept());
                         compoundConstructTreeOptionMap.put(iwModel, ctOption);
                         addAsSameConceptRadioButton.setSelected(true);
                     }
@@ -1265,10 +1265,10 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 if (compoundConstructTreeOptionMap.get(iwModel) == null) {
                     replaceSubClassesCheckBox.setSelected(false);
                     EvalConcept evalConcept = (EvalConcept) conceptSetJList.getSelectedValue();
-                    ConstructTreeOption ctOption = new ConstructTreeOption(evalConcept.getConcept());
+                    TreeConstructionOption ctOption = new TreeConstructionOption(evalConcept.getConcept());
                     compoundConstructTreeOptionMap.put(iwModel, ctOption);
                 } else {
-                    ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
+                    TreeConstructionOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
                     replaceSubClassesCheckBox.setSelected(ctOption.isReplaceSubConcepts());
                 }
             } else {
@@ -1313,7 +1313,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         return perfectlyMatchedTermJList;
     }
 
-    private Set<InputTermModel> getTargetTermModelSet() {
+    private Set<TermModel> getTargetTermModelSet() {
         if (getTargetTermJList() == perfectlyMatchedTermJList) {
             return perfectlyMatchedTermModelSet;
         } else if (getTargetTermJList() == partiallyMatchedTermJList) {
@@ -1327,7 +1327,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         if (!perfectlyMatchedIsSyncCheckBox.isSelected()) {
             return;
         }
-        for (InputTermModel iwModel : partiallyMatchedTermModelSet) {
+        for (TermModel iwModel : partiallyMatchedTermModelSet) {
             if (iwModel.getMatchedTerm().equals(orgTerm)) {
                 termCorrespondConceptSetMap.put(iwModel.getTerm(), correspondConceptSet);
             }
@@ -1340,7 +1340,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     private void selectCorrectConcept(JList termJList) {
         if (!termJList.isSelectionEmpty() && !conceptSetJList.isSelectionEmpty()) {
-            InputTermModel iwModel = (InputTermModel) termJList.getSelectedValue();
+            TermModel iwModel = (TermModel) termJList.getSelectedValue();
             List<EvalConcept> evalConcepts = conceptSetJList.getSelectedValuesList();
             String term = iwModel.getTerm();
             for (EvalConcept evalConcept : evalConcepts) {
@@ -1382,7 +1382,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
             showAroundConceptTree();
             for (Concept c : correspondConceptSet) {
-                ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
+                TreeConstructionOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
                 if (ctOption != null) {
                     ctOption.setConcept(c);
                     compoundConstructTreeOptionMap.put(iwModel, ctOption);
@@ -1418,10 +1418,10 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                         pathToRootSet.addAll(EDRTree.getEDRTTree().getConceptPathToRootSet(
                                 ec.getConcept().getLocalName()));
                     } else if (ec.getConcept().getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                        pathToRootSet.addAll(WordNetDic.getPathToRootSet(Long.valueOf(ec.getConcept()
+                        pathToRootSet.addAll(WordNet.getPathToRootSet(Long.valueOf(ec.getConcept()
                                 .getLocalName())));
                     } else if (ec.getConcept().getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-                        pathToRootSet.addAll(JPNWNTree.getJPNWNTree().getConceptPathToRootSet(
+                        pathToRootSet.addAll(JaWordNetTree.getJPNWNTree().getConceptPathToRootSet(
                                 ec.getConcept().getLocalName()));
                     }
                 }
@@ -1499,11 +1499,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     public void initTermList() {
         systemAddedTermSet = new HashSet<>();
-        inputTermModelSet = inputModule.getInputTermModelSet();
+        termModelSet = inputModule.getTermModelSet();
         perfectlyMatchedTermModelSet = new TreeSet<>();
         partiallyMatchedTermModelSet = new TreeSet<>();
 
-        for (InputTermModel itModel : inputTermModelSet) {
+        for (TermModel itModel : termModelSet) {
             if (itModel.isPartiallyMatchTerm()) {
                 partiallyMatchedTermModelSet.add(itModel);
             } else {
@@ -1605,7 +1605,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
     private Set<String> getIDSet(String ns) {
         Set<String> idSet = new HashSet<>();
-        for (InputTermModel itModel : perfectlyMatchedTermModelSet) {
+        for (TermModel itModel : perfectlyMatchedTermModelSet) {
             String term = itModel.getTerm();
             Set<Concept> conceptSet = termConceptSetMap.get(term);
             if (conceptSet == null) {
@@ -1645,8 +1645,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         return inputVerbConceptSet;
     }
 
-    public Set<InputTermModel> getInputTermModelSet() {
-        return inputModule.getInputTermModelSet();
+    public Set<TermModel> getTermModelSet() {
+        return inputModule.getTermModelSet();
     }
 
     public AutomaticDisAmbiguationAction getAutomaticDisAmbiguationAction() {
@@ -1701,8 +1701,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
 
         private Map<Concept, EvalConcept> getConceptEvalConceptMap() {
             Map<Concept, EvalConcept> conceptEvalConceptMap = new HashMap<>();
-            for (InputTermModel inputTermModel : perfectlyMatchedTermModelSet) {
-                String inputTerm = inputTermModel.getMatchedTerm();
+            for (TermModel termModel : perfectlyMatchedTermModelSet) {
+                String inputTerm = termModel.getMatchedTerm();
                 for (Concept c : termConceptSetMap.get(inputTerm)) {
                     if (conceptEvalConceptMap.get(c) == null) {
                         conceptEvalConceptMap.put(c, new EvalConcept(c, 0));
@@ -1753,11 +1753,11 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
          * 多義性のある概念リストと入力語彙を入力として，評価値つき概念リストを返すメソッド
          */
         public void setTermEvalConceptSetMap() {
-            if (inputTermModelSet == null) {
+            if (termModelSet == null) {
                 return;
             }
             termSet = new HashSet<>();
-            for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
+            for (TermModel iwModel : perfectlyMatchedTermModelSet) {
                 termSet.add(iwModel.getTerm());
             }
             termEvalConceptSetMap = new HashMap<>();
@@ -1785,8 +1785,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 DODDLE_OWL.STATUS_BAR.addValue();
             }
 
-            for (InputTermModel inputTermModel : perfectlyMatchedTermModelSet) {
-                String inputTerm = inputTermModel.getMatchedTerm();
+            for (TermModel termModel : perfectlyMatchedTermModelSet) {
+                String inputTerm = termModel.getMatchedTerm();
                 Set<Concept> conceptSet = termConceptSetMap.get(inputTerm);
                 Set<EvalConcept> evalConceptSet = new TreeSet<>();
                 for (Concept c : conceptSet) {
@@ -1807,7 +1807,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
                 siblingConceptSet = EDRTree.getEDRTTree().getSiblingURISet(c.getURI());
             } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                siblingConceptSet = WordNetDic.getSiblingConceptSet(Long.valueOf(c.getLocalName()));
+                siblingConceptSet = WordNet.getSiblingConceptSet(Long.valueOf(c.getLocalName()));
             }
             return siblingConceptSet;
         }
@@ -1819,7 +1819,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
                 subConceptSet = EDRTree.getEDRTTree().getSubURISet(c.getURI());
             } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                subConceptSet = WordNetDic.getSubIDSet(Long.valueOf(c.getLocalName()));
+                subConceptSet = WordNet.getSubIDSet(Long.valueOf(c.getLocalName()));
             }
             return subConceptSet;
         }
@@ -1831,9 +1831,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
                 pathSet = EDRTree.getEDRTTree().getURIPathToRootSet(c.getLocalName());
             } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                pathSet = WordNetDic.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
+                pathSet = WordNet.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
             } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-                pathSet = JPNWNTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
+                pathSet = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
             }
             return pathSet;
         }
@@ -1853,7 +1853,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     if (id.equals(cid)) {
                         continue;
                     }
-                    Concept c = DODDLEDic.getConcept(uri);
+                    Concept c = ReferenceOntology.getConcept(uri);
                     // System.out.println(c);
                     if (isIncludeInputTerms(termSet, c)) {
                         evalValue++;
@@ -1965,8 +1965,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     public void showAllTerm() {
         JFrame frame = new JFrame();
         Set termSet = new TreeSet();
-        if (inputTermModelSet != null) {
-            for (InputTermModel iwModel : inputTermModelSet) {
+        if (termModelSet != null) {
+            for (TermModel iwModel : termModelSet) {
                 termSet.add(iwModel.getTerm());
             }
             termSet.addAll(inputModule.getUndefinedTermSet());
@@ -2037,8 +2037,8 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
         try {
             StringBuilder buf = new StringBuilder();
-            for (InputTermModel iwModel : compoundConstructTreeOptionMap.keySet()) {
-                ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
+            for (TermModel iwModel : compoundConstructTreeOptionMap.keySet()) {
+                TreeConstructionOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
                 if (iwModel != null && ctOption != null && ctOption.getConcept() != null) {
                     buf.append(iwModel.getTerm());
                     buf.append("\t");
@@ -2088,9 +2088,9 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                     String uri = strs[1];
                     String opt = strs[2];
                     if (0 < iw.length()) {
-                        InputTermModel iwModel = inputModule.makeInputTermModel(iw);
+                        TermModel iwModel = inputModule.makeInputTermModel(iw);
                         compoundConstructTreeOptionMap.put(iwModel,
-                                new ConstructTreeOption(DODDLEDic.getConcept(uri), opt));
+                                new TreeConstructionOption(ReferenceOntology.getConcept(uri), opt));
                     }
                 }
             }
@@ -2110,10 +2110,10 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 String inputConcept = rs.getString("Input_Concept");
                 String treeOption = rs.getString("Tree_Option");
                 if (0 < inputTerm.length()) {
-                    InputTermModel iwModel = inputModule.makeInputTermModel(inputTerm);
+                    TermModel iwModel = inputModule.makeInputTermModel(inputTerm);
                     compoundConstructTreeOptionMap
                             .put(iwModel,
-                                    new ConstructTreeOption(DODDLEDic.getConcept(inputConcept),
+                                    new TreeConstructionOption(ReferenceOntology.getConcept(inputConcept),
                                             treeOption));
                 }
             }
@@ -2122,17 +2122,17 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         }
     }
 
-    public InputTermModel makeInputTermModel(String iw) {
+    public TermModel makeInputTermModel(String iw) {
         return inputModule.makeInputTermModel(iw.replaceAll("_", " "));
     }
 
     public void saveInputTermSet(File file) {
-        if (inputTermModelSet == null) {
+        if (termModelSet == null) {
             return;
         }
         try {
             StringBuilder buf = new StringBuilder();
-            for (InputTermModel iwModel : inputTermModelSet) {
+            for (TermModel iwModel : termModelSet) {
                 if (!iwModel.isSystemAdded()) {
                     buf.append(iwModel.getTerm());
                     buf.append(System.lineSeparator());
@@ -2213,7 +2213,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             try (reader) {
                 while (reader.ready()) {
                     String uri = reader.readLine();
-                    Concept c = DODDLEDic.getConcept(uri);
+                    Concept c = ReferenceOntology.getConcept(uri);
                     if (c != null) {
                         inputConceptSet.add(c);
                     }
@@ -2231,7 +2231,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String inputConcept = rs.getString("Input_Concept");
-                Concept c = DODDLEDic.getConcept(inputConcept);
+                Concept c = ReferenceOntology.getConcept(inputConcept);
                 if (c != null) {
                     inputConceptSet.add(c);
                 }
@@ -2351,12 +2351,12 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     }
 
     public void saveTermEvalConceptSet(File file) {
-        if (termEvalConceptSetMap == null || inputTermModelSet == null) {
+        if (termEvalConceptSetMap == null || termModelSet == null) {
             return;
         }
         try {
             StringBuilder buf = new StringBuilder();
-            for (InputTermModel iwModel : inputTermModelSet) {
+            for (TermModel iwModel : termModelSet) {
                 Set<EvalConcept> evalConceptSet = termEvalConceptSetMap.get(iwModel
                         .getMatchedTerm());
                 if (evalConceptSet == null) {
@@ -2398,7 +2398,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {
-                for (InputTermModel iwModel : perfectlyMatchedTermModelSet) {
+                for (TermModel iwModel : perfectlyMatchedTermModelSet) {
                     writer.write(iwModel.getTerm());
                     writer.newLine();
                 }
@@ -2420,7 +2420,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
     private void savePerfectlyMatchedTermWithCompoundWord(File file) {
         try {
             Map perfectlyMatchedTermWithCompoundWordMap = new TreeMap();
-            for (InputTermModel iwModel : inputTermModelSet) {
+            for (TermModel iwModel : termModelSet) {
                 if (perfectlyMatchedTermWithCompoundWordMap.get(iwModel.getMatchedTerm()) != null) {
                     Set compoundWordSet = (Set) perfectlyMatchedTermWithCompoundWordMap.get(iwModel
                             .getMatchedTerm());
@@ -2491,7 +2491,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                         double value = Double.parseDouble(valueAndURIs[0]);
                         for (int j = 1; j < valueAndURIs.length; j++) {
                             String uri = valueAndURIs[j];
-                            Concept c = DODDLEDic.getConcept(uri);
+                            Concept c = ReferenceOntology.getConcept(uri);
                             evalConceptSet.add(new EvalConcept(c, value));
                         }
                     }
@@ -2526,7 +2526,7 @@ public class InputConceptSelectionPanel extends JPanel implements ListSelectionL
                 while (rs.next()) {
                     String concept = rs.getString("Concept");
                     double evalValue = rs.getDouble("Eval_Value");
-                    Concept c = DODDLEDic.getConcept(concept);
+                    Concept c = ReferenceOntology.getConcept(concept);
                     evalConceptSet.add(new EvalConcept(c, evalValue));
                 }
                 evalConceptSet.add(nullEvalConcept);

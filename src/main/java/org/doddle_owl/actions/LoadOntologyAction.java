@@ -38,10 +38,10 @@ import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.FreeMindModelMaker;
 import org.doddle_owl.utils.Translator;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 import org.doddle_owl.views.concept_tree.ConceptTreePanel;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -74,10 +74,10 @@ public class LoadOntologyAction extends AbstractAction {
 	}
 
 	public void loadFreeMindOntology(DODDLEProjectPanel currentProject, File file) {
-		InputConceptSelectionPanel inputConceptSelectionPanel = currentProject
-				.getInputConceptSelectionPanel();
-		ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-		ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+		ConceptSelectionPanel conceptSelectionPanel = currentProject
+				.getConceptSelectionPanel();
+		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+		PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
 		if (!file.exists()) {
 			return;
@@ -86,7 +86,7 @@ public class LoadOntologyAction extends AbstractAction {
 		constructPropertyPanel.initialize();
 		currentProject.resetURIConceptMap();
 		ConceptTreeMaker.getInstance().setInputConceptSet(
-				inputConceptSelectionPanel.getInputConceptSet());
+				conceptSelectionPanel.getInputConceptSet());
 
 		Element docElement = FreeMindModelMaker.getDocumentElement(file);
 		Element rootNode = null;
@@ -160,16 +160,16 @@ public class LoadOntologyAction extends AbstractAction {
 	}
 
 	public void loadOWLOntology(DODDLEProjectPanel currentProject, Model model) {
-		InputConceptSelectionPanel inputConceptSelectionPanel = currentProject
-				.getInputConceptSelectionPanel();
-		ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-		ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+		ConceptSelectionPanel conceptSelectionPanel = currentProject
+				.getConceptSelectionPanel();
+		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+		PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
 		constructClassPanel.initialize();
 		constructPropertyPanel.initialize();
 		currentProject.resetURIConceptMap();
 		ConceptTreeMaker.getInstance().setInputConceptSet(
-				inputConceptSelectionPanel.getInputConceptSet());
+				conceptSelectionPanel.getInputConceptSet());
 
 		currentProject.initUserIDCount();
 		TreeNode rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject,

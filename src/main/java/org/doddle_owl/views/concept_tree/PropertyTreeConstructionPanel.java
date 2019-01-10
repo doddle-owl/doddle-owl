@@ -34,7 +34,7 @@ import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.models.concept_tree.VerbConcept;
-import org.doddle_owl.models.ontology_api.EDRDic;
+import org.doddle_owl.models.ontology_api.EDR;
 import org.doddle_owl.models.ontology_api.EDRTree;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
@@ -55,7 +55,7 @@ import java.util.logging.Level;
 /**
  * @author Takeshi Morita
  */
-public class ConstructPropertyPanel extends ConstructConceptTreePanel {
+public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel {
 
     private int afterTrimmingConceptCnt;
     private EDRConceptDefinitionPanel edrConceptDefinitionPanel;
@@ -79,7 +79,7 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
         edrConceptDefinitionPanel.init();
     }
 
-    public ConstructPropertyPanel(DODDLEProjectPanel p) {
+    public PropertyTreeConstructionPanel(DODDLEProjectPanel p) {
         project = p;
         undefinedTermListPanel = new UndefinedTermListPanel();
         isaTreePanel = new ConceptTreePanel(Translator.getTerm("IsaTreeBorder"), ConceptTreePanel.PROPERTY_ISA_TREE,
@@ -245,7 +245,7 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
         Set<String> domainSet = new HashSet<>();
         domainSet.addAll(OWLOntologyManager.getDomainSet(c, childNode.getTrimmedConceptList()));
         if (project.getOntologySelectionPanel().isEDREnable()) {
-            domainSet.addAll(EDRDic.getRelationValueSet("agent", vid, childNode.getTrimmedConceptList()));
+            domainSet.addAll(EDR.getRelationValueSet("agent", vid, childNode.getTrimmedConceptList()));
         }
         c.addAllDomain(refineRegion(domainSet, nounURISet));
     }
@@ -255,7 +255,7 @@ public class ConstructPropertyPanel extends ConstructConceptTreePanel {
         Set<String> rangeSet = new HashSet<>();
         rangeSet.addAll(OWLOntologyManager.getRangeSet(c, childNode.getTrimmedConceptList()));
         if (project.getOntologySelectionPanel().isEDREnable()) {
-            rangeSet.addAll(EDRDic.getRelationValueSet("object", vid, childNode.getTrimmedConceptList()));
+            rangeSet.addAll(EDR.getRelationValueSet("object", vid, childNode.getTrimmedConceptList()));
         }
         c.addAllRange(refineRegion(rangeSet, nounURISet));
     }

@@ -40,7 +40,7 @@ public class SaveTermConceptMapAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().saveTermConceptMap();
+        currentProject.getConceptSelectionPanel().saveTermConceptMap();
         DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveInputTermConceptMapAction"));
     }
 }

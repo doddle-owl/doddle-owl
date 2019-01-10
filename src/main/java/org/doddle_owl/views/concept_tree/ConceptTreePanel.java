@@ -30,7 +30,7 @@ import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.models.concept_tree.VerbConcept;
-import org.doddle_owl.models.term_selection.InputTermModel;
+import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.common.ConceptSelectionDialog;
@@ -908,7 +908,7 @@ public class ConceptTreePanel extends JPanel {
             DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) node.getChildAt(i);
             if (childNode.getUserObject() instanceof String) {
                 String compoundWord = (String) childNode.getUserObject();
-                InputTermModel iwModel = project.getInputConceptSelectionPanel().makeInputTermModel(compoundWord);
+                TermModel iwModel = project.getConceptSelectionPanel().makeInputTermModel(compoundWord);
                 return iwModel.getBasicWordWithoutTopWord();
             }
         }
@@ -989,7 +989,7 @@ public class ConceptTreePanel extends JPanel {
     private Concept insertNewConceptTreeNode(String word, Concept parentConcept) {
         Concept newConcept = new VerbConcept(DODDLEConstants.BASE_URI + project.getUserIDStr(), word);
         newConcept.setInputLabel(new DODDLELiteral("", word));
-        project.getInputConceptSelectionPanel().addInputConcept(newConcept);
+        project.getConceptSelectionPanel().addInputConcept(newConcept);
         insertConceptTreeNode(newConcept, parentConcept, false, true);
         return newConcept;
     }

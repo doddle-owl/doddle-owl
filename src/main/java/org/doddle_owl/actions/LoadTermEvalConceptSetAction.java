@@ -39,7 +39,7 @@ public class LoadTermEvalConceptSetAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().loadTermEvalConceptSet();
+        currentProject.getConceptSelectionPanel().loadTermEvalConceptSet();
     }
 }
 

@@ -32,12 +32,12 @@ import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.models.concept_tree.VerbConcept;
 import org.doddle_owl.models.ontology_api.EDRTree;
-import org.doddle_owl.models.ontology_api.JPNWNTree;
-import org.doddle_owl.models.ontology_api.WordNetDic;
+import org.doddle_owl.models.ontology_api.JaWordNetTree;
+import org.doddle_owl.models.ontology_api.WordNet;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.views.concept_tree.ConceptTreePanel;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -111,9 +111,9 @@ public class ConceptTreeMaker {
                 } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
                     pathSet.addAll(EDRTree.getEDRTTree().getConceptPathToRootSet(c.getLocalName()));
                 } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                    pathSet.addAll(WordNetDic.getPathToRootSet(Long.valueOf(c.getLocalName())));
+                    pathSet.addAll(WordNet.getPathToRootSet(Long.valueOf(c.getLocalName())));
                 } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-                    pathSet.addAll(JPNWNTree.getJPNWNTree().getConceptPathToRootSet(c.getLocalName()));
+                    pathSet.addAll(JaWordNetTree.getJPNWNTree().getConceptPathToRootSet(c.getLocalName()));
                 }
             } else {
                 pathSet.addAll(tmpPathSet);
@@ -181,7 +181,7 @@ public class ConceptTreeMaker {
         beforeTrimmingConceptNum = Utils.getAllConcept(treeModel).size();
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
         trimmedConceptSet.clear();
-        if (project.getInputConceptSelectionPanel().getPerfectlyMatchedOptionPanel().isTrimming()) {
+        if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel().isTrimming()) {
             trimTree(rootNode);
             removeSameNode(rootNode);
         }
@@ -286,7 +286,7 @@ public class ConceptTreeMaker {
         if (firstNode != null) {
             boolean isInputConcept = !isSystemAddedConcept(firstNode) && isInputConcept(firstNode);
             VerbConcept c = new VerbConcept(firstNode);
-            project.getInputConceptSelectionPanel().removeRefOntConceptLabel(c, isInputConcept);
+            project.getConceptSelectionPanel().removeRefOntConceptLabel(c, isInputConcept);
             ConceptTreeNode childNode = new ConceptTreeNode(c, project);
             childNode.setIsInputConcept(isInputConcept);
             treeNode.add(childNode);
@@ -437,9 +437,9 @@ public class ConceptTreeMaker {
     }
 
     public boolean isSystemAddedConcept(Concept c) {
-        InputConceptSelectionPanel inputConceptSelectionPanel = DODDLE_OWL.getCurrentProject()
-                .getInputConceptSelectionPanel();
-        Set<Concept> systemAddedInputConceptSet = inputConceptSelectionPanel.getSystemAddedInputConceptSet();
+        ConceptSelectionPanel conceptSelectionPanel = DODDLE_OWL.getCurrentProject()
+                .getConceptSelectionPanel();
+        Set<Concept> systemAddedInputConceptSet = conceptSelectionPanel.getSystemAddedInputConceptSet();
         if (systemAddedInputConceptSet == null) {
             return false;
         }

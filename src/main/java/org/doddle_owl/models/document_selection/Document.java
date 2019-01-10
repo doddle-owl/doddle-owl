@@ -23,7 +23,7 @@
 
 package org.doddle_owl.models.document_selection;
 
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -67,7 +67,7 @@ public class Document implements Comparable<Document> {
 	}
 
 	private String[] getSplitText() {
-		return text.split(InputDocumentSelectionPanel.PUNCTUATION_CHARS + "|\n");
+		return text.split(DocumentSelectionPanel.PUNCTUATION_CHARS + "|\n");
 	}
 
 	private String getTextString() {

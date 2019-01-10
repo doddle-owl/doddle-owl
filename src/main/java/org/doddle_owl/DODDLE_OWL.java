@@ -30,13 +30,13 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.InputModule;
-import org.doddle_owl.models.ontology_api.JWODic;
+import org.doddle_owl.models.ontology_api.JWO;
 import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UpperConceptManager;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.*;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -139,7 +139,7 @@ public class DODDLE_OWL extends JFrame {
         if (messageType == JOptionPane.YES_OPTION) {
             if (isExistingCurrentProject()) {
                 getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
-                JWODic.closeDataSet();
+                JWO.closeDataSet();
             }
             dispose();
             System.exit(0);
@@ -353,10 +353,10 @@ public class DODDLE_OWL extends JFrame {
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
         DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
-        InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
-        InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
+        DocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
+        DocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");
-        InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
+        DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
                 .getProperty("Japanese_Dependency_Structure_Analyzer");
         DODDLEConstants.BASE_URI = properties.getProperty("BASE_URI");
         DODDLEConstants.BASE_PREFIX = properties.getProperty("BASE_PREFIX");

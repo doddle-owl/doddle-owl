@@ -35,15 +35,15 @@ import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_definition.ConceptPair;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.document_selection.Document;
-import org.doddle_owl.models.ontology_api.EDRDic;
-import org.doddle_owl.models.ontology_api.WordNetDic;
-import org.doddle_owl.models.term_selection.InputTermModel;
+import org.doddle_owl.models.ontology_api.EDR;
+import org.doddle_owl.models.ontology_api.WordNet;
+import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.DODDLEProjectPanel;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -73,8 +73,8 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	private ConceptDefinitionResultPanel.ConceptDefinitionPanel conceptDefinitionPanel;
 
 	private DODDLEProjectPanel doddleProjectPanel;
-	private InputDocumentSelectionPanel docSelectionPanel;
-	private InputConceptSelectionPanel inputConceptSelectionPanel;
+	private DocumentSelectionPanel docSelectionPanel;
+	private ConceptSelectionPanel conceptSelectionPanel;
 
 	private View[] mainViews;
 	private RootWindow rootWindow;
@@ -121,11 +121,11 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 			return concept;
 		}
 		if (c.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-			concept = EDRDic.getEDRConcept(c.getLocalName());
+			concept = EDR.getEDRConcept(c.getLocalName());
 		} else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-			concept = EDRDic.getEDRTConcept(c.getLocalName());
+			concept = EDR.getEDRTConcept(c.getLocalName());
 		} else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-			concept = WordNetDic.getWNConcept(c.getLocalName());
+			concept = WordNet.getWNConcept(c.getLocalName());
 		}
 		return concept;
 	}
@@ -179,7 +179,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 	public ConceptDefinitionPanel(DODDLEProjectPanel project) {
 		doddleProjectPanel = project;
 		docSelectionPanel = project.getDocumentSelectionPanel();
-		inputConceptSelectionPanel = project.getInputConceptSelectionPanel();
+		conceptSelectionPanel = project.getConceptSelectionPanel();
 
 		inputConceptJList = new JList(new DefaultListModel());
 		inputConceptJList.addListSelectionListener(this);
@@ -465,19 +465,19 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 
 	public List<String> getInputTermList() {
 		List<String> inputTermList = new ArrayList<>();
-		wordCorrespondConceptSetMap = inputConceptSelectionPanel.getTermCorrespondConceptSetMap();
+		wordCorrespondConceptSetMap = conceptSelectionPanel.getTermCorrespondConceptSetMap();
 		if (wordCorrespondConceptSetMap != null) {
-			termConceptSetMap = inputConceptSelectionPanel.getTermConceptSetMap();
+			termConceptSetMap = conceptSelectionPanel.getTermConceptSetMap();
 			compoundWordConceptMap = doddleProjectPanel.getConstructClassPanel()
 					.getCompoundWordConceptMap();
-			Set<InputTermModel> inputWordModelSet = inputConceptSelectionPanel
-					.getInputTermModelSet();
-			for (InputTermModel iwModel : inputWordModelSet) {
+			Set<TermModel> inputWordModelSet = conceptSelectionPanel
+					.getTermModelSet();
+			for (TermModel iwModel : inputWordModelSet) {
 				if (!iwModel.isSystemAdded()) {
 					inputTermList.add(iwModel.getTerm());
 				}
 			}
-			DefaultListModel undefinedTermListModel = inputConceptSelectionPanel
+			DefaultListModel undefinedTermListModel = conceptSelectionPanel
 					.getUndefinedTermListPanel().getModel();
 			for (int i = 0; i < undefinedTermListModel.size(); i++) {
 				String undefTerm = (String) undefinedTermListModel.getElementAt(i);

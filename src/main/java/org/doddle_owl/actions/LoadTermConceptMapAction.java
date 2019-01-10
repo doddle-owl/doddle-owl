@@ -41,7 +41,7 @@ public class LoadTermConceptMapAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().loadTermConceptMap();
+        currentProject.getConceptSelectionPanel().loadTermConceptMap();
         DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenInputTermConceptMapAction"));
     }
 }

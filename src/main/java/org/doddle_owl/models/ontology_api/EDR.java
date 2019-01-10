@@ -25,19 +25,19 @@ package org.doddle_owl.models.ontology_api;
 
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.Concept;
-import org.doddle_owl.utils.Utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
  * @author Takeshi Morita
  */
-public class JpnWordNetDic {
-
-    public static boolean isAvailable = false;
-
+public class EDR {
+    public static boolean isEDRAvailable = false;
+    public static boolean isEDRTAvailable = false;
     private static String TREE_DATA_FILE = "tree.data";
     private static String WORD_DATA_FILE = "word.data";
     private static String CONCEPT_DATA_FILE = "concept.data";
@@ -48,53 +48,102 @@ public class JpnWordNetDic {
     private static String CONCEPT_INDEX_FILE = "concept.index";
     private static String RELATION_INDEX_FILE = "relation.index";
 
-    private static RandomAccessFile jpnwnTreeDataFile;
-    private static RandomAccessFile jpnwnWordDataFile;
-    private static RandomAccessFile jpnwnConceptDataFile;
-    private static RandomAccessFile jpnwnRelationDataFile;
+    private static RandomAccessFile edrTreeDataFile;
+    private static RandomAccessFile edrWordDataFile;
+    private static RandomAccessFile edrConceptDataFile;
+    private static RandomAccessFile edrRelationDataFile;
 
-    private static RandomAccessFile jpnwnTreeIndexFile;
-    private static RandomAccessFile jpnwnWordIndexFile;
-    private static RandomAccessFile jpnwnConceptIndexFile;
-    private static RandomAccessFile jpnwnRelationIndexFile;
+    private static RandomAccessFile edrTreeIndexFile;
+    private static RandomAccessFile edrWordIndexFile;
+    private static RandomAccessFile edrConceptIndexFile;
+    private static RandomAccessFile edrRelationIndexFile;
 
-    private static Map<String, Concept> jpnwnURIConceptMap; // キャッシュ用
-    private static Map<String, Set<String>> jpnwnWordIDSetMap; // キャッシュ用
+    private static RandomAccessFile edrtTreeDataFile;
+    private static RandomAccessFile edrtWordDataFile;
+    private static RandomAccessFile edrtConceptDataFile;
 
-    public static boolean initJPNWNDic() {
-        if (jpnwnURIConceptMap != null && 0 < jpnwnURIConceptMap.size()) {
-            return isAvailable;
+    private static RandomAccessFile edrtTreeIndexFile;
+    private static RandomAccessFile edrtWordIndexFile;
+    private static RandomAccessFile edrtConceptIndexFile;
+
+    private static Map<String, Concept> edrURIConceptMap; // キャッシュ用
+    private static Map<String, Concept> edrtURIConceptMap; // キャッシュ用
+    private static Map<String, Set<String>> edrWordIDSetMap; // キャッシュ用
+    private static Map<String, Set<String>> edrtWordIDSetMap; // キャッシュ用
+
+    public static boolean initEDRDic() {
+        if (edrURIConceptMap != null) {
+            return isEDRAvailable;
         }
-        jpnwnURIConceptMap = new HashMap<>();
-        jpnwnWordIDSetMap = new HashMap<>();
+        edrURIConceptMap = new HashMap<>();
+        edrWordIDSetMap = new HashMap<>();
+        String baseDir = DODDLEConstants.EDR_HOME + File.separator;
         try {
-            jpnwnTreeDataFile = new RandomAccessFile(Utils.getJPWNFile(TREE_DATA_FILE), "r");
-            jpnwnWordDataFile = new RandomAccessFile(Utils.getJPWNFile(WORD_DATA_FILE), "r");
-            jpnwnConceptDataFile = new RandomAccessFile(Utils.getJPWNFile(CONCEPT_DATA_FILE), "r");
-            jpnwnTreeIndexFile = new RandomAccessFile(Utils.getJPWNFile(TREE_INDEX_FILE), "r");
-            jpnwnWordIndexFile = new RandomAccessFile(Utils.getJPWNFile(WORD_INDEX_FILE), "r");
-            jpnwnConceptIndexFile = new RandomAccessFile(Utils.getJPWNFile(CONCEPT_INDEX_FILE), "r");
-            isAvailable = true;
+            edrTreeDataFile = new RandomAccessFile(baseDir + TREE_DATA_FILE, "r");
+            edrWordDataFile = new RandomAccessFile(baseDir + WORD_DATA_FILE, "r");
+            edrConceptDataFile = new RandomAccessFile(baseDir + CONCEPT_DATA_FILE, "r");
+            edrRelationDataFile = new RandomAccessFile(baseDir + RELATION_DATA_FILE, "r");
+
+            edrTreeIndexFile = new RandomAccessFile(baseDir + TREE_INDEX_FILE, "r");
+            edrWordIndexFile = new RandomAccessFile(baseDir + WORD_INDEX_FILE, "r");
+            edrConceptIndexFile = new RandomAccessFile(baseDir + CONCEPT_INDEX_FILE, "r");
+            edrRelationIndexFile = new RandomAccessFile(baseDir + RELATION_INDEX_FILE, "r");
+            isEDRAvailable = true;
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            isAvailable = false;
+            isEDRAvailable = false;
         }
-        return isAvailable;
+        return isEDRAvailable;
     }
 
-    private static long getIndexFpListSize() {
+    public static boolean initEDRTDic() {
+        if (edrtURIConceptMap != null) {
+            return isEDRTAvailable;
+        }
+        edrtURIConceptMap = new HashMap<>();
+        edrtWordIDSetMap = new HashMap<>();
+        String baseDir = DODDLEConstants.EDRT_HOME + File.separator;
         try {
-            return jpnwnWordIndexFile.length() / 10;
+            edrtTreeDataFile = new RandomAccessFile(baseDir + TREE_DATA_FILE, "r");
+            edrtWordDataFile = new RandomAccessFile(baseDir + WORD_DATA_FILE, "r");
+            edrtConceptDataFile = new RandomAccessFile(baseDir + CONCEPT_DATA_FILE, "r");
+
+            edrtTreeIndexFile = new RandomAccessFile(baseDir + TREE_INDEX_FILE, "r");
+            edrtWordIndexFile = new RandomAccessFile(baseDir + WORD_INDEX_FILE, "r");
+            edrtConceptIndexFile = new RandomAccessFile(baseDir + CONCEPT_INDEX_FILE, "r");
+            isEDRTAvailable = true;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            isEDRTAvailable = false;
+        }
+        return isEDRTAvailable;
+    }
+
+    private static long getIndexFpListSize(boolean isSpecial) {
+        RandomAccessFile indexFpListFile;
+        if (isSpecial) {
+            indexFpListFile = edrtWordIndexFile;
+        } else {
+            indexFpListFile = edrWordIndexFile;
+        }
+        try {
+            return indexFpListFile.length() / 10;
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
         return -1;
     }
 
-    private static long getIndexFp(long fp) {
+    private static long getIndexFp(long fp, boolean isSpecial) {
+        RandomAccessFile indexFpListFile;
+        if (isSpecial) {
+            indexFpListFile = edrtWordIndexFile;
+        } else {
+            indexFpListFile = edrWordIndexFile;
+        }
         try {
-            jpnwnWordIndexFile.seek(fp);
-            String fpStr = jpnwnWordIndexFile.readLine();
+            indexFpListFile.seek(fp);
+            String fpStr = indexFpListFile.readLine();
             if (fpStr == null) {
                 return -1;
             }
@@ -114,16 +163,28 @@ public class JpnWordNetDic {
         return -1;
     }
 
-    private static long getConceptIndexFileSize() {
-        return getIndexFileSize(jpnwnConceptIndexFile);
+    private static long getConceptIndexFileSize(boolean isSpecial) {
+        RandomAccessFile indexFile;
+        if (isSpecial) {
+            indexFile = edrtConceptIndexFile;
+        } else {
+            indexFile = edrConceptIndexFile;
+        }
+        return getIndexFileSize(indexFile);
     }
 
-    private static long getTreeIndexFileSize() {
-        return getIndexFileSize(jpnwnTreeIndexFile);
+    private static long getTreeIndexFileSize(boolean isSpecial) {
+        RandomAccessFile indexFile;
+        if (isSpecial) {
+            indexFile = edrtTreeIndexFile;
+        } else {
+            indexFile = edrTreeIndexFile;
+        }
+        return getIndexFileSize(indexFile);
     }
 
     private static long getRelationIndexFileSize() {
-        return getIndexFileSize(jpnwnRelationIndexFile);
+        return getIndexFileSize(edrRelationIndexFile);
     }
 
     private static long getDataFp(long fp, RandomAccessFile indexFile) {
@@ -136,23 +197,41 @@ public class JpnWordNetDic {
         return -1;
     }
 
-    private static long getConceptDataFp(long fp) {
-        return getDataFp(fp, jpnwnConceptIndexFile);
+    private static long getConceptDataFp(long fp, boolean isSpecial) {
+        RandomAccessFile indexFile;
+        if (isSpecial) {
+            indexFile = edrtConceptIndexFile;
+        } else {
+            indexFile = edrConceptIndexFile;
+        }
+        return getDataFp(fp, indexFile);
     }
 
-    private static long getTreeDataFp(long fp) {
-        return getDataFp(fp, jpnwnTreeIndexFile);
+    private static long getTreeDataFp(long fp, boolean isSpecial) {
+        RandomAccessFile indexFile;
+        if (isSpecial) {
+            indexFile = edrtTreeIndexFile;
+        } else {
+            indexFile = edrTreeIndexFile;
+        }
+        return getDataFp(fp, indexFile);
     }
 
     private static long getRelationDataFp(long fp) {
-        return getDataFp(fp, jpnwnRelationIndexFile);
+        return getDataFp(fp, edrRelationIndexFile);
     }
 
-    private static String getTermAndIndexFpSet(long ifp) {
+    private static String getTermAndIndexFpSet(long ifp, boolean isSpecial) {
+        RandomAccessFile indexFile;
+        if (isSpecial) {
+            indexFile = edrtWordDataFile;
+        } else {
+            indexFile = edrWordDataFile;
+        }
         try {
             // System.out.println("ifp: " + ifp);
-            jpnwnWordDataFile.seek(ifp);
-            return new String(jpnwnWordDataFile.readLine().getBytes("ISO8859_1"), StandardCharsets.UTF_8);
+            indexFile.seek(ifp);
+            return new String(indexFile.readLine().getBytes("ISO8859_1"), StandardCharsets.UTF_8);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -170,33 +249,45 @@ public class JpnWordNetDic {
         return null;
     }
 
-    private static String getConceptData(long dfp) {
-        return getData(dfp, jpnwnConceptDataFile, "UTF-8");
+    private static String getConceptData(long dfp, boolean isSpecial) {
+        RandomAccessFile dataFile;
+        if (isSpecial) {
+            dataFile = edrtConceptDataFile;
+        } else {
+            dataFile = edrConceptDataFile;
+        }
+        return getData(dfp, dataFile, "UTF-8");
     }
 
-    private static String getTreeData(long dfp) {
-        return getData(dfp, jpnwnTreeDataFile, "ISO8859_1");
+    private static String getTreeData(long dfp, boolean isSpecial) {
+        RandomAccessFile dataFile;
+        if (isSpecial) {
+            dataFile = edrtTreeDataFile;
+        } else {
+            dataFile = edrTreeDataFile;
+        }
+        return getData(dfp, dataFile, "ISO8859_1");
     }
 
     private static String getRelationData(long dfp) {
-        return getData(dfp, jpnwnRelationDataFile, "ISO8859_1");
+        return getData(dfp, edrRelationDataFile, "ISO8859_1");
     }
 
-    public static String getConceptData(String id) {
+    public static String getConceptData(boolean isSpecial, String id) {
         long low = 0;
-        long conceptIndexFileSize = getConceptIndexFileSize();
+        long conceptIndexFileSize = getConceptIndexFileSize(isSpecial);
         long high = conceptIndexFileSize;
         while (low <= high) {
             long mid = (low + high) / 2;
-            if (conceptIndexFileSize - 1 < mid) {
+            if (conceptIndexFileSize - 1 <= mid) {
                 return null;
             }
-            long conceptDataFP = getConceptDataFp(mid * 10);
+            long conceptDataFP = getConceptDataFp(mid * 10, isSpecial);
             if (conceptDataFP == -1) {
                 return null;
             }
             // System.out.println("mid: " + mid);
-            String conceptData = getConceptData(conceptDataFP);
+            String conceptData = getConceptData(conceptDataFP, isSpecial);
             if (conceptData == null) {
                 return null;
             }
@@ -215,9 +306,9 @@ public class JpnWordNetDic {
         return null;
     }
 
-    public static String getTreeData(String id) {
+    public static String getTreeData(boolean isSpecial, String id) {
         long low = 0;
-        long treeIndexFileSize = getTreeIndexFileSize();
+        long treeIndexFileSize = getTreeIndexFileSize(isSpecial);
         long high = treeIndexFileSize;
         while (low <= high) {
             long mid = (low + high) / 2;
@@ -225,11 +316,11 @@ public class JpnWordNetDic {
             if (treeIndexFileSize - 1 <= mid) {
                 return null;
             }
-            long treeDataFP = getTreeDataFp(mid * 10);
+            long treeDataFP = getTreeDataFp(mid * 10, isSpecial);
             if (treeDataFP == -1) {
                 return null;
             }
-            String treeData = getTreeData(treeDataFP);
+            String treeData = getTreeData(treeDataFP, isSpecial);
             if (treeData == null) {
                 return null;
             }
@@ -281,10 +372,14 @@ public class JpnWordNetDic {
         return null;
     }
 
-    private static Concept getConcept(long dfp) {
+    private static Concept getConcept(long dfp, boolean isSpecial) {
         RandomAccessFile dataFile;
         try {
-            dataFile = jpnwnConceptDataFile;
+            if (isSpecial) {
+                dataFile = edrtConceptDataFile;
+            } else {
+                dataFile = edrConceptDataFile;
+            }
             dataFile.seek(dfp);
             String data = new String(dataFile.readLine().getBytes("ISO8859_1"), StandardCharsets.UTF_8);
             // System.out.println(data);
@@ -293,10 +388,17 @@ public class JpnWordNetDic {
             String id = dataArray[0].replaceAll("\t", "");
             System.arraycopy(dataArray, 1, conceptData, 0, conceptData.length);
 
-            String uri = DODDLEConstants.JPN_WN_URI + id;
-            Concept c = new Concept(uri, conceptData);
-            jpnwnURIConceptMap.put(uri, c);
-
+            String uri;
+            Concept c;
+            if (isSpecial) {
+                uri = DODDLEConstants.EDRT_URI + id;
+                c = new Concept(uri, conceptData);
+                edrtURIConceptMap.put(uri, c);
+            } else {
+                uri = DODDLEConstants.EDR_URI + id;
+                c = new Concept(uri, conceptData);
+                edrURIConceptMap.put(uri, c);
+            }
             return c;
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -304,17 +406,18 @@ public class JpnWordNetDic {
         return null;
     }
 
-    private static Set<Long> getdataFpSet(long high, String term) {
+    private static Set<Long> getdataFpSet(boolean isSpecial, long high, String term) {
         long low = 0;
         Set<Long> dataFpSet = new HashSet<>();
         while (low <= high) {
             long mid = (low + high) / 2;
             // System.out.println("mid: " + mid);
-            long indexFP = getIndexFp(mid * 10);
+            long indexFP = getIndexFp(mid * 10, isSpecial);
             if (indexFP == -1) {
                 return dataFpSet;
             }
-            String line = getTermAndIndexFpSet(indexFP);
+            String line = getTermAndIndexFpSet(indexFP, isSpecial);
+            // System.out.println(line);
             String[] lines = line.split("\t");
             String searchedTerm = lines[0];
             // System.out.println(searchedTerm.compareTo(term));
@@ -333,26 +436,38 @@ public class JpnWordNetDic {
         return dataFpSet;
     }
 
-    public static Set<String> getSynsetSet(String word) {
-        if (jpnwnWordIDSetMap.get(word) != null) {
-            return jpnwnWordIDSetMap.get(word);
+    public static Set<String> getIDSet(String word, boolean isSpecial) {
+        Map<String, Set<String>> wordIDSetMap;
+        if (isSpecial) {
+            wordIDSetMap = edrtWordIDSetMap;
+        } else {
+            wordIDSetMap = edrWordIDSetMap;
         }
-        Set<Long> dataFpSet = getdataFpSet(getIndexFpListSize(), word);
-        // System.out.println(dataFpSet);
+
+        if (wordIDSetMap.get(word) != null) {
+            return wordIDSetMap.get(word);
+        }
+        // System.out.println(word);
+        Set<Long> dataFpSet = getdataFpSet(isSpecial, getIndexFpListSize(isSpecial), word);
+        // System.out.println(word + ": " + dataFpSet);
         Set<String> idSet = new HashSet<>();
         for (Long dfp : dataFpSet) {
             // System.out.println(dfp);
-            Concept c = getConcept(dfp);
+            Concept c = getConcept(dfp, isSpecial);
             // System.out.println(c.getLocalName());
             idSet.add(c.getLocalName());
         }
-        jpnwnWordIDSetMap.put(word, idSet);
+        wordIDSetMap.put(word, idSet);
 
         return idSet;
     }
 
-    public static Set<String> getJPNWNSynsetSet(String word) {
-        return getSynsetSet(word);
+    public static Set<String> getEDRTIDSet(String word) {
+        return getIDSet(word, true);
+    }
+
+    public static Set<String> getEDRIDSet(String word) {
+        return getIDSet(word, false);
     }
 
     private static void addURISet(String data, String relation, Set<String> uriSet) {
@@ -362,7 +477,7 @@ public class JpnWordNetDic {
                 break;
             }
             if (!id.equals("")) {
-                uriSet.add(DODDLEConstants.JPN_WN_URI + id);
+                uriSet.add(DODDLEConstants.EDR_URI + id);
             }
         }
     }
@@ -408,25 +523,37 @@ public class JpnWordNetDic {
         return uriSet;
     }
 
-    public static Concept getConcept(String id) {
-        String ns = DODDLEConstants.JPN_WN_URI;
+    public static Concept getConcept(String id, boolean isSpecial) {
+        String ns;
+        Map<String, Concept> uriConceptMap;
+        if (isSpecial) {
+            ns = DODDLEConstants.EDRT_URI;
+            uriConceptMap = edrtURIConceptMap;
+        } else {
+            ns = DODDLEConstants.EDR_URI;
+            uriConceptMap = edrURIConceptMap;
+        }
+
         String uri = ns + id;
-        // System.out.println(uri);
-        if (jpnwnURIConceptMap.get(uri) != null) {
-            return jpnwnURIConceptMap.get(uri);
+        if (uriConceptMap.get(uri) != null) {
+            return uriConceptMap.get(uri);
         }
-        String data = getConceptData(id);
-        // System.out.println(id+": "+data);
-        if (data == null) {
-            return null;
-        }
+        String data = getConceptData(isSpecial, id);
         String[] dataArray = data.split("\\^");
         String[] conceptData = new String[4];
         System.arraycopy(dataArray, 1, conceptData, 0, conceptData.length);
 
         Concept c = new Concept(uri, conceptData);
-        jpnwnURIConceptMap.put(uri, c);
+        uriConceptMap.put(uri, c);
         return c;
+    }
+
+    public static Concept getEDRTConcept(String id) {
+        return getConcept(id, true);
+    }
+
+    public static Concept getEDRConcept(String id) {
+        return getConcept(id, false);
     }
 
 }

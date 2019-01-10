@@ -1,7 +1,7 @@
 package org.doddle_owl.models;
 
 import org.doddle_owl.models.common.DODDLEConstants;
-import org.doddle_owl.models.ontology_api.JWODic;
+import org.doddle_owl.models.ontology_api.JWO;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,17 +12,17 @@ import java.net.URLEncoder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JWODicTest {
+public class JWOTest {
 
     @BeforeEach
     void setUp() {
         DODDLEConstants.JWO_HOME = "/Users/t_morita/DODDLE-OWL/jwo";
-        JWODic.initJWODic(null);
+        JWO.initJWODic(null);
     }
 
     @Test
     void initJWODic() {
-        assertTrue(JWODic.isAvailable);
+        assertTrue(JWO.isAvailable);
     }
 
     @Test

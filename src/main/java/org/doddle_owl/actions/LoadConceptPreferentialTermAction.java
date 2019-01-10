@@ -26,8 +26,8 @@ package org.doddle_owl.actions;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -48,8 +48,8 @@ public class LoadConceptPreferentialTermAction extends AbstractAction {
     }
 
     public void loadIDPreferentialTerm(DODDLEProjectPanel currentProject, File file) {
-        ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-        ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
         if (!file.exists()) {
             return;

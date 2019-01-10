@@ -3,8 +3,8 @@ package org.doddle_owl.utils;
 import org.doddle_owl.models.common.ConceptDistanceModel;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.Concept;
-import org.doddle_owl.models.ontology_api.EDRDic;
-import org.doddle_owl.models.ontology_api.WordNetDic;
+import org.doddle_owl.models.ontology_api.EDR;
+import org.doddle_owl.models.ontology_api.WordNet;
 import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,14 +30,14 @@ public class CalcConceptDistanceUtilTest {
         @BeforeEach
         void setup() {
             DODDLEConstants.EDR_HOME = "/Users/t_morita/DODDLE-OWL/EDR-DIC/";
-            EDRDic.initEDRDic();
+            EDR.initEDRDic();
         }
 
         @Test
         @DisplayName("EDRにおける最短概念間距離計算のテスト")
         void getShortestConceptDistanceInEDR() {
             int expected = 11;
-            int actual = getShortestConceptDistance(EDRDic.getEDRConcept("ID3bdc67"), EDRDic.getEDRConcept("ID3bc83c"));
+            int actual = getShortestConceptDistance(EDR.getEDRConcept("ID3bdc67"), EDR.getEDRConcept("ID3bc83c"));
             assertEquals(expected, actual);
         }
 
@@ -45,7 +45,7 @@ public class CalcConceptDistanceUtilTest {
         @DisplayName("EDRにおける最長概念間距離計算のテスト")
         void getLongestConceptDistanceInEDR() {
             int expected = 17;
-            int actual = getLongestConceptDistance(EDRDic.getEDRConcept("ID3bdc67"), EDRDic.getEDRConcept("ID3bc83c"));
+            int actual = getLongestConceptDistance(EDR.getEDRConcept("ID3bdc67"), EDR.getEDRConcept("ID3bc83c"));
             assertEquals(expected, actual);
         }
 
@@ -53,7 +53,7 @@ public class CalcConceptDistanceUtilTest {
         @DisplayName("EDRにおける平均概念間距離計算のテスト")
         void getAverageConceptDistanceInEDR() {
             int expected = 14;
-            int actual = getAverageConceptDistance(EDRDic.getEDRConcept("ID3bdc67"), EDRDic.getEDRConcept("ID3bc83c"));
+            int actual = getAverageConceptDistance(EDR.getEDRConcept("ID3bdc67"), EDR.getEDRConcept("ID3bc83c"));
             assertEquals(expected, actual);
         }
 
@@ -65,7 +65,7 @@ public class CalcConceptDistanceUtilTest {
         @BeforeEach
         void setup() {
             DODDLEConstants.EDRT_HOME = "/Users/t_morita/DODDLE-OWL/EDRT-DIC/";
-            EDRDic.initEDRTDic();
+            EDR.initEDRTDic();
         }
 
         @Test
@@ -93,7 +93,7 @@ public class CalcConceptDistanceUtilTest {
     class CalcConceptDistanceInWordNetTest {
         @BeforeEach
         void setup() {
-            WordNetDic.initWordNetDictionary();
+            WordNet.initWordNetDictionary();
         }
 
         @Test
@@ -141,7 +141,7 @@ public class CalcConceptDistanceUtilTest {
         void getAverageConceptDistanceInJpWordNet() {
 //            fail();
 //            int expected = 1;
-//            int actual = getAverageConceptDistance(JpnWordNetDic.getConcept("2001223"), JpnWordNetDic.getConcept("2037721"));
+//            int actual = getAverageConceptDistance(JaWordNet.getConcept("2001223"), JaWordNet.getConcept("2037721"));
 //            assertEquals(expected, actual);
         }
     }
@@ -184,7 +184,7 @@ public class CalcConceptDistanceUtilTest {
 
 
     public static void testWNConceptDistance() {
-        System.out.println(getAverageConceptDistance(WordNetDic.getWNConcept("2001223"), WordNetDic.getWNConcept("2037721")));
+        System.out.println(getAverageConceptDistance(WordNet.getWNConcept("2001223"), WordNet.getWNConcept("2037721")));
     }
 
     private static void testOwlLongestDepth(String[] args) {

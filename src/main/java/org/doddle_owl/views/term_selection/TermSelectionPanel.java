@@ -30,7 +30,7 @@ import org.doddle_owl.models.term_selection.TermInfo;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.DODDLEProjectPanel;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -46,12 +46,12 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class InputTermSelectionPanel extends JPanel implements ActionListener, KeyListener {
+public class TermSelectionPanel extends JPanel implements ActionListener, KeyListener {
 
     private JTextArea inputTermArea;
     private TermInfoTablePanel inputTermInfoTablePanel;
     private TermInfoTablePanel removedTermInfoTablePanel;
-    private InputTermInDocumentViewer documentViewer;
+    private TermsInDocumentViewer documentViewer;
 
     private JButton addInputTermListButton;
     private JButton deleteTableItemButton;
@@ -63,7 +63,7 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
 
     private View[] mainViews;
     private RootWindow rootWindow;
-    private InputConceptSelectionPanel inputConceptSelectionPanel;
+    private ConceptSelectionPanel conceptSelectionPanel;
 
     public void initialize() {
         inputTermArea.setText("");
@@ -72,13 +72,13 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
         documentViewer.initialize();
     }
 
-    public InputTermSelectionPanel(InputConceptSelectionPanel ui) {
+    public TermSelectionPanel(ConceptSelectionPanel ui) {
         inputTermInfoTablePanel = new TermInfoTablePanel();
         inputTermInfoTablePanel.getTable().addKeyListener(this);
         removedTermInfoTablePanel = new TermInfoTablePanel();
         removedTermInfoTablePanel.getTable().addKeyListener(this);
-        documentViewer = new InputTermInDocumentViewer();
-        inputConceptSelectionPanel = ui;
+        documentViewer = new TermsInDocumentViewer();
+        conceptSelectionPanel = ui;
 
         inputTermArea = new JTextArea(10, 15);
         JScrollPane inputTermsAreaScroll = new JScrollPane(inputTermArea);
@@ -203,14 +203,14 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("SetInputTermListButton"));
         String[] inputTerms = inputTermArea.getText().split("\n");
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
-        inputConceptSelectionPanel.loadInputTermSet(inputTermSet, taskCnt);
+        conceptSelectionPanel.loadInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("AddInputTermListButton"));
         String[] inputTerms = inputTermArea.getText().split("\n");
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
-        inputConceptSelectionPanel.addInputTermSet(inputTermSet, taskCnt);
+        conceptSelectionPanel.addInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTerms() {
@@ -431,13 +431,13 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
             project.addLog("AddInputTermListButton");
         } else if (e.getSource() == deleteTableItemButton) {
             deleteTableItems();
-            project.addLog("RemoveButton", "InputTermSelectionPanel");
+            project.addLog("RemoveButton", "TermSelectionPanel");
         } else if (e.getSource() == returnTableItemButton) {
             returnTableItems(false);
-            project.addLog("ReturnButton", "InputTermSelectionPanel");
+            project.addLog("ReturnButton", "TermSelectionPanel");
         } else if (e.getSource() == completelyDeleteTableItemButton) {
             returnTableItems(true);
-            project.addLog("CompletelyDeleteTermButtonButton", "InputTermSelectionPanel");
+            project.addLog("CompletelyDeleteTermButtonButton", "TermSelectionPanel");
         } else if (e.getSource() == reloadDocumentAreaButton) {
             documentViewer.setDocumentAndLinkArea();
         }
@@ -471,10 +471,10 @@ public class InputTermSelectionPanel extends JPanel implements ActionListener, K
         if (e.getKeyCode() == KeyEvent.VK_DELETE) {
             if (e.getSource() == inputTermInfoTablePanel.getTable()) {
                 deleteTableItems();
-                DODDLE_OWL.getCurrentProject().addLog("RemoveButton", "InputTermSelectionPanel");
+                DODDLE_OWL.getCurrentProject().addLog("RemoveButton", "TermSelectionPanel");
             } else if (e.getSource() == removedTermInfoTablePanel.getTable()) {
                 returnTableItems(false);
-                DODDLE_OWL.getCurrentProject().addLog("ReturnButton", "InputTermSelectionPanel");
+                DODDLE_OWL.getCurrentProject().addLog("ReturnButton", "TermSelectionPanel");
             }
         }
     }

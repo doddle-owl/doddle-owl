@@ -24,10 +24,10 @@
 package org.doddle_owl.views.reference_ontology_selection;
 
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.ontology_api.EDRDic;
-import org.doddle_owl.models.ontology_api.JWODic;
-import org.doddle_owl.models.ontology_api.JpnWordNetDic;
-import org.doddle_owl.models.ontology_api.WordNetDic;
+import org.doddle_owl.models.ontology_api.EDR;
+import org.doddle_owl.models.ontology_api.JWO;
+import org.doddle_owl.models.ontology_api.JaWordNet;
+import org.doddle_owl.models.ontology_api.WordNet;
 import org.doddle_owl.utils.Translator;
 
 import javax.swing.*;
@@ -168,11 +168,11 @@ public class GeneralOntologySelectionPanel extends JPanel {
 
     private void enableEDRDic(boolean isEnable) {
         if (isEnable) {
-            edrCheckBox.setSelected(EDRDic.initEDRDic());
-            edrCheckBox.setEnabled(EDRDic.isEDRAvailable);
+            edrCheckBox.setSelected(EDR.initEDRDic());
+            edrCheckBox.setEnabled(EDR.isEDRAvailable);
             DODDLE_OWL.STATUS_BAR.addValue();
         } else {
-            EDRDic.isEDRAvailable = false;
+            EDR.isEDRAvailable = false;
         }
         DODDLE_OWL.STATUS_BAR.setText("Init EDR: " + edrCheckBox.isSelected());
         DODDLE_OWL.getCurrentProject().addLog("Init EDR", edrCheckBox.isSelected());
@@ -180,10 +180,10 @@ public class GeneralOntologySelectionPanel extends JPanel {
 
     private void enableEDRTDic(boolean isEnable) {
         if (isEnable) {
-            edrtCheckBox.setSelected(EDRDic.initEDRTDic());
-            edrtCheckBox.setEnabled(EDRDic.isEDRTAvailable);
+            edrtCheckBox.setSelected(EDR.initEDRTDic());
+            edrtCheckBox.setEnabled(EDR.isEDRTAvailable);
         } else {
-            EDRDic.isEDRTAvailable = false;
+            EDR.isEDRTAvailable = false;
         }
         DODDLE_OWL.STATUS_BAR.setText("Init EDRT: " + edrtCheckBox.isSelected());
         DODDLE_OWL.getCurrentProject().addLog("Init EDRT", edrtCheckBox.isSelected());
@@ -191,10 +191,10 @@ public class GeneralOntologySelectionPanel extends JPanel {
 
     private void enableWordNetDic(boolean isEnable) {
         if (isEnable) {
-            wnCheckBox.setSelected(WordNetDic.initWordNetDictionary());
-            wnCheckBox.setEnabled(WordNetDic.isAvailable);
+            wnCheckBox.setSelected(WordNet.initWordNetDictionary());
+            wnCheckBox.setEnabled(WordNet.isAvailable);
         } else {
-            WordNetDic.isAvailable = false;
+            WordNet.isAvailable = false;
         }
         DODDLE_OWL.STATUS_BAR.setText("Init WordNet: " + wnCheckBox.isSelected());
         DODDLE_OWL.getCurrentProject().addLog("Init WordNet", wnCheckBox.isSelected());
@@ -202,11 +202,11 @@ public class GeneralOntologySelectionPanel extends JPanel {
 
     private void enableJpnWordNetDic(boolean isEnable) {
         if (isEnable) {
-            jpnWnCheckBox.setSelected(JpnWordNetDic.initJPNWNDic());
-            jpnWnCheckBox.setEnabled(JpnWordNetDic.isAvailable);
+            jpnWnCheckBox.setSelected(JaWordNet.initJPNWNDic());
+            jpnWnCheckBox.setEnabled(JaWordNet.isAvailable);
             DODDLE_OWL.STATUS_BAR.addValue();
         } else {
-            JpnWordNetDic.isAvailable = false;
+            JaWordNet.isAvailable = false;
         }
         DODDLE_OWL.STATUS_BAR.setText("Init Japanese WordNet: " + jpnWnCheckBox.isSelected());
         DODDLE_OWL.getCurrentProject().addLog("Init Japanese WordNet", jpnWnCheckBox.isSelected());
@@ -214,10 +214,10 @@ public class GeneralOntologySelectionPanel extends JPanel {
 
     private void enableJWO(boolean isEnable) {
         if (isEnable) {
-            jwoCheckBox.setSelected(JWODic.initJWODic(nameSpaceTable));
-            jwoCheckBox.setEnabled(JWODic.isAvailable);
+            jwoCheckBox.setSelected(JWO.initJWODic(nameSpaceTable));
+            jwoCheckBox.setEnabled(JWO.isAvailable);
         } else {
-            JWODic.isAvailable = false;
+            JWO.isAvailable = false;
         }
         DODDLE_OWL.STATUS_BAR.setText("Init JWO: " + jwoCheckBox.isSelected());
         DODDLE_OWL.getCurrentProject().addLog("Init JWO", jwoCheckBox.isSelected());

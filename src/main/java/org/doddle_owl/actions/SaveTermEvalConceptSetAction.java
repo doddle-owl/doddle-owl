@@ -41,7 +41,7 @@ public class SaveTermEvalConceptSetAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().saveTermEvalConceptSet();
+        currentProject.getConceptSelectionPanel().saveTermEvalConceptSet();
     }
 }
 

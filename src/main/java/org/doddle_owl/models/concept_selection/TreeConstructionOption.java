@@ -28,13 +28,13 @@ import org.doddle_owl.views.OptionDialog;
 /**
  * @author Takeshi Morita
  */
-public class ConstructTreeOption {
+public class TreeConstructionOption {
 
     private Concept c;
     private String option;
     private boolean isReplaceSubConcepts;
 
-    public ConstructTreeOption(Concept c) {
+    public TreeConstructionOption(Concept c) {
         this.c = c;
         if (OptionDialog.isCompoundWordSetSameConcept()) {
             option = "SAME";
@@ -43,7 +43,7 @@ public class ConstructTreeOption {
         }
     }
 
-    public ConstructTreeOption(Concept c, String opt) {
+    public TreeConstructionOption(Concept c, String opt) {
         this.c = c;
         option = opt;
     }

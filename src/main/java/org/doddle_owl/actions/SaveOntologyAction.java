@@ -31,8 +31,8 @@ import org.doddle_owl.models.common.FreeMindFileFilter;
 import org.doddle_owl.models.common.OWLFileFilter;
 import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
 import org.doddle_owl.views.concept_tree.ConceptTreePanel;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 import org.doddle_owl.utils.FreeMindModelMaker;
 import org.doddle_owl.utils.JenaModelMaker;
 import org.doddle_owl.utils.Translator;
@@ -77,8 +77,8 @@ public class SaveOntologyAction extends AbstractAction {
     }
 
     public static Model getOntology(DODDLEProjectPanel currentProject) {
-        ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-        ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
 
         Model ontology = JenaModelMaker.makeClassModel(constructClassPanel.getIsaTreeModelRoot(),
@@ -95,8 +95,8 @@ public class SaveOntologyAction extends AbstractAction {
 
     public void saveFreeMindOntology(DODDLEProjectPanel project, File file) {
         try {
-            ConstructClassPanel constructClassPanel = project.getConstructClassPanel();
-            ConstructPropertyPanel constructPropertyPanel = project.getConstructPropertyPanel();
+            ClassTreeConstructionPanel constructClassPanel = project.getConstructClassPanel();
+            PropertyTreeConstructionPanel constructPropertyPanel = project.getConstructPropertyPanel();
 
             DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docbuilder = dbfactory.newDocumentBuilder();

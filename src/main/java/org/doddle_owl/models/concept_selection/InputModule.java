@@ -28,10 +28,10 @@ import com.atilika.kuromoji.ipadic.Tokenizer;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.Synset;
 import org.doddle_owl.models.common.DODDLEConstants;
-import org.doddle_owl.models.ontology_api.EDRDic;
-import org.doddle_owl.models.ontology_api.JpnWordNetDic;
-import org.doddle_owl.models.ontology_api.WordNetDic;
-import org.doddle_owl.models.term_selection.InputTermModel;
+import org.doddle_owl.models.ontology_api.EDR;
+import org.doddle_owl.models.ontology_api.JaWordNet;
+import org.doddle_owl.models.ontology_api.WordNet;
+import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.task_analyzer.Morpheme;
@@ -50,7 +50,7 @@ public class InputModule {
 
     private boolean isLoadInputTermSet;
     private Set<String> undefinedTermSet;
-    private Set<InputTermModel> inputTermModelSet;
+    private Set<TermModel> termModelSet;
     private Map<String, Set<Concept>> termConceptSetMap;
 
     public static int INIT_PROGRESS_VALUE = 887253;
@@ -59,7 +59,7 @@ public class InputModule {
     public void initialize() {
         isLoadInputTermSet = false;
         undefinedTermSet = new TreeSet<>();
-        inputTermModelSet = new TreeSet<>();
+        termModelSet = new TreeSet<>();
         termConceptSetMap = new HashMap<>();
     }
 
@@ -84,7 +84,7 @@ public class InputModule {
 
     private void clearData() {
         isLoadInputTermSet = false;
-        inputTermModelSet.clear();
+        termModelSet.clear();
         undefinedTermSet.clear();
         termConceptSetMap.clear();
     }
@@ -100,7 +100,7 @@ public class InputModule {
     /**
      * 複合語の先頭の形態素から除いていき照合を行う．
      */
-    public InputTermModel makeInputTermModel(String inputTerm) {
+    public TermModel makeInputTermModel(String inputTerm) {
         if (inputTerm.length() == 0) {
             return null;
         }
@@ -133,7 +133,7 @@ public class InputModule {
         if (conceptSet.size() == 0) {
             return null;
         }
-        InputTermModel itModel = new InputTermModel(inputTerm, morphemeList,
+        TermModel itModel = new TermModel(inputTerm, morphemeList,
                 subInputTermBuilder.toString(), conceptSet.size(), matchedPoint, project);
         termConceptSetMap.putIfAbsent(itModel.getMatchedTerm(), conceptSet);
         return itModel;
@@ -153,13 +153,13 @@ public class InputModule {
         if (!project.getOntologySelectionPanel().isWordNetEnable() || !isEnglish(subIW)) {
             return;
         }
-        IndexWord indexWord = WordNetDic.getNounIndexWord(subIW);
+        IndexWord indexWord = WordNet.getNounIndexWord(subIW);
         if (indexWord == null) {
             return;
         }
         for (Synset synset : indexWord.getSenses()) {
             if (synset.containsWord(subIW)) {
-                Concept c = WordNetDic.getWNConcept(Long.toString(synset.getOffset()));
+                Concept c = WordNet.getWNConcept(Long.toString(synset.getOffset()));
                 conceptSet.add(c);
             }
         }
@@ -169,12 +169,12 @@ public class InputModule {
         if (!project.getOntologySelectionPanel().isJpnWordNetEnable()) {
             return;
         }
-        Set<String> idSet = JpnWordNetDic.getJPNWNSynsetSet(subIW);
+        Set<String> idSet = JaWordNet.getJPNWNSynsetSet(subIW);
         if (idSet == null) {
             return;
         }
         for (String id : idSet) {
-            Concept c = JpnWordNetDic.getConcept(id);
+            Concept c = JaWordNet.getConcept(id);
             if (c != null) {
                 conceptSet.add(c);
             }
@@ -185,13 +185,13 @@ public class InputModule {
         if (!project.getOntologySelectionPanel().isEDREnable()) {
             return;
         }
-        Set<String> idSet = EDRDic.getEDRIDSet(subInputTerm);
+        Set<String> idSet = EDR.getEDRIDSet(subInputTerm);
         // System.out.println(idSet);
         if (idSet == null) {
             return;
         }
         for (String id : idSet) {
-            Concept c = EDRDic.getEDRConcept(id);
+            Concept c = EDR.getEDRConcept(id);
             if (c != null) {
                 conceptSet.add(c);
             }
@@ -202,12 +202,12 @@ public class InputModule {
         if (!project.getOntologySelectionPanel().isEDRTEnable()) {
             return;
         }
-        Set<String> idSet = EDRDic.getEDRTIDSet(subIW);
+        Set<String> idSet = EDR.getEDRTIDSet(subIW);
         if (idSet == null) {
             return;
         }
         for (String id : idSet) {
-            Concept c = EDRDic.getEDRTConcept(id);
+            Concept c = EDR.getEDRTConcept(id);
             if (c != null) {
                 conceptSet.add(c);
             }
@@ -294,9 +294,9 @@ public class InputModule {
                     if (initialTaskCnt == 0 && i % division == 0) {
                         setProgress(currentTaskCnt++);
                     }
-                    InputTermModel itModel = makeInputTermModel(term);
+                    TermModel itModel = makeInputTermModel(term);
                     if (itModel != null) {
-                        inputTermModelSet.add(itModel);
+                        termModelSet.add(itModel);
                         // 部分照合した複合語中で，完全照合単語リストに含まれない照合した単語を完全照合単語として追加
                         String matchedTerm = itModel.getMatchedTerm();
                         if (!(term.equals(matchedTerm) || matchedTermSet.contains(matchedTerm) || termSet
@@ -305,7 +305,7 @@ public class InputModule {
                             if (itModel != null) {
                                 matchedTermSet.add(matchedTerm);
                                 itModel.setIsSystemAdded(true);
-                                inputTermModelSet.add(itModel);
+                                termModelSet.add(itModel);
                             }
                         }
                     } else {
@@ -314,7 +314,7 @@ public class InputModule {
                         }
                     }
                 }
-                project.getInputConceptSelectionPanel().initTermList();
+                project.getConceptSelectionPanel().initTermList();
                 project.getConceptDefinitionPanel().setInputConceptSet();
                 DODDLE_OWL.setSelectedIndex(DODDLEConstants.DISAMBIGUATION_PANEL);
             } catch (Exception e) {
@@ -344,8 +344,8 @@ public class InputModule {
         worker.execute();
     }
 
-    public Set<InputTermModel> getInputTermModelSet() {
-        return inputTermModelSet;
+    public Set<TermModel> getTermModelSet() {
+        return termModelSet;
     }
 
     public Map<String, Set<Concept>> getTermConceptSetMap() {

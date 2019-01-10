@@ -36,7 +36,7 @@ public class ProjectFileNames {
     public static String INPUT_TERM_SET_FILE = "InputWordSet.txt";
     public static String TERM_EVAL_CONCEPT_SET_FILE = "wordEvalConceptSet.txt";
     public static String INPUT_TERM_CONCEPT_MAP_FILE = "InputWordConceptMap.txt";
-    public static String CONSTRUCT_TREE_OPTION_FILE = "ConstructTreeOption.txt";
+    public static String CONSTRUCT_TREE_OPTION_FILE = "TreeConstructionOption.txt";
     public static String INPUT_TERM_CONSTRUCT_TREE_OPTION_SET_FILE = "InputWord_ConstructTreeOption.txt";
     public static String INPUT_CONCEPT_SET_FILE = "InputConceptSet.txt";
     public static String UNDEFINED_TERM_SET_FILE = "UndefinedWordSet.txt";

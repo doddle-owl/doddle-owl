@@ -43,7 +43,7 @@ import java.util.logging.Level;
  * @author shigeta
  * @author Takeshi Morita
  */
-public class WordNetDic {
+public class WordNet {
     public static boolean isAvailable = false;
     private static Dictionary dictionary;
 
@@ -191,13 +191,13 @@ public class WordNetDic {
 
     public static Set<String> getURISet(String word) {
         Set<String> uriSet = new HashSet<>();
-        if (!WordNetDic.isAvailable) {
+        if (!WordNet.isAvailable) {
             return uriSet;
         }
         if (!isEnglish(word)) {
             return uriSet;
         }
-        IndexWord indexWord = WordNetDic.getNounIndexWord(word);
+        IndexWord indexWord = WordNet.getNounIndexWord(word);
         if (indexWord == null) {
             return uriSet;
         }

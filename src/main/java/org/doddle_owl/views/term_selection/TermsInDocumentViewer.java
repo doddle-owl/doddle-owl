@@ -30,10 +30,10 @@ import net.sf.extjwnl.data.POS;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.document_selection.Document;
+import org.doddle_owl.models.ontology_api.WordNet;
 import org.doddle_owl.models.term_selection.TermInfo;
-import org.doddle_owl.models.ontology_api.WordNetDic;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -52,7 +52,7 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class InputTermInDocumentViewer extends JPanel implements MouseListener, ActionListener,
+public class TermsInDocumentViewer extends JPanel implements MouseListener, ActionListener,
         HyperlinkListener, KeyListener {
     private JList documentList;
     private ListModel inputDocumentListModel;
@@ -86,7 +86,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
         searchField.setText("");
     }
 
-    public InputTermInDocumentViewer() {
+    public TermsInDocumentViewer() {
         documentList = new JList();
         documentList.addMouseListener(this);
         documentList.setCellRenderer(new DocumentListCellRenderer());
@@ -281,12 +281,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
             String[] words = word.split("\\s+");
             for (String word1 : words) {
                 String basic = "";
-                IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word1.toLowerCase());
+                IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word1.toLowerCase());
                 if (indexWord != null && indexWord.getLemma() != null) {
                     basic = indexWord.getLemma().toLowerCase();
                 }
                 if (basic.equals("")) {
-                    indexWord = WordNetDic.getIndexWord(POS.VERB, word1.toLowerCase());
+                    indexWord = WordNet.getIndexWord(POS.VERB, word1.toLowerCase());
                     if (indexWord != null && indexWord.getLemma() != null) {
                         basic = indexWord.getLemma().toLowerCase();
                     }
@@ -299,12 +299,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
             word = basicWord;
         }
         String pos = Translator.getTerm("UserDefinedInputTermCheckBox");
-        InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                 .getInputTermSelectionPanel();
         TermInfo info = new TermInfo(word, 1);
         info.addPos(pos);
         info.putInputDoc(selectedDoc.getFile());
-        inputTermSelectionPanel.addInputTermInfo(info);
+        termSelectionPanel.addInputTermInfo(info);
         setDocumentAndLinkArea();
     }
 
@@ -375,8 +375,8 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
     }
 
     private boolean isCompoundWord(String pos) {
-        return pos.contains(InputDocumentSelectionPanel.COMPOUND_WORD_JA)
-                || pos.toLowerCase().contains(InputDocumentSelectionPanel.COMPOUND_WORD_EN);
+        return pos.contains(DocumentSelectionPanel.COMPOUND_WORD_JA)
+                || pos.toLowerCase().contains(DocumentSelectionPanel.COMPOUND_WORD_EN);
     }
 
     private boolean isUserDefinedWord(String pos) {
@@ -401,14 +401,14 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
         for (String word : words) {
             String basic = "";
 
-            IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word.toLowerCase());
+            IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basic = indexWord.getLemma().toLowerCase();
                 basicWordList.add(basic);
             }
 
             if (basic.equals("")) {
-                indexWord = WordNetDic.getIndexWord(POS.VERB, word.toLowerCase());
+                indexWord = WordNet.getIndexWord(POS.VERB, word.toLowerCase());
                 if (indexWord != null && indexWord.getLemma() != null) {
                     basic = indexWord.getLemma().toLowerCase();
                     basicWordList.add(basic);
@@ -452,13 +452,13 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
             String pos = "";
             String basic = "";
             if (selectedPOS == DODDLE_POS.NOUN) {
-                IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word.toLowerCase());
+                IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word.toLowerCase());
                 if (indexWord != null && indexWord.getLemma() != null) {
                     basic = indexWord.getLemma();
                     pos = "noun";
                 }
             } else if (selectedPOS == DODDLE_POS.VERB) {
-                IndexWord indexWord = WordNetDic.getIndexWord(POS.VERB, word.toLowerCase());
+                IndexWord indexWord = WordNet.getIndexWord(POS.VERB, word.toLowerCase());
                 if (indexWord != null && indexWord.getLemma() != null) {
                     basic = indexWord.getLemma();
                     pos = "verb";
@@ -467,9 +467,9 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
             if (basic.equals("")) {
                 basic = word;
             }
-            InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+            TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                     .getInputTermSelectionPanel();
-            InputDocumentSelectionPanel docSelectionPanel = DODDLE_OWL.getCurrentProject()
+            DocumentSelectionPanel docSelectionPanel = DODDLE_OWL.getCurrentProject()
                     .getDocumentSelectionPanel();
             if (!docSelectionPanel.isOneWordChecked() && basic.length() == 1) {
                 builder.append(word);
@@ -482,8 +482,8 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                 continue;
             }
 
-            TermInfo wordInfo = inputTermSelectionPanel.getInputTermInfo(basic);
-            TermInfo removedWordInfo = inputTermSelectionPanel.getRemovedTermInfo(basic);
+            TermInfo wordInfo = termSelectionPanel.getInputTermInfo(basic);
+            TermInfo removedWordInfo = termSelectionPanel.getRemovedTermInfo(basic);
             String type = "";
             if (wordInfo != null) {
                 type = "inputTerm";
@@ -516,9 +516,9 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
             }
             String pos = token.getPartOfSpeechLevel1();
             String word = token.getSurface();
-            InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+            TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                     .getInputTermSelectionPanel();
-            InputDocumentSelectionPanel docSelectionPanel = DODDLE_OWL.getCurrentProject()
+            DocumentSelectionPanel docSelectionPanel = DODDLE_OWL.getCurrentProject()
                     .getDocumentSelectionPanel();
             if (!docSelectionPanel.isOneWordChecked() && basic.length() == 1) {
                 builder.append(word);
@@ -529,8 +529,8 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                 continue;
             }
 
-            TermInfo termInfo = inputTermSelectionPanel.getInputTermInfo(basic);
-            TermInfo removedTermInfo = inputTermSelectionPanel.getRemovedTermInfo(basic);
+            TermInfo termInfo = termSelectionPanel.getInputTermInfo(basic);
+            TermInfo removedTermInfo = termSelectionPanel.getRemovedTermInfo(basic);
             String type = "";
             if (termInfo != null) {
                 type = "inputTerm";
@@ -574,12 +574,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                     String[] words = word.split("\\s+");
                     for (String word1 : words) {
                         String basic = "";
-                        IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word1);
+                        IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word1);
                         if (indexWord != null && indexWord.getLemma() != null) {
                             basic = indexWord.getLemma();
                         }
                         if (basic.equals("")) {
-                            indexWord = WordNetDic.getIndexWord(POS.VERB, word1);
+                            indexWord = WordNet.getIndexWord(POS.VERB, word1);
                             if (indexWord != null && indexWord.getLemma() != null) {
                                 basic = indexWord.getLemma();
                             }
@@ -627,10 +627,10 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
         StringBuilder builder = new StringBuilder();
         List<String> basicStringList = getEnBasicWordList(text);
 
-        InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                 .getInputTermSelectionPanel();
-        Collection<TermInfo> wordInfoSet = inputTermSelectionPanel.getTermInfoSet();
-        Collection<TermInfo> removedWordInfoSet = inputTermSelectionPanel.getRemovedTermInfoSet();
+        Collection<TermInfo> wordInfoSet = termSelectionPanel.getTermInfoSet();
+        Collection<TermInfo> removedWordInfoSet = termSelectionPanel.getRemovedTermInfoSet();
 
         Set<List<String>> termInfoCompoundWordSet = getTermInfoEnCompoundWordSet(wordInfoSet);
         Set<List<String>> removedTermInfoCompoundWordSet = getTermInfoEnCompoundWordSet(removedWordInfoSet);
@@ -677,10 +677,10 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
         StringBuilder builder = new StringBuilder();
         List<String> basicStringList = getJaBasicWordList(text);
 
-        InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                 .getInputTermSelectionPanel();
-        Collection<TermInfo> wordInfoSet = inputTermSelectionPanel.getTermInfoSet();
-        Collection<TermInfo> removedWordInfoSet = inputTermSelectionPanel.getRemovedTermInfoSet();
+        Collection<TermInfo> wordInfoSet = termSelectionPanel.getTermInfoSet();
+        Collection<TermInfo> removedWordInfoSet = termSelectionPanel.getRemovedTermInfoSet();
 
         Set<List<String>> termInfoCompoundWordSet = getTermInfoJaCompoundWordSet(wordInfoSet);
         Set<List<String>> removedTermInfoCompoundWordSet = getTermInfoJaCompoundWordSet(removedWordInfoSet);
@@ -697,7 +697,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                     word += surfaceList.get(j);
                     basicWord += basicStringList.get(j);
                 }
-                if (inputTermSelectionPanel.getInputTermInfo(basicWord) != null) {
+                if (termSelectionPanel.getInputTermInfo(basicWord) != null) {
                     builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR + "\"><a href=\"inputTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
                     i += compoundWordSize - 1;
                 } else {
@@ -709,7 +709,7 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                     word += surfaceList.get(j);
                     basicWord += basicStringList.get(j);
                 }
-                if (inputTermSelectionPanel.getRemovedTermInfo(basicWord) != null) {
+                if (termSelectionPanel.getRemovedTermInfo(basicWord) != null) {
                     builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR + "\"><a href=\"removedTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
                     i += removedCompoundWordSize - 1;
                 } else {
@@ -829,12 +829,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
     }
 
     private boolean isRegisteredWord(String word, String type) {
-        InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                 .getInputTermSelectionPanel();
         if (type.equals("inputTerm")) {
-            return inputTermSelectionPanel.getInputTermInfo(word) != null;
+            return termSelectionPanel.getInputTermInfo(word) != null;
         }
-        return inputTermSelectionPanel.getRemovedTermInfo(word) != null;
+        return termSelectionPanel.getRemovedTermInfo(word) != null;
     }
 
     private String getSelectedLinkText(String type, String word) {
@@ -867,12 +867,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                 String basicWord = "";
                 for (String word1 : words) {
                     String basic = "";
-                    IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word1.toLowerCase());
+                    IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word1.toLowerCase());
                     if (indexWord != null && indexWord.getLemma() != null) {
                         basic = indexWord.getLemma();
                     }
                     if (basic.equals("")) {
-                        indexWord = WordNetDic.getIndexWord(POS.VERB, word1.toLowerCase());
+                        indexWord = WordNet.getIndexWord(POS.VERB, word1.toLowerCase());
                         if (indexWord != null && indexWord.getLemma() != null) {
                             basic = indexWord.getLemma();
                         }
@@ -900,12 +900,12 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                 String type = descriptions[0];
                 String word = descriptions[1];
                 word = getSelectedLinkText(type, word);
-                InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+                TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                         .getInputTermSelectionPanel();
                 if (type.equals("inputTerm")) {
-                    inputTermSelectionPanel.removeTerm(word);
+                    termSelectionPanel.removeTerm(word);
                 } else {
-                    inputTermSelectionPanel.addTerm(word);
+                    termSelectionPanel.addTerm(word);
                 }
                 builder.append(getHighlightedString());
             }
@@ -924,13 +924,13 @@ public class InputTermInDocumentViewer extends JPanel implements MouseListener, 
                 String type = descriptions[0];
                 String word = descriptions[1];
                 word = getSelectedLinkText(type, word);
-                InputTermSelectionPanel inputTermSelectionPanel = DODDLE_OWL.getCurrentProject()
+                TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
                         .getInputTermSelectionPanel();
                 TermInfo info;
                 if (type.equals("inputTerm")) {
-                    info = inputTermSelectionPanel.getInputTermInfo(word);
+                    info = termSelectionPanel.getInputTermInfo(word);
                 } else {
-                    info = inputTermSelectionPanel.getRemovedTermInfo(word);
+                    info = termSelectionPanel.getRemovedTermInfo(word);
                 }
                 if (0 < wordInfoTableModel.getRowCount()) {
                     wordInfoTableModel.removeRow(0);

@@ -10,7 +10,7 @@ import org.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 
 import java.io.File;
 
-public class JWODic {
+public class JWO {
 
     private static Dataset dataset;
     public static boolean isAvailable = false;

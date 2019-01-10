@@ -24,10 +24,10 @@
 package org.doddle_owl.utils;
 
 import org.doddle_owl.models.common.DODDLEConstants;
-import org.doddle_owl.models.ontology_api.DODDLEDic;
+import org.doddle_owl.models.ontology_api.ReferenceOntology;
 import org.doddle_owl.models.ontology_api.EDRTree;
-import org.doddle_owl.models.ontology_api.JPNWNTree;
-import org.doddle_owl.models.ontology_api.WordNetDic;
+import org.doddle_owl.models.ontology_api.JaWordNetTree;
+import org.doddle_owl.models.ontology_api.WordNet;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -73,7 +73,7 @@ public class UpperConceptManager {
     }
 
     public static Set<String> getUpperConceptLabelSet(String word) {
-        Set<String> uriSet = DODDLEDic.getURISet(word);
+        Set<String> uriSet = ReferenceOntology.getURISet(word);
         Set<String> upperURISet = new HashSet<>();
         for (String uri : uriSet) {
             String ns = Utils.getNameSpace(uri);
@@ -88,11 +88,11 @@ public class UpperConceptManager {
                     upperURISet.addAll(path);
                 }
             } else if (ns.equals(DODDLEConstants.WN_URI)) {
-                for (List<String> path : WordNetDic.getURIPathToRootSet(Long.valueOf(id))) {
+                for (List<String> path : WordNet.getURIPathToRootSet(Long.valueOf(id))) {
                     upperURISet.addAll(path);
                 }
             } else if (ns.equals(DODDLEConstants.JPN_WN_URI)) {
-                for (List<String> path : JPNWNTree.getJPNWNTree().getURIPathToRootSet(id)) {
+                for (List<String> path : JaWordNetTree.getJPNWNTree().getURIPathToRootSet(id)) {
                     upperURISet.addAll(path);
                 }
             } else {

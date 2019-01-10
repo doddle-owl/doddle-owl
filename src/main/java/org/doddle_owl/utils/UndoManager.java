@@ -28,8 +28,8 @@ import org.doddle_owl.actions.LoadOntologyAction;
 import org.doddle_owl.actions.SaveOntologyAction;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.views.concept_tree.ConceptTreePanel;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,8 +81,8 @@ public class UndoManager {
 
     public void loadFiles() {
         loadOntologyAction.loadOWLOntology(project, lastCommand.getOntFile());
-        ConstructClassPanel classPanel = project.getConstructClassPanel();
-        ConstructPropertyPanel propertyPanel = project.getConstructPropertyPanel();
+        ClassTreeConstructionPanel classPanel = project.getConstructClassPanel();
+        PropertyTreeConstructionPanel propertyPanel = project.getConstructPropertyPanel();
         classPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getClassTRAFile());
         propertyPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getPropertyTRAFile());
         if (lastCommand.getTargetConcept() != null) {

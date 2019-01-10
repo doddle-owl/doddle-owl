@@ -29,7 +29,7 @@ import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
-import org.doddle_owl.models.ontology_api.DODDLEDic;
+import org.doddle_owl.models.ontology_api.ReferenceOntology;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
@@ -175,9 +175,9 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             List<ConceptTreeNode> nodeList = mraList.get(mraJList.getSelectedIndex());
             for (ConceptTreeNode node : nodeList) {
                 node.setIsUserConcept(true);
-                DODDLE_OWL.getCurrentProject().getInputConceptSelectionPanel()
+                DODDLE_OWL.getCurrentProject().getConceptSelectionPanel()
                         .addInputConcept(node.getConcept());
-                DODDLE_OWL.getCurrentProject().getInputConceptSelectionPanel()
+                DODDLE_OWL.getCurrentProject().getConceptSelectionPanel()
                         .deleteSystemAddedConcept(node.getConcept());
             }
             resetMatchedResultAnalysis();
@@ -447,7 +447,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         }
 
         public void valueChanged(ListSelectionEvent e) {
-            ConstructConceptTreePanel conceptTreePanel = getConceptTreePanel();
+            ConceptTreeConstructionPanel conceptTreePanel = getConceptTreePanel();
             DefaultTreeModel model = (DefaultTreeModel) conceptTreePanel.getConceptTreeModel();
             Concept c = (Concept) multipleInheritanceConceptJList.getSelectedValue();
             if (e.getSource() == multipleInheritanceConceptJList) {
@@ -491,7 +491,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
          * @return
          */
         private Set<ConceptTreeNode> getSameConceptTreeNodeSet(
-                ConstructConceptTreePanel conceptTreePanel, DefaultTreeModel model, Concept c) {
+                ConceptTreeConstructionPanel conceptTreePanel, DefaultTreeModel model, Concept c) {
             ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
             Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<>();
             conceptTreePanel.searchSameConceptTreeNode(c, rootNode, sameConceptTreeNodeSet);
@@ -503,7 +503,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             if (e.getSource() == removeUpperConceptLinkButton) {
                 ConceptTreeNode upperConceptTreeNode = (ConceptTreeNode) multipleInheritanceUpperConceptJList
                         .getSelectedValue();
-                ConstructConceptTreePanel conceptTreePanel = getConceptTreePanel();
+                ConceptTreeConstructionPanel conceptTreePanel = getConceptTreePanel();
                 DefaultTreeModel model = (DefaultTreeModel) conceptTreePanel.getConceptTreeModel();
                 Set<ConceptTreeNode> sameConceptTreeNodeSet = getSameConceptTreeNodeSet(
                         conceptTreePanel, model, c);
@@ -538,8 +538,8 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         /**
          * @return
          */
-        private ConstructConceptTreePanel getConceptTreePanel() {
-            ConstructConceptTreePanel conceptTreePanel = null;
+        private ConceptTreeConstructionPanel getConceptTreePanel() {
+            ConceptTreeConstructionPanel conceptTreePanel = null;
             if (conceptTreeType.equals(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE)) {
                 conceptTreePanel = project.getConstructClassPanel();
             } else if (conceptTreeType.equals(ConceptTreeCellRenderer.VERB_CONCEPT_TREE)) {
@@ -632,7 +632,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                         String[] conceptStrs = lines[i].split(",");
                         List<Concept> list = new ArrayList<>();
                         for (String conceptStr : conceptStrs) {
-                            list.add(DODDLEDic.getConcept(conceptStr));
+                            list.add(ReferenceOntology.getConcept(conceptStr));
                         }
                         trimmedConceptList.add(list);
                     }
@@ -676,7 +676,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                 List<Concept> list = new ArrayList<>();
                 while (rs.next()) {
                     String concept = rs.getString("Concept");
-                    list.add(DODDLEDic.getConcept(concept));
+                    list.add(ReferenceOntology.getConcept(concept));
                 }
                 trimmedConceptList.add(list);
                 idTrimmedConceptListMap.put(conceptID, trimmedConceptList);

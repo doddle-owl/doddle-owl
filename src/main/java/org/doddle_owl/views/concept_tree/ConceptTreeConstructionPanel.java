@@ -47,7 +47,7 @@ import java.util.TreeSet;
 /**
  * @author Takeshi Morita
  */
-public abstract class ConstructConceptTreePanel extends JPanel implements CompoundConceptTreeInterface {
+public abstract class ConceptTreeConstructionPanel extends JPanel implements CompoundConceptTreeInterface {
     protected ConceptTreePanel isaTreePanel;
     protected ConceptTreePanel hasaTreePanel;
     protected UndefinedTermListPanel undefinedTermListPanel;

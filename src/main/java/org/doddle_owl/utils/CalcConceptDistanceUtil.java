@@ -26,10 +26,10 @@ package org.doddle_owl.utils;
 import org.doddle_owl.models.common.ConceptDistanceModel;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.Concept;
-import org.doddle_owl.models.ontology_api.DODDLEDic;
+import org.doddle_owl.models.ontology_api.ReferenceOntology;
 import org.doddle_owl.models.ontology_api.EDRTree;
-import org.doddle_owl.models.ontology_api.JPNWNTree;
-import org.doddle_owl.models.ontology_api.WordNetDic;
+import org.doddle_owl.models.ontology_api.JaWordNetTree;
+import org.doddle_owl.models.ontology_api.WordNet;
 
 import java.util.*;
 
@@ -58,9 +58,9 @@ public class CalcConceptDistanceUtil {
         } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
             pathSet = EDRTree.getEDRTTree().getURIPathToRootSet(c.getLocalName());
         } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-            pathSet = WordNetDic.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
+            pathSet = WordNet.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
         } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-            pathSet = JPNWNTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
+            pathSet = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
         }
         return pathSet;
     }
@@ -88,12 +88,12 @@ public class CalcConceptDistanceUtil {
             pathSet1 = EDRTree.getEDRTTree().getURIPathToRootSet(c1.getLocalName());
             pathSet2 = EDRTree.getEDRTTree().getURIPathToRootSet(c2.getLocalName());
         } else if (c1.getNameSpace().equals(DODDLEConstants.WN_URI) && c2.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-            pathSet1 = WordNetDic.getURIPathToRootSet(Long.valueOf(c1.getLocalName()));
-            pathSet2 = WordNetDic.getURIPathToRootSet(Long.valueOf(c2.getLocalName()));
+            pathSet1 = WordNet.getURIPathToRootSet(Long.valueOf(c1.getLocalName()));
+            pathSet2 = WordNet.getURIPathToRootSet(Long.valueOf(c2.getLocalName()));
         } else if (c1.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)
                 && c2.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-            pathSet1 = JPNWNTree.getJPNWNTree().getURIPathToRootSet(c1.getLocalName());
-            pathSet2 = JPNWNTree.getJPNWNTree().getURIPathToRootSet(c2.getLocalName());
+            pathSet1 = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c1.getLocalName());
+            pathSet2 = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c2.getLocalName());
         }
         return makeCombination(pathSet1, pathSet2);
     }
@@ -161,7 +161,7 @@ public class CalcConceptDistanceUtil {
                 if (c1.equals(c2)) {
                     int len1 = path1.size() - i - 1;
                     int len2 = path2.size() - j - 1;
-                    Concept commonAncestorConcept = DODDLEDic.getConcept(c1);
+                    Concept commonAncestorConcept = ReferenceOntology.getConcept(c1);
                     cdModel.setCommonAncestor(commonAncestorConcept);
                     cdModel.setC1ToCommonAncestorDistance(len1);
                     cdModel.setC2ToCommonAncestorDistance(len2);
@@ -189,7 +189,7 @@ public class CalcConceptDistanceUtil {
         }
         cdModel.setC1ToCommonAncestorDistance(path1.size());
         cdModel.setC1ToCommonAncestorDistance(path2.size());
-        Concept commonAncestorConcept = DODDLEDic.getConcept(path1.get(0));
+        Concept commonAncestorConcept = ReferenceOntology.getConcept(path1.get(0));
         cdModel.setCommonAncestor(commonAncestorConcept);
         List<Integer> depthList = getDepthList(getPathToRootSet(commonAncestorConcept));
         cdModel.setCommonAncestorDepth(depthList);

@@ -28,7 +28,7 @@ import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UpperConceptManager;
 import org.doddle_owl.utils.Utils;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -144,7 +144,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         optionTab.add(basicOptionPanel, Translator.getTerm("BaseOptionPanel"));
         optionTab.add(directoryPanel, Translator.getTerm("FolderOptionPanel"));
         optionTab.add(automaticDisambiguationOptionPanel,
-                Translator.getTerm("InputConceptSelectionPanel"));
+                Translator.getTerm("ConceptSelectionPanel"));
         optionTab.add(Utils.createNorthPanel(Utils.createWestPanel(compoundWordOptionPanel)),
                 Translator.getTerm("CompoundWordOptionPanel"));
         optionTab.add(viewPanel, Translator.getTerm("DisplayOptionPanel"));
@@ -322,9 +322,9 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         properties.setProperty("TERM_EXTRACT_SCRIPTS_DIR", directoryPanel.getTermExtractScriptDir());
 
-        if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
+        if (DocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
             properties.setProperty("Japanese_Morphological_Analyzer",
-                    InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
+                    DocumentSelectionPanel.Japanese_Morphological_Analyzer);
         } else {
             // properties.setProperty("Japanese_Morphological_Analyzer","C:/Program
             // Files/Mecab/bin/mecab.exe -Ochasen");
@@ -332,9 +332,9 @@ public class OptionDialog extends JDialog implements ActionListener {
                     "C:/Program Files/Chasen/bin/chasen.exe");
         }
 
-        if (InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer != null) {
+        if (DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer != null) {
             properties.setProperty("Japanese_Dependency_Structure_Analyzer",
-                    InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
+                    DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
         } else {
             properties.setProperty("Japanese_Dependency_Structure_Analyzer",
                     "C:/Program Files/CaboCha/bin/cabocha.exe");
@@ -392,16 +392,16 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.JPWN_HOME = directoryPanel.getJpwnDicDir();
         DODDLEConstants.JWO_HOME = directoryPanel.getJwoDicDir();
 
-        InputDocumentSelectionPanel.PERL_EXE = directoryPanel.getPerlDir();
-        InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = directoryPanel
+        DocumentSelectionPanel.PERL_EXE = directoryPanel.getPerlDir();
+        DocumentSelectionPanel.Japanese_Morphological_Analyzer = directoryPanel
                 .getJapaneseMorphologicalAnalyzer();
-        InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = directoryPanel
+        DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = directoryPanel
                 .getJapaneseDependencyStructureAnalyzer();
         DODDLEConstants.PROJECT_HOME = directoryPanel.getProjectDir();
         UpperConceptManager.UPPER_CONCEPT_LIST = directoryPanel.getUpperConceptList();
-        InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = directoryPanel.getStopWordList();
+        DocumentSelectionPanel.STOP_WORD_LIST_FILE = directoryPanel.getStopWordList();
 
-        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = directoryPanel.getTermExtractScriptDir();
+        DocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = directoryPanel.getTermExtractScriptDir();
 
         // 汎用オントロジーパネルのチェックボックスを有効化する
         DODDLE_OWL.doddleProjectPanel.getOntologySelectionPanel().resetGeneralOntologiesCheckBoxes();
@@ -453,36 +453,36 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
         directoryPanel.setJwoDicDir(DODDLEConstants.JWO_HOME);
 
-        InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
-        directoryPanel.setPerlDir(InputDocumentSelectionPanel.PERL_EXE);
+        DocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
+        directoryPanel.setPerlDir(DocumentSelectionPanel.PERL_EXE);
         DODDLEConstants.PROJECT_HOME = properties.getProperty("PROJECT_DIR");
         directoryPanel.setProjectDir(DODDLEConstants.PROJECT_HOME);
         UpperConceptManager.UPPER_CONCEPT_LIST = properties.getProperty("UPPER_CONCEPT_LIST");
         directoryPanel.setUpperCnceptList(UpperConceptManager.UPPER_CONCEPT_LIST);
-        InputDocumentSelectionPanel.STOP_WORD_LIST_FILE = properties.getProperty("STOP_WORD_LIST");
-        directoryPanel.setStopWordList(InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
+        DocumentSelectionPanel.STOP_WORD_LIST_FILE = properties.getProperty("STOP_WORD_LIST");
+        directoryPanel.setStopWordList(DocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
-        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
-        directoryPanel.setTermExtractScriptDir(InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
+        DocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
+        directoryPanel.setTermExtractScriptDir(DocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
 
-        if (InputDocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
+        if (DocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
             properties.setProperty("Japanese_Morphological_Analyzer",
-                    InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
+                    DocumentSelectionPanel.Japanese_Morphological_Analyzer);
         } else {
             properties.setProperty("Japanese_Morphological_Analyzer",
                     "C:/Program Files/Chasen/bin/chasen.exe");
         }
-        InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
+        DocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");
 
-        if (InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer != null) {
+        if (DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer != null) {
             properties.setProperty("Japanese_Dependency_Structure_Analyzer",
-                    InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
+                    DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
         } else {
             properties.setProperty("Japanese_Dependency_Structure_Analyzer",
                     "C:/Program Files/ChaboCha/bin/cabocha.exe");
         }
-        InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
+        DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
                 .getProperty("Japanese_Dependency_Structure_Analyzer");
 
         boolean t = Boolean.valueOf(properties.getProperty("AutomaticDisambiguation.useSiblingNodeCount"));
@@ -587,13 +587,13 @@ public class OptionDialog extends JDialog implements ActionListener {
             browseJapaneseMorphologicalAnalyzerButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(japaneseMorphologicalAnalyzerField,
                     browseJapaneseMorphologicalAnalyzerButton,
-                    InputDocumentSelectionPanel.Japanese_Morphological_Analyzer);
+                    DocumentSelectionPanel.Japanese_Morphological_Analyzer);
 
             japaneseDependencyStructureAnalyzerField = new JTextField(FIELD_SIZE);
             browseJapaneseDependencyStructureAnalyzerButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(japaneseDependencyStructureAnalyzerField,
                     browseJapaneseDependencyStructureAnalyzerButton,
-                    InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
+                    DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
 
             edrDicDirField = new JTextField(FIELD_SIZE);
             browseEDRDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
@@ -622,18 +622,18 @@ public class OptionDialog extends JDialog implements ActionListener {
 
             perlDirField = new JTextField(FIELD_SIZE);
             browsePerlDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-            initComponent(perlDirField, browsePerlDirButton, InputDocumentSelectionPanel.PERL_EXE);
+            initComponent(perlDirField, browsePerlDirButton, DocumentSelectionPanel.PERL_EXE);
 
             stopWordListField = new JTextField(FIELD_SIZE);
             browseStopWordListButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(stopWordListField, browseStopWordListButton,
-                    InputDocumentSelectionPanel.STOP_WORD_LIST_FILE);
+                    DocumentSelectionPanel.STOP_WORD_LIST_FILE);
 
 
             termExtractScriptDirField = new JTextField(FIELD_SIZE);
             browseTermExtractScriptDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(termExtractScriptDirField, browseTermExtractScriptDirButton,
-                    InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
+                    DocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
 
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(7, 2));
@@ -803,11 +803,11 @@ public class OptionDialog extends JDialog implements ActionListener {
                     directoryField.setText(fileOrDirectoryName);
                     directoryField.setToolTipText(fileOrDirectoryName);
                     if (directoryField == japaneseMorphologicalAnalyzerField) {
-                        InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = fileOrDirectoryName;
+                        DocumentSelectionPanel.Japanese_Morphological_Analyzer = fileOrDirectoryName;
                     } else if (directoryField == japaneseDependencyStructureAnalyzerField) {
-                        InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = fileOrDirectoryName;
+                        DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = fileOrDirectoryName;
                     } else if (directoryField == perlDirField) {
-                        InputDocumentSelectionPanel.PERL_EXE = fileOrDirectoryName;
+                        DocumentSelectionPanel.PERL_EXE = fileOrDirectoryName;
                     } else if (directoryField == edrDicDirField) {
                         DODDLEConstants.EDR_HOME = fileOrDirectoryName;
                     } else if (directoryField == edrtDicDirField) {
@@ -821,7 +821,7 @@ public class OptionDialog extends JDialog implements ActionListener {
                     } else if (directoryField == upperConceptListField) {
                         UpperConceptManager.UPPER_CONCEPT_LIST = fileOrDirectoryName;
                     } else if (directoryField == termExtractScriptDirField) {
-                        InputDocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = fileOrDirectoryName;
+                        DocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = fileOrDirectoryName;
                     }
                 }
             }

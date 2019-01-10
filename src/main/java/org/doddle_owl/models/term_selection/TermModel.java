@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author Takeshi Morita
  */
-public class InputTermModel implements Comparable {
+public class TermModel implements Comparable {
 
 	private int matchedPoint;
 	private int ambiguousCnt;
@@ -45,8 +45,8 @@ public class InputTermModel implements Comparable {
 
 	private DODDLEProjectPanel project;
 
-	public InputTermModel(String w, List<Morpheme> mList, String miw, int ac, int mp,
-			DODDLEProjectPanel p) {
+	public TermModel(String w, List<Morpheme> mList, String miw, int ac, int mp,
+					 DODDLEProjectPanel p) {
 		project = p;
 		inputWord = w;
 		morphemeList = mList;
@@ -87,7 +87,7 @@ public class InputTermModel implements Comparable {
 	}
 
 	public int compareTo(Object o) {
-		InputTermModel oiwModel = (InputTermModel) o;
+		TermModel oiwModel = (TermModel) o;
 		int onum = oiwModel.getAmbiguousCnt();
 		String oword = oiwModel.getTerm();
 		if (this.ambiguousCnt < onum) {

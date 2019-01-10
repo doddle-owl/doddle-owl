@@ -33,7 +33,7 @@ import org.doddle_owl.models.document_selection.Document;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.common.ConceptSelectionDialog;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 import org.doddle_owl.views.DODDLEProjectPanel;
 
 import javax.swing.*;
@@ -84,7 +84,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     private JButton deleteWrongPairButton;
 
     private DODDLEProjectPanel doddleProjectPanel;
-    private ConstructPropertyPanel constructPropertyTreePanel;
+    private PropertyTreeConstructionPanel constructPropertyTreePanel;
 
     private static final String[] WS_COLUMN_NAMES = {Translator.getTerm("RelatedConceptList"),
             Translator.getTerm("WordSpaceValueLabel")};

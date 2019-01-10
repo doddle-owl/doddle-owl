@@ -25,21 +25,21 @@ package org.doddle_owl.actions;
 
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.Concept;
-import org.doddle_owl.models.concept_selection.ConstructTreeOption;
+import org.doddle_owl.models.concept_selection.TreeConstructionOption;
 import org.doddle_owl.models.concept_tree.CompoundConceptTreeInterface;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
-import org.doddle_owl.models.ontology_api.EDRDic;
-import org.doddle_owl.models.term_selection.InputTermModel;
+import org.doddle_owl.models.ontology_api.EDR;
+import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.task_analyzer.Morpheme;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructConceptTreePanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.ConceptTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -57,10 +57,10 @@ public class ConstructTreeAction {
 
     private Map<String, Set<Concept>> wordCorrespondConceptSetMap; // 入力単語と適切に対応するIDのマッピング
     private Map<DefaultMutableTreeNode, String> abstractNodeLabelMap;
-    private Map<InputTermModel, ConstructTreeOption> compoundConstructTreeOptionMap;
-    private InputConceptSelectionPanel inputConceptSelectionPanel;
-    private ConstructClassPanel constructClassPanel;
-    private ConstructPropertyPanel constructPropertyPanel;
+    private Map<TermModel, TreeConstructionOption> compoundConstructTreeOptionMap;
+    private ConceptSelectionPanel conceptSelectionPanel;
+    private ClassTreeConstructionPanel constructClassPanel;
+    private PropertyTreeConstructionPanel constructPropertyPanel;
 
     private DefaultListModel undefinedTermListModel;
 
@@ -68,16 +68,16 @@ public class ConstructTreeAction {
 
     public ConstructTreeAction(boolean isNounAndVerbTree, DODDLEProjectPanel p) {
         project = p;
-        inputConceptSelectionPanel = p.getInputConceptSelectionPanel();
+        conceptSelectionPanel = p.getConceptSelectionPanel();
         constructClassPanel = p.getConstructClassPanel();
         constructPropertyPanel = p.getConstructPropertyPanel();
-        wordCorrespondConceptSetMap = inputConceptSelectionPanel.getTermCorrespondConceptSetMap();
-        undefinedTermListModel = inputConceptSelectionPanel.getUndefinedTermListPanel().getModel();
-        compoundConstructTreeOptionMap = inputConceptSelectionPanel
+        wordCorrespondConceptSetMap = conceptSelectionPanel.getTermCorrespondConceptSetMap();
+        undefinedTermListModel = conceptSelectionPanel.getUndefinedTermListPanel().getModel();
+        compoundConstructTreeOptionMap = conceptSelectionPanel
                 .getCompoundConstructTreeOptionMap();
         constructClassPanel.clearPanel();
         constructPropertyPanel.clearPanel();
-        inputConceptSelectionPanel.setConstructNounAndVerbTree(isNounAndVerbTree);
+        conceptSelectionPanel.setConstructNounAndVerbTree(isNounAndVerbTree);
     }
 
     private boolean isExistNode(TreeNode node, TreeNode childNode, String word, Concept ic) {
@@ -89,7 +89,7 @@ public class ConstructTreeAction {
         return iw.matches("(\\w|\\s)*");
     }
 
-    private void addCompoundWordNode(int len, InputTermModel iwModel, TreeNode node) {
+    private void addCompoundWordNode(int len, TermModel iwModel, TreeNode node) {
         if (len == iwModel.getCompoundWordLength()) {
             return;
         }
@@ -292,13 +292,13 @@ public class ConstructTreeAction {
         compoundWordSet = new HashSet<>();
         Map<String, String> matchedWordURIMap = new HashMap<>();
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
-        for (InputTermModel iwModel : compoundConstructTreeOptionMap.keySet()) {
+        for (TermModel iwModel : compoundConstructTreeOptionMap.keySet()) {
             if (iwModel == null) {
                 continue;
             }
             compoundWordSet.add(iwModel.getTerm());
             compoundWordSet.add(iwModel.getMatchedTerm());
-            ConstructTreeOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
+            TreeConstructionOption ctOption = compoundConstructTreeOptionMap.get(iwModel);
             if (ctOption.getConcept() == null) {
                 // オプション復元時に参照できないURIをConceptとした場合にnullとなる．
                 continue;
@@ -317,7 +317,7 @@ public class ConstructTreeAction {
                 Translator.getTerm("ConstructConceptTreeFromCompoundWordsMessage"));
 
         // printDebugTree(rootNode, "before trimming");
-        if (project.getInputConceptSelectionPanel().getPartiallyMatchedOptionPanel().isTrimming()) {
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel().isTrimming()) {
             // childNodeは汎用オントロジー中の概念と対応しているため処理しない
             for (int i = 0; i < rootNode.getChildCount(); i++) {
                 DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) rootNode.getChildAt(i);
@@ -326,7 +326,7 @@ public class ConstructTreeAction {
             DODDLE_OWL.getLogger().log(Level.SEVERE, Translator.getTerm("TrimmingCompoundWordsMessage"));
         }
 
-        if (project.getInputConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
                 .isAddAbstractConcept()) {
             addAbstractTreeNode(rootNode);
             trimAbstractNode(rootNode);
@@ -341,7 +341,7 @@ public class ConstructTreeAction {
     }
 
     private int getAbstractConceptChildNum() {
-        return project.getInputConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        return project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
                 .getAbstractConceptChildNodeNum();
     }
 
@@ -433,7 +433,7 @@ public class ConstructTreeAction {
             for (int i = 0; i < node.getChildCount(); i++) {
                 DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) node.getChildAt(i);
                 if (childNode.getUserObject() instanceof String) {
-                    InputTermModel iwModel = inputConceptSelectionPanel
+                    TermModel iwModel = conceptSelectionPanel
                             .makeInputTermModel(childNode.toString());
                     Set<Concept> correspondConceptSet = wordCorrespondConceptSetMap.get(iwModel
                             .getTopBasicWord());
@@ -471,7 +471,7 @@ public class ConstructTreeAction {
      * @param j
      * @param headWordBuf
      */
-    private void printHeadWordDebug(InputTermModel iwModel, Concept headConcept, int j,
+    private void printHeadWordDebug(TermModel iwModel, Concept headConcept, int j,
                                     StringBuilder headWordBuf) {
         /*
          * for (int j = 0; j < iwModel.getMatchedPoint(); j++) { List<String>
@@ -506,7 +506,7 @@ public class ConstructTreeAction {
      */
     private DefaultMutableTreeNode getAbstractNode(DefaultMutableTreeNode node,
                                                    Map abstractConceptTreeNodeMap, DefaultMutableTreeNode childNode, Concept supConcept,
-                                                   InputTermModel iwModel) {
+                                                   TermModel iwModel) {
         DefaultMutableTreeNode abstractNode = getAbstractNode(abstractConceptTreeNodeMap,
                 supConcept, iwModel);
         // System.out.println("語頭の上位概念: " + supConcept.getWord());
@@ -559,7 +559,7 @@ public class ConstructTreeAction {
      * @return
      */
     private DefaultMutableTreeNode getAbstractNode(Map abstractConceptTreeNodeMap,
-                                                   Concept supConcept, InputTermModel iwModel) {
+                                                   Concept supConcept, TermModel iwModel) {
         DefaultMutableTreeNode abstractNode;
         if (abstractConceptTreeNodeMap.get(supConcept) != null) {
             abstractNode = (DefaultMutableTreeNode) abstractConceptTreeNodeMap.get(supConcept);
@@ -575,9 +575,9 @@ public class ConstructTreeAction {
 
     private TreeModel makeClassTreeModel(Set<Concept> nounConceptSet) {
         TreeModel classTreeModel;
-        if (project.getInputConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
+        if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
             constructClassPanel.initialize();
-            if (project.getInputConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
+            if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
                     .isConstruction()) {
                 classTreeModel = constructClassPanel.getTreeModel(nounConceptSet);
             } else {
@@ -592,14 +592,14 @@ public class ConstructTreeAction {
         }
         constructClassPanel.setUndefinedTermListModel(undefinedTermListModel);
         DODDLE_OWL.STATUS_BAR.addValue();
-        if (project.getInputConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
                 .isConstruction()) {
             setCompoundConcept(constructClassPanel, nounConceptSet);
             trimUnnecessaryAbstractNode(constructClassPanel);
         }
         ConceptTreeNode rootNode = (ConceptTreeNode) classTreeModel.getRoot();
         Set<ConceptTreeNode> replaceNodeSet = new HashSet<>();
-        Set<String> conceptIdSetForReplaceSubConcepts = inputConceptSelectionPanel
+        Set<String> conceptIdSetForReplaceSubConcepts = conceptSelectionPanel
                 .getURISetForReplaceSubConcepts();
         // System.out.println(conceptIdSetForReplaceSubConcepts);
         checkReplaceSubConcepts(rootNode, conceptIdSetForReplaceSubConcepts, replaceNodeSet);
@@ -640,9 +640,9 @@ public class ConstructTreeAction {
 
     private TreeModel makePropertyTreeModel(Set<Concept> verbConceptSet) {
         TreeModel propertyTreeModel;
-        if (project.getInputConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
+        if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
             constructPropertyPanel.initialize();
-            if (project.getInputConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
+            if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
                     .isConstruction()) {
                 propertyTreeModel = constructPropertyPanel.getTreeModel(
                         constructClassPanel.getAllConceptURI(), verbConceptSet,
@@ -659,14 +659,14 @@ public class ConstructTreeAction {
         constructPropertyPanel.setUndefinedTermListModel(undefinedTermListModel);
 
         DODDLE_OWL.STATUS_BAR.addValue();
-        if (project.getInputConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
                 .isConstruction()) {
             setCompoundConcept(constructPropertyPanel, verbConceptSet);
             trimUnnecessaryAbstractNode(constructPropertyPanel);
         }
         ConceptTreeNode rootNode = (ConceptTreeNode) propertyTreeModel.getRoot();
         Set<ConceptTreeNode> replaceNodeSet = new HashSet<>();
-        Set<String> uriSetForReplaceSubConcepts = inputConceptSelectionPanel
+        Set<String> uriSetForReplaceSubConcepts = conceptSelectionPanel
                 .getURISetForReplaceSubConcepts();
         checkReplaceSubConcepts(rootNode, uriSetForReplaceSubConcepts, replaceNodeSet);
         replaceSubConcepts(replaceNodeSet);
@@ -677,7 +677,7 @@ public class ConstructTreeAction {
     /**
      * 不要な抽象ノードを削除（抽象ノードの親ノードの子ノードが対象の抽象ノードのみの場合は，抽象ノードを追加する意味がないため削除））
      */
-    public void trimUnnecessaryAbstractNode(ConstructConceptTreePanel conceptTreePanel) {
+    public void trimUnnecessaryAbstractNode(ConceptTreeConstructionPanel conceptTreePanel) {
         DefaultTreeModel treeModel = (DefaultTreeModel) conceptTreePanel.getConceptTreeModel();
         Set<ConceptTreeNode> unnecessaryNodeSet = new HashSet<>();
         getUnnecessaryAbstractNode((ConceptTreeNode) treeModel.getRoot(), unnecessaryNodeSet);
@@ -712,16 +712,16 @@ public class ConstructTreeAction {
         for (Entry<String, Set<Concept>> entry : wordCorrespondConceptSetMap.entrySet()) {
             String word = entry.getKey();
             Set<Concept> cset = entry.getValue();
-            if (cset.size() == 1 && cset.contains(InputConceptSelectionPanel.nullConcept)) {
+            if (cset.size() == 1 && cset.contains(ConceptSelectionPanel.nullConcept)) {
                 undefinedTermListModel.addElement(word);
             }
         }
     }
 
     public void constructTree() {
-        if (project.getInputConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
+        if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
             project.resetURIConceptMap();
-        } else if (project.getInputConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
+        } else if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
                 .isConstruction()) {
             JOptionPane
                     .showMessageDialog(DODDLE_OWL.getCurrentProject(),
@@ -739,8 +739,8 @@ public class ConstructTreeAction {
         constructPropertyPanel.setVisibleHasaTree(false);
 
         setUndefinedTermSet();
-        inputConceptSelectionPanel.setInputConceptSet(); // 入力概念のセット
-        Set<Concept> inputConceptSet = inputConceptSelectionPanel.getInputConceptSet();
+        conceptSelectionPanel.setInputConceptSet(); // 入力概念のセット
+        Set<Concept> inputConceptSet = conceptSelectionPanel.getInputConceptSet();
         if (inputConceptSet.size() == 0) {
             DODDLE_OWL.STATUS_BAR.hideProgressBar();
             return;
@@ -749,29 +749,29 @@ public class ConstructTreeAction {
         DODDLE_OWL.getLogger().log(
                 Level.INFO,
                 Translator.getTerm("PerfectlyMatchedTermCountMessage") + ": "
-                        + inputConceptSelectionPanel.getPerfectlyMatchedTermCnt());
+                        + conceptSelectionPanel.getPerfectlyMatchedTermCnt());
         DODDLE_OWL.getLogger().log(
                 Level.INFO,
                 Translator.getTerm("SystemAddedPerfectlyMatchedTermCountMessage") + ": "
-                        + inputConceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt());
+                        + conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt());
         DODDLE_OWL.getLogger().log(
                 Level.INFO,
                 Translator.getTerm("PartiallyMatchedTermCountMessage") + ": "
-                        + inputConceptSelectionPanel.getPartiallyMatchedTermCnt());
+                        + conceptSelectionPanel.getPartiallyMatchedTermCnt());
         DODDLE_OWL.getLogger().log(
                 Level.INFO,
                 Translator.getTerm("InputTermCountMessage") + ": "
-                        + (inputConceptSelectionPanel.getMatchedTermCnt()));
+                        + (conceptSelectionPanel.getMatchedTermCnt()));
         DODDLE_OWL.getLogger().log(Level.INFO,
                 Translator.getTerm("InputConceptCountMessage") + ": " + inputConceptSet.size());
         DODDLE_OWL.STATUS_BAR.addValue();
         project.initUserIDCount();
 
         DODDLE_OWL.STATUS_BAR.addValue();
-        if (project.getInputConceptSelectionPanel().isConstructNounAndVerbTree()) {
+        if (project.getConceptSelectionPanel().isConstructNounAndVerbTree()) {
             Set<Concept> inputVerbConceptSet = new HashSet<>();
             if (project.getOntologySelectionPanel().isEDREnable()) {
-                inputVerbConceptSet.addAll(EDRDic.getVerbConceptSet(inputConceptSet)); // EDRにおける動詞的概念の抽出
+                inputVerbConceptSet.addAll(EDR.getVerbConceptSet(inputConceptSet)); // EDRにおける動詞的概念の抽出
             }
             inputVerbConceptSet.addAll(OWLOntologyManager.getVerbConceptSet(inputConceptSet)); // OWLオントロジー中のプロパティセット
             Set<Concept> inputNounConceptSet = new HashSet<>(inputConceptSet);

@@ -37,7 +37,7 @@ import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.models.document_selection.Document;
-import org.doddle_owl.models.ontology_api.WordNetDic;
+import org.doddle_owl.models.ontology_api.WordNet;
 import org.doddle_owl.models.term_selection.TermInfo;
 import org.doddle_owl.task_analyzer.CabochaDocument;
 import org.doddle_owl.task_analyzer.TaskAnalyzer;
@@ -45,7 +45,7 @@ import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UpperConceptManager;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.DODDLEProjectPanel;
-import org.doddle_owl.views.term_selection.InputTermSelectionPanel;
+import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -74,7 +74,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * @author Takeshi Morita
  */
-public class InputDocumentSelectionPanel extends JPanel implements ListSelectionListener, ActionListener {
+public class DocumentSelectionPanel extends JPanel implements ListSelectionListener, ActionListener {
 
     private Set<String> stopWordSet;
 
@@ -112,7 +112,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
     private JTextArea inputDocArea;
     private Map<String, TermInfo> termInfoMap;
 
-    private InputTermSelectionPanel inputTermSelectionPanel;
+    private TermSelectionPanel termSelectionPanel;
     private DODDLEProjectPanel project;
 
     private View[] mainViews;
@@ -154,9 +154,9 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         inputDocArea.setText("");
     }
 
-    public InputDocumentSelectionPanel(InputTermSelectionPanel iwsPanel, DODDLEProjectPanel p) {
+    public DocumentSelectionPanel(TermSelectionPanel iwsPanel, DODDLEProjectPanel p) {
         project = p;
-        inputTermSelectionPanel = iwsPanel;
+        termSelectionPanel = iwsPanel;
         docList = new JList(new DefaultListModel());
         docList.addListSelectionListener(this);
         JScrollPane docListScroll = new JScrollPane(docList);
@@ -427,7 +427,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                     }
                 }
             }
-            inputTermSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
+            termSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -444,7 +444,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                 DefaultListModel model = (DefaultListModel) inputDocList.getModel();
                 model.addElement(new Document(lang, new File(docPath), text));
             }
-            inputTermSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
+            termSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -489,14 +489,14 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     private void setTermInfo(String term, String pos, String basicStr, File file, boolean isInputDoc) {
         if (nounCheckBox.isSelected() && isEnNoun(pos)) {
-            IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, term.toLowerCase());
+            IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, term.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 // System.out.println("n: " + basicStr);
             }
             setTermInfoMap(basicStr, pos, file, isInputDoc);
         } else if (verbCheckBox.isSelected() && isEnVerb(pos)) {
-            IndexWord indexWord = WordNetDic.getIndexWord(POS.VERB, term.toLowerCase());
+            IndexWord indexWord = WordNet.getIndexWord(POS.VERB, term.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 // System.out.println("v: " + basicStr);
@@ -509,7 +509,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
 
     private void setTermInfo(String word, String basicStr, File file, boolean isInputDoc) {
         if (nounCheckBox.isSelected()) {
-            IndexWord indexWord = WordNetDic.getIndexWord(POS.NOUN, word.toLowerCase());
+            IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 setTermInfoMap(basicStr, "noun", file, isInputDoc);
@@ -517,7 +517,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
             }
         }
         if (verbCheckBox.isSelected()) {
-            IndexWord indexWord = WordNetDic.getIndexWord(POS.VERB, word.toLowerCase());
+            IndexWord indexWord = WordNet.getIndexWord(POS.VERB, word.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
                 setTermInfoMap(basicStr, "verb", file, isInputDoc);
@@ -847,8 +847,8 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
                 setUpperConcept();
                 removeDocWordSet();
                 int docNum = docList.getModel().getSize() + inputDocList.getModel().getSize();
-                inputTermSelectionPanel.setInputTermInfoTableModel(termInfoMap, docNum);
-                inputTermSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
+                termSelectionPanel.setInputTermInfoTableModel(termInfoMap, docNum);
+                termSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
                 setProgress(currentTaskCnt++);
                 DODDLE_OWL.setSelectedIndex(DODDLEConstants.INPUT_WORD_SELECTION_PANEL);
                 setProgress(currentTaskCnt++);
@@ -1132,7 +1132,7 @@ public class InputDocumentSelectionPanel extends JPanel implements ListSelection
         JFrame frame = new JFrame();
         DODDLEConstants.EDR_HOME = "C:/usr/eclipse_workspace/DODDLE_DIC/";
         frame.getContentPane()
-                .add(new InputDocumentSelectionPanel(null, null), BorderLayout.CENTER);
+                .add(new DocumentSelectionPanel(null, null), BorderLayout.CENTER);
         frame.setSize(800, 600);
         frame.setVisible(true);
     }

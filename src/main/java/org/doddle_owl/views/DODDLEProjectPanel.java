@@ -31,17 +31,17 @@ import net.infonode.docking.View;
 import net.infonode.docking.util.ViewMap;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.concept_selection.Concept;
-import org.doddle_owl.models.term_selection.InputTermModel;
+import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UndoManager;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 import org.doddle_owl.views.reference_ontology_selection.ReferenceOntologySelectionPanel;
-import org.doddle_owl.views.term_selection.InputTermSelectionPanel;
+import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,11 +67,11 @@ public class DODDLEProjectPanel extends JPanel {
     private View[] views;
     private RootWindow rootWindow;
     private ReferenceOntologySelectionPanel ontSelectionPanel;
-    private InputDocumentSelectionPanel docSelectionPanel;
-    private InputTermSelectionPanel inputTermSelectinPanel;
-    private InputConceptSelectionPanel inputConceptSelectionPanel;
-    private ConstructClassPanel constructClassPanel;
-    private ConstructPropertyPanel constructPropertyPanel;
+    private DocumentSelectionPanel docSelectionPanel;
+    private TermSelectionPanel inputTermSelectinPanel;
+    private ConceptSelectionPanel conceptSelectionPanel;
+    private ClassTreeConstructionPanel constructClassPanel;
+    private PropertyTreeConstructionPanel constructPropertyPanel;
     private ConceptDefinitionPanel conceptDefinitionPanel;
 
     private int userIDCount;
@@ -86,7 +86,7 @@ public class DODDLEProjectPanel extends JPanel {
         ontSelectionPanel.initialize();
         docSelectionPanel.initialize();
         inputTermSelectinPanel.initialize();
-        inputConceptSelectionPanel.initialize();
+        conceptSelectionPanel.initialize();
         constructClassPanel.initialize();
         constructPropertyPanel.initialize();
         conceptDefinitionPanel.initialize();
@@ -120,23 +120,23 @@ public class DODDLEProjectPanel extends JPanel {
                 logList = new ArrayList<>();
 
                 addLog("NewProjectAction");
-                constructClassPanel = new ConstructClassPanel(project);
+                constructClassPanel = new ClassTreeConstructionPanel(project);
                 setProgress(currentTaskCnt++);
                 ontSelectionPanel = new ReferenceOntologySelectionPanel();
                 setProgress(currentTaskCnt++);
-                constructPropertyPanel = new ConstructPropertyPanel(project);
+                constructPropertyPanel = new PropertyTreeConstructionPanel(project);
                 setProgress(currentTaskCnt++);
-                inputConceptSelectionPanel = new InputConceptSelectionPanel(constructClassPanel,
+                conceptSelectionPanel = new ConceptSelectionPanel(constructClassPanel,
                         constructPropertyPanel, project);
                 setProgress(currentTaskCnt++);
 
-                inputTermSelectinPanel = new InputTermSelectionPanel(inputConceptSelectionPanel);
+                inputTermSelectinPanel = new TermSelectionPanel(conceptSelectionPanel);
                 setProgress(currentTaskCnt++);
-                docSelectionPanel = new InputDocumentSelectionPanel(inputTermSelectinPanel, project);
+                docSelectionPanel = new DocumentSelectionPanel(inputTermSelectinPanel, project);
                 setProgress(currentTaskCnt++);
                 conceptDefinitionPanel = new ConceptDefinitionPanel(project);
                 setProgress(currentTaskCnt++);
-                inputConceptSelectionPanel.setDocumentSelectionPanel(docSelectionPanel);
+                conceptSelectionPanel.setDocumentSelectionPanel(docSelectionPanel);
 
                 views = new View[7];
                 ViewMap viewMap = new ViewMap();
@@ -145,10 +145,10 @@ public class DODDLEProjectPanel extends JPanel {
                         Utils.getImageIcon("reference_ontology_selection.png"), ontSelectionPanel);
                 views[1] = new View(Translator.getTerm("DocumentSelectionPanel"),
                         Utils.getImageIcon("input_document_selection.png"), docSelectionPanel);
-                views[2] = new View(Translator.getTerm("InputTermSelectionPanel"),
+                views[2] = new View(Translator.getTerm("TermSelectionPanel"),
                         Utils.getImageIcon("input_term_selection.png"), inputTermSelectinPanel);
-                views[3] = new View(Translator.getTerm("InputConceptSelectionPanel"),
-                        Utils.getImageIcon("input_concept_selection.png"), inputConceptSelectionPanel);
+                views[3] = new View(Translator.getTerm("ConceptSelectionPanel"),
+                        Utils.getImageIcon("input_concept_selection.png"), conceptSelectionPanel);
                 views[4] = new View(Translator.getTerm("ClassTreeConstructionPanel"),
                         Utils.getImageIcon("constructing_class_hierarchy.png"), constructClassPanel);
                 views[5] = new View(Translator.getTerm("PropertyTreeConstructionPanel"),
@@ -286,7 +286,7 @@ public class DODDLEProjectPanel extends JPanel {
         ontSelectionPanel.setXGALayout();
         docSelectionPanel.setXGALayout();
         inputTermSelectinPanel.setXGALayout();
-        inputConceptSelectionPanel.setXGALayout();
+        conceptSelectionPanel.setXGALayout();
         constructClassPanel.setXGALayout();
         constructPropertyPanel.setXGALayout();
         conceptDefinitionPanel.setXGALayout();
@@ -297,7 +297,7 @@ public class DODDLEProjectPanel extends JPanel {
         ontSelectionPanel.setUXGALayout();
         docSelectionPanel.setXGALayout();
         inputTermSelectinPanel.setUXGALayout();
-        inputConceptSelectionPanel.setUXGALayout();
+        conceptSelectionPanel.setUXGALayout();
         constructClassPanel.setUXGALayout();
         constructPropertyPanel.setUXGALayout();
         conceptDefinitionPanel.setUXGALayout();
@@ -341,27 +341,27 @@ public class DODDLEProjectPanel extends JPanel {
         return ontSelectionPanel;
     }
 
-    public InputDocumentSelectionPanel getDocumentSelectionPanel() {
+    public DocumentSelectionPanel getDocumentSelectionPanel() {
         return docSelectionPanel;
     }
 
-    public InputTermSelectionPanel getInputTermSelectionPanel() {
+    public TermSelectionPanel getInputTermSelectionPanel() {
         return inputTermSelectinPanel;
     }
 
-    public InputConceptSelectionPanel getInputConceptSelectionPanel() {
-        return inputConceptSelectionPanel;
+    public ConceptSelectionPanel getConceptSelectionPanel() {
+        return conceptSelectionPanel;
     }
 
-    public InputTermModel makeInputTermModel(String iw) {
-        return inputConceptSelectionPanel.makeInputTermModel(iw);
+    public TermModel makeInputTermModel(String iw) {
+        return conceptSelectionPanel.makeInputTermModel(iw);
     }
 
-    public ConstructPropertyPanel getConstructPropertyPanel() {
+    public PropertyTreeConstructionPanel getConstructPropertyPanel() {
         return constructPropertyPanel;
     }
 
-    public ConstructClassPanel getConstructClassPanel() {
+    public ClassTreeConstructionPanel getConstructClassPanel() {
         return constructClassPanel;
     }
 
@@ -374,23 +374,23 @@ public class DODDLEProjectPanel extends JPanel {
     }
 
     public boolean isPerfectlyMatchedAmbiguityCntCheckBox() {
-        return inputConceptSelectionPanel.isPerfectlyMatchedAmbiguityCntCheckBox();
+        return conceptSelectionPanel.isPerfectlyMatchedAmbiguityCntCheckBox();
     }
 
     public boolean isPerfectlyMatchedSystemAddedWordCheckBox() {
-        return inputConceptSelectionPanel.isPerfectlyMatchedSystemAddedTermCheckBox();
+        return conceptSelectionPanel.isPerfectlyMatchedSystemAddedTermCheckBox();
     }
 
     public boolean isPartiallyMatchedAmbiguityCntCheckBox() {
-        return inputConceptSelectionPanel.isPartiallyMatchedAmbiguityCntCheckBox();
+        return conceptSelectionPanel.isPartiallyMatchedAmbiguityCntCheckBox();
     }
 
     public boolean isPartiallyMatchedCompoundWordCheckBox() {
-        return inputConceptSelectionPanel.isPartiallyMatchedCompoundWordCheckBox();
+        return conceptSelectionPanel.isPartiallyMatchedCompoundWordCheckBox();
     }
 
     public boolean isPartiallyMatchedMatchedWordBox() {
-        return inputConceptSelectionPanel.isPartiallyMatchedMatchedTermBox();
+        return conceptSelectionPanel.isPartiallyMatchedMatchedTermBox();
     }
 
 }

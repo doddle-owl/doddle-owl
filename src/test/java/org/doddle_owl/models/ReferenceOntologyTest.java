@@ -11,7 +11,7 @@ import java.net.URLEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DODDLEDicTest {
+class ReferenceOntologyTest {
 
     @BeforeEach
     public void setUp() {
@@ -20,18 +20,18 @@ class DODDLEDicTest {
         DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
         DODDLEConstants.JWO_HOME = "/Users/t_morita/DODDLE-OWL/jwo";
 
-        EDRDic.initEDRDic();
-        EDRDic.initEDRTDic();
-        JpnWordNetDic.initJPNWNDic();
-        WordNetDic.initWordNetDictionary();
-        JWODic.initJWODic(null);
+        EDR.initEDRDic();
+        EDR.initEDRTDic();
+        JaWordNet.initJPNWNDic();
+        WordNet.initWordNetDictionary();
+        JWO.initJWODic(null);
     }
 
     @Test
     @DisplayName("DODDLEDicからEDRのConceptを取得")
     public void getEDRConcept() {
         String expected = "dog";
-        String actual = DODDLEDic.getConcept(DODDLEConstants.EDR_URI + "ID3bdc67").getWord();
+        String actual = ReferenceOntology.getConcept(DODDLEConstants.EDR_URI + "ID3bdc67").getWord();
         assertEquals(expected, actual);
     }
 
@@ -39,7 +39,7 @@ class DODDLEDicTest {
     @DisplayName("DODDLEDicからEDRのConceptを取得")
     public void getEDRTConcept() {
         String expected = "ツリー検索";
-        String actual = DODDLEDic.getConcept(DODDLEConstants.EDRT_URI + "ID2deac6").getWord();
+        String actual = ReferenceOntology.getConcept(DODDLEConstants.EDRT_URI + "ID2deac6").getWord();
         assertEquals(expected, actual);
     }
 
@@ -47,7 +47,7 @@ class DODDLEDicTest {
     @DisplayName("DODDLEDicからWordNetのConceptを取得")
     public void getWordNetConcept() {
         String expected = "computer";
-        String actual = DODDLEDic.getConcept(DODDLEConstants.WN_URI + "03086983").getWord();
+        String actual = ReferenceOntology.getConcept(DODDLEConstants.WN_URI + "03086983").getWord();
         assertEquals(expected, actual);
     }
 
@@ -55,7 +55,7 @@ class DODDLEDicTest {
     @DisplayName("DODDLEDicから日本語WordNetのConceptを取得")
     public void getJpWordNetConcept() {
         String expected = "urban_area";
-        String actual = DODDLEDic.getConcept(DODDLEConstants.JPN_WN_URI + "08675967-n").getWord();
+        String actual = ReferenceOntology.getConcept(DODDLEConstants.JPN_WN_URI + "08675967-n").getWord();
         assertEquals(expected, actual);
     }
 
@@ -65,7 +65,7 @@ class DODDLEDicTest {
         String expected = "大学";
         String actual = null;
         try {
-            actual = DODDLEDic.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", "UTF-8")).getWord();
+            actual = ReferenceOntology.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", "UTF-8")).getWord();
             assertEquals(expected, actual);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

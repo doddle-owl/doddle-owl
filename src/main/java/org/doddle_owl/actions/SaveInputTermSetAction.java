@@ -27,7 +27,7 @@ import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -43,12 +43,12 @@ public class SaveInputTermSetAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        InputConceptSelectionPanel inputConceptSelectionPanel = currentProject.getInputConceptSelectionPanel();
+        ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
 
         JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
         int retval = chooser.showSaveDialog(DODDLE_OWL.rootPane);
         if (retval == JFileChooser.APPROVE_OPTION) {
-            inputConceptSelectionPanel.saveInputTermSet(chooser.getSelectedFile());
+            conceptSelectionPanel.saveInputTermSet(chooser.getSelectedFile());
             DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveInputTermListAction"));
         }
     }

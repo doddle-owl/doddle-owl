@@ -42,6 +42,6 @@ public class ShowAllTermAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().showAllTerm();
+        currentProject.getConceptSelectionPanel().showAllTerm();
     }
 }

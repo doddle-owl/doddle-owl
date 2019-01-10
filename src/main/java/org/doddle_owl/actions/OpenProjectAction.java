@@ -32,12 +32,12 @@ import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
-import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
-import org.doddle_owl.views.concept_tree.ConstructClassPanel;
-import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 import org.doddle_owl.views.reference_ontology_selection.ReferenceOntologySelectionPanel;
-import org.doddle_owl.views.term_selection.InputTermSelectionPanel;
+import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -178,11 +178,11 @@ public class OpenProjectAction extends AbstractAction {
 
                 ReferenceOntologySelectionPanel ontSelectionPanel = currentProject
                         .getOntologySelectionPanel();
-                InputConceptSelectionPanel inputConceptSelectionPanel = currentProject
-                        .getInputConceptSelectionPanel();
-                InputDocumentSelectionPanel docSelectionPanelI = currentProject
+                ConceptSelectionPanel conceptSelectionPanel = currentProject
+                        .getConceptSelectionPanel();
+                DocumentSelectionPanel docSelectionPanelI = currentProject
                         .getDocumentSelectionPanel();
-                InputTermSelectionPanel inputTermSelectionPanel = currentProject
+                TermSelectionPanel termSelectionPanel = currentProject
                         .getInputTermSelectionPanel();
                 ConceptDefinitionPanel conceptDefinitionPanel = currentProject
                         .getConceptDefinitionPanel();
@@ -212,14 +212,14 @@ public class OpenProjectAction extends AbstractAction {
                 ontSelectionPanel.loadOWLMetaDataSet(new File(openDir,
                         ProjectFileNames.OWL_META_DATA_SET_DIR));
                 setProgress(currentTaskCnt++);
-                inputTermSelectionPanel.loadInputTermInfoTable(new File(openDir,
+                termSelectionPanel.loadInputTermInfoTable(new File(openDir,
                         ProjectFileNames.TERM_INFO_TABLE_FILE), new File(openDir,
                         ProjectFileNames.REMOVED_TERM_INFO_TABLE_FILE));
                 setProgress(currentTaskCnt++);
                 File inputTermSetFile = new File(openDir, ProjectFileNames.INPUT_TERM_SET_FILE);
-                inputConceptSelectionPanel.loadInputTermSet(inputTermSetFile, currentTaskCnt);
+                conceptSelectionPanel.loadInputTermSet(inputTermSetFile, currentTaskCnt);
                 setProgress(currentTaskCnt++);
-                while (!inputConceptSelectionPanel.isLoadInputTermSet()) {
+                while (!conceptSelectionPanel.isLoadInputTermSet()) {
                     try {
                         Thread.sleep(1000);
                     } catch (Exception ex) {
@@ -228,27 +228,27 @@ public class OpenProjectAction extends AbstractAction {
                 }
                 DODDLE_OWL.STATUS_BAR.printMessage(Translator
                         .getTerm("OpenInputConceptSelectionResultAction"));
-                inputConceptSelectionPanel.loadTermEvalConceptSet(new File(openDir,
+                conceptSelectionPanel.loadTermEvalConceptSet(new File(openDir,
                         ProjectFileNames.TERM_EVAL_CONCEPT_SET_FILE));
                 setProgress(currentTaskCnt++);
                 if (inputTermSetFile.exists()) {
                     DODDLE_OWL.STATUS_BAR.printMessage(Translator
                             .getTerm("OpenInputTermConceptMapAction"));
-                    inputConceptSelectionPanel.loadTermCorrespondConceptSetMap(new File(openDir,
+                    conceptSelectionPanel.loadTermCorrespondConceptSetMap(new File(openDir,
                             ProjectFileNames.INPUT_TERM_CONCEPT_MAP_FILE));
                 }
                 setProgress(currentTaskCnt++);
-                inputConceptSelectionPanel.loadConstructTreeOption(new File(openDir,
+                conceptSelectionPanel.loadConstructTreeOption(new File(openDir,
                         ProjectFileNames.CONSTRUCT_TREE_OPTION_FILE));
                 setProgress(currentTaskCnt++);
-                inputConceptSelectionPanel.loadInputTermConstructTreeOptionSet(new File(openDir,
+                conceptSelectionPanel.loadInputTermConstructTreeOptionSet(new File(openDir,
                         ProjectFileNames.INPUT_TERM_CONSTRUCT_TREE_OPTION_SET_FILE));
                 setProgress(currentTaskCnt++);
                 DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenInputConceptSetAction"));
-                inputConceptSelectionPanel.loadInputConceptSet(new File(openDir,
+                conceptSelectionPanel.loadInputConceptSet(new File(openDir,
                         ProjectFileNames.INPUT_CONCEPT_SET_FILE));
                 setProgress(currentTaskCnt++);
-                inputConceptSelectionPanel.loadUndefinedTermSet(new File(openDir,
+                conceptSelectionPanel.loadUndefinedTermSet(new File(openDir,
                         ProjectFileNames.UNDEFINED_TERM_SET_FILE));
                 setProgress(currentTaskCnt++);
                 DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenOWLOntologyAction"));
@@ -256,8 +256,8 @@ public class OpenProjectAction extends AbstractAction {
                         ProjectFileNames.ONTOLOGY_FILE));
                 setProgress(currentTaskCnt++);
 
-                ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-                ConstructPropertyPanel constructPropertyPanel = currentProject
+                ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+                PropertyTreeConstructionPanel constructPropertyPanel = currentProject
                         .getConstructPropertyPanel();
                 constructClassPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(
                         new File(openDir, ProjectFileNames.CLASS_TRIMMED_RESULT_ANALYSIS_FILE));
@@ -285,7 +285,7 @@ public class OpenProjectAction extends AbstractAction {
                         ProjectFileNames.WRONG_PAIR_SET_FILE));
                 setProgress(currentTaskCnt++);
 
-                inputConceptSelectionPanel.selectTopList();
+                conceptSelectionPanel.selectTopList();
                 constructClassPanel.expandIsaTree();
                 constructClassPanel.expandHasaTree();
                 constructPropertyPanel.expandIsaTree();

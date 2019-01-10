@@ -24,7 +24,7 @@
 package org.doddle_owl.task_analyzer;
 
 import org.doddle_owl.models.document_selection.Document;
-import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import java.io.*;
 import java.util.*;
@@ -80,7 +80,7 @@ public class TaskAnalyzer {
 
             // --output-format=XML 
             ProcessBuilder processBuilder = new ProcessBuilder(
-                    InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer, "-f3", tmpFile.getAbsolutePath());
+                    DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer, "-f3", tmpFile.getAbsolutePath());
             cabochaProcess = processBuilder.start();
             cabochaDoc = new CabochaDocument(doc, cabochaProcess);
             cabochaDocList.add(cabochaDoc);
