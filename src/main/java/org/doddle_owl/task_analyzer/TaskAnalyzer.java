@@ -23,8 +23,8 @@
 
 package org.doddle_owl.task_analyzer;
 
-import org.doddle_owl.models.Document;
-import org.doddle_owl.views.InputDocumentSelectionPanel;
+import org.doddle_owl.models.document_selection.Document;
+import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
 
 import java.io.*;
 import java.util.*;

@@ -25,9 +25,9 @@ package org.doddle_owl.actions;
 
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.InputTermModel;
-import org.doddle_owl.views.InputConceptSelectionPanel;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.term_selection.InputTermModel;
+import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

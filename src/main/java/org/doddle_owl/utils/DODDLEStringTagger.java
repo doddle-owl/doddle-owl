@@ -23,7 +23,7 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.models.DODDLEToken;
+import org.doddle_owl.models.common.DODDLEToken;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

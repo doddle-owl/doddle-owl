@@ -23,17 +23,15 @@
 
 package org.doddle_owl.utils;
 
-import org.apache.jena.ontology.OntDocumentManager;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.rdf.model.impl.RDFDefaultErrorHandler;
 import org.apache.jena.vocabulary.RDFS;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.ReferenceOWLOntology;
-import org.doddle_owl.models.SwoogleOWLMetaData;
-import org.doddle_owl.models.SwoogleWebServiceData;
-import org.doddle_owl.views.NameSpaceTable;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import org.doddle_owl.models.reference_ontology_selection.SwoogleOWLMetaData;
+import org.doddle_owl.models.reference_ontology_selection.SwoogleWebServiceData;
+import org.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.doddle_owl.views.StatusBarPanel;
 
 import java.io.*;
@@ -43,7 +41,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Takeshi Morita
@@ -803,7 +800,7 @@ public class SwoogleWebServiceWrapper {
             // searchOntologyで獲得できなかったオントロジーを獲得
             if (!isDefinedConcept) {
                 DODDLE_OWL.getLogger().log(Level.INFO,
-                        "cannot get ontology using search ontology service: " + conceptResource);
+                        "cannot get ontology_api using search ontology_api service: " + conceptResource);
                 searchListDocumentsUsingTerm(conceptResource.getURI());
             }
             cnt++;

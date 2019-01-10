@@ -26,10 +26,10 @@ package org.doddle_owl.utils;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.actions.LoadOntologyAction;
 import org.doddle_owl.actions.SaveOntologyAction;
-import org.doddle_owl.models.Concept;
-import org.doddle_owl.views.ConceptTreePanel;
-import org.doddle_owl.views.ConstructClassPanel;
-import org.doddle_owl.views.ConstructPropertyPanel;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.views.concept_tree.ConceptTreePanel;
+import org.doddle_owl.views.concept_tree.ConstructClassPanel;
+import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package org.doddle_owl.models;
 
-import org.doddle_owl.utils.OWLOntologyManager;
-import org.junit.jupiter.api.BeforeAll;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.ontology_api.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import static org.doddle_owl.utils.OWLOntologyManager.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DODDLEDicTest {

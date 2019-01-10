@@ -23,7 +23,7 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.utils.Utils;
 
 import javax.swing.*;

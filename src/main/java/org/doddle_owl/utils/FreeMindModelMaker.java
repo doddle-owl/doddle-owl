@@ -24,10 +24,10 @@
 package org.doddle_owl.utils;
 
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.ConceptTreeNode;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.DODDLELiteral;
-import org.doddle_owl.models.VerbConcept;
+import org.doddle_owl.models.concept_tree.ConceptTreeNode;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLELiteral;
+import org.doddle_owl.models.concept_tree.VerbConcept;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;

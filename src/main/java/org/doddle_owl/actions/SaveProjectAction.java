@@ -25,13 +25,19 @@ package org.doddle_owl.actions;
 
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.DODDLEProjectFileFilter;
-import org.doddle_owl.models.DODDLEProjectFolderFilter;
-import org.doddle_owl.models.ProjectFileNames;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEProjectFileFilter;
+import org.doddle_owl.models.common.DODDLEProjectFolderFilter;
+import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
-import org.doddle_owl.views.*;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
+import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ConstructClassPanel;
+import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
+import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
+import org.doddle_owl.views.reference_ontology_selection.ReferenceOntologySelectionPanel;
+import org.doddle_owl.views.term_selection.InputTermSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;

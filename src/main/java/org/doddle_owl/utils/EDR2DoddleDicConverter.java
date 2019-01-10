@@ -23,9 +23,9 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.models.Concept;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.DODDLELiteral;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLELiteral;
 import org.doddle_owl.views.DODDLEDicConverterUI;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFWriter;

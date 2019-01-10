@@ -1,6 +1,9 @@
 package org.doddle_owl.models;
 
-import org.doddle_owl.views.NameSpaceTable;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import org.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.doddle_owl.utils.Translator;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -11,8 +14,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReferenceOWLOntologyTest {
 

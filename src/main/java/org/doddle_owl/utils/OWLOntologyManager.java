@@ -24,10 +24,10 @@
 package org.doddle_owl.utils;
 
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.Concept;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.ReferenceOWLOntology;
-import org.doddle_owl.views.NameSpaceTable;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import org.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.apache.jena.rdf.model.Model;
 
 import java.io.File;

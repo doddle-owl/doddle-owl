@@ -25,7 +25,7 @@ package org.doddle_owl.actions;
 
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

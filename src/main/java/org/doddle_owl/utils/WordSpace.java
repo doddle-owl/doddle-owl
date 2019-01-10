@@ -26,8 +26,12 @@ package org.doddle_owl.utils;
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.*;
-import org.doddle_owl.views.ConceptDefinitionPanel;
+import org.doddle_owl.models.common.DODDLELiteral;
+import org.doddle_owl.models.concept_definition.ConceptPair;
+import org.doddle_owl.models.concept_definition.WordSpaceData;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.document_selection.Document;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
 
 import java.util.*;
 

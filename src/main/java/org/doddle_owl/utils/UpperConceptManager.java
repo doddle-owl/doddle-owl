@@ -23,7 +23,11 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.models.*;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.ontology_api.DODDLEDic;
+import org.doddle_owl.models.ontology_api.EDRTree;
+import org.doddle_owl.models.ontology_api.JPNWNTree;
+import org.doddle_owl.models.ontology_api.WordNetDic;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

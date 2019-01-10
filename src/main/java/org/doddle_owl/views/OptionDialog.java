@@ -24,10 +24,11 @@
 package org.doddle_owl.views;
 
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UpperConceptManager;
 import org.doddle_owl.utils.Utils;
+import org.doddle_owl.views.document_selection.InputDocumentSelectionPanel;
 
 import javax.swing.*;
 import java.awt.*;

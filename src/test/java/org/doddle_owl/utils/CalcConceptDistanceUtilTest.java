@@ -1,6 +1,11 @@
 package org.doddle_owl.utils;
 
-import org.doddle_owl.models.*;
+import org.doddle_owl.models.common.ConceptDistanceModel;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.ontology_api.EDRDic;
+import org.doddle_owl.models.ontology_api.WordNetDic;
+import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -1,5 +1,7 @@
 package org.doddle_owl.models;
 
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.ontology_api.EDRDic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

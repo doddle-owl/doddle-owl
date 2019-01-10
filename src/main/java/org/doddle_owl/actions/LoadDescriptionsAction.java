@@ -24,9 +24,9 @@
 package org.doddle_owl.actions;
 
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLELiteral;
-import org.doddle_owl.views.ConstructClassPanel;
-import org.doddle_owl.views.ConstructPropertyPanel;
+import org.doddle_owl.models.common.DODDLELiteral;
+import org.doddle_owl.views.concept_tree.ConstructClassPanel;
+import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

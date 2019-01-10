@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 
 import javax.xml.parsers.*;
 
-import org.doddle_owl.models.Document;
+import org.doddle_owl.models.document_selection.Document;
 
 import org.w3c.dom.*;
 import org.xml.sax.*;

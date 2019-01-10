@@ -23,17 +23,23 @@
 
 package org.doddle_owl.actions;
 
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.concept_selection.ConstructTreeOption;
+import org.doddle_owl.models.concept_tree.CompoundConceptTreeInterface;
+import org.doddle_owl.models.concept_tree.ConceptTreeNode;
+import org.doddle_owl.models.ontology_api.EDRDic;
+import org.doddle_owl.models.term_selection.InputTermModel;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.*;
 import org.doddle_owl.task_analyzer.Morpheme;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.ConstructClassPanel;
-import org.doddle_owl.views.ConstructConceptTreePanel;
-import org.doddle_owl.views.ConstructPropertyPanel;
-import org.doddle_owl.views.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ConstructClassPanel;
+import org.doddle_owl.views.concept_tree.ConstructConceptTreePanel;
+import org.doddle_owl.views.concept_tree.ConstructPropertyPanel;
+import org.doddle_owl.views.concept_selection.InputConceptSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
