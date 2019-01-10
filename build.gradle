@@ -65,7 +65,7 @@ tasks.runtime.doLast {
         into("$buildDir/doddle-owl-${version}")
     }
     copy {
-        from('./src/main/resources/gpl.md')
+        from('./LICENSE')
         into("$buildDir/doddle-owl-${version}")
     }
 }
