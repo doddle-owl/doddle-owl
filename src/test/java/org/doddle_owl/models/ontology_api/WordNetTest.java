@@ -1,6 +1,5 @@
-package org.doddle_owl.models;
+package org.doddle_owl.models.ontology_api;
 
-import org.doddle_owl.models.ontology_api.WordNet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

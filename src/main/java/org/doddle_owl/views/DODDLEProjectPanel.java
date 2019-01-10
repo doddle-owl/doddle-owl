@@ -66,6 +66,7 @@ public class DODDLEProjectPanel extends JPanel {
 
     private View[] views;
     private RootWindow rootWindow;
+    private JTabbedPane rootTabbedPane;
     private ReferenceOntologySelectionPanel ontSelectionPanel;
     private DocumentSelectionPanel docSelectionPanel;
     private TermSelectionPanel inputTermSelectinPanel;
@@ -137,7 +138,37 @@ public class DODDLEProjectPanel extends JPanel {
                 conceptDefinitionPanel = new ConceptDefinitionPanel(project);
                 setProgress(currentTaskCnt++);
                 conceptSelectionPanel.setDocumentSelectionPanel(docSelectionPanel);
-
+                /*
+                rootTabbedPane = new JTabbedPane();
+                rootTabbedPane.addTab(
+                        Translator.getTerm("OntologySelectionPanel"),
+                        Utils.getImageIcon("reference_ontology_selection.png"),
+                        ontSelectionPanel);
+                rootTabbedPane.addTab(
+                        Translator.getTerm("DocumentSelectionPanel"),
+                        Utils.getImageIcon("input_document_selection.png"),
+                        docSelectionPanel);
+                rootTabbedPane.addTab(
+                        Translator.getTerm("TermSelectionPanel"),
+                        Utils.getImageIcon("input_term_selection.png"),
+                        inputTermSelectinPanel);
+                rootTabbedPane.addTab(
+                        Translator.getTerm("ConceptSelectionPanel"),
+                        Utils.getImageIcon("input_concept_selection.png"),
+                        conceptSelectionPanel);
+                rootTabbedPane.addTab(
+                        Translator.getTerm("ClassTreeConstructionPanel"),
+                        Utils.getImageIcon("constructing_class_hierarchy.png"),
+                        constructClassPanel);
+                rootTabbedPane.addTab(
+                        Translator.getTerm("PropertyTreeConstructionPanel"),
+                        Utils.getImageIcon("constructing_property_hierarchy.png"),
+                        constructPropertyPanel);
+                rootTabbedPane.addTab(
+                        Translator.getTerm("ConceptDefinitionPanel"),
+                        Utils.getImageIcon("concept_definition.png"),
+                        conceptDefinitionPanel);
+                        */
                 views = new View[7];
                 ViewMap viewMap = new ViewMap();
 
@@ -161,11 +192,11 @@ public class DODDLEProjectPanel extends JPanel {
                 }
 
                 rootWindow = Utils.createDODDLERootWindow(viewMap);
-
                 setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
                 setProgress(currentTaskCnt++);
                 setXGALayoutForAll();
                 DODDLE_OWL.rootPane.getContentPane().add(rootWindow, BorderLayout.CENTER);
+//                DODDLE_OWL.rootPane.getContentPane().add(rootTabbedPane, BorderLayout.CENTER);
             } catch (NullPointerException npe) {
                 setXGALayoutForAll();
             } catch (Exception e) {

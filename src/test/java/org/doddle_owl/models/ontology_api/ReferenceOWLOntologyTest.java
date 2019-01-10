@@ -1,12 +1,12 @@
-package org.doddle_owl.models;
+package org.doddle_owl.models.ontology_api;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
-import org.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.doddle_owl.utils.Translator;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
