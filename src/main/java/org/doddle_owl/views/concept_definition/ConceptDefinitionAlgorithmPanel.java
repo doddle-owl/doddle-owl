@@ -135,33 +135,6 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
 
         wordSpaceParamPanel = getNorthWestComponent(getWordSpacePanel());
         aprioriParamPanel = getNorthWestComponent(getAprioriPanel());
-        /*
-         * View[] mainViews = new View[2]; ViewMap viewMap = new ViewMap();
-         *
-         * mainViews[0] = new
-         * View(Translator.getString("ConceptDefinitionPanel.WordSpaceParameters"
-         * ), null, getWestComponent(wordSpaceParamPanel)); mainViews[1] = new
-         * View
-         * (Translator.getString("ConceptDefinitionPanel.AprioriParameters"),
-         * null, getWestComponent(aprioriParamPanel));
-         *
-         * for (int i = 0; i < mainViews.length; i++) { viewMap.addView(i,
-         * mainViews[i]); } RootWindow rootWindow =
-         * Utils.createDODDLERootWindow(viewMap); //SplitWindow sw1 = new
-         * SplitWindow(false, 0.3f, mainViews[0], mainViews[1]);
-         * rootWindow.setWindow(new TabWindow(new DockingWindow[]{mainViews[0],
-         * mainViews[1]}));
-         *
-         * setLayout(new BorderLayout()); add(rootWindow, BorderLayout.CENTER);
-         * /* JTabbedPane parameterTab = new JTabbedPane();
-         * parameterTab.add(getWestComponent(wordSpaceParamPanel), Translator
-         * .getString("ConceptDefinitionPanel.WordSpaceParameters"));
-         * parameterTab.add(getWestComponent(aprioriParamPanel), Translator
-         * .getString("ConceptDefinitionPanel.AprioriParameters"));
-         *
-         * setLayout(new BorderLayout()); add(parameterTab,
-         * BorderLayout.CENTER);
-         */
     }
 
     public JComponent getWordSpaceParamPanel() {
@@ -270,7 +243,6 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
     }
 
     private JPanel getWordSpacePanel() {
-        // Integer inte = new Integer(wordSpaceValueSlider.getValue());
         wordSpaceValue = new JLabel("0.50");
         wordSpaceValue.setFont(new Font("Dialog", Font.PLAIN, 14));
 

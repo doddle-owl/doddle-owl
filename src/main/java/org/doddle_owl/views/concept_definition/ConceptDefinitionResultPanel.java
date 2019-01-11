@@ -467,18 +467,6 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         }
     }
 
-    public DefaultTableModel getWResultTableModel() {
-        return (DefaultTableModel) wsResultTable.getModel();
-    }
-
-    public DefaultTableModel getAResultTableModel() {
-        return (DefaultTableModel) arResultTable.getModel();
-    }
-
-    public DefaultTableModel getWAResultTableModel() {
-        return (DefaultTableModel) waResultTable.getModel();
-    }
-
     public String getWSTableRowConceptName(int row) {
         return (String) wsResultTable.getModel().getValueAt(row, 0);
     }
@@ -489,18 +477,6 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
     public String getWATableRowConceptName(int row) {
         return (String) waResultTable.getModel().getValueAt(row, 0);
-    }
-
-    public int getWSTableSelectedRow() {
-        return wsResultTable.getSelectedRow();
-    }
-
-    public int getARTableSelectedRow() {
-        return arResultTable.getSelectedRow();
-    }
-
-    public int getWATableSelectedRow() {
-        return waResultTable.getSelectedRow();
     }
 
     public ListSelectionModel getWordSpaceSelectionModel() {

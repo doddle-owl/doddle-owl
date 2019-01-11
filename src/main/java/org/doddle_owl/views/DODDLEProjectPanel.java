@@ -317,7 +317,7 @@ public class DODDLEProjectPanel extends JPanel {
         conceptSelectionPanel.setXGALayout();
         constructClassPanel.setXGALayout();
         constructPropertyPanel.setXGALayout();
-        conceptDefinitionPanel.setXGALayout();
+//        conceptDefinitionPanel.setXGALayout();
     }
 
     public void setUXGALayoutForAll() {
@@ -325,7 +325,7 @@ public class DODDLEProjectPanel extends JPanel {
         conceptSelectionPanel.setUXGALayout();
         constructClassPanel.setUXGALayout();
         constructPropertyPanel.setUXGALayout();
-        conceptDefinitionPanel.setUXGALayout();
+//        conceptDefinitionPanel.setUXGALayout();
     }
 
     public void resetURIConceptMap() {
