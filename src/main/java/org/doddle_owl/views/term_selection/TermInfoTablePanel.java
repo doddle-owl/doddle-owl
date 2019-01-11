@@ -54,8 +54,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * @author Takeshi Morita
  */
-public class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener,
-        ListSelectionListener {
+public class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, ListSelectionListener {
 
     private int docNum;
     private Map<String, TermInfo> termInfoMap;
@@ -68,7 +67,6 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
     private TermInfoTableModel termInfoTableModel;
 
     private boolean isDeletingTableItems;
-
 
     public void initialize() {
         if (termInfoMap != null) {
@@ -83,15 +81,13 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
         searchTermField = new JTextField(20);
         searchTermField.addActionListener(this);
         searchTermField.addKeyListener(this);
-        searchTermField.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("TermFilterTextField")));
         searchPOSField = new JTextField(20);
         searchPOSField.addActionListener(this);
         searchPOSField.addKeyListener(this);
-        searchPOSField.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("POSFilterTextField")));
         JPanel searchPanel = new JPanel();
+        searchPanel.add(new JLabel(Translator.getTerm("TermFilterTextField")));
         searchPanel.add(searchTermField);
+        searchPanel.add(new JLabel(Translator.getTerm("POSFilterTextField")));
         searchPanel.add(searchPOSField);
 
         termInfoTable = new JTable();
@@ -186,10 +182,7 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
         String TF = Translator.getTerm("TFLabel");
         String IDF = Translator.getTerm("IDFLabel");
         String TFIDF = Translator.getTerm("TFIDFLabel");
-        // String INPUT_DOCUMENT = Translator.getTerm("InputDocumentLabel");
         String UPPER_CONCEPT = Translator.getTerm("UpperConceptLabel");
-        // Object[] titles = new Object[] { TERM, POS, TF, IDF, TFIDF,
-        // INPUT_DOCUMENT, UPPER_CONCEPT};
         Object[] titles = new Object[]{TERM, POS, TF, IDF, TFIDF, UPPER_CONCEPT};
 
         termInfoTableModel = new TermInfoTableModel(null, titles);

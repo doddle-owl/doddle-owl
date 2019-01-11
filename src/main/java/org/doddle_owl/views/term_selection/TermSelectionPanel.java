@@ -48,43 +48,43 @@ import java.util.*;
  */
 public class TermSelectionPanel extends JPanel implements ActionListener, KeyListener {
 
-    private JTextArea inputTermArea;
-    private TermInfoTablePanel inputTermInfoTablePanel;
+    private JTextArea termTextArea;
+    private TermInfoTablePanel termInfoTablePanel;
     private TermInfoTablePanel removedTermInfoTablePanel;
     private TermsInDocumentViewer documentViewer;
 
-    private JButton addInputTermListButton;
+    private JButton addTermListButton;
     private JButton deleteTableItemButton;
     private JButton returnTableItemButton;
     private JButton reloadDocumentAreaButton;
     private JButton completelyDeleteTableItemButton;
-    private JButton setInputTermSetButton;
-    private JButton addInputTermSetButton;
+    private JButton setTermSetButton;
+    private JButton addTermSetButton;
 
     private View[] mainViews;
     private RootWindow rootWindow;
     private ConceptSelectionPanel conceptSelectionPanel;
 
     public void initialize() {
-        inputTermArea.setText("");
-        inputTermInfoTablePanel.initialize();
+        termTextArea.setText("");
+        termInfoTablePanel.initialize();
         removedTermInfoTablePanel.initialize();
         documentViewer.initialize();
     }
 
     public TermSelectionPanel(ConceptSelectionPanel ui) {
-        inputTermInfoTablePanel = new TermInfoTablePanel();
-        inputTermInfoTablePanel.getTable().addKeyListener(this);
+        termInfoTablePanel = new TermInfoTablePanel();
+        termInfoTablePanel.getTable().addKeyListener(this);
         removedTermInfoTablePanel = new TermInfoTablePanel();
         removedTermInfoTablePanel.getTable().addKeyListener(this);
         documentViewer = new TermsInDocumentViewer();
         conceptSelectionPanel = ui;
 
-        inputTermArea = new JTextArea(10, 15);
-        JScrollPane inputTermsAreaScroll = new JScrollPane(inputTermArea);
+        termTextArea = new JTextArea();
+        var inputTermsAreaScroll = new JScrollPane(termTextArea);
 
-        addInputTermListButton = new JButton(Translator.getTerm("AddInputTermListButton"));
-        addInputTermListButton.addActionListener(this);
+        addTermListButton = new JButton(Translator.getTerm("AddInputTermListButton"));
+        addTermListButton.addActionListener(this);
         deleteTableItemButton = new JButton(Translator.getTerm("RemoveButton"));
         deleteTableItemButton.addActionListener(this);
         returnTableItemButton = new JButton(Translator.getTerm("ReturnButton"));
@@ -94,39 +94,65 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         completelyDeleteTableItemButton = new JButton(Translator.getTerm("CompletelyDeleteTermButton"));
         completelyDeleteTableItemButton.addActionListener(this);
 
-        JPanel tableButtonPanel = new JPanel();
-        tableButtonPanel.add(addInputTermListButton);
+        var tableButtonPanel = new JPanel();
+        tableButtonPanel.add(addTermListButton);
         tableButtonPanel.add(deleteTableItemButton);
         tableButtonPanel.add(returnTableItemButton);
         tableButtonPanel.add(reloadDocumentAreaButton);
         tableButtonPanel.add(completelyDeleteTableItemButton);
 
-        setInputTermSetButton = new JButton(Translator.getTerm("SetInputTermSetButton"));
-        setInputTermSetButton.addActionListener(this);
-        addInputTermSetButton = new JButton(Translator.getTerm("AddInputTermSetButton"));
-        addInputTermSetButton.addActionListener(this);
-        JPanel inputTermsButtonPanel = new JPanel();
-        inputTermsButtonPanel.add(setInputTermSetButton);
-        inputTermsButtonPanel.add(addInputTermSetButton);
+        setTermSetButton = new JButton(Translator.getTerm("SetInputTermSetButton"));
+        setTermSetButton.addActionListener(this);
+        addTermSetButton = new JButton(Translator.getTerm("AddInputTermSetButton"));
+        addTermSetButton.addActionListener(this);
+        var inputTermsButtonPanel = new JPanel();
+        inputTermsButtonPanel.add(setTermSetButton);
+        inputTermsButtonPanel.add(addTermSetButton);
 
-        JPanel buttonPanel = new JPanel();
+        var buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.add(tableButtonPanel, BorderLayout.WEST);
         buttonPanel.add(inputTermsButtonPanel, BorderLayout.EAST);
 
-        DockingWindowAction action = new DockingWindowAction();
-        mainViews = new View[4];
-        ViewMap viewMap = new ViewMap();
-        mainViews[0] = new View(Translator.getTerm("InputDocumentViewerPanel"), null, documentViewer);
-        mainViews[1] = new View(Translator.getTerm("InputTermInfoTablePanel"), null, inputTermInfoTablePanel);
-        mainViews[2] = new View(Translator.getTerm("RemovedTermInfoTablePanel"), null, removedTermInfoTablePanel);
-        mainViews[3] = new View(Translator.getTerm("InputTermListArea"), null, inputTermsAreaScroll);
-        for (int i = 0; i < mainViews.length; i++) {
-            viewMap.addView(i, mainViews[i]);
-        }
+        var mainTabbedPane = new JTabbedPane();
+        mainTabbedPane.addChangeListener(l -> {
+            switch (mainTabbedPane.getSelectedIndex()) {
+                case 0:
+                    addTermListButton.setVisible(false);
+                    deleteTableItemButton.setVisible(false);
+                    returnTableItemButton.setVisible(false);
+                    completelyDeleteTableItemButton.setVisible(false);
+                    break;
+                case 1:
+                    addTermListButton.setVisible(true);
+                    deleteTableItemButton.setVisible(true);
+                    returnTableItemButton.setVisible(false);
+                    completelyDeleteTableItemButton.setVisible(false);
+                    reloadDocumentAreaButton.setVisible(false);
+                    break;
+                case 2:
+                    addTermListButton.setVisible(false);
+                    deleteTableItemButton.setVisible(false);
+                    returnTableItemButton.setVisible(true);
+                    completelyDeleteTableItemButton.setVisible(true);
+                    reloadDocumentAreaButton.setVisible(false);
+                    break;
+            }
+        });
+
+        mainTabbedPane.addTab(Translator.getTerm("InputDocumentViewerPanel"), null, documentViewer);
+        mainTabbedPane.addTab(Translator.getTerm("InputTermInfoTablePanel"), null, termInfoTablePanel);
+        mainTabbedPane.addTab(Translator.getTerm("RemovedTermInfoTablePanel"), null, removedTermInfoTablePanel);
+
+        var mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        mainSplitPane.add(mainTabbedPane);
+        mainSplitPane.add(inputTermsAreaScroll);
+        mainSplitPane.setDividerLocation(0.6);
+
+        mainViews = new View[1];
+        var viewMap = new ViewMap();
+        mainViews[0] = new View("", null, mainSplitPane);
         rootWindow = Utils.createDODDLERootWindow(viewMap);
-        rootWindow.addListener(action);
-        action.viewFocusChanged(mainViews[2], mainViews[0]);
 
         setLayout(new BorderLayout());
         add(rootWindow, BorderLayout.CENTER);
@@ -134,9 +160,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     }
 
     public void setXGALayout() {
-        TabWindow tabWindow = new TabWindow(new DockingWindow[]{mainViews[0], mainViews[1], mainViews[2]});
-        SplitWindow sw1 = new SplitWindow(true, 0.8f, tabWindow, mainViews[3]);
-        rootWindow.setWindow(sw1);
+        rootWindow.setWindow(mainViews[0]);
         mainViews[0].restoreFocus();
     }
 
@@ -150,14 +174,14 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
 
     public void setWindowTitle() {
         mainViews[1].getViewProperties().setTitle(
-                Translator.getTerm("InputTermInfoTablePanel") + "（" + inputTermInfoTablePanel.getTableSize() + "）");
+                Translator.getTerm("InputTermInfoTablePanel") + "（" + termInfoTablePanel.getTableSize() + "）");
         mainViews[2].getViewProperties().setTitle(
                 Translator.getTerm("RemovedTermInfoTablePanel") + "（" + removedTermInfoTablePanel.getTableSize() + "）");
         rootWindow.repaint();
     }
 
     public void setInputTermInfoTableModel(Map<String, TermInfo> termInfoMap, int docNum) {
-        inputTermInfoTablePanel.setTermInfoTableModel(termInfoMap, docNum);
+        termInfoTablePanel.setTermInfoTableModel(termInfoMap, docNum);
         removedTermInfoTablePanel.setTermInfoTableModel(new HashMap<>(), docNum);
         setWindowTitle();
     }
@@ -167,54 +191,54 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     }
 
     public void loadInputTermInfoTable() {
-        inputTermInfoTablePanel.loadTermInfoTable();
+        termInfoTablePanel.loadTermInfoTable();
         removedTermInfoTablePanel.loadTermInfoTable();
         setWindowTitle();
     }
 
     public void loadInputTermInfoTable(File file, File removedFile) {
-        inputTermInfoTablePanel.loadTermInfoTable(file);
+        termInfoTablePanel.loadTermInfoTable(file);
         removedTermInfoTablePanel.loadTermInfoTable(removedFile);
         setWindowTitle();
     }
 
     public void loadInputTermInfoTable(int projectID, Statement stmt, int docNum) {
-        inputTermInfoTablePanel.loadTermInfoTable(projectID, stmt, "term_info", docNum);
+        termInfoTablePanel.loadTermInfoTable(projectID, stmt, "term_info", docNum);
         removedTermInfoTablePanel.loadTermInfoTable(projectID, stmt, "removed_term_info", docNum);
         setWindowTitle();
     }
 
     public void saveInputTermInfoTable() {
-        inputTermInfoTablePanel.saveTermInfoTable();
+        termInfoTablePanel.saveTermInfoTable();
         removedTermInfoTablePanel.saveTermInfoTable();
     }
 
     public void saveInputTermInfoTable(File file, File removedFile) {
-        inputTermInfoTablePanel.saveTermInfoTable(file);
+        termInfoTablePanel.saveTermInfoTable(file);
         removedTermInfoTablePanel.saveTermInfoTable(removedFile);
     }
 
     public void saveTermInfoTable(int projectID, Statement stmt) {
-        inputTermInfoTablePanel.saveTermInfoTable(projectID, stmt, "term_info");
+        termInfoTablePanel.saveTermInfoTable(projectID, stmt, "term_info");
         removedTermInfoTablePanel.saveTermInfoTable(projectID, stmt, "removed_term_info");
     }
 
     private void setInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("SetInputTermListButton"));
-        String[] inputTerms = inputTermArea.getText().split("\n");
+        String[] inputTerms = termTextArea.getText().split("\n");
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         conceptSelectionPanel.loadInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("AddInputTermListButton"));
-        String[] inputTerms = inputTermArea.getText().split("\n");
+        String[] inputTerms = termTextArea.getText().split("\n");
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         conceptSelectionPanel.addInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTerms() {
-        JTable termInfoTable = inputTermInfoTablePanel.getTermInfoTable();
+        JTable termInfoTable = termInfoTablePanel.getTermInfoTable();
         int[] rows = termInfoTable.getSelectedRows();
         StringBuilder inputTerms = new StringBuilder();
         for (int row : rows) {
@@ -222,13 +246,13 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
                     .getTerm("TermLabel"))); // 現在選択されている行のデータがほしいのでTableを使う
             inputTerms.append(term).append(System.lineSeparator());
         }
-        inputTermArea.setText(inputTermArea.getText() + inputTerms.toString());
+        termTextArea.setText(termTextArea.getText() + inputTerms.toString());
     }
 
     private void deleteTableItems() {
-        inputTermInfoTablePanel.setIsDeletingTableItems(true);
+        termInfoTablePanel.setIsDeletingTableItems(true);
         removedTermInfoTablePanel.setIsDeletingTableItems(true);
-        JTable inputTermInfoTable = inputTermInfoTablePanel.getTermInfoTable();
+        JTable inputTermInfoTable = termInfoTablePanel.getTermInfoTable();
         JTable removedTermInfoTable = removedTermInfoTablePanel.getTermInfoTable();
         DefaultTableModel inputTermInfoTableModel = (DefaultTableModel) inputTermInfoTable.getModel();
         DefaultTableModel removedTermInfoTableModel = (DefaultTableModel) removedTermInfoTable.getModel();
@@ -241,9 +265,9 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             String deleteTerm = (String) inputTermInfoTable.getValueAt(selectedRows[i], getColumnNamePosition(
                     inputTermInfoTable, Translator.getTerm("TermLabel"))); // 現在選択されている行のデータがほしいのでTableを使う
 
-            TermInfo info = inputTermInfoTablePanel.getTermInfo(deleteTerm);
+            TermInfo info = termInfoTablePanel.getTermInfo(deleteTerm);
             removedTermInfoTablePanel.addTermInfoMapKey(deleteTerm, info);
-            inputTermInfoTablePanel.removeTermInfoMapKey(deleteTerm);
+            termInfoTablePanel.removeTermInfoMapKey(deleteTerm);
 
             // Vector rowData = (Vector)
             // inputTermInfoTableModel.getDataVector().get(selectedRows[i]);
@@ -255,7 +279,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         }
         setWindowTitle();
         documentViewer.setDocumentAndLinkArea();
-        inputTermInfoTablePanel.setIsDeletingTableItems(false);
+        termInfoTablePanel.setIsDeletingTableItems(false);
         removedTermInfoTablePanel.setIsDeletingTableItems(false);
     }
 
@@ -296,25 +320,8 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         return rowData;
     }
 
-    // private Vector getRowData(int row, JTable table) {
-    // Vector rowData = new Vector();
-    // rowData.add(table.getValueAt(row, getColumnNamePosition(table,
-    // Translator.getTerm("TermLabel"))));
-    // rowData.add(table.getValueAt(row, getColumnNamePosition(table,
-    // Translator.getTerm("POSLabel"))));
-    // rowData.add(table.getValueAt(row, getColumnNamePosition(table,
-    // Translator.getTerm("TFLabel"))));
-    // rowData.add(table.getValueAt(row, getColumnNamePosition(table,
-    // Translator.getTerm("IDFLabel"))));
-    // rowData.add(table.getValueAt(row, getColumnNamePosition(table,
-    // Translator.getTerm("TFIDFLabel"))));
-    // rowData.add(table.getValueAt(row, getColumnNamePosition(table,
-    // Translator.getTerm("UpperConceptLabel"))));
-    // return rowData;
-    // }
-
     public void removeTerm(String rmTerm) {
-        JTable inputTermInfoTable = inputTermInfoTablePanel.getTermInfoTable();
+        JTable inputTermInfoTable = termInfoTablePanel.getTermInfoTable();
         JTable removedTermInfoTable = removedTermInfoTablePanel.getTermInfoTable();
         DefaultTableModel inputTermInfoTableModel = (DefaultTableModel) inputTermInfoTable.getModel();
         DefaultTableModel removedTermInfoTableModel = (DefaultTableModel) removedTermInfoTable.getModel();
@@ -323,10 +330,10 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             // 全体をパースするだけなのでTableModelでよい．また，Modelの場合は絶対位置となるので0でよい．
             String term = (String) inputTermInfoTableModel.getValueAt(i, 0);
             if (term.equals(rmTerm)) {
-                TermInfo info = inputTermInfoTablePanel.getTermInfo(rmTerm);
+                TermInfo info = termInfoTablePanel.getTermInfo(rmTerm);
                 removedTermInfoTableModel.insertRow(0, info.getRowData());
                 removedTermInfoTablePanel.addTermInfoMapKey(rmTerm, info);
-                inputTermInfoTablePanel.removeTermInfoMapKey(rmTerm);
+                termInfoTablePanel.removeTermInfoMapKey(rmTerm);
                 inputTermInfoTableModel.removeRow(i);
                 break;
             }
@@ -335,17 +342,17 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     }
 
     public void addInputTermInfo(TermInfo info) {
-        JTable inputTermInfoTable = inputTermInfoTablePanel.getTermInfoTable();
-        if (inputTermInfoTablePanel.getTermInfo(info.getTerm()) == null) {
+        JTable inputTermInfoTable = termInfoTablePanel.getTermInfoTable();
+        if (termInfoTablePanel.getTermInfo(info.getTerm()) == null) {
             DefaultTableModel inputTermInfoTableModel = (DefaultTableModel) inputTermInfoTable.getModel();
-            inputTermInfoTablePanel.addTermInfoMapKey(info.getTerm(), info);
+            termInfoTablePanel.addTermInfoMapKey(info.getTerm(), info);
             inputTermInfoTableModel.insertRow(0, info.getRowData());
             setWindowTitle();
         }
     }
 
     public void addTerm(String addTerm) {
-        JTable inputTermInfoTable = inputTermInfoTablePanel.getTermInfoTable();
+        JTable inputTermInfoTable = termInfoTablePanel.getTermInfoTable();
         JTable removedTermInfoTable = removedTermInfoTablePanel.getTermInfoTable();
         DefaultTableModel inputTermInfoTableModel = (DefaultTableModel) inputTermInfoTable.getModel();
         DefaultTableModel removedTermInfoTableModel = (DefaultTableModel) removedTermInfoTable.getModel();
@@ -356,7 +363,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             if (term.equals(addTerm)) {
                 TermInfo info = removedTermInfoTablePanel.getTermInfo(addTerm);
                 inputTermInfoTableModel.insertRow(0, info.getRowData());
-                inputTermInfoTablePanel.addTermInfoMapKey(addTerm, info);
+                termInfoTablePanel.addTermInfoMapKey(addTerm, info);
                 removedTermInfoTablePanel.removeTermInfoMapKey(addTerm);
                 removedTermInfoTableModel.removeRow(i);
                 break;
@@ -366,9 +373,9 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     }
 
     private void returnTableItems(boolean isCompleteDelete) {
-        inputTermInfoTablePanel.setIsDeletingTableItems(true);
+        termInfoTablePanel.setIsDeletingTableItems(true);
         removedTermInfoTablePanel.setIsDeletingTableItems(true);
-        JTable inputTermInfoTable = inputTermInfoTablePanel.getTermInfoTable();
+        JTable inputTermInfoTable = termInfoTablePanel.getTermInfoTable();
         JTable removedTermInfoTable = removedTermInfoTablePanel.getTermInfoTable();
         DefaultTableModel inputTermInfoTableModel = (DefaultTableModel) inputTermInfoTable.getModel();
         DefaultTableModel removedTermInfoTableModel = (DefaultTableModel) removedTermInfoTable.getModel();
@@ -381,7 +388,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
                     removedTermInfoTable, Translator.getTerm("TermLabel"))); // 現在選択されている行のデータがほしいのでTableを使う
             TermInfo info = removedTermInfoTablePanel.getTermInfo(returnTerm);
             if (!isCompleteDelete) {
-                inputTermInfoTablePanel.addTermInfoMapKey(returnTerm, info);
+                termInfoTablePanel.addTermInfoMapKey(returnTerm, info);
             }
             removedTermInfoTablePanel.removeTermInfoMapKey(returnTerm);
 
@@ -397,12 +404,12 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         }
         setWindowTitle();
         documentViewer.setDocumentAndLinkArea();
-        inputTermInfoTablePanel.setIsDeletingTableItems(false);
+        termInfoTablePanel.setIsDeletingTableItems(false);
         removedTermInfoTablePanel.setIsDeletingTableItems(false);
     }
 
     public Collection<TermInfo> getTermInfoSet() {
-        return inputTermInfoTablePanel.getTermInfoSet();
+        return termInfoTablePanel.getTermInfoSet();
     }
 
     public Collection<TermInfo> getRemovedTermInfoSet() {
@@ -410,7 +417,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     }
 
     public TermInfo getInputTermInfo(String term) {
-        return inputTermInfoTablePanel.getTermInfo(term);
+        return termInfoTablePanel.getTermInfo(term);
     }
 
     public TermInfo getRemovedTermInfo(String term) {
@@ -420,13 +427,13 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel project = DODDLE_OWL.getCurrentProject();
 
-        if (e.getSource() == setInputTermSetButton) {
+        if (e.getSource() == setTermSetButton) {
             setInputTermSet(0);
             project.addLog("SetInputTermSetButton");
-        } else if (e.getSource() == addInputTermSetButton) {
+        } else if (e.getSource() == addTermSetButton) {
             addInputTermSet(0);
             project.addLog("AddInputTermSetButton");
-        } else if (e.getSource() == addInputTermListButton) {
+        } else if (e.getSource() == addTermListButton) {
             addInputTerms();
             project.addLog("AddInputTermListButton");
         } else if (e.getSource() == deleteTableItemButton) {
@@ -443,33 +450,9 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         }
     }
 
-    class DockingWindowAction extends DockingWindowAdapter {
-        public void viewFocusChanged(View previouslyFocusedView, View focusedView) {
-            if (focusedView == mainViews[0]) {
-                addInputTermListButton.setVisible(false);
-                deleteTableItemButton.setVisible(false);
-                returnTableItemButton.setVisible(false);
-                completelyDeleteTableItemButton.setVisible(false);
-                reloadDocumentAreaButton.setVisible(true);
-            } else if (focusedView == mainViews[1]) {
-                addInputTermListButton.setVisible(true);
-                deleteTableItemButton.setVisible(true);
-                returnTableItemButton.setVisible(false);
-                completelyDeleteTableItemButton.setVisible(false);
-                reloadDocumentAreaButton.setVisible(false);
-            } else if (focusedView == mainViews[2]) {
-                addInputTermListButton.setVisible(false);
-                deleteTableItemButton.setVisible(false);
-                returnTableItemButton.setVisible(true);
-                completelyDeleteTableItemButton.setVisible(true);
-                reloadDocumentAreaButton.setVisible(false);
-            }
-        }
-    }
-
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-            if (e.getSource() == inputTermInfoTablePanel.getTable()) {
+            if (e.getSource() == termInfoTablePanel.getTable()) {
                 deleteTableItems();
                 DODDLE_OWL.getCurrentProject().addLog("RemoveButton", "TermSelectionPanel");
             } else if (e.getSource() == removedTermInfoTablePanel.getTable()) {

@@ -78,7 +78,6 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
     private static final String REMOVED_WORD_LINK_COLOR = "gray";
     private static int DISPLAY_LINE_NUM = 20;
 
-
     public void initialize() {
         documentList.removeAll();
         documentArea.setText("");
@@ -176,10 +175,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         String TF = Translator.getTerm("TFLabel");
         String IDF = Translator.getTerm("IDFLabel");
         String TFIDF = Translator.getTerm("TFIDFLabel");
-        // String INPUT_DOCUMENT = Translator.getTerm("InputDocumentLabel");
         String UPPER_CONCEPT = Translator.getTerm("UpperConceptLabel");
-        // Object[] titles = new Object[] { WORD, POS, TF, IDF, TFIDF,
-        // INPUT_DOCUMENT, UPPER_CONCEPT};
         Object[] titles = new Object[]{WORD, POS, TF, IDF, TFIDF, UPPER_CONCEPT};
 
         wordInfoTableModel = new DefaultTableModel(null, titles);
@@ -808,7 +804,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         try {
             documentArea.setCaretPosition(p);
         } catch (Exception e) {
-            // 無視
+            e.printStackTrace();
         }
     }
 
