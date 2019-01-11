@@ -67,9 +67,9 @@ public class DODDLEProjectPanel extends JPanel {
     private View[] views;
     private RootWindow rootWindow;
     private JTabbedPane rootTabbedPane;
-    private ReferenceOntologySelectionPanel ontSelectionPanel;
-    private DocumentSelectionPanel docSelectionPanel;
-    private TermSelectionPanel inputTermSelectinPanel;
+    private ReferenceOntologySelectionPanel ontologySelectionPanel;
+    private DocumentSelectionPanel documentSelectionPanel;
+    private TermSelectionPanel termSelectionPanel;
     private ConceptSelectionPanel conceptSelectionPanel;
     private ClassTreeConstructionPanel constructClassPanel;
     private PropertyTreeConstructionPanel constructPropertyPanel;
@@ -84,9 +84,9 @@ public class DODDLEProjectPanel extends JPanel {
     private static final int WINDOW_HEIGHT = 768;
 
     public void initProject() {
-        ontSelectionPanel.initialize();
-        docSelectionPanel.initialize();
-        inputTermSelectinPanel.initialize();
+        ontologySelectionPanel.initialize();
+        documentSelectionPanel.initialize();
+        termSelectionPanel.initialize();
         conceptSelectionPanel.initialize();
         constructClassPanel.initialize();
         constructPropertyPanel.initialize();
@@ -123,7 +123,7 @@ public class DODDLEProjectPanel extends JPanel {
                 addLog("NewProjectAction");
                 constructClassPanel = new ClassTreeConstructionPanel(project);
                 setProgress(currentTaskCnt++);
-                ontSelectionPanel = new ReferenceOntologySelectionPanel();
+                ontologySelectionPanel = new ReferenceOntologySelectionPanel();
                 setProgress(currentTaskCnt++);
                 constructPropertyPanel = new PropertyTreeConstructionPanel(project);
                 setProgress(currentTaskCnt++);
@@ -131,27 +131,27 @@ public class DODDLEProjectPanel extends JPanel {
                         constructPropertyPanel, project);
                 setProgress(currentTaskCnt++);
 
-                inputTermSelectinPanel = new TermSelectionPanel(conceptSelectionPanel);
+                termSelectionPanel = new TermSelectionPanel(conceptSelectionPanel);
                 setProgress(currentTaskCnt++);
-                docSelectionPanel = new DocumentSelectionPanel(inputTermSelectinPanel, project);
+                documentSelectionPanel = new DocumentSelectionPanel(termSelectionPanel, project);
                 setProgress(currentTaskCnt++);
                 conceptDefinitionPanel = new ConceptDefinitionPanel(project);
                 setProgress(currentTaskCnt++);
-                conceptSelectionPanel.setDocumentSelectionPanel(docSelectionPanel);
+                conceptSelectionPanel.setDocumentSelectionPanel(documentSelectionPanel);
                 /*
                 rootTabbedPane = new JTabbedPane();
                 rootTabbedPane.addTab(
                         Translator.getTerm("OntologySelectionPanel"),
                         Utils.getImageIcon("reference_ontology_selection.png"),
-                        ontSelectionPanel);
+                        ontologySelectionPanel);
                 rootTabbedPane.addTab(
                         Translator.getTerm("DocumentSelectionPanel"),
                         Utils.getImageIcon("input_document_selection.png"),
-                        docSelectionPanel);
+                        documentSelectionPanel);
                 rootTabbedPane.addTab(
                         Translator.getTerm("TermSelectionPanel"),
                         Utils.getImageIcon("input_term_selection.png"),
-                        inputTermSelectinPanel);
+                        termSelectionPanel);
                 rootTabbedPane.addTab(
                         Translator.getTerm("ConceptSelectionPanel"),
                         Utils.getImageIcon("input_concept_selection.png"),
@@ -173,11 +173,11 @@ public class DODDLEProjectPanel extends JPanel {
                 ViewMap viewMap = new ViewMap();
 
                 views[0] = new View(Translator.getTerm("OntologySelectionPanel"),
-                        Utils.getImageIcon("reference_ontology_selection.png"), ontSelectionPanel);
+                        Utils.getImageIcon("reference_ontology_selection.png"), ontologySelectionPanel);
                 views[1] = new View(Translator.getTerm("DocumentSelectionPanel"),
-                        Utils.getImageIcon("input_document_selection.png"), docSelectionPanel);
+                        Utils.getImageIcon("input_document_selection.png"), documentSelectionPanel);
                 views[2] = new View(Translator.getTerm("TermSelectionPanel"),
-                        Utils.getImageIcon("input_term_selection.png"), inputTermSelectinPanel);
+                        Utils.getImageIcon("input_term_selection.png"), termSelectionPanel);
                 views[3] = new View(Translator.getTerm("ConceptSelectionPanel"),
                         Utils.getImageIcon("input_concept_selection.png"), conceptSelectionPanel);
                 views[4] = new View(Translator.getTerm("ClassTreeConstructionPanel"),
@@ -314,9 +314,6 @@ public class DODDLEProjectPanel extends JPanel {
 
     public void setXGALayoutForAll() {
         setXGALayout();
-        ontSelectionPanel.setXGALayout();
-        docSelectionPanel.setXGALayout();
-        inputTermSelectinPanel.setXGALayout();
         conceptSelectionPanel.setXGALayout();
         constructClassPanel.setXGALayout();
         constructPropertyPanel.setXGALayout();
@@ -325,9 +322,6 @@ public class DODDLEProjectPanel extends JPanel {
 
     public void setUXGALayoutForAll() {
         setXGALayout();
-        ontSelectionPanel.setUXGALayout();
-        docSelectionPanel.setXGALayout();
-        inputTermSelectinPanel.setUXGALayout();
         conceptSelectionPanel.setUXGALayout();
         constructClassPanel.setUXGALayout();
         constructPropertyPanel.setUXGALayout();
@@ -336,10 +330,6 @@ public class DODDLEProjectPanel extends JPanel {
 
     public void resetURIConceptMap() {
         uriConceptMap.clear();
-    }
-
-    public Set getAllConcept() {
-        return uriConceptMap.keySet();
     }
 
     public void putConcept(String uri, Concept c) {
@@ -369,15 +359,15 @@ public class DODDLEProjectPanel extends JPanel {
     }
 
     public ReferenceOntologySelectionPanel getOntologySelectionPanel() {
-        return ontSelectionPanel;
+        return ontologySelectionPanel;
     }
 
     public DocumentSelectionPanel getDocumentSelectionPanel() {
-        return docSelectionPanel;
+        return documentSelectionPanel;
     }
 
     public TermSelectionPanel getInputTermSelectionPanel() {
-        return inputTermSelectinPanel;
+        return termSelectionPanel;
     }
 
     public ConceptSelectionPanel getConceptSelectionPanel() {

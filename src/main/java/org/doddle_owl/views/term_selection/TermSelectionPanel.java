@@ -23,12 +23,9 @@
 
 package org.doddle_owl.views.term_selection;
 
-import net.infonode.docking.*;
-import net.infonode.docking.util.ViewMap;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.term_selection.TermInfo;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
@@ -61,8 +58,6 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     private JButton setTermSetButton;
     private JButton addTermSetButton;
 
-    private View[] mainViews;
-    private RootWindow rootWindow;
     private ConceptSelectionPanel conceptSelectionPanel;
 
     public void initialize() {
@@ -150,32 +145,19 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         mainSplitPane.add(inputTermsAreaScroll);
         mainSplitPane.setDividerLocation(0.6);
 
-        mainViews = new View[1];
-        var viewMap = new ViewMap();
-        mainViews[0] = new View("", null, mainSplitPane);
-        rootWindow = Utils.createDODDLERootWindow(viewMap);
-
         setLayout(new BorderLayout());
-        add(rootWindow, BorderLayout.CENTER);
+        add(mainSplitPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public void setXGALayout() {
-        rootWindow.setWindow(mainViews[0]);
-        mainViews[0].restoreFocus();
-    }
 
-    public void setUXGALayout() {
-        rootWindow.setWindow(mainViews[0]);
-        mainViews[0].restoreFocus();
-    }
-
+    // TODO update
     public void setWindowTitle() {
-        mainViews[1].getViewProperties().setTitle(
-                Translator.getTerm("InputTermInfoTablePanel") + "（" + termInfoTablePanel.getTableSize() + "）");
-        mainViews[2].getViewProperties().setTitle(
-                Translator.getTerm("RemovedTermInfoTablePanel") + "（" + removedTermInfoTablePanel.getTableSize() + "）");
-        rootWindow.repaint();
+//        mainViews[1].getViewProperties().setTitle(
+//                Translator.getTerm("InputTermInfoTablePanel") + "（" + termInfoTablePanel.getTableSize() + "）");
+//        mainViews[2].getViewProperties().setTitle(
+//                Translator.getTerm("RemovedTermInfoTablePanel") + "（" + removedTermInfoTablePanel.getTableSize() + "）");
+//        rootWindow.repaint();
     }
 
     public void setInputTermInfoTableModel(Map<String, TermInfo> termInfoMap, int docNum) {

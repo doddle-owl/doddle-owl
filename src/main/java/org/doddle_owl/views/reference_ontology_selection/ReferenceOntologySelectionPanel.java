@@ -48,9 +48,6 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
     private GeneralOntologySelectionPanel generalOntologySelectionPanel;
     private OWLOntologySelectionPanel owlOntologySelectionPanel;
 
-    private View[] mainViews;
-    private RootWindow rootWindow;
-
     public void initialize() {
         swoogleWebServiceWrapperPanel.initialize();
         generalOntologySelectionPanel.initialize();
@@ -85,27 +82,9 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
                     new JPanel());
         }
 
-        mainViews = new View[1];
-        ViewMap viewMap = new ViewMap();
-        mainViews[0] = new View("", null, mainTabbedPane);
-        rootWindow = Utils.createDODDLERootWindow(viewMap);
         setLayout(new BorderLayout());
-        add(rootWindow, BorderLayout.CENTER);
+        add(mainTabbedPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-    }
-
-    public void setInputWordArea(String inputWordText) {
-        swoogleWebServiceWrapperPanel.setInputWordArea(inputWordText);
-    }
-
-    public void setXGALayout() {
-        rootWindow.setWindow(mainViews[0]);
-        mainViews[0].restoreFocus();
-    }
-
-    public void setUXGALayout() {
-        rootWindow.setWindow(mainViews[0]);
-        mainViews[0].restoreFocus();
     }
 
     public NameSpaceTable getNSTable() {

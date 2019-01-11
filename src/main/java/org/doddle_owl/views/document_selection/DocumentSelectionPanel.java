@@ -106,9 +106,6 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     private TermSelectionPanel termSelectionPanel;
     private DODDLEProjectPanel project;
 
-    private View[] mainViews;
-    private RootWindow rootWindow;
-
     private Process jaMorphologicalAnalyzerProcess;
     private Process termExtractProcess;
     public static String Japanese_Morphological_Analyzer = "C:/Program Files/Chasen/chasen.exe";
@@ -213,20 +210,10 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         documentSelectionPanelSplitPane.add(documentPanel);
         documentSelectionPanelSplitPane.add(documentTextAreaScroll);
 
-        mainViews = new View[1];
-        ViewMap viewMap = new ViewMap();
-        mainViews[0] = new View("", null, documentSelectionPanelSplitPane);
-        viewMap.addView(0, mainViews[0]);
         initialize();
-        rootWindow = Utils.createDODDLERootWindow(viewMap);
-        rootWindow.setWindow(mainViews[0]);
         setLayout(new BorderLayout());
-        add(rootWindow, BorderLayout.CENTER);
+        add(documentSelectionPanelSplitPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-    }
-
-    public void setXGALayout() {
-        rootWindow.setWindow(mainViews[0]);
     }
 
     private void setStopWordSet() {
