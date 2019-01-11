@@ -82,6 +82,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
 
         termTextArea = new JTextArea();
         var inputTermsAreaScroll = new JScrollPane(termTextArea);
+        inputTermsAreaScroll.setBorder(BorderFactory.createTitledBorder("Input Term List"));
 
         addTermListButton = new JButton(Translator.getTerm("AddInputTermListButton"));
         addTermListButton.addActionListener(this);
@@ -165,10 +166,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     }
 
     public void setUXGALayout() {
-        SplitWindow sw1 = new SplitWindow(true, mainViews[1], mainViews[2]);
-        SplitWindow sw2 = new SplitWindow(false, mainViews[0], sw1);
-        SplitWindow sw3 = new SplitWindow(true, 0.8f, sw2, mainViews[3]);
-        rootWindow.setWindow(sw3);
+        rootWindow.setWindow(mainViews[0]);
         mainViews[0].restoreFocus();
     }
 

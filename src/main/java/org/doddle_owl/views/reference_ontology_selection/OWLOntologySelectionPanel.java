@@ -77,8 +77,8 @@ public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
         listModel = new DefaultListModel();
         ontologyList = new JList(listModel);
         ontologyList.addListSelectionListener(this);
-        ontologyList
-                .setBorder(BorderFactory.createTitledBorder(Translator.getTerm("OntologyList")));
+        var ontologyListScroll = new JScrollPane(ontologyList);
+        ontologyListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("OntologyList")));
         addOWLFileButton = new JButton(Translator.getTerm("AddOntologyFromFileButton"));
         addOWLFileButton.addActionListener(this);
         addOWLURIButton = new JButton(Translator.getTerm("AddOntologyFromURIButton"));
@@ -95,14 +95,12 @@ public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
         ontologyListPanel.setPreferredSize(new Dimension(100, 150));
         ontologyListPanel.setMinimumSize(new Dimension(100, 150));
         ontologyListPanel.setLayout(new BorderLayout());
-        ontologyListPanel.add(new JScrollPane(ontologyList), BorderLayout.CENTER);
+        ontologyListPanel.add(ontologyListScroll, BorderLayout.CENTER);
         ontologyListPanel.add(Utils.createWestPanel(buttonPanel), BorderLayout.SOUTH);
 
         owlMetaDataPanel = new OWLMetaDataPanel();
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, ontologyListPanel,
-                owlMetaDataPanel);
-        //splitPane.setDividerLocation(0.3);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, ontologyListPanel, owlMetaDataPanel);
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerSize(DODDLEConstants.DIVIDER_SIZE);
         setLayout(new BorderLayout());

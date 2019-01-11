@@ -70,13 +70,14 @@ public class GeneralOntologySelectionPanel extends JPanel {
         jwoCheckBox = new JCheckBox(Translator.getTerm("JWOCheckBox"), false);
         jwoCheckBox.addActionListener(e -> enableJWO(jwoCheckBox.isSelected()));
         JPanel checkPanel = new JPanel();
+        checkPanel.setLayout(new BoxLayout(checkPanel, BoxLayout.Y_AXIS));
         checkPanel.add(wnCheckBox);
         checkPanel.add(jpnWnCheckBox);
         checkPanel.add(edrCheckBox);
         checkPanel.add(edrtCheckBox);
         checkPanel.add(jwoCheckBox);
         setLayout(new BorderLayout());
-        add(checkPanel, BorderLayout.WEST);
+        add(checkPanel, BorderLayout.CENTER);
     }
 
     public void saveGeneralOntologyInfo(File saveFile) {

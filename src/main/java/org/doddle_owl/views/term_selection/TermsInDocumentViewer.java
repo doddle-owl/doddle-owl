@@ -107,8 +107,8 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         JScrollPane linkAreaScroll = new JScrollPane(linkArea);
         linkAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator
                 .getTerm("PageLinesList")));
-        linkAreaScroll.setMinimumSize(new Dimension(100, 50));
-        linkAreaScroll.setPreferredSize(new Dimension(100, 50));
+        linkAreaScroll.setMinimumSize(new Dimension(120, 50));
+        linkAreaScroll.setPreferredSize(new Dimension(120, 50));
 
         JPanel documentPanel = new JPanel();
         documentPanel.setLayout(new BorderLayout());

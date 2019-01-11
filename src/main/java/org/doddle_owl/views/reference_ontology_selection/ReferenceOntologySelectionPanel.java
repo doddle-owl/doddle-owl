@@ -72,24 +72,22 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.add(nextTabButton, BorderLayout.EAST);
 
-        mainViews = new View[4];
-        ViewMap viewMap = new ViewMap();
-        mainViews[0] = new View(Translator.getTerm("GenericOntologySelectionPanel"), null,
-                generalOntologySelectionPanel);
-        mainViews[1] = new View(Translator.getTerm("OWLOntologySelectionPanel"), null,
+        var mainTabbedPane = new JTabbedPane();
+        mainTabbedPane.addTab(Translator.getTerm("GenericOntologySelectionPanel"), null, generalOntologySelectionPanel);
+        mainTabbedPane.addTab(Translator.getTerm("NameSpaceTable"), null, nsTable);
+        mainTabbedPane.addTab(Translator.getTerm("OWLOntologySelectionPanel"), null,
                 owlOntologySelectionPanel);
-        mainViews[2] = new View(Translator.getTerm("NameSpaceTable"), null, nsTable);
         if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
-            mainViews[3] = new View(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
+            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
                     swoogleWebServiceWrapperPanel);
         } else {
-            mainViews[3] = new View(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
+            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
                     new JPanel());
         }
 
-        for (int i = 0; i < mainViews.length; i++) {
-            viewMap.addView(i, mainViews[i]);
-        }
+        mainViews = new View[1];
+        ViewMap viewMap = new ViewMap();
+        mainViews[0] = new View("", null, mainTabbedPane);
         rootWindow = Utils.createDODDLERootWindow(viewMap);
         setLayout(new BorderLayout());
         add(rootWindow, BorderLayout.CENTER);
@@ -101,17 +99,13 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
     }
 
     public void setXGALayout() {
-        SplitWindow sw1 = new SplitWindow(false, 0.2f, mainViews[0], mainViews[2]);
-        TabWindow tabWindow = new TabWindow(new DockingWindow[]{sw1, mainViews[3], mainViews[1]});
-        rootWindow.setWindow(tabWindow);
+        rootWindow.setWindow(mainViews[0]);
         mainViews[0].restoreFocus();
     }
 
     public void setUXGALayout() {
-        SplitWindow sw1 = new SplitWindow(false, 0.25f, mainViews[0], mainViews[1]);
-        SplitWindow sw2 = new SplitWindow(false, 0.75f, sw1, mainViews[2]);
-        TabWindow tabWindow = new TabWindow(new DockingWindow[]{mainViews[3], sw2});
-        rootWindow.setWindow(tabWindow);
+        rootWindow.setWindow(mainViews[0]);
+        mainViews[0].restoreFocus();
     }
 
     public NameSpaceTable getNSTable() {

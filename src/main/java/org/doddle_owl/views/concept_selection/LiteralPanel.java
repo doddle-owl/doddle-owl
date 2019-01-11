@@ -48,7 +48,7 @@ public class LiteralPanel extends JPanel implements ListSelectionListener {
 
     protected String literalType;
 
-    private static final int LANG_SIZE = 60;
+    private static final int LANG_SIZE = 80;
     public static final String LABEL = "LABEL";
     public static final String DESCRIPTION = "DESCRIPTION";
 
