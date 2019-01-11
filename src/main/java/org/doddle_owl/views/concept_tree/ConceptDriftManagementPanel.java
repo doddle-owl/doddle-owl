@@ -23,8 +23,6 @@
 
 package org.doddle_owl.views.concept_tree;
 
-import net.infonode.docking.*;
-import net.infonode.docking.util.ViewMap;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
@@ -42,7 +40,10 @@ import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -75,9 +76,6 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 
     private JTextField trimmedNumField;
     private ConceptTreeMaker maker = ConceptTreeMaker.getInstance();
-
-    private View[] mainViews;
-    private RootWindow rootWindow;
 
     private DODDLEProjectPanel project;
 
@@ -116,36 +114,17 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         trimmedNumField = new JTextField(5);
         trimmedNumField.setText("3");
 
-        mainViews = new View[3];
-        ViewMap viewMap = new ViewMap();
-
-        mainViews[0] = new View(Translator.getTerm("MatchedResultAnalysisResultBorder"), null,
-                getMRAPanel());
-        mainViews[1] = new View(Translator.getTerm("TrimmedResultAnalysisResultBorder"), null,
-                getTRAPanel());
         rmMultipleInheritancePanel = new RemoveMultipleInheritancePanel();
-        mainViews[2] = new View(Translator.getTerm("RemoveMultipleInheritanceBorder"), null,
+        var mainTabbedPane = new JTabbedPane();
+        mainTabbedPane.addTab(Translator.getTerm("MatchedResultAnalysisResultBorder"), null,
+                getMRAPanel());
+        mainTabbedPane.addTab(Translator.getTerm("TrimmedResultAnalysisResultBorder"), null,
+                getTRAPanel());
+        mainTabbedPane.addTab(Translator.getTerm("RemoveMultipleInheritanceBorder"), null,
                 rmMultipleInheritancePanel);
 
-        for (int i = 0; i < mainViews.length; i++) {
-            viewMap.addView(i, mainViews[i]);
-        }
-        rootWindow = Utils.createDODDLERootWindow(viewMap);
         setLayout(new BorderLayout());
-        add(rootWindow, BorderLayout.CENTER);
-    }
-
-    public void setXGALayout() {
-        rootWindow.setWindow(new TabWindow(new DockingWindow[]{mainViews[0], mainViews[1],
-                mainViews[2]}));
-        mainViews[0].restoreFocus();
-    }
-
-    public void setUXGALayout() {
-        SplitWindow sw1 = new SplitWindow(true, mainViews[0], mainViews[1]);
-        SplitWindow sw2 = new SplitWindow(true, 0.66f, sw1, mainViews[2]);
-        rootWindow.setWindow(sw2);
-        mainViews[0].restoreFocus();
+        add(mainTabbedPane, BorderLayout.CENTER);
     }
 
     public List<ConceptTreeNode> getTRAResult() {
@@ -364,9 +343,10 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                 .getMulipleInheritanceConceptSet());
         setMRADefaultValue();
         setTRADefaultValue();
-        mainViews[2].getViewProperties().setTitle(
-                Translator.getTerm("RemoveMultipleInheritanceBorder") + " ("
-                        + maker.getMulipleInheritanceConceptSet().size() + ")");
+        // TODO update
+//        mainViews[2].getViewProperties().setTitle(
+//                Translator.getTerm("RemoveMultipleInheritanceBorder") + " ("
+//                        + maker.getMulipleInheritanceConceptSet().size() + ")");
     }
 
     private void setMRADefaultValue() {
@@ -377,8 +357,9 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             list.add(i + 1 + ": " + sinNode.getConcept());
         }
         mraJList.setListData(list.toArray());
-        mainViews[0].getViewProperties().setTitle(
-                Translator.getTerm("MatchedResultAnalysisResultBorder") + " (" + list.size() + ")");
+        // TODO update
+//        mainViews[0].getViewProperties().setTitle(
+//                Translator.getTerm("MatchedResultAnalysisResultBorder") + " (" + list.size() + ")");
     }
 
     public void setTRADefaultValue() {
@@ -389,9 +370,10 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
                     + ")");
         }
         traJList.setListData(list.toArray());
-        mainViews[1].getViewProperties().setTitle(
-                Translator.getTerm("TrimmedResultAnalysisResultBorder") + " (" + traList.size()
-                        + ")");
+        // TODO update
+//        mainViews[1].getViewProperties().setTitle(
+//                Translator.getTerm("TrimmedResultAnalysisResultBorder") + " (" + traList.size()
+//                        + ")");
     }
 
     class RemoveMultipleInheritancePanel extends JPanel implements ListSelectionListener,
@@ -531,8 +513,9 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         public void resetMutipleInheritanceConceptJListTitle() {
             DefaultListModel listModel = (DefaultListModel) multipleInheritanceConceptJList
                     .getModel();
-            mainViews[2].getViewProperties().setTitle(Translator.getTerm("RemoveMultipleInheritanceBorder") + " (" + listModel.size() + ")");
-            rootWindow.repaint();
+            // TODO update title
+//            mainViews[2].getViewProperties().setTitle(Translator.getTerm("RemoveMultipleInheritanceBorder") + " (" + listModel.size() + ")");
+//            rootWindow.repaint();
         }
 
         /**

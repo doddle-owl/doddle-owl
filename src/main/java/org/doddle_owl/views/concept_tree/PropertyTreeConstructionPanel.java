@@ -23,11 +23,6 @@
 
 package org.doddle_owl.views.concept_tree;
 
-import net.infonode.docking.DockingWindow;
-import net.infonode.docking.SplitWindow;
-import net.infonode.docking.TabWindow;
-import net.infonode.docking.View;
-import net.infonode.docking.util.ViewMap;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.Concept;
@@ -42,6 +37,7 @@ import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.views.common.UndefinedTermListPanel;
 
+import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
@@ -57,20 +53,11 @@ import java.util.logging.Level;
  */
 public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel {
 
-    private int afterTrimmingConceptCnt;
     private EDRConceptDefinitionPanel edrConceptDefinitionPanel;
 
     public void clearPanel() {
         super.clearPanel();
         edrConceptDefinitionPanel.init();
-    }
-
-    public int getAfterTrimmingConceptCnt() {
-        return afterTrimmingConceptCnt;
-    }
-
-    public boolean isConceptContains(Concept c) {
-        return isaTreePanel.isConceptContains(c);
     }
 
     public void initialize() {
@@ -95,46 +82,31 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
                 new ConceptTreeCellRenderer(ConceptTreeCellRenderer.VERB_CONCEPT_TREE), edrConceptDefinitionPanel,
                 conceptDriftManagementPanel);
 
-        mainViews = new View[6];
-        ViewMap viewMap = new ViewMap();
+        var treeTabbedPane = new JTabbedPane();
+        treeTabbedPane.addTab(Translator.getTerm("IsaConceptTreePanel"), null, isaTreePanel);
+        treeTabbedPane.addTab(Translator.getTerm("HasaConceptTreePanel"), null, hasaTreePanel);
 
-        mainViews[0] = new View(Translator.getTerm("UndefinedTermListPanel"), null, undefinedTermListPanel);
-        mainViews[1] = new View(Translator.getTerm("IsaConceptTreePanel"), null, isaTreePanel);
-        mainViews[2] = new View(Translator.getTerm("HasaConceptTreePanel"), null, hasaTreePanel);
-        mainViews[3] = new View(Translator.getTerm("ConceptInformationPanel"), null, conceptInfoPanel);
-        mainViews[4] = new View(Translator.getTerm("ConceptDefinitionPanel"), null, edrConceptDefinitionPanel);
-        mainViews[5] = new View(Translator.getTerm("ConceptDriftManagementPanel"), null, conceptDriftManagementPanel);
+        var leftPanel = new JPanel();
+        leftPanel.setLayout(new BorderLayout());
+        leftPanel.add(undefinedTermListPanel, BorderLayout.NORTH);
+        leftPanel.add(treeTabbedPane, BorderLayout.CENTER);
 
-        for (int i = 0; i < mainViews.length; i++) {
-            viewMap.addView(i, mainViews[i]);
-        }
-        rootWindow = Utils.createDODDLERootWindow(viewMap);
+        var southTabbedPane = new JTabbedPane();
+        southTabbedPane.addTab(Translator.getTerm("ConceptDefinitionPanel"), null, edrConceptDefinitionPanel);
+        southTabbedPane.addTab(Translator.getTerm("ConceptDriftManagementPanel"), null, conceptDriftManagementPanel);
+
+        var rightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplitPane.add(conceptInfoPanel);
+        rightSplitPane.add(southTabbedPane);
+        rightSplitPane.setDividerLocation(0.6);
+
+        var mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        mainSplitPane.add(leftPanel);
+        mainSplitPane.add(rightSplitPane);
+        mainSplitPane.setDividerLocation(0.4);
+
         setLayout(new BorderLayout());
-        add(rootWindow, BorderLayout.CENTER);
-    }
-
-    public void setXGALayout() {
-        conceptDriftManagementPanel.setXGALayout();
-        TabWindow t1 = new TabWindow(new DockingWindow[]{mainViews[1], mainViews[2]});
-        SplitWindow sw1 = new SplitWindow(false, 0.3f, mainViews[0], t1);
-        TabWindow t2 = new TabWindow(new DockingWindow[]{mainViews[4], mainViews[5]});
-        SplitWindow sw2 = new SplitWindow(false, 0.5f, mainViews[3], t2);
-        SplitWindow sw3 = new SplitWindow(true, 0.3f, sw1, sw2);
-        rootWindow.setWindow(sw3);
-        mainViews[1].restoreFocus();
-        mainViews[4].restoreFocus();
-    }
-
-    public void setUXGALayout() {
-        conceptDriftManagementPanel.setUXGALayout();
-        TabWindow t1 = new TabWindow(new DockingWindow[]{mainViews[1], mainViews[2]});
-        SplitWindow sw1 = new SplitWindow(false, 0.3f, mainViews[0], t1);
-        SplitWindow sw2 = new SplitWindow(true, mainViews[4], mainViews[5]);
-        SplitWindow sw3 = new SplitWindow(false, 0.5f, mainViews[3], sw2);
-        SplitWindow sw4 = new SplitWindow(true, 0.3f, sw1, sw3);
-        rootWindow.setWindow(sw4);
-        mainViews[1].restoreFocus();
-        mainViews[4].restoreFocus();
+        add(mainSplitPane, BorderLayout.CENTER);
     }
 
     public void addCompoundWordConcept(Map matchedWordIDMap, Map abstractNodeLabelMap, TreeNode rootNode) {

@@ -315,17 +315,11 @@ public class DODDLEProjectPanel extends JPanel {
     public void setXGALayoutForAll() {
         setXGALayout();
         conceptSelectionPanel.setXGALayout();
-        constructClassPanel.setXGALayout();
-        constructPropertyPanel.setXGALayout();
-//        conceptDefinitionPanel.setXGALayout();
     }
 
     public void setUXGALayoutForAll() {
         setXGALayout();
         conceptSelectionPanel.setUXGALayout();
-        constructClassPanel.setUXGALayout();
-        constructPropertyPanel.setUXGALayout();
-//        conceptDefinitionPanel.setUXGALayout();
     }
 
     public void resetURIConceptMap() {

@@ -45,7 +45,7 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
     private JButton addLabelButton;
     private JButton deleteLabelButton;
     private JButton editLabelButton;
-    private JButton setTypcialLabelButton;
+    private JButton setDefaultLabelButton;
 
     private ConceptInformationPanel conceptInfoPanel;
 
@@ -83,9 +83,10 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
         deleteLabelButton.addActionListener(this);
         editLabelButton = new JButton(Translator.getTerm("EditButton"));
         editLabelButton.addActionListener(this);
-        setTypcialLabelButton = new JButton(Translator.getTerm("SetPreferentialTermButton"));
-        setTypcialLabelButton.addActionListener(this);
-        buttonPanel.add(setTypcialLabelButton);
+        // TODO update button label
+        setDefaultLabelButton = new JButton(Translator.getTerm("SetPreferentialTermButton"));
+        setDefaultLabelButton.addActionListener(this);
+        buttonPanel.add(setDefaultLabelButton);
         buttonPanel.add(addLabelButton);
         buttonPanel.add(editLabelButton);
         buttonPanel.add(deleteLabelButton);
@@ -169,7 +170,7 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
                 conceptInfoPanel.reloadConceptTreeNode(selectedConcept);
                 conceptInfoPanel.reloadHasaTreeNode(selectedConcept);
             }
-        } else if (e.getSource() == setTypcialLabelButton) {
+        } else if (e.getSource() == setDefaultLabelButton) {
             DODDLELiteral label = (DODDLELiteral) literalJList.getSelectedValue();
             conceptInfoPanel.setPreferentialTerm(selectedConcept, label);
         }
