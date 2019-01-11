@@ -67,7 +67,7 @@ public class Utils {
 
     public static RootWindow createDODDLERootWindow(ViewMap viewMap) {
         RootWindow rootWindow = DockingUtil.createRootWindow(viewMap, true);
-        rootWindow.getWindowBar(Direction.DOWN).setEnabled(true);
+        rootWindow.getWindowBar(Direction.DOWN).setEnabled(false);
         RootWindowProperties properties = new RootWindowProperties();
         DockingWindowsTheme currentTheme = new ShapedGradientDockingTheme();
         properties.addSuperObject(currentTheme.getRootWindowProperties());

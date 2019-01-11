@@ -1,6 +1,6 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
-
+ *
  * Project Website: http://doddle-owl.org/
  *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.

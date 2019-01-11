@@ -27,7 +27,6 @@ import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
 import edu.stanford.nlp.simple.Sentence;
 import net.infonode.docking.RootWindow;
-import net.infonode.docking.SplitWindow;
 import net.infonode.docking.View;
 import net.infonode.docking.util.ViewMap;
 import net.sf.extjwnl.data.IndexWord;
@@ -48,6 +47,7 @@ import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -57,19 +57,15 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 /**
  * @author Takeshi Morita
@@ -78,20 +74,14 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     private Set<String> stopWordSet;
 
-    private JList docList;
-    private JList inputDocList;
+    private JList<Document> documentList;
+    private DefaultListModel<Document> documentListModel;
 
-    private JComboBox docLangBox;
-    private JButton addDocButton;
-    private JButton removeDocButton;
-    private JComboBox inputDocLangBox;
-    private JButton addInputDocButton;
-    private JButton removeInputDocButton;
+    private JComboBox<String> documentLangComboBox;
+    private DefaultComboBoxModel<String> documentLangComboBoxModel;
 
-    private JButton termExtractionButton;
     private JCheckBox genSenCheckBox;
     private JCheckBox cabochaCheckBox;
-    private JCheckBox showImportanceCheckBox;
     private JCheckBox nounCheckBox;
     private JCheckBox verbCheckBox;
     private JCheckBox otherCheckBox;
@@ -99,6 +89,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     private JTextField punctuationField;
     private JButton setPunctuationButton;
+    private JButton termExtractionButton;
 
     public static String PUNCTUATION_CHARS = "．|。|\\.";
     public static final String COMPOUND_WORD_JA = "複合語";
@@ -109,7 +100,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     private TaskAnalyzer taskAnalyzer;
 
-    private JTextArea inputDocArea;
+    private JTextArea documentTextArea;
     private Map<String, TermInfo> termInfoMap;
 
     private TermSelectionPanel termSelectionPanel;
@@ -121,11 +112,9 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     private Process jaMorphologicalAnalyzerProcess;
     private Process termExtractProcess;
     public static String Japanese_Morphological_Analyzer = "C:/Program Files/Chasen/chasen.exe";
-    public static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
+    private static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
     public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
     public static String PERL_EXE = "C:/Perl/bin/perl.exe";
-    private static String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
-    private static String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
     private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
     public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
     public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
@@ -141,78 +130,60 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         } else {
             stopWordSet.clear();
         }
-        docList.removeAll();
-        inputDocList.removeAll();
+        documentListModel.clear();
         genSenCheckBox.setSelected(false);
         cabochaCheckBox.setSelected(false);
-        showImportanceCheckBox.setSelected(false);
         nounCheckBox.setSelected(true);
         verbCheckBox.setSelected(false);
         otherCheckBox.setSelected(false);
         oneWordCheckBox.setSelected(false);
         punctuationField.setText(PUNCTUATION_CHARS);
-        inputDocArea.setText("");
+        documentTextArea.setText("");
     }
 
     public DocumentSelectionPanel(TermSelectionPanel iwsPanel, DODDLEProjectPanel p) {
         project = p;
         termSelectionPanel = iwsPanel;
-        docList = new JList(new DefaultListModel());
-        docList.addListSelectionListener(this);
-        JScrollPane docListScroll = new JScrollPane(docList);
-        inputDocList = new JList(new DefaultListModel());
-        inputDocList.addListSelectionListener(this);
-        JScrollPane inputDocListScroll = new JScrollPane(inputDocList);
+        documentListModel = new DefaultListModel<>();
+        documentList = new JList<>(documentListModel);
+        documentList.addListSelectionListener(this);
+        var documentListScroll = new JScrollPane(documentList);
 
-        DefaultComboBoxModel docLangBoxModel = new DefaultComboBoxModel(new Object[]{"en", "ja"});
-        docLangBox = new JComboBox(docLangBoxModel);
-        docLangBox.addActionListener(this);
-        addDocButton = new JButton(new AddDocAction(Translator.getTerm("AddDocumentButton")));
-        removeDocButton = new JButton(new RemoveDocAction(Translator.getTerm("RemoveDocumentButton")));
-        DefaultComboBoxModel inputDocLangBoxModel = new DefaultComboBoxModel(new Object[]{"en", "ja"});
-        inputDocLangBox = new JComboBox(inputDocLangBoxModel);
-        inputDocLangBox.addActionListener(this);
-        addInputDocButton = new JButton(new AddInputDocAction(Translator.getTerm("AddInputDocumentButton")));
-        removeInputDocButton = new JButton(new RemoveInputDocAction(Translator.getTerm("RemoveInputDocumentButton")));
+        documentLangComboBoxModel = new DefaultComboBoxModel<>(new String[]{"en", "ja"});
+        documentLangComboBox = new JComboBox<>(documentLangComboBoxModel);
+        documentLangComboBox.addActionListener(this);
+        var addDocumentButton = new JButton(new AddDocumentAction(Translator.getTerm("AddInputDocumentButton")));
+        var removeDocumentButton = new JButton(new RemoveDocumentAction(Translator.getTerm("RemoveInputDocumentButton")));
 
-        inputDocArea = new JTextArea();
-        inputDocArea.setLineWrap(true);
-        JScrollPane inputDocAreaScroll = new JScrollPane(inputDocArea);
-
-        JPanel docButtonPanel = new JPanel();
-        docButtonPanel.setLayout(new BorderLayout());
-        docButtonPanel.setLayout(new GridLayout(1, 3));
-        docButtonPanel.add(docLangBox);
-        docButtonPanel.add(addDocButton);
-        docButtonPanel.add(removeDocButton);
-        JPanel docPanel = new JPanel();
-        docPanel.setLayout(new BorderLayout());
-        docPanel.add(docListScroll, BorderLayout.CENTER);
-        docPanel.add(docButtonPanel, BorderLayout.SOUTH);
+        documentTextArea = new JTextArea();
+        documentTextArea.setLineWrap(true);
+        var documentTextAreaScroll = new JScrollPane(documentTextArea);
+        documentTextAreaScroll.setBorder(new TitledBorder(Translator.getTerm("InputDocumentArea")));
 
         punctuationField = new JTextField(10);
         setPunctuationButton = new JButton(Translator.getTerm("SetPunctuationCharacterButton"));
         setPunctuationButton.addActionListener(this);
 
-        JPanel punctuationPanel = new JPanel();
+        var punctuationPanel = new JPanel();
         punctuationPanel.add(punctuationField);
         punctuationPanel.add(setPunctuationButton);
 
-        JPanel inputDocButtonPanel = new JPanel();
-        inputDocButtonPanel.setLayout(new GridLayout(1, 3));
-        inputDocButtonPanel.add(inputDocLangBox);
-        inputDocButtonPanel.add(addInputDocButton);
-        inputDocButtonPanel.add(removeInputDocButton);
+        var documentButtonPanel = new JPanel();
+        documentButtonPanel.setLayout(new GridLayout(1, 3));
+        documentButtonPanel.add(documentLangComboBox);
+        documentButtonPanel.add(addDocumentButton);
+        documentButtonPanel.add(removeDocumentButton);
 
-        JPanel southPanel = new JPanel();
+        var southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
-        southPanel.add(inputDocButtonPanel, BorderLayout.WEST);
+        southPanel.add(documentButtonPanel, BorderLayout.WEST);
         southPanel.add(punctuationPanel, BorderLayout.EAST);
 
-        JPanel inputDocPanel = new JPanel();
-        inputDocPanel.setLayout(new BorderLayout());
-        inputDocPanel.add(inputDocListScroll, BorderLayout.CENTER);
-        inputDocPanel.add(southPanel, BorderLayout.SOUTH);
+        var documentPanel = new JPanel();
+        documentPanel.setLayout(new BorderLayout());
+        documentPanel.add(documentListScroll, BorderLayout.CENTER);
+        documentPanel.add(southPanel, BorderLayout.SOUTH);
+        documentPanel.setBorder(new TitledBorder(Translator.getTerm("InputDocumentList")));
 
         termExtractionButton = new JButton(Translator.getTerm("InputTermExtractionButton"),
                 Utils.getImageIcon("input_term_selection.png"));
@@ -220,13 +191,12 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
         genSenCheckBox = new JCheckBox(Translator.getTerm("GensenCheckBox"));
         cabochaCheckBox = new JCheckBox(Translator.getTerm("CabochaCheckBox"));
-        showImportanceCheckBox = new JCheckBox("重要度");
         nounCheckBox = new JCheckBox(Translator.getTerm("NounCheckBox"));
         verbCheckBox = new JCheckBox(Translator.getTerm("VerbCheckBox"));
         otherCheckBox = new JCheckBox(Translator.getTerm("OtherPOSCheckBox"));
         oneWordCheckBox = new JCheckBox(Translator.getTerm("OneCharacterCheckBox"));
 
-        JPanel morphemeAnalysisPanel = new JPanel();
+        var morphemeAnalysisPanel = new JPanel();
         morphemeAnalysisPanel.add(genSenCheckBox);
         morphemeAnalysisPanel.add(cabochaCheckBox);
         morphemeAnalysisPanel.add(nounCheckBox);
@@ -234,46 +204,42 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         morphemeAnalysisPanel.add(otherCheckBox);
         morphemeAnalysisPanel.add(oneWordCheckBox);
 
-        JPanel buttonPanel = new JPanel();
+        var buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.add(morphemeAnalysisPanel, BorderLayout.WEST);
         buttonPanel.add(termExtractionButton, BorderLayout.EAST);
 
-        mainViews = new View[2];
-        ViewMap viewMap = new ViewMap();
-        mainViews[0] = new View(Translator.getTerm("InputDocumentList"), null, inputDocPanel);
-        mainViews[1] = new View(Translator.getTerm("InputDocumentArea"), null, inputDocAreaScroll);
+        var documentSelectionPanelSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        documentSelectionPanelSplitPane.add(documentPanel);
+        documentSelectionPanelSplitPane.add(documentTextAreaScroll);
 
-        for (int i = 0; i < mainViews.length; i++) {
-            viewMap.addView(i, mainViews[i]);
-        }
+        mainViews = new View[1];
+        ViewMap viewMap = new ViewMap();
+        mainViews[0] = new View("", null, documentSelectionPanelSplitPane);
+        viewMap.addView(0, mainViews[0]);
         initialize();
         rootWindow = Utils.createDODDLERootWindow(viewMap);
+        rootWindow.setWindow(mainViews[0]);
         setLayout(new BorderLayout());
         add(rootWindow, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
     public void setXGALayout() {
-        SplitWindow sw2 = new SplitWindow(false, 0.4f, mainViews[0], mainViews[1]);
-        rootWindow.setWindow(sw2);
+        rootWindow.setWindow(mainViews[0]);
     }
 
     private void setStopWordSet() {
         stopWordSet.clear();
         try {
-            File file = new File(STOP_WORD_LIST_FILE);
-            if (!file.exists()) {
+            Path stopWordListFilePath = Paths.get(STOP_WORD_LIST_FILE);
+            if (Files.notExists(stopWordListFilePath)) {
                 return;
             }
-            BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
-            try (reader) {
-                while (reader.ready()) {
-                    String line = reader.readLine();
-                    stopWordSet.add(line);
-                }
-            }
-        } catch (Exception e) {
+            stopWordSet = Files.lines(stopWordListFilePath).collect(Collectors.toSet());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -286,78 +252,13 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         return stopWordSet.contains(w);
     }
 
-    private void deleteFiles(File file) {
-        File[] files = file.listFiles();
-        for (File file1 : files) {
-            file1.delete();
-        }
-    }
-
-    private String getTextFileName(String fileName) {
-        if (!fileName.endsWith("txt")) {
-            fileName += ".txt";
-        }
-        return fileName;
-    }
-
-    private void saveFiles(Map<File, String> fileTextStringMap, File saveDir) {
-        try {
-            for (Entry<File, String> entrySet : fileTextStringMap.entrySet()) {
-                File file = entrySet.getKey();
-                String text = entrySet.getValue();
-                File saveFile = new File(saveDir, getTextFileName(file.getName()));
-                BufferedWriter writer = Files.newBufferedWriter(Paths.get(saveFile.getAbsolutePath()), StandardCharsets.UTF_8);
-                try (writer) {
-                    writer.write(text);
-                }
-            }
-        } catch (IOException ioex) {
-            ioex.printStackTrace();
-        }
-    }
-
-    private Map<File, String> getFileTextStringMap(ListModel listModel) {
-        Map<File, String> fileTextStringMap = new HashMap<>();
-        for (int i = 0; i < listModel.getSize(); i++) {
-            Document doc = (Document) listModel.getElementAt(i);
-            fileTextStringMap.put(doc.getFile(), doc.getText());
-        }
-        return fileTextStringMap;
-    }
-
-    /**
-     * 同名のファイルが複数ある場合には，上書きされる
-     */
-    public void saveDocuments(File saveDir) {
-        // File docs = new File(saveDir, "docs");
-        // Map<File, String> fileTextStringMap =
-        // getFileTextStringMap(docList.getModel());
-        // if (!docs.mkdir()) {
-        // deleteFiles(docs);
-        // }
-        // saveFiles(fileTextStringMap, docs);
-        File inputDocs = new File(saveDir, "inputDocs");
-        Map<File, String> fileTextStringMap = getFileTextStringMap(inputDocList.getModel());
-        if (!inputDocs.mkdir()) {
-            deleteFiles(inputDocs);
-        }
-        saveFiles(fileTextStringMap, inputDocs);
-        saveDocumentInfo(saveDir);
-    }
-
     public void saveDocumentInfo(File saveDir) {
         File docInfo = new File(saveDir, ProjectFileNames.DOC_INFO_FILE);
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(docInfo.getAbsolutePath()), StandardCharsets.UTF_8);
-            // for (int i = 0; i < docList.getModel().getSize(); i++) {
-            // Document doc = (Document) docList.getModel().getElementAt(i);
-            // writer.write("doc," +
-            // getTextFileName(doc.getFile().getAbsolutePath()) + "," +
-            // doc.getLang() + "\n");
-            // }
             try (writer) {
-                for (int i = 0; i < inputDocList.getModel().getSize(); i++) {
-                    Document doc = (Document) inputDocList.getModel().getElementAt(i);
+                for (int i = 0; i < documentListModel.getSize(); i++) {
+                    Document doc = documentListModel.getElementAt(i);
                     writer.write("inputDoc,");
                     writer.write(doc.getFile().getAbsolutePath());
                     writer.write(",");
@@ -367,37 +268,6 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void saveDocumentInfo(int projectID, Statement stmt) {
-        int docID = 1;
-        try {
-            for (int i = 0; i < inputDocList.getModel().getSize(); i++) {
-                Document doc = (Document) inputDocList.getModel().getElementAt(i);
-                String path = URLEncoder.encode(doc.getFile().getAbsolutePath(), StandardCharsets.UTF_8);
-                String lang = doc.getLang();
-                String text = URLEncoder.encode(doc.getText(), StandardCharsets.UTF_8);
-                String sql = "INSERT INTO doc_info (Project_ID,Doc_ID,Doc_Path,Language,Text) "
-                        + "VALUES(" + projectID + "," + docID + ",'" + path + "','" + lang + "','"
-                        + text + "')";
-                stmt.executeUpdate(sql);
-                docID++;
-            }
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-    }
-
-    public void openDocuments(File openDir) {
-        File docs = new File(openDir, ProjectFileNames.DOC_DIR);
-        if (docs.listFiles() != null) {
-            Set fileSet = new TreeSet();
-            getFiles(docs.listFiles(), fileSet);
-            if (fileSet == null) {
-                return;
-            }
-            addDocuments(docList, fileSet);
         }
     }
 
@@ -418,60 +288,24 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                     String type = info[0];
                     String fileName = info[1];
                     String lang = info[2];
-                    if (type.equals("doc")) {
-                        DefaultListModel model = (DefaultListModel) docList.getModel();
-                        model.addElement(new Document(lang, new File(fileName)));
-                    } else if (type.equals("inputDoc")) {
-                        DefaultListModel model = (DefaultListModel) inputDocList.getModel();
-                        model.addElement(new Document(lang, new File(fileName)));
+                    if (type.equals("inputDoc")) {
+                        documentListModel.addElement(new Document(lang, new File(fileName)));
                     }
                 }
             }
-            termSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
+            termSelectionPanel.setInputDocumentListModel(documentListModel);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadDocuments(int projectID, Statement stmt) {
-        try {
-            String sql = "SELECT * from doc_info where Project_ID=" + projectID;
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                String docPath = URLDecoder.decode(rs.getString("Doc_Path"), StandardCharsets.UTF_8);
-                String lang = rs.getString("Language");
-                String text = URLDecoder.decode(rs.getString("Text"), StandardCharsets.UTF_8);
-                DefaultListModel model = (DefaultListModel) inputDocList.getModel();
-                model.addElement(new Document(lang, new File(docPath), text));
-            }
-            termSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void openInputDocuments(File openDir) {
-        File inputDocs = new File(openDir, ProjectFileNames.INPUT_DOC_DIR);
-        if (inputDocs.listFiles() != null) {
-            Set fileSet = new TreeSet();
-            getFiles(inputDocs.listFiles(), fileSet);
-            if (fileSet == null) {
-                return;
-            }
-            addDocuments(inputDocList, fileSet);
-        }
-    }
-
-    public int getDocNum() {
-        return docList.getModel().getSize() + inputDocList.getModel().getSize();
-    }
-
-    private void setTermInfoMap(String term, String pos, File doc, boolean isInputDoc) {
+    private void setTermInfoMap(String term, String pos, File doc) {
         TermInfo info;
         if (termInfoMap.get(term) != null) {
             info = termInfoMap.get(term);
         } else {
-            int docNum = docList.getModel().getSize() + inputDocList.getModel().getSize();
+            int docNum = documentListModel.getSize();
             info = new TermInfo(term, docNum);
         }
         if (!(pos.equals(COMPOUND_WORD_EN) || pos.equals(COMPOUND_WORD_JA))) {
@@ -479,61 +313,33 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         } else if (info.getPosSet().size() == 0) {
             info.addPos(pos);
         }
-        if (isInputDoc) {
-            info.putInputDoc(doc);
-        } else {
-            info.putDoc(doc);
-        }
+        info.putInputDoc(doc);
         termInfoMap.put(term, info);
     }
 
-    private void setTermInfo(String term, String pos, String basicStr, File file, boolean isInputDoc) {
+    private void setTermInfo(String term, String pos, String basicStr, File file) {
         if (nounCheckBox.isSelected() && isEnNoun(pos)) {
             IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, term.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
-                // System.out.println("n: " + basicStr);
             }
-            setTermInfoMap(basicStr, pos, file, isInputDoc);
+            setTermInfoMap(basicStr, pos, file);
         } else if (verbCheckBox.isSelected() && isEnVerb(pos)) {
             IndexWord indexWord = WordNet.getIndexWord(POS.VERB, term.toLowerCase());
             if (indexWord != null && indexWord.getLemma() != null) {
                 basicStr = indexWord.getLemma();
-                // System.out.println("v: " + basicStr);
             }
-            setTermInfoMap(basicStr, pos, file, isInputDoc);
+            setTermInfoMap(basicStr, pos, file);
         } else if (otherCheckBox.isSelected() && isEnOther(pos)) {
-            setTermInfoMap(basicStr, pos, file, isInputDoc);
+            setTermInfoMap(basicStr, pos, file);
         }
     }
 
-    private void setTermInfo(String word, String basicStr, File file, boolean isInputDoc) {
-        if (nounCheckBox.isSelected()) {
-            IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word.toLowerCase());
-            if (indexWord != null && indexWord.getLemma() != null) {
-                basicStr = indexWord.getLemma();
-                setTermInfoMap(basicStr, "noun", file, isInputDoc);
-                // System.out.println("n: " + basicStr);
-            }
-        }
-        if (verbCheckBox.isSelected()) {
-            IndexWord indexWord = WordNet.getIndexWord(POS.VERB, word.toLowerCase());
-            if (indexWord != null && indexWord.getLemma() != null) {
-                basicStr = indexWord.getLemma();
-                setTermInfoMap(basicStr, "verb", file, isInputDoc);
-                // System.out.println("v: " + basicStr);
-            }
-        }
-        if (otherCheckBox.isSelected()) {
-            setTermInfoMap(basicStr, "", file, isInputDoc);
-        }
-    }
-
-    private void enTermExtraction(Document doc, boolean isInputDoc) {
+    private void enTermExtraction(Document doc) {
         File file = doc.getFile();
         edu.stanford.nlp.simple.Document stanfordDoc = new edu.stanford.nlp.simple.Document(doc.getText());
         Path taggerOutPath = Paths.get(DODDLEConstants.PROJECT_HOME + File.separator + "tmpTagger.txt");
-        try (BufferedWriter writer = Files.newBufferedWriter(taggerOutPath);) {
+        try (BufferedWriter writer = Files.newBufferedWriter(taggerOutPath)) {
             for (Sentence sentence : stanfordDoc.sentences()) {
                 for (int i = 0; i < sentence.words().size(); i++) {
                     String word = sentence.word(i);
@@ -550,7 +356,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                     if (isStopWord(basicStr)) {
                         continue;
                     }
-                    setTermInfo(word, pos, basicStr, file, isInputDoc);
+                    setTermInfo(word, pos, basicStr, file);
                 }
             }
         } catch (IOException e) {
@@ -559,12 +365,12 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         if (genSenCheckBox.isSelected()) {
             Set<String> comoundWordSet = getGensenCompoundWordSet(doc);
             for (String compoundWord : comoundWordSet) {
-                setTermInfoMap(compoundWord, COMPOUND_WORD_EN, file, isInputDoc);
+                setTermInfoMap(compoundWord, COMPOUND_WORD_EN, file);
             }
         }
     }
 
-    private void jaTermExtraction(Document doc, boolean isInputDoc) {
+    private void jaTermExtraction(Document doc) {
         File file = doc.getFile();
         Tokenizer tokenizer = new Tokenizer();
         List<Token> tokenList = tokenizer.tokenize(doc.getText());
@@ -581,17 +387,17 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                 continue;
             }
             if (nounCheckBox.isSelected() && isJaNoun(pos)) {
-                setTermInfoMap(basicStr, pos, file, isInputDoc);
+                setTermInfoMap(basicStr, pos, file);
             } else if (verbCheckBox.isSelected() && isJaVerb(pos)) {
-                setTermInfoMap(basicStr, pos, file, isInputDoc);
+                setTermInfoMap(basicStr, pos, file);
             } else if (otherCheckBox.isSelected() && isJaOther(pos)) {
-                setTermInfoMap(basicStr, pos, file, isInputDoc);
+                setTermInfoMap(basicStr, pos, file);
             }
         }
         if (genSenCheckBox.isSelected()) {
             Set<String> compoundWordSet = getGensenCompoundWordSet(doc);
             for (String compoundWord : compoundWordSet) {
-                setTermInfoMap(compoundWord, COMPOUND_WORD_JA, file, isInputDoc);
+                setTermInfoMap(compoundWord, COMPOUND_WORD_JA, file);
             }
         }
         if (cabochaCheckBox.isSelected()) {
@@ -605,17 +411,20 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         for (Entry<String, Integer> entry : map.entrySet()) {
             String compoundWord = entry.getKey();
             int count = entry.getValue();
-            setTermInfoMap(compoundWord, COMPOUND_WORD_JA, doc.getFile(), true);
+            setTermInfoMap(compoundWord, COMPOUND_WORD_JA, doc.getFile());
             TermInfo wordInfo = termInfoMap.get(compoundWord);
             wordInfo.putInputDoc(doc.getFile(), count);
         }
     }
 
-    private void termExtraction(Document doc, boolean isInputDoc) {
-        if (doc.getLang().equals("ja")) {
-            jaTermExtraction(doc, isInputDoc);
-        } else if (doc.getLang().equals("en")) {
-            enTermExtraction(doc, isInputDoc);
+    private void termExtraction(Document doc) {
+        switch (doc.getLang()) {
+            case "ja":
+                jaTermExtraction(doc);
+                break;
+            case "en":
+                enTermExtraction(doc);
+                break;
         }
     }
 
@@ -623,19 +432,16 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     public void destroyProcesses() {
         if (jaMorphologicalAnalyzerProcess != null) {
             jaMorphologicalAnalyzerProcess.destroy();
-            // System.out.println("Destroy Japanese Morphological Analyzer
-            // Process");
         }
         if (termExtractProcess != null) {
             termExtractProcess.destroy();
-            // System.out.println("Term Extract Process");
         }
         if (taskAnalyzer != null) {
             taskAnalyzer.destroyProcess();
         }
     }
 
-    public Set<String> getGensenCompoundWordSet(Document doc) {
+    private Set<String> getGensenCompoundWordSet(Document doc) {
         String lang = doc.getLang();
         Set<String> wordSet = new HashSet<>();
         BufferedReader reader = null;
@@ -659,18 +465,13 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                 if (lang.equals("en")) {
                     word = word.replaceAll("\\s+", " ");
                 }
-                String importance = lines[1];
                 if (lang.equals("en") && word.split("\\s+").length == 1) {
                     continue;
                 }
                 if (!oneWordCheckBox.isSelected() && word.length() == 1) {
                     continue;
                 }
-                if (showImportanceCheckBox.isSelected()) {
-                    wordSet.add(word + "(" + importance + ")");
-                } else {
-                    wordSet.add(word);
-                }
+                wordSet.add(word);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -744,8 +545,10 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         }
 
         jaMorphologicalAnalyzerProcess = processBuilder.start();
+        String TERM_EXTRACT_CHASEN_PL = "ex_chasen.pl";
         String TERM_EXTRACT_EXE = TERM_EXTRACT_CHASEN_PL;
         if (Japanese_Morphological_Analyzer.matches(".*mecab.*")) {
+            String TERM_EXTRACT_MECAB_PL = "ex_mecab.pl";
             TERM_EXTRACT_EXE = TERM_EXTRACT_MECAB_PL;
         }
         File dir = new File(TERM_EXTRACT_SCRIPTS_DIR);
@@ -808,8 +611,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         }
     }
 
-    class TermExtractionWorker extends SwingWorker<String, String> implements
-            PropertyChangeListener {
+    class TermExtractionWorker extends SwingWorker<String, String> implements PropertyChangeListener {
 
         private int currentTaskCnt;
 
@@ -824,31 +626,24 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         }
 
         @Override
-        protected String doInBackground() throws Exception {
+        protected String doInBackground() {
             try {
                 taskAnalyzer = new TaskAnalyzer();
                 UpperConceptManager.makeUpperOntologyList();
                 setProgress(currentTaskCnt++);
                 termInfoMap.clear();
-                ListModel listModel = inputDocList.getModel();
-                for (int i = 0; i < listModel.getSize(); i++) {
-                    Document doc = (Document) listModel.getElementAt(i);
+                for (int i = 0; i < documentListModel.getSize(); i++) {
+                    Document doc = documentListModel.getElementAt(i);
                     DODDLE_OWL.STATUS_BAR.setLastMessage(doc.getFile().getName());
-                    termExtraction(doc, true);
-                }
-                listModel = docList.getModel();
-                for (int i = 0; i < listModel.getSize(); i++) {
-                    Document doc = (Document) listModel.getElementAt(i);
-                    DODDLE_OWL.STATUS_BAR.setLastMessage(doc.getFile().getName());
-                    termExtraction(doc, false);
+                    termExtraction(doc);
                 }
 
                 setProgress(currentTaskCnt++);
                 setUpperConcept();
                 removeDocWordSet();
-                int docNum = docList.getModel().getSize() + inputDocList.getModel().getSize();
+                int docNum = documentListModel.getSize();
                 termSelectionPanel.setInputTermInfoTableModel(termInfoMap, docNum);
-                termSelectionPanel.setInputDocumentListModel(inputDocList.getModel());
+                termSelectionPanel.setInputDocumentListModel(documentListModel);
                 setProgress(currentTaskCnt++);
                 DODDLE_OWL.setSelectedIndex(DODDLEConstants.INPUT_WORD_SELECTION_PANEL);
                 setProgress(currentTaskCnt++);
@@ -881,32 +676,24 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
             TermExtractionWorker worker = new TermExtractionWorker(4);
             DODDLE_OWL.STATUS_BAR.setSwingWorker(worker);
             worker.execute();
-        } else if (e.getSource() == docLangBox) {
-            if (docList.getSelectedValuesList().size() == 1) {
-                String lang = (String) docLangBox.getSelectedItem();
-                Document doc = (Document) docList.getSelectedValue();
-                doc.setLang(lang);
-                updateUI();
-            }
-        } else if (e.getSource() == inputDocLangBox) {
-            if (inputDocList.getSelectedValuesList().size() == 1) {
-                String lang = (String) inputDocLangBox.getSelectedItem();
-                Document doc = (Document) inputDocList.getSelectedValue();
+        } else if (e.getSource() == documentLangComboBox) {
+            if (documentList.getSelectedValuesList().size() == 1) {
+                String lang = (String) documentLangComboBox.getSelectedItem();
+                Document doc = documentList.getSelectedValue();
                 doc.setLang(lang);
                 updateUI();
             }
         } else if (e.getSource() == setPunctuationButton) {
             PUNCTUATION_CHARS = punctuationField.getText();
-            ListModel inputDocModel = inputDocList.getModel();
-            for (int i = 0; i < inputDocModel.getSize(); i++) {
-                Document doc = (Document) inputDocModel.getElementAt(i);
+            for (int i = 0; i < documentListModel.getSize(); i++) {
+                Document doc = documentListModel.getElementAt(i);
                 doc.resetText();
             }
-            Document doc = (Document) inputDocList.getSelectedValue();
+            Document doc = documentList.getSelectedValue();
             if (doc != null) {
-                inputDocArea.setText(doc.getText());
-                inputDocArea.setCaretPosition(0);
-                docLangBox.setSelectedItem(doc.getLang());
+                documentTextArea.setText(doc.getText());
+                documentTextArea.setCaretPosition(0);
+                documentLangComboBox.setSelectedItem(doc.getLang());
             }
             updateUI();
         }
@@ -925,16 +712,11 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        if (e.getSource() == inputDocList && inputDocList.getSelectedValuesList().size() == 1) {
-            Document doc = (Document) inputDocList.getSelectedValue();
-            inputDocArea.setText(doc.getText());
-            inputDocArea.setCaretPosition(0);
-            inputDocLangBox.setSelectedItem(doc.getLang());
-        } else if (e.getSource() == docList && docList.getSelectedValuesList().size() == 1) {
-            Document doc = (Document) docList.getSelectedValue();
-            inputDocArea.setText(doc.getText());
-            inputDocArea.setCaretPosition(0);
-            docLangBox.setSelectedItem(doc.getLang());
+        if (e.getSource() == documentList && documentList.getSelectedValuesList().size() == 1) {
+            Document doc = documentList.getSelectedValue();
+            documentTextArea.setText(doc.getText());
+            documentTextArea.setCaretPosition(0);
+            documentLangComboBox.setSelectedItem(doc.getLang());
         }
     }
 
@@ -963,31 +745,10 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         return fileSet;
     }
 
-    public String getTargetTextLines(String word) {
-        StringWriter writer = new StringWriter();
-        ListModel listModel = inputDocList.getModel();
-        for (int i = 0; i < listModel.getSize(); i++) {
-            Document doc = (Document) listModel.getElementAt(i);
-            String text = doc.getText();
-            if (text != null) {
-                writer.write("[ " + doc.getFile().getAbsolutePath() + " ]\n");
-                String[] lines = text.split("\n");
-                for (int j = 0; j < lines.length; j++) {
-                    String line = lines[j];
-                    if (line.contains(word)) {
-                        writer.write((j + 1) + ": " + line + "\n");
-                    }
-                }
-                writer.write("\n");
-            }
-        }
-        return writer.toString();
-    }
-
     public String getTargetHtmlLines(String word) {
         StringWriter writer = new StringWriter();
         writer.write("<html><body>");
-        ListModel listModel = inputDocList.getModel();
+        ListModel listModel = documentListModel;
         for (int i = 0; i < listModel.getSize(); i++) {
             Document doc = (Document) listModel.getElementAt(i);
             String text = doc.getText();
@@ -1030,7 +791,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         return writer.toString();
     }
 
-    private void addDocuments(JList list, Set fileSet) {
+    private void addDocuments(JList<Document> list, Set fileSet) {
         DefaultListModel model = (DefaultListModel) list.getModel();
         for (Object o : fileSet) {
             File file = (File) o;
@@ -1043,23 +804,8 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         }
     }
 
-    class AddDocAction extends AbstractAction {
-
-        public AddDocAction(String title) {
-            super(title);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            Set fileSet = getFiles();
-            if (fileSet == null) {
-                return;
-            }
-            addDocuments(docList, fileSet);
-        }
-    }
-
-    class AddInputDocAction extends AbstractAction {
-        public AddInputDocAction(String title) {
+    class AddDocumentAction extends AbstractAction {
+        public AddDocumentAction(String title) {
             super(title, addDocIcon);
         }
 
@@ -1068,72 +814,33 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
             if (fileSet == null) {
                 return;
             }
-            addDocuments(inputDocList, fileSet);
+            addDocuments(documentList, fileSet);
             project.getConceptDefinitionPanel().setInputDocList();
             project.addLog("AddInputDocumentButton");
         }
     }
 
-    class RemoveDocAction extends AbstractAction {
-        public RemoveDocAction(String title) {
-            super(title);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            List removeElements = docList.getSelectedValuesList();
-            DefaultListModel model = (DefaultListModel) docList.getModel();
-            for (Object removeElement : removeElements) {
-                model.removeElement(removeElement);
-            }
-            inputDocArea.setText("");
-        }
-    }
-
-    class RemoveInputDocAction extends AbstractAction {
-        public RemoveInputDocAction(String title) {
+    class RemoveDocumentAction extends AbstractAction {
+        public RemoveDocumentAction(String title) {
             super(title, removeDocIcon);
         }
 
         public void actionPerformed(ActionEvent e) {
-            List removeElements = inputDocList.getSelectedValuesList();
-            DefaultListModel model = (DefaultListModel) inputDocList.getModel();
-            for (Object removeElement : removeElements) {
-                model.removeElement(removeElement);
+            List<Document> removeElements = documentList.getSelectedValuesList();
+            for (Document removeElement : removeElements) {
+                documentListModel.removeElement(removeElement);
             }
-            inputDocArea.setText("");
+            documentTextArea.setText("");
             project.getConceptDefinitionPanel().setInputDocList();
             project.addLog("RemoveInputDocumentButton");
         }
     }
 
-    class EditInputDocAction extends AbstractAction {
-        public EditInputDocAction(String title) {
-            super(title);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            Document doc = (Document) inputDocList.getSelectedValue();
-            doc.setText(inputDocArea.getText());
-            project.addLog("Edit");
-        }
-    }
-
     public Set<Document> getDocSet() {
         TreeSet<Document> docSet = new TreeSet<>();
-        ListModel listModel = inputDocList.getModel();
-        for (int i = 0; i < listModel.getSize(); i++) {
-            Document doc = (Document) listModel.getElementAt(i);
-            docSet.add(doc);
+        for (int i = 0; i < documentListModel.getSize(); i++) {
+            docSet.add(documentListModel.getElementAt(i));
         }
         return docSet;
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        DODDLEConstants.EDR_HOME = "C:/usr/eclipse_workspace/DODDLE_DIC/";
-        frame.getContentPane()
-                .add(new DocumentSelectionPanel(null, null), BorderLayout.CENTER);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
     }
 }
