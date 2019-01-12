@@ -23,8 +23,6 @@
 
 package org.doddle_owl.views.concept_tree;
 
-import net.infonode.docking.RootWindow;
-import net.infonode.docking.View;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.common.DODDLELiteral;
 import org.doddle_owl.models.concept_selection.Concept;
@@ -32,8 +30,8 @@ import org.doddle_owl.models.concept_tree.CompoundConceptTreeInterface;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.Utils;
-import org.doddle_owl.views.common.ConceptSelectionDialog;
 import org.doddle_owl.views.DODDLEProjectPanel;
+import org.doddle_owl.views.common.ConceptSelectionDialog;
 import org.doddle_owl.views.common.UndefinedTermListPanel;
 
 import javax.swing.*;
@@ -61,9 +59,6 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     protected int addedSINNum;
     protected double addedAbstractCompoundConceptCnt;
     protected double averageAbstracCompoundConceptGroupSiblingConceptCnt;
-
-    protected View[] mainViews;
-    protected RootWindow rootWindow;
 
     protected DODDLEProjectPanel project;
 

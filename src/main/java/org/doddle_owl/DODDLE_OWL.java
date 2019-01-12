@@ -90,9 +90,6 @@ public class DODDLE_OWL extends JFrame {
         return super.getIconImage();
     }
 
-    private LayoutDockingWindowAction xgaLayoutDockingWindowAction;
-    private LayoutDockingWindowAction uxgaLayoutDockingWindowAction;
-
     public static Property HASA_PROPERTY;
 
     public DODDLE_OWL() {
@@ -215,10 +212,6 @@ public class DODDLE_OWL extends JFrame {
         showOptionDialogAction = new ShowOptionDialogAction(Translator.getTerm("ShowOptionDialogAction"), this);
         showVersionInfoAction = new ShowVersionInfoAction(this);
         showDODDLEDicConverterAction = new ShowDODDLEDicConverterAction("DODDLE Dic Converter");
-        xgaLayoutDockingWindowAction = new LayoutDockingWindowAction(LayoutDockingWindowAction.XGA_LAYOUT,
-                Translator.getTerm("XGALayoutAction"));
-        uxgaLayoutDockingWindowAction = new LayoutDockingWindowAction(LayoutDockingWindowAction.UXGA_LAYOUT,
-                Translator.getTerm("UXGALayoutAction"));
     }
 
     private void makeMenuBar() {
@@ -272,9 +265,6 @@ public class DODDLE_OWL extends JFrame {
         toolMenu.add(showDODDLEDicConverterAction);
         toolMenu.addSeparator();
         toolMenu.add(showLogConsoleAction);
-        toolMenu.addSeparator();
-        toolMenu.add(xgaLayoutDockingWindowAction);
-        toolMenu.add(uxgaLayoutDockingWindowAction);
         toolMenu.addSeparator();
         toolMenu.add(showOptionDialogAction);
         menuBar.add(toolMenu);
@@ -330,7 +320,8 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static void setSelectedIndex(int index) {
-        doddleProjectPanel.setSelectedIndex(index);
+        // TODO fix
+//        doddleProjectPanel.setSelectedIndex(index);
     }
 
     public void loadBaseURI(File file) {

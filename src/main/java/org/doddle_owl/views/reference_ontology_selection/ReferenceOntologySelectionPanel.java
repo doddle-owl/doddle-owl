@@ -23,12 +23,9 @@
 
 package org.doddle_owl.views.reference_ontology_selection;
 
-import net.infonode.docking.*;
-import net.infonode.docking.util.ViewMap;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;

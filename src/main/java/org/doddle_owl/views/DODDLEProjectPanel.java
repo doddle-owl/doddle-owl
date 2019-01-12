@@ -24,11 +24,6 @@
 
 package org.doddle_owl.views;
 
-import net.infonode.docking.DockingWindow;
-import net.infonode.docking.RootWindow;
-import net.infonode.docking.TabWindow;
-import net.infonode.docking.View;
-import net.infonode.docking.util.ViewMap;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.term_selection.TermModel;
@@ -54,8 +49,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * @author Takeshi Morita
@@ -64,8 +59,6 @@ public class DODDLEProjectPanel extends JPanel {
 
     private boolean isInitialized;
 
-    private View[] views;
-    private RootWindow rootWindow;
     private JTabbedPane rootTabbedPane;
     private ReferenceOntologySelectionPanel ontologySelectionPanel;
     private DocumentSelectionPanel documentSelectionPanel;
@@ -130,7 +123,6 @@ public class DODDLEProjectPanel extends JPanel {
                 conceptSelectionPanel = new ConceptSelectionPanel(constructClassPanel,
                         constructPropertyPanel, project);
                 setProgress(currentTaskCnt++);
-
                 termSelectionPanel = new TermSelectionPanel(conceptSelectionPanel);
                 setProgress(currentTaskCnt++);
                 documentSelectionPanel = new DocumentSelectionPanel(termSelectionPanel, project);
@@ -138,7 +130,7 @@ public class DODDLEProjectPanel extends JPanel {
                 conceptDefinitionPanel = new ConceptDefinitionPanel(project);
                 setProgress(currentTaskCnt++);
                 conceptSelectionPanel.setDocumentSelectionPanel(documentSelectionPanel);
-                /*
+
                 rootTabbedPane = new JTabbedPane();
                 rootTabbedPane.addTab(
                         Translator.getTerm("OntologySelectionPanel"),
@@ -168,37 +160,9 @@ public class DODDLEProjectPanel extends JPanel {
                         Translator.getTerm("ConceptDefinitionPanel"),
                         Utils.getImageIcon("concept_definition.png"),
                         conceptDefinitionPanel);
-                        */
-                views = new View[7];
-                ViewMap viewMap = new ViewMap();
-
-                views[0] = new View(Translator.getTerm("OntologySelectionPanel"),
-                        Utils.getImageIcon("reference_ontology_selection.png"), ontologySelectionPanel);
-                views[1] = new View(Translator.getTerm("DocumentSelectionPanel"),
-                        Utils.getImageIcon("input_document_selection.png"), documentSelectionPanel);
-                views[2] = new View(Translator.getTerm("TermSelectionPanel"),
-                        Utils.getImageIcon("input_term_selection.png"), termSelectionPanel);
-                views[3] = new View(Translator.getTerm("ConceptSelectionPanel"),
-                        Utils.getImageIcon("input_concept_selection.png"), conceptSelectionPanel);
-                views[4] = new View(Translator.getTerm("ClassTreeConstructionPanel"),
-                        Utils.getImageIcon("constructing_class_hierarchy.png"), constructClassPanel);
-                views[5] = new View(Translator.getTerm("PropertyTreeConstructionPanel"),
-                        Utils.getImageIcon("constructing_property_hierarchy.png"), constructPropertyPanel);
-                views[6] = new View(Translator.getTerm("ConceptDefinitionPanel"),
-                        Utils.getImageIcon("concept_definition.png"), conceptDefinitionPanel);
-
-                for (int i = 0; i < views.length; i++) {
-                    viewMap.addView(i, views[i]);
-                }
-
-                rootWindow = Utils.createDODDLERootWindow(viewMap);
                 setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
                 setProgress(currentTaskCnt++);
-                setXGALayoutForAll();
-                DODDLE_OWL.rootPane.getContentPane().add(rootWindow, BorderLayout.CENTER);
-//                DODDLE_OWL.rootPane.getContentPane().add(rootTabbedPane, BorderLayout.CENTER);
-            } catch (NullPointerException npe) {
-                setXGALayoutForAll();
+                DODDLE_OWL.rootPane.getContentPane().add(rootTabbedPane, BorderLayout.CENTER);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -306,22 +270,6 @@ public class DODDLEProjectPanel extends JPanel {
         return undoManager.canRedo();
     }
 
-    public void setXGALayout() {
-        rootWindow.setWindow(new TabWindow(new DockingWindow[]{views[0], views[1], views[2],
-                views[3], views[4], views[5], views[6]}));
-        views[0].restoreFocus();
-    }
-
-    public void setXGALayoutForAll() {
-        setXGALayout();
-        conceptSelectionPanel.setXGALayout();
-    }
-
-    public void setUXGALayoutForAll() {
-        setXGALayout();
-        conceptSelectionPanel.setUXGALayout();
-    }
-
     public void resetURIConceptMap() {
         uriConceptMap.clear();
     }
@@ -382,10 +330,6 @@ public class DODDLEProjectPanel extends JPanel {
 
     public ConceptDefinitionPanel getConceptDefinitionPanel() {
         return conceptDefinitionPanel;
-    }
-
-    public void setSelectedIndex(int i) {
-        views[i].restoreFocus();
     }
 
     public boolean isPerfectlyMatchedAmbiguityCntCheckBox() {

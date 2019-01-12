@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.views.common;
@@ -93,6 +93,7 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
         add(northPanel, BorderLayout.NORTH);
         add(unefinedWordJListScroll, BorderLayout.CENTER);
+        setBorder(BorderFactory.createTitledBorder(Translator.getTerm("UndefinedTermListPanel")));
     }
 
     class UndefinedTermJListDropTargetAdapter extends DropTargetAdapter {
@@ -114,7 +115,9 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
     }
 
     public DefaultListModel getViewModel() {
-        if (undefinedTermJList.getModel() == undefinedTermListModel) { return null; }
+        if (undefinedTermJList.getModel() == undefinedTermListModel) {
+            return null;
+        }
         return (DefaultListModel) undefinedTermJList.getModel();
     }
 
@@ -163,7 +166,9 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
             if (0 < addWord.length()) {
                 for (int i = 0; i < undefinedTermListModel.getSize(); i++) {
                     String word = (String) undefinedTermListModel.getElementAt(i);
-                    if (word.equals(addWord)) { return; }
+                    if (word.equals(addWord)) {
+                        return;
+                    }
                 }
                 ((DefaultListModel) undefinedTermListModel).addElement(addWord);
                 if (getViewModel() != null && addWord.matches(getSearchRegex())) {
@@ -175,7 +180,7 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
         } else if (e.getSource() == removeButton) {
             DefaultListModel model = (DefaultListModel) undefinedTermJList.getModel();
             List removeWordList = undefinedTermJList.getSelectedValuesList();
-            for (Object word: removeWordList) {
+            for (Object word : removeWordList) {
                 model.removeElement(word);
                 ((DefaultListModel) undefinedTermListModel).removeElement(word);
             }

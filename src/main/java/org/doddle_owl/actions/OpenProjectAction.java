@@ -305,7 +305,6 @@ public class OpenProjectAction extends AbstractAction {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                DODDLE_OWL.doddleProjectPanel.setXGALayout();
                 DODDLE_OWL.doddleProjectPanel.setVisible(true);
                 setProgress(currentTaskCnt++);
                 DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("OpenProjectDoneMessage"));

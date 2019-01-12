@@ -23,8 +23,6 @@
 
 package org.doddle_owl.views.concept_selection;
 
-import net.infonode.docking.*;
-import net.infonode.docking.util.ViewMap;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.actions.ConstructNounAndVerbTreeAction;
@@ -33,17 +31,18 @@ import org.doddle_owl.actions.ConstructTreeAction;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.common.DODDLELiteral;
 import org.doddle_owl.models.concept_selection.Concept;
-import org.doddle_owl.models.concept_selection.TreeConstructionOption;
 import org.doddle_owl.models.concept_selection.EvalConcept;
 import org.doddle_owl.models.concept_selection.InputModule;
+import org.doddle_owl.models.concept_selection.TreeConstructionOption;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
-import org.doddle_owl.models.ontology_api.ReferenceOntology;
 import org.doddle_owl.models.ontology_api.EDRTree;
 import org.doddle_owl.models.ontology_api.JaWordNetTree;
+import org.doddle_owl.models.ontology_api.ReferenceOntology;
 import org.doddle_owl.models.ontology_api.WordNet;
 import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.utils.*;
-import org.doddle_owl.views.*;
+import org.doddle_owl.views.DODDLEProjectPanel;
+import org.doddle_owl.views.OptionDialog;
 import org.doddle_owl.views.common.UndefinedTermListPanel;
 import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
 import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
@@ -99,9 +98,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private JPanel perfectlyMatchedTermListPanel;
     private JPanel partiallyMatchedTermListPanel;
 
-    private View[] termListViews;
-    private RootWindow termListRootWindow;
-
     private JTextField searchTermField;
     private JButton searchTermButton;
 
@@ -137,7 +133,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     private JList highlightPartJList;
     private JEditorPane documentArea;
-    // private JTextArea documentArea;
     private JCheckBox highlightInputTermCheckBox;
     private JCheckBox showAroundConceptTreeCheckBox;
     private JTree aroundConceptTree;
@@ -168,9 +163,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private DODDLEProjectPanel project;
 
     private boolean isConstructNounAndVerbTree;
-
-    private View[] mainViews;
-    private RootWindow rootWindow;
 
     public static Concept nullConcept;
     public static EvalConcept nullEvalConcept = new EvalConcept(null, -1);
@@ -239,6 +231,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         conceptSetJList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         conceptSetJList.addListSelectionListener(this);
         JScrollPane conceptJListScroll = new JScrollPane(conceptSetJList);
+        conceptJListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptList")));
 
         labelPanel = new LiteralPanel(Translator.getTerm("LanguageLabel"),
                 Translator.getTerm("LabelList"), LiteralPanel.LABEL);
@@ -281,6 +274,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         conceptInfoPanel.setLayout(new BorderLayout());
         conceptInfoPanel.add(labelAndDescriptionPanel, BorderLayout.CENTER);
         conceptInfoPanel.add(constructTreeOptionPanel, BorderLayout.SOUTH);
+        conceptInfoPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptInformationPanel")));
 
         undefinedTermListPanel = new UndefinedTermListPanel();
 
@@ -311,11 +305,13 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         treePanel.setLayout(new BorderLayout());
         treePanel.add(aroundConceptTreeScroll, BorderLayout.CENTER);
         treePanel.add(showAroundConceptTreeCheckBox, BorderLayout.SOUTH);
+        treePanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptTreePanel")));
 
         JPanel documentPanel = new JPanel();
         documentPanel.setLayout(new BorderLayout());
         documentPanel.add(documentAreaScroll, BorderLayout.CENTER);
         documentPanel.add(highlightInputTermCheckBox, BorderLayout.SOUTH);
+        documentPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentArea")));
 
         automaticDisAmbiguationAction = new AutomaticDisAmbiguationAction(
                 Translator.getTerm("AutomaticInputConceptSelectionAction"));
@@ -344,53 +340,36 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         optionPanel.add(optionTab, BorderLayout.CENTER);
         optionPanel.add(buttonBorderPanel, BorderLayout.EAST);
 
-        mainViews = new View[7];
-        ViewMap viewMap = new ViewMap();
+        var xBoxPanel1 = new JPanel();
+        xBoxPanel1.setLayout(new BoxLayout(xBoxPanel1, BoxLayout.X_AXIS));
+        xBoxPanel1.add(conceptJListScroll);
+        xBoxPanel1.add(conceptInfoPanel);
+        xBoxPanel1.add(undefinedTermListPanel);
+
+        var xBoxPanel2 = new JPanel();
+        xBoxPanel2.setLayout(new BoxLayout(xBoxPanel2, BoxLayout.X_AXIS));
+        xBoxPanel2.add(treePanel);
+        xBoxPanel2.add(documentPanel);
+
+        var yBoxPanel = new JPanel();
+        yBoxPanel.setLayout(new BoxLayout(yBoxPanel, BoxLayout.Y_AXIS));
+        yBoxPanel.add(xBoxPanel1);
+        yBoxPanel.add(xBoxPanel2);
+
+        var mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        mainSplitPane.add(getTermListPanel());
+        mainSplitPane.add(yBoxPanel);
+
+        /*
 
         mainViews[0] = new View(Translator.getTerm("TermListPanel"), null, getTermListPanel());
-        mainViews[1] = new View(Translator.getTerm("ConceptList"), null, conceptJListScroll);
-        mainViews[2] = new View(Translator.getTerm("ConceptInformationPanel"), null,
-                conceptInfoPanel);
-        mainViews[3] = new View(Translator.getTerm("UndefinedTermListPanel"), null,
-                undefinedTermListPanel);
-        mainViews[4] = new View(Translator.getTerm("ConceptTreePanel"), null, treePanel);
-        mainViews[5] = new View(Translator.getTerm("InputDocumentArea"), null, documentPanel);
         mainViews[6] = new View(Translator.getTerm("TreeConstructionOptionPanel"), null,
                 optionPanel);
-        for (int i = 0; i < mainViews.length; i++) {
-            viewMap.addView(i, mainViews[i]);
-        }
-        rootWindow = Utils.createDODDLERootWindow(viewMap);
+        */
         setLayout(new BorderLayout());
-        add(rootWindow, BorderLayout.CENTER);
+        add(mainSplitPane, BorderLayout.CENTER);
+        add(optionPanel, BorderLayout.SOUTH);
         initialize();
-    }
-
-    public void setXGALayout() {
-        termListRootWindow.setWindow(new TabWindow(new DockingWindow[]{termListViews[0],
-                termListViews[1]}));
-        termListViews[0].restoreFocus();
-
-        SplitWindow sw1 = new SplitWindow(true, 0.5f, mainViews[2], mainViews[3]);
-        SplitWindow sw2 = new SplitWindow(true, 0.3f, mainViews[1], sw1);
-        SplitWindow sw3 = new SplitWindow(true, mainViews[4], mainViews[5]);
-        SplitWindow sw4 = new SplitWindow(false, 0.6f, sw2, sw3);
-        SplitWindow sw5 = new SplitWindow(true, 0.3f, mainViews[0], sw4);
-        SplitWindow sw6 = new SplitWindow(false, 0.8f, sw5, mainViews[6]);
-        rootWindow.setWindow(sw6);
-    }
-
-    public void setUXGALayout() {
-        termListRootWindow.setWindow(new SplitWindow(false, termListViews[0], termListViews[1]));
-        termListViews[0].restoreFocus();
-
-        SplitWindow sw1 = new SplitWindow(true, 0.5f, mainViews[2], mainViews[3]);
-        SplitWindow sw2 = new SplitWindow(true, 0.3f, mainViews[1], sw1);
-        SplitWindow sw3 = new SplitWindow(true, mainViews[4], mainViews[5]);
-        SplitWindow sw4 = new SplitWindow(false, 0.6f, sw2, sw3);
-        SplitWindow sw5 = new SplitWindow(true, 0.3f, mainViews[0], sw4);
-        SplitWindow sw6 = new SplitWindow(false, 0.85f, sw5, mainViews[6]);
-        rootWindow.setWindow(sw6);
     }
 
     public void removeRefOntConceptLabel(Concept c, boolean isInputConcept) {
@@ -634,22 +613,16 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         perfectlyMatchedTermListPanel = getPerfectlyMatchedTermListPanel();
         partiallyMatchedTermListPanel = getPartiallyMatchedTermListPanel();
 
-        termListViews = new View[2];
-        termListViews[0] = new View(Translator.getTerm("PerfectlyMatchedTermListPanel"), null,
+        var termListTabbedPane = new JTabbedPane();
+        termListTabbedPane.addTab(Translator.getTerm("PerfectlyMatchedTermListPanel"), null,
                 perfectlyMatchedTermListPanel);
-        termListViews[1] = new View(Translator.getTerm("PartiallyMatchedTermListPanel"), null,
+        termListTabbedPane.addTab(Translator.getTerm("PartiallyMatchedTermListPanel"), null,
                 partiallyMatchedTermListPanel);
-
-        ViewMap viewMap = new ViewMap();
-        viewMap.addView(0, termListViews[0]);
-        viewMap.addView(1, termListViews[1]);
-
-        termListRootWindow = Utils.createDODDLERootWindow(viewMap);
 
         JPanel termListPanel = new JPanel();
         termListPanel.setLayout(new BorderLayout());
         termListPanel.add(getSearchTermPanel(), BorderLayout.NORTH);
-        termListPanel.add(termListRootWindow, BorderLayout.CENTER);
+        termListPanel.add(termListTabbedPane, BorderLayout.CENTER);
         termListPanel.add(new EditPanel(), BorderLayout.SOUTH);
         termListPanel.setPreferredSize(new Dimension(300, 100));
         termListPanel.setMinimumSize(new Dimension(300, 100));
@@ -797,7 +770,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     public void selectTopList() {
         if (perfectlyMatchedTermJList.getModel().getSize() != 0) {
-            termListRootWindow.getWindow().getChildWindow(0).restoreFocus();
             perfectlyMatchedTermJList.setSelectedIndex(0);
         } else {
             clearConceptInfoPanel();
@@ -866,7 +838,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
         perfectlyMatchedTermJList.repaint();
         partiallyMatchedTermJList.repaint();
-        termListRootWindow.getWindow().repaint();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -901,17 +872,12 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                         .getTerm("PerfectlyMatchedTermList")
                         + " ("
                         + perfectlyMatchedTermModelSet.size() + ")");
-                termListViews[0].getViewProperties().setTitle(
-                        perfectlyMatchedTermJListTitle.getTitle());
 
                 partiallyMatchedTermJList.setListData(partiallyMatchedTermModelSet.toArray());
                 partiallyMatchedTermJListTitle.setTitle(Translator
                         .getTerm("PartiallyMatchedTermList")
                         + " ("
                         + partiallyMatchedTermModelSet.size() + ")");
-                termListViews[1].getViewProperties().setTitle(
-                        partiallyMatchedTermJListTitle.getTitle());
-
             } else {
                 Set searchedPerfectlyMatchedTermModelSet = new TreeSet();
                 Set searchedPartiallyMatchedTermModelSet = new TreeSet();
@@ -928,8 +894,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                         + searchedPerfectlyMatchedTermModelSet.size()
                         + "/"
                         + perfectlyMatchedTermModelSet.size() + ")");
-                termListViews[0].getViewProperties().setTitle(
-                        perfectlyMatchedTermJListTitle.getTitle());
 
                 TermModel targetIWModel = (TermModel) perfectlyMatchedTermJList
                         .getSelectedValue();
@@ -960,11 +924,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                         + searchedPartiallyMatchedTermModelSet.size()
                         + "/"
                         + partiallyMatchedTermModelSet.size() + ")");
-                termListViews[1].getViewProperties().setTitle(
-                        partiallyMatchedTermJListTitle.getTitle());
-
             }
-            termListRootWindow.getWindow().repaint();
         }
     }
 
@@ -1299,6 +1259,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     private JList getTargetTermJList() {
+        /*
         if (termListRootWindow.getWindow().getLastFocusedChildWindow() == null) {
             return perfectlyMatchedTermJList;
         }
@@ -1310,6 +1271,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 termListViews[1].getViewProperties().getTitle())) {
             return partiallyMatchedTermJList;
         }
+        */
+        // TODO fix
         return perfectlyMatchedTermJList;
     }
 
@@ -1516,12 +1479,10 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         perfectlyMatchedTermJList.setListData(perfectlyMatchedTermModelSet.toArray());
         perfectlyMatchedTermJListTitle.setTitle(Translator.getTerm("PerfectlyMatchedTermList")
                 + " (" + perfectlyMatchedTermModelSet.size() + ")");
-        termListViews[0].getViewProperties().setTitle(perfectlyMatchedTermJListTitle.getTitle());
 
         partiallyMatchedTermJList.setListData(partiallyMatchedTermModelSet.toArray());
         partiallyMatchedTermJListTitle.setTitle(Translator.getTerm("PartiallyMatchedTermList")
                 + " (" + partiallyMatchedTermModelSet.size() + ")");
-        termListViews[1].getViewProperties().setTitle(partiallyMatchedTermJListTitle.getTitle());
 
         termConceptSetMap = inputModule.getTermConceptSetMap();
 
@@ -1536,7 +1497,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         undefinedTermListPanel.setTitleWithSize();
         perfectlyMatchedTermJList.repaint();
         partiallyMatchedTermJList.repaint();
-        termListRootWindow.getWindow().repaint();
     }
 
     public boolean isLoadInputTermSet() {

@@ -20,9 +20,6 @@ project.ext {
 
 repositories {
     jcenter()
-    maven {
-        url 'http://mrcube.org/mvn_repo/'
-    }
 }
 
 wrapper {
@@ -89,7 +86,6 @@ dependencies {
     compile 'edu.stanford.nlp:stanford-corenlp:3.9.2'
     compile 'edu.stanford.nlp:stanford-corenlp:3.9.2:models'
     compile 'org.apache.jena:apache-jena-libs:3.9.0'
-    compile 'net.infonode:idw:1.6.1_gpl'
     compile 'org.slf4j:slf4j-simple:1.7.25'
     compile 'log4j:log4j:1.2.17'
     compileOnly 'org.projectlombok:lombok:1.18.4'
