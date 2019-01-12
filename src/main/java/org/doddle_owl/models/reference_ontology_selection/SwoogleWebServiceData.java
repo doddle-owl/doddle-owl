@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.models.reference_ontology_selection;
@@ -86,9 +86,9 @@ public class SwoogleWebServiceData {
     public void putRefOntology(String uri, ReferenceOWLOntology refOntology) {
         if (isRelatedOntology(refOntology)) {
             uriRefOntologyMap.put(uri, refOntology);
-            DODDLE_OWL.getLogger().log(Level.INFO, "Regist Ontology: " + uri);
+            DODDLE_OWL.getLogger().info("Regist Ontology: " + uri);
         } else {
-            DODDLE_OWL.getLogger().log(Level.INFO, "Unnecessary Ontology: " + uri);
+            DODDLE_OWL.getLogger().info("Unnecessary Ontology: " + uri);
         }
     }
 
@@ -221,9 +221,8 @@ public class SwoogleWebServiceData {
 
     /**
      * 定義域と値域の両方が定義されているプロパティを獲得
-     * 
+     *
      * @param property
-     * 
      */
     private boolean isNecessaryProperty(Resource property) {
         return (getDomainSet(property) != null && getRangeSet(property) != null);
@@ -242,7 +241,6 @@ public class SwoogleWebServiceData {
 
     /**
      * 継承している定義域と値域を追加
-     * 
      */
     public void addInheritedRegionSet() {
         for (Resource property : relatedPropertySet) {
@@ -271,7 +269,7 @@ public class SwoogleWebServiceData {
 
     /**
      * propertyの定義域を返す
-     * 
+     *
      * @param property
      */
     public Set<Resource> getDomainSet(Resource property) {
@@ -280,7 +278,7 @@ public class SwoogleWebServiceData {
 
     /**
      * propertyの値域を返す
-     * 
+     *
      * @param property
      */
     public Set<Resource> getRangeSet(Resource property) {
@@ -289,12 +287,13 @@ public class SwoogleWebServiceData {
 
     /**
      * クラス，プロパティ，関連プロパティのいずれかを含むオントロジーを関連オントロジーとする
-     * 
      */
     public boolean isRelatedOntology(ReferenceOWLOntology refOnto) {
         Set<Resource> conceptSet = getConceptSet();
         for (Resource concept : conceptSet) {
-            if (refOnto.getConcept(concept.getURI()) != null) { return true; }
+            if (refOnto.getConcept(concept.getURI()) != null) {
+                return true;
+            }
         }
         return false;
     }
@@ -344,21 +343,21 @@ public class SwoogleWebServiceData {
                                 }
                             }
                         }
-                        DODDLE_OWL.getLogger().log(Level.INFO, domain + " => " + property + " => " + range);
+                        DODDLE_OWL.getLogger().info(domain + " => " + property + " => " + range);
                     }
                 }
             }
         }
 
         for (String pair : pairPropertySetMap.keySet()) {
-           Set<Resource> propertySet= pairPropertySetMap.get(pair);
-           DODDLE_OWL.getLogger().log(Level.INFO, "厳密照合: " + pair + ": " + propertySet.size());
-           //DODDLE.getLogger().log(Level.INFO, "厳密照合: " + propertySet);
+            Set<Resource> propertySet = pairPropertySetMap.get(pair);
+            DODDLE_OWL.getLogger().info("厳密照合: " + pair + ": " + propertySet.size());
+            //DODDLE.getLogger().info( "厳密照合: " + propertySet);
         }
         for (String pair : extPairPropertySetMap.keySet()) {
-            Set<Resource> propertySet= extPairPropertySetMap.get(pair);
-            DODDLE_OWL.getLogger().log(Level.INFO, "拡張照合: " + pair + ": " + propertySet.size());
-            //DODDLE.getLogger().log(Level.INFO, "拡張照合: " + propertySet);  
+            Set<Resource> propertySet = extPairPropertySetMap.get(pair);
+            DODDLE_OWL.getLogger().info("拡張照合: " + pair + ": " + propertySet.size());
+            //DODDLE.getLogger().info( "拡張照合: " + propertySet);
         }
         return relCnt;
     }
@@ -395,7 +394,7 @@ public class SwoogleWebServiceData {
             }
         }
         for (String rel : relSet) {
-            DODDLE_OWL.getLogger().log(Level.INFO, rel);
+            DODDLE_OWL.getLogger().info(rel);
         }
         return relSet.size();
     }
@@ -410,7 +409,7 @@ public class SwoogleWebServiceData {
         Set<Resource> validConceptSet = new HashSet<>();
         for (Resource concept : conceptSet) {
             Set<String> refOntoURISet = uriRefOntologyMap.keySet();
-            for (String uri : refOntoURISet) {                
+            for (String uri : refOntoURISet) {
                 ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
 //                System.out.println("concept: "+concept.getURI());
 //                System.out.println("uri: "+uri);
@@ -418,12 +417,12 @@ public class SwoogleWebServiceData {
 //                System.out.println("clssize: "+refOnto.getClassSet().size());
                 if (refOnto.getConcept(concept.getURI()) != null) {
                     validConceptSet.add(concept);
-                    DODDLE_OWL.getLogger().log(Level.INFO, type + ": " + concept + " => " + "ontology_api: " + uri);
+                    DODDLE_OWL.getLogger().info(type + ": " + concept + " => " + "ontology_api: " + uri);
                     break;
                 }
             }
         }
-        DODDLE_OWL.getLogger().log(Level.INFO, "Defined " + type + " Set size: " + validConceptSet.size());
+        DODDLE_OWL.getLogger().info("Defined " + type + " Set size: " + validConceptSet.size());
     }
 
     public void countDefinedConcept() {
@@ -433,7 +432,6 @@ public class SwoogleWebServiceData {
 
     /**
      * inputWordRatio, relationCountを計算する
-     * 
      */
     public void calcOntologyRank(Set<String> inputWordSet) {
         Set<String> unnecessaryOntologyURISet = new HashSet<>();

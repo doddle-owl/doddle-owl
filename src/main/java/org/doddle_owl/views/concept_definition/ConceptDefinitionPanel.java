@@ -69,9 +69,15 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
 
     public void initialize() {
         termListModel.clear();
-        wordCorrespondConceptSetMap.clear();
-        compoundWordConceptMap.clear();
-        termConceptSetMap.clear();
+        if (wordCorrespondConceptSetMap != null) {
+            wordCorrespondConceptSetMap.clear();
+        }
+        if (compoundWordConceptMap != null) {
+            compoundWordConceptMap.clear();
+        }
+        if (termConceptSetMap != null) {
+            termConceptSetMap.clear();
+        }
         resultPanel.initialize();
     }
 

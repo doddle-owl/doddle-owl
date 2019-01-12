@@ -933,8 +933,7 @@ public class ConceptTreePanel extends JPanel {
                 abstractNodeCnt++;
                 abstractLabelSet.add(newWord);
                 totalAbstractNodeGroupSiblingNodeCnt += childNode.getChildCount();
-                DODDLE_OWL.getLogger().log(Level.SEVERE,
-                        "[" + abstractNodeCnt + "] 抽象概念(兄弟数)： " + newWord + " (" + childNode.getChildCount() + ")");
+                DODDLE_OWL.getLogger().info("[" + abstractNodeCnt + "] 抽象概念(兄弟数)： " + newWord + " (" + childNode.getChildCount() + ")");
             } else {
                 newWord = childNode.toString();
             }

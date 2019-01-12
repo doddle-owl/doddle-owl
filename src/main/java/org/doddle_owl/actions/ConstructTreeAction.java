@@ -313,8 +313,7 @@ public class ConstructTreeAction {
                 addCompoundWordNode(0, iwModel, rootNode);
             }
         }
-        DODDLE_OWL.getLogger().log(Level.SEVERE,
-                Translator.getTerm("ConstructConceptTreeFromCompoundWordsMessage"));
+        DODDLE_OWL.getLogger().info(Translator.getTerm("ConstructConceptTreeFromCompoundWordsMessage"));
 
         // printDebugTree(rootNode, "before trimming");
         if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel().isTrimming()) {
@@ -323,7 +322,7 @@ public class ConstructTreeAction {
                 DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) rootNode.getChildAt(i);
                 trimCompoundWordNode(childNode);
             }
-            DODDLE_OWL.getLogger().log(Level.SEVERE, Translator.getTerm("TrimmingCompoundWordsMessage"));
+            DODDLE_OWL.getLogger().info(Translator.getTerm("TrimmingCompoundWordsMessage"));
         }
 
         if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
@@ -331,8 +330,7 @@ public class ConstructTreeAction {
             addAbstractTreeNode(rootNode);
             trimAbstractNode(rootNode);
             trimLeafAbstractNode();
-            DODDLE_OWL.getLogger().log(Level.SEVERE,
-                    Translator.getTerm("AddAbstractInternalConceptsMessage"));
+            DODDLE_OWL.getLogger().info(Translator.getTerm("AddAbstractInternalConceptsMessage"));
         }
 
         // printDebugTree(rootNode, "add abstract node");
@@ -385,8 +383,7 @@ public class ConstructTreeAction {
         abstractNodeLabelMap = new HashMap<>();
         tmpcnt = 0;
         for (int i = 0; i < rootNode.getChildCount(); i++) {
-            DODDLE_OWL.getLogger().log(Level.SEVERE,
-                    rootNode.getChildAt(i) + ": " + (i + 1) + "/" + rootNode.getChildCount());
+            DODDLE_OWL.getLogger().info(rootNode.getChildAt(i) + ": " + (i + 1) + "/" + rootNode.getChildCount());
             reconstructCompoundTree(1, (DefaultMutableTreeNode) rootNode.getChildAt(i));
             // 多重継承している場合もあるので，一度クローンを抽象ノードに挿入した後に，
             // 親ノードから削除する．
@@ -746,24 +743,15 @@ public class ConstructTreeAction {
             return;
         }
 
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                Translator.getTerm("PerfectlyMatchedTermCountMessage") + ": "
-                        + conceptSelectionPanel.getPerfectlyMatchedTermCnt());
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                Translator.getTerm("SystemAddedPerfectlyMatchedTermCountMessage") + ": "
-                        + conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt());
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                Translator.getTerm("PartiallyMatchedTermCountMessage") + ": "
-                        + conceptSelectionPanel.getPartiallyMatchedTermCnt());
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                Translator.getTerm("InputTermCountMessage") + ": "
-                        + (conceptSelectionPanel.getMatchedTermCnt()));
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                Translator.getTerm("InputConceptCountMessage") + ": " + inputConceptSet.size());
+        DODDLE_OWL.getLogger().info(Translator.getTerm("PerfectlyMatchedTermCountMessage") + ": "
+                + conceptSelectionPanel.getPerfectlyMatchedTermCnt());
+        DODDLE_OWL.getLogger().info(Translator.getTerm("SystemAddedPerfectlyMatchedTermCountMessage") + ": "
+                + conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt());
+        DODDLE_OWL.getLogger().info(Translator.getTerm("PartiallyMatchedTermCountMessage") + ": "
+                + conceptSelectionPanel.getPartiallyMatchedTermCnt());
+        DODDLE_OWL.getLogger().info(Translator.getTerm("InputTermCountMessage") + ": "
+                + (conceptSelectionPanel.getMatchedTermCnt()));
+        DODDLE_OWL.getLogger().info(Translator.getTerm("InputConceptCountMessage") + ": " + inputConceptSet.size());
         DODDLE_OWL.STATUS_BAR.addValue();
         project.initUserIDCount();
 
@@ -777,10 +765,8 @@ public class ConstructTreeAction {
             Set<Concept> inputNounConceptSet = new HashSet<>(inputConceptSet);
             inputNounConceptSet.removeAll(inputVerbConceptSet);
 
-            DODDLE_OWL.getLogger().log(
-                    Level.INFO,
-                    Translator.getTerm("InputNounConceptCountMessage") + ": "
-                            + inputNounConceptSet.size());
+            DODDLE_OWL.getLogger().info(Translator.getTerm("InputNounConceptCountMessage") + ": "
+                    + inputNounConceptSet.size());
             DODDLE_OWL.STATUS_BAR.addValue();
             constructClassPanel.setConceptTreeModel(makeClassTreeModel(inputNounConceptSet));
             TreeModel hasaTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
@@ -788,10 +774,8 @@ public class ConstructTreeAction {
                     ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI);
             constructClassPanel.setHasaTreeModel(hasaTreeModel);
             DODDLE_OWL.STATUS_BAR.addValue();
-            DODDLE_OWL.getLogger().log(
-                    Level.INFO,
-                    Translator.getTerm("InputVerbConceptCountMessage") + ": "
-                            + inputVerbConceptSet.size());
+            DODDLE_OWL.getLogger().info(Translator.getTerm("InputVerbConceptCountMessage") + ": "
+                    + inputVerbConceptSet.size());
             constructPropertyPanel.setConceptTreeModel(makePropertyTreeModel(inputVerbConceptSet));
             hasaTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
                     new HashSet<>(), project,
@@ -800,10 +784,8 @@ public class ConstructTreeAction {
             DODDLE_OWL.STATUS_BAR.addValue();
         } else {
             Set<Concept> inputNounConceptSet = new HashSet<>(inputConceptSet);
-            DODDLE_OWL.getLogger().log(
-                    Level.INFO,
-                    Translator.getTerm("InputNounConceptCountMessage") + ": "
-                            + inputNounConceptSet.size());
+            DODDLE_OWL.getLogger().info(Translator.getTerm("InputNounConceptCountMessage") + ": "
+                    + inputNounConceptSet.size());
             constructClassPanel.setConceptTreeModel(makeClassTreeModel(inputNounConceptSet));
             TreeModel hasaTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
                     new HashSet<>(), project,

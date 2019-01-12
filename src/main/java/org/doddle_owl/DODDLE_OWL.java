@@ -46,6 +46,7 @@ import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.*;
@@ -58,6 +59,7 @@ import java.util.prefs.Preferences;
  */
 public class DODDLE_OWL extends JFrame {
 
+    private static final Logger logger = Logger.getLogger(DODDLE_OWL.class.getName());
     private OptionDialog optionDialog;
     private LogConsole logConsole;
 
@@ -380,17 +382,20 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static Logger getLogger() {
-        return Logger.getLogger(DODDLE_OWL.class.getName());
+        return logger;
     }
 
     public static void setFileLogger() {
         try {
-            getLogger().setLevel(Level.INFO);
-            String file = DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt";
-            if (new File(DODDLEConstants.PROJECT_HOME).exists()) {
-                Handler handler = new FileHandler(file);
-                handler.setFormatter(new SimpleFormatter());
-                getLogger().addHandler(handler);
+            Path logFilePath = Paths.get(DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt");
+            if (Files.exists(logFilePath)) {
+                Handler fileHandler = new FileHandler(logFilePath.toString(), true);
+                fileHandler.setLevel(Level.INFO);
+                fileHandler.setFormatter(new SimpleFormatter());
+                logger.addHandler(fileHandler);
+                ConsoleHandler consoleHandler = new ConsoleHandler();
+                consoleHandler.setLevel(Level.INFO);
+                logger.addHandler(consoleHandler);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -423,12 +428,6 @@ public class DODDLE_OWL extends JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String getExecPath() {
-        String jarPath = DODDLE_OWL.class.getClassLoader().getResource("").getFile();
-        File file = new File(jarPath);
-        return file.getAbsolutePath() + File.separator;
     }
 
     public static void main(String[] args) {

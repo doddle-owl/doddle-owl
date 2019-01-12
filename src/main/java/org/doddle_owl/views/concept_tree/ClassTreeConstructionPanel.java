@@ -102,10 +102,10 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
         beforeTrimmingConceptNum = treeMaker.getBeforeTrimmingConceptNum();
         addedSINNum = beforeTrimmingConceptNum - conceptSet.size();
 
-        DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("ClassSINCountMessage") + ": " + addedSINNum);
-        DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("BeforeTrimmingClassCountMessage") + ": " + beforeTrimmingConceptNum);
-        DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("TrimmedClassCountMessage") + ": " + trimmedConceptNum);
-        DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("AfterTrimmingClassCountMessage") + ": " + getAfterTrimmingConceptNum());
+        DODDLE_OWL.getLogger().info(Translator.getTerm("ClassSINCountMessage") + ": " + addedSINNum);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("BeforeTrimmingClassCountMessage") + ": " + beforeTrimmingConceptNum);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("TrimmedClassCountMessage") + ": " + trimmedConceptNum);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("AfterTrimmingClassCountMessage") + ": " + getAfterTrimmingConceptNum());
         isaTreePanel.checkAllMultipleInheritanceNode(model);
         return model;
     }
@@ -114,9 +114,9 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
         DefaultTreeModel model = (DefaultTreeModel) isaTreePanel.getConceptTree().getModel();
         ConceptTreeNode conceptTreeRootNode = (ConceptTreeNode) model.getRoot();
         isaTreePanel.addCompoundWordConcept(matchedWordIDMap, rootNode, conceptTreeRootNode, abstractNodeLabelMap);
-        //DODDLE.getLogger().log(Level.INFO, "追加した抽象中間ノード数: " + isaTreePanel.getAbstractNodeCnt());
+        //DODDLE.getLogger().info("追加した抽象中間ノード数: " + isaTreePanel.getAbstractNodeCnt());
         addedAbstractCompoundConceptCnt = isaTreePanel.getAbstractConceptCnt();
-        DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("AbstractInternalClassCountMessage") + ": " + addedAbstractCompoundConceptCnt);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("AbstractInternalClassCountMessage") + ": " + addedAbstractCompoundConceptCnt);
 
         if (addedAbstractCompoundConceptCnt == 0) {
             averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
@@ -124,8 +124,7 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
             averageAbstracCompoundConceptGroupSiblingConceptCnt = isaTreePanel.getTotalAbstractNodeGroupSiblingNodeCnt()
                     / addedAbstractCompoundConceptCnt;
         }
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                Translator.getTerm("AverageAbstractSiblingConceptCountInClassesMessage") + ": " + averageAbstracCompoundConceptGroupSiblingConceptCnt);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("AverageAbstractSiblingConceptCountInClassesMessage") + ": " + averageAbstracCompoundConceptGroupSiblingConceptCnt);
     }
 
 }

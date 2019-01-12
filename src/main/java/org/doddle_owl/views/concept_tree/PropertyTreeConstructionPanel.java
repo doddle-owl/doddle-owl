@@ -86,9 +86,9 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         treeTabbedPane.addTab(Translator.getTerm("IsaConceptTreePanel"), null, isaTreePanel);
         treeTabbedPane.addTab(Translator.getTerm("HasaConceptTreePanel"), null, hasaTreePanel);
 
-        var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT) ;
+        var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         leftSplitPane.setOneTouchExpandable(true);
-        leftSplitPane.add(undefinedTermListPanel) ;
+        leftSplitPane.add(undefinedTermListPanel);
         leftSplitPane.add(treeTabbedPane);
 
         var southTabbedPane = new JTabbedPane();
@@ -115,11 +115,10 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         DefaultTreeModel model = (DefaultTreeModel) isaTreePanel.getConceptTree().getModel();
         ConceptTreeNode conceptTreeRootNode = (ConceptTreeNode) model.getRoot();
         isaTreePanel.addCompoundWordConcept(matchedWordIDMap, rootNode, conceptTreeRootNode, abstractNodeLabelMap);
-        // DODDLE.getLogger().log(Level.INFO, "追加した抽象中間ノード数: " +
+        // DODDLE.getLogger().info("追加した抽象中間ノード数: " +
         // isaTreePanel.getAbstractNodeCnt());
         addedAbstractCompoundConceptCnt = isaTreePanel.getAbstractConceptCnt();
-        DODDLE_OWL.getLogger().log(Level.SEVERE,
-                Translator.getTerm("AbstractInternalPropertyCountMessage") + ": " + addedAbstractCompoundConceptCnt);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("AbstractInternalPropertyCountMessage") + ": " + addedAbstractCompoundConceptCnt);
         if (addedAbstractCompoundConceptCnt == 0) {
             averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
         } else {
@@ -127,10 +126,8 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
                     .getTotalAbstractNodeGroupSiblingNodeCnt()
                     / addedAbstractCompoundConceptCnt;
         }
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                Translator.getTerm("AverageAbstractSiblingConceptCountInPropertiesMessage") + ": "
-                        + averageAbstracCompoundConceptGroupSiblingConceptCnt);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("AverageAbstractSiblingConceptCountInPropertiesMessage") + ": "
+                + averageAbstracCompoundConceptGroupSiblingConceptCnt);
     }
 
 
@@ -146,11 +143,9 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
             trimmedConceptNum += 1;
         }
         addedSINNum = beforeTrimmingConceptNum - verbConceptSet.size();
-        DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("PropertySINCountMessage") + ": " + addedSINNum);
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                Translator.getTerm("BeforeTrimmingPropertyCountMessage") + ": " + beforeTrimmingConceptNum);
-        DODDLE_OWL.getLogger()
-                .log(Level.INFO, Translator.getTerm("TrimmedPropertyCountMessage") + ": " + trimmedConceptNum);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("PropertySINCountMessage") + ": " + addedSINNum);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("BeforeTrimmingPropertyCountMessage") + ": " + beforeTrimmingConceptNum);
+        DODDLE_OWL.getLogger().info(Translator.getTerm("TrimmedPropertyCountMessage") + ": " + trimmedConceptNum);
 
         setRegion(propertyTreeModel, nounURISet);
         isaTreePanel.checkAllMultipleInheritanceNode(propertyTreeModel);

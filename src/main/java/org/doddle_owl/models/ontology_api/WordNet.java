@@ -53,7 +53,7 @@ public class WordNet {
             isAvailable = true;
         } catch (JWNLException e) {
             e.printStackTrace();
-            DODDLE_OWL.getLogger().log(Level.INFO, Translator.getTerm("WordNetLoadErrorMessage"));
+            DODDLE_OWL.getLogger().info(Translator.getTerm("WordNetLoadErrorMessage"));
             JOptionPane.showMessageDialog(null, Translator.getTerm("WordNetLoadErrorMessage"));
             isAvailable = false;
         }

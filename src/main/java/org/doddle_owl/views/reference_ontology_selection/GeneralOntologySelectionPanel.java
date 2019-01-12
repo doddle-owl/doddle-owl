@@ -197,8 +197,9 @@ public class GeneralOntologySelectionPanel extends JPanel {
         } else {
             WordNet.isAvailable = false;
         }
-        DODDLE_OWL.STATUS_BAR.setText("Init WordNet: " + wnCheckBox.isSelected());
-        DODDLE_OWL.getCurrentProject().addLog("Init WordNet", wnCheckBox.isSelected());
+        String logMessage = "Init WordNet: " + wnCheckBox.isSelected();
+        DODDLE_OWL.STATUS_BAR.setText(logMessage);
+        DODDLE_OWL.getLogger().info(logMessage);
     }
 
     private void enableJpnWordNetDic(boolean isEnable) {

@@ -280,7 +280,8 @@ public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
                         .getProperty("SearchRegionSetTemplate")));
             }
         } catch (MalformedURLException mue) {
-            DODDLE_OWL.getLogger().log(Level.INFO, "MalformedURLException");
+            mue.printStackTrace();
+            DODDLE_OWL.getLogger().info("MalformedURLException");
         } catch (IOException ioex) {
             ioex.printStackTrace();
         } finally {
