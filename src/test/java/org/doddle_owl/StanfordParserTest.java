@@ -18,5 +18,7 @@ public class StanfordParserTest {
                 System.out.println(p);
             }
         }
+
+        
     }
 }
