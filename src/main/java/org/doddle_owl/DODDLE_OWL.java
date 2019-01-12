@@ -110,7 +110,7 @@ public class DODDLE_OWL extends JFrame {
         makeActions();
         makeMenuBar();
         contentPane.add(getToolBar(), BorderLayout.NORTH);
-        doddleProjectPanel = new DODDLEProjectPanel(11);
+        doddleProjectPanel = new DODDLEProjectPanel();
         contentPane.add(STATUS_BAR, BorderLayout.SOUTH);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -320,8 +320,7 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static void setSelectedIndex(int index) {
-        // TODO fix
-//        doddleProjectPanel.setSelectedIndex(index);
+        doddleProjectPanel.setSelectedIndex(index);
     }
 
     public void loadBaseURI(File file) {

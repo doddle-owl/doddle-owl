@@ -86,104 +86,65 @@ public class DODDLEProjectPanel extends JPanel {
         conceptDefinitionPanel.initialize();
     }
 
-    class NewProjectWorker extends SwingWorker<String, String> implements PropertyChangeListener {
+    public DODDLEProjectPanel() {
+        try {
+            ToolTipManager.sharedInstance().setEnabled(false);
+            undoManager = new UndoManager(this);
 
-        private int taskCnt;
-        private int currentTaskCnt;
-        private DODDLEProjectPanel project;
+            userIDCount = 0;
+            uriConceptMap = new HashMap<>();
+            logList = new ArrayList<>();
 
-        public NewProjectWorker(int taskCnt, DODDLEProjectPanel project) {
-            this.taskCnt = taskCnt;
-            currentTaskCnt = 1;
-            this.project = project;
-            addPropertyChangeListener(this);
-            DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("NewProjectAction"));
-            DODDLE_OWL.STATUS_BAR.startTime();
-            DODDLE_OWL.STATUS_BAR.initNormal(taskCnt);
-            DODDLE_OWL.STATUS_BAR.lock();
-        }
+            addLog("NewProjectAction");
+            constructClassPanel = new ClassTreeConstructionPanel(this);
+            ontologySelectionPanel = new ReferenceOntologySelectionPanel();
+            constructPropertyPanel = new PropertyTreeConstructionPanel(this);
+            conceptSelectionPanel = new ConceptSelectionPanel(constructClassPanel,
+                    constructPropertyPanel, this);
+            termSelectionPanel = new TermSelectionPanel(conceptSelectionPanel);
+            documentSelectionPanel = new DocumentSelectionPanel(termSelectionPanel, this);
+            conceptDefinitionPanel = new ConceptDefinitionPanel(this);
+            conceptSelectionPanel.setDocumentSelectionPanel(documentSelectionPanel);
 
-        @Override
-        protected String doInBackground() {
-            try {
-                ToolTipManager.sharedInstance().setEnabled(false);
-                undoManager = new UndoManager(project);
-
-                userIDCount = 0;
-                uriConceptMap = new HashMap<>();
-                logList = new ArrayList<>();
-
-                addLog("NewProjectAction");
-                constructClassPanel = new ClassTreeConstructionPanel(project);
-                setProgress(currentTaskCnt++);
-                ontologySelectionPanel = new ReferenceOntologySelectionPanel();
-                setProgress(currentTaskCnt++);
-                constructPropertyPanel = new PropertyTreeConstructionPanel(project);
-                setProgress(currentTaskCnt++);
-                conceptSelectionPanel = new ConceptSelectionPanel(constructClassPanel,
-                        constructPropertyPanel, project);
-                setProgress(currentTaskCnt++);
-                termSelectionPanel = new TermSelectionPanel(conceptSelectionPanel);
-                setProgress(currentTaskCnt++);
-                documentSelectionPanel = new DocumentSelectionPanel(termSelectionPanel, project);
-                setProgress(currentTaskCnt++);
-                conceptDefinitionPanel = new ConceptDefinitionPanel(project);
-                setProgress(currentTaskCnt++);
-                conceptSelectionPanel.setDocumentSelectionPanel(documentSelectionPanel);
-
-                rootTabbedPane = new JTabbedPane();
-                rootTabbedPane.addTab(
-                        Translator.getTerm("OntologySelectionPanel"),
-                        Utils.getImageIcon("reference_ontology_selection.png"),
-                        ontologySelectionPanel);
-                rootTabbedPane.addTab(
-                        Translator.getTerm("DocumentSelectionPanel"),
-                        Utils.getImageIcon("input_document_selection.png"),
-                        documentSelectionPanel);
-                rootTabbedPane.addTab(
-                        Translator.getTerm("TermSelectionPanel"),
-                        Utils.getImageIcon("input_term_selection.png"),
-                        termSelectionPanel);
-                rootTabbedPane.addTab(
-                        Translator.getTerm("ConceptSelectionPanel"),
-                        Utils.getImageIcon("input_concept_selection.png"),
-                        conceptSelectionPanel);
-                rootTabbedPane.addTab(
-                        Translator.getTerm("ClassTreeConstructionPanel"),
-                        Utils.getImageIcon("constructing_class_hierarchy.png"),
-                        constructClassPanel);
-                rootTabbedPane.addTab(
-                        Translator.getTerm("PropertyTreeConstructionPanel"),
-                        Utils.getImageIcon("constructing_property_hierarchy.png"),
-                        constructPropertyPanel);
-                rootTabbedPane.addTab(
-                        Translator.getTerm("ConceptDefinitionPanel"),
-                        Utils.getImageIcon("concept_definition.png"),
-                        conceptDefinitionPanel);
-                setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-                setProgress(currentTaskCnt++);
-                DODDLE_OWL.rootPane.getContentPane().add(rootTabbedPane, BorderLayout.CENTER);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                setProgress(currentTaskCnt++);
-                isInitialized = true;
-                if (taskCnt == 11) {
-                    project.setVisible(true); // かならず表示させるため
-                    DODDLE_OWL.STATUS_BAR.unLock();
-                    DODDLE_OWL.STATUS_BAR.hideProgressBar();
-                }
-                ToolTipManager.sharedInstance().setEnabled(true);
-            }
-            return "done";
-        }
-
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getNewValue() instanceof Integer) {
-                DODDLE_OWL.STATUS_BAR.setValue(currentTaskCnt);
-            }
+            rootTabbedPane = new JTabbedPane();
+            rootTabbedPane.addTab(
+                    Translator.getTerm("OntologySelectionPanel"),
+                    Utils.getImageIcon("reference_ontology_selection.png"),
+                    ontologySelectionPanel);
+            rootTabbedPane.addTab(
+                    Translator.getTerm("DocumentSelectionPanel"),
+                    Utils.getImageIcon("input_document_selection.png"),
+                    documentSelectionPanel);
+            rootTabbedPane.addTab(
+                    Translator.getTerm("TermSelectionPanel"),
+                    Utils.getImageIcon("input_term_selection.png"),
+                    termSelectionPanel);
+            rootTabbedPane.addTab(
+                    Translator.getTerm("ConceptSelectionPanel"),
+                    Utils.getImageIcon("input_concept_selection.png"),
+                    conceptSelectionPanel);
+            rootTabbedPane.addTab(
+                    Translator.getTerm("ClassTreeConstructionPanel"),
+                    Utils.getImageIcon("constructing_class_hierarchy.png"),
+                    constructClassPanel);
+            rootTabbedPane.addTab(
+                    Translator.getTerm("PropertyTreeConstructionPanel"),
+                    Utils.getImageIcon("constructing_property_hierarchy.png"),
+                    constructPropertyPanel);
+            rootTabbedPane.addTab(
+                    Translator.getTerm("ConceptDefinitionPanel"),
+                    Utils.getImageIcon("concept_definition.png"),
+                    conceptDefinitionPanel);
+            setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+            DODDLE_OWL.rootPane.getContentPane().add(rootTabbedPane, BorderLayout.CENTER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            isInitialized = true;
+            ToolTipManager.sharedInstance().setEnabled(true);
         }
     }
+
 
     private String getTerm(String msg) {
         String term = Translator.getTerm(msg);
@@ -239,11 +200,6 @@ public class DODDLEProjectPanel extends JPanel {
 
     public boolean isInitialized() {
         return isInitialized;
-    }
-
-    public DODDLEProjectPanel(int taskCnt) {
-        NewProjectWorker worker = new NewProjectWorker(taskCnt, this);
-        worker.execute();
     }
 
     public void initUndoManager() {
@@ -350,6 +306,10 @@ public class DODDLEProjectPanel extends JPanel {
 
     public boolean isPartiallyMatchedMatchedWordBox() {
         return conceptSelectionPanel.isPartiallyMatchedMatchedTermBox();
+    }
+
+    public void setSelectedIndex(int index) {
+        rootTabbedPane.setSelectedIndex(index);
     }
 
 }
