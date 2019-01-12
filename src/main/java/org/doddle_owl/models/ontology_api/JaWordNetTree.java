@@ -64,7 +64,7 @@ public class JaWordNetTree {
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
         Set<List<Concept>> pathToRootSet = new HashSet<>();
         if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(c));
+            pathToRootSet.add(Collections.singletonList(c));
             return pathToRootSet;
         }
         for (TreeNode node : nodeSet) {
@@ -85,7 +85,7 @@ public class JaWordNetTree {
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
         Set<List<String>> pathToRootSet = new HashSet<>();
         if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(uri));
+            pathToRootSet.add(Collections.singletonList(uri));
             return pathToRootSet;
         }
         for (TreeNode node : nodeSet) {
@@ -107,7 +107,7 @@ public class JaWordNetTree {
         String treeData = JaWordNet.getTreeData(id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(getURI(id)));
+            pathToRootSet.add(Collections.singletonList(getURI(id)));
             return pathToRootSet;
         }
 
@@ -131,7 +131,7 @@ public class JaWordNetTree {
         String treeData = JaWordNet.getTreeData(id);
 
         if (treeData == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(c));
+            pathToRootSet.add(Collections.singletonList(c));
             return pathToRootSet;
         }
 

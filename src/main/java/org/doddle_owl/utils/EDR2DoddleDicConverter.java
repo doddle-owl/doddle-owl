@@ -232,7 +232,7 @@ public class EDR2DoddleDicConverter {
         Set<TreeNode> nodeSet = idNodeSetMap.get(id);
         Set<List<String>> pathToRootSet = new HashSet<>();
         if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(id));
+            pathToRootSet.add(Collections.singletonList(id));
             return pathToRootSet;
         }
         for (TreeNode node : nodeSet) {

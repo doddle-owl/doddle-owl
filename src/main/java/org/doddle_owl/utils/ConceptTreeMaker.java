@@ -493,9 +493,7 @@ public class ConceptTreeMaker {
                     subResourceSet = new HashSet<>();
                 }
                 subResourceSet.add(resource);
-                if (subResourceSet.contains(supResource)) {
-                    subResourceSet.remove(supResource);
-                }
+                subResourceSet.remove(supResource);
                 supSubSetMap.put(supResource, subResourceSet);
             }
         }

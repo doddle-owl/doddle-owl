@@ -483,7 +483,6 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
     }
 
     public Set<List<Concept>> getPathToRootSet(String uri) {
-        Set<List<Concept>> pathToRootSet = new HashSet<>();
         ArrayList<Concept> pathToRoot = new ArrayList<>();
         Concept c = getConcept(uri);
         if (c != null) {
@@ -496,13 +495,12 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
             subConceptOf = RDFS.subClassOf;
         }
         int depth = 1;
-        pathToRootSet.addAll(setPathToRoot(depth, ontModel.createResource(uri), pathToRoot,
+        Set<List<Concept>> pathToRootSet = new HashSet<>(setPathToRoot(depth, ontModel.createResource(uri), pathToRoot,
                 subConceptOf));
         return pathToRootSet;
     }
 
     public Set<List<String>> getURIPathToRootSet(String uri) {
-        Set<List<String>> pathToRootSet = new HashSet<>();
         ArrayList<String> pathToRoot = new ArrayList<>();
         Concept c = getConcept(uri);
         if (c != null) {
@@ -515,7 +513,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
             subConceptOf = RDFS.subClassOf;
         }
         int depth = 1;
-        pathToRootSet.addAll(setURIPathToRoot(depth, ontModel.createResource(uri), pathToRoot,
+        Set<List<String>> pathToRootSet = new HashSet<>(setURIPathToRoot(depth, ontModel.createResource(uri), pathToRoot,
                 subConceptOf));
         return pathToRootSet;
     }

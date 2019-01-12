@@ -262,7 +262,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         }
         word = word.replaceAll("<", "");
         word = word.replaceAll(">", "");
-        String basicWord = "";
+        StringBuilder basicWord = new StringBuilder();
         if (selectedDoc.getLang().equals("ja")) {
             Tokenizer tokenizer = new Tokenizer();
             List<Token> tokenList = tokenizer.tokenize(word);
@@ -271,7 +271,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                 if (bw.equals("*")) {
                     bw = token.getSurface();
                 }
-                basicWord += bw;
+                basicWord.append(bw);
             }
         } else if (selectedDoc.getLang().equals("en")) {
             String[] words = word.split("\\s+");
@@ -290,9 +290,9 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                 if (basic.equals("")) {
                     basic = word1;
                 }
-                basicWord += basic + " ";
+                basicWord.append(basic).append(" ");
             }
-            word = basicWord;
+            word = basicWord.toString();
         }
         String pos = Translator.getTerm("UserDefinedInputTermCheckBox");
         TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
@@ -636,33 +636,33 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
             int compoundWordSize = getTermSize(basicStringList, termInfoCompoundWordSet, i);
             int removedCompoundWordSize = getTermSize(basicStringList,
                     removedTermInfoCompoundWordSet, i);
-            String word = "";
-            String basicWord = "";
+            StringBuilder word = new StringBuilder();
+            StringBuilder basicWord = new StringBuilder();
             if (0 < compoundWordSize) {
                 for (int j = i; j < i + compoundWordSize; j++) {
-                    word += texts[j];
-                    basicWord += basicStringList.get(j);
+                    word.append(texts[j]);
+                    basicWord.append(basicStringList.get(j));
                     if (j != i + compoundWordSize - 1) {
-                        word += " ";
-                        basicWord += " ";
+                        word.append(" ");
+                        basicWord.append(" ");
                     }
                 }
                 builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR + "\"><a href=\"inputTerm:").append(basicWord).append("\">").append(word).append("</a></font> ");
                 i += compoundWordSize - 1;
             } else if (0 < removedCompoundWordSize) {
                 for (int j = i; j < i + removedCompoundWordSize; j++) {
-                    word += texts[j];
-                    basicWord += basicStringList.get(j);
+                    word.append(texts[j]);
+                    basicWord.append(basicStringList.get(j));
                     if (j != i + removedCompoundWordSize - 1) {
-                        word += " ";
-                        basicWord += " ";
+                        word.append(" ");
+                        basicWord.append(" ");
                     }
                 }
-                basicWord = basicWord.replace("\\s+$", "");
+                basicWord = new StringBuilder(basicWord.toString().replace("\\s+$", ""));
                 builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR + "\"><a href=\"removedTerm:").append(basicWord).append("\">").append(word).append("</a></font> ");
                 i += removedCompoundWordSize - 1;
             } else {
-                word = texts[i] + " ";
+                word = new StringBuilder(texts[i] + " ");
                 builder.append(word);
             }
         }
@@ -686,34 +686,34 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
             int compoundWordSize = getTermSize(basicStringList, termInfoCompoundWordSet, i);
             int removedCompoundWordSize = getTermSize(basicStringList,
                     removedTermInfoCompoundWordSet, i);
-            String word = "";
-            String basicWord = "";
+            StringBuilder word = new StringBuilder();
+            StringBuilder basicWord = new StringBuilder();
             if (0 < compoundWordSize) {
                 for (int j = i; j < i + compoundWordSize; j++) {
-                    word += surfaceList.get(j);
-                    basicWord += basicStringList.get(j);
+                    word.append(surfaceList.get(j));
+                    basicWord.append(basicStringList.get(j));
                 }
-                if (termSelectionPanel.getInputTermInfo(basicWord) != null) {
+                if (termSelectionPanel.getInputTermInfo(basicWord.toString()) != null) {
                     builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR + "\"><a href=\"inputTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
                     i += compoundWordSize - 1;
                 } else {
-                    word = surfaceList.get(i);
+                    word = new StringBuilder(surfaceList.get(i));
                     builder.append(word);
                 }
             } else if (0 < removedCompoundWordSize) {
                 for (int j = i; j < i + removedCompoundWordSize; j++) {
-                    word += surfaceList.get(j);
-                    basicWord += basicStringList.get(j);
+                    word.append(surfaceList.get(j));
+                    basicWord.append(basicStringList.get(j));
                 }
-                if (termSelectionPanel.getRemovedTermInfo(basicWord) != null) {
+                if (termSelectionPanel.getRemovedTermInfo(basicWord.toString()) != null) {
                     builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR + "\"><a href=\"removedTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
                     i += removedCompoundWordSize - 1;
                 } else {
-                    word = surfaceList.get(i);
+                    word = new StringBuilder(surfaceList.get(i));
                     builder.append(word);
                 }
             } else {
-                word = surfaceList.get(i);
+                word = new StringBuilder(surfaceList.get(i));
                 builder.append(word);
             }
         }
@@ -754,30 +754,30 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         if (selectedDoc == null) {
             return "";
         }
-        String text = "";
+        StringBuilder text = new StringBuilder();
         String[] texts = selectedDoc.getTexts();
         int num = 0;
         for (int i = lineNum; i < selectedDoc.getSize(); i++, num++) {
             if (num == DISPLAY_LINE_NUM) {
                 break;
             }
-            text += texts[i] + "<br>";
+            text.append(texts[i]).append("<br>");
         }
 
         if (selectedPOS == DODDLE_POS.COMPOUND_WORD) {
             if (selectedDoc.getLang().equals("en")) {
-                text = highlightEnCompoundWord(text);
+                text = new StringBuilder(highlightEnCompoundWord(text.toString()));
             } else if (selectedDoc.getLang().equals("ja")) {
-                text = highlightJaCompoundWord(text);
+                text = new StringBuilder(highlightJaCompoundWord(text.toString()));
             }
         } else {
             if (selectedDoc.getLang().equals("en")) {
-                text = highlightEnText(text);
+                text = new StringBuilder(highlightEnText(text.toString()));
             } else if (selectedDoc.getLang().equals("ja")) {
-                text = highlightJaText(text);
+                text = new StringBuilder(highlightJaText(text.toString()));
             }
         }
-        return text;
+        return text.toString();
     }
 
     public void setDocumentAndLinkArea() {
@@ -837,15 +837,15 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         if (!isRegisteredWord(word, type)) {
             if (selectedDoc.getLang().equals("ja")) {
                 int num = 0;
-                String text = "";
+                StringBuilder text = new StringBuilder();
                 for (int i = lineNum; i < selectedDoc.getSize(); i++, num++) {
                     if (num == DISPLAY_LINE_NUM) {
                         break;
                     }
-                    text += selectedDoc.getTexts()[i] + "<br>";
+                    text.append(selectedDoc.getTexts()[i]).append("<br>");
                 }
                 Tokenizer tokenizer = new Tokenizer();
-                List<Token> tokenList = tokenizer.tokenize(text);
+                List<Token> tokenList = tokenizer.tokenize(text.toString());
                 for (Token token : tokenList) {
                     if (token.getSurface().equals(word)) {
                         String basic = token.getBaseForm();
@@ -860,7 +860,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                 }
             } else if (selectedDoc.getLang().equals("en")) {
                 String[] words = word.split("\\s+");
-                String basicWord = "";
+                StringBuilder basicWord = new StringBuilder();
                 for (String word1 : words) {
                     String basic = "";
                     IndexWord indexWord = WordNet.getIndexWord(POS.NOUN, word1.toLowerCase());
@@ -876,9 +876,9 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                     if (basic.equals("")) {
                         basic = word1;
                     }
-                    basicWord += basic + " ";
+                    basicWord.append(basic).append(" ");
                 }
-                word = basicWord;
+                word = basicWord.toString();
             }
         }
         return word;

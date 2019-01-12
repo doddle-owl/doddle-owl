@@ -99,7 +99,6 @@ public class ConceptDistanceModel implements Comparable<ConceptDistanceModel> {
     }
 
     public String toString() {
-        StringBuilder builder = new StringBuilder();
         // String firstLabel = commonAncestor.getURI();
         // if (commonAncestor.getLangLabelListMap().get("ja") != null) {
         // for (DODDLELiteral literal :
@@ -117,22 +116,22 @@ public class ConceptDistanceModel implements Comparable<ConceptDistanceModel> {
         // }
         // builder.append(firstLabel);
         // builder.append(",");
-        builder.append(c1ToCommonAncestorDistance);
-        builder.append(",");
-        builder.append(c2ToCommonAncestorDistance);
-        builder.append(",");
         // for (int depth : commonAncestorDepthList) {
         // builder.append(depth);
         // builder.append(" ");
         // }
-        builder.append(getShortestCommonAncestorDepth());
-        builder.append(",");
-        builder.append(commonAncestor.getURI());
-        builder.append(",");
-        builder.append(c1.getURI());
-        builder.append(",");
-        builder.append(c2.getURI());
-        return builder.toString();
+        String builder = String.valueOf(c1ToCommonAncestorDistance) +
+                "," +
+                c2ToCommonAncestorDistance +
+                "," +
+                getShortestCommonAncestorDepth() +
+                "," +
+                commonAncestor.getURI() +
+                "," +
+                c1.getURI() +
+                "," +
+                c2.getURI();
+        return builder;
     }
 
     @Override

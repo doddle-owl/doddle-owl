@@ -23,7 +23,6 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Translator;
 

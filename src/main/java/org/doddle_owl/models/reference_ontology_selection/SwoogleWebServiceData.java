@@ -191,8 +191,7 @@ public class SwoogleWebServiceData {
                         Set<String> extInputWordSet = conceptInputWordSetMap.get(c.getResource());
                         extInputWordSet.addAll(inputWordSet);
                     } else {
-                        Set<String> extInputWordSet = new HashSet<>();
-                        extInputWordSet.addAll(inputWordSet);
+                        Set<String> extInputWordSet = new HashSet<>(inputWordSet);
                         conceptInputWordSetMap.put(c.getResource(), extInputWordSet);
                     }
                 }

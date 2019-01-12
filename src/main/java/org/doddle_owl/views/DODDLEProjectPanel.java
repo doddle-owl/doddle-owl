@@ -24,7 +24,6 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.utils.Translator;
@@ -40,8 +39,6 @@ import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

@@ -366,11 +366,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void setWAResultTable(DefaultTableModel dtm) {
-        if (dtm != null) {
-            waResultTable.setModel(dtm);
-        } else {
-            waResultTable.setModel(new DefaultTableModel(null, WA_COLUMN_NAMES));
-        }
+        waResultTable.setModel(Objects.requireNonNullElseGet(dtm, () -> new DefaultTableModel(null, WA_COLUMN_NAMES)));
     }
 
     public int getRelationCount() {
@@ -389,9 +385,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
     public void addWrongPair(WrongPair wp) {
         DefaultTableModel model = (DefaultTableModel) wrongPairTable.getModel();
-        if (!wrongPairSet.contains(wp)) {
-            wrongPairSet.add(wp);
-        }
+        wrongPairSet.add(wp);
         reCalcWSandARValue();
         // System.out.println(wrongPairSet);
         model.addRow(new Object[]{wp.getDomain(), wp.getRange()});
@@ -434,11 +428,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void setWSResultTable(DefaultTableModel dtm) {
-        if (dtm != null) {
-            wsResultTable.setModel(dtm);
-        } else {
-            wsResultTable.setModel(new DefaultTableModel(null, WS_COLUMN_NAMES));
-        }
+        wsResultTable.setModel(Objects.requireNonNullElseGet(dtm, () -> new DefaultTableModel(null, WS_COLUMN_NAMES)));
     }
 
     public Set<ConceptPair> setARResultTable(String inputConcept, List<ConceptPair> arConceptPairSet) {
@@ -460,11 +450,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void setARResultTable(DefaultTableModel dtm) {
-        if (dtm != null) {
-            arResultTable.setModel(dtm);
-        } else {
-            arResultTable.setModel(new DefaultTableModel(null, AR_COLUMN_NAMES));
-        }
+        arResultTable.setModel(Objects.requireNonNullElseGet(dtm, () -> new DefaultTableModel(null, AR_COLUMN_NAMES)));
     }
 
     public String getWSTableRowConceptName(int row) {

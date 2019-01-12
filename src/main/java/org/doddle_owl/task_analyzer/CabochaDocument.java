@@ -69,10 +69,10 @@ public class CabochaDocument {
             Element tokElement = (Element) tokElementList.item(i);
             String surface = tokElement.getTextContent();
             String[] elems = tokElement.getAttribute("feature").split(",");
-            String pos = elems[0];
+            StringBuilder pos = new StringBuilder(elems[0]);
             for (int j = 1; j < 3; j++) {
                 if (!elems[j].equals("*")) {
-                    pos += "-" + elems[j];
+                    pos.append("-").append(elems[j]);
                 }
             }
             String basic = surface;
@@ -81,7 +81,7 @@ public class CabochaDocument {
                 basic = elems[6];
                 kana = elems[7];
             }
-            Morpheme morpheme = new Morpheme(surface, kana, basic, pos);
+            Morpheme morpheme = new Morpheme(surface, kana, basic, pos.toString());
             segment.addMorpheme(morpheme);
         }
     }

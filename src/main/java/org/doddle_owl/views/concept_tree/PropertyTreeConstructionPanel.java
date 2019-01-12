@@ -177,16 +177,12 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
                     Set<String> subURISet = new HashSet<>();
                     EDRTree.getEDRTree().getSubURISet(uri, nounURISet, subURISet);
                     if (0 < subURISet.size()) {
-                        for (String subURI : subURISet) {
-                            refineRegionSet.add(subURI);
-                        }
+                        refineRegionSet.addAll(subURISet);
                     }
                 }
             } else { // EDR以外の定義域，値域
                 Set<String> refineURISet = OWLOntologyManager.getSubURISet(uri, nounURISet);
-                for (String refineURI : refineURISet) {
-                    refineRegionSet.add(refineURI);
-                }
+                refineRegionSet.addAll(refineURISet);
             }
         }
         return refineRegionSet;
@@ -216,8 +212,7 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
 
     private void setDomainSet(VerbConcept c, ConceptTreeNode childNode, Set<String> nounURISet) {
         String vid = c.getLocalName();
-        Set<String> domainSet = new HashSet<>();
-        domainSet.addAll(OWLOntologyManager.getDomainSet(c, childNode.getTrimmedConceptList()));
+        Set<String> domainSet = new HashSet<>(OWLOntologyManager.getDomainSet(c, childNode.getTrimmedConceptList()));
         if (project.getOntologySelectionPanel().isEDREnable()) {
             domainSet.addAll(EDR.getRelationValueSet("agent", vid, childNode.getTrimmedConceptList()));
         }
@@ -226,8 +221,7 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
 
     private void setRangeSet(VerbConcept c, ConceptTreeNode childNode, Set<String> nounURISet) {
         String vid = c.getLocalName();
-        Set<String> rangeSet = new HashSet<>();
-        rangeSet.addAll(OWLOntologyManager.getRangeSet(c, childNode.getTrimmedConceptList()));
+        Set<String> rangeSet = new HashSet<>(OWLOntologyManager.getRangeSet(c, childNode.getTrimmedConceptList()));
         if (project.getOntologySelectionPanel().isEDREnable()) {
             rangeSet.addAll(EDR.getRelationValueSet("object", vid, childNode.getTrimmedConceptList()));
         }

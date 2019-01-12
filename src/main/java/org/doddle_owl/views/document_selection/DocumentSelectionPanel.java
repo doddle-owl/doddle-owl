@@ -221,8 +221,6 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                 return;
             }
             stopWordSet = Files.lines(stopWordListFilePath).collect(Collectors.toSet());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

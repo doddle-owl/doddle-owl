@@ -39,6 +39,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -322,23 +323,13 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         properties.setProperty("TERM_EXTRACT_SCRIPTS_DIR", directoryPanel.getTermExtractScriptDir());
 
-        if (DocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
-            properties.setProperty("Japanese_Morphological_Analyzer",
-                    DocumentSelectionPanel.Japanese_Morphological_Analyzer);
-        } else {
-            // properties.setProperty("Japanese_Morphological_Analyzer","C:/Program
-            // Files/Mecab/bin/mecab.exe -Ochasen");
-            properties.setProperty("Japanese_Morphological_Analyzer",
-                    "C:/Program Files/Chasen/bin/chasen.exe");
-        }
+        properties.setProperty("Japanese_Morphological_Analyzer",
+                Objects.requireNonNullElse(DocumentSelectionPanel.Japanese_Morphological_Analyzer,
+                        "C:/Program Files/Chasen/bin/chasen.exe"));
 
-        if (DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer != null) {
-            properties.setProperty("Japanese_Dependency_Structure_Analyzer",
-                    DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
-        } else {
-            properties.setProperty("Japanese_Dependency_Structure_Analyzer",
-                    "C:/Program Files/CaboCha/bin/cabocha.exe");
-        }
+        properties.setProperty("Japanese_Dependency_Structure_Analyzer",
+                Objects.requireNonNullElse(DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer,
+                        "C:/Program Files/CaboCha/bin/cabocha.exe"));
 
         properties.setProperty("AutomaticDisambiguation.useSiblingNodeCount",
                 String.valueOf(siblingDisambiguationCheckBox.isSelected()));
@@ -465,23 +456,15 @@ public class OptionDialog extends JDialog implements ActionListener {
         DocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR = properties.getProperty("TERM_EXTRACT_SCRIPTS_DIR");
         directoryPanel.setTermExtractScriptDir(DocumentSelectionPanel.TERM_EXTRACT_SCRIPTS_DIR);
 
-        if (DocumentSelectionPanel.Japanese_Morphological_Analyzer != null) {
-            properties.setProperty("Japanese_Morphological_Analyzer",
-                    DocumentSelectionPanel.Japanese_Morphological_Analyzer);
-        } else {
-            properties.setProperty("Japanese_Morphological_Analyzer",
-                    "C:/Program Files/Chasen/bin/chasen.exe");
-        }
+        properties.setProperty("Japanese_Morphological_Analyzer",
+                Objects.requireNonNullElse(DocumentSelectionPanel.Japanese_Morphological_Analyzer,
+                        "C:/Program Files/Chasen/bin/chasen.exe"));
         DocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");
 
-        if (DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer != null) {
-            properties.setProperty("Japanese_Dependency_Structure_Analyzer",
-                    DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer);
-        } else {
-            properties.setProperty("Japanese_Dependency_Structure_Analyzer",
-                    "C:/Program Files/ChaboCha/bin/cabocha.exe");
-        }
+        properties.setProperty("Japanese_Dependency_Structure_Analyzer",
+                Objects.requireNonNullElse(DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer,
+                        "C:/Program Files/ChaboCha/bin/cabocha.exe"));
         DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
                 .getProperty("Japanese_Dependency_Structure_Analyzer");
 

@@ -129,10 +129,10 @@ public class DODDLEStringTagger {
 	public static void main(String[] args) throws Exception {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
 				"C:/DODDLE-OWL/InputDocument.txt"), StandardCharsets.UTF_8));
-		String text = "";
+		StringBuilder text = new StringBuilder();
 		while (reader.ready()) {
 			String line = reader.readLine();
-			text += line + "\n";
+			text.append(line).append("\n");
 
 		}
 		reader.close();
@@ -140,7 +140,7 @@ public class DODDLEStringTagger {
 		System.out.println("text: " + text);
 
 		DODDLEStringTagger tagger2 = DODDLEStringTagger.getInstance();
-		List<DODDLEToken> tokenList = tagger2.analyze(text);
+		List<DODDLEToken> tokenList = tagger2.analyze(text.toString());
 		System.out.println(tokenList.size());
 		for (DODDLEToken token : tokenList) {
 			System.out.print(token.getPos() + "\t");

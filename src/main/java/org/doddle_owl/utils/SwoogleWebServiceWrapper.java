@@ -759,8 +759,7 @@ public class SwoogleWebServiceWrapper {
     }
 
     private static Set<String> getRelatedWordSet(Set<String> inputWordSet) {
-        Set<String> relatedWordSet = new HashSet<>();
-        relatedWordSet.addAll(inputWordSet);
+        Set<String> relatedWordSet = new HashSet<>(inputWordSet);
         for (Resource property : swoogleWebServiceData.getAllProperty()) {
             relatedWordSet.add(Utils.getLocalName(property));
         }
