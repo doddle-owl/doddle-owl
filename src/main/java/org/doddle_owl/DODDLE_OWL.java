@@ -59,7 +59,7 @@ import java.util.prefs.Preferences;
  */
 public class DODDLE_OWL extends JFrame {
 
-    private static final Logger logger = Logger.getLogger(DODDLE_OWL.class.getName());
+    private static final Logger logger = Logger.getLogger("DODDLE-OWL");
     private OptionDialog optionDialog;
     private LogConsole logConsole;
 
@@ -388,15 +388,16 @@ public class DODDLE_OWL extends JFrame {
     public static void setFileLogger() {
         try {
             Path logFilePath = Paths.get(DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt");
-            if (Files.exists(logFilePath)) {
-                Handler fileHandler = new FileHandler(logFilePath.toString(), true);
-                fileHandler.setLevel(Level.INFO);
-                fileHandler.setFormatter(new SimpleFormatter());
-                logger.addHandler(fileHandler);
-                ConsoleHandler consoleHandler = new ConsoleHandler();
-                consoleHandler.setLevel(Level.INFO);
-                logger.addHandler(consoleHandler);
+            if (Files.notExists(logFilePath)) {
+                Files.createFile(logFilePath);
             }
+            Handler fileHandler = new FileHandler(logFilePath.toString(), true);
+            fileHandler.setLevel(Level.INFO);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+            ConsoleHandler consoleHandler = new ConsoleHandler();
+            consoleHandler.setLevel(Level.INFO);
+            logger.addHandler(consoleHandler);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
