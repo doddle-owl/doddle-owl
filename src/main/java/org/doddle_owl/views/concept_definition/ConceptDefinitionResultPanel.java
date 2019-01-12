@@ -70,7 +70,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     private Set<NonTaxonomicRelation> nonTaxRelSet;
     private Set<WrongPair> wrongPairSet;
 
-    private JList inputDocJList;
+    private DefaultListModel<Document> documentListModel;
+    private JList documentJList;
 
     private JTable wsResultTable;
     private JTable arResultTable;
@@ -82,6 +83,12 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
     private JTable wrongPairTable;
     private JButton deleteWrongPairButton;
+
+    private String[] definedColumnNames = {Translator.getTerm("MetaPropertyLabel"),
+            Translator.getTerm("DomainLabel"), Translator.getTerm("RelationLabel"),
+            Translator.getTerm("RangeLabel")};
+    private String[] wrongDefinedColumnNames = {Translator.getTerm("DomainLabel"),
+            Translator.getTerm("RangeLabel")};
 
     private DODDLEProjectPanel doddleProjectPanel;
     private PropertyTreeConstructionPanel constructPropertyTreePanel;
@@ -126,6 +133,22 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         return waResultTable;
     }
 
+    public void initialize() {
+        documentListModel.clear();
+        DefaultTableModel resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
+        wsResultTable.setModel(resultModel);
+        resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
+        arResultTable.setModel(resultModel);
+        resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
+        waResultTable.setModel(resultModel);
+        var resultTableModel = new ResultTableModel(null, definedColumnNames);
+        resultTableModel.addTableModelListener(this);
+        conceptDefinitionTable.setModel(resultTableModel);
+        resultTableModel = new ResultTableModel(null, wrongDefinedColumnNames);
+        resultTableModel.addTableModelListener(this);
+        wrongPairTable.setModel(resultTableModel);
+    }
+
     public ConceptDefinitionResultPanel(JList icList, ConceptDefinitionAlgorithmPanel ap,
                                         DODDLEProjectPanel project) {
         algorithmPanel = ap;
@@ -137,13 +160,13 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         wrongPairSet = new HashSet<>();
 
         definePanel = new ConceptDefinitionPanel();
-        DefaultTableModel resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        inputDocJList = new JList();
-        inputDocJList.addListSelectionListener(this);
-        JScrollPane inputDocJListScroll = new JScrollPane(inputDocJList);
+        documentListModel = new DefaultListModel<>();
+        documentJList = new JList(documentListModel);
+        documentJList.addListSelectionListener(this);
+        JScrollPane inputDocJListScroll = new JScrollPane(documentJList);
         inputDocJListScroll.setBorder(BorderFactory.createTitledBorder(Translator
                 .getTerm("InputDocumentList")));
         inputDocJListScroll.setPreferredSize(new Dimension(80, 80));
@@ -152,21 +175,11 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         inputDocPanel.setLayout(new BorderLayout());
         inputDocPanel.add(inputDocJListScroll, BorderLayout.CENTER);
 
-        wsResultTable = new JTable(resultModel);
-        // WresultTable.setBackground(Color.BLUE);
+        wsResultTable = new JTable();
+        arResultTable = new JTable();
+        waResultTable = new JTable();
 
-        resultModel = new DefaultTableModel(null, AR_COLUMN_NAMES);
-        arResultTable = new JTable(resultModel);
-
-        resultModel = new DefaultTableModel(null, WA_COLUMN_NAMES);
-        waResultTable = new JTable(resultModel);
-
-        String[] definedColumnNames = {Translator.getTerm("MetaPropertyLabel"),
-                Translator.getTerm("DomainLabel"), Translator.getTerm("RelationLabel"),
-                Translator.getTerm("RangeLabel")};
-        ResultTableModel resultTableModel = new ResultTableModel(null, definedColumnNames);
-        resultTableModel.addTableModelListener(this);
-        conceptDefinitionTable = new JTable(resultTableModel);
+        conceptDefinitionTable = new JTable();
         JScrollPane conceptDefinitionTableScroll = new JScrollPane(conceptDefinitionTable);
         setRelationButton = new JButton(Translator.getTerm("SetPropertyButton"));
         setRelationButton.addActionListener(this);
@@ -181,9 +194,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         acceptedPairPanel.add(conceptDefinitionTableScroll, BorderLayout.CENTER);
         acceptedPairPanel.add(getEastComponent(buttonPanel), BorderLayout.SOUTH);
 
-        String[] wrongDefinedColumnNames = {Translator.getTerm("DomainLabel"),
-                Translator.getTerm("RangeLabel")};
-        wrongPairTable = new JTable(new ResultTableModel(null, wrongDefinedColumnNames));
+        wrongPairTable = new JTable();
         JScrollPane wrongConceptPairTableScroll = new JScrollPane(wrongPairTable);
         deleteWrongPairButton = new JButton(Translator.getTerm("RemoveWrongConceptPairButton"));
         deleteWrongPairButton.addActionListener(this);
@@ -200,10 +211,11 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         inputConceptPanel = new JPanel();
         inputConceptPanel.setLayout(new BorderLayout());
         inputConceptPanel.add(inputConceptJListScroll, BorderLayout.CENTER);
+        initialize();
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        if (e.getSource() == inputDocJList) {
+        if (e.getSource() == documentJList) {
             reCalcWSandARValue();
         }
     }
@@ -306,11 +318,11 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void setInputDocList() {
-        inputDocJList.setListData(doddleProjectPanel.getDocumentSelectionPanel().getDocSet().toArray());
+        documentListModel.addAll(doddleProjectPanel.getDocumentSelectionPanel().getDocSet());
     }
 
     public void calcWSandARValue(String selectedInputConcept) {
-        Document currentDoc = (Document) inputDocJList.getSelectedValue();
+        Document currentDoc = (Document) documentJList.getSelectedValue();
         if (currentDoc == null) {
             return;
         }

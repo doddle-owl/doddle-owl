@@ -325,7 +325,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         wordSpaceSet.clear();
         aprioriSet.clear();
         ConceptDefinitionPanel conceptDefinitionPanel = doddleProjectPanel.getConceptDefinitionPanel();
-        conceptDefinitionPanel.setInputConceptJList();
+        conceptDefinitionPanel.setTermList();
         if (0 < conceptDefinitionPanel.getInputTermList().size()) {
             Set<Document> docSet = doddleProjectPanel.getDocumentSelectionPanel().getDocSet();
             for (Document doc : docSet) {

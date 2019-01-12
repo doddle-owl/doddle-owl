@@ -58,9 +58,8 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
     private Map<String, Concept> compoundWordConceptMap;
     private Map<String, Set<Concept>> termConceptSetMap;
 
-    public List<String> inputWordList;
-
-    private JList inputConceptJList;
+    private DefaultListModel<String> termListModel;
+    private JList termJList;
     private ConceptDefinitionResultPanel resultPanel;
     private ConceptDefinitionAlgorithmPanel algorithmPanel;
     private ConceptDefinitionResultPanel.ConceptDefinitionPanel conceptDefinitionPanel;
@@ -69,20 +68,70 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
     private ConceptSelectionPanel conceptSelectionPanel;
 
     public void initialize() {
+        termListModel.clear();
         wordCorrespondConceptSetMap.clear();
         compoundWordConceptMap.clear();
         termConceptSetMap.clear();
-        inputWordList.clear();
+        resultPanel.initialize();
     }
 
-    public void setInputConceptJList() {
-        inputWordList = getInputTermList();
-        inputConceptJList.removeAll();
-        DefaultListModel listModel = new DefaultListModel();
-        for (String iw : inputWordList) {
-            listModel.addElement(iw);
-        }
-        inputConceptJList.setModel(listModel);
+    public ConceptDefinitionPanel(DODDLEProjectPanel project) {
+        doddleProjectPanel = project;
+        conceptSelectionPanel = project.getConceptSelectionPanel();
+
+        termListModel = new DefaultListModel();
+        termJList = new JList(termListModel);
+        termJList.addListSelectionListener(this);
+
+        algorithmPanel = new ConceptDefinitionAlgorithmPanel(termJList, doddleProjectPanel);
+        resultPanel = new ConceptDefinitionResultPanel(termJList, algorithmPanel, doddleProjectPanel);
+        conceptDefinitionPanel = resultPanel.getDefinePanel();
+
+        var parameterTabbedPane = new JTabbedPane();
+        parameterTabbedPane.addTab(Translator.getTerm("WordSpaceParameterPanel"), null,
+                algorithmPanel.getWordSpaceParamPanel());
+        parameterTabbedPane.addTab(Translator.getTerm("AprioriParameterPanel"), null,
+                algorithmPanel.getAprioriParamPanel());
+
+        var resultTabbedPane = new JTabbedPane();
+        resultTabbedPane.addTab("WordSpace", null, new JScrollPane(
+                resultPanel.getWordSpaceResultTable()));
+        resultTabbedPane.addTab("Apriori", null, new JScrollPane(
+                resultPanel.getAprioriResultTable()));
+        resultTabbedPane.addTab("WordSpace & Apriori", null, new JScrollPane(
+                resultPanel.getWAResultTable()));
+
+        var conceptPairsTabbedPane = new JTabbedPane();
+        conceptPairsTabbedPane.addTab(Translator.getTerm("CorrectConceptPairTable"), null,
+                resultPanel.getAcceptedPairPanel());
+        conceptPairsTabbedPane.addTab(Translator.getTerm("WrongConceptPairTable"), null,
+                resultPanel.getWrongPairPanel());
+        conceptPairsTabbedPane.setPreferredSize(new Dimension(800, 200));
+
+        var splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPane.add(resultPanel.getInputDocPanel());
+        splitPane.add(resultTabbedPane);
+
+        var centerPanel = new JPanel();
+        centerPanel.setLayout(new BorderLayout());
+        centerPanel.add(resultPanel.getInputConceptPanel(), BorderLayout.WEST);
+        centerPanel.add(splitPane, BorderLayout.CENTER);
+        centerPanel.add(conceptDefinitionPanel, BorderLayout.SOUTH);
+
+        var mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        mainSplitPane.add(centerPanel);
+        mainSplitPane.add(conceptPairsTabbedPane);
+
+        setLayout(new BorderLayout());
+        add(parameterTabbedPane, BorderLayout.NORTH);
+        add(centerPanel, BorderLayout.CENTER);
+        add(mainSplitPane, BorderLayout.SOUTH);
+
+        setTableAction();
+    }
+
+    public void setTermList() {
+        termListModel.addAll(getInputTermList());
     }
 
     public Concept getConcept(String word) {
@@ -168,64 +217,10 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
         return ontology;
     }
 
-    public ConceptDefinitionPanel(DODDLEProjectPanel project) {
-        doddleProjectPanel = project;
-        conceptSelectionPanel = project.getConceptSelectionPanel();
-
-        inputConceptJList = new JList(new DefaultListModel());
-        inputConceptJList.addListSelectionListener(this);
-
-        algorithmPanel = new ConceptDefinitionAlgorithmPanel(inputConceptJList, doddleProjectPanel);
-        resultPanel = new ConceptDefinitionResultPanel(inputConceptJList, algorithmPanel,
-                doddleProjectPanel);
-        conceptDefinitionPanel = resultPanel.getDefinePanel();
-
-        var parameterTabbedPane = new JTabbedPane();
-        parameterTabbedPane.addTab(Translator.getTerm("WordSpaceParameterPanel"), null,
-                algorithmPanel.getWordSpaceParamPanel());
-        parameterTabbedPane.addTab(Translator.getTerm("AprioriParameterPanel"), null,
-                algorithmPanel.getAprioriParamPanel());
-
-        var resultTabbedPane = new JTabbedPane();
-        resultTabbedPane.addTab("WordSpace", null, new JScrollPane(
-                resultPanel.getWordSpaceResultTable()));
-        resultTabbedPane.addTab("Apriori", null, new JScrollPane(
-                resultPanel.getAprioriResultTable()));
-        resultTabbedPane.addTab("WordSpace & Apriori", null, new JScrollPane(
-                resultPanel.getWAResultTable()));
-
-        var conceptPairsTabbedPane = new JTabbedPane();
-        conceptPairsTabbedPane.addTab(Translator.getTerm("CorrectConceptPairTable"), null,
-                resultPanel.getAcceptedPairPanel());
-        conceptPairsTabbedPane.addTab(Translator.getTerm("WrongConceptPairTable"), null,
-                resultPanel.getWrongPairPanel());
-        conceptPairsTabbedPane.setPreferredSize(new Dimension(800, 200));
-
-        var splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        splitPane.add(resultPanel.getInputDocPanel());
-        splitPane.add(resultTabbedPane);
-
-        var centerPanel = new JPanel();
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.add(resultPanel.getInputConceptPanel(), BorderLayout.WEST);
-        centerPanel.add(splitPane, BorderLayout.CENTER);
-        centerPanel.add(conceptDefinitionPanel, BorderLayout.SOUTH);
-
-        var mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        mainSplitPane.add(centerPanel);
-        mainSplitPane.add(conceptPairsTabbedPane);
-
-        setLayout(new BorderLayout());
-        add(parameterTabbedPane, BorderLayout.NORTH);
-        add(centerPanel, BorderLayout.CENTER);
-        add(mainSplitPane, BorderLayout.SOUTH);
-
-        setTableAction();
-    }
 
     public void valueChanged(ListSelectionEvent e) {
-        if (inputConceptJList.getSelectedValue() != null) {
-            String selectedInputConcept = inputConceptJList.getSelectedValue().toString();
+        if (termJList.getSelectedValue() != null) {
+            String selectedInputConcept = termJList.getSelectedValue().toString();
             resultPanel.calcWSandARValue(selectedInputConcept);
         }
     }
@@ -239,8 +234,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
                     if (lsm.isSelectionEmpty()) {
                     } else {
                         int selectedRow = lsm.getMinSelectionIndex();
-                        // System.out.println(lsm.getMinSelectionIndex());
-                        String c1 = inputConceptJList.getSelectedValue().toString();
+                        String c1 = termJList.getSelectedValue().toString();
                         String c2 = resultPanel.getWSTableRowConceptName(selectedRow);
                         conceptDefinitionPanel.setCText(c1, c2);
                     }
@@ -254,10 +248,9 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
                     if (lsm.isSelectionEmpty()) {
                     } else {
                         int selectedRow = lsm.getMinSelectionIndex();
-                        String c1 = inputConceptJList.getSelectedValue().toString();
+                        String c1 = termJList.getSelectedValue().toString();
                         String c2 = resultPanel.getARTableRowConceptName(selectedRow);
                         conceptDefinitionPanel.setCText(c1, c2);
-                        // System.out.println("-----" + selectedRow);
                     }
                 });
 
@@ -268,11 +261,9 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
             if (lsm.isSelectionEmpty()) {
             } else {
                 int selectedRow = lsm.getMinSelectionIndex();
-                // String c1 = comboBox.getSelectedItem().toString();
-                String c1 = inputConceptJList.getSelectedValue().toString();
+                String c1 = termJList.getSelectedValue().toString();
                 String c2 = resultPanel.getWATableRowConceptName(selectedRow);
                 conceptDefinitionPanel.setCText(c1, c2);
-                // System.out.println("-----" + selectedRow);
             }
         });
 
