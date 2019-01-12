@@ -85,6 +85,9 @@ public class DODDLE_OWL extends JFrame {
 
     private ShowDODDLEDicConverterAction showDODDLEDicConverterAction;
 
+    private static final int WINDOW_WIDTH = 1280;
+    private static final int WINDOW_HEIGHT = 768;
+
     @Override
     public Image getIconImage() {
         return super.getIconImage();
@@ -111,6 +114,7 @@ public class DODDLE_OWL extends JFrame {
         makeMenuBar();
         contentPane.add(getToolBar(), BorderLayout.NORTH);
         doddleProjectPanel = new DODDLEProjectPanel();
+        contentPane.add(doddleProjectPanel, BorderLayout.CENTER);
         contentPane.add(STATUS_BAR, BorderLayout.SOUTH);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -118,7 +122,7 @@ public class DODDLE_OWL extends JFrame {
             }
         });
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setSize(1000, 750);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
         setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "

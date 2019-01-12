@@ -73,9 +73,6 @@ public class DODDLEProjectPanel extends JPanel {
     private List<String> logList;
     private UndoManager undoManager;
 
-    private static final int WINDOW_WIDTH = 1024;
-    private static final int WINDOW_HEIGHT = 768;
-
     public void initProject() {
         ontologySelectionPanel.initialize();
         documentSelectionPanel.initialize();
@@ -108,35 +105,35 @@ public class DODDLEProjectPanel extends JPanel {
 
             rootTabbedPane = new JTabbedPane();
             rootTabbedPane.addTab(
-                    Translator.getTerm("OntologySelectionPanel"),
+                    Translator.getTerm("OntologySelectionTab"),
                     Utils.getImageIcon("reference_ontology_selection.png"),
                     ontologySelectionPanel);
             rootTabbedPane.addTab(
-                    Translator.getTerm("DocumentSelectionPanel"),
+                    Translator.getTerm("DocumentSelectionTab"),
                     Utils.getImageIcon("input_document_selection.png"),
                     documentSelectionPanel);
             rootTabbedPane.addTab(
-                    Translator.getTerm("TermSelectionPanel"),
+                    Translator.getTerm("TermSelectionTab"),
                     Utils.getImageIcon("input_term_selection.png"),
                     termSelectionPanel);
             rootTabbedPane.addTab(
-                    Translator.getTerm("ConceptSelectionPanel"),
+                    Translator.getTerm("ConceptSelectionTab"),
                     Utils.getImageIcon("input_concept_selection.png"),
                     conceptSelectionPanel);
             rootTabbedPane.addTab(
-                    Translator.getTerm("ClassTreeConstructionPanel"),
+                    Translator.getTerm("ClassTreeConstructionTab"),
                     Utils.getImageIcon("constructing_class_hierarchy.png"),
                     constructClassPanel);
             rootTabbedPane.addTab(
-                    Translator.getTerm("PropertyTreeConstructionPanel"),
+                    Translator.getTerm("PropertyTreeConstructionTab"),
                     Utils.getImageIcon("constructing_property_hierarchy.png"),
                     constructPropertyPanel);
             rootTabbedPane.addTab(
-                    Translator.getTerm("ConceptDefinitionPanel"),
+                    Translator.getTerm("RelationConstructionTab"),
                     Utils.getImageIcon("concept_definition.png"),
                     conceptDefinitionPanel);
-            setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-            DODDLE_OWL.rootPane.getContentPane().add(rootTabbedPane, BorderLayout.CENTER);
+            setLayout(new BorderLayout());
+            add(rootTabbedPane, BorderLayout.CENTER);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

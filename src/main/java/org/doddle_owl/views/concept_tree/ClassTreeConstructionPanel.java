@@ -73,18 +73,20 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
         conceptInfoPanel = new ConceptInformationPanel(isaTreePanel.getConceptTree(), hasaTreePanel.getConceptTree(),
                 new ConceptTreeCellRenderer(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE), conceptDriftManagementPanel);
 
-        var leftPanel = new JPanel();
-        leftPanel.setLayout(new BorderLayout());
-        leftPanel.add(undefinedTermListPanel, BorderLayout.NORTH);
-        leftPanel.add(treeTabbedPane, BorderLayout.CENTER);
+        var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        leftSplitPane.setOneTouchExpandable(true);
+        leftSplitPane.add(undefinedTermListPanel);
+        leftSplitPane.add(treeTabbedPane);
 
         var rightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplitPane.setOneTouchExpandable(true);
         rightSplitPane.add(conceptInfoPanel);
         rightSplitPane.add(conceptDriftManagementPanel);
         rightSplitPane.setDividerLocation(0.6);
 
         var mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        mainSplitPane.add(leftPanel);
+        mainSplitPane.setOneTouchExpandable(true);
+        mainSplitPane.add(leftSplitPane);
         mainSplitPane.add(rightSplitPane);
         mainSplitPane.setDividerLocation(0.4);
 

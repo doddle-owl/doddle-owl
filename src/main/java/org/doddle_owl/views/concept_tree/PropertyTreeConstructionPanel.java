@@ -86,22 +86,24 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         treeTabbedPane.addTab(Translator.getTerm("IsaConceptTreePanel"), null, isaTreePanel);
         treeTabbedPane.addTab(Translator.getTerm("HasaConceptTreePanel"), null, hasaTreePanel);
 
-        var leftPanel = new JPanel();
-        leftPanel.setLayout(new BorderLayout());
-        leftPanel.add(undefinedTermListPanel, BorderLayout.NORTH);
-        leftPanel.add(treeTabbedPane, BorderLayout.CENTER);
+        var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT) ;
+        leftSplitPane.setOneTouchExpandable(true);
+        leftSplitPane.add(undefinedTermListPanel) ;
+        leftSplitPane.add(treeTabbedPane);
 
         var southTabbedPane = new JTabbedPane();
         southTabbedPane.addTab(Translator.getTerm("ConceptDefinitionPanel"), null, edrConceptDefinitionPanel);
         southTabbedPane.addTab(Translator.getTerm("ConceptDriftManagementPanel"), null, conceptDriftManagementPanel);
 
         var rightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplitPane.setOneTouchExpandable(true);
         rightSplitPane.add(conceptInfoPanel);
         rightSplitPane.add(southTabbedPane);
         rightSplitPane.setDividerLocation(0.6);
 
         var mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        mainSplitPane.add(leftPanel);
+        mainSplitPane.setOneTouchExpandable(true);
+        mainSplitPane.add(leftSplitPane);
         mainSplitPane.add(rightSplitPane);
         mainSplitPane.setDividerLocation(0.4);
 

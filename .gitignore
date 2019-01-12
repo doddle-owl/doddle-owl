@@ -1,5 +1,6 @@
 *.iml
 doddle_log.txt
+doddle_log.txt.lck
 .idea/
 .gradle/
 gradle/

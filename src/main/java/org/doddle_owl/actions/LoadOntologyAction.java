@@ -151,7 +151,7 @@ public class LoadOntologyAction extends AbstractAction {
 			Model model = ModelFactory.createDefaultModel();
 			BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
 			try (reader) {
-				model.read(reader, DODDLEConstants.BASE_URI, "RDF/XML");
+				model.read(reader, DODDLEConstants.BASE_URI, "TURTLE");
 			}
 			loadOWLOntology(currentProject, model);
 		} catch (IOException e) {

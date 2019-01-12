@@ -133,7 +133,7 @@ public class SaveOntologyAction extends AbstractAction {
     public void saveOWLOntology(DODDLEProjectPanel project, File file) {
         try {
             Model ontModel = getOntology(project);
-            RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
+            RDFWriter rdfWriter = ontModel.getWriter("TURTLE");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
             rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
