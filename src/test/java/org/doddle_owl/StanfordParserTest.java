@@ -1,24 +1,30 @@
 package org.doddle_owl;
 
-import edu.stanford.nlp.simple.Document;
-import edu.stanford.nlp.simple.Sentence;
+import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.ling.SentenceUtils;
+import edu.stanford.nlp.ling.TaggedWord;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class StanfordParserTest {
     public static void main(String[] args) {
-        Document doc = new Document("add your text here! It can contain multiple sentences.");
-        for (Sentence s : doc.sentences()) {
-            System.out.println(s);
-            for (String w : s.words()) {
-                System.out.println(w);
+        var taggerModel = DODDLE_OWL.class.getClassLoader().getResourceAsStream("pos_tagger_model/english-left3words-distsim.tagger");
+        var tagger = new MaxentTagger(taggerModel);
+        try (var reader = Files.newBufferedReader(Paths.get("./LICENSE"))) {
+            List<List<HasWord>> sentenceList = MaxentTagger.tokenizeText(reader);
+            for (List<HasWord> sentence : sentenceList) {
+                List<TaggedWord> taggedWordList = tagger.tagSentence(sentence);
+                for (TaggedWord tw : taggedWordList) {
+                    System.out.println(tw.tag() + ", " + tw.word());
+                }
+                System.out.println(SentenceUtils.listToString(taggedWordList, false));
             }
-            for (String l : s.lemmas()) {
-                System.out.println(l);
-            }
-            for (String p : s.posTags()) {
-                System.out.println(p);
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        
     }
 }

@@ -25,7 +25,10 @@ package org.doddle_owl.views.document_selection;
 
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
-import edu.stanford.nlp.simple.Sentence;
+import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.ling.SentenceUtils;
+import edu.stanford.nlp.ling.TaggedWord;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
 import org.apache.commons.io.FileUtils;
@@ -319,31 +322,34 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     private void enTermExtraction(Document doc) {
         File file = doc.getFile();
-        edu.stanford.nlp.simple.Document stanfordDoc = new edu.stanford.nlp.simple.Document(doc.getText());
-        Path taggerOutPath = Paths.get(DODDLEConstants.PROJECT_HOME + File.separator + "tmpTagger.txt");
-        try (BufferedWriter writer = Files.newBufferedWriter(taggerOutPath)) {
-            for (Sentence sentence : stanfordDoc.sentences()) {
-                for (int i = 0; i < sentence.words().size(); i++) {
-                    String word = sentence.word(i);
-                    String pos = sentence.posTag(i);
-                    String basicStr = sentence.lemma(i);
-                    writer.write(word);
-                    writer.write("/");
-                    writer.write(pos);
-                    writer.write(" ");
+        var taggerModel = DODDLE_OWL.class.getClassLoader().getResourceAsStream("pos_tagger_model/english-left3words-distsim.tagger");
+        var tagger = new MaxentTagger(taggerModel);
 
-                    if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
-                        continue;
+        Path taggerOutPath = Paths.get(DODDLEConstants.PROJECT_HOME + File.separator + "tmpTagger.txt");
+        try (var writer = Files.newBufferedWriter(taggerOutPath)) {
+            try (var reader = Files.newBufferedReader(Paths.get(doc.getFile().getAbsolutePath()))) {
+                List<List<HasWord>> sentenceList = MaxentTagger.tokenizeText(reader);
+                for (List<HasWord> sentence : sentenceList) {
+                    List<TaggedWord> taggedWordList = tagger.tagSentence(sentence);
+                    for (TaggedWord tw : taggedWordList) {
+                        String word = tw.word();
+                        String pos = tw.tag();
+                        String basicStr = word.toLowerCase();
+                        if (!oneWordCheckBox.isSelected() && basicStr.length() == 1) {
+                            continue;
+                        }
+                        if (isStopWord(basicStr)) {
+                            continue;
+                        }
+                        setTermInfo(word, pos, basicStr, file);
                     }
-                    if (isStopWord(basicStr)) {
-                        continue;
-                    }
-                    setTermInfo(word, pos, basicStr, file);
+                    writer.write(SentenceUtils.listToString(taggedWordList, false));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         if (genSenCheckBox.isSelected()) {
             Set<String> comoundWordSet = getGensenCompoundWordSet(doc);
             for (String compoundWord : comoundWordSet) {
