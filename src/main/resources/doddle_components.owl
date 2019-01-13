@@ -64,11 +64,11 @@
 <#OpenInputConceptSetAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Open Input Concept Set"@en , "入力概念セットを開く"@ja ;
+                "Open Concept Set"@en , "概念セットを開く"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#OpenAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Open Input Concept Set" .
+                "Open Concept Set" .
 
 <#ApplicationName>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -241,20 +241,20 @@
 <#EditInputDocumentButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Edit Input Document"@en , "入力文書の編集"@ja ;
+                "Edit Document"@en , "文書の編集"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Button> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力文書の編集" .
+                "文書の編集" .
 
 <#InputConceptSetCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Concept Set"@en , "入力概念のセット"@ja ;
+                "Concept Set"@en , "概念セット"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力概念のセット" .
+                "概念セット" .
 
 <#UnnecessaryOntologyList>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -368,11 +368,11 @@
 
 <#IsaConceptTree>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Concept Tree"@en , "Is-a階層"@ja ;
+                "is-a Tree"@en , "is-a階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#ConceptTree> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Is-a階層" .
+                "is-a階層" .
 
 <#ClassSINCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -412,11 +412,11 @@
 <#AutomaticInputConceptSelectionAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Automatic Input Concept Selection"@en , "自動入力概念選択"@ja ;
+                "Automatic Concept Selection"@en , "自動概念選択"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Action> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "自動入力概念選択" .
+                "自動概念選択" .
 
 <#AddAbstractInternalNodeCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -484,11 +484,11 @@
 <#SetInputTermSetDoneMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Set Input Term List Done"@en , "入力語リストの設定完了"@ja ;
+                "Set Term List Done"@en , "用語リストの設定完了"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#DoneMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語リストの設定完了" .
+                "用語リストの設定完了" .
 
 <#ValidLabel>  a                        <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -604,20 +604,20 @@
 <#InputTermExtractionDoneMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Term Extraction Done"@en , "入力語抽出完了"@ja ;
+                "Term Extraction Done"@en , "用語抽出完了"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#DoneMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語抽出完了" .
+                "用語抽出完了" .
 
 <#InputDocumentViewerPanel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Document Viewer"@en , "入力文書ビューア"@ja ;
+                "Document Viewer"@en , "文書ビューア"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Panel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力文書ビューア" .
+                "文書ビューア" .
 
 <#TotalPropertyCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -640,11 +640,11 @@
 <#InputDocumentLabel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Document"@en , "入力文書"@ja ;
+                "Document"@en , "文書"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Label> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力文書" .
+                "文書" .
 
 <#WordSpaceAndAprioriResultTable>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -747,11 +747,11 @@
 <#InputConceptCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "The number of input concepts"@en , "入力概念数"@ja ;
+                "The number of concepts"@en , "概念数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力概念数" .
+                "概念数" .
 
 <#NewConceptLabel>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -772,21 +772,21 @@
 <#UserDefinedInputTermCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "User Defined Input Term"@en , "ユーザ定義入力語"@ja ;
+                "User Defined Term"@en , "ユーザ定義用語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "ユーザ定義入力語" .
+                "ユーザ定義用語" .
 
 <#HighlightInputTermCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Hilight Input Term"@en , "入力語を強調"@ja ;
+                "Hilight Term"@en , "用語を強調"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
         <#partOf>                       <#DisambiguationPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語を強調" .
+                "用語を強調" .
 
 <#DocumentInfoCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1002,21 +1002,12 @@
 
 <#InputConceptList>  a                  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Concept List"@en , "入力概念リスト"@ja ;
+                "Concept List"@en , "概念リスト"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#ConceptList> ;
         <#partOf>                       <#TextBasedConceptDefinitionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力概念リスト" .
-
-<#ExitProjectMessage>
-        a       <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Exit this project ?"@en , "このプロジェクトを終了しますか？"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Message> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "このプロジェクトを終了しますか？" .
+                "概念リスト" .
 
 <#GensenCheckBox>  a                    <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -1050,20 +1041,20 @@
 <#OpenInputConceptSelectionResultAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Open Input Concept Selection Result"@en , "入力概念選択結果を開く"@ja ;
+                "Open Concept Selection Result"@en , "概念選択結果を開く"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#OpenAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力概念選択結果を開く" .
+                "概念選択結果を開く" .
 
 <#SetInputTermSetButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Set Input Term Set"@en , "入力語彙をセット"@ja ;
+                "Set Term Set"@en , "用語をセット"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Button> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語彙をセット" .
+                "用語をセット" .
 
 <#ProjectItemCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1257,12 +1248,12 @@
 
 <#InputDocumentList>  a                 <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Document List"@en , "入力文書リスト"@ja ;
+                "Document List"@en , "文書リスト"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#List> ;
         <#partOf>                       <#DocumentSelectionPanel> , <#TextBasedConceptDefinitionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力文書リスト" .
+                "文書リスト" .
 
 <#TreeConstructionOptionBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -1486,6 +1477,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "同一概念" .
 
+<#SaveProjectMessage>
+        a       <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Do you want to save the changes?"@en , "変更を保存しますか？"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#Message> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "変更を保存しますか？" .
+
 <#OpenFreeMindOntologyAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -1578,12 +1578,12 @@
 <#AddInputDocumentButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Input Document"@en , "入力文書追加"@ja ;
+                "Add Document"@en , "文書追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#AddButton> ;
         <#partOf>                       <#DocumentSelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力文書追加" .
+                "文書追加" .
 
 <#CheckTRAButton>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -1714,11 +1714,11 @@
 <#InputTermInfoTablePanel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Term Info Table"@en , "入力語情報テーブル"@ja ;
+                "Term Info Table"@en , "用語情報テーブル"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#TermInfoTablePanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語情報テーブル" .
+                "用語情報テーブル" .
 
 <#TrimmedResultAnalysisResultBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -1733,12 +1733,12 @@
 <#RemoveInputDocumentButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Remove Input Document"@en , "入力文書削除"@ja ;
+                "Remove Document"@en , "文書削除"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#RemoveButton> ;
         <#partOf>                       <#DocumentSelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力文書削除" .
+                "文書削除" .
 
 <#POSFilterTextField>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2069,12 +2069,12 @@
 <#InputConceptSelectionButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Concept Selection"@en , "入力概念選択"@ja ;
+                "Concept Selection"@en , "概念選択"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Button> ;
         <#partOf>                       <#OntologySelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力概念選択" .
+                "概念選択" .
 
 <#ExpandConceptTreeAction>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -2163,12 +2163,12 @@
 <#InputTermExtractionButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Term Extraction"@en , "入力語抽出"@ja ;
+                "Term Extraction"@en , "用語抽出"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Button> ;
         <#partOf>                       <#DocumentSelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語抽出" .
+                "用語抽出" .
 
 <#CloseButton>  a                       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -2218,11 +2218,11 @@
 <#AddInputTermSetButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Input Term Set"@en , "入力語彙を追加"@ja ;
+                "Add Term Set"@en , "用語セットを追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#AddButton> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語彙を追加" .
+                "用語セットを追加" .
 
 <#CLASS_ROOT>  a  <http://www.w3.org/2002/07/owl#Class> .
 
@@ -2362,11 +2362,11 @@
 <#InputTermCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Term Count"@en , "入力語数"@ja ;
+                "Term Count"@en , "用語数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語数" .
+                "用語数" .
 
 <#TrimmedClassCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2419,11 +2419,11 @@
 <#SaveInputTermConceptMapAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Input Term Concept Map"@en , "入力語と概念の対応を保存"@ja ;
+                "Save Term Concept Map"@en , "用語と概念の対応を保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語と概念の対応を保存" .
+                "用語と概念の対応を保存" .
 
 <#SearchConceptTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -2625,11 +2625,11 @@
 
 <#HasaConceptTree>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Has-a Concept Tree"@en , "Has-a階層"@ja ;
+                "has-a Tree"@en , "has-a階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#ConceptTree> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Has-a階層" .
+                "has-a階層" .
 
 <#NewProjectAction>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -2657,10 +2657,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "作成日" .
 
-<#SetPreferentialTermButton>
+<#SetPreferredTermButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Set Preferential Term"@en , "優先見出しの設定"@ja ;
+                "Set Preferred Term"@en , "優先見出しの設定"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#Button> ;
         <#partOf>                       <#LabelPanel> ;
@@ -2729,16 +2729,6 @@
                 <#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "完全照合語リストを保存" .
-
-<#ExitAction>  a  <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#comment>
-                "Exit DODDLE ?"@en , "DODDLEを終了しますか？"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Exit"@en , "終了"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Action> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "終了" .
 
 <#RangeList>  a                         <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -2824,20 +2814,20 @@
 <#SaveInputConceptSelectionResultAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Input Concept Selection Result"@en , "入力概念選択結果を保存"@ja ;
+                "Save Concept Selection Result"@en , "概念選択結果を保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力概念選択結果を保存" .
+                "概念選択結果を保存" .
 
 <#InputTermListArea>  a                 <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Term List"@en , "入力語リスト"@ja ;
+                "Term List"@en , "用語リスト"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#TextArea> ;
         <#partOf>                       <#SwoogleWebServiceWrapperPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語リスト" .
+                "用語リスト" .
 
 <#PROPERTY_HASA_ROOT>
         a       <http://www.w3.org/2002/07/owl#ObjectProperty> .
@@ -2900,12 +2890,12 @@
 
 <#InputDocumentArea>  a                 <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Document"@en , "入力文書"@ja ;
+                "Document"@en , "文書"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#TextArea> ;
         <#partOf>                       <#DisambiguationPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力文書" .
+                "文書" .
 
 <#SearchPropertySetTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -3025,11 +3015,11 @@
 <#SaveInputTermListAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Input Term List"@en , "入力語リストを保存"@ja ;
+                "Save Term List"@en , "用語リストを保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語リストを保存" .
+                "用語リストを保存" .
 
 <#SINLabel>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3088,11 +3078,11 @@
 <#OpenInputTermConceptMapAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Open Input Term Concept Map"@en , "入力語と概念の対応を開く"@ja ;
+                "Open Term Concept Map"@en , "用語と概念の対応を開く"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#OpenAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語と概念の対応を開く" .
+                "用語と概念の対応を開く" .
 
 <#WarningMessage>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3123,11 +3113,11 @@
 <#OpenInputTermTableAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Open Input Term Table"@en , "入力語テーブルを開く"@ja ;
+                "Open Term Table"@en , "用語テーブルを開く"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#OpenAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語テーブルを開く" .
+                "用語テーブルを開く" .
 
 <#PerfectlyMatchedTermList>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -3161,11 +3151,11 @@
 <#SaveInputTermTableAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Input Term Table"@en , "入力語テーブルを保存"@ja ;
+                "Save Term Table"@en , "用語テーブルを保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語テーブルを保存" .
+                "用語テーブルを保存" .
 
 <#RelationLabel>  a                     <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3220,11 +3210,11 @@
 <#AddInputTermListButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Input Term List"@en , "入力語リストに追加"@ja ;
+                "Add Term List"@en , "用語リストに追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#AddButton> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語リストに追加" .
+                "用語リストに追加" .
 
 <#SubConceptRadioButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -3244,6 +3234,16 @@
         <#partOf>                       <#NameSpaceTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "接頭辞" .
+
+<#PreferredTermLabel>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Preferred Term"@en , "優先見出し"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#Label> ;
+        <#partOf>                       <#LabelPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "優先見出し" .
 
 <#WordSpaceValueLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -3303,12 +3303,12 @@
 <#SyncPartiallyMatchedTermListCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Apply Input Concept Selection Results to Partially Matched Terms"@en , "入力概念選択結果を対応する部分照合語リストに適用"@ja ;
+                "Apply Concept Selection Results to Partially Matched Terms"@en , "概念選択結果を対応する部分照合語リストに適用"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
         <#partOf>                       <#PerfectlyMatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力概念選択結果を対応する部分照合語リストに適用" .
+                "概念選択結果を対応する部分照合語リストに適用" .
 
 <#SetURIButton>  a                      <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3339,12 +3339,12 @@
 <#SystemAddedInputTermCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "System Added Input Term"@en , "システムが追加した入力語"@ja ;
+                "System Added Term"@en , "システムが追加した用語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
         <#partOf>                       <#PerfectlyMatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "システムが追加した入力語" .
+                "システムが追加した用語" .
 
 <#PropertyTrimmedResultAnalysisCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -3618,11 +3618,11 @@
 <#OpenInputTermListAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Open Input Term List"@en , "入力語リストを開く"@ja ;
+                "Open Term List"@en , "用語リストを開く"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#OpenAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力語リストを開く" .
+                "用語リストを開く" .
 
 <#DeleteInternalConceptAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -3782,6 +3782,16 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクトの削除" .
 
+<#QuitAction>  a  <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#comment>
+                "Do you want to quit DODDLE-OWL?"@en , "DODDLEを終了しますか？"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Quit DODDLE-OWL"@en , "DODDLE-OWLを終了"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#Action> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "DODDLE-OWLを終了" .
+
 <#GenericEDRCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3885,16 +3895,6 @@
                 <#Tab> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Ontology Selection" .
-
-<#PreferentialTermLabel>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Preferential Term"@en , "優先見出し"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Label> ;
-        <#partOf>                       <#LabelPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "優先見出し" .
 
 <#DBAccountBorder>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>

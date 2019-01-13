@@ -38,14 +38,14 @@ import java.awt.event.ActionListener;
  */
 public class LabelPanel extends LiteralPanel implements ActionListener {
 
-    private JLabel preferentialTermLabel;
-    private JLabel preferentialTermValueLabel;
+    private JLabel preferredTermLabel;
+    private JLabel preferredTermValueLabel;
     private JTextField langField;
     private JTextField labelField;
     private JButton addLabelButton;
     private JButton deleteLabelButton;
     private JButton editLabelButton;
-    private JButton setDefaultLabelButton;
+    private JButton setPreferredLabelButton;
 
     private ConceptInformationPanel conceptInfoPanel;
 
@@ -58,12 +58,15 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
         super(Translator.getTerm("LanguageLabel"), Translator.getTerm("LabelList"), type);
         conceptInfoPanel = ciPanel;
 
-        preferentialTermLabel = new JLabel(Translator.getTerm("PreferentialTermLabel") + ": ");
-        preferentialTermValueLabel = new JLabel("");
-        JPanel preferentialTermPanel = new JPanel();
-        preferentialTermPanel.setLayout(new GridLayout(1, 2));
-        preferentialTermPanel.add(preferentialTermLabel);
-        preferentialTermPanel.add(preferentialTermValueLabel);
+        preferredTermLabel = new JLabel(Translator.getTerm("PreferredTermLabel") + ": ");
+        preferredTermValueLabel = new JLabel("");
+        setPreferredLabelButton = new JButton(Translator.getTerm("SetPreferredTermButton"));
+        setPreferredLabelButton.addActionListener(this);
+        var preferredTermPanel = new JPanel();
+        preferredTermPanel.setLayout(new GridLayout(1, 3));
+        preferredTermPanel.add(setPreferredLabelButton);
+        preferredTermPanel.add(preferredTermLabel);
+        preferredTermPanel.add(preferredTermValueLabel);
 
         langField = new JTextField(5);
         langField.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("LangTextField")));
@@ -83,10 +86,6 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
         deleteLabelButton.addActionListener(this);
         editLabelButton = new JButton(Translator.getTerm("EditButton"));
         editLabelButton.addActionListener(this);
-        // TODO update button label
-        setDefaultLabelButton = new JButton(Translator.getTerm("SetPreferentialTermButton"));
-        setDefaultLabelButton.addActionListener(this);
-        buttonPanel.add(setDefaultLabelButton);
         buttonPanel.add(addLabelButton);
         buttonPanel.add(editLabelButton);
         buttonPanel.add(deleteLabelButton);
@@ -97,16 +96,16 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
         editPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         setBorder(BorderFactory.createTitledBorder(Translator.getTerm("LabelBorder")));
-        add(preferentialTermPanel, BorderLayout.NORTH);
+        add(preferredTermPanel, BorderLayout.NORTH);
         add(editPanel, BorderLayout.SOUTH);
     }
 
     public void setPreferentialTerm(String word) {
-        preferentialTermValueLabel.setText(word);
+        preferredTermValueLabel.setText(word);
     }
 
     public void clearPreferentialTermValue() {
-        preferentialTermValueLabel.setText("");
+        preferredTermValueLabel.setText("");
     }
 
     public void clearLabelField() {
@@ -143,7 +142,7 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
         } else if (e.getSource() == deleteLabelButton) {
             java.util.List<DODDLELiteral> labelList = literalJList.getSelectedValuesList();
             for (DODDLELiteral label : labelList) {
-                if (label.getString().equals(preferentialTermValueLabel.getText())) {
+                if (label.getString().equals(preferredTermValueLabel.getText())) {
                     conceptInfoPanel.setPreferentialTerm(selectedConcept, new DODDLELiteral("", ""));
                 }
                 selectedConcept.removeLabel(label);
@@ -162,7 +161,7 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
                     label.setString(labelField.getText());
                     selectedConcept.addLabel(label);
                 }
-                if (labelText.equals(preferentialTermValueLabel.getText())) {
+                if (labelText.equals(preferredTermValueLabel.getText())) {
                     conceptInfoPanel.setPreferentialTerm(selectedConcept, label);
                 }
                 setLabelLangList();
@@ -170,7 +169,7 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
                 conceptInfoPanel.reloadConceptTreeNode(selectedConcept);
                 conceptInfoPanel.reloadHasaTreeNode(selectedConcept);
             }
-        } else if (e.getSource() == setDefaultLabelButton) {
+        } else if (e.getSource() == setPreferredLabelButton) {
             DODDLELiteral label = (DODDLELiteral) literalJList.getSelectedValue();
             conceptInfoPanel.setPreferentialTerm(selectedConcept, label);
         }

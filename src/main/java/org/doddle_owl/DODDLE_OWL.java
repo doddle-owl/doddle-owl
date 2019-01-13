@@ -137,8 +137,8 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public void exit() {
-        int messageType = JOptionPane.showConfirmDialog(rootPane, Translator.getDescription("ExitAction"),
-                Translator.getTerm("ExitAction"), JOptionPane.YES_NO_OPTION);
+        int messageType = JOptionPane.showConfirmDialog(rootPane, Translator.getDescription("QuitAction"),
+                Translator.getTerm("QuitAction"), JOptionPane.YES_NO_OPTION);
         if (messageType == JOptionPane.YES_OPTION) {
             if (isExistingCurrentProject()) {
                 getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
@@ -257,7 +257,7 @@ public class DODDLE_OWL extends JFrame {
         saveMenu.add(saveConceptDisplayTermAction);
         fileMenu.add(saveMenu);
         fileMenu.addSeparator();
-        fileMenu.add(new ExitAction(Translator.getTerm("ExitAction"), this));
+        fileMenu.add(new ExitAction(Translator.getTerm("QuitAction"), this));
         menuBar.add(fileMenu);
 
         JMenu toolMenu = new JMenu(Translator.getTerm("ToolMenu"));
