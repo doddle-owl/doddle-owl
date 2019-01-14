@@ -184,7 +184,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         private JLabel basePrefixLabel;
         private JLabel baseURILabel;
 
-        private JTextField langField;
+        private JComboBox<String> langComboBox;
         private JTextField basePrefixField;
         private JTextField baseURIField;
 
@@ -193,8 +193,9 @@ public class OptionDialog extends JDialog implements ActionListener {
             basePrefixLabel = new JLabel(Translator.getTerm("BasePrefixLabel"));
             baseURILabel = new JLabel(Translator.getTerm("BaseURILabel"));
 
-            langField = new JTextField();
-            langField.setText(DODDLEConstants.LANG);
+            langComboBox = new JComboBox<>();
+            langComboBox.addItem(Translator.getTerm("EnglishComboBoxItem"));
+            langComboBox.addItem(Translator.getTerm("JapaneseComboBoxItem"));
             basePrefixField = new JTextField();
             basePrefixField.setText(DODDLEConstants.BASE_PREFIX);
             baseURIField = new JTextField();
@@ -203,7 +204,7 @@ public class OptionDialog extends JDialog implements ActionListener {
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new GridLayout(3, 2));
             mainPanel.add(langLabel);
-            mainPanel.add(langField);
+            mainPanel.add(langComboBox);
             mainPanel.add(basePrefixLabel);
             mainPanel.add(basePrefixField);
             mainPanel.add(baseURILabel);
@@ -214,11 +215,19 @@ public class OptionDialog extends JDialog implements ActionListener {
         }
 
         public void setLang(String lang) {
-            langField.setText(lang);
+            if (lang.equals("ja")) {
+                langComboBox.setSelectedItem(Translator.getTerm("JapaneseComboBoxItem"));
+            } else {
+                langComboBox.setSelectedItem(Translator.getTerm("EnglishComboBoxItem"));
+            }
         }
 
         public String getLang() {
-            return langField.getText();
+            if (langComboBox.getSelectedItem().equals(Translator.getTerm("JapaneseComboBoxItem"))) {
+                return "ja";
+            } else {
+                return "en";
+            }
         }
 
         public void setBasePrefix(String prefix) {

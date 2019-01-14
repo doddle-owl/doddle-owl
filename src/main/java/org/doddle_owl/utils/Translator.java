@@ -146,8 +146,6 @@ public class Translator {
     }
 
     public static void main(String[] args) {
-        // Translator.loadResourceBundle("en");
-        // System.out.println(Translator.getString("Lang"));
         Translator.loadDODDLEComponentOntology("ja");
         System.out.println(Translator.getTerm("PropertyTreeConstructionPanel"));
         System.out.println(Translator.getTerm("RangeLabel"));

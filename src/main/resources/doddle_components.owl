@@ -458,8 +458,6 @@
 <#AddDocumentButton>  a                 <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Add Document"@en , "文書追加"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#AddButton> ;
         <#partOf>                       <#DocumentSelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "文書追加" .
@@ -646,6 +644,16 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "文書" .
 
+<#SetPreferredTermButton>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Set Preferred Term"@en , "優先見出しの設定"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#Button> ;
+        <#partOf>                       <#LabelPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "優先見出しの設定" .
+
 <#WordSpaceAndAprioriResultTable>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -701,6 +709,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "この名前空間はシステムで使われるURIです．" .
 
+<#InputConceptCountMessage>
+        a       <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "The number of concepts"@en , "概念数"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#ProjectInformationMessage> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "概念数" .
+
 <#DBManagerDialog>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "DB Manager"@en , "DBマネージャー"@ja ;
@@ -708,15 +725,6 @@
                 <#Dialog> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "DBマネージャー" .
-
-<#JPNWNFolderTextField>
-        a       <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Japanese WordNet Folder"@en , "日本語WordNetフォルダ"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#TextField> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "日本語WordNetフォルダ" .
 
 <#LabelBorder>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -726,13 +734,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "見出し" .
 
-<#TextArea>  a  <http://www.w3.org/2002/07/owl#Class> ;
+<#JPNWNFolderTextField>
+        a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Text Area"@en , "テキストエリア"@ja ;
+                "Japanese WordNet Folder"@en , "日本語WordNetフォルダ"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#CLASS_ROOT> ;
+                <#TextField> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "テキストエリア" .
+                "日本語WordNetフォルダ" .
 
 <#AddSubConceptAction>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -744,14 +753,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "下位概念の追加" .
 
-<#InputConceptCountMessage>
-        a       <http://www.w3.org/2002/07/owl#Class> ;
+<#TextArea>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "The number of concepts"@en , "概念数"@ja ;
+                "Text Area"@en , "テキストエリア"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#ProjectInformationMessage> ;
+                <#CLASS_ROOT> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "概念数" .
+                "テキストエリア" .
 
 <#NewConceptLabel>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -1228,12 +1236,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "WordSpace" .
 
-<#DocumentList>  a                      <http://www.w3.org/2002/07/owl#Class> ;
+<#InputDocumentList>  a                 <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Document List"@en , "文書リスト"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#List> ;
-        <#partOf>                       <#DocumentSelectionPanel> ;
+        <#partOf>                       <#DocumentSelectionPanel> , <#TextBasedConceptDefinitionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "文書リスト" .
 
@@ -1246,12 +1252,12 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクトの更新" .
 
-<#InputDocumentList>  a                 <http://www.w3.org/2002/07/owl#Class> ;
+<#DocumentList>  a                      <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Document List"@en , "文書リスト"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#List> ;
-        <#partOf>                       <#DocumentSelectionPanel> , <#TextBasedConceptDefinitionPanel> ;
+        <#partOf>                       <#DocumentSelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "文書リスト" .
 
@@ -1494,14 +1500,6 @@
                 <#OpenAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "FreeMindオントロジーを開く" .
-
-<#DocumentLabel>  a  <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Document"@en , "文書"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Label> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "文書" .
 
 <#AddOntologyFromFileButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -1864,6 +1862,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "ボタン" .
 
+<#RemoveDocumentButton>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Remove Document"@en , "文書削除"@ja ;
+        <#partOf>                       <#DocumentSelectionPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "文書削除" .
+
 <#AbstractInternalPropertyCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -1872,16 +1878,6 @@
                 <#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "抽象中間プロパティ数" .
-
-<#ClassIsaTreeBorder>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Tree (Property)"@en , "Is-a階層(クラス)"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#IsaTreeBorder> ;
-        <#partOf>                       <#ClassTreeConstructionPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Is-a階層(クラス)" .
 
 <#PropertyIs-aTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -1901,15 +1897,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "XGAレイアウト" .
 
-<#RemoveDocumentButton>
+<#ClassIsaTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Remove Document"@en , "文書削除"@ja ;
+                "Is-a Tree (Property)"@en , "Is-a階層(クラス)"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#RemoveButton> ;
-        <#partOf>                       <#DocumentSelectionPanel> ;
+                <#IsaTreeBorder> ;
+        <#partOf>                       <#ClassTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "文書削除" .
+                "Is-a階層(クラス)" .
 
 <#OntologyList>  a                      <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -2515,6 +2511,16 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "元に戻す" .
 
+<#JapaneseComboBoxItem>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Japanese"@en , "日本語"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#ComboBox> ;
+        <#partOf>                       <#BaseOptionPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Japanese" .
+
 <#ConceptTreeConstructionPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -2657,15 +2663,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "作成日" .
 
-<#SetPreferredTermButton>
+<#EnglishComboBoxItem>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Set Preferred Term"@en , "優先見出しの設定"@ja ;
+                "English"@en , "英語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Button> ;
-        <#partOf>                       <#LabelPanel> ;
+                <#ComboBox> ;
+        <#partOf>                       <#BaseOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "優先見出しの設定" .
+                "English" .
 
 <#Tab>  a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3166,6 +3172,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "関係 (プロパティ)" .
 
+<#LogConsoleDialog>  a  <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Log Console"@en , "ログコンソール"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#Dialog> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "ログコンソール" .
+
 <#UndefinedTermCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3174,14 +3188,6 @@
                 <#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "未照合語数" .
-
-<#LogConsoleDialog>  a  <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Log Console"@en , "ログコンソール"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Dialog> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "ログコンソール" .
 
 <#IDFLabel>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3666,6 +3672,14 @@
                 <#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "タクソノミー" .
+
+<#ComboBox>  a  <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "ComboBox"@en , "コンボボックス"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#CLASS_ROOT> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "コンボボックス" .
 
 <#DODDLEProjectFileFilter>
         a       <http://www.w3.org/2002/07/owl#Class> ;
