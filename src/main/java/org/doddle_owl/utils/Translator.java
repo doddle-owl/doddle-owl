@@ -64,51 +64,6 @@ public class Translator {
         systemLocaleSet.add(Locale.CHINA);
     }
 
-    /**
-     * デフォルトのロカールの言語ファイルがシステムに内蔵されている場合は， その言語を返し，内蔵されていない場合には，英語の言語を返す.
-     */
-    public static String getSystemLanguage() {
-        if (systemLocaleSet.contains(Locale.getDefault())) {
-            return Locale.getDefault().getLanguage();
-        }
-        return Locale.ENGLISH.getLanguage();
-    }
-
-    private static boolean isSystemLanguage(String lang) {
-        for (Locale locale : systemLocaleSet) {
-            if (locale.getLanguage().equals(lang)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * loadDODDLEComponentOntologyと置換
-     *
-     * @param lang
-     */
-    public static void loadResourceBundle(String lang) {
-        try {
-            InputStream ins = null;
-            File resFile = new File("./resources/DODDLE_" + lang + ".properties");
-            if (resFile.exists()) {
-                ins = new FileInputStream(resFile);
-            }
-            if (ins == null) {
-                if (isSystemLanguage(lang)) {
-                    ins = Utils.class.getClassLoader().getResourceAsStream("DODDLE_" + lang + ".properties");
-                } else {
-                    ins = Utils.class.getClassLoader().getResourceAsStream("DODDLE_" + getSystemLanguage() + ".properties");
-                }
-            }
-            resourceBundle = new PropertyResourceBundle(ins);
-            ins.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
     public static void loadDODDLEComponentOntology(String lang) {
         uriTermMap = new HashMap<>();
         uriDescriptionMap = new HashMap<>();
