@@ -78,6 +78,16 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "DODDLE" .
 
+<#SyncPartialMatchTermListCheckBox>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Apply Concept Selection Results to Partial Match Terms"@en , "概念選択結果を対応する部分照合語リストに適用"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#CheckBox> ;
+        <#partOf>                       <#ExactMatchTermListPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "概念選択結果を対応する部分照合語リストに適用" .
+
 <#TrimmingCheckBox>  a                  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Trimming"@en , "剪定"@ja ;
@@ -132,6 +142,25 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "汎用オントロジー選択" .
 
+<#ExactMatchTermCountMessage>
+        a       <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Exact Match Term Count"@en , "完全照合語数"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#ProjectInformationMessage> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "完全照合語数" .
+
+<#ExactMatchTermList>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Exact Match Term List"@en , "完全照合語リスト"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#List> ;
+        <#partOf>                       <#ExactMatchTermListPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "完全照合語リスト" .
+
 <#DescriptionBorder>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Description"@en , "説明"@ja ;
@@ -175,6 +204,16 @@
         <#partOf>                       <#DisambiguationPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念リスト" .
+
+<#ExactMatchSearchOptionCheckBox>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Exact Match Search"@en , "完全一致検索"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#CheckBox> ;
+        <#partOf>                       <#ConceptTreePanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "完全一致検索" .
 
 <#FrontScopeLabel>  a                   <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -440,10 +479,10 @@
 <#ShowOnlyCorrespondCompoundWordsCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Show Compound Words Corresponding to the Selected Perfectly Matched Term"@en , "選択中の完全照合語に対応する複合語のみ表示"@ja ;
+                "Show Compound Words Corresponding to the Selected Exact Match Term"@en , "選択中の完全照合語に対応する複合語のみ表示"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
-        <#partOf>                       <#PartiallyMatchedTermListPanel> ;
+        <#partOf>                       <#PartialMatchTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "選択中の完全照合語に対応する複合語のみ表示" .
 
@@ -514,6 +553,15 @@
         <#partOf>                       <#BaseOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "基本接頭辞" .
+
+<#SystemAddedExactMatchTermCountMessage>
+        a       <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "System Added Exact Match Term Count"@en , "システムが追加した完全照合語数"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#ProjectInformationMessage> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "システムが追加した完全照合語数" .
 
 <#AverageAbstractSiblingConceptCountInClassesMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -635,6 +683,16 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "言語" .
 
+<#PartialMatchTermListPanel>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Partial Match"@en , "部分照合"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#TermListPanel> ;
+        <#partOf>                       <#DisambiguationPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "部分照合" .
+
 <#InputDocumentLabel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -681,15 +739,6 @@
         <#partOf>                       <#DocumentSelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "名詞" .
-
-<#PartiallyMatchedTermCountMessage>
-        a       <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partially Matched Term Count"@en , "部分照合語数"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#ProjectInformationMessage> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "部分照合語数" .
 
 <#CompoundWordExtractionScriptFolderTextField>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -907,16 +956,6 @@
                 <#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "剪定前プロパティ数" .
-
-<#PartiallyMatchedTermListPanel>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partially Matched Term List"@en , "部分照合語リスト"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#TermListPanel> ;
-        <#partOf>                       <#DisambiguationPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "部分照合語リスト" .
 
 <#ExecuteWordSpaceButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1172,6 +1211,16 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念情報" .
 
+<#PartialMatchTermList>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Partial Match Term List"@en , "部分照合語リスト"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#List> ;
+        <#partOf>                       <#PartialMatchTermListPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "部分照合語リスト" .
+
 <#FolderOptionPanel>  a                 <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Folder"@en , "フォルダ"@ja ;
@@ -1215,16 +1264,6 @@
                 <#WarningMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "この名前空間は使えません．" .
-
-<#PerfectlyMatchedOptionBorder>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Perfectly Matched Option"@en , "完全照合オプション"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Border> ;
-        <#partOf>                       <#TreeConstructionOptionPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "完全照合オプション" .
 
 <#WordSpaceResultTable>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -1463,16 +1502,6 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "基本" .
 
-<#PerfectlyMatchedTermListPanel>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Perfectly Matched Term List"@en , "完全照合語リスト"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#TermListPanel> ;
-        <#partOf>                       <#DisambiguationPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "完全照合語リスト" .
-
 <#SameConceptRadioButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -1520,6 +1549,16 @@
         <#partOf>                       <#DisplayOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "修飾名を表示" .
+
+<#ExactMatchOptionBorder>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Exact Match Option"@en , "完全照合オプション"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#Border> ;
+        <#partOf>                       <#TreeConstructionOptionPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "完全照合オプション" .
 
 <#AvailableGeneralOntologiesMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1600,14 +1639,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Property Tree Construction" .
 
-<#SystemAddedPerfectlyMatchedTermCountMessage>
+<#PartialMatchTermCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "System Added Perfectly Matched Term Count"@en , "システムが追加した完全照合語数"@ja ;
+                "Partial Match Term Count"@en , "部分照合語数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "システムが追加した完全照合語数" .
+                "部分照合語数" .
 
 <#SearchSubConceptTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -2265,6 +2304,16 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクト" .
 
+<#ExactMatchTermListPanel>
+        a                               <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Exact Match"@en , "完全照合"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#TermListPanel> ;
+        <#partOf>                       <#DisambiguationPanel> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "完全照合" .
+
 <#AddAbstractInternalConceptsMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -2334,7 +2383,7 @@
                 "Sense Count"@en , "意味数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
-        <#partOf>                       <#PerfectlyMatchedTermListPanel> , <#PartiallyMatchedTermListPanel> ;
+        <#partOf>                       <#ExactMatchTermListPanel> , <#PartialMatchTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "意味数" .
 
@@ -2399,7 +2448,7 @@
                 "Match Result"@en , "照合結果"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
-        <#partOf>                       <#PartiallyMatchedTermListPanel> ;
+        <#partOf>                       <#PartialMatchTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "照合結果" .
 
@@ -2593,10 +2642,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "新規プロジェクト" .
 
-<#SavePerfectlyMatchedTermCompoundWordMapAction>
+<#SaveExactMatchTermCompoundWordMapAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Perfectly Matched Term Compound Word Map"@en , "完全照合語と対応する複合語を保存"@ja ;
+                "Save Exact Match Term Compound Word Map"@en , "完全照合語と対応する複合語を保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -2681,16 +2730,6 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Tab" .
 
-<#PerfectlyMatchSearchOptionCheckBox>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Perfectly Matched Search"@en , "完全一致検索"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#CheckBox> ;
-        <#partOf>                       <#ConceptTreePanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "完全一致検索" .
-
 <#IsaConceptTreePanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -2727,10 +2766,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "ファイル" .
 
-<#SavePerfectlyMatchedTermListAction>
+<#SaveExactMatchTermListAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Perfectly Matched Term List"@en , "完全照合語リストを保存"@ja ;
+                "Save Exact Match Term List"@en , "完全照合語リストを保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3125,16 +3164,6 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "用語テーブルを開く" .
 
-<#PerfectlyMatchedTermList>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Perfectly Matched Term List"@en , "完全照合語リスト"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#List> ;
-        <#partOf>                       <#PerfectlyMatchedTermListPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "完全照合語リスト" .
-
 <#SearchConceptTextField>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3270,16 +3299,6 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "汎用オントロジー情報" .
 
-<#PartiallyMatchedOptionBorder>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partially Matched Option"@en , "部分照合オプション"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Border> ;
-        <#partOf>                       <#TreeConstructionOptionPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "部分照合オプション" .
-
 <#SystemAddedLabel>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Automatically Added"@en , "自動追加"@ja ;
@@ -3305,16 +3324,6 @@
         <#partOf>                       <#BaseOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "言語" .
-
-<#SyncPartiallyMatchedTermListCheckBox>
-        a                               <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Apply Concept Selection Results to Partially Matched Terms"@en , "概念選択結果を対応する部分照合語リストに適用"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#CheckBox> ;
-        <#partOf>                       <#PerfectlyMatchedTermListPanel> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "概念選択結果を対応する部分照合語リストに適用" .
 
 <#SetURIButton>  a                      <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3348,7 +3357,7 @@
                 "System Added Term"@en , "システムが追加した用語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#CheckBox> ;
-        <#partOf>                       <#PerfectlyMatchedTermListPanel> ;
+        <#partOf>                       <#ExactMatchTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "システムが追加した用語" .
 
@@ -3429,15 +3438,6 @@
                 <#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "剪定前クラス数" .
-
-<#PerfectlyMatchedTermCountMessage>
-        a       <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Perfectly Matched Term Count"@en , "完全照合語数"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#ProjectInformationMessage> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "完全照合語数" .
 
 <#List>  a      <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3681,6 +3681,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "コンボボックス" .
 
+<#OpenMenu>  a  <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Open"@en , "開く"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <#Menu> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "開く" .
+
 <#DODDLEProjectFileFilter>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
@@ -3690,31 +3698,23 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "DODDLEプロジェクトファイル (.ddl)" .
 
-<#OpenMenu>  a  <http://www.w3.org/2002/07/owl#Class> ;
-        <http://www.w3.org/2000/01/rdf-schema#label>
-                "Open"@en , "開く"@ja ;
-        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#Menu> ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "開く" .
-
-<#CLASS_HASA_ROOT>  a  <http://www.w3.org/2002/07/owl#Class> .
-
-<#PartiallyMatchedTermList>
+<#PartialMatchOptionBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partially Matched Term List"@en , "部分照合語リスト"@ja ;
+                "Partial Match Option"@en , "部分照合オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <#List> ;
-        <#partOf>                       <#PartiallyMatchedTermListPanel> ;
+                <#Border> ;
+        <#partOf>                       <#TreeConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "部分照合語リスト" .
+                "部分照合オプション" .
+
+<#CLASS_HASA_ROOT>  a  <http://www.w3.org/2002/07/owl#Class> .
 
 <#ComplexWordCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Complex Word"@en , "複合語"@ja ;
-        <#partOf>                       <#PartiallyMatchedTermListPanel> ;
+        <#partOf>                       <#PartialMatchTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "複合語" .
 

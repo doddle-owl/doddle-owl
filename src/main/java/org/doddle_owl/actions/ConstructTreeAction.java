@@ -743,11 +743,11 @@ public class ConstructTreeAction {
             return;
         }
 
-        DODDLE_OWL.getLogger().info(Translator.getTerm("PerfectlyMatchedTermCountMessage") + ": "
+        DODDLE_OWL.getLogger().info(Translator.getTerm("ExactMatchTermCountMessage") + ": "
                 + conceptSelectionPanel.getPerfectlyMatchedTermCnt());
-        DODDLE_OWL.getLogger().info(Translator.getTerm("SystemAddedPerfectlyMatchedTermCountMessage") + ": "
+        DODDLE_OWL.getLogger().info(Translator.getTerm("SystemAddedExactMatchTermCountMessage") + ": "
                 + conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt());
-        DODDLE_OWL.getLogger().info(Translator.getTerm("PartiallyMatchedTermCountMessage") + ": "
+        DODDLE_OWL.getLogger().info(Translator.getTerm("PartialMatchTermCountMessage") + ": "
                 + conceptSelectionPanel.getPartiallyMatchedTermCnt());
         DODDLE_OWL.getLogger().info(Translator.getTerm("InputTermCountMessage") + ": "
                 + (conceptSelectionPanel.getMatchedTermCnt()));

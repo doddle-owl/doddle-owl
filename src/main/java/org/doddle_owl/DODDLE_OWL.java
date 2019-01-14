@@ -29,9 +29,9 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.doddle_owl.actions.*;
 import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.models.concept_selection.InputModule;
 import org.doddle_owl.models.ontology_api.JWO;
-import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UpperConceptManager;
 import org.doddle_owl.utils.Utils;
@@ -249,9 +249,9 @@ public class DODDLE_OWL extends JFrame {
         saveMenu.add(new SaveTermInfoTableAction(Translator.getTerm("SaveInputTermTableAction")));
         saveMenu.add(new SaveTermEvalConceptSetAction(Translator.getTerm("SaveInputConceptSelectionResultAction")));
         saveMenu.add(new SaveTermConceptMapAction(Translator.getTerm("SaveInputTermConceptMapAction")));
-        saveMenu.add(new SavePerfectlyMatchedTermAction(Translator.getTerm("SavePerfectlyMatchedTermListAction")));
+        saveMenu.add(new SavePerfectlyMatchedTermAction(Translator.getTerm("SaveExactMatchTermListAction")));
         saveMenu.add(new SavePerfectlyMatchedTermWithCompoundWordAction(Translator
-                .getTerm("SavePerfectlyMatchedTermCompoundWordMapAction")));
+                .getTerm("SaveExactMatchTermCompoundWordMapAction")));
         saveMenu.add(saveOWLOntologyAction);
         saveMenu.add(saveFreeMindOntologyAction);
         saveMenu.add(saveConceptDisplayTermAction);

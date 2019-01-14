@@ -164,9 +164,9 @@ public class SaveProjectAction extends AbstractAction {
             if (conceptSelectionPanel.getTermModelSet() != null) {
                 buf.append(Translator.getTerm("InputTermCountMessage")).append(": ").append(conceptSelectionPanel.getInputTermCnt()).append("\n");
             }
-            buf.append(Translator.getTerm("PerfectlyMatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getPerfectlyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("SystemAddedPerfectlyMatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("PartiallyMatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getPartiallyMatchedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("ExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPerfectlyMatchedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("SystemAddedExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("PartialMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPartiallyMatchedTermCnt()).append("\n");
             buf.append(Translator.getTerm("MatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getMatchedTermCnt()).append("\n");
             buf.append(Translator.getTerm("UndefinedTermCountMessage")).append(": ").append(conceptSelectionPanel.getUndefinedTermCnt()).append("\n");
 

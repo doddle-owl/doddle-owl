@@ -283,7 +283,7 @@ public class DODDLEProjectPanel extends JPanel {
     }
 
     public boolean isPerfectlyMatchedAmbiguityCntCheckBox() {
-        return conceptSelectionPanel.isPerfectlyMatchedAmbiguityCntCheckBox();
+        return conceptSelectionPanel.getExactMatchAmbiguityCntCheckBox();
     }
 
     public boolean isPerfectlyMatchedSystemAddedWordCheckBox() {
@@ -291,15 +291,15 @@ public class DODDLEProjectPanel extends JPanel {
     }
 
     public boolean isPartiallyMatchedAmbiguityCntCheckBox() {
-        return conceptSelectionPanel.isPartiallyMatchedAmbiguityCntCheckBox();
+        return conceptSelectionPanel.getPartialMatchAmbiguityCntCheckBox();
     }
 
     public boolean isPartiallyMatchedCompoundWordCheckBox() {
-        return conceptSelectionPanel.isPartiallyMatchedCompoundWordCheckBox();
+        return conceptSelectionPanel.getPartialMatchCompoundWordCheckBox();
     }
 
     public boolean isPartiallyMatchedMatchedWordBox() {
-        return conceptSelectionPanel.isPartiallyMatchedMatchedTermBox();
+        return conceptSelectionPanel.getPartialMatchMatchedTermBox();
     }
 
     public void setSelectedIndex(int index) {
