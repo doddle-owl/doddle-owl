@@ -40,29 +40,27 @@ public class ConceptTreeCellRenderer extends DefaultTreeCellRenderer {
     private ImageIcon BEST_MATCH_ICON;
     private ImageIcon MULTIPLE_BEST_MATCH_ICON;
 
-    public final ImageIcon PROP_SIN_ICON = Utils.getImageIcon("property_sin_icon.png");
-    public final ImageIcon PROP_BEST_MATCH_ICON = Utils.getImageIcon("property_best_match_icon.png");
-    public final ImageIcon PROP_MULTIPLE_SIN_ICON = Utils.getImageIcon("property_multiple_sin_icon.png");
-    public final ImageIcon PROP_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("property_multiple_best_match_icon.png");
-
-    public final ImageIcon CLASS_SIN_ICON = Utils.getImageIcon("class_sin_icon.png");
-    public final ImageIcon CLASS_BEST_MATCH_ICON = Utils.getImageIcon("class_best_match_icon.png");
-    public final ImageIcon CLASS_MULTIPLE_SIN_ICON = Utils.getImageIcon("class_multiple_sin_icon.png");
-    public final ImageIcon CLASS_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("class_multiple_best_match_icon.png");
-
     public static final String NOUN_CONCEPT_TREE = "Noun Concept Tree";
     public static final String VERB_CONCEPT_TREE = "Verb Concept Tree";
 
     public ConceptTreeCellRenderer(String type) {
         if (type.equals(NOUN_CONCEPT_TREE)) {
+            ImageIcon CLASS_SIN_ICON = Utils.getImageIcon("class_sin_icon.png");
             SIN_ICON = CLASS_SIN_ICON;
+            ImageIcon CLASS_MULTIPLE_SIN_ICON = Utils.getImageIcon("class_multiple_sin_icon.png");
             MULTIPLE_SIN_ICON = CLASS_MULTIPLE_SIN_ICON;
+            ImageIcon CLASS_BEST_MATCH_ICON = Utils.getImageIcon("class_best_match_icon.png");
             BEST_MATCH_ICON = CLASS_BEST_MATCH_ICON;
+            ImageIcon CLASS_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("class_multiple_best_match_icon.png");
             MULTIPLE_BEST_MATCH_ICON = CLASS_MULTIPLE_BEST_MATCH_ICON;
         } else if (type.equals(VERB_CONCEPT_TREE)) {
+            ImageIcon PROP_SIN_ICON = Utils.getImageIcon("property_sin_icon.png");
             SIN_ICON = PROP_SIN_ICON;
+            ImageIcon PROP_MULTIPLE_SIN_ICON = Utils.getImageIcon("property_multiple_sin_icon.png");
             MULTIPLE_SIN_ICON = PROP_MULTIPLE_SIN_ICON;
+            ImageIcon PROP_BEST_MATCH_ICON = Utils.getImageIcon("property_best_match_icon.png");
             BEST_MATCH_ICON = PROP_BEST_MATCH_ICON;
+            ImageIcon PROP_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("property_multiple_best_match_icon.png");
             MULTIPLE_BEST_MATCH_ICON = PROP_MULTIPLE_BEST_MATCH_ICON;
         }
         setOpaque(true);

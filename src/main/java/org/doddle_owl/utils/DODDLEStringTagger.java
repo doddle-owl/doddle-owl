@@ -44,7 +44,7 @@ public class DODDLEStringTagger {
 
 	private static Process process;
 	private MophologicalAnalyzerType type;
-	public static String Japanese_Morphological_Analyzer = "D:/Program Files (x86)/MeCab/bin/mecab.exe";
+	private static final String Japanese_Morphological_Analyzer = "D:/Program Files (x86)/MeCab/bin/mecab.exe";
 	private static DODDLEStringTagger tagger;
 
 	private DODDLEStringTagger() {
@@ -72,7 +72,7 @@ public class DODDLEStringTagger {
 		return new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 	}
 
-	public List<DODDLEToken> analyze(String text) {
+	private List<DODDLEToken> analyze(String text) {
 		List<DODDLEToken> tokenList = new ArrayList<>();
 		BufferedReader reader = null;
 		BufferedWriter writer = null;
@@ -119,7 +119,7 @@ public class DODDLEStringTagger {
 		return tokenList;
 	}
 
-	public static DODDLEStringTagger getInstance() {
+	private static DODDLEStringTagger getInstance() {
 		if (tagger == null) {
 			tagger = new DODDLEStringTagger();
 		}

@@ -60,9 +60,9 @@ import java.nio.file.Paths;
  */
 public class LoadOntologyAction extends AbstractAction {
 
-	private String conversionType;
-	private FileFilter owlFileFilter;
-	private FileFilter freeMindFileFilter;
+	private final String conversionType;
+	private final FileFilter owlFileFilter;
+	private final FileFilter freeMindFileFilter;
 	public static final String OWL_ONTOLOGY = "OWL";
 	public static final String FREEMIND_ONTOLOGY = "FREEMIND";
 
@@ -73,7 +73,7 @@ public class LoadOntologyAction extends AbstractAction {
 		freeMindFileFilter = new FreeMindFileFilter();
 	}
 
-	public void loadFreeMindOntology(DODDLEProjectPanel currentProject, File file) {
+	private void loadFreeMindOntology(DODDLEProjectPanel currentProject, File file) {
 		ConceptSelectionPanel conceptSelectionPanel = currentProject
 				.getConceptSelectionPanel();
 		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
@@ -159,7 +159,7 @@ public class LoadOntologyAction extends AbstractAction {
 		}
 	}
 
-	public void loadOWLOntology(DODDLEProjectPanel currentProject, Model model) {
+	private void loadOWLOntology(DODDLEProjectPanel currentProject, Model model) {
 		ConceptSelectionPanel conceptSelectionPanel = currentProject
 				.getConceptSelectionPanel();
 		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();

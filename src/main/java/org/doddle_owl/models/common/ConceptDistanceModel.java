@@ -32,8 +32,8 @@ import java.util.*;
  */
 public class ConceptDistanceModel implements Comparable<ConceptDistanceModel> {
 
-    private Concept c1;
-    private Concept c2;
+    private final Concept c1;
+    private final Concept c2;
     private Concept commonAncestor;
     private List<Integer> commonAncestorDepthList;
     private int c1ToCommonAncestorDistance;
@@ -120,7 +120,7 @@ public class ConceptDistanceModel implements Comparable<ConceptDistanceModel> {
         // builder.append(depth);
         // builder.append(" ");
         // }
-        String builder = String.valueOf(c1ToCommonAncestorDistance) +
+        String builder = c1ToCommonAncestorDistance +
                 "," +
                 c2ToCommonAncestorDistance +
                 "," +

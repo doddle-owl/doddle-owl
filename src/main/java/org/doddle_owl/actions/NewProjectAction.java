@@ -35,7 +35,7 @@ import java.awt.event.KeyEvent;
  */
 public class NewProjectAction extends AbstractAction {
 
-    private String title;
+    private final String title;
 
     public NewProjectAction(String title) {
         super(title, Utils.getImageIcon("page_white.png"));

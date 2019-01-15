@@ -23,6 +23,7 @@
 
 package org.doddle_owl.actions;
 
+import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_selection.TreeConstructionOption;
@@ -30,16 +31,15 @@ import org.doddle_owl.models.concept_tree.CompoundConceptTreeInterface;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.models.ontology_api.EDR;
 import org.doddle_owl.models.term_selection.TermModel;
-import org.doddle_owl.views.DODDLEProjectPanel;
-import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.task_analyzer.Morpheme;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
+import org.doddle_owl.views.DODDLEProjectPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
 import org.doddle_owl.views.concept_tree.ConceptTreeConstructionPanel;
 import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
-import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -48,23 +48,22 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
  */
 public class ConstructTreeAction {
 
-    private Map<String, Set<Concept>> wordCorrespondConceptSetMap; // 入力単語と適切に対応するIDのマッピング
+    private final Map<String, Set<Concept>> wordCorrespondConceptSetMap; // 入力単語と適切に対応するIDのマッピング
     private Map<DefaultMutableTreeNode, String> abstractNodeLabelMap;
-    private Map<TermModel, TreeConstructionOption> compoundConstructTreeOptionMap;
-    private ConceptSelectionPanel conceptSelectionPanel;
-    private ClassTreeConstructionPanel constructClassPanel;
-    private PropertyTreeConstructionPanel constructPropertyPanel;
+    private final Map<TermModel, TreeConstructionOption> compoundConstructTreeOptionMap;
+    private final ConceptSelectionPanel conceptSelectionPanel;
+    private final ClassTreeConstructionPanel constructClassPanel;
+    private final PropertyTreeConstructionPanel constructPropertyPanel;
 
-    private DefaultListModel undefinedTermListModel;
+    private final DefaultListModel undefinedTermListModel;
 
-    private DODDLEProjectPanel project;
+    private final DODDLEProjectPanel project;
 
     public ConstructTreeAction(boolean isNounAndVerbTree, DODDLEProjectPanel p) {
         project = p;
@@ -358,7 +357,7 @@ public class ConstructTreeAction {
         }
     }
 
-    Set conceptStrSet;
+    private Set conceptStrSet;
 
     private void countNode(TreeNode node) {
         conceptStrSet.add(node.toString());
@@ -674,7 +673,7 @@ public class ConstructTreeAction {
     /**
      * 不要な抽象ノードを削除（抽象ノードの親ノードの子ノードが対象の抽象ノードのみの場合は，抽象ノードを追加する意味がないため削除））
      */
-    public void trimUnnecessaryAbstractNode(ConceptTreeConstructionPanel conceptTreePanel) {
+    private void trimUnnecessaryAbstractNode(ConceptTreeConstructionPanel conceptTreePanel) {
         DefaultTreeModel treeModel = (DefaultTreeModel) conceptTreePanel.getConceptTreeModel();
         Set<ConceptTreeNode> unnecessaryNodeSet = new HashSet<>();
         getUnnecessaryAbstractNode((ConceptTreeNode) treeModel.getRoot(), unnecessaryNodeSet);

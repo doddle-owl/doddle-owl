@@ -57,10 +57,10 @@ import java.util.zip.ZipOutputStream;
  */
 public class SaveProjectAction extends AbstractAction {
 
-    private String title;
-    private DODDLE_OWL doddle;
-    private FileFilter doddleProjectFileFilter;
-    private FileFilter doddleProjectFolderFilter;
+    private final String title;
+    private final DODDLE_OWL doddle;
+    private final FileFilter doddleProjectFileFilter;
+    private final FileFilter doddleProjectFolderFilter;
 
     public String getTitle() {
         return title;
@@ -75,7 +75,7 @@ public class SaveProjectAction extends AbstractAction {
         doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
     }
 
-    public SaveProjectAction(String title, ImageIcon icon, DODDLE_OWL ddl) {
+    SaveProjectAction(String title, ImageIcon icon, DODDLE_OWL ddl) {
         super(title, icon);
         this.title = title;
         doddle = ddl;
@@ -89,7 +89,7 @@ public class SaveProjectAction extends AbstractAction {
         }
     }
 
-    public void saveProject(File saveFile, DODDLEProjectPanel currentProject) {
+    void saveProject(File saveFile, DODDLEProjectPanel currentProject) {
         File saveDir;
         if (saveFile.isDirectory()) {
             saveDir = saveFile;
@@ -151,7 +151,7 @@ public class SaveProjectAction extends AbstractAction {
                 + java.util.Calendar.getInstance().getTime() + ": " + DODDLE_OWL.rootFrame.getTitle());
     }
 
-    public void saveProjectInfo(DODDLEProjectPanel currentProject, File file) {
+    private void saveProjectInfo(DODDLEProjectPanel currentProject, File file) {
         ReferenceOntologySelectionPanel ontSelectionPanel = currentProject.getOntologySelectionPanel();
         ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
         ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
@@ -271,7 +271,7 @@ public class SaveProjectAction extends AbstractAction {
         }
     }
 
-    public File getSaveFile() {
+    File getSaveFile() {
         JFileChooser fileChooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileChooser.addChoosableFileFilter(doddleProjectFileFilter);

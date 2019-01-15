@@ -58,35 +58,31 @@ import java.util.Map.Entry;
  * @author shigeta
  * @author Takeshi Morita
  */
-public class ConceptDriftManagementPanel extends JPanel implements ActionListener,
-        ListSelectionListener {
+public class ConceptDriftManagementPanel extends JPanel implements ActionListener, ListSelectionListener {
 
-    private String conceptTreeType;
-    private JList mraJList;
-    private JButton checkMRAButton;
+    private final String conceptTreeType;
+    private final JList mraJList;
+    private final JButton checkMRAButton;
     private List<List<ConceptTreeNode>> mraList;
-    private JList traJList;
-    private JTree trimmedNodeTree;
+    private final JList traJList;
+    private final JTree trimmedNodeTree;
     private List<ConceptTreeNode> traList;
-    private JButton traButton;
-    private JButton checkTRAButton;
-    private RemoveMultipleInheritancePanel rmMultipleInheritancePanel;
+    private final JButton traButton;
+    private final JButton checkTRAButton;
+    private final RemoveMultipleInheritancePanel rmMultipleInheritancePanel;
 
-    private JTree conceptTree;
+    private final JTree conceptTree;
 
-    private JTextField trimmedNumField;
-    private ConceptTreeMaker maker = ConceptTreeMaker.getInstance();
+    private final JTextField trimmedNumField;
+    private final ConceptTreeMaker maker = ConceptTreeMaker.getInstance();
 
-    private DODDLEProjectPanel project;
+    private final DODDLEProjectPanel project;
 
     public void initialize() {
         System.out.println("initialize concept drift");
         resetMatchedResultAnalysis();
-        System.out.println("##");
         resetTrimmedResultAnalysis();
-        System.out.println("##2");
         rmMultipleInheritancePanel.initialize();
-        System.out.println("##3");
     }
 
     public ConceptDriftManagementPanel(String type, JTree tree, DODDLEProjectPanel p) {
@@ -116,24 +112,20 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 
         rmMultipleInheritancePanel = new RemoveMultipleInheritancePanel();
         var mainTabbedPane = new JTabbedPane();
-        mainTabbedPane.addTab(Translator.getTerm("MatchedResultAnalysisResultBorder"), null,
-                getMRAPanel());
-        mainTabbedPane.addTab(Translator.getTerm("TrimmedResultAnalysisResultBorder"), null,
-                getTRAPanel());
-        mainTabbedPane.addTab(Translator.getTerm("RemoveMultipleInheritanceBorder"), null,
-                rmMultipleInheritancePanel);
+        mainTabbedPane.addTab(Translator.getTerm("MatchedResultAnalysisResultBorder"), null, getMRAPanel());
+        mainTabbedPane.addTab(Translator.getTerm("TrimmedResultAnalysisResultBorder"), null, getTRAPanel());
+        mainTabbedPane.addTab(Translator.getTerm("RemoveMultipleInheritanceBorder"), null, rmMultipleInheritancePanel);
 
         setLayout(new BorderLayout());
         add(mainTabbedPane, BorderLayout.CENTER);
     }
 
-    public List<ConceptTreeNode> getTRAResult() {
+    private List<ConceptTreeNode> getTRAResult() {
         return traList;
     }
 
-    public void addTRANode(ConceptTreeNode node) {
+    private void addTRANode(ConceptTreeNode node) {
         traList.add(node);
-
     }
 
     public void valueChanged(ListSelectionEvent e) {
@@ -183,7 +175,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         setMRADefaultValue();
     }
 
-    public void resetTrimmedResultAnalysis() {
+    private void resetTrimmedResultAnalysis() {
         int trimmedNum;
         try {
             trimmedNum = Integer.parseInt(trimmedNumField.getText());
@@ -198,7 +190,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         setTRADefaultValue();
     }
 
-    public void resetMultipleInheritanceConceptSet(ConceptTreeNode rootNode) {
+    private void resetMultipleInheritanceConceptSet(ConceptTreeNode rootNode) {
         rmMultipleInheritancePanel.setMultipleInheritanceConceptSet(maker
                 .getMulipleInheritanceConceptSet(rootNode));
         rmMultipleInheritancePanel.resetMutipleInheritanceConceptJListTitle();
@@ -362,7 +354,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 //                Translator.getTerm("MatchedResultAnalysisResultBorder") + " (" + list.size() + ")");
     }
 
-    public void setTRADefaultValue() {
+    private void setTRADefaultValue() {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < traList.size(); i++) {
             ConceptTreeNode traNode = traList.get(i);
@@ -379,16 +371,16 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
     class RemoveMultipleInheritancePanel extends JPanel implements ListSelectionListener,
             ActionListener {
 
-        private JList multipleInheritanceConceptJList;
-        private JList multipleInheritanceUpperConceptJList;
-        private JButton removeUpperConceptLinkButton;
+        private final JList multipleInheritanceConceptJList;
+        private final JList multipleInheritanceUpperConceptJList;
+        private final JButton removeUpperConceptLinkButton;
 
-        public void initialize() {
+        void initialize() {
             multipleInheritanceConceptJList.setListData(new ArrayList<>().toArray());
             multipleInheritanceUpperConceptJList.setListData(new ArrayList<>().toArray());
         }
 
-        public RemoveMultipleInheritancePanel() {
+        RemoveMultipleInheritancePanel() {
             multipleInheritanceConceptJList = new JList();
             multipleInheritanceConceptJList.addListSelectionListener(this);
             JScrollPane multipleInheritanceConceptJListScroll = new JScrollPane(
@@ -419,7 +411,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             add(eastPanel, BorderLayout.SOUTH);
         }
 
-        public void setMultipleInheritanceConceptSet(Set<Concept> multipleInheritanceConceptSet) {
+        void setMultipleInheritanceConceptSet(Set<Concept> multipleInheritanceConceptSet) {
             DefaultListModel listModel = new DefaultListModel();
             for (Concept c : multipleInheritanceConceptSet) {
                 listModel.addElement(c);
@@ -499,7 +491,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             }
         }
 
-        public void selectTargetMultipleInheritanceConcept(Concept targetConcept) {
+        void selectTargetMultipleInheritanceConcept(Concept targetConcept) {
             ListModel listModel = multipleInheritanceConceptJList.getModel();
             for (int i = 0; i < listModel.getSize(); i++) {
                 Concept c = (Concept) listModel.getElementAt(i);
@@ -510,9 +502,8 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             }
         }
 
-        public void resetMutipleInheritanceConceptJListTitle() {
-            DefaultListModel listModel = (DefaultListModel) multipleInheritanceConceptJList
-                    .getModel();
+        void resetMutipleInheritanceConceptJListTitle() {
+            DefaultListModel listModel = (DefaultListModel) multipleInheritanceConceptJList.getModel();
             // TODO update title
 //            mainViews[2].getViewProperties().setTitle(Translator.getTerm("RemoveMultipleInheritanceBorder") + " (" + listModel.size() + ")");
 //            rootWindow.repaint();

@@ -33,8 +33,8 @@ import org.doddle_owl.models.concept_tree.VerbConcept;
 import org.doddle_owl.models.term_selection.TermModel;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
-import org.doddle_owl.views.common.ConceptSelectionDialog;
 import org.doddle_owl.views.DODDLEProjectPanel;
+import org.doddle_owl.views.common.ConceptSelectionDialog;
 import org.doddle_owl.views.common.UndefinedTermListPanel;
 
 import javax.swing.*;
@@ -48,27 +48,26 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.regex.PatternSyntaxException;
 
 /**
  * @author Takeshi Morita
  */
 public class ConceptTreePanel extends JPanel {
-    private DODDLEProjectPanel project;
+    private final DODDLEProjectPanel project;
 
-    private JTextField searchConceptField;
-    private TitledBorder searchConceptFieldBorder;
-    private JButton searchButton;
-    private JButton searchPreviousButton;
-    private JButton searchNextButton;
-    private JCheckBox perfectlyMatchedSearchOptionCheckBox;
-    private JCheckBox searchURICheckBox;
-    private JCheckBox caseSensitivityCheckBox;
-    private JList labelLangJList;
-    private JList descriptionLangJList;
+    private final JTextField searchConceptField;
+    private final TitledBorder searchConceptFieldBorder;
+    private final JButton searchButton;
+    private final JButton searchPreviousButton;
+    private final JButton searchNextButton;
+    private final JCheckBox perfectlyMatchedSearchOptionCheckBox;
+    private final JCheckBox searchURICheckBox;
+    private final JCheckBox caseSensitivityCheckBox;
+    private final JList<String> labelLangJList;
+    private final JList<String> descriptionLangJList;
 
-    private JTree conceptTree;
+    private final JTree conceptTree;
     private ConceptTreeNode targetConceptTreeNode;
 
     private AddConceptAction addSubConceptAction;
@@ -80,39 +79,38 @@ public class ConceptTreePanel extends JPanel {
     private DeleteLinkToUpperConceptAction deleteLinkToUpperConceptAction;
     private DeleteConceptAction deleteConceptAction;
     private AddUndefinedTermListAction addUndefinedTermListAction;
-    private MoveUndefinedTermListAction moveUndefinedTermListAction;
     private UndoAction undoAction;
     private RedoAction redoAction;
-    private JCheckBox showPrefixCheckBox;
+    private final JCheckBox showPrefixCheckBox;
 
-    private ImageIcon addSubConceptIcon = Utils.getImageIcon("add_sub_concept.png");
-    private ImageIcon addSibConceptIcon = Utils.getImageIcon("add_sib_concept.png");
+    private final ImageIcon addSubConceptIcon = Utils.getImageIcon("add_sub_concept.png");
+    private final ImageIcon addSibConceptIcon = Utils.getImageIcon("add_sib_concept.png");
     // private ImageIcon expandTreeIcon = Utils.getImageIcon("expand_tree.png");
     // private ImageIcon addUndefWordIcon =
     // Utils.getImageIcon("add_undef_word.png");
     // private ImageIcon undefIcon = Utils.getImageIcon("undef.png");
 
-    private ImageIcon copyIcon = Utils.getImageIcon("page_white_copy.png");
-    private ImageIcon cutIcon = Utils.getImageIcon("cut.png");
-    private ImageIcon pasteIcon = Utils.getImageIcon("page_white_paste.png");
-    private ImageIcon removeConceptIcon = Utils.getImageIcon("remove_concept.png");
-    private ImageIcon removeUpperLinkIcon = Utils.getImageIcon("remove_upper_link.png");
-    private ImageIcon removeInternalConceptIcon = Utils.getImageIcon("remove_internal_concept.png");
+    private final ImageIcon copyIcon = Utils.getImageIcon("page_white_copy.png");
+    private final ImageIcon cutIcon = Utils.getImageIcon("cut.png");
+    private final ImageIcon pasteIcon = Utils.getImageIcon("page_white_paste.png");
+    private final ImageIcon removeConceptIcon = Utils.getImageIcon("remove_concept.png");
+    private final ImageIcon removeUpperLinkIcon = Utils.getImageIcon("remove_upper_link.png");
+    private final ImageIcon removeInternalConceptIcon = Utils.getImageIcon("remove_internal_concept.png");
 
-    private ImageIcon undoIcon = Utils.getImageIcon("arrow_undo.png");
-    private ImageIcon redoIcon = Utils.getImageIcon("arrow_redo.png");
+    private final ImageIcon undoIcon = Utils.getImageIcon("arrow_undo.png");
+    private final ImageIcon redoIcon = Utils.getImageIcon("arrow_redo.png");
 
-    private UndefinedTermListPanel undefinedTermListPanel;
+    private final UndefinedTermListPanel undefinedTermListPanel;
     private ConceptDriftManagementPanel conceptDriftManagementPanel;
 
-    private Map<String, Concept> idConceptMap;
-    private Map<Concept, Set<ConceptTreeNode>> conceptSameConceptTreeNodeMap;
-    private Map<String, Concept> compoundWordConceptMap; // 複合語と対応する概念のマッピング
+    private final Map<String, Concept> idConceptMap;
+    private final Map<Concept, Set<ConceptTreeNode>> conceptSameConceptTreeNodeMap;
+    private final Map<String, Concept> compoundWordConceptMap; // 複合語と対応する概念のマッピング
     private static final int LANG_SIZE = 60;
 
     private ConceptSelectionDialog conceptSelectionDialog;
 
-    private String treeType;
+    private final String treeType;
 
     private JTree hasaTree;
 
@@ -139,8 +137,7 @@ public class ConceptTreePanel extends JPanel {
         Action searchAction = new SearchAction();
         searchConceptField = new JTextField(15);
         searchConceptField.addActionListener(searchAction);
-        searchConceptFieldBorder = BorderFactory.createTitledBorder(Translator.getTerm("SearchConceptTextField")
-                + " (0/0)");
+        searchConceptFieldBorder = BorderFactory.createTitledBorder(Translator.getTerm("SearchConceptTextField") + " (0/0)");
         searchConceptField.setBorder(searchConceptFieldBorder);
         searchButton = new JButton(Translator.getTerm("SearchButton"));
         searchButton.addActionListener(searchAction);
@@ -157,13 +154,13 @@ public class ConceptTreePanel extends JPanel {
         searchCheckBoxPanel.add(searchURICheckBox);
         searchCheckBoxPanel.add(caseSensitivityCheckBox);
 
-        labelLangJList = new JList(new String[]{"en", "ja", "ALL", "NULL"});
+        labelLangJList = new JList<>(new String[]{"en", "ja", "ALL", "NULL"});
         labelLangJList.setSelectedValue("ALL", true);
         JScrollPane labelLangJListScroll = new JScrollPane(labelLangJList);
         labelLangJListScroll.setPreferredSize(new Dimension(LANG_SIZE, 70));
         labelLangJListScroll.setMinimumSize(new Dimension(LANG_SIZE, 70));
         labelLangJListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("LabelLangList")));
-        descriptionLangJList = new JList(new String[]{"en", "ja", "ALL", "NULL"});
+        descriptionLangJList = new JList<>(new String[]{"en", "ja", "ALL", "NULL"});
         JScrollPane descriptionLangJListScroll = new JScrollPane(descriptionLangJList);
         descriptionLangJListScroll.setBorder(BorderFactory
                 .createTitledBorder(Translator.getTerm("DescriptionLangList")));
@@ -235,7 +232,7 @@ public class ConceptTreePanel extends JPanel {
                 .getTerm("DeleteLinkToUpperConceptAction"));
         deleteConceptAction = new DeleteConceptAction(Translator.getTerm("DeleteConceptAction"));
         addUndefinedTermListAction = new AddUndefinedTermListAction(Translator.getTerm("AddUndefinedTermAction"));
-        moveUndefinedTermListAction = new MoveUndefinedTermListAction(Translator.getTerm("UndefineTermAction"));
+        MoveUndefinedTermListAction moveUndefinedTermListAction = new MoveUndefinedTermListAction(Translator.getTerm("UndefineTermAction"));
         undoAction = new UndoAction(Translator.getTerm("UndoAction"), undoIcon);
         redoAction = new RedoAction(Translator.getTerm("RedoAction"), redoIcon);
     }
@@ -254,7 +251,7 @@ public class ConceptTreePanel extends JPanel {
         actionMap.put(Translator.getTerm("RedoAction"), redoAction);
     }
 
-    public void initToolBar(JToolBar toolBar) {
+    private void initToolBar(JToolBar toolBar) {
         toolBar.add(addSubConceptAction).setToolTipText(addSubConceptAction.getTitle());
         toolBar.add(addSibConceptAction).setToolTipText(addSibConceptAction.getTitle());
         toolBar.add(copyConceptAction).setToolTipText(copyConceptAction.getTitle());
@@ -291,7 +288,7 @@ public class ConceptTreePanel extends JPanel {
         setDescriptions(rootNode, wordDescriptionMap);
     }
 
-    public void setDescriptions(ConceptTreeNode treeNode, Map<String, DODDLELiteral> wordDescriptionMap) {
+    private void setDescriptions(ConceptTreeNode treeNode, Map<String, DODDLELiteral> wordDescriptionMap) {
         for (int i = 0; i < treeNode.getChildCount(); i++) {
             ConceptTreeNode childNode = (ConceptTreeNode) treeNode.getChildAt(i);
             for (String lang : childNode.getLangLabelLiteralListMap().keySet()) {
@@ -308,7 +305,7 @@ public class ConceptTreePanel extends JPanel {
 
     class ConceptTreeMouseAdapter extends MouseAdapter {
 
-        private JPopupMenu popupMenu;
+        private final JPopupMenu popupMenu;
 
         ConceptTreeMouseAdapter() {
             popupMenu = new JPopupMenu();
@@ -367,10 +364,10 @@ public class ConceptTreePanel extends JPanel {
     class SearchAction extends AbstractAction {
 
         private int index;
-        private List searchNodeList;
+        private final List searchNodeList;
         private String searchKeyWord;
 
-        public SearchAction() {
+        SearchAction() {
             index = 0;
             searchKeyWord = "";
             searchNodeList = new ArrayList();
@@ -737,7 +734,7 @@ public class ConceptTreePanel extends JPanel {
         checkAllMultipleInheritanceNode(idParentIDSetMap, rootNode);
     }
 
-    public void checkMultipleInheritanceNode(Concept c) {
+    private void checkMultipleInheritanceNode(Concept c) {
         ConceptTreeNode rootNode = (ConceptTreeNode) conceptTree.getModel().getRoot();
         Set sameConceptTreeNodeSet = new HashSet();
         searchSameConceptTreeNode(c, rootNode, sameConceptTreeNodeSet);
@@ -915,8 +912,8 @@ public class ConceptTreePanel extends JPanel {
         return null;
     }
 
-    public void addCompoundWordConcept(String identity, TreeNode node, ConceptTreeNode conceptTreeRootNode,
-                                       Map<DefaultMutableTreeNode, String> abstractNodeLabelMap) {
+    private void addCompoundWordConcept(String identity, TreeNode node, ConceptTreeNode conceptTreeRootNode,
+                                        Map<DefaultMutableTreeNode, String> abstractNodeLabelMap) {
         for (int i = 0; i < node.getChildCount(); i++) {
             DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) node.getChildAt(i);
             String newWord;
@@ -949,7 +946,7 @@ public class ConceptTreePanel extends JPanel {
     }
 
     private int abstractNodeCnt;
-    private Set<String> abstractLabelSet;
+    private final Set<String> abstractLabelSet;
     private int totalAbstractNodeGroupSiblingNodeCnt;
 
     public int getAbstractNodeCnt() {
@@ -1051,7 +1048,7 @@ public class ConceptTreePanel extends JPanel {
         return false;
     }
 
-    public void copyTargetTreeNode(ConceptTreeNode copyTreeNode, ConceptTreeNode targetTreeNode) {
+    private void copyTargetTreeNode(ConceptTreeNode copyTreeNode, ConceptTreeNode targetTreeNode) {
         for (int i = 0; i < targetTreeNode.getChildCount(); i++) {
             ConceptTreeNode childNode = (ConceptTreeNode) targetTreeNode.getChildAt(i);
             ConceptTreeNode copyChildNode = new ConceptTreeNode(childNode, project);
@@ -1062,9 +1059,9 @@ public class ConceptTreePanel extends JPanel {
 
     class CopyConceptAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
@@ -1089,9 +1086,9 @@ public class ConceptTreePanel extends JPanel {
 
     class CutConceptAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
@@ -1142,9 +1139,9 @@ public class ConceptTreePanel extends JPanel {
 
     class PasteConceptAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
@@ -1169,7 +1166,7 @@ public class ConceptTreePanel extends JPanel {
 
     class UndoAction extends AbstractAction {
 
-        public UndoAction(String title, Icon icon) {
+        UndoAction(String title, Icon icon) {
             super(title, icon);
             setToolTipText(title);
             setEnabled(false);
@@ -1193,7 +1190,7 @@ public class ConceptTreePanel extends JPanel {
 
     class RedoAction extends AbstractAction {
 
-        public RedoAction(String title, Icon icon) {
+        RedoAction(String title, Icon icon) {
             super(title, icon);
             setToolTipText(title);
             setEnabled(false);
@@ -1217,8 +1214,8 @@ public class ConceptTreePanel extends JPanel {
 
     class AddConceptAction extends AbstractAction {
 
-        private String title;
-        private boolean isAddSubConcept;
+        private final String title;
+        private final boolean isAddSubConcept;
 
         AddConceptAction(String title, Icon icon, boolean t) {
             super(title, icon);
@@ -1237,7 +1234,7 @@ public class ConceptTreePanel extends JPanel {
             }
         }
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
@@ -1315,7 +1312,7 @@ public class ConceptTreePanel extends JPanel {
         deleteInternalConcept(targetDeleteNode);
     }
 
-    public void addCommand() {
+    private void addCommand() {
         ConceptTreeNode targetNode = (ConceptTreeNode) conceptTree.getLastSelectedPathComponent();
         Concept targetConcept = null;
         Concept parentConcept = null;
@@ -1335,7 +1332,7 @@ public class ConceptTreePanel extends JPanel {
     /**
      * @param targetDeleteNode
      */
-    public void deleteInternalConcept(ConceptTreeNode targetDeleteNode) {
+    private void deleteInternalConcept(ConceptTreeNode targetDeleteNode) {
         DefaultTreeModel model = (DefaultTreeModel) conceptTree.getModel();
         if (targetDeleteNode != null && targetDeleteNode.getParent() != null) {
             ConceptTreeNode targetDeleteNodeParent = (ConceptTreeNode) targetDeleteNode.getParent();
@@ -1384,9 +1381,9 @@ public class ConceptTreePanel extends JPanel {
 
     class DeleteInternalConceptAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
@@ -1410,9 +1407,9 @@ public class ConceptTreePanel extends JPanel {
 
     class DeleteLinkToUpperConceptAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
@@ -1436,7 +1433,7 @@ public class ConceptTreePanel extends JPanel {
 
     class DeleteConceptAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
         DeleteConceptAction(String title) {
             super(title, removeConceptIcon);
@@ -1448,7 +1445,7 @@ public class ConceptTreePanel extends JPanel {
             inputMap.put(keyStroke, title);
         }
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
@@ -1462,7 +1459,7 @@ public class ConceptTreePanel extends JPanel {
 
     class AddUndefinedTermListAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
         public String getTitle() {
             return title;
@@ -1493,7 +1490,7 @@ public class ConceptTreePanel extends JPanel {
 
     class MoveUndefinedTermListAction extends AbstractAction {
 
-        private String title;
+        private final String title;
 
         public String getTitle() {
             return title;
@@ -1565,7 +1562,7 @@ public class ConceptTreePanel extends JPanel {
         }
     }
 
-    public void expandSubTree(ConceptTreeNode node) {
+    private void expandSubTree(ConceptTreeNode node) {
         for (int i = 0; i < node.getChildCount(); i++) {
             ConceptTreeNode childNode = (ConceptTreeNode) node.getChildAt(i);
             conceptTree.expandPath(new TreePath(childNode.getPath()));
@@ -1575,7 +1572,7 @@ public class ConceptTreePanel extends JPanel {
 
     class ExpandSelectedPathAction extends AbstractAction {
 
-        public ExpandSelectedPathAction(String title) {
+        ExpandSelectedPathAction(String title) {
             super(title);
         }
 
@@ -1585,7 +1582,7 @@ public class ConceptTreePanel extends JPanel {
         }
     }
 
-    class ExpandAllPathAction extends AbstractAction {
+    private class ExpandAllPathAction extends AbstractAction {
 
         public ExpandAllPathAction(String title) {
             super(title);

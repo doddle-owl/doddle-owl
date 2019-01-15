@@ -47,22 +47,22 @@ import java.util.*;
  */
 public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
     private boolean isAvailable;
-    private String uri;
-    private Model ontModel;
-    private Map<String, Set<String>> wordURIsMap;
-    private Map<String, Concept> uriConceptMap;
-    private Set<String> classSet;
-    private Set<String> propertySet;
-    private Set<Resource> conceptResourceSet;
-    private Map<String, Set<String>> domainMap;
-    private Map<String, Set<String>> rangeMap;
+    private final String uri;
+    private final Model ontModel;
+    private final Map<String, Set<String>> wordURIsMap;
+    private final Map<String, Concept> uriConceptMap;
+    private final Set<String> classSet;
+    private final Set<String> propertySet;
+    private final Set<Resource> conceptResourceSet;
+    private final Map<String, Set<String>> domainMap;
+    private final Map<String, Set<String>> rangeMap;
 
-    private OWLMetaDataTableModel owlMetaDataTableModel;
+    private final OWLMetaDataTableModel owlMetaDataTableModel;
 
-    private OntologyRank ontoRank;
+    private final OntologyRank ontoRank;
 
-    private NameSpaceTable nsTable;
-    private OWLOntologyExtractionTemplate owlExtractionTemplate;
+    private final NameSpaceTable nsTable;
+    private final OWLOntologyExtractionTemplate owlExtractionTemplate;
 
     public ReferenceOWLOntology(Model model, String uri, NameSpaceTable nst) {
         isAvailable = true;
@@ -247,7 +247,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         }
     }
 
-    public void makeWordURIsMap() {
+    private void makeWordURIsMap() {
         for (Resource conceptResource : conceptResourceSet) {
             if (conceptResource.isAnon()) {
                 continue;
@@ -518,8 +518,8 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         return pathToRootSet;
     }
 
-    public Set<List<Concept>> setPathToRoot(int depth, Resource conceptRes,
-                                            List<Concept> pathToRoot, Property subConceptOf) {
+    private Set<List<Concept>> setPathToRoot(int depth, Resource conceptRes,
+                                             List<Concept> pathToRoot, Property subConceptOf) {
         Set<List<Concept>> pathToRootSet = new HashSet<>();
         if (!ontModel.listObjectsOfProperty(conceptRes, subConceptOf).hasNext()) {
             pathToRootSet.add(pathToRoot);
@@ -550,8 +550,8 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         return pathToRootSet;
     }
 
-    public Set<List<String>> setURIPathToRoot(int depth, Resource conceptRes,
-                                              List<String> pathToRoot, Property subConceptOf) {
+    private Set<List<String>> setURIPathToRoot(int depth, Resource conceptRes,
+                                               List<String> pathToRoot, Property subConceptOf) {
         Set<List<String>> pathToRootSet = new HashSet<>();
         if (!ontModel.listObjectsOfProperty(conceptRes, subConceptOf).hasNext()) {
             pathToRootSet.add(pathToRoot);
@@ -582,7 +582,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         return pathToRootSet;
     }
 
-    public Set<String> getSubURISet(String uri) {
+    private Set<String> getSubURISet(String uri) {
         Set<String> subURISet = new HashSet<>();
         String queryString = "";
         if (owlExtractionTemplate.getSearchSubConceptTemplate().exists()) {

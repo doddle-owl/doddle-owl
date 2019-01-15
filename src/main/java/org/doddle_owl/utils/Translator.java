@@ -29,9 +29,6 @@ import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.doddle_owl.models.common.DODDLEConstants;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
@@ -42,7 +39,7 @@ import java.util.*;
  */
 public class Translator {
 
-    protected static ResourceBundle resourceBundle;
+    private static ResourceBundle resourceBundle;
     private static Map<String, String> uriTermMap;
     private static Map<String, String> uriDescriptionMap;
 
@@ -55,10 +52,8 @@ public class Translator {
         }
     }
 
-    private static Set<Locale> systemLocaleSet;
-
     static {
-        systemLocaleSet = new HashSet<>();
+        Set<Locale> systemLocaleSet = new HashSet<>();
         systemLocaleSet.add(Locale.JAPAN);
         systemLocaleSet.add(Locale.ENGLISH);
         systemLocaleSet.add(Locale.CHINA);

@@ -38,11 +38,11 @@ import java.util.*;
  */
 public class EDRTree {
 
-    private boolean isSpecial;
+    private final boolean isSpecial;
     private static EDRTree edrTree;
     private static EDRTree edrtTree;
     private DefaultTreeModel edrTreeModel;
-    private Map<String, Set<TreeNode>> uriNodeSetMap;
+    private final Map<String, Set<TreeNode>> uriNodeSetMap;
 
     public static EDRTree getEDRTree() {
         if (edrTree == null) {

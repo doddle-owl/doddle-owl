@@ -31,11 +31,11 @@ import org.apache.jena.rdf.model.Resource;
  */
 public class SwoogleOWLMetaData {
 
-    private String url;
-    private String fileEncoding;
-    private String rdfType;
-    private String fileType;
-    private double ontoRank;
+    private final String url;
+    private final String fileEncoding;
+    private final String rdfType;
+    private final String fileType;
+    private final double ontoRank;
 
     public SwoogleOWLMetaData(Resource u, Literal fe, Literal ft, Resource rt, Literal rank) {
         url = u.getURI();

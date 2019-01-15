@@ -39,23 +39,23 @@ import java.util.TreeSet;
 /**
  * @author Takeshi Morita
  */
-public class ConceptDescriptionUI extends JPanel implements ListSelectionListener, ActionListener {
+class ConceptDescriptionUI extends JPanel implements ListSelectionListener, ActionListener {
 
     private Set<Concept> inputConceptSet;
 
-    private JLabel idLabel;
-    private JTextField idField;
-    private JButton evalButton;
-    private JCheckBox showOnlyInputConceptsButton;
+    private final JLabel idLabel;
+    private final JTextField idField;
+    private final JButton evalButton;
+    private final JCheckBox showOnlyInputConceptsButton;
 
-    private JList fromRelationJList;
-    private JList verbIDJList;
-    private JList subVerbIDJList;
-    private JList toRelationJList;
-    private JList nounIDJList;
-    private JList subNounIDJList;
+    private final JList fromRelationJList;
+    private final JList verbIDJList;
+    private final JList subVerbIDJList;
+    private final JList toRelationJList;
+    private final JList nounIDJList;
+    private final JList subNounIDJList;
 
-    private ConceptDefinition conceptDescription;
+    private final ConceptDefinition conceptDescription;
 
     public ConceptDescriptionUI() {
         conceptDescription = ConceptDefinition.getInstance();

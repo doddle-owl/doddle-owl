@@ -54,17 +54,16 @@ import java.util.regex.PatternSyntaxException;
 /**
  * @author Takeshi Morita
  */
-public class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, ListSelectionListener {
+class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, ListSelectionListener {
 
     private int docNum;
     private Map<String, TermInfo> termInfoMap;
 
-    private JTextField searchTermField;
-    private JTextField searchPOSField;
-    private JEditorPane docArea;
-    private JTable termInfoTable;
+    private final JTextField searchTermField;
+    private final JTextField searchPOSField;
+    private final JEditorPane docArea;
+    private final JTable termInfoTable;
     private TableRowSorter<TableModel> rowSorter;
-    private TermInfoTableModel termInfoTableModel;
 
     private boolean isDeletingTableItems;
 
@@ -185,7 +184,7 @@ public class TermInfoTablePanel extends JPanel implements ActionListener, KeyLis
         String UPPER_CONCEPT = Translator.getTerm("UpperConceptLabel");
         Object[] titles = new Object[]{TERM, POS, TF, IDF, TFIDF, UPPER_CONCEPT};
 
-        termInfoTableModel = new TermInfoTableModel(null, titles);
+        TermInfoTableModel termInfoTableModel = new TermInfoTableModel(null, titles);
         termInfoTableModel.getColumnClass(0);
         rowSorter = new TableRowSorter<>(termInfoTableModel);
         rowSorter.setMaxSortKeys(5);

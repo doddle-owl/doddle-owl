@@ -44,15 +44,15 @@ public class Concept implements Serializable {
 
 	transient private Resource uri;
 	private DODDLELiteral inputLabel;
-	private Map<String, List<DODDLELiteral>> langLabelListMap;
-	private Map<String, List<DODDLELiteral>> langDescriptionListMap;
+	private final Map<String, List<DODDLELiteral>> langLabelListMap;
+	private final Map<String, List<DODDLELiteral>> langDescriptionListMap;
 
 	public Concept() {
 		langLabelListMap = new HashMap<>();
 		langDescriptionListMap = new HashMap<>();
 	}
 
-	public Concept(Concept c) {
+	protected Concept(Concept c) {
 		uri = c.getResource();
 		langLabelListMap = c.getLangLabelListMap();
 		langDescriptionListMap = c.getLangDescriptionListMap();
@@ -132,7 +132,7 @@ public class Concept implements Serializable {
 		return str.replaceAll("\\*\\*\\*", "");
 	}
 
-	public void setInputWord() {
+	private void setInputWord() {
 		inputLabel = null;
 		List<DODDLELiteral> literalList = langLabelListMap.get(DODDLEConstants.LANG);
 		if (literalList != null && 0 < literalList.size()) {

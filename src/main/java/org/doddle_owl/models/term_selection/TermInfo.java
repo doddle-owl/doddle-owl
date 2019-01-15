@@ -32,12 +32,12 @@ import java.util.Map.*;
  */
 public class TermInfo {
 
-    private double docNum;
-    private String word;
+    private final double docNum;
+    private final String word;
     private Set<String> posSet;
     private boolean isInputword;
-    private Map<File, Integer> docTermFreqMap;
-    private Map<File, Integer> inputDocTermFreqMap;
+    private final Map<File, Integer> docTermFreqMap;
+    private final Map<File, Integer> inputDocTermFreqMap;
     private Set<String> upperConceptLabelSet;
 
     public TermInfo(String w, int dn) {
@@ -141,7 +141,7 @@ public class TermInfo {
         return Math.log(docNum / ni);
     }
 
-    public String getIDFString() {
+    private String getIDFString() {
         return String.format("%.3f", getIDF());
     }
 
@@ -152,7 +152,7 @@ public class TermInfo {
         return getTF() * getIDF();
     }
 
-    public String getTFIDFString() {
+    private String getTFIDFString() {
         return String.format("%.3f", getTFIDF());
     }
 

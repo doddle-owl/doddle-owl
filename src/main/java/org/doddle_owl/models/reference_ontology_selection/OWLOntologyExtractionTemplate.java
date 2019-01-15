@@ -64,7 +64,7 @@ public class OWLOntologyExtractionTemplate {
         return DODDLE_OWL.class.getClassLoader().getResourceAsStream("ontology_templates/SearchOWLMetaData.rq");
     }
 
-    public void setSearchOWLMetaDataTemplate(File searchOWLMetaDataTemplate) {
+    private void setSearchOWLMetaDataTemplate(File searchOWLMetaDataTemplate) {
         this.searchOWLMetaDataTemplate = searchOWLMetaDataTemplate;
     }
 

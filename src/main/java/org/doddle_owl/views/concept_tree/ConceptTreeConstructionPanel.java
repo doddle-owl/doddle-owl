@@ -46,21 +46,21 @@ import java.util.TreeSet;
  * @author Takeshi Morita
  */
 public abstract class ConceptTreeConstructionPanel extends JPanel implements CompoundConceptTreeInterface {
-    protected ConceptTreePanel isaTreePanel;
-    protected ConceptTreePanel hasaTreePanel;
-    protected UndefinedTermListPanel undefinedTermListPanel;
-    protected ConceptInformationPanel conceptInfoPanel;
+    ConceptTreePanel isaTreePanel;
+    ConceptTreePanel hasaTreePanel;
+    UndefinedTermListPanel undefinedTermListPanel;
+    ConceptInformationPanel conceptInfoPanel;
 
-    protected ConceptDriftManagementPanel conceptDriftManagementPanel;
-    protected ConceptTreeMaker treeMaker = ConceptTreeMaker.getInstance();
+    ConceptDriftManagementPanel conceptDriftManagementPanel;
+    final ConceptTreeMaker treeMaker = ConceptTreeMaker.getInstance();
 
-    protected int trimmedConceptNum;
-    protected int beforeTrimmingConceptNum;
-    protected int addedSINNum;
-    protected double addedAbstractCompoundConceptCnt;
-    protected double averageAbstracCompoundConceptGroupSiblingConceptCnt;
+    int trimmedConceptNum;
+    int beforeTrimmingConceptNum;
+    int addedSINNum;
+    double addedAbstractCompoundConceptCnt;
+    double averageAbstracCompoundConceptGroupSiblingConceptCnt;
 
-    protected DODDLEProjectPanel project;
+    DODDLEProjectPanel project;
 
     public void initUndo() {
         isaTreePanel.initUndo();
@@ -163,7 +163,7 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
         return averageAbstracCompoundConceptGroupSiblingConceptCnt;
     }
 
-    public void initialize() {
+    void initialize() {
         addedAbstractCompoundConceptCnt = 0;
         averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
         ConceptTreeMaker.getInstance().init();
@@ -255,7 +255,7 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
         return sortedTreeModel;
     }
 
-    public void checkMultipleInheritance(TreeModel model) {
+    private void checkMultipleInheritance(TreeModel model) {
         isaTreePanel.checkAllMultipleInheritanceNode(model);
     }
 

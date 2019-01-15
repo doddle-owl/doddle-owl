@@ -60,13 +60,13 @@ import java.util.prefs.Preferences;
 public class DODDLE_OWL extends JFrame {
 
     private static final Logger logger = Logger.getLogger("DODDLE-OWL");
-    private OptionDialog optionDialog;
-    private LogConsole logConsole;
+    private final OptionDialog optionDialog;
+    private final LogConsole logConsole;
 
     public static Frame rootFrame;
     public static JRootPane rootPane;
     public static DODDLEProjectPanel doddleProjectPanel;
-    public static JMenu recentProjectMenu;
+    private static JMenu recentProjectMenu;
     public static StatusBarPanel STATUS_BAR;
     public static Set<String> GENERAL_ONTOLOGY_NAMESPACE_SET;
 
@@ -305,7 +305,7 @@ public class DODDLE_OWL extends JFrame {
         return doddleProjectPanel;
     }
 
-    public static boolean isExistingCurrentProject() {
+    private static boolean isExistingCurrentProject() {
         return doddleProjectPanel != null;
     }
 
@@ -344,7 +344,7 @@ public class DODDLE_OWL extends JFrame {
         }
     }
 
-    public static void setPath(Properties properties) {
+    private static void setPath(Properties properties) {
         DODDLEConstants.EDR_HOME = properties.getProperty("EDR_HOME");
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
@@ -361,7 +361,7 @@ public class DODDLE_OWL extends JFrame {
         DODDLEConstants.LANG = properties.getProperty("LANG");
     }
 
-    public static void setPath() {
+    private static void setPath() {
         try {
             Preferences userPrefs = Preferences.userNodeForPackage(DODDLE_OWL.class);
             String[] keys = userPrefs.keys();
@@ -377,7 +377,7 @@ public class DODDLE_OWL extends JFrame {
         }
     }
 
-    public static void setProgressValue() {
+    private static void setProgressValue() {
         InputModule.INIT_PROGRESS_VALUE = 887253;
     }
 
@@ -403,7 +403,7 @@ public class DODDLE_OWL extends JFrame {
         }
     }
 
-    public static void initOptions(String[] args) {
+    private static void initOptions(String[] args) {
         Options options = new Options();
         options.addOption("g", "DEBUG", false, "");
         options.addOption("l", "LANG", true, "");

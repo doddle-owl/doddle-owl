@@ -50,11 +50,10 @@ import java.util.Set;
 /**
  * @author Takeshi Morita
  */
-public class ConceptInformationPanel extends JPanel implements ActionListener {
+class ConceptInformationPanel extends JPanel implements ActionListener {
 
     private Concept selectedConcept;
 
-    private JLabel uriLabel;
     private JComboBox prefixComboBox;
     private JTextField localNameField;
     private JButton setURIButton;
@@ -62,23 +61,21 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
     private LabelPanel labelPanel;
     private DescriptionPanel descriptionPanel;
 
-    private JLabel nodeTypeLabel;
     private JComboBox nodeTypeBox;
 
-    private JLabel trimmedNodeCntLabel;
     private JLabel trimmedNodeCntValueLabel;
 
     private JLabel isMultipleInheritanceLabel;
 
     private JTree conceptTree;
-    private JTree hasaTree;
-    private ConceptDriftManagementPanel conceptDriftManagementPanel;
+    private final JTree hasaTree;
+    private final ConceptDriftManagementPanel conceptDriftManagementPanel;
 
     private EDRConceptDefinitionPanel edrConceptDefinitionPanel;
 
     private void init(JTree tree, DefaultTreeCellRenderer renderer) {
         conceptTree = tree;
-        uriLabel = new JLabel(Translator.getTerm("URILabel") + ": ");
+        JLabel uriLabel = new JLabel(Translator.getTerm("URILabel") + ": ");
         prefixComboBox = new JComboBox();
         // prefixComboBox.setBorder(BorderFactory.createTitledBorder("Prefix"));
         localNameField = new JTextField(25);
@@ -104,7 +101,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
         centerPanel.add(labelPanel);
         centerPanel.add(descriptionPanel);
 
-        nodeTypeLabel = new JLabel(Translator.getTerm("NodeTypeLabel")+": ");
+        JLabel nodeTypeLabel = new JLabel(Translator.getTerm("NodeTypeLabel") + ": ");
         nodeTypeBox = new JComboBox(new Object[] {Translator.getTerm("SINLabel"), Translator.getTerm("BestMatchNodeLabel")});
         nodeTypeBox.setPreferredSize(new Dimension(120, 20));
         nodeTypeBox.addActionListener(this);
@@ -112,7 +109,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
         nodeTypePanel.add(nodeTypeLabel);
         nodeTypePanel.add(nodeTypeBox);
 
-        trimmedNodeCntLabel = new JLabel(Translator.getTerm("TrimmedConceptCountLabel") + "： ");
+        JLabel trimmedNodeCntLabel = new JLabel(Translator.getTerm("TrimmedConceptCountLabel") + "： ");
         trimmedNodeCntValueLabel = new JLabel("");
         JPanel trimmedNodeCntPanel = new JPanel();
         trimmedNodeCntPanel.add(trimmedNodeCntLabel);
@@ -162,7 +159,7 @@ public class ConceptInformationPanel extends JPanel implements ActionListener {
     }
 
 
-    public void setConceptInformation(ConceptTreeNode conceptTreeNode) {
+    private void setConceptInformation(ConceptTreeNode conceptTreeNode) {
         selectedConcept = conceptTreeNode.getConcept();
         labelPanel.setSelectedConcept(selectedConcept);
         descriptionPanel.setSelectedConcept(selectedConcept);

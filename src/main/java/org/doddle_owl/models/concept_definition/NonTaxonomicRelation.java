@@ -86,7 +86,7 @@ public class NonTaxonomicRelation {
         this.range = range;
     }
 
-    public Concept getRelation() {
+    private Concept getRelation() {
         return relation;
     }
 

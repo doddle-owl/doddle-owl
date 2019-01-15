@@ -63,13 +63,13 @@ public class OptionDialog extends JDialog implements ActionListener {
 
     private static JCheckBox showQNameCheckBox;
 
-    private JButton saveOptionToRegistryButton;
-    private JButton applyButton;
-    private JButton removeButton;
-    private JButton cancelButton;
+    private final JButton saveOptionToRegistryButton;
+    private final JButton applyButton;
+    private final JButton removeButton;
+    private final JButton cancelButton;
 
-    private BasicOptionPanel basicOptionPanel;
-    private DirectoryPanel directoryPanel;
+    private final BasicOptionPanel basicOptionPanel;
+    private final DirectoryPanel directoryPanel;
 
     public OptionDialog(Frame owner) {
         super(owner);
@@ -180,13 +180,13 @@ public class OptionDialog extends JDialog implements ActionListener {
 
     class BasicOptionPanel extends JPanel {
 
-        private JLabel langLabel;
-        private JLabel basePrefixLabel;
-        private JLabel baseURILabel;
+        private final JLabel langLabel;
+        private final JLabel basePrefixLabel;
+        private final JLabel baseURILabel;
 
-        private JComboBox<String> langComboBox;
-        private JTextField basePrefixField;
-        private JTextField baseURIField;
+        private final JComboBox<String> langComboBox;
+        private final JTextField basePrefixField;
+        private final JTextField baseURIField;
 
         BasicOptionPanel() {
             langLabel = new JLabel(Translator.getTerm("LanguageLabel"));
@@ -214,7 +214,7 @@ public class OptionDialog extends JDialog implements ActionListener {
             add(mainPanel, BorderLayout.NORTH);
         }
 
-        public void setLang(String lang) {
+        void setLang(String lang) {
             if (lang.equals("ja")) {
                 langComboBox.setSelectedItem(Translator.getTerm("JapaneseComboBoxItem"));
             } else {
@@ -222,7 +222,7 @@ public class OptionDialog extends JDialog implements ActionListener {
             }
         }
 
-        public String getLang() {
+        String getLang() {
             if (langComboBox.getSelectedItem().equals(Translator.getTerm("JapaneseComboBoxItem"))) {
                 return "ja";
             } else {
@@ -230,19 +230,19 @@ public class OptionDialog extends JDialog implements ActionListener {
             }
         }
 
-        public void setBasePrefix(String prefix) {
+        void setBasePrefix(String prefix) {
             basePrefixField.setText(prefix);
         }
 
-        public String getBasePrefix() {
+        String getBasePrefix() {
             return basePrefixField.getText();
         }
 
-        public void setBaseURI(String uri) {
+        void setBaseURI(String uri) {
             baseURIField.setText(uri);
         }
 
-        public String getBaseURI() {
+        String getBaseURI() {
             return baseURIField.getText();
         }
     }
@@ -381,7 +381,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         }
     }
 
-    public void applyConfig() {
+    private void applyConfig() {
         DODDLEConstants.LANG = basicOptionPanel.getLang();
         DODDLEConstants.BASE_PREFIX = basicOptionPanel.getBasePrefix();
         DODDLEConstants.BASE_URI = basicOptionPanel.getBaseURI();
@@ -407,7 +407,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLE_OWL.doddleProjectPanel.getOntologySelectionPanel().resetGeneralOntologiesCheckBoxes();
     }
 
-    public void removeConfig() {
+    private void removeConfig() {
         String msg = Translator.getTerm("RemoveButton") + ": config";
         int isYes = JOptionPane.showConfirmDialog(this, msg, msg, JOptionPane.YES_NO_OPTION);
         if (isYes == JOptionPane.YES_OPTION) {
@@ -436,7 +436,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setTermExtractScriptDir("");
     }
 
-    public void loadConfig(Properties properties) {
+    private void loadConfig(Properties properties) {
         DODDLEConstants.LANG = properties.getProperty("LANG");
         basicOptionPanel.setLang(DODDLEConstants.LANG);
         DODDLEConstants.BASE_PREFIX = properties.getProperty("BASE_PREFIX");
@@ -550,31 +550,31 @@ public class OptionDialog extends JDialog implements ActionListener {
     }
 
     class DirectoryPanel extends JPanel {
-        private JTextField japaneseMorphologicalAnalyzerField;
-        private JTextField japaneseDependencyStructureAnalyzerField;
-        private JTextField edrDicDirField;
-        private JTextField edrtDicDirField;
-        private JTextField jpwnDicDirField;
-        private JTextField jwoDicDirField;
-        private JTextField projectDirField;
-        private JTextField perlDirField;
-        private JTextField upperConceptListField;
-        private JTextField stopWordListField;
-        private JTextField termExtractScriptDirField;
+        private final JTextField japaneseMorphologicalAnalyzerField;
+        private final JTextField japaneseDependencyStructureAnalyzerField;
+        private final JTextField edrDicDirField;
+        private final JTextField edrtDicDirField;
+        private final JTextField jpwnDicDirField;
+        private final JTextField jwoDicDirField;
+        private final JTextField projectDirField;
+        private final JTextField perlDirField;
+        private final JTextField upperConceptListField;
+        private final JTextField stopWordListField;
+        private final JTextField termExtractScriptDirField;
 
-        private JButton browseJapaneseMorphologicalAnalyzerButton;
-        private JButton browseJapaneseDependencyStructureAnalyzerButton;
-        private JButton browseEDRDicDirButton;
-        private JButton browseEDRTDicDirButton;
-        private JButton browseJpwnDicDirButton;
-        private JButton browseJwoDicDirButton;
-        private JButton browseProjectDirButton;
-        private JButton browsePerlDirButton;
-        private JButton browseUpperConceptListButton;
-        private JButton browseStopWordListButton;
-        private JButton browseTermExtractScriptDirButton;
+        private final JButton browseJapaneseMorphologicalAnalyzerButton;
+        private final JButton browseJapaneseDependencyStructureAnalyzerButton;
+        private final JButton browseEDRDicDirButton;
+        private final JButton browseEDRTDicDirButton;
+        private final JButton browseJpwnDicDirButton;
+        private final JButton browseJwoDicDirButton;
+        private final JButton browseProjectDirButton;
+        private final JButton browsePerlDirButton;
+        private final JButton browseUpperConceptListButton;
+        private final JButton browseStopWordListButton;
+        private final JButton browseTermExtractScriptDirButton;
 
-        public DirectoryPanel() {
+        DirectoryPanel() {
             japaneseMorphologicalAnalyzerField = new JTextField(FIELD_SIZE);
             browseJapaneseMorphologicalAnalyzerButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(japaneseMorphologicalAnalyzerField,
@@ -665,91 +665,91 @@ public class OptionDialog extends JDialog implements ActionListener {
             add(Utils.createNorthPanel(panel), BorderLayout.CENTER);
         }
 
-        public void setJapaneseMorphologicalAnalyzer(String dir) {
+        void setJapaneseMorphologicalAnalyzer(String dir) {
             japaneseMorphologicalAnalyzerField.setText(dir);
         }
 
-        public String getJapaneseMorphologicalAnalyzer() {
+        String getJapaneseMorphologicalAnalyzer() {
             return japaneseMorphologicalAnalyzerField.getText();
         }
 
-        public void setJapaneseDependencyStructureAnalyzer(String dir) {
+        void setJapaneseDependencyStructureAnalyzer(String dir) {
             japaneseDependencyStructureAnalyzerField.setText(dir);
         }
 
-        public String getJapaneseDependencyStructureAnalyzer() {
+        String getJapaneseDependencyStructureAnalyzer() {
             return japaneseDependencyStructureAnalyzerField.getText();
         }
 
-        public void setPerlDir(String dir) {
+        void setPerlDir(String dir) {
             perlDirField.setText(dir);
         }
 
-        public String getPerlDir() {
+        String getPerlDir() {
             return perlDirField.getText();
         }
 
-        public void setEDRDicDir(String dir) {
+        void setEDRDicDir(String dir) {
             edrDicDirField.setText(dir);
         }
 
-        public String getEDRDicDir() {
+        String getEDRDicDir() {
             return edrDicDirField.getText();
         }
 
-        public void setEDRTDicDir(String dir) {
+        void setEDRTDicDir(String dir) {
             edrtDicDirField.setText(dir);
         }
 
-        public String getEDRTDicDir() {
+        String getEDRTDicDir() {
             return edrtDicDirField.getText();
         }
 
-        public void setJpwnDicDir(String dir) {
+        void setJpwnDicDir(String dir) {
             jpwnDicDirField.setText(dir);
         }
 
-        public String getJpwnDicDir() {
+        String getJpwnDicDir() {
             return jpwnDicDirField.getText();
         }
 
-        public void setJwoDicDir(String dir) {
+        void setJwoDicDir(String dir) {
             jwoDicDirField.setText(dir);
         }
 
-        public String getJwoDicDir() {
+        String getJwoDicDir() {
             return jwoDicDirField.getText();
         }
 
-        public void setProjectDir(String dir) {
+        void setProjectDir(String dir) {
             projectDirField.setText(dir);
         }
 
-        public String getProjectDir() {
+        String getProjectDir() {
             return projectDirField.getText();
         }
 
-        public void setUpperCnceptList(String file) {
+        void setUpperCnceptList(String file) {
             upperConceptListField.setText(file);
         }
 
-        public String getUpperConceptList() {
+        String getUpperConceptList() {
             return upperConceptListField.getText();
         }
 
-        public void setStopWordList(String file) {
+        void setStopWordList(String file) {
             stopWordListField.setText(file);
         }
 
-        public String getStopWordList() {
+        String getStopWordList() {
             return stopWordListField.getText();
         }
 
-        public void setTermExtractScriptDir(String file) {
+        void setTermExtractScriptDir(String file) {
             termExtractScriptDirField.setText(file);
         }
 
-        public String getTermExtractScriptDir() {
+        String getTermExtractScriptDir() {
             return termExtractScriptDirField.getText();
         }
 
@@ -771,7 +771,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         }
 
         class BrowseDirectory extends AbstractAction {
-            private JTextField directoryField;
+            private final JTextField directoryField;
 
             BrowseDirectory(JTextField field) {
                 directoryField = field;

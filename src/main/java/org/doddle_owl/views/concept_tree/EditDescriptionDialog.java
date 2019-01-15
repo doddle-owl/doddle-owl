@@ -36,15 +36,15 @@ import java.awt.event.ActionListener;
 /**
  * @author Takeshi Morita
  */
-public class EditDescriptionDialog extends JDialog implements ActionListener {
+class EditDescriptionDialog extends JDialog implements ActionListener {
 
-    private DODDLELiteral description;
+    private final DODDLELiteral description;
 
-    private JTextField langField;
-    private JTextArea descriptionArea;
+    private final JTextField langField;
+    private final JTextArea descriptionArea;
 
-    private JButton applyButton;
-    private JButton cancelButton;
+    private final JButton applyButton;
+    private final JButton cancelButton;
 
     private static final int DIALOG_WIDTH = 300;
     private static final int DIALOG_HEIGHT = 250;

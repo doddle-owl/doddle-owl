@@ -22,7 +22,7 @@ import java.util.Set;
 import static org.doddle_owl.utils.CalcConceptDistanceUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CalcConceptDistanceUtilTest {
+class CalcConceptDistanceUtilTest {
 
     @Nested
     @DisplayName("EDRにおける概念距離計算のテスト")
@@ -146,7 +146,7 @@ public class CalcConceptDistanceUtilTest {
         }
     }
 
-    public static void getOWLConceptDistance(String fname, String uri1, String uri2) {
+    static void getOWLConceptDistance(String fname, String uri1, String uri2) {
         OWLOntologyManager.addRefOntology(new File(fname));
         Concept c1 = OWLOntologyManager.getConcept(uri1);
         Concept c2 = OWLOntologyManager.getConcept(uri2);
@@ -165,7 +165,7 @@ public class CalcConceptDistanceUtilTest {
         System.err.println(resultModel);
     }
 
-    public static void getOWLLongestDepth(String fname) {
+    static void getOWLLongestDepth(String fname) {
         OWLOntologyManager.addRefOntology(new File(fname));
         ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(new File(fname).getAbsolutePath());
         int depth = 0;
@@ -183,11 +183,11 @@ public class CalcConceptDistanceUtilTest {
     }
 
 
-    public static void testWNConceptDistance() {
+    static void testWNConceptDistance() {
         System.out.println(getAverageConceptDistance(WordNet.getWNConcept("2001223"), WordNet.getWNConcept("2037721")));
     }
 
-    private static void testOwlLongestDepth(String[] args) {
+    static void testOwlLongestDepth(String[] args) {
         if (args.length != 2) {
             return;
         }

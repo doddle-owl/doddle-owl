@@ -28,7 +28,7 @@ package org.doddle_owl.models.common;
  */
 public class DODDLEConstants {
 
-    public static int DIVIDER_SIZE = 10;
+    public static final int DIVIDER_SIZE = 10;
     public static final String VERSION = "1.0RC4";
 
     public static boolean DEBUG = false;
@@ -43,12 +43,12 @@ public class DODDLEConstants {
     public static String BASE_URI = "http://doddle-owl.org#";
     public static final String DODDLE_URI = "http://doddle-owl.org#";
     public static String BASE_PREFIX = "doddle-owl";
-    public static String EDR_URI = "http://www2.nict.go.jp/kk/e416/EDR#";
-    public static String OLD_EDR_URI = "http://www2.nict.go.jp/kk/e416/EDR/";
-    public static String EDRT_URI = "http://www2.nict.go.jp/kk/e416/EDRT#";
-    public static String WN_URI = "http://wordnet.princeton.edu/wn/";
-    public static String JPN_WN_URI = "http://nlpwww.nict.go.jp/wn-ja/";
-    public static String JWO_URI = "http://www.wikipediaontology.org/class/";
+    public static final String EDR_URI = "http://www2.nict.go.jp/kk/e416/EDR#";
+    public static final String OLD_EDR_URI = "http://www2.nict.go.jp/kk/e416/EDR/";
+    public static final String EDRT_URI = "http://www2.nict.go.jp/kk/e416/EDRT#";
+    public static final String WN_URI = "http://wordnet.princeton.edu/wn/";
+    public static final String JPN_WN_URI = "http://nlpwww.nict.go.jp/wn-ja/";
+    public static final String JWO_URI = "http://www.wikipediaontology.org/class/";
 
     public static String EDR_HOME = "C:/DODDLE-OWL/EDR_DIC/";
     public static String EDRT_HOME = "C:/DODDLE-OWL/EDRT_DIC/";

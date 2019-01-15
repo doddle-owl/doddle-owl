@@ -42,22 +42,22 @@ import java.io.File;
  */
 public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 
-	private JRadioButton edrRadioButton;
-	private JRadioButton edrtRadioButton;
-	private JRadioButton jpnwnRadioButton;
+	private final JRadioButton edrRadioButton;
+	private final JRadioButton edrtRadioButton;
+	private final JRadioButton jpnwnRadioButton;
 
-	private JRadioButton txtBox;
+	private final JRadioButton txtBox;
 	// private JCheckBox dbBox;
-	private JRadioButton owlBox;
+	private final JRadioButton owlBox;
 
-	private JTextField orgDicPathField;
-	private JButton refOrgDicPathButton;
-	private JTextField doddleDicPathField;
-	private JButton refDoddleDicPathButton;
-	private JButton convertButton;
-	private JButton exitButton;
-	private static JLabel progressLabel = new JLabel();
-	private static JProgressBar progressBar = new JProgressBar();
+	private final JTextField orgDicPathField;
+	private final JButton refOrgDicPathButton;
+	private final JTextField doddleDicPathField;
+	private final JButton refDoddleDicPathButton;
+	private final JButton convertButton;
+	private final JButton exitButton;
+	private static final JLabel progressLabel = new JLabel();
+	private static final JProgressBar progressBar = new JProgressBar();
 
 	public DODDLEDicConverterUI() {
 		edrRadioButton = new JRadioButton("EDR");
@@ -311,7 +311,7 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 				makeWordIndex(dicType);
 			}
 
-			public void convertOWL(DictionaryType dicType) {
+			void convertOWL(DictionaryType dicType) {
 				if (dicType == DictionaryType.JPNWN) {
 					Model ontModel = ModelFactory.createDefaultModel();
 					JPNWN2DODDLEDicConverter.readConceptData();

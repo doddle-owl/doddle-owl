@@ -53,11 +53,11 @@ public class ConceptSelectionDialog extends JDialog implements ActionListener, L
 
     private JList predefinedRelationJList;
 
-    private Set selectedConceptSet;
-    private JTree conceptTree;
-    private JButton expandButton;
-    private JButton applyButton;
-    private JButton cancelButton;
+    private final Set selectedConceptSet;
+    private final JTree conceptTree;
+    private final JButton expandButton;
+    private final JButton applyButton;
+    private final JButton cancelButton;
 
     public static Concept agentConcept = new Concept(DODDLEConstants.BASE_URI+"DID0", "agent");
     public static Concept objectConcept = new Concept(DODDLEConstants.BASE_URI+"DID1", "object");

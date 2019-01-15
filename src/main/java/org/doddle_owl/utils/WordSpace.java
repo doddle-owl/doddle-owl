@@ -42,15 +42,15 @@ public class WordSpace {
 
     private List<String> corpusTokenList;
 
-    private Map<String, Integer> gramNumMap;
+    private final Map<String, Integer> gramNumMap;
     private Map<String, List<ConceptPair>> wordSpaceResult;
 
     private WordSpaceData wsData;
-    private List<ConceptPair> allConceptPairs;
+    private final List<ConceptPair> allConceptPairs;
 
-    private List<String> inputWordList;
-    private Document document;
-    private ConceptDefinitionPanel conceptDefinitionPanel;
+    private final List<String> inputWordList;
+    private final Document document;
+    private final ConceptDefinitionPanel conceptDefinitionPanel;
 
     public WordSpace(ConceptDefinitionPanel cdp, Document doc) {
         document = doc;
@@ -301,7 +301,7 @@ public class WordSpace {
         }
     }
 
-    public List<String> makeGramText(List<String> tokenList) {
+    private List<String> makeGramText(List<String> tokenList) {
         List<String> gramText = new ArrayList<>();
         for (Iterator<String> i = tokenList.iterator(); i.hasNext(); ) {
             List<String> gramList = new ArrayList<>();

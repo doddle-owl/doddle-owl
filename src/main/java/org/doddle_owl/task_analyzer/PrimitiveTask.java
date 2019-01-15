@@ -28,11 +28,11 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class PrimitiveTask {
+class PrimitiveTask {
 
-    private List<Segment> subjectList;
+    private final List<Segment> subjectList;
     private Segment predicate;
-    private List<Segment> objectList;
+    private final List<Segment> objectList;
 
     public PrimitiveTask(Segment predicate) {
         this.predicate = predicate;

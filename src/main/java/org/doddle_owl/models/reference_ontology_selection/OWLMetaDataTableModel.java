@@ -33,9 +33,9 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author Takeshi Morita
  */
-public class OWLMetaDataTableModel extends DefaultTableModel {
+class OWLMetaDataTableModel extends DefaultTableModel {
 
-    private NameSpaceTable nsTable;
+    private final NameSpaceTable nsTable;
     
     public OWLMetaDataTableModel(NameSpaceTable nstbl, Object[] columnNames, int rowCount) {
         super(columnNames, rowCount);

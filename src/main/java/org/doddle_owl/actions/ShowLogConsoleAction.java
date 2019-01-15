@@ -34,8 +34,8 @@ import java.awt.event.ActionEvent;
  */
 public class ShowLogConsoleAction extends AbstractAction {
 
-    private String title;
-    private LogConsole logConsole;
+    private final String title;
+    private final LogConsole logConsole;
 
     public ShowLogConsoleAction(String title, LogConsole console) {
         super(title, Utils.getImageIcon("application_xp_terminal.png"));

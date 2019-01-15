@@ -40,13 +40,13 @@ import java.util.Set;
  */
 public class LiteralPanel extends JPanel implements ListSelectionListener {
 
-    protected JList langJList;
-    protected JList literalJList;
+    protected final JList langJList;
+    protected final JList literalJList;
     protected DefaultListModel literalJListModel;
 
     protected Concept selectedConcept;
 
-    protected String literalType;
+    private final String literalType;
 
     private static final int LANG_SIZE = 80;
     public static final String LABEL = "LABEL";
@@ -131,7 +131,7 @@ public class LiteralPanel extends JPanel implements ListSelectionListener {
         literalJList.setModel(listModel);
     }
 
-    public void setField() {
+    protected void setField() {
     }
 
     public void valueChanged(ListSelectionEvent e) {

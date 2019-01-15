@@ -39,18 +39,9 @@ import java.util.Map.*;
  */
 public class ConceptDefinition {
 
-    private Map<String, Set<String>> agentMap;
-    private Map<String, Set<String>> objectMap;
-    private Map<String, Set<String>> goalMap;
-    private Map<String, Set<String>> implementMap;
-    private Map<String, Set<String>> a_objectMap;
-    private Map<String, Set<String>> placeMap;
-    private Map<String, Set<String>> sceneMap;
-    private Map<String, Set<String>> causeMap;
+    private final Set<String> verbSet;
 
-    private Set<String> verbSet;
-
-    private Map<String, Map<String, Set<String>>> relationMap;
+    private final Map<String, Map<String, Set<String>>> relationMap;
     public static final String[] relationList = {"agent", "object", "goal", "implement", "a-object", "place", "scene",
             "cause"};
     private static ConceptDefinition conceptDefintion;
@@ -63,15 +54,14 @@ public class ConceptDefinition {
     }
 
     private ConceptDefinition() {
-
-        agentMap = new HashMap<>();
-        objectMap = new HashMap<>();
-        goalMap = new HashMap<>();
-        implementMap = new HashMap<>();
-        a_objectMap = new HashMap<>();
-        placeMap = new HashMap<>();
-        sceneMap = new HashMap<>();
-        causeMap = new HashMap<>();
+        Map<String, Set<String>> agentMap = new HashMap<>();
+        Map<String, Set<String>> objectMap = new HashMap<>();
+        Map<String, Set<String>> goalMap = new HashMap<>();
+        Map<String, Set<String>> implementMap = new HashMap<>();
+        Map<String, Set<String>> a_objectMap = new HashMap<>();
+        Map<String, Set<String>> placeMap = new HashMap<>();
+        Map<String, Set<String>> sceneMap = new HashMap<>();
+        Map<String, Set<String>> causeMap = new HashMap<>();
         verbSet = new TreeSet<>();
         Map[] relationMapList = {agentMap, objectMap, goalMap, implementMap, a_objectMap, placeMap, sceneMap, causeMap};
         relationMap = new HashMap<>();
@@ -185,7 +175,7 @@ public class ConceptDefinition {
     /**
      * idを受け取り，そのIDのルートまでのパスに存在するURIのセットを返す
      */
-    public Set<String> getSupURISet(String id) {
+    private Set<String> getSupURISet(String id) {
         Set<String> uriSet = new HashSet<>();
         for (List<String> supIDList : EDRTree.getEDRTree().getURIPathToRootSet(id)) {
             uriSet.addAll(supIDList);

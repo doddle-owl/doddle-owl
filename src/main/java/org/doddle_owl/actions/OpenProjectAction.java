@@ -57,13 +57,13 @@ import java.util.zip.ZipFile;
  */
 public class OpenProjectAction extends AbstractAction {
 
-    protected String title;
-    protected DODDLE_OWL doddle;
-    protected File openFile;
-    protected FileFilter doddleProjectFileFilter;
-    protected FileFilter doddleProjectFolderFilter;
+    String title;
+    DODDLE_OWL doddle;
+    File openFile;
+    private FileFilter doddleProjectFileFilter;
+    private FileFilter doddleProjectFolderFilter;
 
-    public OpenProjectAction() {
+    OpenProjectAction() {
     }
 
     public OpenProjectAction(String title, DODDLE_OWL ddl) {
@@ -79,9 +79,9 @@ public class OpenProjectAction extends AbstractAction {
         return title;
     }
 
-    protected static final int EOF = -1;
+    private static final int EOF = -1;
 
-    public static void getEntry(ZipFile zipFile, ZipEntry target) {
+    private static void getEntry(ZipFile zipFile, ZipEntry target) {
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
         try {
@@ -158,7 +158,7 @@ public class OpenProjectAction extends AbstractAction {
 
         private int currentTaskCnt;
 
-        public OpenProjectWorker(int taskCnt) {
+        OpenProjectWorker(int taskCnt) {
             currentTaskCnt = taskCnt;
             addPropertyChangeListener(this);
         }
@@ -176,16 +176,11 @@ public class OpenProjectAction extends AbstractAction {
             try {
                 DODDLEProjectPanel currentProject = DODDLE_OWL.doddleProjectPanel;
 
-                ReferenceOntologySelectionPanel ontSelectionPanel = currentProject
-                        .getOntologySelectionPanel();
-                ConceptSelectionPanel conceptSelectionPanel = currentProject
-                        .getConceptSelectionPanel();
-                DocumentSelectionPanel docSelectionPanelI = currentProject
-                        .getDocumentSelectionPanel();
-                TermSelectionPanel termSelectionPanel = currentProject
-                        .getInputTermSelectionPanel();
-                ConceptDefinitionPanel conceptDefinitionPanel = currentProject
-                        .getConceptDefinitionPanel();
+                ReferenceOntologySelectionPanel ontSelectionPanel = currentProject.getOntologySelectionPanel();
+                ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
+                DocumentSelectionPanel docSelectionPanelI = currentProject.getDocumentSelectionPanel();
+                TermSelectionPanel termSelectionPanel = currentProject.getInputTermSelectionPanel();
+                ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
                 File openDir;
                 List<String> recentProjects = doddle.loadRecentProject();
                 recentProjects.remove(openFile.getAbsolutePath());
@@ -206,11 +201,9 @@ public class OpenProjectAction extends AbstractAction {
                 setProgress(currentTaskCnt++);
                 docSelectionPanelI.loadDocuments(openDir);
                 setProgress(currentTaskCnt++);
-                ontSelectionPanel.loadGeneralOntologyInfo(new File(openDir,
-                        ProjectFileNames.GENERAL_ONTOLOGY_INFO_FILE));
+                ontSelectionPanel.loadGeneralOntologyInfo(new File(openDir, ProjectFileNames.GENERAL_ONTOLOGY_INFO_FILE));
                 setProgress(currentTaskCnt++);
-                ontSelectionPanel.loadOWLMetaDataSet(new File(openDir,
-                        ProjectFileNames.OWL_META_DATA_SET_DIR));
+                ontSelectionPanel.loadOWLMetaDataSet(new File(openDir, ProjectFileNames.OWL_META_DATA_SET_DIR));
                 setProgress(currentTaskCnt++);
                 termSelectionPanel.loadInputTermInfoTable(new File(openDir,
                         ProjectFileNames.TERM_INFO_TABLE_FILE), new File(openDir,

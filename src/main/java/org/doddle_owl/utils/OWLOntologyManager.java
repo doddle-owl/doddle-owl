@@ -40,7 +40,7 @@ import java.util.*;
  */
 public class OWLOntologyManager {
 
-    private static Map<String, ReferenceOWLOntology> refOntMap = new HashMap<>();
+    private static final Map<String, ReferenceOWLOntology> refOntMap = new HashMap<>();
 
     public static void addRefOntology(String uri, ReferenceOWLOntology ontInfo) {
         refOntMap.put(uri, ontInfo);
@@ -67,7 +67,7 @@ public class OWLOntologyManager {
         refOntMap.remove(uri);
     }
 
-    public static Collection<ReferenceOWLOntology> getRefOntologySet() {
+    private static Collection<ReferenceOWLOntology> getRefOntologySet() {
         return refOntMap.values();
     }
 

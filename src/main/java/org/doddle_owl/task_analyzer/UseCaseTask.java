@@ -31,11 +31,11 @@ import java.util.regex.*;
 /**
  * @author Takeshi Morita
  */
-public class UseCaseTask {
+class UseCaseTask {
 
     private String id;
     private String description;
-    private List<PrimitiveTask> primitiveTaskList;
+    private final List<PrimitiveTask> primitiveTaskList;
 
     public UseCaseTask(String fileName) {
         Pattern pattern = Pattern.compile(".*[［\\[](.*)[］\\]].*");
@@ -51,7 +51,7 @@ public class UseCaseTask {
         primitiveTaskList = new ArrayList<>();
     }
 
-    public UseCaseTask(String description, String id) {
+    private UseCaseTask(String description, String id) {
         this.description = description;
         this.id = id;
         primitiveTaskList = new ArrayList<>();
@@ -69,11 +69,11 @@ public class UseCaseTask {
         primitiveTaskList.addAll(taskList);
     }
 
-    public void addTask(PrimitiveTask task) {
+    private void addTask(PrimitiveTask task) {
         primitiveTaskList.add(task);
     }
 
-    public List<PrimitiveTask> getPrimitiveTaskList() {
+    private List<PrimitiveTask> getPrimitiveTaskList() {
         return primitiveTaskList;
     }
 

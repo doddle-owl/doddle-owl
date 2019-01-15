@@ -91,7 +91,7 @@ public class ConceptPair implements Comparable {
         relationValue = value;
     }
 
-    public String getCombinationToString() {
+    private String getCombinationToString() {
         return fromConcept + "->" + toConcept;
     }
 
@@ -160,7 +160,7 @@ public class ConceptPair implements Comparable {
         return relationValue;
     }
 
-    public Double getArValue() {
+    private Double getArValue() {
         return arValue;
     }
 
@@ -168,7 +168,7 @@ public class ConceptPair implements Comparable {
         return isCorrectPair;
     }
 
-    public Double getNvValue() {
+    private Double getNvValue() {
         return nvValue;
     }
 
@@ -176,7 +176,7 @@ public class ConceptPair implements Comparable {
         return sumValue;
     }
 
-    public Double getWsValue() {
+    private Double getWsValue() {
         return wsValue;
     }
 

@@ -46,14 +46,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
  */
 public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel {
 
-    private EDRConceptDefinitionPanel edrConceptDefinitionPanel;
+    private final EDRConceptDefinitionPanel edrConceptDefinitionPanel;
 
     public void clearPanel() {
         super.clearPanel();

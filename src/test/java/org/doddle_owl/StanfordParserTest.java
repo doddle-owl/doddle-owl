@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class StanfordParserTest {
+class StanfordParserTest {
     public static void main(String[] args) {
         var taggerModel = DODDLE_OWL.class.getClassLoader().getResourceAsStream("pos_tagger_model/english-left3words-distsim.tagger");
         var tagger = new MaxentTagger(taggerModel);

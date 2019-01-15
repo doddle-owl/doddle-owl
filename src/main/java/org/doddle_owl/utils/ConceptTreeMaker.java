@@ -50,21 +50,21 @@ import java.util.*;
  */
 public class ConceptTreeMaker {
 
-    private List<List<ConceptTreeNode>> mraResultList;
-    private SinNodeListSorter sinNodeListSorter;
-    private List<ConceptTreeNode> traResultList;
-    private Set<Concept> multipleInheritanceConceptSet;
+    private final List<List<ConceptTreeNode>> mraResultList;
+    private final SinNodeListSorter sinNodeListSorter;
+    private final List<ConceptTreeNode> traResultList;
+    private final Set<Concept> multipleInheritanceConceptSet;
     private Set<Concept> inputConceptSet;
-    private static Set<Concept> trimmedConceptSet = new HashSet<>();
+    private static final Set<Concept> trimmedConceptSet = new HashSet<>();
 
-    private static ConceptTreeMaker maker = new ConceptTreeMaker();
-    public static String EDR_CLASS_ROOT_ID = "ID3aa966";
-    public static String EDRT_CLASS_ROOT_ID = "ID2f3526";
-    public static String JPNWN_CLASS_ROOT_ID = "JPNWN_ROOT";
-    public static String DODDLE_CLASS_ROOT_URI = DODDLEConstants.BASE_URI + "CLASS_ROOT";
-    public static String DODDLE_CLASS_HASA_ROOT_URI = DODDLEConstants.BASE_URI + "CLASS_HASA_ROOT";
-    public static String DODDLE_PROPERTY_ROOT_URI = DODDLEConstants.BASE_URI + "PROP_ROOT";
-    public static String DODDLE_PROPERTY_HASA_ROOT_URI = DODDLEConstants.BASE_URI + "PROPERTY_HASA_ROOT";
+    private static final ConceptTreeMaker maker = new ConceptTreeMaker();
+    public static final String EDR_CLASS_ROOT_ID = "ID3aa966";
+    public static final String EDRT_CLASS_ROOT_ID = "ID2f3526";
+    public static final String JPNWN_CLASS_ROOT_ID = "JPNWN_ROOT";
+    public static final String DODDLE_CLASS_ROOT_URI = DODDLEConstants.DODDLE_URI + "CLASS_ROOT";
+    public static final String DODDLE_CLASS_HASA_ROOT_URI = DODDLEConstants.DODDLE_URI + "CLASS_HASA_ROOT";
+    public static final String DODDLE_PROPERTY_ROOT_URI = DODDLEConstants.DODDLE_URI + "PROP_ROOT";
+    public static final String DODDLE_PROPERTY_HASA_ROOT_URI = DODDLEConstants.DODDLE_URI + "PROPERTY_HASA_ROOT";
 
     private ConceptTreeMaker() {
         inputConceptSet = new HashSet<>();
@@ -106,14 +106,19 @@ public class ConceptTreeMaker {
                 }
             }
             if (pathSize <= 1 && DODDLE_OWL.GENERAL_ONTOLOGY_NAMESPACE_SET.contains(c.getNameSpace())) {
-                if (c.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-                    pathSet.addAll(EDRTree.getEDRTree().getConceptPathToRootSet(c.getLocalName()));
-                } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-                    pathSet.addAll(EDRTree.getEDRTTree().getConceptPathToRootSet(c.getLocalName()));
-                } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                    pathSet.addAll(WordNet.getPathToRootSet(Long.valueOf(c.getLocalName())));
-                } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-                    pathSet.addAll(JaWordNetTree.getJPNWNTree().getConceptPathToRootSet(c.getLocalName()));
+                switch (c.getNameSpace()) {
+                    case DODDLEConstants.EDR_URI:
+                        pathSet.addAll(EDRTree.getEDRTree().getConceptPathToRootSet(c.getLocalName()));
+                        break;
+                    case DODDLEConstants.EDRT_URI:
+                        pathSet.addAll(EDRTree.getEDRTTree().getConceptPathToRootSet(c.getLocalName()));
+                        break;
+                    case DODDLEConstants.WN_URI:
+                        pathSet.addAll(WordNet.getPathToRootSet(Long.valueOf(c.getLocalName())));
+                        break;
+                    case DODDLEConstants.JPN_WN_URI:
+                        pathSet.addAll(JaWordNetTree.getJPNWNTree().getConceptPathToRootSet(c.getLocalName()));
+                        break;
                 }
             } else {
                 pathSet.addAll(tmpPathSet);
@@ -134,22 +139,27 @@ public class ConceptTreeMaker {
      */
     public TreeModel getDefaultConceptTreeModel(Set<List<Concept>> pathSet, DODDLEProjectPanel project, String type) {
         Concept rootConcept = null;
-        if (type.equals(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI)) {
-            rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI, "");
-            rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (Is-a)"));
-            rootConcept.addLabel(new DODDLELiteral("en", "Is-a Root Class"));
-        } else if (type.equals(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI)) {
-            rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI, "");
-            rootConcept.addLabel(new DODDLELiteral("ja", "動詞的概念 (Is-a)"));
-            rootConcept.addLabel(new DODDLELiteral("en", "Is-a Root Property"));
-        } else if (type.equals(ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI)) {
-            rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI, "");
-            rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念(Has-a)"));
-            rootConcept.addLabel(new DODDLELiteral("en", "Has-a Root Class"));
-        } else if (type.equals(ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI)) {
-            rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI, "");
-            rootConcept.addLabel(new DODDLELiteral("ja", "動詞的概念(Has-a)"));
-            rootConcept.addLabel(new DODDLELiteral("en", "Has-a Root Property"));
+        switch (type) {
+            case ConceptTreeMaker.DODDLE_CLASS_ROOT_URI:
+                rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI, "");
+                rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (Is-a)"));
+                rootConcept.addLabel(new DODDLELiteral("en", "Is-a Root Class"));
+                break;
+            case ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI:
+                rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI, "");
+                rootConcept.addLabel(new DODDLELiteral("ja", "動詞的概念 (Is-a)"));
+                rootConcept.addLabel(new DODDLELiteral("en", "Is-a Root Property"));
+                break;
+            case ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI:
+                rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI, "");
+                rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念(Has-a)"));
+                rootConcept.addLabel(new DODDLELiteral("en", "Has-a Root Class"));
+                break;
+            case ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI:
+                rootConcept = new VerbConcept(ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI, "");
+                rootConcept.addLabel(new DODDLELiteral("ja", "動詞的概念(Has-a)"));
+                rootConcept.addLabel(new DODDLELiteral("en", "Has-a Root Property"));
+                break;
         }
         ConceptTreeNode rootNode = new ConceptTreeNode(rootConcept, project);
         rootNode.setIsUserConcept(true);
@@ -436,7 +446,7 @@ public class ConceptTreeMaker {
         return traResultList;
     }
 
-    public boolean isSystemAddedConcept(Concept c) {
+    private boolean isSystemAddedConcept(Concept c) {
         ConceptSelectionPanel conceptSelectionPanel = DODDLE_OWL.getCurrentProject()
                 .getConceptSelectionPanel();
         Set<Concept> systemAddedInputConceptSet = conceptSelectionPanel.getSystemAddedInputConceptSet();
@@ -451,7 +461,7 @@ public class ConceptTreeMaker {
         return false;
     }
 
-    public boolean isInputConcept(Concept c) {
+    private boolean isInputConcept(Concept c) {
         if (inputConceptSet == null) {
             return false;
         }
@@ -471,7 +481,7 @@ public class ConceptTreeMaker {
     public TreeNode getConceptTreeRoot(DODDLEProjectPanel currentProject, Model model, Resource rootResource, String type) {
         Concept rootConcept = null;
         Property property = null;
-        if (type == ConceptTreePanel.CLASS_ISA_TREE) {
+        if (type.equals(ConceptTreePanel.CLASS_ISA_TREE)) {
             property = RDFS.subClassOf;
             rootConcept = new VerbConcept(DODDLE_CLASS_ROOT_URI, "");
             rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (Is-a)"));

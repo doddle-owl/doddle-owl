@@ -29,9 +29,9 @@ package org.doddle_owl.models.reference_ontology_selection;
  */
 public class PrefixNSInfo {
 
-    private String prefix;
-    private String nameSpace;
-    private boolean isAvailable;
+    private final String prefix;
+    private final String nameSpace;
+    private final boolean isAvailable;
 
     public PrefixNSInfo(String p, String ns, boolean t) {
         prefix = p;

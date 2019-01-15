@@ -39,7 +39,7 @@ import java.util.*;
 public class JaWordNetTree {
     private static JaWordNetTree jaWordNetTree;
     private DefaultTreeModel jpnwnTreeModel;
-    private Map<String, Set<TreeNode>> uriNodeSetMap;
+    private final Map<String, Set<TreeNode>> uriNodeSetMap;
 
     public static JaWordNetTree getJPNWNTree() {
         if (jaWordNetTree == null) {
@@ -165,7 +165,7 @@ public class JaWordNetTree {
         }
     }
 
-    public void getSubURISet(String uri, Set<String> nounURISet, Set<String> refineSubURISet) {
+    private void getSubURISet(String uri, Set<String> nounURISet, Set<String> refineSubURISet) {
         Set<String> subURISet = new HashSet<>();
         Set<TreeNode> nodeSet = uriNodeSetMap.get(uri);
         if (nodeSet == null) { return; }

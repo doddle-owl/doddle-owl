@@ -63,9 +63,9 @@ import java.nio.file.Paths;
  */
 public class SaveOntologyAction extends AbstractAction {
 
-    private String conversionType;
-    private FileFilter owlFileFilter;
-    private FileFilter freeMindFileFilter;
+    private final String conversionType;
+    private final FileFilter owlFileFilter;
+    private final FileFilter freeMindFileFilter;
     public static final String OWL_ONTOLOGY = "OWL";
     public static final String FREEMIND_ONTOLOGY = "FREEMIND";
 
@@ -76,7 +76,7 @@ public class SaveOntologyAction extends AbstractAction {
         freeMindFileFilter = new FreeMindFileFilter();
     }
 
-    public static Model getOntology(DODDLEProjectPanel currentProject) {
+    private static Model getOntology(DODDLEProjectPanel currentProject) {
         ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
         PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
@@ -93,7 +93,7 @@ public class SaveOntologyAction extends AbstractAction {
         return ontology;
     }
 
-    public void saveFreeMindOntology(DODDLEProjectPanel project, File file) {
+    private void saveFreeMindOntology(DODDLEProjectPanel project, File file) {
         try {
             ClassTreeConstructionPanel constructClassPanel = project.getConstructClassPanel();
             PropertyTreeConstructionPanel constructPropertyPanel = project.getConstructPropertyPanel();

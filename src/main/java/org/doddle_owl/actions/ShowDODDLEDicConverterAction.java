@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 
 public class ShowDODDLEDicConverterAction extends AbstractAction {
 
-    private String title;
+    private final String title;
 
     public ShowDODDLEDicConverterAction(String title) {
         super(title, Utils.getImageIcon("plugin.png"));

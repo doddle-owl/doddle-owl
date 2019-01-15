@@ -37,9 +37,9 @@ import java.util.*;
  *
  * @author Takeshi Morita
  */
-public class AccentSymbolConverter {
+class AccentSymbolConverter {
 
-    private static Map<String, String> accentSymbolTable;
+    private static final Map<String, String> accentSymbolTable;
 
     static {
         accentSymbolTable = new HashMap<>();

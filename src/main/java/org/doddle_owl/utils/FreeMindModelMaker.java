@@ -135,7 +135,7 @@ public class FreeMindModelMaker {
         return ontModel;
     }
 
-    public static void setOWLModel(String upperURI, Model ontModel, Element element, Resource type) {
+    private static void setOWLModel(String upperURI, Model ontModel, Element element, Resource type) {
         NodeList childNodeList = element.getChildNodes();
         for (int i = 0; i < childNodeList.getLength(); i++) {
             Node childNode = childNodeList.item(i);

@@ -54,7 +54,7 @@ public class InputModule {
     private Map<String, Set<Concept>> termConceptSetMap;
 
     public static int INIT_PROGRESS_VALUE = 887253;
-    private DODDLEProjectPanel project;
+    private final DODDLEProjectPanel project;
 
     public void initialize() {
         isLoadInputTermSet = false;
@@ -68,7 +68,7 @@ public class InputModule {
         initialize();
     }
 
-    static class WordIDsLinesComparator implements Comparator<String> {
+    private static class WordIDsLinesComparator implements Comparator<String> {
         public int compare(String o1, String o2) {
             String w1 = o1.split("\t")[0];
             String w2 = o2.split("\t")[0];
@@ -76,7 +76,7 @@ public class InputModule {
         }
     }
 
-    static class IDDefinitionLinesComparator implements Comparator<String> {
+    private static class IDDefinitionLinesComparator implements Comparator<String> {
         public int compare(String o1, String o2) {
             return o1.compareTo(o2);
         }
@@ -255,15 +255,15 @@ public class InputModule {
         return morphemeList;
     }
 
-    public class InputTermModelWorker extends SwingWorker<String, String> implements
+    class InputTermModelWorker extends SwingWorker<String, String> implements
             PropertyChangeListener {
 
         private int division;
-        private int initialTaskCnt;
+        private final int initialTaskCnt;
         private int currentTaskCnt;
-        private Set<String> termSet;
+        private final Set<String> termSet;
 
-        public InputTermModelWorker(Set<String> termSet, int taskCnt) {
+        InputTermModelWorker(Set<String> termSet, int taskCnt) {
             initialTaskCnt = taskCnt;
             this.termSet = termSet;
             if (initialTaskCnt == 0) {

@@ -38,15 +38,13 @@ import java.util.*;
 public class EDR {
     public static boolean isEDRAvailable = false;
     public static boolean isEDRTAvailable = false;
-    private static String TREE_DATA_FILE = "tree.data";
-    private static String WORD_DATA_FILE = "word.data";
-    private static String CONCEPT_DATA_FILE = "concept.data";
-    private static String RELATION_DATA_FILE = "relation.data";
+    private static final String TREE_DATA_FILE = "tree.data";
+    private static final String WORD_DATA_FILE = "word.data";
+    private static final String CONCEPT_DATA_FILE = "concept.data";
 
-    private static String TREE_INDEX_FILE = "tree.index";
-    private static String WORD_INDEX_FILE = "word.index";
-    private static String CONCEPT_INDEX_FILE = "concept.index";
-    private static String RELATION_INDEX_FILE = "relation.index";
+    private static final String TREE_INDEX_FILE = "tree.index";
+    private static final String WORD_INDEX_FILE = "word.index";
+    private static final String CONCEPT_INDEX_FILE = "concept.index";
 
     private static RandomAccessFile edrTreeDataFile;
     private static RandomAccessFile edrWordDataFile;
@@ -82,11 +80,13 @@ public class EDR {
             edrTreeDataFile = new RandomAccessFile(baseDir + TREE_DATA_FILE, "r");
             edrWordDataFile = new RandomAccessFile(baseDir + WORD_DATA_FILE, "r");
             edrConceptDataFile = new RandomAccessFile(baseDir + CONCEPT_DATA_FILE, "r");
+            String RELATION_DATA_FILE = "relation.data";
             edrRelationDataFile = new RandomAccessFile(baseDir + RELATION_DATA_FILE, "r");
 
             edrTreeIndexFile = new RandomAccessFile(baseDir + TREE_INDEX_FILE, "r");
             edrWordIndexFile = new RandomAccessFile(baseDir + WORD_INDEX_FILE, "r");
             edrConceptIndexFile = new RandomAccessFile(baseDir + CONCEPT_INDEX_FILE, "r");
+            String RELATION_INDEX_FILE = "relation.index";
             edrRelationIndexFile = new RandomAccessFile(baseDir + RELATION_INDEX_FILE, "r");
             isEDRAvailable = true;
         } catch (IOException ioe) {
@@ -273,7 +273,7 @@ public class EDR {
         return getData(dfp, edrRelationDataFile, "ISO8859_1");
     }
 
-    public static String getConceptData(boolean isSpecial, String id) {
+    private static String getConceptData(boolean isSpecial, String id) {
         long low = 0;
         long conceptIndexFileSize = getConceptIndexFileSize(isSpecial);
         long high = conceptIndexFileSize;
@@ -339,7 +339,7 @@ public class EDR {
         return null;
     }
 
-    public static String getRelationData(String id) {
+    private static String getRelationData(String id) {
         long low = 0;
         long relationIndexFileSize = getRelationIndexFileSize();
         long high = relationIndexFileSize;
@@ -436,7 +436,7 @@ public class EDR {
         return dataFpSet;
     }
 
-    public static Set<String> getIDSet(String word, boolean isSpecial) {
+    private static Set<String> getIDSet(String word, boolean isSpecial) {
         Map<String, Set<String>> wordIDSetMap;
         if (isSpecial) {
             wordIDSetMap = edrtWordIDSetMap;
@@ -523,7 +523,7 @@ public class EDR {
         return uriSet;
     }
 
-    public static Concept getConcept(String id, boolean isSpecial) {
+    private static Concept getConcept(String id, boolean isSpecial) {
         String ns;
         Map<String, Concept> uriConceptMap;
         if (isSpecial) {

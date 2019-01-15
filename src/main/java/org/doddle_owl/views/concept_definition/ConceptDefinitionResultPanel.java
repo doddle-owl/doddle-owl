@@ -64,34 +64,34 @@ import java.util.*;
 public class ConceptDefinitionResultPanel extends JPanel implements ActionListener,
         ListSelectionListener, TableModelListener {
 
-    private JList inputConceptJList;
-    private ConceptDefinitionAlgorithmPanel algorithmPanel;
+    private final JList inputConceptJList;
+    private final ConceptDefinitionAlgorithmPanel algorithmPanel;
 
-    private Set<NonTaxonomicRelation> nonTaxRelSet;
-    private Set<WrongPair> wrongPairSet;
+    private final Set<NonTaxonomicRelation> nonTaxRelSet;
+    private final Set<WrongPair> wrongPairSet;
 
-    private DefaultListModel<Document> documentListModel;
-    private JList documentJList;
+    private final DefaultListModel<Document> documentListModel;
+    private final JList<Document> documentJList;
 
-    private JTable wsResultTable;
-    private JTable arResultTable;
-    private JTable waResultTable;
+    private final JTable wsResultTable;
+    private final JTable arResultTable;
+    private final JTable waResultTable;
 
-    private JTable conceptDefinitionTable;
-    private JButton setRelationButton;
-    private JButton deleteAcceptedPairButton;
+    private final JTable conceptDefinitionTable;
+    private final JButton setRelationButton;
+    private final JButton deleteAcceptedPairButton;
 
-    private JTable wrongPairTable;
-    private JButton deleteWrongPairButton;
+    private final JTable wrongPairTable;
+    private final JButton deleteWrongPairButton;
 
-    private String[] definedColumnNames = {Translator.getTerm("MetaPropertyLabel"),
+    private final String[] definedColumnNames = {Translator.getTerm("MetaPropertyLabel"),
             Translator.getTerm("DomainLabel"), Translator.getTerm("RelationLabel"),
             Translator.getTerm("RangeLabel")};
-    private String[] wrongDefinedColumnNames = {Translator.getTerm("DomainLabel"),
+    private final String[] wrongDefinedColumnNames = {Translator.getTerm("DomainLabel"),
             Translator.getTerm("RangeLabel")};
 
-    private DODDLEProjectPanel doddleProjectPanel;
-    private PropertyTreeConstructionPanel constructPropertyTreePanel;
+    private final DODDLEProjectPanel doddleProjectPanel;
+    private final PropertyTreeConstructionPanel constructPropertyTreePanel;
 
     private static final String[] WS_COLUMN_NAMES = {Translator.getTerm("RelatedConceptList"),
             Translator.getTerm("WordSpaceValueLabel")};
@@ -100,10 +100,10 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     private static final String[] WA_COLUMN_NAMES = {Translator.getTerm("RelatedConceptList"),
             Translator.getTerm("WordSpaceValueLabel"), Translator.getTerm("AprioriValueLabel")};
 
-    private JPanel inputConceptPanel;
-    private JPanel inputDocPanel;
-    private JPanel acceptedPairPanel;
-    private JPanel wrongPairPanel;
+    private final JPanel inputConceptPanel;
+    private final JPanel inputDocPanel;
+    private final JPanel acceptedPairPanel;
+    private final JPanel wrongPairPanel;
 
     public JPanel getInputConceptPanel() {
         return inputConceptPanel;
@@ -322,7 +322,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void calcWSandARValue(String selectedInputConcept) {
-        Document currentDoc = (Document) documentJList.getSelectedValue();
+        Document currentDoc = documentJList.getSelectedValue();
         if (currentDoc == null) {
             return;
         }
@@ -377,7 +377,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         setWAResultTable(new DefaultTableModel(data, ConceptDefinitionResultPanel.WA_COLUMN_NAMES));
     }
 
-    public void setWAResultTable(DefaultTableModel dtm) {
+    private void setWAResultTable(DefaultTableModel dtm) {
         waResultTable.setModel(Objects.requireNonNullElseGet(dtm, () -> new DefaultTableModel(null, WA_COLUMN_NAMES)));
     }
 
@@ -395,7 +395,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         return relation;
     }
 
-    public void addWrongPair(WrongPair wp) {
+    private void addWrongPair(WrongPair wp) {
         DefaultTableModel model = (DefaultTableModel) wrongPairTable.getModel();
         wrongPairSet.add(wp);
         reCalcWSandARValue();
@@ -403,7 +403,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         model.addRow(new Object[]{wp.getDomain(), wp.getRange()});
     }
 
-    public void addNonTaxonomicRelation(NonTaxonomicRelation nonTaxRel) {
+    private void addNonTaxonomicRelation(NonTaxonomicRelation nonTaxRel) {
         if (nonTaxRel == null || !nonTaxRel.isValid()) {
             return;
         }
@@ -420,8 +420,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     /**
      * Set WordSpace Result to Table
      */
-    public Set<ConceptPair> setWSResultTable(String selectedInputConcept,
-                                             List<ConceptPair> wsConceptPairList) {
+    private Set<ConceptPair> setWSResultTable(String selectedInputConcept,
+                                              List<ConceptPair> wsConceptPairList) {
         Set<ConceptPair> validPairSet = new TreeSet<>();
         for (ConceptPair pair : wsConceptPairList) {
             String[] data = pair.getTableData();
@@ -439,11 +439,11 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         return validPairSet;
     }
 
-    public void setWSResultTable(DefaultTableModel dtm) {
+    private void setWSResultTable(DefaultTableModel dtm) {
         wsResultTable.setModel(Objects.requireNonNullElseGet(dtm, () -> new DefaultTableModel(null, WS_COLUMN_NAMES)));
     }
 
-    public Set<ConceptPair> setARResultTable(String inputConcept, List<ConceptPair> arConceptPairSet) {
+    private Set<ConceptPair> setARResultTable(String inputConcept, List<ConceptPair> arConceptPairSet) {
         Set<ConceptPair> validPairSet = new TreeSet<>();
         for (ConceptPair pair : arConceptPairSet) {
             String[] data = pair.getTableData();
@@ -461,7 +461,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         return validPairSet;
     }
 
-    public void setARResultTable(DefaultTableModel dtm) {
+    private void setARResultTable(DefaultTableModel dtm) {
         arResultTable.setModel(Objects.requireNonNullElseGet(dtm, () -> new DefaultTableModel(null, AR_COLUMN_NAMES)));
     }
 
@@ -489,7 +489,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         return waResultTable.getSelectionModel();
     }
 
-    private ConceptDefinitionPanel definePanel;
+    private final ConceptDefinitionPanel definePanel;
 
     public ConceptDefinitionPanel getDefinePanel() {
         return definePanel;
@@ -627,17 +627,17 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
     public class ConceptDefinitionPanel extends JPanel implements ActionListener {
 
-        private JLabel c1Label;
-        private JLabel c2Label;
-        private JLabel allowLabel;
-        private JButton reverseButton;
-        private JButton addAcceptedPairButton;
-        private JButton addWrongPairButton;
+        private final JLabel c1Label;
+        private final JLabel c2Label;
+        private final JLabel allowLabel;
+        private final JButton reverseButton;
+        private final JButton addAcceptedPairButton;
+        private final JButton addWrongPairButton;
 
-        private ImageIcon rightIcon = Utils.getImageIcon("arrow_right.png");
-        private ImageIcon leftIcon = Utils.getImageIcon("arrow_left.png");
+        private final ImageIcon rightIcon = Utils.getImageIcon("arrow_right.png");
+        private final ImageIcon leftIcon = Utils.getImageIcon("arrow_left.png");
 
-        public ConceptDefinitionPanel() {
+        ConceptDefinitionPanel() {
             c1Label = new JLabel();
             c2Label = new JLabel();
             reverseButton = new JButton(Translator.getTerm("ReverseButton"));
@@ -695,7 +695,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
             }
         }
 
-        public NonTaxonomicRelation getNonTaxonomicRelation() {
+        NonTaxonomicRelation getNonTaxonomicRelation() {
             NonTaxonomicRelation nonTaxRel = null;
             Concept propRootConcept = getPropertyRootConcept();
             if (propRootConcept != null) {

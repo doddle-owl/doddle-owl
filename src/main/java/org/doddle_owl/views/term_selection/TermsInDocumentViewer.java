@@ -54,24 +54,24 @@ import java.util.*;
  */
 public class TermsInDocumentViewer extends JPanel implements MouseListener, ActionListener,
         HyperlinkListener, KeyListener {
-    private JList documentList;
+    private final JList documentList;
     private ListModel inputDocumentListModel;
-    private JEditorPane documentArea;
-    private JEditorPane linkArea;
+    private final JEditorPane documentArea;
+    private final JEditorPane linkArea;
 
-    private TitledBorder documentAreaBorder;
+    private final TitledBorder documentAreaBorder;
 
-    private JTextField displayLineNumField;
-    private JButton setDisplayLineNumButton;
+    private final JTextField displayLineNumField;
+    private final JButton setDisplayLineNumButton;
 
-    private JTextField searchField;
-    private JButton addTermButton;
-    private JRadioButton compoundWordRadioButton;
-    private JRadioButton nounRadioButton;
-    private JRadioButton verbRadioButton;
-    private JRadioButton otherRadioButton;
+    private final JTextField searchField;
+    private final JButton addTermButton;
+    private final JRadioButton compoundWordRadioButton;
+    private final JRadioButton nounRadioButton;
+    private final JRadioButton verbRadioButton;
+    private final JRadioButton otherRadioButton;
 
-    private JTable wordInfoTable;
+    private final JTable wordInfoTable;
     private DefaultTableModel wordInfoTableModel;
 
     private static final String CORRECT_WORD_LINK_COLOR = "#325eff";
@@ -169,7 +169,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         add(southPanel, BorderLayout.SOUTH);
     }
 
-    public void setWordInfoTableModel() {
+    private void setWordInfoTableModel() {
         String WORD = Translator.getTerm("TermLabel");
         String POS = Translator.getTerm("POSLabel");
         String TF = Translator.getTerm("TFLabel");
@@ -188,7 +188,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
     private final Highlighter.HighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
             Color.YELLOW);
 
-    public void removeHighlights(JTextComponent jtc) {
+    private void removeHighlights(JTextComponent jtc) {
         Highlighter highlight = jtc.getHighlighter();
         Highlighter.Highlight[] highlights = highlight.getHighlights();
         for (Highlighter.Highlight highlight1 : highlights) {
@@ -198,7 +198,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         }
     }
 
-    public void setHighlight(JTextComponent jtc, String pattern) {
+    private void setHighlight(JTextComponent jtc, String pattern) {
         removeHighlights(jtc);
         try {
             Highlighter highlight = jtc.getHighlighter();
@@ -750,7 +750,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
     private Document selectedDoc = null;
     private DODDLE_POS selectedPOS = null;
 
-    public String getHighlightedString() {
+    private String getHighlightedString() {
         if (selectedDoc == null) {
             return "";
         }
@@ -785,7 +785,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         setLinkArea();
     }
 
-    public void setDocumentArea() {
+    private void setDocumentArea() {
         if (inputDocumentListModel == null) {
             return;
         }
@@ -808,7 +808,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         }
     }
 
-    public void setLinkArea() {
+    private void setLinkArea() {
         StringBuilder linkBuilder = new StringBuilder();
         linkBuilder.append("<html><body>");
         if (selectedDoc != null) {

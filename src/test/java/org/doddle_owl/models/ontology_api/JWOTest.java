@@ -5,13 +5,13 @@ import org.doddle_owl.utils.OWLOntologyManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JWOTest {
+class JWOTest {
 
     @BeforeEach
     void setUp() {
@@ -27,12 +27,7 @@ public class JWOTest {
     @Test
     void getJWOConcept() {
         String expected = "大学";
-        String actual = null;
-        try {
-            actual = OWLOntologyManager.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", "UTF-8")).getWord();
-            assertEquals(expected, actual);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        String actual = OWLOntologyManager.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", StandardCharsets.UTF_8)).getWord();
+        assertEquals(expected, actual);
     }
 }

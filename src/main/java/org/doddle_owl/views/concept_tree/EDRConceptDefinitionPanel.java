@@ -44,19 +44,19 @@ import java.util.Set;
 /**
  * @author Takeshi Morita
  */
-public class EDRConceptDefinitionPanel extends JPanel implements ActionListener {
+class EDRConceptDefinitionPanel extends JPanel implements ActionListener {
 
-    private JList domainList;
-    private DefaultListModel domainListModel;
-    private JList rangeList;
-    private DefaultListModel rangeListModel;
-    private JButton addDomainButton;
-    private JButton deleteDomainButton;
-    private JButton addRangeButton;
-    private JButton deleteRangeButton;
+    private final JList domainList;
+    private final DefaultListModel domainListModel;
+    private final JList rangeList;
+    private final DefaultListModel rangeListModel;
+    private final JButton addDomainButton;
+    private final JButton deleteDomainButton;
+    private final JButton addRangeButton;
+    private final JButton deleteRangeButton;
 
     private static ConceptSelectionDialog conceptSelectionDialog;
-    private DODDLEProjectPanel project;
+    private final DODDLEProjectPanel project;
 
     public EDRConceptDefinitionPanel(DODDLEProjectPanel p) {
         project = p;

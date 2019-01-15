@@ -34,7 +34,7 @@ import java.io.File;
  */
 public class OpenRecentProjectAction extends OpenProjectAction {
 
-    private File projectFile;
+    private final File projectFile;
 
     public OpenRecentProjectAction(String project, DODDLE_OWL ddl) {
         this.title = Translator.getTerm("OpenProjectAction");

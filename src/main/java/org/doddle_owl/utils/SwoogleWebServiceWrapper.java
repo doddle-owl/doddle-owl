@@ -49,7 +49,7 @@ public class SwoogleWebServiceWrapper {
 
     private static final int MAX_CNT = 5;
 
-    private static Set<Resource> literalResourceSet = new HashSet<>();
+    private static final Set<Resource> literalResourceSet = new HashSet<>();
 
     static {
         literalResourceSet.add(ResourceFactory
@@ -72,14 +72,14 @@ public class SwoogleWebServiceWrapper {
     private static List<String> swoogleQueryList;
 
     private static NameSpaceTable nsTable;
-    private static SwoogleWebServiceData swoogleWebServiceData = new SwoogleWebServiceData();
+    private static final SwoogleWebServiceData swoogleWebServiceData = new SwoogleWebServiceData();
 
     private static final String SWOOGLE_WEB_SERVICE_URI = " http://sparql.cs.umbc.edu:80/swoogle31/q?";
     private static final String SWOOGLE_WEB_SERVICE_KEY = "&key=demo";
-    public static String SWOOGLE_QUERY_RESULTS_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "swoogle_query_results_tmp";
-    private static String SWOOGLE_QUERY_RESULT_LIST_FILE = "swoogle_query_files.txt";
-    public static String OWL_ONTOLOGIES_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "owl_ontologies";
-    private static String OWL_ONTOLOGY_RESULT_LIST_FILE = "owl_files.txt";
+    private static final String SWOOGLE_QUERY_RESULTS_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "swoogle_query_results_tmp";
+    private static final String SWOOGLE_QUERY_RESULT_LIST_FILE = "swoogle_query_files.txt";
+    private static final String OWL_ONTOLOGIES_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "owl_ontologies";
+    private static final String OWL_ONTOLOGY_RESULT_LIST_FILE = "owl_files.txt";
 
     private static final String ONTOLOGY_URL = "ontology_url";
     private static final String ONTOLOGY_RANK = "ontoRank";
@@ -416,7 +416,7 @@ public class SwoogleWebServiceWrapper {
     /**
      * 獲得したオントロジーの中から入力単語に関連するクラス及びプロパティを抽出する
      */
-    public static void setSWTSet(Set<String> inputWordSet) {
+    private static void setSWTSet(Set<String> inputWordSet) {
         for (String uri : swoogleWebServiceData.getRefOntologyURISet()) {
             ReferenceOWLOntology refOnt = swoogleWebServiceData.getRefOntology(uri);
             for (String inputWord : inputWordSet) {
@@ -442,7 +442,7 @@ public class SwoogleWebServiceWrapper {
      *
      * @param inputWord
      */
-    public static void searchOntology(String inputWord) {
+    private static void searchOntology(String inputWord) {
         // demo以外のキーがもらえば検索結果数に応じて獲得するオントロジーの数を決められる
         // とりあえず上位10個のみを対象とする
         for (int i = 1; i < 10; i += 10) {
@@ -473,8 +473,8 @@ public class SwoogleWebServiceWrapper {
         }
     }
 
-    private static Set<String> classWordSet = new HashSet<>();
-    private static Set<String> propertyWordSet = new HashSet<>();
+    private static final Set<String> classWordSet = new HashSet<>();
+    private static final Set<String> propertyWordSet = new HashSet<>();
 
     /**
      * 入力単語に関連するSWTを獲得
@@ -483,7 +483,7 @@ public class SwoogleWebServiceWrapper {
      * @param inputWord
      * @param type
      */
-    public static void searchTerms(int maxCnt, boolean isSearchLabel, String inputWord, String type) {
+    private static void searchTerms(int maxCnt, boolean isSearchLabel, String inputWord, String type) {
         QueryExecution qexec = null;
         try {
             String searchString;
@@ -564,7 +564,7 @@ public class SwoogleWebServiceWrapper {
     /**
      * 入力したクラスを定義域とするプロパティを獲得
      */
-    public static void searchListPropertiesOfaDomainClass(String domainURI) {
+    private static void searchListPropertiesOfaDomainClass(String domainURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_c2p&searchString="
                 + URLEncoder.encode(domainURI, StandardCharsets.UTF_8);
         DODDLE_OWL.getLogger().info("Search List Properties Of a Domain Class: " + domainURI);
@@ -575,7 +575,7 @@ public class SwoogleWebServiceWrapper {
     /**
      * 入力したクラスを値域とするプロパティを獲得
      */
-    public static void searchListPropertiesOfaRangeClass(String rangeURI) {
+    private static void searchListPropertiesOfaRangeClass(String rangeURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_range_c2p&searchString="
                 + URLEncoder.encode(rangeURI, StandardCharsets.UTF_8);
         DODDLE_OWL.getLogger().info("Search List Properties Of a Range Class: " + rangeURI);
@@ -614,7 +614,7 @@ public class SwoogleWebServiceWrapper {
     /**
      * プロパティのURIを入力として，そのプロパティの定義域を獲得
      */
-    public static void searchListDomainClassOfaProperty(String propertyURI) {
+    private static void searchListDomainClassOfaProperty(String propertyURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_p2c&searchString="
                 + URLEncoder.encode(propertyURI, StandardCharsets.UTF_8);
         DODDLE_OWL.getLogger().info("Search List Domain Class Of a Property: " + propertyURI);
@@ -625,7 +625,7 @@ public class SwoogleWebServiceWrapper {
     /**
      * プロパティのURIを入力として，そのプロパティの値域を獲得
      */
-    public static void searchListRangeClassOfaProperty(String propertyURI) {
+    private static void searchListRangeClassOfaProperty(String propertyURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_range_p2c&searchString="
                 + URLEncoder.encode(propertyURI, StandardCharsets.UTF_8);
         DODDLE_OWL.getLogger().info("Search List Range Class Of a Property: " + propertyURI);
@@ -636,7 +636,7 @@ public class SwoogleWebServiceWrapper {
     /**
      * SWTが定義されているオントロジーを獲得
      */
-    public static void searchListDocumentsUsingTerm(String swtURI) {
+    private static void searchListDocumentsUsingTerm(String swtURI) {
         QueryExecution qexec = null;
         try {
             String queryTypeAndSearchString = "queryType=rel_swt_swd&searchString="
@@ -677,7 +677,7 @@ public class SwoogleWebServiceWrapper {
     /**
      * SWDのメタデータを獲得
      */
-    public static void searchDigestSemanticWebDocument(String swdURI) {
+    private static void searchDigestSemanticWebDocument(String swdURI) {
         QueryExecution qexec = null;
         try {
             String queryTypeAndSearchString = "queryType=digest_swd&searchString="
@@ -799,7 +799,7 @@ public class SwoogleWebServiceWrapper {
         DODDLE_OWL.getLogger().info(level + " Relation cnt: " + swoogleWebServiceData.getAllRelationCount());
     }
 
-    public static void refinePropertiesAndRegionSet() {
+    private static void refinePropertiesAndRegionSet() {
         swoogleWebServiceData.addInheritedRegionSet();
         printInfo(4);
         swoogleWebServiceData.removeUnnecessaryRegionSet();

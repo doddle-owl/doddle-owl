@@ -27,9 +27,9 @@ package org.doddle_owl.task_analyzer;
  * @author Takeshi Morita
  */
 public class Morpheme {
-	private String surface;
+	private final String surface;
 	private String kana;
-	private String basic;
+	private final String basic;
 	private String pos;
 
 	public static final String NOUN = "名詞-";

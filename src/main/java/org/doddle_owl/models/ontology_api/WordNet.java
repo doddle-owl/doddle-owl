@@ -37,7 +37,6 @@ import org.doddle_owl.utils.Translator;
 
 import javax.swing.*;
 import java.util.*;
-import java.util.logging.Level;
 
 /**
  * @author shigeta
@@ -70,7 +69,7 @@ public class WordNet {
         return indexWord;
     }
 
-    private Set<String> adverbConceptSet = new HashSet<>();
+    private final Set<String> adverbConceptSet = new HashSet<>();
 
     private boolean isAdverb(String concept) {
         if (adverbConceptSet.contains(concept)) {
@@ -94,7 +93,7 @@ public class WordNet {
                 || concept.startsWith("7") || concept.startsWith("8") || concept.startsWith("9")
                 || concept.startsWith("0")) {
             return true;
-        } else if (concept.equals("one") || concept.equals("two") || concept.equals("three")
+        } else return concept.equals("one") || concept.equals("two") || concept.equals("three")
                 || concept.equals("four") || concept.equals("five") || concept.equals("six")
                 || concept.equals("seven") || concept.equals("eight") || concept.equals("nine")
                 || concept.equals("ten") || concept.equals("eleven") || concept.equals("twelve")
@@ -105,11 +104,7 @@ public class WordNet {
                 || concept.equals("thirty") || concept.equals("forty") || concept.equals("fifty")
                 || concept.equals("sixty") || concept.equals("seventy") || concept.equals("eighty")
                 || concept.equals("ninety") || concept.equals("hundred")
-                || concept.equals("thousand")) {
-            return true;
-        } else {
-            return false;
-        }
+                || concept.equals("thousand");
     }
 
     private boolean isVerb(String concept) {
@@ -230,7 +225,7 @@ public class WordNet {
         return pathToRootSet;
     }
 
-    private static Map<String, Concept> idConceptMap = new HashMap<>();
+    private static final Map<String, Concept> idConceptMap = new HashMap<>();
 
     public static Concept getWNConcept(String id) {
         if (dictionary == null) {

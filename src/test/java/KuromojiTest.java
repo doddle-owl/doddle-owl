@@ -3,7 +3,7 @@ import com.atilika.kuromoji.ipadic.Tokenizer;
 
 import java.util.List;
 
-public class KuromojiTest {
+class KuromojiTest {
     public static void main(String[] args) {
         Tokenizer tokenizer = new Tokenizer();
         List<Token> tokens = tokenizer.tokenize("領域オントロジー構築支援環境");

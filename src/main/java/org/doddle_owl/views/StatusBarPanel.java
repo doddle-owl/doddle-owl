@@ -32,7 +32,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
-import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
@@ -47,9 +46,9 @@ public class StatusBarPanel extends Panel implements ActionListener {
     private int maxValue;
     private int currentValue;
 
-    private JTextField statusField;
-    private JButton cancelButton;
-    private JProgressBar progressBar;
+    private final JTextField statusField;
+    private final JButton cancelButton;
+    private final JProgressBar progressBar;
     private static final Color STATUS_BAR_COLOR = new Color(240, 240, 240);
 
     private Thread timer;
@@ -188,7 +187,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
         progressBar.paintImmediately(progressBar.getVisibleRect());
     }
 
-    public void setValue() {
+    private void setValue() {
         progressBar.setValue(currentValue);
     }
 

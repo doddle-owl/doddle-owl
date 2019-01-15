@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class WordNetTest {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         WordNet.initWordNetDictionary();
     }
 

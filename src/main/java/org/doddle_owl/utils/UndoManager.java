@@ -43,13 +43,11 @@ public class UndoManager {
     
     private int index;    
     private Command lastCommand;
-    private List<Command> commandList;
-    private LoadOntologyAction loadOntologyAction;
-    private SaveOntologyAction saveOntologyAction;
-    private DODDLEProjectPanel project;
-    
-    private static int MAX_COMMAND_CNT = 50;
-    
+    private final List<Command> commandList;
+    private final LoadOntologyAction loadOntologyAction;
+    private final SaveOntologyAction saveOntologyAction;
+    private final DODDLEProjectPanel project;
+
     public UndoManager(DODDLEProjectPanel project) {
         index = -1;
         commandList = new ArrayList<>();
@@ -69,9 +67,10 @@ public class UndoManager {
     public void addCommand(Concept parentConcept, Concept targetConcept, String treeType) {
         ++index;
         commandList.add(index, new Command(parentConcept, targetConcept, treeType));
-        if (commandList.size() == MAX_COMMAND_CNT+1) {
+        int MAX_COMMAND_CNT = 50;
+        if (commandList.size() == MAX_COMMAND_CNT +1) {
             commandList.remove(0);
-            index = MAX_COMMAND_CNT-1;
+            index = MAX_COMMAND_CNT -1;
         } else if (index+1 < commandList.size()){ // 新たなCommandを追加したら，redoはできなくなる
             for (int i = index+1; i < commandList.size(); i++) {
                 commandList.remove(i);
@@ -79,7 +78,7 @@ public class UndoManager {
         }
     }
 
-    public void loadFiles() {
+    private void loadFiles() {
         loadOntologyAction.loadOWLOntology(project, lastCommand.getOntFile());
         ClassTreeConstructionPanel classPanel = project.getConstructClassPanel();
         PropertyTreeConstructionPanel propertyPanel = project.getConstructPropertyPanel();
@@ -136,38 +135,38 @@ public class UndoManager {
     }
     
     class Command {
-        private String treeType;
-        private Concept parentConcept;
-        private Concept targetConcept;
+        private final String treeType;
+        private final Concept parentConcept;
+        private final Concept targetConcept;
         private File ontFile;
         private File classTRAFile;
         private File propertyTRAFile;
         
-        public String getTreeType() {
+        String getTreeType() {
             return treeType;
         }
 
-        public File getClassTRAFile() {
+        File getClassTRAFile() {
             return classTRAFile;
         }
         
-        public File getPropertyTRAFile() {
+        File getPropertyTRAFile() {
             return propertyTRAFile;
         }
         
-        public File getOntFile() {
+        File getOntFile() {
             return ontFile;
         }
 
-        public Concept getParentConcept() {
+        Concept getParentConcept() {
             return parentConcept;
         }
 
-        public Concept getTargetConcept() {
+        Concept getTargetConcept() {
             return targetConcept;
         }
 
-        public Command(Concept p, Concept t, String type) {
+        Command(Concept p, Concept t, String type) {
             treeType = type;
             parentConcept = p;
             targetConcept = t;

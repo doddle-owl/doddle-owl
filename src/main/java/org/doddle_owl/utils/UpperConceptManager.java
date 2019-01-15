@@ -79,26 +79,32 @@ public class UpperConceptManager {
             String ns = Utils.getNameSpace(uri);
             String id = Utils.getLocalName(uri);
             upperURISet.add(uri);
-            if (ns.equals(DODDLEConstants.EDR_URI)) {
-                for (List<String> path : EDRTree.getEDRTree().getURIPathToRootSet(id)) {
-                    upperURISet.addAll(path);
-                }
-            } else if (ns.equals(DODDLEConstants.EDRT_URI)) {
-                for (List<String> path : EDRTree.getEDRTTree().getURIPathToRootSet(id)) {
-                    upperURISet.addAll(path);
-                }
-            } else if (ns.equals(DODDLEConstants.WN_URI)) {
-                for (List<String> path : WordNet.getURIPathToRootSet(Long.valueOf(id))) {
-                    upperURISet.addAll(path);
-                }
-            } else if (ns.equals(DODDLEConstants.JPN_WN_URI)) {
-                for (List<String> path : JaWordNetTree.getJPNWNTree().getURIPathToRootSet(id)) {
-                    upperURISet.addAll(path);
-                }
-            } else {
-                for (List<String> path : OWLOntologyManager.getURIPathToRootSet(uri)) {
-                    upperURISet.addAll(path);
-                }
+            switch (ns) {
+                case DODDLEConstants.EDR_URI:
+                    for (List<String> path : EDRTree.getEDRTree().getURIPathToRootSet(id)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                case DODDLEConstants.EDRT_URI:
+                    for (List<String> path : EDRTree.getEDRTTree().getURIPathToRootSet(id)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                case DODDLEConstants.WN_URI:
+                    for (List<String> path : WordNet.getURIPathToRootSet(Long.valueOf(id))) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                case DODDLEConstants.JPN_WN_URI:
+                    for (List<String> path : JaWordNetTree.getJPNWNTree().getURIPathToRootSet(id)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                default:
+                    for (List<String> path : OWLOntologyManager.getURIPathToRootSet(uri)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
             }
         }
         Set<String> upperConceptLabelSet = new HashSet<>();

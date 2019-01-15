@@ -41,14 +41,14 @@ import java.util.Map;
  */
 public class ConceptTreeNode extends DefaultMutableTreeNode implements Comparable {
 
-    private String uri;
+    private final String uri;
     private boolean isInputConcept;
     private boolean isUserConcept;
     private boolean isMultipleInheritance;
 
     private List<List<Concept>> trimmedConceptList;
 
-    private DODDLEProjectPanel project;
+    private final DODDLEProjectPanel project;
 
     public ConceptTreeNode(Concept c, DODDLEProjectPanel p) {
         super();

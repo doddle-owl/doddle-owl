@@ -38,12 +38,11 @@ import java.io.File;
  */
 public class ReferenceOntologySelectionPanel extends JPanel implements ActionListener {
 
-    private JButton nextTabButton;
-    private NameSpaceTable nsTable;
+    private final NameSpaceTable nsTable;
 
     private SwoogleWebServiceWrapperPanel swoogleWebServiceWrapperPanel;
-    private GeneralOntologySelectionPanel generalOntologySelectionPanel;
-    private OWLOntologySelectionPanel owlOntologySelectionPanel;
+    private final GeneralOntologySelectionPanel generalOntologySelectionPanel;
+    private final OWLOntologySelectionPanel owlOntologySelectionPanel;
 
     public void initialize() {
         swoogleWebServiceWrapperPanel.initialize();
@@ -60,7 +59,7 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
                     owlOntologySelectionPanel);
         }
 
-        nextTabButton = new JButton(Translator.getTerm("DocumentSelectionPanel"));
+        JButton nextTabButton = new JButton(Translator.getTerm("DocumentSelectionPanel"));
         nextTabButton.addActionListener(this);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());

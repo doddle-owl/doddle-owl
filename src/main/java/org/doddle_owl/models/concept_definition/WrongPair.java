@@ -27,8 +27,8 @@ package org.doddle_owl.models.concept_definition;
  * @author Takeshi Morita
  */
 public class WrongPair {
-    private String domain;
-    private String range;
+    private final String domain;
+    private final String range;
 
     public WrongPair(String d, String r) {
         domain = d;

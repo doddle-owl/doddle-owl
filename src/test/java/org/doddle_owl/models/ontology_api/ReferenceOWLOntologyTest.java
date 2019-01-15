@@ -52,7 +52,7 @@ class ReferenceOWLOntologyTest {
     }
 
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
             NameSpaceTable nsTable = new NameSpaceTable();

@@ -29,13 +29,13 @@ import java.util.Map.*;
 /**
  * @author Takeshi Morita
  */
-public class Sentence {
+class Sentence {
 
     private List<Segment> segmentList;
-    private Map<Segment, PrimitiveTask> segmentTaskDescriptionMap;
-    private Map<String, Integer> compoundWordCountMap;
-    private Map<String, Integer> compoundWordWithNokakuCountMap;
-    private Map<Segment, Set<Segment>> segmentMap;
+    private final Map<Segment, PrimitiveTask> segmentTaskDescriptionMap;
+    private final Map<String, Integer> compoundWordCountMap;
+    private final Map<String, Integer> compoundWordWithNokakuCountMap;
+    private final Map<Segment, Set<Segment>> segmentMap;
 
     public Sentence() {
         segmentList = new ArrayList<>();

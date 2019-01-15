@@ -39,7 +39,7 @@ import java.nio.file.Paths;
 /**
  * @author Takeshi Morita
  */
-public class SaveMatchedTermListAction extends AbstractAction {
+class SaveMatchedTermListAction extends AbstractAction {
 
     public SaveMatchedTermListAction(String title) {
         super(title);

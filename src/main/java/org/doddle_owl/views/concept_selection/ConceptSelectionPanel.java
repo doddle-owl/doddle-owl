@@ -95,8 +95,6 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     private TitledBorder exactMatchTermJListTitle;
     private TitledBorder partialMatchTermJListTitle;
-    private JPanel exatctMatchTermListPanel;
-    private JPanel partialMatchTermListPanel;
 
     private JTextField searchTermField;
     private JButton searchTermButton;
@@ -105,8 +103,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private Set<TermModel> exactMatchTermModelSet;
     private JList partialMatchTermJList; // 部分照合した単語リスト
     private Set<TermModel> partialMatchTermModelSet;
-    private JList conceptSetJList;
-    private UndefinedTermListPanel undefinedTermListPanel;
+    private final JList conceptSetJList;
+    private final UndefinedTermListPanel undefinedTermListPanel;
 
     private JCheckBox exactMatchAmbiguityCntCheckBox;
     private JCheckBox exactMatchIsSyncCheckBox;
@@ -118,38 +116,35 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private JCheckBox partialMatchShowOnlyRelatedCompoundWordsCheckBox;
 
     private Concept selectedConcept;
-    private LiteralPanel labelPanel;
-    private LiteralPanel descriptionPanel;
+    private final LiteralPanel labelPanel;
+    private final LiteralPanel descriptionPanel;
 
-    private JPanel constructTreeOptionPanel;
-    private JPanel partialMatchConstructTreeOptionPanel;
-    private JPanel exactMatchConstructTreeOptionPanel;
-    private JPanel systemAddedPerfectlyMatchedConstructTreeOptionPanel;
+    private final JPanel constructTreeOptionPanel;
+    private final JPanel partialMatchConstructTreeOptionPanel;
+    private final JPanel exactMatchConstructTreeOptionPanel;
+    private final JPanel systemAddedPerfectlyMatchedConstructTreeOptionPanel;
 
-    private JCheckBox replaceSubClassesCheckBox;
+    private final JCheckBox replaceSubClassesCheckBox;
 
-    private JRadioButton addAsSubConceptRadioButton;
-    private JRadioButton addAsSameConceptRadioButton;
+    private final JRadioButton addAsSubConceptRadioButton;
+    private final JRadioButton addAsSameConceptRadioButton;
 
-    private JList highlightPartJList;
-    private JEditorPane documentArea;
-    private JCheckBox highlightInputTermCheckBox;
-    private JCheckBox showAroundConceptTreeCheckBox;
-    private JTree aroundConceptTree;
-    private TreeModel aroundConceptTreeModel;
+    private final JList highlightPartJList;
+    private final JEditorPane documentArea;
+    private final JCheckBox highlightInputTermCheckBox;
+    private final JCheckBox showAroundConceptTreeCheckBox;
+    private final JTree aroundConceptTree;
 
-    private InputModule inputModule;
-    private ClassTreeConstructionPanel constructClassPanel;
-    private PropertyTreeConstructionPanel constructPropertyPanel;
+    private final InputModule inputModule;
+    private final ClassTreeConstructionPanel constructClassPanel;
+    private final PropertyTreeConstructionPanel constructPropertyPanel;
 
-    private JButton constructNounTreeButton;
-    private JButton constructNounAndVerbTreeButton;
-    private ConstructionTypePanel constructionTypePanel;
-    private PerfectlyMatchedOptionPanel perfectlyMatchedOptionPanel;
-    private PartiallyMatchedOptionPanel partiallyMatchedOptionPanel;
+    private final ConstructionTypePanel constructionTypePanel;
+    private final PerfectlyMatchedOptionPanel perfectlyMatchedOptionPanel;
+    private final PartiallyMatchedOptionPanel partiallyMatchedOptionPanel;
     // private JButton showConceptDescriptionButton;
 
-    private AutomaticDisAmbiguationAction automaticDisAmbiguationAction;
+    private final AutomaticDisAmbiguationAction automaticDisAmbiguationAction;
     private ConstructTreeAction constructNounTreeAction;
     private ConstructTreeAction constructNounAndVerbTreeAction;
 
@@ -160,12 +155,12 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     private DocumentSelectionPanel docSelectionPanel;
 
-    private DODDLEProjectPanel project;
+    private final DODDLEProjectPanel project;
 
     private boolean isConstructNounAndVerbTree;
 
     public static Concept nullConcept;
-    public static EvalConcept nullEvalConcept = new EvalConcept(null, -1);
+    private static final EvalConcept nullEvalConcept = new EvalConcept(null, -1);
 
 
     public void initialize() {
@@ -294,7 +289,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 Translator.getTerm("ShowConceptTreeCheckBox"), true);
         showAroundConceptTreeCheckBox.addActionListener(this);
 
-        aroundConceptTreeModel = new DefaultTreeModel(null);
+        TreeModel aroundConceptTreeModel = new DefaultTreeModel(null);
         aroundConceptTree = new JTree(aroundConceptTreeModel);
         aroundConceptTree.addTreeSelectionListener(this);
         aroundConceptTree.setEditable(false);
@@ -320,8 +315,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         perfectlyMatchedOptionPanel = new PerfectlyMatchedOptionPanel();
         partiallyMatchedOptionPanel = new PartiallyMatchedOptionPanel();
 
-        constructNounTreeButton = new JButton(new ConstructNounTreeAction());
-        constructNounAndVerbTreeButton = new JButton(new ConstructNounAndVerbTreeAction());
+        JButton constructNounTreeButton = new JButton(new ConstructNounTreeAction());
+        JButton constructNounAndVerbTreeButton = new JButton(new ConstructNounAndVerbTreeAction());
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
         buttonPanel.add(constructNounTreeButton);
@@ -391,9 +386,9 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     class EditPanel extends JPanel implements ActionListener {
-        private JTextField inputTermField;
-        private JButton addInputTermButton;
-        private JButton removeInputTermButton;
+        private final JTextField inputTermField;
+        private final JButton addInputTermButton;
+        private final JButton removeInputTermButton;
 
         EditPanel() {
             inputTermField = new JTextField();
@@ -461,8 +456,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     public class ConstructionTypePanel extends JPanel {
-        private JRadioButton newButton;
-        private JRadioButton addButton;
+        private final JRadioButton newButton;
+        private final JRadioButton addButton;
 
         ConstructionTypePanel() {
             newButton = new JRadioButton(Translator.getTerm("NewRadioButton"), true);
@@ -482,9 +477,9 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     public class PerfectlyMatchedOptionPanel extends JPanel implements ActionListener {
-        private JCheckBox constructionBox;
-        private JCheckBox trimmingBox;
-        private JCheckBox includeRefOntConceptLabelBox;
+        private final JCheckBox constructionBox;
+        private final JCheckBox trimmingBox;
+        private final JCheckBox includeRefOntConceptLabelBox;
 
         PerfectlyMatchedOptionPanel() {
             constructionBox = new JCheckBox(Translator.getTerm("ConstructionCheckBox"), true);
@@ -504,11 +499,11 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             }
         }
 
-        public void setConstruction(boolean t) {
+        void setConstruction(boolean t) {
             constructionBox.setSelected(t);
         }
 
-        public void setTrimming(boolean t) {
+        void setTrimming(boolean t) {
             trimmingBox.setSelected(t);
         }
 
@@ -524,16 +519,16 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             return trimmingBox.isSelected();
         }
 
-        public boolean isIncludeRefOntConceptLabel() {
+        boolean isIncludeRefOntConceptLabel() {
             return includeRefOntConceptLabelBox.isSelected();
         }
     }
 
     public class PartiallyMatchedOptionPanel extends JPanel implements ActionListener {
-        private JCheckBox constructionBox;
-        private JCheckBox trimmingBox;
-        private JCheckBox addAbstractConceptBox;
-        private JTextField abstractConceptChildNodeNumField;
+        private final JCheckBox constructionBox;
+        private final JCheckBox trimmingBox;
+        private final JCheckBox addAbstractConceptBox;
+        private final JTextField abstractConceptChildNodeNumField;
 
         PartiallyMatchedOptionPanel() {
             constructionBox = new JCheckBox(Translator.getTerm("ConstructionCheckBox"), true);
@@ -560,16 +555,16 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             addAbstractConceptBox.setEnabled(t);
         }
 
-        public void setConstruction(boolean t) {
+        void setConstruction(boolean t) {
             constructionBox.setSelected(t);
             constructionBoxAction(t);
         }
 
-        public void setTrimming(boolean t) {
+        void setTrimming(boolean t) {
             trimmingBox.setSelected(t);
         }
 
-        public void setAddAbstractConcept(boolean t) {
+        void setAddAbstractConcept(boolean t) {
             addAbstractConceptBox.setSelected(t);
         }
 
@@ -602,12 +597,12 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     private JPanel getTermListPanel() {
-        exatctMatchTermListPanel = getExatctMatchTermListPanel();
-        partialMatchTermListPanel = getPartialMatchTermListPanel();
+        JPanel exactMatchTermListPanel = getExactMatchTermListPanel();
+        JPanel partialMatchTermListPanel = getPartialMatchTermListPanel();
 
         var termListTabbedPane = new JTabbedPane();
         termListTabbedPane.addTab(Translator.getTerm("ExactMatchTermListPanel"), null,
-                exatctMatchTermListPanel);
+                exactMatchTermListPanel);
         termListTabbedPane.addTab(Translator.getTerm("PartialMatchTermListPanel"), null,
                 partialMatchTermListPanel);
 
@@ -636,7 +631,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return searchPanel;
     }
 
-    private JPanel getExatctMatchTermListPanel() {
+    private JPanel getExactMatchTermListPanel() {
         exactMatchTermJList = new JList();
         exactMatchTermJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         exactMatchTermJList.addListSelectionListener(this);
@@ -713,7 +708,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return partialMatchTermModelSet.size();
     }
 
-    public int getPerfectlyMatchedTermCnt(boolean isSystemAdded) {
+    private int getPerfectlyMatchedTermCnt(boolean isSystemAdded) {
         if (exactMatchTermModelSet == null) {
             return 0;
         }
@@ -1367,18 +1362,23 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                         && DODDLE_OWL.GENERAL_ONTOLOGY_NAMESPACE_SET.contains(ec.getConcept()
                         .getNameSpace())) {
                     pathToRootSet.clear();
-                    if (ec.getConcept().getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-                        pathToRootSet.addAll(EDRTree.getEDRTree().getConceptPathToRootSet(
-                                ec.getConcept().getLocalName()));
-                    } else if (ec.getConcept().getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-                        pathToRootSet.addAll(EDRTree.getEDRTTree().getConceptPathToRootSet(
-                                ec.getConcept().getLocalName()));
-                    } else if (ec.getConcept().getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                        pathToRootSet.addAll(WordNet.getPathToRootSet(Long.valueOf(ec.getConcept()
-                                .getLocalName())));
-                    } else if (ec.getConcept().getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-                        pathToRootSet.addAll(JaWordNetTree.getJPNWNTree().getConceptPathToRootSet(
-                                ec.getConcept().getLocalName()));
+                    switch (ec.getConcept().getNameSpace()) {
+                        case DODDLEConstants.EDR_URI:
+                            pathToRootSet.addAll(EDRTree.getEDRTree().getConceptPathToRootSet(
+                                    ec.getConcept().getLocalName()));
+                            break;
+                        case DODDLEConstants.EDRT_URI:
+                            pathToRootSet.addAll(EDRTree.getEDRTTree().getConceptPathToRootSet(
+                                    ec.getConcept().getLocalName()));
+                            break;
+                        case DODDLEConstants.WN_URI:
+                            pathToRootSet.addAll(WordNet.getPathToRootSet(Long.valueOf(ec.getConcept()
+                                    .getLocalName())));
+                            break;
+                        case DODDLEConstants.JPN_WN_URI:
+                            pathToRootSet.addAll(JaWordNetTree.getJPNWNTree().getConceptPathToRootSet(
+                                    ec.getConcept().getLocalName()));
+                            break;
                     }
                 }
             }
@@ -1396,9 +1396,9 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private final ImageIcon bestMatchIcon = Utils.getImageIcon("class_best_match_icon.png");
     private final ImageIcon ConceptNodeIcon = Utils.getImageIcon("class_sin_icon.png");
 
-    public class AroundTreeCellRenderer extends DefaultTreeCellRenderer {
+    class AroundTreeCellRenderer extends DefaultTreeCellRenderer {
 
-        public AroundTreeCellRenderer() {
+        AroundTreeCellRenderer() {
             setOpaque(true);
         }
 
@@ -1626,7 +1626,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     class ConceptDescriptionFrame extends JFrame {
 
-        private ConceptDescriptionUI conceptDescrptionPanel;
+        private final ConceptDescriptionUI conceptDescrptionPanel;
 
         ConceptDescriptionFrame() {
             setBounds(50, 50, 800, 600);
@@ -1648,7 +1648,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
         private Set<String> termSet;
 
-        public AutomaticDisAmbiguationAction(String title) {
+        AutomaticDisAmbiguationAction(String title) {
             super(title);
         }
 
@@ -1665,12 +1665,12 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             return conceptEvalConceptMap;
         }
 
-        private void calcEvalValueUsingSpreadActivatingAlgorithm(int i, Concept c1,
-                                                                 EvalConcept ec1, Object[] allDisambiguationCandidate,
+        private void calcEvalValueUsingSpreadActivatingAlgorithm(int i,
+                                                                 Object[] allDisambiguationCandidate,
                                                                  Map<Concept, EvalConcept> conceptEvalConceptMap) {
             for (int j = i + 1; j < allDisambiguationCandidate.length; j++) {
-                c1 = (Concept) allDisambiguationCandidate[i];
-                ec1 = conceptEvalConceptMap.get(c1);
+                Concept c1 = (Concept) allDisambiguationCandidate[i];
+                EvalConcept ec1 = conceptEvalConceptMap.get(c1);
                 Concept c2 = (Concept) allDisambiguationCandidate[j];
                 EvalConcept ec2 = conceptEvalConceptMap.get(c2);
                 double ev = 0;
@@ -1705,7 +1705,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         /**
          * 多義性のある概念リストと入力語彙を入力として，評価値つき概念リストを返すメソッド
          */
-        public void setTermEvalConceptSetMap() {
+        void setTermEvalConceptSetMap() {
             if (termModelSet == null) {
                 return;
             }
@@ -1725,7 +1725,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 Concept c = (Concept) allDisambiguationCandidate[i];
                 EvalConcept ec = conceptEvalConceptMap.get(c);
                 if (OptionDialog.isUsingSpreadActivatingAlgorithm()) {
-                    calcEvalValueUsingSpreadActivatingAlgorithm(i, c, ec,
+                    calcEvalValueUsingSpreadActivatingAlgorithm(i,
                             allDisambiguationCandidate, conceptEvalConceptMap);
                 }
                 calcEvalValueUsingSupSubSibConcepts(c, ec);
@@ -1755,38 +1755,51 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
         private Set<Set<String>> getSiblingConceptSet(Concept c) {
             Set<Set<String>> siblingConceptSet = null;
-            if (c.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-                siblingConceptSet = EDRTree.getEDRTree().getSiblingURISet(c.getURI());
-            } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-                siblingConceptSet = EDRTree.getEDRTTree().getSiblingURISet(c.getURI());
-            } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                siblingConceptSet = WordNet.getSiblingConceptSet(Long.valueOf(c.getLocalName()));
+            switch (c.getNameSpace()) {
+                case DODDLEConstants.EDR_URI:
+                    siblingConceptSet = EDRTree.getEDRTree().getSiblingURISet(c.getURI());
+                    break;
+                case DODDLEConstants.EDRT_URI:
+                    siblingConceptSet = EDRTree.getEDRTTree().getSiblingURISet(c.getURI());
+                    break;
+                case DODDLEConstants.WN_URI:
+                    siblingConceptSet = WordNet.getSiblingConceptSet(Long.valueOf(c.getLocalName()));
+                    break;
             }
             return siblingConceptSet;
         }
 
         private Set<Set<String>> getSubConceptSet(Concept c) {
             Set<Set<String>> subConceptSet = null;
-            if (c.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-                subConceptSet = EDRTree.getEDRTree().getSubURISet(c.getURI());
-            } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-                subConceptSet = EDRTree.getEDRTTree().getSubURISet(c.getURI());
-            } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                subConceptSet = WordNet.getSubIDSet(Long.valueOf(c.getLocalName()));
+            switch (c.getNameSpace()) {
+                case DODDLEConstants.EDR_URI:
+                    subConceptSet = EDRTree.getEDRTree().getSubURISet(c.getURI());
+                    break;
+                case DODDLEConstants.EDRT_URI:
+                    subConceptSet = EDRTree.getEDRTTree().getSubURISet(c.getURI());
+                    break;
+                case DODDLEConstants.WN_URI:
+                    subConceptSet = WordNet.getSubIDSet(Long.valueOf(c.getLocalName()));
+                    break;
             }
             return subConceptSet;
         }
 
         private Set<List<String>> getPathToRootSet(Concept c) {
             Set<List<String>> pathSet = null;
-            if (c.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-                pathSet = EDRTree.getEDRTree().getURIPathToRootSet(c.getLocalName());
-            } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-                pathSet = EDRTree.getEDRTTree().getURIPathToRootSet(c.getLocalName());
-            } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-                pathSet = WordNet.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
-            } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-                pathSet = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
+            switch (c.getNameSpace()) {
+                case DODDLEConstants.EDR_URI:
+                    pathSet = EDRTree.getEDRTree().getURIPathToRootSet(c.getLocalName());
+                    break;
+                case DODDLEConstants.EDRT_URI:
+                    pathSet = EDRTree.getEDRTTree().getURIPathToRootSet(c.getLocalName());
+                    break;
+                case DODDLEConstants.WN_URI:
+                    pathSet = WordNet.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
+                    break;
+                case DODDLEConstants.JPN_WN_URI:
+                    pathSet = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
+                    break;
             }
             return pathSet;
         }

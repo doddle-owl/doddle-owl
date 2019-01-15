@@ -43,16 +43,16 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
 
     public static boolean isDragUndefinedList = false;
 
-    private JButton searchButton;
-    private JTextField searchField;
+    private final JButton searchButton;
+    private final JTextField searchField;
 
-    private JTextField addWordField;
-    private JButton addButton;
-    private JButton removeButton;
+    private final JTextField addWordField;
+    private final JButton addButton;
+    private final JButton removeButton;
 
     private ListModel undefinedTermListModel;
-    private JList undefinedTermJList;
-    private TitledBorder undefinedTermJListTitle;
+    private final JList undefinedTermJList;
+    private final TitledBorder undefinedTermJListTitle;
 
     public UndefinedTermListPanel() {
         searchButton = new JButton(Translator.getTerm("SearchButton"));
@@ -129,7 +129,7 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
         undefinedTermJList.clearSelection();
     }
 
-    public void setTitle() {
+    private void setTitle() {
         undefinedTermJListTitle.setTitle(Translator.getTerm("UndefinedTermList"));
     }
 

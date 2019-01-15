@@ -30,7 +30,7 @@ import org.doddle_owl.utils.Translator;
  */
 public class EvalConcept implements Comparable {
 
-	private Concept concept;
+	private final Concept concept;
 	private double evalValue;
 
 	public EvalConcept(Concept c, double v) {

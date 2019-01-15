@@ -58,14 +58,14 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
     private Map<String, Concept> compoundWordConceptMap;
     private Map<String, Set<Concept>> termConceptSetMap;
 
-    private DefaultListModel<String> termListModel;
-    private JList termJList;
-    private ConceptDefinitionResultPanel resultPanel;
-    private ConceptDefinitionAlgorithmPanel algorithmPanel;
-    private ConceptDefinitionResultPanel.ConceptDefinitionPanel conceptDefinitionPanel;
+    private final DefaultListModel<String> termListModel;
+    private final JList termJList;
+    private final ConceptDefinitionResultPanel resultPanel;
+    private final ConceptDefinitionAlgorithmPanel algorithmPanel;
+    private final ConceptDefinitionResultPanel.ConceptDefinitionPanel conceptDefinitionPanel;
 
-    private DODDLEProjectPanel doddleProjectPanel;
-    private ConceptSelectionPanel conceptSelectionPanel;
+    private final DODDLEProjectPanel doddleProjectPanel;
+    private final ConceptSelectionPanel conceptSelectionPanel;
 
     public void initialize() {
         termListModel.clear();
@@ -167,12 +167,16 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
         if (concept != null) {
             return concept;
         }
-        if (c.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-            concept = EDR.getEDRConcept(c.getLocalName());
-        } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-            concept = EDR.getEDRTConcept(c.getLocalName());
-        } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-            concept = WordNet.getWNConcept(c.getLocalName());
+        switch (c.getNameSpace()) {
+            case DODDLEConstants.EDR_URI:
+                concept = EDR.getEDRConcept(c.getLocalName());
+                break;
+            case DODDLEConstants.EDRT_URI:
+                concept = EDR.getEDRTConcept(c.getLocalName());
+                break;
+            case DODDLEConstants.WN_URI:
+                concept = WordNet.getWNConcept(c.getLocalName());
+                break;
         }
         return concept;
     }
@@ -181,7 +185,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
         return ontology.getResource(c.getURI());
     }
 
-    public Property getProperty(Concept c, Model ontology) {
+    private Property getProperty(Concept c, Model ontology) {
         return ontology.getProperty(c.getURI());
     }
 

@@ -32,8 +32,8 @@ import java.util.*;
  */
 public class VerbConcept extends Concept {
 
-    private Set<String> domainSet;
-    private Set<String> rangeSet;
+    private final Set<String> domainSet;
+    private final Set<String> rangeSet;
 
     public VerbConcept(Concept c) {
         super(c);

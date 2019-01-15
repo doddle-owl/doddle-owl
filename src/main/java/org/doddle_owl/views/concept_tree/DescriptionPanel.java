@@ -37,11 +37,11 @@ import java.util.List;
 /**
  * @author Takeshi Morita
  */
-public class DescriptionPanel extends LiteralPanel implements ActionListener {
+class DescriptionPanel extends LiteralPanel implements ActionListener {
 
-    private JButton addDescriptionButton;
-    private JButton deleteDescriptionButton;
-    private JButton editDescriptionButton;
+    private final JButton addDescriptionButton;
+    private final JButton deleteDescriptionButton;
+    private final JButton editDescriptionButton;
 
     public DescriptionPanel(String type) {
         super(Translator.getTerm("LanguageLabel"), Translator.getTerm("DescriptionList"), type);

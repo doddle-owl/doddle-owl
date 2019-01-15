@@ -35,15 +35,15 @@ import java.util.List;
  */
 public class TermModel implements Comparable {
 
-	private int matchedPoint;
-	private int ambiguousCnt;
-	private String inputWord;
-	private String matchedInputWord;
-	private List<Morpheme> morphemeList;
-	private String wordListStr;
+	private final int matchedPoint;
+	private final int ambiguousCnt;
+	private final String inputWord;
+	private final String matchedInputWord;
+	private final List<Morpheme> morphemeList;
+	private final String wordListStr;
 	private boolean isSystemAdded;
 
-	private DODDLEProjectPanel project;
+	private final DODDLEProjectPanel project;
 
 	public TermModel(String w, List<Morpheme> mList, String miw, int ac, int mp,
 					 DODDLEProjectPanel p) {
@@ -82,7 +82,7 @@ public class TermModel implements Comparable {
 	}
 
 	// 完全照合かどうか
-	public boolean isPerfectlyMatchWord() {
+    private boolean isPerfectlyMatchWord() {
 		return !isPartiallyMatchTerm();
 	}
 
@@ -111,7 +111,7 @@ public class TermModel implements Comparable {
 		return matchedPoint;
 	}
 
-	public int getAmbiguousCnt() {
+	private int getAmbiguousCnt() {
 		return ambiguousCnt;
 	}
 

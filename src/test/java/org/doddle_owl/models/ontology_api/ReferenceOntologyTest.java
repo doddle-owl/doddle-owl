@@ -5,15 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReferenceOntologyTest {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         DODDLEConstants.EDR_HOME = "/Users/t_morita/DODDLE-OWL/EDR-DIC/";
         DODDLEConstants.EDRT_HOME = "/Users/t_morita/DODDLE-OWL/EDRT-DIC/";
         DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
@@ -28,7 +28,7 @@ class ReferenceOntologyTest {
 
     @Test
     @DisplayName("DODDLEDicからEDRのConceptを取得")
-    public void getEDRConcept() {
+    void getEDRConcept() {
         String expected = "dog";
         String actual = ReferenceOntology.getConcept(DODDLEConstants.EDR_URI + "ID3bdc67").getWord();
         assertEquals(expected, actual);
@@ -36,7 +36,7 @@ class ReferenceOntologyTest {
 
     @Test
     @DisplayName("DODDLEDicからEDRのConceptを取得")
-    public void getEDRTConcept() {
+    void getEDRTConcept() {
         String expected = "ツリー検索";
         String actual = ReferenceOntology.getConcept(DODDLEConstants.EDRT_URI + "ID2deac6").getWord();
         assertEquals(expected, actual);
@@ -44,7 +44,7 @@ class ReferenceOntologyTest {
 
     @Test
     @DisplayName("DODDLEDicからWordNetのConceptを取得")
-    public void getWordNetConcept() {
+    void getWordNetConcept() {
         String expected = "computer";
         String actual = ReferenceOntology.getConcept(DODDLEConstants.WN_URI + "03086983").getWord();
         assertEquals(expected, actual);
@@ -52,7 +52,7 @@ class ReferenceOntologyTest {
 
     @Test
     @DisplayName("DODDLEDicから日本語WordNetのConceptを取得")
-    public void getJpWordNetConcept() {
+    void getJpWordNetConcept() {
         String expected = "urban_area";
         String actual = ReferenceOntology.getConcept(DODDLEConstants.JPN_WN_URI + "08675967-n").getWord();
         assertEquals(expected, actual);
@@ -60,14 +60,9 @@ class ReferenceOntologyTest {
 
     @Test
     @DisplayName("DODDLEDicから日本語WikipediaオントロジーのConceptを取得")
-    public void getJWOConcept() {
+    void getJWOConcept() {
         String expected = "大学";
-        String actual = null;
-        try {
-            actual = ReferenceOntology.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", "UTF-8")).getWord();
-            assertEquals(expected, actual);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        String actual = ReferenceOntology.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", StandardCharsets.UTF_8)).getWord();
+        assertEquals(expected, actual);
     }
 }

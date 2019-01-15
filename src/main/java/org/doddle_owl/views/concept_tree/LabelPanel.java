@@ -38,16 +38,15 @@ import java.awt.event.ActionListener;
  */
 public class LabelPanel extends LiteralPanel implements ActionListener {
 
-    private JLabel preferredTermLabel;
-    private JLabel preferredTermValueLabel;
-    private JTextField langField;
-    private JTextField labelField;
-    private JButton addLabelButton;
-    private JButton deleteLabelButton;
-    private JButton editLabelButton;
-    private JButton setPreferredLabelButton;
+    private final JLabel preferredTermValueLabel;
+    private final JTextField langField;
+    private final JTextField labelField;
+    private final JButton addLabelButton;
+    private final JButton deleteLabelButton;
+    private final JButton editLabelButton;
+    private final JButton setPreferredLabelButton;
 
-    private ConceptInformationPanel conceptInfoPanel;
+    private final ConceptInformationPanel conceptInfoPanel;
 
     @Override
     public void setSelectedConcept(Concept c) {
@@ -58,7 +57,7 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
         super(Translator.getTerm("LanguageLabel"), Translator.getTerm("LabelList"), type);
         conceptInfoPanel = ciPanel;
 
-        preferredTermLabel = new JLabel(Translator.getTerm("PreferredTermLabel") + ": ");
+        JLabel preferredTermLabel = new JLabel(Translator.getTerm("PreferredTermLabel") + ": ");
         preferredTermValueLabel = new JLabel("");
         setPreferredLabelButton = new JButton(Translator.getTerm("SetPreferredTermButton"));
         setPreferredLabelButton.addActionListener(this);

@@ -74,45 +74,42 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     private Set<String> stopWordSet;
 
-    private JList<Document> documentList;
-    private DefaultListModel<Document> documentListModel;
+    private final JList<Document> documentList;
+    private final DefaultListModel<Document> documentListModel;
 
-    private JComboBox<String> documentLangComboBox;
-    private DefaultComboBoxModel<String> documentLangComboBoxModel;
+    private final JComboBox<String> documentLangComboBox;
 
-    private JCheckBox genSenCheckBox;
-    private JCheckBox cabochaCheckBox;
-    private JCheckBox nounCheckBox;
-    private JCheckBox verbCheckBox;
-    private JCheckBox otherCheckBox;
-    private JCheckBox oneWordCheckBox;
+    private final JCheckBox genSenCheckBox;
+    private final JCheckBox cabochaCheckBox;
+    private final JCheckBox nounCheckBox;
+    private final JCheckBox verbCheckBox;
+    private final JCheckBox otherCheckBox;
+    private final JCheckBox oneWordCheckBox;
 
-    private JTextField punctuationField;
-    private JButton setPunctuationButton;
-    private JButton termExtractionButton;
+    private final JTextField punctuationField;
+    private final JButton setPunctuationButton;
+    private final JButton termExtractionButton;
 
     public static String PUNCTUATION_CHARS = "．|。|\\.";
     public static final String COMPOUND_WORD_JA = "複合語";
     public static final String COMPOUND_WORD_EN = "Compound Word";
 
-    private ImageIcon addDocIcon = Utils.getImageIcon("page_white_add.png");
-    private ImageIcon removeDocIcon = Utils.getImageIcon("page_white_delete.png");
+    private final ImageIcon addDocIcon = Utils.getImageIcon("page_white_add.png");
+    private final ImageIcon removeDocIcon = Utils.getImageIcon("page_white_delete.png");
 
     private TaskAnalyzer taskAnalyzer;
 
-    private JTextArea documentTextArea;
+    private final JTextArea documentTextArea;
     private Map<String, TermInfo> termInfoMap;
 
-    private TermSelectionPanel termSelectionPanel;
-    private DODDLEProjectPanel project;
+    private final TermSelectionPanel termSelectionPanel;
+    private final DODDLEProjectPanel project;
 
     private Process jaMorphologicalAnalyzerProcess;
     private Process termExtractProcess;
     public static String Japanese_Morphological_Analyzer = "C:/Program Files/Chasen/chasen.exe";
-    private static String Japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
     public static String Japanese_Dependency_Structure_Analyzer = "C:/Program Files/CaboCha/bin/cabocha.exe";
     public static String PERL_EXE = "C:/Perl/bin/perl.exe";
-    private static String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
     public static String TERM_EXTRACT_SCRIPTS_DIR = "TermExtractScripts" + File.separator;
     public static String STOP_WORD_LIST_FILE = "C:/DODDLE-OWL/stop_word_list.txt";
 
@@ -146,7 +143,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         documentList.addListSelectionListener(this);
         var documentListScroll = new JScrollPane(documentList);
 
-        documentLangComboBoxModel = new DefaultComboBoxModel<>(new String[]{"en", "ja"});
+        DefaultComboBoxModel<String> documentLangComboBoxModel = new DefaultComboBoxModel<>(new String[]{"en", "ja"});
         documentLangComboBox = new JComboBox<>(documentLangComboBoxModel);
         documentLangComboBox.addActionListener(this);
         var addDocumentButton = new JButton(new AddDocumentAction(Translator.getTerm("AddInputDocumentButton")));
@@ -481,6 +478,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         if (!dir.exists()) {
             dir.mkdir();
         }
+        String TERM_EXTRACT_TAGGER_PL = "ex_brillstagger.pl";
         String taggerPath = TERM_EXTRACT_SCRIPTS_DIR + File.separator + TERM_EXTRACT_TAGGER_PL;
         File scriptFile = new File(taggerPath);
         if (!scriptFile.exists()) {
@@ -515,8 +513,9 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
      */
     private BufferedReader getJaGenSenReader(String text) throws IOException {
         tmpFile = File.createTempFile("tmp", null);
+        String japanese_Morphological_Analyzer_CharacterSet = "UTF-8";
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(tmpFile), Japanese_Morphological_Analyzer_CharacterSet));
+                new FileOutputStream(tmpFile), japanese_Morphological_Analyzer_CharacterSet));
         bw.write(text);
         bw.close();
 
@@ -556,7 +555,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                 tmpJapaneseMorphologicalAnalyzerFile.getAbsolutePath());
         termExtractProcess = processBuilder.start();
         return new BufferedReader(new InputStreamReader(termExtractProcess.getInputStream(),
-                Japanese_Morphological_Analyzer_CharacterSet));
+                japanese_Morphological_Analyzer_CharacterSet));
     }
 
     private boolean isJaNoun(String pos) {
@@ -603,7 +602,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
         private int currentTaskCnt;
 
-        public TermExtractionWorker(int taskCnt) {
+        TermExtractionWorker(int taskCnt) {
             currentTaskCnt = 1;
             DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("InputTermExtractionButton"));
             DODDLE_OWL.STATUS_BAR.startTime();
@@ -793,7 +792,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     }
 
     class AddDocumentAction extends AbstractAction {
-        public AddDocumentAction(String title) {
+        AddDocumentAction(String title) {
             super(title, addDocIcon);
         }
 
@@ -809,7 +808,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     }
 
     class RemoveDocumentAction extends AbstractAction {
-        public RemoveDocumentAction(String title) {
+        RemoveDocumentAction(String title) {
             super(title, removeDocIcon);
         }
 

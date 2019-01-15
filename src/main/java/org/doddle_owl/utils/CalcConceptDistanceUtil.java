@@ -38,7 +38,7 @@ import java.util.*;
  */
 public class CalcConceptDistanceUtil {
 
-    public static Set<List<String>[]> makeCombination(Set<List<String>> pathSet1, Set<List<String>> pathSet2) {
+    private static Set<List<String>[]> makeCombination(Set<List<String>> pathSet1, Set<List<String>> pathSet2) {
         Set<List<String>[]> combinationSet = new HashSet<>();
         for (List<String> path1 : pathSet1) {
             for (List<String> path2 : pathSet2) {
@@ -53,14 +53,19 @@ public class CalcConceptDistanceUtil {
         if (pathSet.size() != 0) {
             return pathSet;
         }
-        if (c.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
-            pathSet = EDRTree.getEDRTree().getURIPathToRootSet(c.getLocalName());
-        } else if (c.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
-            pathSet = EDRTree.getEDRTTree().getURIPathToRootSet(c.getLocalName());
-        } else if (c.getNameSpace().equals(DODDLEConstants.WN_URI)) {
-            pathSet = WordNet.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
-        } else if (c.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
-            pathSet = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
+        switch (c.getNameSpace()) {
+            case DODDLEConstants.EDR_URI:
+                pathSet = EDRTree.getEDRTree().getURIPathToRootSet(c.getLocalName());
+                break;
+            case DODDLEConstants.EDRT_URI:
+                pathSet = EDRTree.getEDRTTree().getURIPathToRootSet(c.getLocalName());
+                break;
+            case DODDLEConstants.WN_URI:
+                pathSet = WordNet.getURIPathToRootSet(Long.valueOf(c.getLocalName()));
+                break;
+            case DODDLEConstants.JPN_WN_URI:
+                pathSet = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c.getLocalName());
+                break;
         }
         return pathSet;
     }

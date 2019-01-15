@@ -46,33 +46,33 @@ import java.util.List;
 /**
  * @author Takeshi Morita
  */
-public class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
+class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
 		ListSelectionListener {
 
-	private JLabel termRankLabel;
+	private final JLabel termRankLabel;
 
-	private JTextArea inputWordArea;
-	private JButton acquireOntologiesButton;
+	private final JTextArea inputWordArea;
+	private final JButton acquireOntologiesButton;
 
-	private JList acquiredOntologyJList;
-	private DefaultListModel acquiredOntologyModel;
-	private JList removedOntologyJList;
-	private DefaultListModel removedOntologyModel;
-	private JButton setOWLOntologiesButton;
-	private JButton removeOntologyButton;
-	private JButton returnOntologyButton;
+	private final JList acquiredOntologyJList;
+	private final DefaultListModel acquiredOntologyModel;
+	private final JList removedOntologyJList;
+	private final DefaultListModel removedOntologyModel;
+	private final JButton setOWLOntologiesButton;
+	private final JButton removeOntologyButton;
+	private final JButton returnOntologyButton;
 
-	private OWLMetaDataTablePanel owlMetaDataTablePanel;
-	private LiteralPanel labelPanel;
-	private LiteralPanel descriptionPanel;
-	private JList classJList;
-	private DefaultListModel classListModel;
-	private JList propertyJList;
-	private DefaultListModel propertyListModel;
-	private JList domainJList;
-	private JList rangeJList;
+	private final OWLMetaDataTablePanel owlMetaDataTablePanel;
+	private final LiteralPanel labelPanel;
+	private final LiteralPanel descriptionPanel;
+	private final JList classJList;
+	private final DefaultListModel classListModel;
+	private final JList propertyJList;
+	private final DefaultListModel propertyListModel;
+	private final JList domainJList;
+	private final JList rangeJList;
 
-	private OWLOntologySelectionPanel owlOntologySelectionPanel;
+	private final OWLOntologySelectionPanel owlOntologySelectionPanel;
 
 	public void initialize() {
 
@@ -207,7 +207,7 @@ public class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListe
 		add(splitPane, BorderLayout.CENTER);
 	}
 
-	public void initListData() {
+	private void initListData() {
 		acquiredOntologyModel.clear();
 		removedOntologyModel.clear();
 		classListModel.clear();

@@ -23,18 +23,18 @@
 
 package org.doddle_owl.views.reference_ontology_selection;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.util.FileUtils;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.common.DODDLEConstants;
-import org.doddle_owl.models.reference_ontology_selection.OWLOntologyExtractionTemplate;
 import org.doddle_owl.models.common.ProjectFileNames;
+import org.doddle_owl.models.reference_ontology_selection.OWLOntologyExtractionTemplate;
 import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
 import org.doddle_owl.utils.FreeMindModelMaker;
 import org.doddle_owl.utils.OWLOntologyManager;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.util.FileUtils;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -49,23 +49,22 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.Properties;
 
 /**
  * @author Takeshi Morita
  */
-public class OWLOntologySelectionPanel extends JPanel implements ActionListener,
+class OWLOntologySelectionPanel extends JPanel implements ActionListener,
         ListSelectionListener {
 
-    private JList ontologyList;
-    private DefaultListModel listModel;
-    private OWLMetaDataPanel owlMetaDataPanel;
-    private JButton addOWLFileButton;
-    private JButton addOWLURIButton;
-    private JButton deleteButton;
-    private NameSpaceTable nsTable;
+    private final JList ontologyList;
+    private final DefaultListModel listModel;
+    private final OWLMetaDataPanel owlMetaDataPanel;
+    private final JButton addOWLFileButton;
+    private final JButton addOWLURIButton;
+    private final JButton deleteButton;
+    private final NameSpaceTable nsTable;
 
 
     public void initialize() {

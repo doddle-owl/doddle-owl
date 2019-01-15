@@ -56,39 +56,39 @@ import java.util.Map.Entry;
  * @author Yoshihiro Shigeta
  * @author Takeshi Morita
  */
-public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
+class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
         ActionListener {
 
-    private Set<WordSpace> wordSpaceSet;
-    private Set<Apriori> aprioriSet;
-    private TreeMap<Document, Map<String, List<ConceptPair>>> docWSResultMap;
-    private TreeMap<Document, Map<String, List<ConceptPair>>> docAprioriResultMap;
+    private final Set<WordSpace> wordSpaceSet;
+    private final Set<Apriori> aprioriSet;
+    private final TreeMap<Document, Map<String, List<ConceptPair>>> docWSResultMap;
+    private final TreeMap<Document, Map<String, List<ConceptPair>>> docAprioriResultMap;
 
-    private JLabel minSupport;
-    private JTextField minSupportField;
-    private JSlider minConfidenceSlider;
+    private final JLabel minSupport;
+    private final JTextField minSupportField;
+    private final JSlider minConfidenceSlider;
     private JLabel confidenceValue;
 
     private JLabel wordSpaceValue;
-    private JSlider wordSpaceValueSlider;
-    private JLabel gramNumber;
-    private JLabel gramCount;
-    private JLabel frontscope;
-    private JLabel behindscope;
-    private JTextField gramNumberField;
-    private JTextField gramCountField;
-    private JTextField frontScopeField;
-    private JTextField behindScopeField;
+    private final JSlider wordSpaceValueSlider;
+    private final JLabel gramNumber;
+    private final JLabel gramCount;
+    private final JLabel frontscope;
+    private final JLabel behindscope;
+    private final JTextField gramNumberField;
+    private final JTextField gramCountField;
+    private final JTextField frontScopeField;
+    private final JTextField behindScopeField;
 
-    private JButton exeWordSpaceButton;
-    private JButton exeAprioriButton;
+    private final JButton exeWordSpaceButton;
+    private final JButton exeAprioriButton;
 
-    private JList inputConceptJList;
+    private final JList inputConceptJList;
 
-    private JComponent wordSpaceParamPanel;
-    private JComponent aprioriParamPanel;
+    private final JComponent wordSpaceParamPanel;
+    private final JComponent aprioriParamPanel;
 
-    private DODDLEProjectPanel doddleProjectPanel;
+    private final DODDLEProjectPanel doddleProjectPanel;
 
     public ConceptDefinitionAlgorithmPanel(JList list, DODDLEProjectPanel project) {
         inputConceptJList = list;
@@ -153,7 +153,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return docAprioriResultMap;
     }
 
-    public int getGramNumber() {
+    private int getGramNumber() {
         int gramNum = 0;
         if (gramNumberField.getText() != null) {
             gramNum = Integer.valueOf(gramNumberField.getText());
@@ -161,7 +161,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return gramNum;
     }
 
-    public int getGramCount() {
+    private int getGramCount() {
         int gramCount = 0;
         if (gramCountField.getText() != null) {
             gramCount = Integer.valueOf(gramCountField.getText());
@@ -169,7 +169,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return gramCount;
     }
 
-    public int getFrontScope() {
+    private int getFrontScope() {
         int frontScope = 0;
         if (frontScopeField.getText() != null) {
             frontScope = Integer.valueOf(frontScopeField.getText());
@@ -177,7 +177,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return frontScope;
     }
 
-    public int getBehindScope() {
+    private int getBehindScope() {
         int behindScope = 0;
         if (behindScopeField.getText() != null) {
             behindScope = Integer.valueOf(behindScopeField.getText());
@@ -185,7 +185,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return behindScope;
     }
 
-    public double getMinSupport() {
+    private double getMinSupport() {
         double minSupport = 0;
         if (minSupportField.getText() != null) {
             minSupport = Double.valueOf(minSupportField.getText());
@@ -234,11 +234,11 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return panel;
     }
 
-    public double getMinConfidence() {
+    private double getMinConfidence() {
         return Double.parseDouble(confidenceValue.getText());
     }
 
-    public double getWordSpaceUnderValue() {
+    private double getWordSpaceUnderValue() {
         return Double.parseDouble(wordSpaceValue.getText());
     }
 
@@ -273,19 +273,19 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() == minConfidenceSlider) {
             Integer inte = minConfidenceSlider.getValue();
-            Double value = inte.doubleValue() / 100;
-            if (value.toString().length() == 4) {
-                confidenceValue.setText(value.toString());
+            double value = inte.doubleValue() / 100;
+            if (Double.toString(value).length() == 4) {
+                confidenceValue.setText(Double.toString(value));
             } else {
-                confidenceValue.setText(value.toString() + "0");
+                confidenceValue.setText(value + "0");
             }
         } else if (e.getSource() == wordSpaceValueSlider) {
             Integer inte = wordSpaceValueSlider.getValue();
-            Double value = inte.doubleValue() / 100;
-            if (value.toString().length() == 4) {
-                wordSpaceValue.setText(value.toString());
+            double value = inte.doubleValue() / 100;
+            if (Double.toString(value).length() == 4) {
+                wordSpaceValue.setText(Double.toString(value));
             } else {
-                wordSpaceValue.setText(value.toString() + "0");
+                wordSpaceValue.setText(value + "0");
             }
         }
     }
@@ -312,7 +312,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         }
     }
 
-    public WordSpaceData getWordSpaceData() {
+    private WordSpaceData getWordSpaceData() {
         int gramNumber = getGramNumber();
         int gramCount = getGramCount();
         int frontScope = getFrontScope();
@@ -355,8 +355,8 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         return targetInputWordList;
     }
 
-    public static int APRIORI = 0;
-    public static int WORDSPACE = 1;
+    public static final int APRIORI = 0;
+    public static final int WORDSPACE = 1;
 
     public void saveResult(File dir, int algorithm) {
         TreeMap<Document, Map<String, List<ConceptPair>>> docResultMap = null;
@@ -623,7 +623,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         }
     }
 
-    public void exeWordSpace() {
+    private void exeWordSpace() {
         try {
             DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("ExecuteWordSpaceButton"));
             DODDLE_OWL.STATUS_BAR.startTime();
@@ -651,7 +651,7 @@ public class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeLis
         }
     }
 
-    public void exeApriori() {
+    private void exeApriori() {
         try {
             DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("ExecuteAprioriButton"));
             DODDLE_OWL.STATUS_BAR.startTime();

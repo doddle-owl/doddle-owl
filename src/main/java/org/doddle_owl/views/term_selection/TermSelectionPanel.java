@@ -45,20 +45,20 @@ import java.util.*;
  */
 public class TermSelectionPanel extends JPanel implements ActionListener, KeyListener {
 
-    private JTextArea termTextArea;
-    private TermInfoTablePanel termInfoTablePanel;
-    private TermInfoTablePanel removedTermInfoTablePanel;
-    private TermsInDocumentViewer documentViewer;
+    private final JTextArea termTextArea;
+    private final TermInfoTablePanel termInfoTablePanel;
+    private final TermInfoTablePanel removedTermInfoTablePanel;
+    private final TermsInDocumentViewer documentViewer;
 
-    private JButton addTermListButton;
-    private JButton deleteTableItemButton;
-    private JButton returnTableItemButton;
-    private JButton reloadDocumentAreaButton;
-    private JButton completelyDeleteTableItemButton;
-    private JButton setTermSetButton;
-    private JButton addTermSetButton;
+    private final JButton addTermListButton;
+    private final JButton deleteTableItemButton;
+    private final JButton returnTableItemButton;
+    private final JButton reloadDocumentAreaButton;
+    private final JButton completelyDeleteTableItemButton;
+    private final JButton setTermSetButton;
+    private final JButton addTermSetButton;
 
-    private ConceptSelectionPanel conceptSelectionPanel;
+    private final ConceptSelectionPanel conceptSelectionPanel;
 
     public void initialize() {
         termTextArea.setText("");
@@ -152,7 +152,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
 
 
     // TODO update
-    public void setWindowTitle() {
+    private void setWindowTitle() {
 //        mainViews[1].getViewProperties().setTitle(
 //                Translator.getTerm("InputTermInfoTablePanel") + "（" + termInfoTablePanel.getTableSize() + "）");
 //        mainViews[2].getViewProperties().setTitle(

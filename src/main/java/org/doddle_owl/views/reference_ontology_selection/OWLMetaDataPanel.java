@@ -38,30 +38,24 @@ import java.io.File;
 /**
  * @author Takeshi Morita
  */
-public class OWLMetaDataPanel extends JPanel implements ActionListener {
+class OWLMetaDataPanel extends JPanel implements ActionListener {
 
-    private JCheckBox isAvailableCheckBox;
+    private final JCheckBox isAvailableCheckBox;
 
-    private JLabel locationTitleLabel;
-    private JLabel locationLabel;
+    private final JLabel locationLabel;
 
-    private OWLMetaDataTablePanel owlMetaDataTablePanel;
+    private final OWLMetaDataTablePanel owlMetaDataTablePanel;
 
-    private JLabel searchSubConceptTemplateLabel;
-    private JTextField searchSubConceptTemplateField;
-    private JButton setSearchSubConceptTemplateButton;
-    private JLabel searchConceptTemplateLabel;
-    private JTextField searchConceptTemplateField;
-    private JButton setSearchConceptTemplateButton;
-    private JLabel searchClassSetTemplateLabel;
-    private JTextField searchClassSetTemplateField;
-    private JButton setSearchClassSetTemplateButton;
-    private JLabel searchPropertySetTemplateLabel;
-    private JTextField searchPropertySetTemplateField;
-    private JButton setSearchPropertySetTemplateButton;
-    private JLabel searchRegionSetTemplateLabel;
-    private JTextField searchRegionSetTemplateField;
-    private JButton setSearchRegionSetTemplateButton;
+    private final JTextField searchSubConceptTemplateField;
+    private final JButton setSearchSubConceptTemplateButton;
+    private final JTextField searchConceptTemplateField;
+    private final JButton setSearchConceptTemplateButton;
+    private final JTextField searchClassSetTemplateField;
+    private final JButton setSearchClassSetTemplateButton;
+    private final JTextField searchPropertySetTemplateField;
+    private final JButton setSearchPropertySetTemplateButton;
+    private final JTextField searchRegionSetTemplateField;
+    private final JButton setSearchRegionSetTemplateButton;
 
     private ReferenceOWLOntology refOnt;
     private static final int TEXT_FIELD_WIDTH = 30;
@@ -75,7 +69,7 @@ public class OWLMetaDataPanel extends JPanel implements ActionListener {
         isAvailableCheckBox.addActionListener(this);
         templatePanel.add(isAvailableCheckBox);
 
-        locationTitleLabel = new JLabel(Translator.getTerm("LocationLabel") + ": ");
+        JLabel locationTitleLabel = new JLabel(Translator.getTerm("LocationLabel") + ": ");
         locationLabel = new JLabel();
         JPanel locationPanel = new JPanel();
         locationPanel.setLayout(new BorderLayout());
@@ -84,7 +78,7 @@ public class OWLMetaDataPanel extends JPanel implements ActionListener {
         templatePanel.add(locationPanel);
         String browse = Translator.getTerm("ReferenceButton");
 
-        searchClassSetTemplateLabel = new JLabel(Translator.getTerm("SearchClassSetTemplateLabel") + ": ");
+        JLabel searchClassSetTemplateLabel = new JLabel(Translator.getTerm("SearchClassSetTemplateLabel") + ": ");
         searchClassSetTemplateField = new JTextField(TEXT_FIELD_WIDTH);
         searchClassSetTemplateField.setEditable(false);
         setSearchClassSetTemplateButton = new JButton(browse);
@@ -93,7 +87,7 @@ public class OWLMetaDataPanel extends JPanel implements ActionListener {
                 setSearchClassSetTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        searchPropertySetTemplateLabel = new JLabel(Translator.getTerm("SearchPropertySetTemplateLabel") + ": ");
+        JLabel searchPropertySetTemplateLabel = new JLabel(Translator.getTerm("SearchPropertySetTemplateLabel") + ": ");
         searchPropertySetTemplateField = new JTextField(TEXT_FIELD_WIDTH);
         searchPropertySetTemplateField.setEditable(false);
         setSearchPropertySetTemplateButton = new JButton(browse);
@@ -102,7 +96,7 @@ public class OWLMetaDataPanel extends JPanel implements ActionListener {
                 setSearchPropertySetTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        searchConceptTemplateLabel = new JLabel(Translator.getTerm("SearchConceptTemplateLabel") + ": ");
+        JLabel searchConceptTemplateLabel = new JLabel(Translator.getTerm("SearchConceptTemplateLabel") + ": ");
         searchConceptTemplateField = new JTextField(TEXT_FIELD_WIDTH);
         searchConceptTemplateField.setEditable(false);
         setSearchConceptTemplateButton = new JButton(browse);
@@ -110,7 +104,7 @@ public class OWLMetaDataPanel extends JPanel implements ActionListener {
         panel = getTemplatePanel(searchConceptTemplateLabel, searchConceptTemplateField, setSearchConceptTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        searchSubConceptTemplateLabel = new JLabel(Translator.getTerm("SearchSubConceptTemplateLabel") + ": ");
+        JLabel searchSubConceptTemplateLabel = new JLabel(Translator.getTerm("SearchSubConceptTemplateLabel") + ": ");
         searchSubConceptTemplateField = new JTextField(TEXT_FIELD_WIDTH);
         searchSubConceptTemplateField.setEditable(false);
         setSearchSubConceptTemplateButton = new JButton(browse);
@@ -119,7 +113,7 @@ public class OWLMetaDataPanel extends JPanel implements ActionListener {
                 setSearchSubConceptTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        searchRegionSetTemplateLabel = new JLabel(Translator.getTerm("SearchRegionSetTemplateLabel") + ": ");
+        JLabel searchRegionSetTemplateLabel = new JLabel(Translator.getTerm("SearchRegionSetTemplateLabel") + ": ");
         searchRegionSetTemplateField = new JTextField(TEXT_FIELD_WIDTH);
         searchRegionSetTemplateField.setEditable(false);
         setSearchRegionSetTemplateButton = new JButton(browse);

@@ -44,14 +44,14 @@ import java.util.Properties;
 /**
  * @author Takeshi Morita
  */
-public class GeneralOntologySelectionPanel extends JPanel {
-    private JCheckBox edrCheckBox;
-    private JCheckBox edrtCheckBox;
-    private JCheckBox wnCheckBox;
-    private JCheckBox jpnWnCheckBox;
-    private JCheckBox jwoCheckBox;
+class GeneralOntologySelectionPanel extends JPanel {
+    private final JCheckBox edrCheckBox;
+    private final JCheckBox edrtCheckBox;
+    private final JCheckBox wnCheckBox;
+    private final JCheckBox jpnWnCheckBox;
+    private final JCheckBox jwoCheckBox;
 
-    private NameSpaceTable nameSpaceTable;
+    private final NameSpaceTable nameSpaceTable;
 
     public void initialize() {
         resetCheckBoxes();

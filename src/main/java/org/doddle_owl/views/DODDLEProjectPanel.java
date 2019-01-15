@@ -54,7 +54,7 @@ import java.util.*;
  */
 public class DODDLEProjectPanel extends JPanel {
 
-    private boolean isInitialized;
+    private final boolean isInitialized;
 
     private JTabbedPane rootTabbedPane;
     private ReferenceOntologySelectionPanel ontologySelectionPanel;

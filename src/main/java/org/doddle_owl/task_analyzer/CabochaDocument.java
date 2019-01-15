@@ -41,15 +41,15 @@ public class CabochaDocument {
 
     private String docName;
     private Document document;
-    private List<Sentence> sentenceList;
-    private Set<Segment> segmentSet;
-    private Map<String, Integer> compoundWordCountMap;
-    private Map<String, Integer> compoundWordWithNokakuCountMap;
-    private Map<Segment, Set<Segment>> segmentMap;
-    private Process cabochaProcess;
-    public static String CHARSET = "UTF-8";
+    private final List<Sentence> sentenceList;
+    private final Set<Segment> segmentSet;
+    private final Map<String, Integer> compoundWordCountMap;
+    private final Map<String, Integer> compoundWordWithNokakuCountMap;
+    private final Map<Segment, Set<Segment>> segmentMap;
+    private final Process cabochaProcess;
+    public static final String CHARSET = "UTF-8";
 
-    public CabochaDocument(Process cp) {
+    private CabochaDocument(Process cp) {
         cabochaProcess = cp;
         sentenceList = new ArrayList<>();
         segmentSet = new HashSet<>();
@@ -86,11 +86,11 @@ public class CabochaDocument {
         }
     }
 
-    private void setChunk(NodeList chunkElementList, Segment segment, Sentence sentence) {
+    private void setChunk(NodeList chunkElementList, Sentence sentence) {
         for (int i = 0; i < chunkElementList.getLength(); i++) {
             Element chunkElement = (Element) chunkElementList.item(i);
             int link = Integer.parseInt(chunkElement.getAttribute("link"));
-            segment = new Segment(link);
+            Segment segment = new Segment(link);
             sentence.addSegment(segment);
             NodeList tokElementList = chunkElement.getElementsByTagName("tok");
             setMorpheme(tokElementList, segment);
@@ -109,7 +109,7 @@ public class CabochaDocument {
             for (int i = 0; i < sentenceElementList.getLength(); i++) {
                 Element sentenceElement = (Element) sentenceElementList.item(i);
                 NodeList chunkElementList = sentenceElement.getElementsByTagName("chunk");
-                setChunk(chunkElementList, segment, sentence);
+                setChunk(chunkElementList, sentence);
                 sentence.mergeSegments();
                 setSegmentMap(sentence);
                 setCompoundWordCountMap(sentence);

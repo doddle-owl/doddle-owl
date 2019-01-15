@@ -61,7 +61,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
 
     private Map<String, String> prefixNSMap;
     private Map<String, String> knownNSPrefixMap;
-    private Map<String, PrefixNSInfo> nsInfoMap;
+    private final Map<String, PrefixNSInfo> nsInfoMap;
     private static final String WARNING = Translator.getTerm("WarningMessage");
 
     public NameSpaceTable() {
@@ -101,7 +101,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         }
     }
 
-    public void setDefaultNSPrefix() {
+    private void setDefaultNSPrefix() {
         addDefaultNS("base", DODDLEConstants.BASE_URI);
         addDefaultNS("rdf", RDF.getURI());
         addDefaultNS("rdfs", RDFS.getURI());
@@ -328,7 +328,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         setNSInfoMap();
     }
 
-    public void addNameSpaceTable(Boolean isAvailable, String prefix, String ns) {
+    private void addNameSpaceTable(Boolean isAvailable, String prefix, String ns) {
         if (isValidPrefixWithWarning(prefix) && isValidNSWithWarning(ns)) {
             prefixNSMap.put(prefix, ns);
             Object[] list = new Object[]{isAvailable, prefix, ns};
@@ -371,7 +371,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         // }
     }
 
-    public void setNSInfoMap() {
+    private void setNSInfoMap() {
         nsInfoMap.clear();
         for (int i = 0; i < nsTableModel.getRowCount(); i++) {
             String prefix = (String) nsTableModel.getValueAt(i, 1);
@@ -407,7 +407,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
 
     public class NSTableModel extends DefaultTableModel {
 
-        public NSTableModel(Object[] columnNames, int rowCount) {
+        NSTableModel(Object[] columnNames, int rowCount) {
             super(columnNames, rowCount);
         }
 

@@ -28,9 +28,9 @@ package org.doddle_owl.models.common;
  */
 public class DODDLEToken {
 
-	private String pos;
-	private String basicString;
-	private String string;
+	private final String pos;
+	private final String basicString;
+	private final String string;
 
 	public DODDLEToken(String p, String bs, String s) {
 		pos = p;

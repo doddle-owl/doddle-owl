@@ -32,9 +32,9 @@ import java.awt.*;
 /**
  * @author Takeshi Morita
  */
-public class OWLMetaDataTablePanel extends JPanel {
+class OWLMetaDataTablePanel extends JPanel {
 
-    private JTable owlMetaDataTable;
+    private final JTable owlMetaDataTable;
 
     public OWLMetaDataTablePanel() {
         owlMetaDataTable = new JTable();

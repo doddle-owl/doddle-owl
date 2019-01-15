@@ -40,7 +40,7 @@ public class OntologyRank  implements Comparable{
         inputWordCount = cnt;
     }
     
-    public double getInputWordRatio() {
+    private double getInputWordRatio() {
         return inputWordRatio;
     }
 
@@ -48,7 +48,7 @@ public class OntologyRank  implements Comparable{
         this.inputWordRatio = inputWordRatio;
     }
 
-    public int getRelationCount() {
+    private int getRelationCount() {
         return relationCount;
     }
 
@@ -56,7 +56,7 @@ public class OntologyRank  implements Comparable{
         this.relationCount = relationCount;
     }
 
-    public double getSwoogleOntoRank() {
+    private double getSwoogleOntoRank() {
         return swoogleOntoRank;
     }
 

@@ -29,25 +29,24 @@ import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.models.concept_selection.Concept;
 
 import java.util.*;
-import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
  */
 public class SwoogleWebServiceData {
 
-    private Map<String, Double> swtTermRankMap;
+    private final Map<String, Double> swtTermRankMap;
 
-    private Set<Resource> classSet;
-    private Set<Resource> propertySet;
-    private Set<Resource> relatedPropertySet;
-    private Set<Resource> expandClassSet;
-    private Map<Resource, Set<Resource>> propertyDomainSetMap;
-    private Map<Resource, Set<Resource>> propertyRangeSetMap;
+    private final Set<Resource> classSet;
+    private final Set<Resource> propertySet;
+    private final Set<Resource> relatedPropertySet;
+    private final Set<Resource> expandClassSet;
+    private final Map<Resource, Set<Resource>> propertyDomainSetMap;
+    private final Map<Resource, Set<Resource>> propertyRangeSetMap;
 
-    private Map<Resource, Set<String>> conceptInputWordSetMap;
+    private final Map<Resource, Set<String>> conceptInputWordSetMap;
 
-    private Map<String, SwoogleOWLMetaData> uriSwoogleOWLMetaDataMap;
+    private final Map<String, SwoogleOWLMetaData> uriSwoogleOWLMetaDataMap;
     private static Map<String, ReferenceOWLOntology> uriRefOntologyMap;
 
     public SwoogleWebServiceData() {
@@ -272,7 +271,7 @@ public class SwoogleWebServiceData {
      *
      * @param property
      */
-    public Set<Resource> getDomainSet(Resource property) {
+    private Set<Resource> getDomainSet(Resource property) {
         return propertyDomainSetMap.get(property);
     }
 
@@ -281,14 +280,14 @@ public class SwoogleWebServiceData {
      *
      * @param property
      */
-    public Set<Resource> getRangeSet(Resource property) {
+    private Set<Resource> getRangeSet(Resource property) {
         return propertyRangeSetMap.get(property);
     }
 
     /**
      * クラス，プロパティ，関連プロパティのいずれかを含むオントロジーを関連オントロジーとする
      */
-    public boolean isRelatedOntology(ReferenceOWLOntology refOnto) {
+    private boolean isRelatedOntology(ReferenceOWLOntology refOnto) {
         Set<Resource> conceptSet = getConceptSet();
         for (Resource concept : conceptSet) {
             if (refOnto.getConcept(concept.getURI()) != null) {

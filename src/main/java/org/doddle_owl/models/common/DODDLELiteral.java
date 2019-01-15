@@ -59,7 +59,7 @@ public class DODDLELiteral implements Serializable {
         this.string = text;
     }
 
-    public String getFormattedText(String text) {
+    private String getFormattedText(String text) {
         String[] words = text.split(" ");
         StringBuilder newText = new StringBuilder();
         newText.append("<html><body>");

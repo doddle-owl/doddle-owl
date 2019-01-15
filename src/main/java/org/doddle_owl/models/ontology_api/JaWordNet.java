@@ -39,14 +39,14 @@ public class JaWordNet {
 
     public static boolean isAvailable = false;
 
-    private static String TREE_DATA_FILE = "tree.data";
-    private static String WORD_DATA_FILE = "word.data";
-    private static String CONCEPT_DATA_FILE = "concept.data";
+    private static final String TREE_DATA_FILE = "tree.data";
+    private static final String WORD_DATA_FILE = "word.data";
+    private static final String CONCEPT_DATA_FILE = "concept.data";
     private static String RELATION_DATA_FILE = "relation.data";
 
-    private static String TREE_INDEX_FILE = "tree.index";
-    private static String WORD_INDEX_FILE = "word.index";
-    private static String CONCEPT_INDEX_FILE = "concept.index";
+    private static final String TREE_INDEX_FILE = "tree.index";
+    private static final String WORD_INDEX_FILE = "word.index";
+    private static final String CONCEPT_INDEX_FILE = "concept.index";
     private static String RELATION_INDEX_FILE = "relation.index";
 
     private static RandomAccessFile jpnwnTreeDataFile;
@@ -183,7 +183,7 @@ public class JaWordNet {
         return getData(dfp, jpnwnRelationDataFile, "ISO8859_1");
     }
 
-    public static String getConceptData(String id) {
+    private static String getConceptData(String id) {
         long low = 0;
         long conceptIndexFileSize = getConceptIndexFileSize();
         long high = conceptIndexFileSize;
@@ -249,7 +249,7 @@ public class JaWordNet {
         return null;
     }
 
-    public static String getRelationData(String id) {
+    private static String getRelationData(String id) {
         long low = 0;
         long relationIndexFileSize = getRelationIndexFileSize();
         long high = relationIndexFileSize;
