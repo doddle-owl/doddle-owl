@@ -1,24 +1,24 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
- * 
+ *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
- * 
+ *
  * This file is part of DODDLE-OWL.
- * 
+ *
  * DODDLE-OWL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * DODDLE-OWL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with DODDLE-OWL.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package org.doddle_owl.views;
@@ -32,7 +32,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
-import java.util.logging.Level;
 
 /**
  * @author Takeshi Morita
@@ -47,9 +46,9 @@ public class StatusBarPanel extends Panel implements ActionListener {
     private int maxValue;
     private int currentValue;
 
-    private JTextField statusField;
-    private JButton cancelButton;
-    private JProgressBar progressBar;
+    private final JTextField statusField;
+    private final JButton cancelButton;
+    private final JProgressBar progressBar;
     private static final Color STATUS_BAR_COLOR = new Color(240, 240, 240);
 
     private Thread timer;
@@ -92,12 +91,12 @@ public class StatusBarPanel extends Panel implements ActionListener {
     public void setLastMessage(String msg) {
         lastMessage = msg;
     }
-    
+
     public void printMessage(String msg) {
         lastMessage = msg;
         setCurrentTime();
     }
-    
+
     private void startTimer() {
         timer = new Thread(() -> {
             while (progressBar.isVisible()) {
@@ -108,8 +107,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
                     e.printStackTrace();
                 }
             }
-            DODDLE_OWL.getLogger().log(Level.SEVERE,
-                    Translator.getTerm("TotalTimeMessage") + ": " + elapsedTime);
+            DODDLE_OWL.getLogger().info(Translator.getTerm("TotalTimeMessage") + ": " + elapsedTime);
             setValue(lastMessage);
         });
         timer.start();
@@ -117,7 +115,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
 
     public void setCurrentTime() {
         elapsedTime = (int) (Calendar.getInstance().getTimeInMillis() - startTime) / 1000;
-        statusField.setText(lastMessage+": "+Translator.getTerm("ElapsedTimeMessage") + ": " + elapsedTime);
+        statusField.setText(lastMessage + ": " + Translator.getTerm("ElapsedTimeMessage") + ": " + elapsedTime);
     }
 
     public void lock() {
@@ -178,7 +176,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
     }
 
     public void addValue() {
-        if (!isLock) {            
+        if (!isLock) {
             addProjectValue();
         }
     }
@@ -189,10 +187,10 @@ public class StatusBarPanel extends Panel implements ActionListener {
         progressBar.paintImmediately(progressBar.getVisibleRect());
     }
 
-    public void setValue() {
+    private void setValue() {
         progressBar.setValue(currentValue);
     }
-    
+
     public void setValue(int value) {
         progressBar.setValue(value);
     }

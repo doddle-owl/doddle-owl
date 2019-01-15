@@ -23,11 +23,11 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.InputTermModel;
-import org.doddle_owl.views.InputConceptSelectionPanel;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.term_selection.TermModel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,15 +39,15 @@ import java.nio.file.Paths;
 /**
  * @author Takeshi Morita
  */
-public class SaveMatchedTermListAction extends AbstractAction {
+class SaveMatchedTermListAction extends AbstractAction {
 
     public SaveMatchedTermListAction(String title) {
         super(title);
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
-        InputConceptSelectionPanel inputConceptSelectionPanel = currentProject.getInputConceptSelectionPanel();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
+        ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
 
         JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
         int retval = chooser.showSaveDialog(DODDLE_OWL.rootPane);
@@ -56,7 +56,7 @@ public class SaveMatchedTermListAction extends AbstractAction {
             try {
                 BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
                 try (writer) {
-                    for (InputTermModel iwModel : inputConceptSelectionPanel.getInputTermModelSet()) {
+                    for (TermModel iwModel : conceptSelectionPanel.getTermModelSet()) {
                         writer.write(iwModel.getTerm());
                         writer.newLine();
                     }

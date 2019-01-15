@@ -23,7 +23,7 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 
 import javax.swing.*;
@@ -38,8 +38,8 @@ public class LoadTermEvalConceptSetAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().loadTermEvalConceptSet();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
+        currentProject.getConceptSelectionPanel().loadTermEvalConceptSet();
     }
 }
 

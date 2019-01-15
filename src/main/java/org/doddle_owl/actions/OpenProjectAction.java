@@ -23,15 +23,21 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.DODDLEProjectFileFilter;
-import org.doddle_owl.models.DODDLEProjectFolderFilter;
-import org.doddle_owl.models.ProjectFileNames;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEProjectFileFilter;
+import org.doddle_owl.models.common.DODDLEProjectFolderFilter;
+import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
-import org.doddle_owl.views.*;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
+import org.doddle_owl.views.reference_ontology_selection.ReferenceOntologySelectionPanel;
+import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -39,7 +45,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -52,291 +57,277 @@ import java.util.zip.ZipFile;
  */
 public class OpenProjectAction extends AbstractAction {
 
-	protected String title;
-	protected DODDLE_OWL doddle;
-	protected File openFile;
-	protected DODDLEProject newProject;
-	protected FileFilter doddleProjectFileFilter;
-	protected FileFilter doddleProjectFolderFilter;
+    String title;
+    DODDLE_OWL doddle;
+    File openFile;
+    private FileFilter doddleProjectFileFilter;
+    private FileFilter doddleProjectFolderFilter;
 
-	public OpenProjectAction() {
-	}
+    OpenProjectAction() {
+    }
 
-	public OpenProjectAction(String title, DODDLE_OWL ddl) {
-		super(title, Utils.getImageIcon("folder_page_white.png"));
-		this.title = title;
-		doddle = ddl;
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
-		doddleProjectFileFilter = new DODDLEProjectFileFilter();
-		doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
-	}
+    public OpenProjectAction(String title, DODDLE_OWL ddl) {
+        super(title, Utils.getImageIcon("folder_page_white.png"));
+        this.title = title;
+        doddle = ddl;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+        doddleProjectFileFilter = new DODDLEProjectFileFilter();
+        doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	protected static final int EOF = -1;
+    private static final int EOF = -1;
 
-	public static void getEntry(ZipFile zipFile, ZipEntry target) {
-		BufferedInputStream bis = null;
-		BufferedOutputStream bos = null;
-		try {
-			File file = new File(target.getName());
-			if (target.isDirectory()) {
-				file.mkdirs();
-			} else {
-				bis = new BufferedInputStream(zipFile.getInputStream(target));
-				String parentName;
-				if ((parentName = file.getParent()) != null) {
-					File dir = new File(parentName);
-					dir.mkdirs();
-				}
-				bos = new BufferedOutputStream(new FileOutputStream(file));
-				int c;
-				while ((c = bis.read()) != EOF) {
-					bos.write((byte) c);
-				}
-				bis.close();
-				bos.close();
-			}
-		} catch (IOException ze) {
-			ze.printStackTrace();
-		} finally {
-			try {
-				if (bis != null) {
-					bis.close();
-				}
-				if (bos != null) {
-					bos.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    private static void getEntry(ZipFile zipFile, ZipEntry target) {
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        try {
+            File file = new File(target.getName());
+            if (target.isDirectory()) {
+                file.mkdirs();
+            } else {
+                bis = new BufferedInputStream(zipFile.getInputStream(target));
+                String parentName;
+                if ((parentName = file.getParent()) != null) {
+                    File dir = new File(parentName);
+                    dir.mkdirs();
+                }
+                bos = new BufferedOutputStream(new FileOutputStream(file));
+                int c;
+                while ((c = bis.read()) != EOF) {
+                    bos.write((byte) c);
+                }
+                bis.close();
+                bos.close();
+            }
+        } catch (IOException ze) {
+            ze.printStackTrace();
+        } finally {
+            try {
+                if (bis != null) {
+                    bis.close();
+                }
+                if (bos != null) {
+                    bos.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	private File unzipProjectDir(File openFile) {
-		BufferedInputStream bis = null;
-		File openDir = null;
-		try {
-			ZipFile projectFile = new ZipFile(openFile);
-			ZipEntry entry = null;
-			for (Enumeration enumeration = projectFile.entries(); enumeration.hasMoreElements();) {
-				entry = (ZipEntry) enumeration.nextElement();
-				getEntry(projectFile, entry);
-			}
-			openDir = new File(entry.getName()).getParentFile();
-		} catch (IOException fnfe) {
-			fnfe.printStackTrace();
-		} finally {
-			try {
-				if (bis != null) {
-					bis.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return openDir;
-	}
+    private File unzipProjectDir(File openFile) {
+        BufferedInputStream bis = null;
+        File openDir = null;
+        try {
+            ZipFile projectFile = new ZipFile(openFile);
+            ZipEntry entry = null;
+            for (Enumeration enumeration = projectFile.entries(); enumeration.hasMoreElements(); ) {
+                entry = (ZipEntry) enumeration.nextElement();
+                getEntry(projectFile, entry);
+            }
+            openDir = new File(entry.getName()).getParentFile();
+        } catch (IOException fnfe) {
+            fnfe.printStackTrace();
+        } finally {
+            try {
+                if (bis != null) {
+                    bis.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return openDir;
+    }
 
-	private void getAllProjectFile(File dir, List<File> allFile) {
-		for (File file : dir.listFiles()) {
-			if (file.isDirectory()) {
-				getAllProjectFile(file, allFile);
-			} else {
-				allFile.add(file);
-			}
-		}
-	}
+    private void getAllProjectFile(File dir, List<File> allFile) {
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
+                getAllProjectFile(file, allFile);
+            } else {
+                allFile.add(file);
+            }
+        }
+    }
 
-	class OpenProjectWorker extends SwingWorker<String, String> implements PropertyChangeListener {
+    class OpenProjectWorker extends SwingWorker<String, String> implements PropertyChangeListener {
 
-		private int currentTaskCnt;
+        private int currentTaskCnt;
 
-		public OpenProjectWorker(int taskCnt) {
-			currentTaskCnt = taskCnt;
-			addPropertyChangeListener(this);
-		}
+        OpenProjectWorker(int taskCnt) {
+            currentTaskCnt = taskCnt;
+            addPropertyChangeListener(this);
+        }
 
-		public String doInBackground() {
-			while (!newProject.isInitialized()) {
-				try {
-					Thread.sleep(1000);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-			DODDLE_OWL.STATUS_BAR.setLastMessage(title);
-			setProgress(currentTaskCnt++);
-			try {
-				DODDLEProject currentProject = newProject;
+        public String doInBackground() {
+            while (!DODDLE_OWL.doddleProjectPanel.isInitialized()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            DODDLE_OWL.STATUS_BAR.setLastMessage(title);
+            setProgress(currentTaskCnt++);
+            try {
+                DODDLEProjectPanel currentProject = DODDLE_OWL.doddleProjectPanel;
 
-				ReferenceOntologySelectionPanel ontSelectionPanel = currentProject
-						.getOntologySelectionPanel();
-				InputConceptSelectionPanel inputConceptSelectionPanel = currentProject
-						.getInputConceptSelectionPanel();
-				InputDocumentSelectionPanel docSelectionPanelI = currentProject
-						.getDocumentSelectionPanel();
-				InputTermSelectionPanel inputTermSelectionPanel = currentProject
-						.getInputTermSelectionPanel();
-				ConceptDefinitionPanel conceptDefinitionPanel = currentProject
-						.getConceptDefinitionPanel();
-				File openDir;
-				List<String> recentProjects = doddle.loadRecentProject();
-				recentProjects.remove(openFile.getAbsolutePath());
-				recentProjects.add(0, openFile.getAbsolutePath());
-				doddle.saveRecentProject(recentProjects);
-				if (openFile.isDirectory()) {
-					openDir = openFile;
-				} else {
-					openDir = unzipProjectDir(openFile);
-				}
-				DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenProjectAction") + ": "
-						+ openFile.toString());
+                ReferenceOntologySelectionPanel ontSelectionPanel = currentProject.getOntologySelectionPanel();
+                ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
+                DocumentSelectionPanel docSelectionPanelI = currentProject.getDocumentSelectionPanel();
+                TermSelectionPanel termSelectionPanel = currentProject.getInputTermSelectionPanel();
+                ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
+                File openDir;
+                List<String> recentProjects = doddle.loadRecentProject();
+                recentProjects.remove(openFile.getAbsolutePath());
+                recentProjects.add(0, openFile.getAbsolutePath());
+                doddle.saveRecentProject(recentProjects);
+                if (openFile.isDirectory()) {
+                    openDir = openFile;
+                } else {
+                    openDir = unzipProjectDir(openFile);
+                }
+                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenProjectAction") + ": "
+                        + openFile.toString());
 
-				currentProject.loadLog(new File(openDir, ProjectFileNames.LOG_FILE));
-				currentProject.addLog("OpenProjectAction");
-				setProgress(currentTaskCnt++);
-				doddle.loadBaseURI(new File(openDir, ProjectFileNames.PROJECT_INFO_FILE));
-				setProgress(currentTaskCnt++);
-				docSelectionPanelI.loadDocuments(openDir);
-				setProgress(currentTaskCnt++);
-				ontSelectionPanel.loadGeneralOntologyInfo(new File(openDir,
-						ProjectFileNames.GENERAL_ONTOLOGY_INFO_FILE));
-				setProgress(currentTaskCnt++);
-				ontSelectionPanel.loadOWLMetaDataSet(new File(openDir,
-						ProjectFileNames.OWL_META_DATA_SET_DIR));
-				setProgress(currentTaskCnt++);
-				inputTermSelectionPanel.loadInputTermInfoTable(new File(openDir,
-						ProjectFileNames.TERM_INFO_TABLE_FILE), new File(openDir,
-						ProjectFileNames.REMOVED_TERM_INFO_TABLE_FILE));
-				setProgress(currentTaskCnt++);
-				File inputTermSetFile = new File(openDir, ProjectFileNames.INPUT_TERM_SET_FILE);
-				inputConceptSelectionPanel.loadInputTermSet(inputTermSetFile, currentTaskCnt);
-				setProgress(currentTaskCnt++);
-				while (!inputConceptSelectionPanel.isLoadInputTermSet()) {
-					try {
-						Thread.sleep(1000);
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-				DODDLE_OWL.STATUS_BAR.printMessage(Translator
-						.getTerm("OpenInputConceptSelectionResultAction"));
-				inputConceptSelectionPanel.loadTermEvalConceptSet(new File(openDir,
-						ProjectFileNames.TERM_EVAL_CONCEPT_SET_FILE));
-				setProgress(currentTaskCnt++);
-				if (inputTermSetFile.exists()) {
-					DODDLE_OWL.STATUS_BAR.printMessage(Translator
-							.getTerm("OpenInputTermConceptMapAction"));
-					inputConceptSelectionPanel.loadTermCorrespondConceptSetMap(new File(openDir,
-							ProjectFileNames.INPUT_TERM_CONCEPT_MAP_FILE));
-				}
-				setProgress(currentTaskCnt++);
-				inputConceptSelectionPanel.loadConstructTreeOption(new File(openDir,
-						ProjectFileNames.CONSTRUCT_TREE_OPTION_FILE));
-				setProgress(currentTaskCnt++);
-				inputConceptSelectionPanel.loadInputTermConstructTreeOptionSet(new File(openDir,
-						ProjectFileNames.INPUT_TERM_CONSTRUCT_TREE_OPTION_SET_FILE));
-				setProgress(currentTaskCnt++);
-				DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenInputConceptSetAction"));
-				inputConceptSelectionPanel.loadInputConceptSet(new File(openDir,
-						ProjectFileNames.INPUT_CONCEPT_SET_FILE));
-				setProgress(currentTaskCnt++);
-				inputConceptSelectionPanel.loadUndefinedTermSet(new File(openDir,
-						ProjectFileNames.UNDEFINED_TERM_SET_FILE));
-				setProgress(currentTaskCnt++);
-				DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenOWLOntologyAction"));
-				doddle.loadOntology(currentProject, new File(openDir,
-						ProjectFileNames.ONTOLOGY_FILE));
-				setProgress(currentTaskCnt++);
+                currentProject.loadLog(new File(openDir, ProjectFileNames.LOG_FILE));
+                currentProject.addLog("OpenProjectAction");
+                setProgress(currentTaskCnt++);
+                doddle.loadBaseURI(new File(openDir, ProjectFileNames.PROJECT_INFO_FILE));
+                setProgress(currentTaskCnt++);
+                docSelectionPanelI.loadDocuments(openDir);
+                setProgress(currentTaskCnt++);
+                ontSelectionPanel.loadGeneralOntologyInfo(new File(openDir, ProjectFileNames.GENERAL_ONTOLOGY_INFO_FILE));
+                setProgress(currentTaskCnt++);
+                ontSelectionPanel.loadOWLMetaDataSet(new File(openDir, ProjectFileNames.OWL_META_DATA_SET_DIR));
+                setProgress(currentTaskCnt++);
+                termSelectionPanel.loadInputTermInfoTable(new File(openDir,
+                        ProjectFileNames.TERM_INFO_TABLE_FILE), new File(openDir,
+                        ProjectFileNames.REMOVED_TERM_INFO_TABLE_FILE));
+                setProgress(currentTaskCnt++);
+                File inputTermSetFile = new File(openDir, ProjectFileNames.INPUT_TERM_SET_FILE);
+                conceptSelectionPanel.loadInputTermSet(inputTermSetFile, currentTaskCnt);
+                setProgress(currentTaskCnt++);
+                while (!conceptSelectionPanel.isLoadInputTermSet()) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                DODDLE_OWL.STATUS_BAR.printMessage(Translator
+                        .getTerm("OpenInputConceptSelectionResultAction"));
+                conceptSelectionPanel.loadTermEvalConceptSet(new File(openDir,
+                        ProjectFileNames.TERM_EVAL_CONCEPT_SET_FILE));
+                setProgress(currentTaskCnt++);
+                if (inputTermSetFile.exists()) {
+                    DODDLE_OWL.STATUS_BAR.printMessage(Translator
+                            .getTerm("OpenInputTermConceptMapAction"));
+                    conceptSelectionPanel.loadTermCorrespondConceptSetMap(new File(openDir,
+                            ProjectFileNames.INPUT_TERM_CONCEPT_MAP_FILE));
+                }
+                setProgress(currentTaskCnt++);
+                conceptSelectionPanel.loadConstructTreeOption(new File(openDir,
+                        ProjectFileNames.CONSTRUCT_TREE_OPTION_FILE));
+                setProgress(currentTaskCnt++);
+                conceptSelectionPanel.loadInputTermConstructTreeOptionSet(new File(openDir,
+                        ProjectFileNames.INPUT_TERM_CONSTRUCT_TREE_OPTION_SET_FILE));
+                setProgress(currentTaskCnt++);
+                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenInputConceptSetAction"));
+                conceptSelectionPanel.loadInputConceptSet(new File(openDir,
+                        ProjectFileNames.INPUT_CONCEPT_SET_FILE));
+                setProgress(currentTaskCnt++);
+                conceptSelectionPanel.loadUndefinedTermSet(new File(openDir,
+                        ProjectFileNames.UNDEFINED_TERM_SET_FILE));
+                setProgress(currentTaskCnt++);
+                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenOWLOntologyAction"));
+                doddle.loadOntology(currentProject, new File(openDir,
+                        ProjectFileNames.ONTOLOGY_FILE));
+                setProgress(currentTaskCnt++);
 
-				ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-				ConstructPropertyPanel constructPropertyPanel = currentProject
-						.getConstructPropertyPanel();
-				constructClassPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(
-						new File(openDir, ProjectFileNames.CLASS_TRIMMED_RESULT_ANALYSIS_FILE));
-				constructPropertyPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(
-						new File(openDir, ProjectFileNames.PROPERTY_TRIMMED_RESULT_ANALYSIS_FILE));
+                ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+                PropertyTreeConstructionPanel constructPropertyPanel = currentProject
+                        .getConstructPropertyPanel();
+                constructClassPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(
+                        new File(openDir, ProjectFileNames.CLASS_TRIMMED_RESULT_ANALYSIS_FILE));
+                constructPropertyPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(
+                        new File(openDir, ProjectFileNames.PROPERTY_TRIMMED_RESULT_ANALYSIS_FILE));
 
-				conceptDefinitionPanel.setInputDocList();
-				conceptDefinitionPanel.loadConceptDefinitionParameters(new File(openDir,
-						ProjectFileNames.CONCEPT_DEFINITION_PARAMETERS_FILE));
-				setProgress(currentTaskCnt++);
-				File conceptDefinitionResultDir = new File(openDir,
-						ProjectFileNames.WORDSPACE_RESULTS_DIR);
-				conceptDefinitionResultDir.mkdir();
-				conceptDefinitionPanel.loadWordSpaceResult(conceptDefinitionResultDir);
-				setProgress(currentTaskCnt++);
-				conceptDefinitionResultDir = new File(openDir, ProjectFileNames.APRIORI_RESULTS_DIR);
-				conceptDefinitionResultDir.mkdir();
-				conceptDefinitionPanel.loadAprioriResult(conceptDefinitionResultDir);
-				setProgress(currentTaskCnt++);
+                conceptDefinitionPanel.setInputDocList();
+                conceptDefinitionPanel.loadConceptDefinitionParameters(new File(openDir,
+                        ProjectFileNames.CONCEPT_DEFINITION_PARAMETERS_FILE));
+                setProgress(currentTaskCnt++);
+                File conceptDefinitionResultDir = new File(openDir,
+                        ProjectFileNames.WORDSPACE_RESULTS_DIR);
+                conceptDefinitionResultDir.mkdir();
+                conceptDefinitionPanel.loadWordSpaceResult(conceptDefinitionResultDir);
+                setProgress(currentTaskCnt++);
+                conceptDefinitionResultDir = new File(openDir, ProjectFileNames.APRIORI_RESULTS_DIR);
+                conceptDefinitionResultDir.mkdir();
+                conceptDefinitionPanel.loadAprioriResult(conceptDefinitionResultDir);
+                setProgress(currentTaskCnt++);
 
-				conceptDefinitionPanel.loadConceptDefinition(new File(openDir,
-						ProjectFileNames.CONCEPT_DEFINITION_FILE));
-				setProgress(currentTaskCnt++);
-				conceptDefinitionPanel.loadWrongPairSet(new File(openDir,
-						ProjectFileNames.WRONG_PAIR_SET_FILE));
-				setProgress(currentTaskCnt++);
+                conceptDefinitionPanel.loadConceptDefinition(new File(openDir,
+                        ProjectFileNames.CONCEPT_DEFINITION_FILE));
+                setProgress(currentTaskCnt++);
+                conceptDefinitionPanel.loadWrongPairSet(new File(openDir,
+                        ProjectFileNames.WRONG_PAIR_SET_FILE));
+                setProgress(currentTaskCnt++);
 
-				inputConceptSelectionPanel.selectTopList();
-				constructClassPanel.expandIsaTree();
-				constructClassPanel.expandHasaTree();
-				constructPropertyPanel.expandIsaTree();
+                conceptSelectionPanel.selectTopList();
+                constructClassPanel.expandIsaTree();
+                constructClassPanel.expandHasaTree();
+                constructPropertyPanel.expandIsaTree();
 
-				if (!openFile.isDirectory()) {
-					List<File> allFile = new ArrayList<>();
-					getAllProjectFile(openDir, allFile);
-					for (File file : allFile) {
-						file.delete();
-					}
-					for (File dir : openDir.listFiles()) {
-						dir.delete();
-					}
-					openDir.delete();
-				}
-				setProgress(currentTaskCnt++);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					newProject.setXGALayout();
-					newProject.setVisible(true);
-					newProject.setMaximum(true);
-				} catch (PropertyVetoException pve) {
-					pve.printStackTrace();
-				}
-				setProgress(currentTaskCnt++);
-				DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("OpenProjectDoneMessage"));
-				DODDLE_OWL.STATUS_BAR.setCurrentTime();
-				DODDLE_OWL.STATUS_BAR.unLock();
-				DODDLE_OWL.STATUS_BAR.hideProgressBar();
-			}
-			return "done";
-		}
+                if (!openFile.isDirectory()) {
+                    List<File> allFile = new ArrayList<>();
+                    getAllProjectFile(openDir, allFile);
+                    for (File file : allFile) {
+                        file.delete();
+                    }
+                    for (File dir : openDir.listFiles()) {
+                        dir.delete();
+                    }
+                    openDir.delete();
+                }
+                setProgress(currentTaskCnt++);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                DODDLE_OWL.doddleProjectPanel.setVisible(true);
+                setProgress(currentTaskCnt++);
+                DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("OpenProjectDoneMessage"));
+                DODDLE_OWL.STATUS_BAR.setCurrentTime();
+                DODDLE_OWL.STATUS_BAR.unLock();
+                DODDLE_OWL.STATUS_BAR.hideProgressBar();
+            }
+            return "done";
+        }
 
-		public void propertyChange(PropertyChangeEvent evt) {
-			if (evt.getNewValue() instanceof Integer) {
-				DODDLE_OWL.STATUS_BAR.setValue(currentTaskCnt);
-			}
-		}
-	}
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getNewValue() instanceof Integer) {
+                DODDLE_OWL.STATUS_BAR.setValue(currentTaskCnt);
+            }
+        }
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
-		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		chooser.addChoosableFileFilter(doddleProjectFileFilter);
-		chooser.addChoosableFileFilter(doddleProjectFolderFilter);
-		int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
-		if (retval != JFileChooser.APPROVE_OPTION) {
-			return;
-		}
-		openFile = chooser.getSelectedFile();
-		newProject = new DODDLEProject(openFile.getAbsolutePath(), 32);
-		OpenProjectWorker worker = new OpenProjectWorker(11);
-		DODDLE_OWL.STATUS_BAR.setSwingWorker(worker);
-		worker.execute();
-	}
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
+        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        chooser.addChoosableFileFilter(doddleProjectFileFilter);
+        chooser.addChoosableFileFilter(doddleProjectFolderFilter);
+        int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
+        if (retval != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        openFile = chooser.getSelectedFile();
+        DODDLE_OWL.doddleProjectPanel.initProject();
+        OpenProjectWorker worker = new OpenProjectWorker(11);
+        DODDLE_OWL.STATUS_BAR.setSwingWorker(worker);
+        worker.execute();
+    }
 }

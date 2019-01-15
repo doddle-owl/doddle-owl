@@ -26,8 +26,12 @@ package org.doddle_owl.utils;
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.*;
-import org.doddle_owl.views.ConceptDefinitionPanel;
+import org.doddle_owl.models.common.DODDLELiteral;
+import org.doddle_owl.models.concept_definition.ConceptPair;
+import org.doddle_owl.models.concept_definition.WordSpaceData;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.document_selection.Document;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
 
 import java.util.*;
 
@@ -38,15 +42,15 @@ public class WordSpace {
 
     private List<String> corpusTokenList;
 
-    private Map<String, Integer> gramNumMap;
+    private final Map<String, Integer> gramNumMap;
     private Map<String, List<ConceptPair>> wordSpaceResult;
 
     private WordSpaceData wsData;
-    private List<ConceptPair> allConceptPairs;
+    private final List<ConceptPair> allConceptPairs;
 
-    private List<String> inputWordList;
-    private Document document;
-    private ConceptDefinitionPanel conceptDefinitionPanel;
+    private final List<String> inputWordList;
+    private final Document document;
+    private final ConceptDefinitionPanel conceptDefinitionPanel;
 
     public WordSpace(ConceptDefinitionPanel cdp, Document doc) {
         document = doc;
@@ -297,7 +301,7 @@ public class WordSpace {
         }
     }
 
-    public List<String> makeGramText(List<String> tokenList) {
+    private List<String> makeGramText(List<String> tokenList) {
         List<String> gramText = new ArrayList<>();
         for (Iterator<String> i = tokenList.iterator(); i.hasNext(); ) {
             List<String> gramList = new ArrayList<>();

@@ -1,6 +1,6 @@
 *.iml
-src/test/java/CalcConceptDistanceInJWN.java
 doddle_log.txt
+doddle_log.txt.lck
 .idea/
 .gradle/
 gradle/
@@ -11,5 +11,5 @@ out/
 gradlew
 gradlew.bat
 .DS_Store
-./src/main/resources/catalog-v001.xml
+src/main/resources/catalog-v001.xml
 gradle.properties

@@ -23,15 +23,21 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.DODDLEProjectFileFilter;
-import org.doddle_owl.models.DODDLEProjectFolderFilter;
-import org.doddle_owl.models.ProjectFileNames;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEProjectFileFilter;
+import org.doddle_owl.models.common.DODDLEProjectFolderFilter;
+import org.doddle_owl.models.common.ProjectFileNames;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
-import org.doddle_owl.views.*;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
+import org.doddle_owl.views.reference_ontology_selection.ReferenceOntologySelectionPanel;
+import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -51,10 +57,10 @@ import java.util.zip.ZipOutputStream;
  */
 public class SaveProjectAction extends AbstractAction {
 
-    private String title;
-    private DODDLE_OWL doddle;
-    private FileFilter doddleProjectFileFilter;
-    private FileFilter doddleProjectFolderFilter;
+    private final String title;
+    private final DODDLE_OWL doddle;
+    private final FileFilter doddleProjectFileFilter;
+    private final FileFilter doddleProjectFolderFilter;
 
     public String getTitle() {
         return title;
@@ -69,7 +75,7 @@ public class SaveProjectAction extends AbstractAction {
         doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
     }
 
-    public SaveProjectAction(String title, ImageIcon icon, DODDLE_OWL ddl) {
+    SaveProjectAction(String title, ImageIcon icon, DODDLE_OWL ddl) {
         super(title, icon);
         this.title = title;
         doddle = ddl;
@@ -83,7 +89,7 @@ public class SaveProjectAction extends AbstractAction {
         }
     }
 
-    public void saveProject(File saveFile, DODDLEProject currentProject) {
+    void saveProject(File saveFile, DODDLEProjectPanel currentProject) {
         File saveDir;
         if (saveFile.isDirectory()) {
             saveDir = saveFile;
@@ -92,12 +98,11 @@ public class SaveProjectAction extends AbstractAction {
             saveDir.mkdir();
         }
         ReferenceOntologySelectionPanel ontSelectionPanel = currentProject.getOntologySelectionPanel();
-        InputConceptSelectionPanel inputConceptSelectionPanel = currentProject.getInputConceptSelectionPanel();
-        InputDocumentSelectionPanel docSelectionPanel = currentProject.getDocumentSelectionPanel();
-        InputTermSelectionPanel inputTermSelectionPanel = currentProject.getInputTermSelectionPanel();
+        ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
+        DocumentSelectionPanel docSelectionPanel = currentProject.getDocumentSelectionPanel();
+        TermSelectionPanel termSelectionPanel = currentProject.getInputTermSelectionPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
-        currentProject.setTitle(saveFile.getAbsolutePath());
-        currentProject.setProjectName(saveFile.getAbsolutePath());
+        DODDLE_OWL.rootFrame.setTitle(saveFile.getAbsolutePath());
         ontSelectionPanel.saveGeneralOntologyInfo(new File(saveDir, ProjectFileNames.GENERAL_ONTOLOGY_INFO_FILE));
         File owlMetaDataSetDir = new File(saveDir, ProjectFileNames.OWL_META_DATA_SET_DIR);
         owlMetaDataSetDir.mkdir();
@@ -105,19 +110,19 @@ public class SaveProjectAction extends AbstractAction {
         ontSelectionPanel.saveOWLMetaDataSet(owlMetaDataSetDir);
         // docSelectionPanel.saveDocuments(saveDir); // ファイルの内容のコピーはしないようにした
         docSelectionPanel.saveDocumentInfo(saveDir);
-        inputTermSelectionPanel.saveInputTermInfoTable(new File(saveDir, ProjectFileNames.TERM_INFO_TABLE_FILE),
+        termSelectionPanel.saveInputTermInfoTable(new File(saveDir, ProjectFileNames.TERM_INFO_TABLE_FILE),
                 new File(saveDir, ProjectFileNames.REMOVED_TERM_INFO_TABLE_FILE));
-        inputConceptSelectionPanel.saveInputTermSet(new File(saveDir, ProjectFileNames.INPUT_TERM_SET_FILE));
-        inputConceptSelectionPanel
+        conceptSelectionPanel.saveInputTermSet(new File(saveDir, ProjectFileNames.INPUT_TERM_SET_FILE));
+        conceptSelectionPanel
                 .saveTermEvalConceptSet(new File(saveDir, ProjectFileNames.TERM_EVAL_CONCEPT_SET_FILE));
-        inputConceptSelectionPanel.saveTermCorrespondConceptSetMap(new File(saveDir,
+        conceptSelectionPanel.saveTermCorrespondConceptSetMap(new File(saveDir,
                 ProjectFileNames.INPUT_TERM_CONCEPT_MAP_FILE));
-        inputConceptSelectionPanel.saveConstructTreeOption(new File(saveDir,
+        conceptSelectionPanel.saveConstructTreeOption(new File(saveDir,
                 ProjectFileNames.CONSTRUCT_TREE_OPTION_FILE));
-        inputConceptSelectionPanel.saveInputTermConstructTreeOptionSet(new File(saveDir,
+        conceptSelectionPanel.saveInputTermConstructTreeOptionSet(new File(saveDir,
                 ProjectFileNames.INPUT_TERM_CONSTRUCT_TREE_OPTION_SET_FILE));
-        inputConceptSelectionPanel.saveInputConceptSet(new File(saveDir, ProjectFileNames.INPUT_CONCEPT_SET_FILE));
-        inputConceptSelectionPanel.saveUndefinedTermSet(new File(saveDir, ProjectFileNames.UNDEFINED_TERM_SET_FILE));
+        conceptSelectionPanel.saveInputConceptSet(new File(saveDir, ProjectFileNames.INPUT_CONCEPT_SET_FILE));
+        conceptSelectionPanel.saveUndefinedTermSet(new File(saveDir, ProjectFileNames.UNDEFINED_TERM_SET_FILE));
         doddle.saveOntology(currentProject, new File(saveDir, ProjectFileNames.ONTOLOGY_FILE));
 
         currentProject.getConstructClassPanel().getConceptDriftManagementPanel().saveTrimmedResultAnalysis(
@@ -143,36 +148,36 @@ public class SaveProjectAction extends AbstractAction {
             zipProjectDir(saveFile, saveDir);
         }
         DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveProjectDoneMessage") + " ----- "
-                + java.util.Calendar.getInstance().getTime() + ": " + currentProject.getTitle());
+                + java.util.Calendar.getInstance().getTime() + ": " + DODDLE_OWL.rootFrame.getTitle());
     }
 
-    public void saveProjectInfo(DODDLEProject currentProject, File file) {
+    private void saveProjectInfo(DODDLEProjectPanel currentProject, File file) {
         ReferenceOntologySelectionPanel ontSelectionPanel = currentProject.getOntologySelectionPanel();
-        InputConceptSelectionPanel inputConceptSelectionPanel = currentProject.getInputConceptSelectionPanel();
-        ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-        ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+        ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
+        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         try {
             StringBuilder buf = new StringBuilder();
             buf.append(DODDLEConstants.BASE_URI).append("\n");
 
             buf.append(Translator.getTerm("AvailableGeneralOntologiesMessage")).append(": ").append(ontSelectionPanel.getEnableDicList()).append("\n");
-            if (inputConceptSelectionPanel.getInputTermModelSet() != null) {
-                buf.append(Translator.getTerm("InputTermCountMessage")).append(": ").append(inputConceptSelectionPanel.getInputTermCnt()).append("\n");
+            if (conceptSelectionPanel.getTermModelSet() != null) {
+                buf.append(Translator.getTerm("InputTermCountMessage")).append(": ").append(conceptSelectionPanel.getInputTermCnt()).append("\n");
             }
-            buf.append(Translator.getTerm("PerfectlyMatchedTermCountMessage")).append(": ").append(inputConceptSelectionPanel.getPerfectlyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("SystemAddedPerfectlyMatchedTermCountMessage")).append(": ").append(inputConceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("PartiallyMatchedTermCountMessage")).append(": ").append(inputConceptSelectionPanel.getPartiallyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("MatchedTermCountMessage")).append(": ").append(inputConceptSelectionPanel.getMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("UndefinedTermCountMessage")).append(": ").append(inputConceptSelectionPanel.getUndefinedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("ExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPerfectlyMatchedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("SystemAddedExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("PartialMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPartiallyMatchedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("MatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getMatchedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("UndefinedTermCountMessage")).append(": ").append(conceptSelectionPanel.getUndefinedTermCnt()).append("\n");
 
-            if (inputConceptSelectionPanel.getInputConceptSet() != null) {
-                buf.append(Translator.getTerm("InputConceptCountMessage")).append(": ").append(inputConceptSelectionPanel.getInputConceptSet().size()).append("\n");
+            if (conceptSelectionPanel.getInputConceptSet() != null) {
+                buf.append(Translator.getTerm("InputConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputConceptSet().size()).append("\n");
             }
-            if (inputConceptSelectionPanel.getInputNounConceptSet() != null) {
-                buf.append(Translator.getTerm("InputNounConceptCountMessage")).append(": ").append(inputConceptSelectionPanel.getInputNounConceptSet().size()).append("\n");
+            if (conceptSelectionPanel.getInputNounConceptSet() != null) {
+                buf.append(Translator.getTerm("InputNounConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputNounConceptSet().size()).append("\n");
             }
-            if (inputConceptSelectionPanel.getInputVerbConceptSet() != null) {
-                buf.append(Translator.getTerm("InputVerbConceptCountMessage")).append(": ").append(inputConceptSelectionPanel.getInputVerbConceptSet().size()).append("\n");
+            if (conceptSelectionPanel.getInputVerbConceptSet() != null) {
+                buf.append(Translator.getTerm("InputVerbConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputVerbConceptSet().size()).append("\n");
             }
 
             buf.append(Translator.getTerm("ClassSINCountMessage")).append(": ").append(constructClassPanel.getAddedSINNum()).append("\n");
@@ -266,7 +271,7 @@ public class SaveProjectAction extends AbstractAction {
         }
     }
 
-    public File getSaveFile() {
+    File getSaveFile() {
         JFileChooser fileChooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileChooser.addChoosableFileFilter(doddleProjectFileFilter);
@@ -292,13 +297,13 @@ public class SaveProjectAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
         if (currentProject == null) {
             return;
         }
         File saveFile;
-        if (!currentProject.getTitle().equals(Translator.getTerm("NewProjectAction"))) {
-            saveFile = new File(currentProject.getTitle());
+        if (!DODDLE_OWL.rootFrame.getTitle().equals(Translator.getTerm("NewProjectAction"))) {
+            saveFile = new File(DODDLE_OWL.rootFrame.getTitle());
         } else {
             saveFile = getSaveFile();
         }

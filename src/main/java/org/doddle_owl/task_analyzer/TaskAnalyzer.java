@@ -23,8 +23,8 @@
 
 package org.doddle_owl.task_analyzer;
 
-import org.doddle_owl.models.Document;
-import org.doddle_owl.views.InputDocumentSelectionPanel;
+import org.doddle_owl.models.document_selection.Document;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import java.io.*;
 import java.util.*;
@@ -35,14 +35,14 @@ import java.util.Map.Entry;
  */
 public class TaskAnalyzer {
 
-    private List<CabochaDocument> cabochaDocList;
-    private List<UseCaseTask> useCaseTaskList;
-    private Map<String, Integer> compoundWordCountMap;
-    private Map<String, Integer> compoundWordWithNokakuCountMap;
+    private final List<CabochaDocument> cabochaDocList;
+    private final List<UseCaseTask> useCaseTaskList;
+    private final Map<String, Integer> compoundWordCountMap;
+    private final Map<String, Integer> compoundWordWithNokakuCountMap;
     private Process cabochaProcess;
 
-    private Set<Segment> segmentSet; // 全文書の全文節の集合を保存
-    private Map<Segment, Set<Segment>> segmentMap; // 文節とその文節に係っている文節の集合を保存
+    private final Set<Segment> segmentSet; // 全文書の全文節の集合を保存
+    private final Map<Segment, Set<Segment>> segmentMap; // 文節とその文節に係っている文節の集合を保存
 
     public TaskAnalyzer() {
         cabochaDocList = new ArrayList<>();
@@ -80,7 +80,7 @@ public class TaskAnalyzer {
 
             // --output-format=XML 
             ProcessBuilder processBuilder = new ProcessBuilder(
-                    InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer, "-f3", tmpFile.getAbsolutePath());
+                    DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer, "-f3", tmpFile.getAbsolutePath());
             cabochaProcess = processBuilder.start();
             cabochaDoc = new CabochaDocument(doc, cabochaProcess);
             cabochaDocList.add(cabochaDoc);

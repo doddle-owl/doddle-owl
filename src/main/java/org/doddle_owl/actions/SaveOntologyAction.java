@@ -23,16 +23,16 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.ConceptTreeNode;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.FreeMindFileFilter;
-import org.doddle_owl.models.OWLFileFilter;
-import org.doddle_owl.views.ConceptDefinitionPanel;
-import org.doddle_owl.views.ConceptTreePanel;
-import org.doddle_owl.views.ConstructClassPanel;
-import org.doddle_owl.views.ConstructPropertyPanel;
+import org.doddle_owl.models.concept_tree.ConceptTreeNode;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.FreeMindFileFilter;
+import org.doddle_owl.models.common.OWLFileFilter;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
+import org.doddle_owl.views.concept_tree.ConceptTreePanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 import org.doddle_owl.utils.FreeMindModelMaker;
 import org.doddle_owl.utils.JenaModelMaker;
 import org.doddle_owl.utils.Translator;
@@ -48,7 +48,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -64,9 +63,9 @@ import java.nio.file.Paths;
  */
 public class SaveOntologyAction extends AbstractAction {
 
-    private String conversionType;
-    private FileFilter owlFileFilter;
-    private FileFilter freeMindFileFilter;
+    private final String conversionType;
+    private final FileFilter owlFileFilter;
+    private final FileFilter freeMindFileFilter;
     public static final String OWL_ONTOLOGY = "OWL";
     public static final String FREEMIND_ONTOLOGY = "FREEMIND";
 
@@ -77,9 +76,9 @@ public class SaveOntologyAction extends AbstractAction {
         freeMindFileFilter = new FreeMindFileFilter();
     }
 
-    public static Model getOntology(DODDLEProject currentProject) {
-        ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-        ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+    private static Model getOntology(DODDLEProjectPanel currentProject) {
+        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
 
         Model ontology = JenaModelMaker.makeClassModel(constructClassPanel.getIsaTreeModelRoot(),
@@ -94,10 +93,10 @@ public class SaveOntologyAction extends AbstractAction {
         return ontology;
     }
 
-    public void saveFreeMindOntology(DODDLEProject project, File file) {
+    private void saveFreeMindOntology(DODDLEProjectPanel project, File file) {
         try {
-            ConstructClassPanel constructClassPanel = project.getConstructClassPanel();
-            ConstructPropertyPanel constructPropertyPanel = project.getConstructPropertyPanel();
+            ClassTreeConstructionPanel constructClassPanel = project.getConstructClassPanel();
+            PropertyTreeConstructionPanel constructPropertyPanel = project.getConstructPropertyPanel();
 
             DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docbuilder = dbfactory.newDocumentBuilder();
@@ -131,10 +130,10 @@ public class SaveOntologyAction extends AbstractAction {
         }
     }
 
-    public void saveOWLOntology(DODDLEProject project, File file) {
+    public void saveOWLOntology(DODDLEProjectPanel project, File file) {
         try {
             Model ontModel = getOntology(project);
-            RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
+            RDFWriter rdfWriter = ontModel.getWriter("TURTLE");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
             rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
@@ -155,7 +154,7 @@ public class SaveOntologyAction extends AbstractAction {
         }
         int retval = chooser.showSaveDialog(DODDLE_OWL.rootPane);
         if (retval == JFileChooser.APPROVE_OPTION) {
-            DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+            DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
             if (conversionType.equals(OWL_ONTOLOGY)) {
                 File file = chooser.getSelectedFile();
                 if (!file.getName().endsWith(".owl")) {

@@ -23,11 +23,11 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.views.ConstructClassPanel;
-import org.doddle_owl.views.ConstructPropertyPanel;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -46,9 +46,9 @@ public class SaveConceptPreferentialTermAction extends AbstractAction {
         super(title);
     }
 
-    public void saveIDPreferentialTerm(DODDLEProject currentProject, File file) {
-        ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-        ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+    public void saveIDPreferentialTerm(DODDLEProjectPanel currentProject, File file) {
+        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         try {
 
             Map uriPreferentialTermMap = constructClassPanel.getIDPreferentialTermMap();
@@ -77,7 +77,7 @@ public class SaveConceptPreferentialTermAction extends AbstractAction {
         if (retval != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
         saveIDPreferentialTerm(currentProject, chooser.getSelectedFile());
     }
 }

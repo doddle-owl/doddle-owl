@@ -23,11 +23,11 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -42,13 +42,13 @@ public class LoadInputTermSetAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
-        InputConceptSelectionPanel inputConceptSelectionPanel = currentProject.getInputConceptSelectionPanel();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
+        ConceptSelectionPanel conceptSelectionPanel = currentProject.getConceptSelectionPanel();
 
         JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
         int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
         if (retval == JFileChooser.APPROVE_OPTION) {
-            inputConceptSelectionPanel.loadInputTermSet(chooser.getSelectedFile(), 0);
+            conceptSelectionPanel.loadInputTermSet(chooser.getSelectedFile(), 0);
             DODDLE_OWL.setSelectedIndex(DODDLEConstants.DISAMBIGUATION_PANEL);
             DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenInputTermListAction"));
         }

@@ -31,7 +31,7 @@ import java.util.*;
 public class Segment {
 
     private int modificationRelationNum;
-    private List<Morpheme> morphemeList;
+    private final List<Morpheme> morphemeList;
     private Segment dependToSegment;
     private Segment dependFromSegment;
 
@@ -96,7 +96,7 @@ public class Segment {
         return 0;
     }
 
-    public List<Morpheme> getNounMorphemeList() {
+    private List<Morpheme> getNounMorphemeList() {
         List<Morpheme> nounMorList = new ArrayList<>();
         boolean isIncludeSymbolParenthesis = isIncludeSymbolParenthesis();
         for (Morpheme m : morphemeList) {

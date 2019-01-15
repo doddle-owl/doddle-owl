@@ -23,7 +23,7 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Utils;
 
@@ -43,7 +43,7 @@ public class SaveProjectAsAction extends SaveProjectAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
         if (currentProject == null) { return; }
         File saveFile = getSaveFile();
         if (saveFile != null) {

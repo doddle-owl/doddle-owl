@@ -26,9 +26,9 @@ package org.doddle_owl.utils;
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.ConceptPair;
-import org.doddle_owl.models.Document;
-import org.doddle_owl.views.ConceptDefinitionPanel;
+import org.doddle_owl.models.concept_definition.ConceptPair;
+import org.doddle_owl.models.document_selection.Document;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
 
 import java.util.*;
 
@@ -40,20 +40,18 @@ public class Apriori {
 
     private List<List<String>> lineList;
 
-    private Set<List<Integer>> pairSet;
-    private List<ConceptPair> allRelation;
-    private Map<String, List<ConceptPair>> aprioriResult;
-    private Map<List<Integer>, Integer> indexPairAppearence;
+    private final Set<List<Integer>> pairSet;
+    private final List<ConceptPair> allRelation;
+    private final Map<String, List<ConceptPair>> aprioriResult;
+    private final Map<List<Integer>, Integer> indexPairAppearence;
     private double minSupport;
     private double minConfidence;
-    private List<String> inputWordList;
+    private final List<String> inputWordList;
 
-    private Document document;
-    private ConceptDefinitionPanel conceptDefinitionPanel;
+    private final Document document;
 
-    public Apriori(ConceptDefinitionPanel cdp, Document doc) {
+    public Apriori(ConceptDefinitionPanel conceptDefinitionPanel, Document doc) {
         document = doc;
-        conceptDefinitionPanel = cdp;
         pairSet = new HashSet<>();
         aprioriResult = new HashMap<>();
         indexPairAppearence = new HashMap<>();
@@ -173,10 +171,6 @@ public class Apriori {
         }
     }
 
-    public void setConfidence(double dou) {
-        minConfidence = dou;
-    }
-
     /**
      * conceptAppearance ...
      * 全文の中にconceptData.getConcepts()リストの番号に対応する概念がいくつ出現したかを保存
@@ -228,11 +222,4 @@ public class Apriori {
         }
     }
 
-    public Map<String, List<ConceptPair>> getAprioriResult() {
-        return aprioriResult;
-    }
-
-    public List<ConceptPair> getAllRelation() {
-        return allRelation;
-    }
 }

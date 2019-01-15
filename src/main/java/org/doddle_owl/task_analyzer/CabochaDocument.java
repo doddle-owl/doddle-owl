@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 
 import javax.xml.parsers.*;
 
-import org.doddle_owl.models.Document;
+import org.doddle_owl.models.document_selection.Document;
 
 import org.w3c.dom.*;
 import org.xml.sax.*;
@@ -41,15 +41,15 @@ public class CabochaDocument {
 
     private String docName;
     private Document document;
-    private List<Sentence> sentenceList;
-    private Set<Segment> segmentSet;
-    private Map<String, Integer> compoundWordCountMap;
-    private Map<String, Integer> compoundWordWithNokakuCountMap;
-    private Map<Segment, Set<Segment>> segmentMap;
-    private Process cabochaProcess;
-    public static String CHARSET = "UTF-8";
+    private final List<Sentence> sentenceList;
+    private final Set<Segment> segmentSet;
+    private final Map<String, Integer> compoundWordCountMap;
+    private final Map<String, Integer> compoundWordWithNokakuCountMap;
+    private final Map<Segment, Set<Segment>> segmentMap;
+    private final Process cabochaProcess;
+    public static final String CHARSET = "UTF-8";
 
-    public CabochaDocument(Process cp) {
+    private CabochaDocument(Process cp) {
         cabochaProcess = cp;
         sentenceList = new ArrayList<>();
         segmentSet = new HashSet<>();
@@ -69,10 +69,10 @@ public class CabochaDocument {
             Element tokElement = (Element) tokElementList.item(i);
             String surface = tokElement.getTextContent();
             String[] elems = tokElement.getAttribute("feature").split(",");
-            String pos = elems[0];
+            StringBuilder pos = new StringBuilder(elems[0]);
             for (int j = 1; j < 3; j++) {
                 if (!elems[j].equals("*")) {
-                    pos += "-" + elems[j];
+                    pos.append("-").append(elems[j]);
                 }
             }
             String basic = surface;
@@ -81,16 +81,16 @@ public class CabochaDocument {
                 basic = elems[6];
                 kana = elems[7];
             }
-            Morpheme morpheme = new Morpheme(surface, kana, basic, pos);
+            Morpheme morpheme = new Morpheme(surface, kana, basic, pos.toString());
             segment.addMorpheme(morpheme);
         }
     }
 
-    private void setChunk(NodeList chunkElementList, Segment segment, Sentence sentence) {
+    private void setChunk(NodeList chunkElementList, Sentence sentence) {
         for (int i = 0; i < chunkElementList.getLength(); i++) {
             Element chunkElement = (Element) chunkElementList.item(i);
             int link = Integer.parseInt(chunkElement.getAttribute("link"));
-            segment = new Segment(link);
+            Segment segment = new Segment(link);
             sentence.addSegment(segment);
             NodeList tokElementList = chunkElement.getElementsByTagName("tok");
             setMorpheme(tokElementList, segment);
@@ -109,7 +109,7 @@ public class CabochaDocument {
             for (int i = 0; i < sentenceElementList.getLength(); i++) {
                 Element sentenceElement = (Element) sentenceElementList.item(i);
                 NodeList chunkElementList = sentenceElement.getElementsByTagName("chunk");
-                setChunk(chunkElementList, segment, sentence);
+                setChunk(chunkElementList, sentence);
                 sentence.mergeSegments();
                 setSegmentMap(sentence);
                 setCompoundWordCountMap(sentence);

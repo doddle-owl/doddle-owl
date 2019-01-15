@@ -31,8 +31,13 @@ import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.*;
-import org.doddle_owl.views.ConceptTreePanel;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLELiteral;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.concept_tree.ConceptTreeNode;
+import org.doddle_owl.models.concept_tree.VerbConcept;
+import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import org.doddle_owl.views.concept_tree.ConceptTreePanel;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -81,7 +86,7 @@ public class JenaModelMaker {
     private static Resource getResource(ConceptTreeNode node, Model ontology) {
         ConceptTreeNode parentNode = (ConceptTreeNode) node.getParent();
         return ontology.getResource(parentNode.getURI());
-        // return ontology.getResource(Utils.getNameSpace(parentNode.getURI()) +
+        // return ontology_api.getResource(Utils.getNameSpace(parentNode.getURI()) +
         // parentNode.getConcept().getWord() + "_"
         // + parentNode.getConcept().getLocalName());
     }

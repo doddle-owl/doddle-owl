@@ -26,16 +26,22 @@ package org.doddle_owl.actions;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLELiteral;
+import org.doddle_owl.models.common.FreeMindFileFilter;
+import org.doddle_owl.models.common.OWLFileFilter;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.concept_tree.ConceptTreeNode;
+import org.doddle_owl.models.concept_tree.VerbConcept;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.*;
 import org.doddle_owl.utils.ConceptTreeMaker;
 import org.doddle_owl.utils.FreeMindModelMaker;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.ConceptTreePanel;
-import org.doddle_owl.views.ConstructClassPanel;
-import org.doddle_owl.views.ConstructPropertyPanel;
-import org.doddle_owl.views.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
+import org.doddle_owl.views.concept_tree.ConceptTreePanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -54,9 +60,9 @@ import java.nio.file.Paths;
  */
 public class LoadOntologyAction extends AbstractAction {
 
-	private String conversionType;
-	private FileFilter owlFileFilter;
-	private FileFilter freeMindFileFilter;
+	private final String conversionType;
+	private final FileFilter owlFileFilter;
+	private final FileFilter freeMindFileFilter;
 	public static final String OWL_ONTOLOGY = "OWL";
 	public static final String FREEMIND_ONTOLOGY = "FREEMIND";
 
@@ -67,20 +73,20 @@ public class LoadOntologyAction extends AbstractAction {
 		freeMindFileFilter = new FreeMindFileFilter();
 	}
 
-	public void loadFreeMindOntology(DODDLEProject currentProject, File file) {
-		InputConceptSelectionPanel inputConceptSelectionPanel = currentProject
-				.getInputConceptSelectionPanel();
-		ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-		ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+	private void loadFreeMindOntology(DODDLEProjectPanel currentProject, File file) {
+		ConceptSelectionPanel conceptSelectionPanel = currentProject
+				.getConceptSelectionPanel();
+		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+		PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
 		if (!file.exists()) {
 			return;
 		}
-		constructClassPanel.init();
-		constructPropertyPanel.init();
+		constructClassPanel.initialize();
+		constructPropertyPanel.initialize();
 		currentProject.resetURIConceptMap();
 		ConceptTreeMaker.getInstance().setInputConceptSet(
-				inputConceptSelectionPanel.getInputConceptSet());
+				conceptSelectionPanel.getInputConceptSet());
 
 		Element docElement = FreeMindModelMaker.getDocumentElement(file);
 		Element rootNode = null;
@@ -137,7 +143,7 @@ public class LoadOntologyAction extends AbstractAction {
 		expandTrees(currentProject);
 	}
 
-	public void loadOWLOntology(DODDLEProject currentProject, File file) {
+	public void loadOWLOntology(DODDLEProjectPanel currentProject, File file) {
 		if (!file.exists()) {
 			return;
 		}
@@ -145,7 +151,7 @@ public class LoadOntologyAction extends AbstractAction {
 			Model model = ModelFactory.createDefaultModel();
 			BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
 			try (reader) {
-				model.read(reader, DODDLEConstants.BASE_URI, "RDF/XML");
+				model.read(reader, DODDLEConstants.BASE_URI, "TURTLE");
 			}
 			loadOWLOntology(currentProject, model);
 		} catch (IOException e) {
@@ -153,17 +159,17 @@ public class LoadOntologyAction extends AbstractAction {
 		}
 	}
 
-	public void loadOWLOntology(DODDLEProject currentProject, Model model) {
-		InputConceptSelectionPanel inputConceptSelectionPanel = currentProject
-				.getInputConceptSelectionPanel();
-		ConstructClassPanel constructClassPanel = currentProject.getConstructClassPanel();
-		ConstructPropertyPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+	private void loadOWLOntology(DODDLEProjectPanel currentProject, Model model) {
+		ConceptSelectionPanel conceptSelectionPanel = currentProject
+				.getConceptSelectionPanel();
+		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+		PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
-		constructClassPanel.init();
-		constructPropertyPanel.init();
+		constructClassPanel.initialize();
+		constructPropertyPanel.initialize();
 		currentProject.resetURIConceptMap();
 		ConceptTreeMaker.getInstance().setInputConceptSet(
-				inputConceptSelectionPanel.getInputConceptSet());
+				conceptSelectionPanel.getInputConceptSet());
 
 		currentProject.initUserIDCount();
 		TreeNode rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject,
@@ -208,7 +214,7 @@ public class LoadOntologyAction extends AbstractAction {
 		expandTrees(currentProject);
 	}
 
-	private void expandTrees(DODDLEProject currentProject) {
+	private void expandTrees(DODDLEProjectPanel currentProject) {
 		currentProject.getConstructClassPanel().expandIsaTree();
 		currentProject.getConstructClassPanel().expandHasaTree();
 		currentProject.getConstructPropertyPanel().expandIsaTree();
@@ -224,7 +230,7 @@ public class LoadOntologyAction extends AbstractAction {
 		}
 		int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
 		if (retval == JFileChooser.APPROVE_OPTION) {
-			DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
+			DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
 			if (conversionType.equals(OWL_ONTOLOGY)) {
 				loadOWLOntology(currentProject, chooser.getSelectedFile());
 				DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenOWLOntologyAction"));

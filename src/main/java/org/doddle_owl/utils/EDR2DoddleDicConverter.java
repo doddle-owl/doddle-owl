@@ -23,9 +23,9 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.models.Concept;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.DODDLELiteral;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLELiteral;
 import org.doddle_owl.views.DODDLEDicConverterUI;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFWriter;
@@ -59,14 +59,14 @@ public class EDR2DoddleDicConverter {
         EDR, EDRT, JPNWN
     }
 
-    public static String WORD_DATA = "word.data";
-    public static String WORD_INDEX = "word.index";
-    public static String CONCEPT_DATA = "concept.data";
-    public static String CONCEPT_INDEX = "concept.index";
-    public static String RELATION_DATA = "relation.data";
-    public static String RELATION_INDEX = "relation.index";
-    public static String TREE_DATA = "tree.data";
-    public static String TREE_INDEX = "tree.index";
+    private static final String WORD_DATA = "word.data";
+    private static final String WORD_INDEX = "word.index";
+    private static final String CONCEPT_DATA = "concept.data";
+    private static final String CONCEPT_INDEX = "concept.index";
+    private static final String RELATION_DATA = "relation.data";
+    private static final String RELATION_INDEX = "relation.index";
+    private static final String TREE_DATA = "tree.data";
+    private static final String TREE_INDEX = "tree.index";
 
     private static String DODDLE_DIC_HOME = "C:/DODDLE-OWL/DODDLE_DIC/";
     private static String EDR_HOME = "C:/DODDLE-OWL/EDR_TextData/";
@@ -78,25 +78,25 @@ public class EDR2DoddleDicConverter {
     private static String CPT_DIC_PATH = EDR_HOME + "CPT.DIC";
 
     private static TreeModel edrTreeModel;
-    private static Map<String, Set<String>> idSubIDSetMap = new HashMap<>();
-    private static TreeMap<String, Set<TreeNode>> idNodeSetMap = new TreeMap<>();
+    private static final Map<String, Set<String>> idSubIDSetMap = new HashMap<>();
+    private static final TreeMap<String, Set<TreeNode>> idNodeSetMap = new TreeMap<>();
 
-    private static TreeSet<String> relationConceptIDSet = new TreeSet<>();
+    private static final TreeSet<String> relationConceptIDSet = new TreeSet<>();
 
-    private static List<Long> dataFilePointerList = new ArrayList<>();
-    private static Map<String, Long> idFilePointerMap = new HashMap<>();
-    private static TreeMap<String, Concept> idDefinitionMap = new TreeMap<>();
-    private static TreeMap<String, Set<String>> wordIDSetMap = new TreeMap<>();
-    private static TreeMap<String, Set<Long>> wordFilePointerSetMap = new TreeMap<>();
+    private static final List<Long> dataFilePointerList = new ArrayList<>();
+    private static final Map<String, Long> idFilePointerMap = new HashMap<>();
+    private static final TreeMap<String, Concept> idDefinitionMap = new TreeMap<>();
+    private static final TreeMap<String, Set<String>> wordIDSetMap = new TreeMap<>();
+    private static final TreeMap<String, Set<Long>> wordFilePointerSetMap = new TreeMap<>();
 
-    private static Map<String, Set<String>> agentMap = new HashMap<>();
-    private static Map<String, Set<String>> objectMap = new HashMap<>();
-    private static Map<String, Set<String>> goalMap = new HashMap<>();
-    private static Map<String, Set<String>> placeMap = new HashMap<>();
-    private static Map<String, Set<String>> implementMap = new HashMap<>();
-    private static Map<String, Set<String>> a_objectMap = new HashMap<>();
-    private static Map<String, Set<String>> sceneMap = new HashMap<>();
-    private static Map<String, Set<String>> causeMap = new HashMap<>();
+    private static final Map<String, Set<String>> agentMap = new HashMap<>();
+    private static final Map<String, Set<String>> objectMap = new HashMap<>();
+    private static final Map<String, Set<String>> goalMap = new HashMap<>();
+    private static final Map<String, Set<String>> placeMap = new HashMap<>();
+    private static final Map<String, Set<String>> implementMap = new HashMap<>();
+    private static final Map<String, Set<String>> a_objectMap = new HashMap<>();
+    private static final Map<String, Set<String>> sceneMap = new HashMap<>();
+    private static final Map<String, Set<String>> causeMap = new HashMap<>();
 
     public static void clearRelationMaps() {
         agentMap.clear();
@@ -232,7 +232,7 @@ public class EDR2DoddleDicConverter {
         Set<TreeNode> nodeSet = idNodeSetMap.get(id);
         Set<List<String>> pathToRootSet = new HashSet<>();
         if (nodeSet == null) { // 上位・下位関係が定義されていない（できない）概念
-            pathToRootSet.add(Arrays.asList(id));
+            pathToRootSet.add(Collections.singletonList(id));
             return pathToRootSet;
         }
         for (TreeNode node : nodeSet) {

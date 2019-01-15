@@ -25,7 +25,7 @@ package org.doddle_owl.actions;
 
 import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Translator;
-import org.doddle_owl.views.InputConceptSelectionPanel;
+import org.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -45,9 +45,9 @@ public class ConstructNounAndVerbTreeAction extends AbstractAction {
                 DODDLE_OWL.STATUS_BAR.initNormal(10);
                 DODDLE_OWL.STATUS_BAR.startTime();
                 DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("ClassAndPropertyTreeConstructionAction"));
-                InputConceptSelectionPanel inputConceptSelectionPanel = DODDLE_OWL.getCurrentProject()
-                        .getInputConceptSelectionPanel();
-                inputConceptSelectionPanel.makeEDRTree();
+                ConceptSelectionPanel conceptSelectionPanel = DODDLE_OWL.getCurrentProject()
+                        .getConceptSelectionPanel();
+                conceptSelectionPanel.makeEDRTree();
                 DODDLE_OWL.STATUS_BAR.addValue();
                 new ConstructTreeAction(true, DODDLE_OWL.getCurrentProject()).constructTree();
                 DODDLE_OWL.getCurrentProject().addLog("ClassAndPropertyTreeConstructionAction");

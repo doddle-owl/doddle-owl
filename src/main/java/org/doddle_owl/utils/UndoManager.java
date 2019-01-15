@@ -23,13 +23,13 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.actions.LoadOntologyAction;
 import org.doddle_owl.actions.SaveOntologyAction;
-import org.doddle_owl.models.Concept;
-import org.doddle_owl.views.ConceptTreePanel;
-import org.doddle_owl.views.ConstructClassPanel;
-import org.doddle_owl.views.ConstructPropertyPanel;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.views.concept_tree.ConceptTreePanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,14 +43,12 @@ public class UndoManager {
     
     private int index;    
     private Command lastCommand;
-    private List<Command> commandList;
-    private LoadOntologyAction loadOntologyAction;
-    private SaveOntologyAction saveOntologyAction;
-    private DODDLEProject project;
-    
-    private static int MAX_COMMAND_CNT = 50;
-    
-    public UndoManager(DODDLEProject project) {
+    private final List<Command> commandList;
+    private final LoadOntologyAction loadOntologyAction;
+    private final SaveOntologyAction saveOntologyAction;
+    private final DODDLEProjectPanel project;
+
+    public UndoManager(DODDLEProjectPanel project) {
         index = -1;
         commandList = new ArrayList<>();
         loadOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenOWLOntologyAction"),
@@ -69,9 +67,10 @@ public class UndoManager {
     public void addCommand(Concept parentConcept, Concept targetConcept, String treeType) {
         ++index;
         commandList.add(index, new Command(parentConcept, targetConcept, treeType));
-        if (commandList.size() == MAX_COMMAND_CNT+1) {
+        int MAX_COMMAND_CNT = 50;
+        if (commandList.size() == MAX_COMMAND_CNT +1) {
             commandList.remove(0);
-            index = MAX_COMMAND_CNT-1;
+            index = MAX_COMMAND_CNT -1;
         } else if (index+1 < commandList.size()){ // 新たなCommandを追加したら，redoはできなくなる
             for (int i = index+1; i < commandList.size(); i++) {
                 commandList.remove(i);
@@ -79,10 +78,10 @@ public class UndoManager {
         }
     }
 
-    public void loadFiles() {
+    private void loadFiles() {
         loadOntologyAction.loadOWLOntology(project, lastCommand.getOntFile());
-        ConstructClassPanel classPanel = project.getConstructClassPanel();
-        ConstructPropertyPanel propertyPanel = project.getConstructPropertyPanel();
+        ClassTreeConstructionPanel classPanel = project.getConstructClassPanel();
+        PropertyTreeConstructionPanel propertyPanel = project.getConstructPropertyPanel();
         classPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getClassTRAFile());
         propertyPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getPropertyTRAFile());
         if (lastCommand.getTargetConcept() != null) {
@@ -136,38 +135,38 @@ public class UndoManager {
     }
     
     class Command {
-        private String treeType;
-        private Concept parentConcept;
-        private Concept targetConcept;
+        private final String treeType;
+        private final Concept parentConcept;
+        private final Concept targetConcept;
         private File ontFile;
         private File classTRAFile;
         private File propertyTRAFile;
         
-        public String getTreeType() {
+        String getTreeType() {
             return treeType;
         }
 
-        public File getClassTRAFile() {
+        File getClassTRAFile() {
             return classTRAFile;
         }
         
-        public File getPropertyTRAFile() {
+        File getPropertyTRAFile() {
             return propertyTRAFile;
         }
         
-        public File getOntFile() {
+        File getOntFile() {
             return ontFile;
         }
 
-        public Concept getParentConcept() {
+        Concept getParentConcept() {
             return parentConcept;
         }
 
-        public Concept getTargetConcept() {
+        Concept getTargetConcept() {
             return targetConcept;
         }
 
-        public Command(Concept p, Concept t, String type) {
+        Command(Concept p, Concept t, String type) {
             treeType = type;
             parentConcept = p;
             targetConcept = t;

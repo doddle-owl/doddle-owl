@@ -23,7 +23,7 @@
 
 package org.doddle_owl.views;
 
-import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.utils.Utils;
 
 import javax.swing.*;
@@ -45,16 +45,15 @@ public class SplashWindow extends JWindow implements HyperlinkListener {
         JEditorPane editor = new JEditorPane("text/html", "");
         editor.addHyperlinkListener(this);
         editor.setEditable(false);
-        StringBuilder builder = new StringBuilder();
-        builder.append("<font face=TimesNewRoman>");
-        builder.append("Name:  DODDLE-OWL  <br>");
-        builder.append("Version: " + DODDLEConstants.VERSION + "<br>");
-        builder.append("Copyright (C) 2004-2018 Yamaguchi Laboratory.<br>");
-        builder.append("Contact: {t_morita, yamaguti}@ae.keio.ac.jp<br>");
-        builder.append("License: GPL<br>");
-        builder.append("Project Website: <a href=http://doddle-owl.org>http://doddle-owl.org/</a>");
-        builder.append("</font>");
-        editor.setText(builder.toString());
+        String builder = "<font face=TimesNewRoman>" +
+                "Name:  DODDLE-OWL  <br>" +
+                "Version: " + DODDLEConstants.VERSION + "<br>" +
+                "Copyright (C) 2004-2018 Yamaguchi Laboratory.<br>" +
+                "Contact: {t_morita, yamaguti}@ae.keio.ac.jp<br>" +
+                "License: GPL<br>" +
+                "Project Website: <a href=http://doddle-owl.org>http://doddle-owl.org/</a>" +
+                "</font>";
+        editor.setText(builder);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());

@@ -25,14 +25,6 @@ package org.doddle_owl.utils;
 
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
-import net.infonode.docking.RootWindow;
-import net.infonode.docking.properties.RootWindowProperties;
-import net.infonode.docking.theme.DockingWindowsTheme;
-import net.infonode.docking.theme.ShapedGradientDockingTheme;
-import net.infonode.docking.util.DockingUtil;
-import net.infonode.docking.util.PropertiesUtil;
-import net.infonode.docking.util.ViewMap;
-import net.infonode.util.Direction;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
@@ -40,9 +32,9 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.Concept;
-import org.doddle_owl.models.ConceptTreeNode;
-import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.concept_selection.Concept;
+import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -51,7 +43,6 @@ import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -64,26 +55,6 @@ public class Utils {
     public static ImageIcon getImageIcon(String icon) {
         return new ImageIcon(DODDLE_OWL.class.getClassLoader()
                 .getResource("images" + File.separator + icon));
-    }
-
-    public static URL getURL(String icon) {
-        return DODDLE_OWL.class.getClassLoader().getResource(icon);
-    }
-
-    public static File getENWNFile() {
-        return new File(DODDLEConstants.ENWN_HOME);
-    }
-
-    public static RootWindow createDODDLERootWindow(ViewMap viewMap) {
-        RootWindow rootWindow = DockingUtil.createRootWindow(viewMap, true);
-        rootWindow.getWindowBar(Direction.DOWN).setEnabled(true);
-        RootWindowProperties properties = new RootWindowProperties();
-        DockingWindowsTheme currentTheme = new ShapedGradientDockingTheme();
-        properties.addSuperObject(currentTheme.getRootWindowProperties());
-        RootWindowProperties titleBarStyleProperties = PropertiesUtil.createTitleBarStyleRootWindowProperties();
-        properties.addSuperObject(titleBarStyleProperties);
-        rootWindow.getRootWindowProperties().addSuperObject(properties);
-        return rootWindow;
     }
 
     public static void addJaCompoundWord(List tokenList, List<String> inputWordList) {

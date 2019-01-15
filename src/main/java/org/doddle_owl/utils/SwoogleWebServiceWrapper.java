@@ -23,17 +23,15 @@
 
 package org.doddle_owl.utils;
 
-import org.apache.jena.ontology.OntDocumentManager;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.rdf.model.impl.RDFDefaultErrorHandler;
 import org.apache.jena.vocabulary.RDFS;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.ReferenceOWLOntology;
-import org.doddle_owl.models.SwoogleOWLMetaData;
-import org.doddle_owl.models.SwoogleWebServiceData;
-import org.doddle_owl.views.NameSpaceTable;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import org.doddle_owl.models.reference_ontology_selection.SwoogleOWLMetaData;
+import org.doddle_owl.models.reference_ontology_selection.SwoogleWebServiceData;
+import org.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.doddle_owl.views.StatusBarPanel;
 
 import java.io.*;
@@ -43,7 +41,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Takeshi Morita
@@ -52,7 +49,7 @@ public class SwoogleWebServiceWrapper {
 
     private static final int MAX_CNT = 5;
 
-    private static Set<Resource> literalResourceSet = new HashSet<>();
+    private static final Set<Resource> literalResourceSet = new HashSet<>();
 
     static {
         literalResourceSet.add(ResourceFactory
@@ -75,14 +72,14 @@ public class SwoogleWebServiceWrapper {
     private static List<String> swoogleQueryList;
 
     private static NameSpaceTable nsTable;
-    private static SwoogleWebServiceData swoogleWebServiceData = new SwoogleWebServiceData();
+    private static final SwoogleWebServiceData swoogleWebServiceData = new SwoogleWebServiceData();
 
     private static final String SWOOGLE_WEB_SERVICE_URI = " http://sparql.cs.umbc.edu:80/swoogle31/q?";
     private static final String SWOOGLE_WEB_SERVICE_KEY = "&key=demo";
-    public static String SWOOGLE_QUERY_RESULTS_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "swoogle_query_results_tmp";
-    private static String SWOOGLE_QUERY_RESULT_LIST_FILE = "swoogle_query_files.txt";
-    public static String OWL_ONTOLOGIES_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "owl_ontologies";
-    private static String OWL_ONTOLOGY_RESULT_LIST_FILE = "owl_files.txt";
+    private static final String SWOOGLE_QUERY_RESULTS_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "swoogle_query_results_tmp";
+    private static final String SWOOGLE_QUERY_RESULT_LIST_FILE = "swoogle_query_files.txt";
+    private static final String OWL_ONTOLOGIES_DIR = DODDLEConstants.PROJECT_HOME + File.separator + "owl_ontologies";
+    private static final String OWL_ONTOLOGY_RESULT_LIST_FILE = "owl_files.txt";
 
     private static final String ONTOLOGY_URL = "ontology_url";
     private static final String ONTOLOGY_RANK = "ontoRank";
@@ -306,7 +303,7 @@ public class SwoogleWebServiceWrapper {
                                         InputStream inputStream) {
         saveFile(file, inputStream, "UTF-8");
         try {
-            DODDLE_OWL.getLogger().log(Level.SEVERE, "sleep 2 sec");
+            DODDLE_OWL.getLogger().info("sleep 2 sec");
             Thread.sleep(2000); // 1秒間間隔をあけてアクセスする
         } catch (InterruptedException ie) {
             ie.printStackTrace();
@@ -325,7 +322,7 @@ public class SwoogleWebServiceWrapper {
             File queryCachFile = new File(SWOOGLE_QUERY_RESULTS_DIR + File.separator + "query_"
                     + index);
             if (queryCachFile.exists()) {
-                DODDLE_OWL.getLogger().log(Level.SEVERE, "Using Cashed Data");
+                DODDLE_OWL.getLogger().info("Using Cashed Data");
                 model = getModel(new FileInputStream(queryCachFile), DODDLEConstants.BASE_URI);
             } else {
                 queryCachFile = new File(SWOOGLE_QUERY_RESULTS_DIR + File.separator + "query_"
@@ -364,7 +361,7 @@ public class SwoogleWebServiceWrapper {
             Literal fileType = (Literal) qs.get(FILE_TYPE);
             Resource rdfType = (Resource) qs.get(RDF_TYPE);
 
-            DODDLE_OWL.getLogger().log(Level.INFO, "Try to save: " + ontologyURL.getURI());
+            DODDLE_OWL.getLogger().info("Try to save: " + ontologyURL.getURI());
             switch (ontologyURL.getURI()) {
                 case "http://c703-deri03.uibk.ac.at:8080/people/mappings.owl":
                     System.out.println("skip: http://c703-deri03.uibk.ac.at:8080/people/mappings.owl");
@@ -387,17 +384,17 @@ public class SwoogleWebServiceWrapper {
             index += 1;
             ontFile = new File(OWL_ONTOLOGIES_DIR + File.separator + "onto_" + index);
             if (!ontFile.exists()) {
-                DODDLE_OWL.getLogger().log(Level.SEVERE, "Save Ontology: " + ontologyURL);
+                DODDLE_OWL.getLogger().info("Save Ontology: " + ontologyURL);
                 try {
                     ontFile = new File(OWL_ONTOLOGIES_DIR + File.separator + "onto_"
                             + (owlOntologyList.size() + 1));
                     saveOntology(ontologyURL.getURI(), ontFile, ontURL.openStream(),
                             owlMetaData.getFileEncoding());
                 } catch (Exception e) {
-                    DODDLE_OWL.getLogger().log(Level.SEVERE, "ignore exception !!");
+                    DODDLE_OWL.getLogger().severe("ignore exception !!");
                 }
             } else {
-                DODDLE_OWL.getLogger().log(Level.SEVERE, "Using Cashed Data");
+                DODDLE_OWL.getLogger().warning("Using Cashed Data");
             }
             if (swoogleWebServiceData.getRefOntology(ontologyURL.getURI()) == null) {
                 Model ontModel = Utils.getOntModel(new FileInputStream(ontFile),
@@ -411,17 +408,15 @@ public class SwoogleWebServiceWrapper {
         } catch (MalformedURLException mue) {
             mue.printStackTrace();
         } catch (FileNotFoundException fne) {
-            DODDLE_OWL.getLogger().log(
-                    Level.INFO,
-                    "Save Ontology Exception: File => " + ontFile.getAbsolutePath() + " URL => "
-                            + ontURL);
+            fne.printStackTrace();
+            DODDLE_OWL.getLogger().severe("Save Ontology Exception: File => " + ontFile.getAbsolutePath() + " URL => " + ontURL);
         }
     }
 
     /**
      * 獲得したオントロジーの中から入力単語に関連するクラス及びプロパティを抽出する
      */
-    public static void setSWTSet(Set<String> inputWordSet) {
+    private static void setSWTSet(Set<String> inputWordSet) {
         for (String uri : swoogleWebServiceData.getRefOntologyURISet()) {
             ReferenceOWLOntology refOnt = swoogleWebServiceData.getRefOntology(uri);
             for (String inputWord : inputWordSet) {
@@ -447,7 +442,7 @@ public class SwoogleWebServiceWrapper {
      *
      * @param inputWord
      */
-    public static void searchOntology(String inputWord) {
+    private static void searchOntology(String inputWord) {
         // demo以外のキーがもらえば検索結果数に応じて獲得するオントロジーの数を決められる
         // とりあえず上位10個のみを対象とする
         for (int i = 1; i < 10; i += 10) {
@@ -455,7 +450,7 @@ public class SwoogleWebServiceWrapper {
             try {
                 String queryTypeAndSearchString = "queryType=search_swd_ontology&searchString=def:"
                         + inputWord + "&searchStart=" + i;
-                DODDLE_OWL.getLogger().log(Level.SEVERE, "Search Ontology: " + inputWord);
+                DODDLE_OWL.getLogger().info("Search Ontology: " + inputWord);
                 DODDLE_OWL.STATUS_BAR.setText("Search Ontology: " + inputWord);
                 Model model = getSwoogleQueryResultModel(queryTypeAndSearchString);
                 String sparqlQueryString = SPARQLQueryUtil.getQueryString(getSearchOntologyQuery());
@@ -478,8 +473,8 @@ public class SwoogleWebServiceWrapper {
         }
     }
 
-    private static Set<String> classWordSet = new HashSet<>();
-    private static Set<String> propertyWordSet = new HashSet<>();
+    private static final Set<String> classWordSet = new HashSet<>();
+    private static final Set<String> propertyWordSet = new HashSet<>();
 
     /**
      * 入力単語に関連するSWTを獲得
@@ -488,7 +483,7 @@ public class SwoogleWebServiceWrapper {
      * @param inputWord
      * @param type
      */
-    public static void searchTerms(int maxCnt, boolean isSearchLabel, String inputWord, String type) {
+    private static void searchTerms(int maxCnt, boolean isSearchLabel, String inputWord, String type) {
         QueryExecution qexec = null;
         try {
             String searchString;
@@ -502,7 +497,7 @@ public class SwoogleWebServiceWrapper {
 
             String queryTypeAndSearchString = "queryType=search_swt&searchString="
                     + URLEncoder.encode(searchString, StandardCharsets.UTF_8);
-            DODDLE_OWL.getLogger().log(Level.SEVERE, "Search Terms: " + inputWord);
+            DODDLE_OWL.getLogger().info("Search Terms: " + inputWord);
             DODDLE_OWL.STATUS_BAR.setText("Search Terms: " + inputWord);
             Model model = getSwoogleQueryResultModel(queryTypeAndSearchString);
             if (model == null) {
@@ -569,11 +564,10 @@ public class SwoogleWebServiceWrapper {
     /**
      * 入力したクラスを定義域とするプロパティを獲得
      */
-    public static void searchListPropertiesOfaDomainClass(String domainURI) {
+    private static void searchListPropertiesOfaDomainClass(String domainURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_c2p&searchString="
                 + URLEncoder.encode(domainURI, StandardCharsets.UTF_8);
-        DODDLE_OWL.getLogger().log(Level.SEVERE,
-                "Search List Properties Of a Domain Class: " + domainURI);
+        DODDLE_OWL.getLogger().info("Search List Properties Of a Domain Class: " + domainURI);
         DODDLE_OWL.STATUS_BAR.setText("Search List Properties Of a Domain Class: " + domainURI);
         searchListPropertiesOfaRegionClass(queryTypeAndSearchString, domainURI, RDFS.domain);
     }
@@ -581,11 +575,10 @@ public class SwoogleWebServiceWrapper {
     /**
      * 入力したクラスを値域とするプロパティを獲得
      */
-    public static void searchListPropertiesOfaRangeClass(String rangeURI) {
+    private static void searchListPropertiesOfaRangeClass(String rangeURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_range_c2p&searchString="
                 + URLEncoder.encode(rangeURI, StandardCharsets.UTF_8);
-        DODDLE_OWL.getLogger().log(Level.SEVERE,
-                "Search List Properties Of a Range Class: " + rangeURI);
+        DODDLE_OWL.getLogger().info("Search List Properties Of a Range Class: " + rangeURI);
         DODDLE_OWL.STATUS_BAR.setText("Search List Properties Of a Range Class: " + rangeURI);
         searchListPropertiesOfaRegionClass(queryTypeAndSearchString, rangeURI, RDFS.range);
     }
@@ -621,11 +614,10 @@ public class SwoogleWebServiceWrapper {
     /**
      * プロパティのURIを入力として，そのプロパティの定義域を獲得
      */
-    public static void searchListDomainClassOfaProperty(String propertyURI) {
+    private static void searchListDomainClassOfaProperty(String propertyURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_domain_p2c&searchString="
                 + URLEncoder.encode(propertyURI, StandardCharsets.UTF_8);
-        DODDLE_OWL.getLogger().log(Level.SEVERE,
-                "Search List Domain Class Of a Property: " + propertyURI);
+        DODDLE_OWL.getLogger().info("Search List Domain Class Of a Property: " + propertyURI);
         DODDLE_OWL.STATUS_BAR.setText("Search List Domain Class Of a Property: " + propertyURI);
         searchListRegionClassOfaProperty(queryTypeAndSearchString, propertyURI, RDFS.domain);
     }
@@ -633,11 +625,10 @@ public class SwoogleWebServiceWrapper {
     /**
      * プロパティのURIを入力として，そのプロパティの値域を獲得
      */
-    public static void searchListRangeClassOfaProperty(String propertyURI) {
+    private static void searchListRangeClassOfaProperty(String propertyURI) {
         String queryTypeAndSearchString = "queryType=rel_swd_instance_range_p2c&searchString="
                 + URLEncoder.encode(propertyURI, StandardCharsets.UTF_8);
-        DODDLE_OWL.getLogger().log(Level.SEVERE,
-                "Search List Range Class Of a Property: " + propertyURI);
+        DODDLE_OWL.getLogger().info("Search List Range Class Of a Property: " + propertyURI);
         DODDLE_OWL.STATUS_BAR.setText("Search List Range Class Of a Property: " + propertyURI);
         searchListRegionClassOfaProperty(queryTypeAndSearchString, propertyURI, RDFS.range);
     }
@@ -645,12 +636,12 @@ public class SwoogleWebServiceWrapper {
     /**
      * SWTが定義されているオントロジーを獲得
      */
-    public static void searchListDocumentsUsingTerm(String swtURI) {
+    private static void searchListDocumentsUsingTerm(String swtURI) {
         QueryExecution qexec = null;
         try {
             String queryTypeAndSearchString = "queryType=rel_swt_swd&searchString="
                     + URLEncoder.encode(swtURI, StandardCharsets.UTF_8);
-            DODDLE_OWL.getLogger().log(Level.SEVERE, "Search List Documents Using Term: " + swtURI);
+            DODDLE_OWL.getLogger().info("Search List Documents Using Term: " + swtURI);
             DODDLE_OWL.STATUS_BAR.setText("Search List Documents Using Term: " + swtURI);
             Model model = getSwoogleQueryResultModel(queryTypeAndSearchString);
             String sparqlQueryString = SPARQLQueryUtil
@@ -686,12 +677,12 @@ public class SwoogleWebServiceWrapper {
     /**
      * SWDのメタデータを獲得
      */
-    public static void searchDigestSemanticWebDocument(String swdURI) {
+    private static void searchDigestSemanticWebDocument(String swdURI) {
         QueryExecution qexec = null;
         try {
             String queryTypeAndSearchString = "queryType=digest_swd&searchString="
                     + URLEncoder.encode(swdURI, StandardCharsets.UTF_8);
-            DODDLE_OWL.getLogger().log(Level.SEVERE, "Search Digest Semantic Web Document: " + swdURI);
+            DODDLE_OWL.getLogger().info("Search Digest Semantic Web Document: " + swdURI);
             Model model = getSwoogleQueryResultModel(queryTypeAndSearchString);
             String sparqlQueryString = SPARQLQueryUtil.getQueryString(getSearchOntologyQuery());
             Query query = QueryFactory.create(sparqlQueryString);
@@ -719,21 +710,14 @@ public class SwoogleWebServiceWrapper {
             swoogleWebServiceData.addClass("Literal", litRes);
         }
 
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                "Class word set: " + classWordSet.size() + "/" + inputWordSet.size() + ": "
-                        + classWordSet);
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                "Property word set: " + propertyWordSet.size() + "/" + inputWordSet.size() + ": "
-                        + propertyWordSet);
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                "Class URI cnt: " + swoogleWebServiceData.getClassSet().size());
+        DODDLE_OWL.getLogger().info("Class word set: " + classWordSet.size() + "/" + inputWordSet.size() + ": " + classWordSet);
+        DODDLE_OWL.getLogger().info("Property word set: " + propertyWordSet.size() + "/" + inputWordSet.size() + ": "
+                + propertyWordSet);
+        DODDLE_OWL.getLogger().info("Class URI cnt: " + swoogleWebServiceData.getClassSet().size());
         for (Resource cls : swoogleWebServiceData.getClassSet()) {
             System.out.println("Class URI: " + cls.getURI());
         }
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                "Property URI cnt: " + swoogleWebServiceData.getPropertySet().size());
+        DODDLE_OWL.getLogger().info("Property URI cnt: " + swoogleWebServiceData.getPropertySet().size());
         for (Resource prop : swoogleWebServiceData.getPropertySet()) {
             System.out.println("Property URI: " + prop.getURI());
         }
@@ -762,8 +746,7 @@ public class SwoogleWebServiceWrapper {
     }
 
     private static Set<String> getRelatedWordSet(Set<String> inputWordSet) {
-        Set<String> relatedWordSet = new HashSet<>();
-        relatedWordSet.addAll(inputWordSet);
+        Set<String> relatedWordSet = new HashSet<>(inputWordSet);
         for (Resource property : swoogleWebServiceData.getAllProperty()) {
             relatedWordSet.add(Utils.getLocalName(property));
         }
@@ -776,8 +759,7 @@ public class SwoogleWebServiceWrapper {
 
         int cnt = 1;
         for (String word : inputWordSet) {
-            DODDLE_OWL.getLogger().log(Level.INFO,
-                    "input word: " + cnt + "/" + inputWordSet.size() + ": " + word);
+            DODDLE_OWL.getLogger().info("input word: " + cnt + "/" + inputWordSet.size() + ": " + word);
             searchOntology(word);
             cnt++;
         }
@@ -786,15 +768,14 @@ public class SwoogleWebServiceWrapper {
         int definedConceptCnt = 0;
         Set<Resource> conceptSet = swoogleWebServiceData.getConceptSet();
         for (Resource conceptResource : conceptSet) {
-            DODDLE_OWL.getLogger().log(Level.INFO,
-                    "concept: " + cnt + "/" + conceptSet.size() + ": " + conceptResource);
-            DODDLE_OWL.getLogger().log(Level.INFO, "defined concept cnt: " + definedConceptCnt);
+            DODDLE_OWL.getLogger().info("concept: " + cnt + "/" + conceptSet.size() + ": " + conceptResource);
+            DODDLE_OWL.getLogger().info("defined concept cnt: " + definedConceptCnt);
             boolean isDefinedConcept = false;
             for (String uri : swoogleWebServiceData.getRefOntologyURISet()) {
                 ReferenceOWLOntology refOnto = swoogleWebServiceData.getRefOntology(uri);
                 if (refOnto.getClassSet().contains(conceptResource.getURI())
                         || refOnto.getPropertySet().contains(conceptResource.getURI())) {
-                    DODDLE_OWL.getLogger().log(Level.SEVERE, "defined concept: " + conceptResource);
+                    DODDLE_OWL.getLogger().info("defined concept: " + conceptResource);
                     definedConceptCnt++;
                     isDefinedConcept = true;
                     break;
@@ -802,8 +783,7 @@ public class SwoogleWebServiceWrapper {
             }
             // searchOntologyで獲得できなかったオントロジーを獲得
             if (!isDefinedConcept) {
-                DODDLE_OWL.getLogger().log(Level.INFO,
-                        "cannot get ontology using search ontology service: " + conceptResource);
+                DODDLE_OWL.getLogger().info("cannot get ontology_api using search ontology_api service: " + conceptResource);
                 searchListDocumentsUsingTerm(conceptResource.getURI());
             }
             cnt++;
@@ -812,19 +792,14 @@ public class SwoogleWebServiceWrapper {
     }
 
     private static void printInfo(int level) {
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                +level + ": Class size: " + swoogleWebServiceData.getClassSet().size());
-        DODDLE_OWL.getLogger().log(
-                Level.INFO,
-                level + " Related Property size: "
-                        + swoogleWebServiceData.getRelatedPropertySet().size());
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                level + " Property size: " + swoogleWebServiceData.getPropertySet().size());
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                level + " Relation cnt: " + swoogleWebServiceData.getAllRelationCount());
+        DODDLE_OWL.getLogger().info(+level + ": Class size: " + swoogleWebServiceData.getClassSet().size());
+        DODDLE_OWL.getLogger().info(level + " Related Property size: "
+                + swoogleWebServiceData.getRelatedPropertySet().size());
+        DODDLE_OWL.getLogger().info(level + " Property size: " + swoogleWebServiceData.getPropertySet().size());
+        DODDLE_OWL.getLogger().info(level + " Relation cnt: " + swoogleWebServiceData.getAllRelationCount());
     }
 
-    public static void refinePropertiesAndRegionSet() {
+    private static void refinePropertiesAndRegionSet() {
         swoogleWebServiceData.addInheritedRegionSet();
         printInfo(4);
         swoogleWebServiceData.removeUnnecessaryRegionSet();
@@ -866,14 +841,12 @@ public class SwoogleWebServiceWrapper {
 
         Object[] refOntologies = swoogleWebServiceData.getRefOntologies().toArray();
         Arrays.sort(refOntologies);
-        DODDLE_OWL.getLogger().log(Level.INFO, "獲得オントロジー数: " + refOntologies.length);
+        DODDLE_OWL.getLogger().info("獲得オントロジー数: " + refOntologies.length);
         for (Object refOntology : refOntologies) {
-            DODDLE_OWL.getLogger().log(Level.INFO, refOntology.toString());
+            DODDLE_OWL.getLogger().info(refOntology.toString());
         }
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                "概念定義数： " + swoogleWebServiceData.getValidRelationCount());
-        DODDLE_OWL.getLogger().log(Level.INFO,
-                "オントロジーに定義されている概念定義数： " + swoogleWebServiceData.getDefinedRelationCount());
+        DODDLE_OWL.getLogger().info("概念定義数： " + swoogleWebServiceData.getValidRelationCount());
+        DODDLE_OWL.getLogger().info("オントロジーに定義されている概念定義数： " + swoogleWebServiceData.getDefinedRelationCount());
 
         DODDLE_OWL.STATUS_BAR.unLock();
         DODDLE_OWL.STATUS_BAR.hideProgressBar();

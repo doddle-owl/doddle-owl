@@ -34,7 +34,7 @@ import java.awt.event.ActionEvent;
  */
 public class ShowOptionDialogAction extends AbstractAction {
 
-    private DODDLE_OWL doddle;
+    private final DODDLE_OWL doddle;
 
     public ShowOptionDialogAction(String title, DODDLE_OWL ddl) {
         super(title, Utils.getImageIcon("cog.png"));

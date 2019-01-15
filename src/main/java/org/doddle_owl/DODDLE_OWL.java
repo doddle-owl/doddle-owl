@@ -1,6 +1,6 @@
 /*
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
-
+ *
  * Project Website: http://doddle-owl.org/
  *
  * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
@@ -28,13 +28,15 @@ import org.apache.commons.cli.*;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.doddle_owl.actions.*;
-import org.doddle_owl.models.DODDLEConstants;
-import org.doddle_owl.models.InputModule;
-import org.doddle_owl.models.ProjectFileNames;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.common.ProjectFileNames;
+import org.doddle_owl.models.concept_selection.InputModule;
+import org.doddle_owl.models.ontology_api.JWO;
 import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.UpperConceptManager;
 import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.*;
+import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -44,6 +46,7 @@ import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.*;
@@ -56,21 +59,21 @@ import java.util.prefs.Preferences;
  */
 public class DODDLE_OWL extends JFrame {
 
-    private OptionDialog optionDialog;
-    private LogConsole logConsole;
+    private static final Logger logger = Logger.getLogger("DODDLE-OWL");
+    private final OptionDialog optionDialog;
+    private final LogConsole logConsole;
 
     public static Frame rootFrame;
     public static JRootPane rootPane;
-    public static JDesktopPane desktop;
-    public static JMenu projectMenu;
-    public static JMenu recentProjectMenu;
+    public static DODDLEProjectPanel doddleProjectPanel;
+    private static JMenu recentProjectMenu;
     public static StatusBarPanel STATUS_BAR;
     public static Set<String> GENERAL_ONTOLOGY_NAMESPACE_SET;
 
     private NewProjectAction newProjectAction;
     private OpenProjectAction openProjectAction;
     private SaveProjectAction saveProjectAction;
-    private SaveProjectAsAction saveProjectAsAction;
+    private static SaveProjectAsAction saveProjectAsAction;
     private LoadDescriptionsAction loadDescriptionAction;
     private LoadConceptPreferentialTermAction loadConceptDisplayTermAction;
     private SaveConceptPreferentialTermAction saveConceptDisplayTermAction;
@@ -84,20 +87,19 @@ public class DODDLE_OWL extends JFrame {
 
     private ShowDODDLEDicConverterAction showDODDLEDicConverterAction;
 
+    private static final int WINDOW_WIDTH = 1280;
+    private static final int WINDOW_HEIGHT = 768;
+
     @Override
     public Image getIconImage() {
         return super.getIconImage();
     }
-
-    private LayoutDockingWindowAction xgaLayoutDockingWindowAction;
-    private LayoutDockingWindowAction uxgaLayoutDockingWindowAction;
 
     public static Property HASA_PROPERTY;
 
     public DODDLE_OWL() {
         rootPane = getRootPane();
         rootFrame = this;
-        desktop = new JDesktopPane();
         optionDialog = new OptionDialog(this);
         setFileLogger();
         logConsole = new LogConsole(this, Translator.getTerm("LogConsoleDialog"), null);
@@ -113,7 +115,8 @@ public class DODDLE_OWL extends JFrame {
         makeActions();
         makeMenuBar();
         contentPane.add(getToolBar(), BorderLayout.NORTH);
-        contentPane.add(desktop, BorderLayout.CENTER);
+        doddleProjectPanel = new DODDLEProjectPanel();
+        contentPane.add(doddleProjectPanel, BorderLayout.CENTER);
         contentPane.add(STATUS_BAR, BorderLayout.SOUTH);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -121,26 +124,29 @@ public class DODDLE_OWL extends JFrame {
             }
         });
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setSize(1000, 750);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
         setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
-                + DODDLEConstants.VERSION);
+                + DODDLEConstants.VERSION + " - " + Translator.getTerm("NewProjectAction"));
         setVisible(true);
-        new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
     }
 
     public OptionDialog getOptionDialog() {
         return optionDialog;
     }
 
+    public static SaveProjectAsAction getSaveProjectAsAction()  {
+        return saveProjectAsAction;
+    }
+
     public void exit() {
-        int messageType = JOptionPane.showConfirmDialog(rootPane, Translator.getDescription("ExitAction"),
-                Translator.getTerm("ExitAction"), JOptionPane.YES_NO_OPTION);
+        int messageType = JOptionPane.showConfirmDialog(rootPane, Translator.getDescription("QuitAction"),
+                Translator.getTerm("QuitAction"), JOptionPane.YES_NO_OPTION);
         if (messageType == JOptionPane.YES_OPTION) {
             if (isExistingCurrentProject()) {
                 getCurrentProject().getDocumentSelectionPanel().destroyProcesses();
-                getCurrentProject().getOntologySelectionPanel().closeDataset();
+                JWO.closeDataSet();
             }
             dispose();
             System.exit(0);
@@ -194,19 +200,6 @@ public class DODDLE_OWL extends JFrame {
         }
     }
 
-    public static void finishNewProject(DODDLEProject project) {
-        try {
-            desktop.add(project);
-            project.toFront();
-            desktop.setSelectedFrame(project);
-            project.setVisible(true);
-            project.setMaximum(true); // setVisibleより前にしてしまうと，初期サイズ(800x600)
-            // で最大化されてしまう
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void makeActions() {
         newProjectAction = new NewProjectAction(Translator.getTerm("NewProjectAction"));
         openProjectAction = new OpenProjectAction(Translator.getTerm("OpenProjectAction"), this);
@@ -229,10 +222,6 @@ public class DODDLE_OWL extends JFrame {
         showOptionDialogAction = new ShowOptionDialogAction(Translator.getTerm("ShowOptionDialogAction"), this);
         showVersionInfoAction = new ShowVersionInfoAction(this);
         showDODDLEDicConverterAction = new ShowDODDLEDicConverterAction("DODDLE Dic Converter");
-        xgaLayoutDockingWindowAction = new LayoutDockingWindowAction(LayoutDockingWindowAction.XGA_LAYOUT,
-                Translator.getTerm("XGALayoutAction"));
-        uxgaLayoutDockingWindowAction = new LayoutDockingWindowAction(LayoutDockingWindowAction.UXGA_LAYOUT,
-                Translator.getTerm("UXGALayoutAction"));
     }
 
     private void makeMenuBar() {
@@ -264,15 +253,15 @@ public class DODDLE_OWL extends JFrame {
         saveMenu.add(new SaveTermInfoTableAction(Translator.getTerm("SaveInputTermTableAction")));
         saveMenu.add(new SaveTermEvalConceptSetAction(Translator.getTerm("SaveInputConceptSelectionResultAction")));
         saveMenu.add(new SaveTermConceptMapAction(Translator.getTerm("SaveInputTermConceptMapAction")));
-        saveMenu.add(new SavePerfectlyMatchedTermAction(Translator.getTerm("SavePerfectlyMatchedTermListAction")));
+        saveMenu.add(new SavePerfectlyMatchedTermAction(Translator.getTerm("SaveExactMatchTermListAction")));
         saveMenu.add(new SavePerfectlyMatchedTermWithCompoundWordAction(Translator
-                .getTerm("SavePerfectlyMatchedTermCompoundWordMapAction")));
+                .getTerm("SaveExactMatchTermCompoundWordMapAction")));
         saveMenu.add(saveOWLOntologyAction);
         saveMenu.add(saveFreeMindOntologyAction);
         saveMenu.add(saveConceptDisplayTermAction);
         fileMenu.add(saveMenu);
         fileMenu.addSeparator();
-        fileMenu.add(new ExitAction(Translator.getTerm("ExitAction"), this));
+        fileMenu.add(new ExitAction(Translator.getTerm("QuitAction"), this));
         menuBar.add(fileMenu);
 
         JMenu toolMenu = new JMenu(Translator.getTerm("ToolMenu"));
@@ -287,14 +276,9 @@ public class DODDLE_OWL extends JFrame {
         toolMenu.addSeparator();
         toolMenu.add(showLogConsoleAction);
         toolMenu.addSeparator();
-        toolMenu.add(xgaLayoutDockingWindowAction);
-        toolMenu.add(uxgaLayoutDockingWindowAction);
-        toolMenu.addSeparator();
         toolMenu.add(showOptionDialogAction);
         menuBar.add(toolMenu);
 
-        projectMenu = new JMenu(Translator.getTerm("ProjectMenu"));
-        menuBar.add(projectMenu);
         menuBar.add(getHelpMenu());
         setJMenuBar(menuBar);
     }
@@ -321,52 +305,32 @@ public class DODDLE_OWL extends JFrame {
         return toolBar;
     }
 
-    public static DODDLEProject getCurrentProject() {
-        if (desktop == null) {
-            return null;
-        }
-        DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
-        if (currentProject == null) {
-            currentProject = new DODDLEProject(Translator.getTerm("NewProjectAction"), 11);
-        }
-        return currentProject;
+    public static DODDLEProjectPanel getCurrentProject() {
+        return doddleProjectPanel;
     }
 
-    public static boolean isExistingCurrentProject() {
-        if (desktop == null) {
-            return false;
-        }
-        DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
-        return currentProject != null;
+    private static boolean isExistingCurrentProject() {
+        return doddleProjectPanel != null;
     }
 
-    public static void addProjectMenuItem(JMenuItem item) {
-        projectMenu.add(item);
-    }
-
-    public static void removeProjectMenuItem(JMenuItem item) {
-        projectMenu.remove(item);
-    }
-
-    public void loadConceptDisplayTerm(DODDLEProject currentProject, File file) {
+    public void loadConceptDisplayTerm(DODDLEProjectPanel currentProject, File file) {
         loadConceptDisplayTermAction.loadIDPreferentialTerm(currentProject, file);
     }
 
-    public void saveConceptDisplayTerm(DODDLEProject currentProject, File file) {
+    public void saveConceptDisplayTerm(DODDLEProjectPanel currentProject, File file) {
         saveConceptDisplayTermAction.saveIDPreferentialTerm(currentProject, file);
     }
 
-    public void saveOntology(DODDLEProject currentProject, File file) {
+    public void saveOntology(DODDLEProjectPanel currentProject, File file) {
         saveOWLOntologyAction.saveOWLOntology(currentProject, file);
     }
 
-    public void loadOntology(DODDLEProject currentProject, File file) {
+    public void loadOntology(DODDLEProjectPanel currentProject, File file) {
         loadOWLOntologyAction.loadOWLOntology(currentProject, file);
     }
 
     public static void setSelectedIndex(int index) {
-        DODDLEProject currentProject = (DODDLEProject) desktop.getSelectedFrame();
-        currentProject.setSelectedIndex(index);
+        doddleProjectPanel.setSelectedIndex(index);
     }
 
     public void loadBaseURI(File file) {
@@ -384,17 +348,15 @@ public class DODDLE_OWL extends JFrame {
         }
     }
 
-    public static void setPath(Properties properties) {
+    private static void setPath(Properties properties) {
         DODDLEConstants.EDR_HOME = properties.getProperty("EDR_HOME");
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
         DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
-        DODDLEConstants.ENWN_3_0_HOME = properties.getProperty("ENWN_3_0_HOME");
-        DODDLEConstants.ENWN_3_1_HOME = properties.getProperty("ENWN_3_1_HOME");
-        InputDocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
-        InputDocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
+        DocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
+        DocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");
-        InputDocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
+        DocumentSelectionPanel.Japanese_Dependency_Structure_Analyzer = properties
                 .getProperty("Japanese_Dependency_Structure_Analyzer");
         DODDLEConstants.BASE_URI = properties.getProperty("BASE_URI");
         DODDLEConstants.BASE_PREFIX = properties.getProperty("BASE_PREFIX");
@@ -403,7 +365,7 @@ public class DODDLE_OWL extends JFrame {
         DODDLEConstants.LANG = properties.getProperty("LANG");
     }
 
-    public static void setPath() {
+    private static void setPath() {
         try {
             Preferences userPrefs = Preferences.userNodeForPackage(DODDLE_OWL.class);
             String[] keys = userPrefs.keys();
@@ -419,29 +381,33 @@ public class DODDLE_OWL extends JFrame {
         }
     }
 
-    public static void setProgressValue() {
+    private static void setProgressValue() {
         InputModule.INIT_PROGRESS_VALUE = 887253;
     }
 
     public static Logger getLogger() {
-        return Logger.getLogger(DODDLE_OWL.class.getName());
+        return logger;
     }
 
     public static void setFileLogger() {
         try {
-            getLogger().setLevel(Level.INFO);
-            String file = DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt";
-            if (new File(DODDLEConstants.PROJECT_HOME).exists()) {
-                Handler handler = new FileHandler(file);
-                handler.setFormatter(new SimpleFormatter());
-                getLogger().addHandler(handler);
+            Path logFilePath = Paths.get(DODDLEConstants.PROJECT_HOME + File.separator + "doddle_log.txt");
+            if (Files.notExists(logFilePath)) {
+                Files.createFile(logFilePath);
             }
+            Handler fileHandler = new FileHandler(logFilePath.toString(), true);
+            fileHandler.setLevel(Level.INFO);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+            ConsoleHandler consoleHandler = new ConsoleHandler();
+            consoleHandler.setLevel(Level.INFO);
+            logger.addHandler(consoleHandler);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
 
-    public static void initOptions(String[] args) {
+    private static void initOptions(String[] args) {
         Options options = new Options();
         options.addOption("g", "DEBUG", false, "");
         options.addOption("l", "LANG", true, "");
@@ -467,12 +433,6 @@ public class DODDLE_OWL extends JFrame {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String getExecPath() {
-        String jarPath = DODDLE_OWL.class.getClassLoader().getResource("").getFile();
-        File file = new File(jarPath);
-        return file.getAbsolutePath() + File.separator;
     }
 
     public static void main(String[] args) {

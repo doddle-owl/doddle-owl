@@ -16,7 +16,6 @@ DODDLE-OWL uses the following libraries.
 * [Japanese WordNet](http://compling.hss.ntu.edu.sg/wnja/)([License](http://nlpwww.nict.go.jp/wn-ja/license.txt))
 * [Japanese Wikipedia Ontology](http://www.wikipediaontology.org/)([License](http://www.wikipediaontology.org/download.html))
 * [extJWNL](http://extjwnl.sourceforge.net/)([License](http://extjwnl.sourceforge.net/license.txt))
-* [InfoNode Docking Windows](http://www.infonode.net/index.html?idw)([License](http://www.infonode.net/index.html?idwlicense))
 * [SQLite JDBC Driver](https://bitbucket.org/xerial/sqlite-jdbc)([License](http://www.apache.org/licenses/))
 * [Kuromoji](https://github.com/atilika/kuromoji)([License](http://www.apache.org/licenses/LICENSE-2.0))
 * [Apache Jena](https://jena.apache.org/)([License](http://www.apache.org/licenses/LICENSE-2.0))

@@ -27,7 +27,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import org.doddle_owl.DODDLEProject;
+import org.doddle_owl.views.DODDLEProjectPanel;
 import org.doddle_owl.DODDLE_OWL;
 
 /**
@@ -40,8 +40,8 @@ public class SavePerfectlyMatchedTermWithCompoundWordAction extends AbstractActi
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEProject currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getInputConceptSelectionPanel().savePerfectlyMatchedTermWithCompoundWord();
+        DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
+        currentProject.getConceptSelectionPanel().savePerfectlyMatchedTermWithCompoundWord();
     }
 }
 

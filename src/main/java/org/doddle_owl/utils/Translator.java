@@ -27,11 +27,8 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
-import org.doddle_owl.models.DODDLEConstants;
+import org.doddle_owl.models.common.DODDLEConstants;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
@@ -42,7 +39,7 @@ import java.util.*;
  */
 public class Translator {
 
-    protected static ResourceBundle resourceBundle;
+    private static ResourceBundle resourceBundle;
     private static Map<String, String> uriTermMap;
     private static Map<String, String> uriDescriptionMap;
 
@@ -55,58 +52,11 @@ public class Translator {
         }
     }
 
-    private static Set<Locale> systemLocaleSet;
-
     static {
-        systemLocaleSet = new HashSet<>();
+        Set<Locale> systemLocaleSet = new HashSet<>();
         systemLocaleSet.add(Locale.JAPAN);
         systemLocaleSet.add(Locale.ENGLISH);
         systemLocaleSet.add(Locale.CHINA);
-    }
-
-    /**
-     * デフォルトのロカールの言語ファイルがシステムに内蔵されている場合は， その言語を返し，内蔵されていない場合には，英語の言語を返す.
-     */
-    public static String getSystemLanguage() {
-        if (systemLocaleSet.contains(Locale.getDefault())) {
-            return Locale.getDefault().getLanguage();
-        }
-        return Locale.ENGLISH.getLanguage();
-    }
-
-    private static boolean isSystemLanguage(String lang) {
-        for (Locale locale : systemLocaleSet) {
-            if (locale.getLanguage().equals(lang)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * loadDODDLEComponentOntologyと置換
-     *
-     * @param lang
-     */
-    public static void loadResourceBundle(String lang) {
-        try {
-            InputStream ins = null;
-            File resFile = new File("./resources/DODDLE_" + lang + ".properties");
-            if (resFile.exists()) {
-                ins = new FileInputStream(resFile);
-            }
-            if (ins == null) {
-                if (isSystemLanguage(lang)) {
-                    ins = Utils.class.getClassLoader().getResourceAsStream("DODDLE_" + lang + ".properties");
-                } else {
-                    ins = Utils.class.getClassLoader().getResourceAsStream("DODDLE_" + getSystemLanguage() + ".properties");
-                }
-            }
-            resourceBundle = new PropertyResourceBundle(ins);
-            ins.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
     public static void loadDODDLEComponentOntology(String lang) {
@@ -146,8 +96,6 @@ public class Translator {
     }
 
     public static void main(String[] args) {
-        // Translator.loadResourceBundle("en");
-        // System.out.println(Translator.getString("Lang"));
         Translator.loadDODDLEComponentOntology("ja");
         System.out.println(Translator.getTerm("PropertyTreeConstructionPanel"));
         System.out.println(Translator.getTerm("RangeLabel"));

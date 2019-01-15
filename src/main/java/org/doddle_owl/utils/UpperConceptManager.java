@@ -23,7 +23,11 @@
 
 package org.doddle_owl.utils;
 
-import org.doddle_owl.models.*;
+import org.doddle_owl.models.common.DODDLEConstants;
+import org.doddle_owl.models.ontology_api.ReferenceOntology;
+import org.doddle_owl.models.ontology_api.EDRTree;
+import org.doddle_owl.models.ontology_api.JaWordNetTree;
+import org.doddle_owl.models.ontology_api.WordNet;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -69,32 +73,38 @@ public class UpperConceptManager {
     }
 
     public static Set<String> getUpperConceptLabelSet(String word) {
-        Set<String> uriSet = DODDLEDic.getURISet(word);
+        Set<String> uriSet = ReferenceOntology.getURISet(word);
         Set<String> upperURISet = new HashSet<>();
         for (String uri : uriSet) {
             String ns = Utils.getNameSpace(uri);
             String id = Utils.getLocalName(uri);
             upperURISet.add(uri);
-            if (ns.equals(DODDLEConstants.EDR_URI)) {
-                for (List<String> path : EDRTree.getEDRTree().getURIPathToRootSet(id)) {
-                    upperURISet.addAll(path);
-                }
-            } else if (ns.equals(DODDLEConstants.EDRT_URI)) {
-                for (List<String> path : EDRTree.getEDRTTree().getURIPathToRootSet(id)) {
-                    upperURISet.addAll(path);
-                }
-            } else if (ns.equals(DODDLEConstants.WN_URI)) {
-                for (List<String> path : WordNetDic.getURIPathToRootSet(Long.valueOf(id))) {
-                    upperURISet.addAll(path);
-                }
-            } else if (ns.equals(DODDLEConstants.JPN_WN_URI)) {
-                for (List<String> path : JPNWNTree.getJPNWNTree().getURIPathToRootSet(id)) {
-                    upperURISet.addAll(path);
-                }
-            } else {
-                for (List<String> path : OWLOntologyManager.getURIPathToRootSet(uri)) {
-                    upperURISet.addAll(path);
-                }
+            switch (ns) {
+                case DODDLEConstants.EDR_URI:
+                    for (List<String> path : EDRTree.getEDRTree().getURIPathToRootSet(id)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                case DODDLEConstants.EDRT_URI:
+                    for (List<String> path : EDRTree.getEDRTTree().getURIPathToRootSet(id)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                case DODDLEConstants.WN_URI:
+                    for (List<String> path : WordNet.getURIPathToRootSet(Long.valueOf(id))) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                case DODDLEConstants.JPN_WN_URI:
+                    for (List<String> path : JaWordNetTree.getJPNWNTree().getURIPathToRootSet(id)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
+                default:
+                    for (List<String> path : OWLOntologyManager.getURIPathToRootSet(uri)) {
+                        upperURISet.addAll(path);
+                    }
+                    break;
             }
         }
         Set<String> upperConceptLabelSet = new HashSet<>();
