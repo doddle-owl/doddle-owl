@@ -73,7 +73,7 @@ public class DODDLE_OWL extends JFrame {
     private NewProjectAction newProjectAction;
     private OpenProjectAction openProjectAction;
     private SaveProjectAction saveProjectAction;
-    private SaveProjectAsAction saveProjectAsAction;
+    private static SaveProjectAsAction saveProjectAsAction;
     private LoadDescriptionsAction loadDescriptionAction;
     private LoadConceptPreferentialTermAction loadConceptDisplayTermAction;
     private SaveConceptPreferentialTermAction saveConceptDisplayTermAction;
@@ -134,6 +134,10 @@ public class DODDLE_OWL extends JFrame {
 
     public OptionDialog getOptionDialog() {
         return optionDialog;
+    }
+
+    public static SaveProjectAsAction getSaveProjectAsAction()  {
+        return saveProjectAsAction;
     }
 
     public void exit() {

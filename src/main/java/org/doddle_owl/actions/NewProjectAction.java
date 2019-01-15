@@ -24,11 +24,14 @@
 package org.doddle_owl.actions;
 
 import org.doddle_owl.DODDLE_OWL;
+import org.doddle_owl.utils.Translator;
 import org.doddle_owl.utils.Utils;
+import org.doddle_owl.views.DODDLEProjectPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 /**
  * @author Takeshi Morita
@@ -48,6 +51,20 @@ public class NewProjectAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLE_OWL.doddleProjectPanel.initProject();
+        int messageType = JOptionPane.showConfirmDialog(DODDLE_OWL.rootPane, Translator.getTerm("SaveProjectMessage"),
+                Translator.getTerm("NewProjectAction"), JOptionPane.YES_NO_CANCEL_OPTION);
+        if (messageType != JOptionPane.CANCEL_OPTION) {
+            if (messageType == JOptionPane.YES_OPTION) {
+                DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
+                if (currentProject == null) {
+                    return;
+                }
+                File saveFile = DODDLE_OWL.getSaveProjectAsAction().getSaveFile();
+                if (saveFile != null) {
+                    DODDLE_OWL.getSaveProjectAsAction().saveProject(saveFile, currentProject);
+                }
+            }
+            DODDLE_OWL.doddleProjectPanel.initProject();
+        }
     }
 }
