@@ -204,7 +204,7 @@ class Sentence {
             if (compoundWord != null) {
                 putCompoundWord(compoundWord);
                 if (seg.isIncludeSymbolParenthesis()) {
-                    String[] words = compoundWord.split("[（）()\\[\\]{}【】［］”“（）]");
+                    String[] words = compoundWord.split("[（）()\\[\\]{}【】［］”“]");
                     for (String word : words) {
                         if (0 < word.length()) {
                             putCompoundWord(word); // A(B)において，A,Bが複合語の時，それらを登録する

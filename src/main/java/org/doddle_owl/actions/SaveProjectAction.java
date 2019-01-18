@@ -41,6 +41,7 @@ import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -70,7 +71,7 @@ public class SaveProjectAction extends AbstractAction {
         super(title, Utils.getImageIcon("disk.png"));
         this.title = title;
         doddle = ddl;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         doddleProjectFileFilter = new DODDLEProjectFileFilter();
         doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
     }

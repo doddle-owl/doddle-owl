@@ -41,6 +41,7 @@ import org.doddle_owl.views.term_selection.TermSelectionPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
@@ -70,7 +71,7 @@ public class OpenProjectAction extends AbstractAction {
         super(title, Utils.getImageIcon("folder_page_white.png"));
         this.title = title;
         doddle = ddl;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         doddleProjectFileFilter = new DODDLEProjectFileFilter();
         doddleProjectFolderFilter = new DODDLEProjectFolderFilter();
     }

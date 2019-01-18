@@ -1171,7 +1171,7 @@ public class ConceptTreePanel extends JPanel {
             setToolTipText(title);
             setEnabled(false);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
@@ -1195,7 +1195,7 @@ public class ConceptTreePanel extends JPanel {
             setToolTipText(title);
             setEnabled(false);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
@@ -1228,7 +1228,7 @@ public class ConceptTreePanel extends JPanel {
                 putValue(ACCELERATOR_KEY, keyStroke);
                 inputMap.put(keyStroke, title);
             } else {
-                KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_DOWN_MASK);
+                KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
                 putValue(ACCELERATOR_KEY, keyStroke);
                 inputMap.put(keyStroke, title);
             }
@@ -1440,7 +1440,7 @@ public class ConceptTreePanel extends JPanel {
             this.title = title;
             setToolTipText(title);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.CTRL_DOWN_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }

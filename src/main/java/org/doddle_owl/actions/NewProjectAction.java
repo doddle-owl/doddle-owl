@@ -29,6 +29,7 @@ import org.doddle_owl.utils.Utils;
 import org.doddle_owl.views.DODDLEProjectPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -43,7 +44,7 @@ public class NewProjectAction extends AbstractAction {
     public NewProjectAction(String title) {
         super(title, Utils.getImageIcon("page_white.png"));
         this.title = title;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
     }
 
     public String getTitle() {
