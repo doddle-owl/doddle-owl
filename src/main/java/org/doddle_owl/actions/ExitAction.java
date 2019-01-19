@@ -27,6 +27,7 @@ import org.doddle_owl.DODDLE_OWL;
 import org.doddle_owl.utils.Utils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -40,7 +41,8 @@ public class ExitAction extends AbstractAction {
     public ExitAction(String title, DODDLE_OWL ddl) {
         super(title, Utils.getImageIcon("application_delete.png"));
         doddle = ddl;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
     }
 
     public void actionPerformed(ActionEvent e) {

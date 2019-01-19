@@ -41,6 +41,9 @@ import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.desktop.QuitEvent;
+import java.awt.desktop.QuitHandler;
+import java.awt.desktop.QuitResponse;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
@@ -118,12 +121,18 @@ public class DODDLE_OWL extends JFrame {
         doddleProjectPanel = new DODDLEProjectPanel();
         contentPane.add(doddleProjectPanel, BorderLayout.CENTER);
         contentPane.add(STATUS_BAR, BorderLayout.SOUTH);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        if (Desktop.isDesktopSupported()) {
+            var desktop = Desktop.getDesktop();
+            desktop.setQuitHandler((e, response) -> {
+                exit();
+            });
+        }
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 exit();
             }
         });
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
         setIconImage(Utils.getImageIcon("application.png").getImage());
@@ -136,7 +145,7 @@ public class DODDLE_OWL extends JFrame {
         return optionDialog;
     }
 
-    public static SaveProjectAsAction getSaveProjectAsAction()  {
+    public static SaveProjectAsAction getSaveProjectAsAction() {
         return saveProjectAsAction;
     }
 

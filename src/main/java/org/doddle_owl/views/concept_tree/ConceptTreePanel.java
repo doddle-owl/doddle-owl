@@ -146,7 +146,7 @@ public class ConceptTreePanel extends JPanel {
         searchNextButton = new JButton(Translator.getTerm("SearchNextButton"));
         searchNextButton.addActionListener(searchAction);
 
-        perfectlyMatchedSearchOptionCheckBox = new JCheckBox(Translator.getTerm("PerfectlyMatchSearchOptionCheckBox"));
+        perfectlyMatchedSearchOptionCheckBox = new JCheckBox(Translator.getTerm("ExactMatchSearchOptionCheckBox"));
         searchURICheckBox = new JCheckBox(Translator.getTerm("SearchURICheckBox"));
         caseSensitivityCheckBox = new JCheckBox(Translator.getTerm("CaseSensitivityCheckBox"));
         JPanel searchCheckBoxPanel = new JPanel();
@@ -252,6 +252,7 @@ public class ConceptTreePanel extends JPanel {
     }
 
     private void initToolBar(JToolBar toolBar) {
+        toolBar.setFloatable(false);
         toolBar.add(addSubConceptAction).setToolTipText(addSubConceptAction.getTitle());
         toolBar.add(addSibConceptAction).setToolTipText(addSibConceptAction.getTitle());
         toolBar.add(copyConceptAction).setToolTipText(copyConceptAction.getTitle());
