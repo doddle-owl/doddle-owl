@@ -41,9 +41,6 @@ import org.doddle_owl.views.document_selection.DocumentSelectionPanel;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.desktop.QuitEvent;
-import java.awt.desktop.QuitHandler;
-import java.awt.desktop.QuitResponse;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
@@ -460,6 +457,9 @@ public class DODDLE_OWL extends JFrame {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            if (Taskbar.isTaskbarSupported()) {
+                Taskbar.getTaskbar().setIconImage(Utils.getImageIcon("doddle_splash.png").getImage());
             }
             new DODDLE_OWL();
         } catch (Exception e) {
