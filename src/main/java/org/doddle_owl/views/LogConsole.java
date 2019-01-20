@@ -51,10 +51,6 @@ import java.io.*;
 public class LogConsole extends JDialog {
 
     /**
-     * The PrintStream for the System.out
-     */
-    private PrintStream stdout = null;
-    /**
      * The PrintStream for the System.err
      */
     private PrintStream stderr = null;
@@ -89,10 +85,6 @@ public class LogConsole extends JDialog {
      */
     private final JTabbedPane jTabbedPane1 = new JTabbedPane();
     /**
-     * Icon for the Window
-     */
-    private final Image myIcon;
-    /**
      * PopUpMenu for save and clear the output textareas
      */
     private final InternalPopupMenu popup = new InternalPopupMenu();
@@ -103,7 +95,10 @@ public class LogConsole extends JDialog {
     public LogConsole(Frame rootFrame, String title, Image icon) {
         super(rootFrame);
         frameTitle = title;
-        myIcon = icon;
+        /**
+         * Icon for the Window
+         */
+        Image myIcon = icon;
 
         if ((frameTitle == null) || (frameTitle.equals(""))) {
             frameTitle = "Test drive";
@@ -196,7 +191,10 @@ public class LogConsole extends JDialog {
         appender.setJTextCompnent(stdoutText);
         Logger.getRootLogger().addAppender(appender);
 
-        stdout = System.out;
+        /**
+         * The PrintStream for the System.out
+         */
+        PrintStream stdout = System.out;
         stderr = System.err;
         PrintStream stdoutStream = new JTextAreaOutputStream(stdoutText, stdout, true);
         PrintStream stderrStream = new JTextAreaOutputStream(stderrText, stderr, true);
@@ -621,14 +619,6 @@ class MyDocumentListener implements DocumentListener {
 
 class InternalPopupMenu extends JPopupMenu {
     /**
-     * Menu item for clearing the text area
-     */
-    private final JMenuItem jMenuItemClearWindow = new JMenuItem("Clear output");
-    /**
-     * Menu item for saving the text area
-     */
-    private final JMenuItem jMenuItemSaveToFile = new JMenuItem("Save to file...");
-    /**
      * The current textarea
      */
     private JTextArea currentWindow = null;
@@ -638,8 +628,16 @@ class InternalPopupMenu extends JPopupMenu {
      */
     public InternalPopupMenu() {
         super();
+        /**
+         * Menu item for clearing the text area
+         */
+        JMenuItem jMenuItemClearWindow = new JMenuItem("Clear output");
         this.add(jMenuItemClearWindow);
         this.addSeparator();
+        /**
+         * Menu item for saving the text area
+         */
+        JMenuItem jMenuItemSaveToFile = new JMenuItem("Save to file...");
         this.add(jMenuItemSaveToFile);
 
         jMenuItemClearWindow.addActionListener(e -> clearWindow());

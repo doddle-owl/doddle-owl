@@ -118,12 +118,18 @@ public class DODDLE_OWL extends JFrame {
         doddleProjectPanel = new DODDLEProjectPanel();
         contentPane.add(doddleProjectPanel, BorderLayout.CENTER);
         contentPane.add(STATUS_BAR, BorderLayout.SOUTH);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        if (Desktop.isDesktopSupported()) {
+            var desktop = Desktop.getDesktop();
+            desktop.setQuitHandler((e, response) -> {
+                exit();
+            });
+        }
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 exit();
             }
         });
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
         setIconImage(Utils.getImageIcon("application.png").getImage());
@@ -136,7 +142,7 @@ public class DODDLE_OWL extends JFrame {
         return optionDialog;
     }
 
-    public static SaveProjectAsAction getSaveProjectAsAction()  {
+    public static SaveProjectAsAction getSaveProjectAsAction() {
         return saveProjectAsAction;
     }
 
@@ -451,6 +457,9 @@ public class DODDLE_OWL extends JFrame {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            if (Taskbar.isTaskbarSupported()) {
+                Taskbar.getTaskbar().setIconImage(Utils.getImageIcon("doddle_splash.png").getImage());
             }
             new DODDLE_OWL();
         } catch (Exception e) {

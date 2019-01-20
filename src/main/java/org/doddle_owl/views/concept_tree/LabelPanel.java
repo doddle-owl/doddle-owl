@@ -67,15 +67,17 @@ public class LabelPanel extends LiteralPanel implements ActionListener {
         preferredTermPanel.add(preferredTermLabel);
         preferredTermPanel.add(preferredTermValueLabel);
 
+        var langLabel = new JLabel(Translator.getTerm("LangTextField"));
         langField = new JTextField(5);
-        langField.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("LangTextField")));
+        var labelLabel = new JLabel(Translator.getTerm("LabelTextField"));
         labelField = new JTextField(15);
-        labelField.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("LabelTextField")));
 
         JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new BorderLayout());
-        fieldPanel.add(langField, BorderLayout.WEST);
-        fieldPanel.add(labelField, BorderLayout.CENTER);
+        fieldPanel.setLayout(new GridLayout(2,2));
+        fieldPanel.add(langLabel);
+        fieldPanel.add(labelLabel);
+        fieldPanel.add(langField);
+        fieldPanel.add(labelField);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 4));

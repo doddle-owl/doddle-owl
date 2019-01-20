@@ -202,8 +202,7 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     public ConceptTreeNode getIsaTreeModelRoot() {
         JTree conceptTree = isaTreePanel.getConceptTree();
         if (conceptTree.getModel().getRoot() instanceof ConceptTreeNode) {
-            return (ConceptTreeNode) conceptTree
-                    .getModel().getRoot();
+            return (ConceptTreeNode) conceptTree.getModel().getRoot();
         }
         return null;
     }

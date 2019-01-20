@@ -146,7 +146,7 @@ public class ConceptTreePanel extends JPanel {
         searchNextButton = new JButton(Translator.getTerm("SearchNextButton"));
         searchNextButton.addActionListener(searchAction);
 
-        perfectlyMatchedSearchOptionCheckBox = new JCheckBox(Translator.getTerm("PerfectlyMatchSearchOptionCheckBox"));
+        perfectlyMatchedSearchOptionCheckBox = new JCheckBox(Translator.getTerm("ExactMatchSearchOptionCheckBox"));
         searchURICheckBox = new JCheckBox(Translator.getTerm("SearchURICheckBox"));
         caseSensitivityCheckBox = new JCheckBox(Translator.getTerm("CaseSensitivityCheckBox"));
         JPanel searchCheckBoxPanel = new JPanel();
@@ -252,6 +252,7 @@ public class ConceptTreePanel extends JPanel {
     }
 
     private void initToolBar(JToolBar toolBar) {
+        toolBar.setFloatable(false);
         toolBar.add(addSubConceptAction).setToolTipText(addSubConceptAction.getTitle());
         toolBar.add(addSibConceptAction).setToolTipText(addSibConceptAction.getTitle());
         toolBar.add(copyConceptAction).setToolTipText(copyConceptAction.getTitle());
@@ -1171,7 +1172,7 @@ public class ConceptTreePanel extends JPanel {
             setToolTipText(title);
             setEnabled(false);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
@@ -1195,7 +1196,7 @@ public class ConceptTreePanel extends JPanel {
             setToolTipText(title);
             setEnabled(false);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
@@ -1228,7 +1229,7 @@ public class ConceptTreePanel extends JPanel {
                 putValue(ACCELERATOR_KEY, keyStroke);
                 inputMap.put(keyStroke, title);
             } else {
-                KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_DOWN_MASK);
+                KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
                 putValue(ACCELERATOR_KEY, keyStroke);
                 inputMap.put(keyStroke, title);
             }
@@ -1440,7 +1441,7 @@ public class ConceptTreePanel extends JPanel {
             this.title = title;
             setToolTipText(title);
             InputMap inputMap = conceptTree.getInputMap();
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.CTRL_DOWN_MASK);
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
             putValue(ACCELERATOR_KEY, keyStroke);
             inputMap.put(keyStroke, title);
         }
