@@ -121,9 +121,9 @@ public class DODDLE_OWL extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         if (Desktop.isDesktopSupported()) {
             var desktop = Desktop.getDesktop();
-            desktop.setQuitHandler((e, response) -> {
-                exit();
-            });
+            if (desktop.isSupported(Desktop.Action.APP_QUIT_HANDLER)) {
+                desktop.setQuitHandler((e, response) -> exit());
+            }
         }
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
