@@ -26,6 +26,10 @@ wrapper {
     gradleVersion = '5.0'
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 test {
     useJUnitPlatform()
 }
