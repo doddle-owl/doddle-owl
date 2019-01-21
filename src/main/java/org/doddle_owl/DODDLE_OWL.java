@@ -459,7 +459,10 @@ public class DODDLE_OWL extends JFrame {
                 e.printStackTrace();
             }
             if (Taskbar.isTaskbarSupported()) {
-                Taskbar.getTaskbar().setIconImage(Utils.getImageIcon("doddle_splash.png").getImage());
+                var taskbar = Taskbar.getTaskbar();
+                if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
+                    taskbar.setIconImage(Utils.getImageIcon("doddle_splash.png").getImage());
+                }
             }
             new DODDLE_OWL();
         } catch (Exception e) {
