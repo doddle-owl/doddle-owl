@@ -3,7 +3,7 @@ plugins {
     id 'application'
     id 'com.github.johnrengelman.shadow' version '4.0.2'
     id 'com.jfrog.bintray' version '1.8.4'
-    id 'org.beryx.runtime' version '1.0.0'
+    id 'org.beryx.runtime' version '1.1.2'
     id 'maven-publish'
     id 'idea'
 }
@@ -24,6 +24,10 @@ repositories {
 
 wrapper {
     gradleVersion = '5.0'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 test {
@@ -47,7 +51,6 @@ idea {
 runtime {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     modules = ['java.desktop', 'java.logging', 'java.xml', 'java.sql']
-    javaHome = '/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home'
     imageDir = file("$buildDir/doddle-owl-${version}")
     imageZip = file("$buildDir/doddle-owl-${version}.zip")
 }

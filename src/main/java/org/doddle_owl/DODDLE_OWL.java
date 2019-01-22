@@ -121,9 +121,9 @@ public class DODDLE_OWL extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         if (Desktop.isDesktopSupported()) {
             var desktop = Desktop.getDesktop();
-            desktop.setQuitHandler((e, response) -> {
-                exit();
-            });
+            if (desktop.isSupported(Desktop.Action.APP_QUIT_HANDLER)) {
+                desktop.setQuitHandler((e, response) -> exit());
+            }
         }
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -459,7 +459,10 @@ public class DODDLE_OWL extends JFrame {
                 e.printStackTrace();
             }
             if (Taskbar.isTaskbarSupported()) {
-                Taskbar.getTaskbar().setIconImage(Utils.getImageIcon("doddle_splash.png").getImage());
+                var taskbar = Taskbar.getTaskbar();
+                if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
+                    taskbar.setIconImage(Utils.getImageIcon("doddle_splash.png").getImage());
+                }
             }
             new DODDLE_OWL();
         } catch (Exception e) {
