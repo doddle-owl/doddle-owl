@@ -53,8 +53,7 @@ import java.util.*;
  */
 public class Utils {
     public static ImageIcon getImageIcon(String icon) {
-        return new ImageIcon(DODDLE_OWL.class.getClassLoader()
-                .getResource("images" + File.separator + icon));
+        return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource("images/" + icon));
     }
 
     public static void addJaCompoundWord(List tokenList, List<String> inputWordList) {
