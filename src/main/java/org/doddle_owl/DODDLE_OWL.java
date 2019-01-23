@@ -358,7 +358,6 @@ public class DODDLE_OWL extends JFrame {
         DODDLEConstants.EDR_HOME = properties.getProperty("EDR_HOME");
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
-        DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
         DocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         DocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
                 .getProperty("Japanese_Morphological_Analyzer");
