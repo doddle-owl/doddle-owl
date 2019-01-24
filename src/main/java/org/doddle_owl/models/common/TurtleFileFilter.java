@@ -31,15 +31,15 @@ import java.io.File;
 /**
  * @author Takeshi Morita
  */
-public class OWLFileFilter extends FileFilter {
+public class TurtleFileFilter extends FileFilter {
 
     @Override
     public boolean accept(File f) {
         if (f.isDirectory()) return true;
-        return f.getName().toLowerCase().endsWith(".owl");
+        return f.getName().toLowerCase().endsWith(".ttl");
     }
     @Override
     public String getDescription() {
-        return Translator.getTerm("OWLFileFilter");
+        return Translator.getTerm("TurtleFileFilter");
     }
 }

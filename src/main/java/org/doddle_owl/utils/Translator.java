@@ -24,6 +24,7 @@
 package org.doddle_owl.utils;
 
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
@@ -63,7 +64,7 @@ public class Translator {
         uriTermMap = new HashMap<>();
         uriDescriptionMap = new HashMap<>();
         Model ontModel = ModelFactory.createDefaultModel();
-        InputStream ins = Utils.class.getClassLoader().getResourceAsStream("doddle_components.owl");
+        InputStream ins = Utils.class.getClassLoader().getResourceAsStream("doddle_components.ttl");
         ontModel.read(ins, DODDLEConstants.BASE_URI, "TURTLE");
 
         for (ResIterator resItor = ontModel.listSubjectsWithProperty(RDF.type, OWL.Class); resItor

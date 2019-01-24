@@ -23,22 +23,23 @@
 
 package org.doddle_owl.actions;
 
-import org.doddle_owl.views.DODDLEProjectPanel;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 import org.doddle_owl.DODDLE_OWL;
-import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.common.FreeMindFileFilter;
-import org.doddle_owl.models.common.OWLFileFilter;
-import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
-import org.doddle_owl.views.concept_tree.ConceptTreePanel;
-import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import org.doddle_owl.models.common.TurtleFileFilter;
+import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.utils.FreeMindModelMaker;
 import org.doddle_owl.utils.JenaModelMaker;
 import org.doddle_owl.utils.Translator;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFWriter;
+import org.doddle_owl.views.DODDLEProjectPanel;
+import org.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
+import org.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
+import org.doddle_owl.views.concept_tree.ConceptTreePanel;
+import org.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -53,8 +54,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.event.ActionEvent;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -72,7 +73,7 @@ public class SaveOntologyAction extends AbstractAction {
     public SaveOntologyAction(String title, String type) {
         super(title);
         conversionType = type;
-        owlFileFilter = new OWLFileFilter();
+        owlFileFilter = new TurtleFileFilter();
         freeMindFileFilter = new FreeMindFileFilter();
     }
 
@@ -132,13 +133,9 @@ public class SaveOntologyAction extends AbstractAction {
 
     public void saveOWLOntology(DODDLEProjectPanel project, File file) {
         try {
-            Model ontModel = getOntology(project);
-            RDFWriter rdfWriter = ontModel.getWriter("TURTLE");
-            rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
-            rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
-            try (writer) {
-                rdfWriter.write(ontModel, writer, DODDLEConstants.BASE_URI);
+            var outputStream = Files.newOutputStream(Paths.get(file.getAbsolutePath()));
+            try (outputStream) {
+                RDFDataMgr.write(outputStream, getOntology(project), Lang.TURTLE);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -157,8 +154,8 @@ public class SaveOntologyAction extends AbstractAction {
             DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
             if (conversionType.equals(OWL_ONTOLOGY)) {
                 File file = chooser.getSelectedFile();
-                if (!file.getName().endsWith(".owl")) {
-                    file = new File(file.getAbsolutePath() + ".owl");
+                if (!file.getName().endsWith(".ttl")) {
+                    file = new File(file.getAbsolutePath() + ".ttl");
                 }
                 saveOWLOntology(currentProject, file);
                 DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveOWLOntologyAction"));

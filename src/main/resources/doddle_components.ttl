@@ -3147,13 +3147,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Aprioriパラメータ" .
 
-<#OWLFileFilter>  a  <http://www.w3.org/2002/07/owl#Class> ;
+<#TurtleFileFilter>  a  <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "OWL File (.owl)"@en , "OWLファイル (.owl)"@ja ;
+                "Turtle File (.ttl)"@en , "Turtleファイル (.ttl)"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <#FileFilter> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "OWLファイル (.owl)" .
+                "Turtleファイル (.ttl)" .
 
 <#OpenInputTermTableAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
