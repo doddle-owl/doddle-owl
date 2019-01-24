@@ -67,18 +67,14 @@ public class Translator {
         InputStream ins = Utils.class.getClassLoader().getResourceAsStream("doddle_components.ttl");
         ontModel.read(ins, DODDLEConstants.BASE_URI, "TURTLE");
 
-        for (ResIterator resItor = ontModel.listSubjectsWithProperty(RDF.type, OWL.Class); resItor
-                .hasNext(); ) {
-            Resource res = resItor.nextResource();
-            for (StmtIterator stmtItor = res.listProperties(RDFS.label); stmtItor.hasNext(); ) {
-                Statement stmt = stmtItor.nextStatement();
+        for (Resource res : ontModel.listSubjectsWithProperty(RDF.type, OWL.Class).toList()) {
+            for (Statement stmt : res.listProperties(RDFS.label).toList()) {
                 Literal label = (Literal) stmt.getObject();
                 if (label.getLanguage().equals(lang)) {
                     uriTermMap.put(res.getURI(), label.getString());
                 }
             }
-            for (StmtIterator stmtItor = res.listProperties(RDFS.comment); stmtItor.hasNext(); ) {
-                Statement stmt = stmtItor.nextStatement();
+            for (Statement stmt : res.listProperties(RDFS.comment).toList()) {
                 Literal description = (Literal) stmt.getObject();
                 if (description != null && description.getLanguage().equals(lang)) {
                     uriDescriptionMap.put(res.getURI(), description.getString());
