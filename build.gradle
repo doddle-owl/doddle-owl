@@ -68,6 +68,10 @@ tasks.runtime.doLast {
         from('./LICENSE')
         into("$buildDir/doddle-owl-${version}")
     }
+    copy {
+        from('./src/main/resources/jpwn_dict_1.1/')
+        into("$buildDir/doddle-owl-${version}/ontologies/jpwn_dict_1.1/")
+    }
 }
 
 shadowJar {
@@ -76,6 +80,7 @@ shadowJar {
         attributes 'Main-Class': 'org.doddle_owl.DODDLE_OWL'
     }
     archiveName = "doddle-owl.jar"
+    exclude 'jpwn_dict_1.1/'
 }
 
 dependencies {

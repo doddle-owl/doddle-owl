@@ -52,7 +52,6 @@ public class DODDLEConstants {
 
     public static String EDR_HOME = "C:/DODDLE-OWL/EDR_DIC/";
     public static String EDRT_HOME = "C:/DODDLE-OWL/EDRT_DIC/";
-    public static String JPWN_HOME = "jpwn_dict_1.1/";
     public static String JWO_HOME = "jwo/";
     public static String PROJECT_HOME = "./";
 }

@@ -288,7 +288,6 @@ public class JaWordNet {
             dataFile = jpnwnConceptDataFile;
             dataFile.seek(dfp);
             String data = new String(dataFile.readLine().getBytes("ISO8859_1"), StandardCharsets.UTF_8);
-            // System.out.println(data);
             String[] dataArray = data.split("\\^");
             String[] conceptData = new String[4];
             String id = dataArray[0].replaceAll("\t", "");

@@ -321,7 +321,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         properties.setProperty("EDR_HOME", directoryPanel.getEDRDicDir());
         properties.setProperty("EDRT_HOME", directoryPanel.getEDRTDicDir());
 
-        properties.setProperty("JPWN_HOME", directoryPanel.getJpwnDicDir());
         properties.setProperty("JWO_HOME", directoryPanel.getJwoDicDir());
 
         properties.setProperty("PERL_EXE", directoryPanel.getPerlDir());
@@ -389,7 +388,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         DODDLEConstants.EDR_HOME = directoryPanel.getEDRDicDir();
         DODDLEConstants.EDRT_HOME = directoryPanel.getEDRTDicDir();
 
-        DODDLEConstants.JPWN_HOME = directoryPanel.getJpwnDicDir();
         DODDLEConstants.JWO_HOME = directoryPanel.getJwoDicDir();
 
         DocumentSelectionPanel.PERL_EXE = directoryPanel.getPerlDir();
@@ -427,7 +425,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setJapaneseDependencyStructureAnalyzer("");
         directoryPanel.setEDRDicDir("");
         directoryPanel.setEDRTDicDir("");
-        directoryPanel.setJpwnDicDir("");
         directoryPanel.setJwoDicDir("");
         directoryPanel.setPerlDir("");
         directoryPanel.setProjectDir("");
@@ -448,8 +445,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         directoryPanel.setEDRDicDir(DODDLEConstants.EDR_HOME);
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
         directoryPanel.setEDRTDicDir(DODDLEConstants.EDRT_HOME);
-        DODDLEConstants.JPWN_HOME = properties.getProperty("JPWN_HOME");
-        directoryPanel.setJpwnDicDir(DODDLEConstants.JPWN_HOME);
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
         directoryPanel.setJwoDicDir(DODDLEConstants.JWO_HOME);
 
@@ -554,7 +549,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         private final JTextField japaneseDependencyStructureAnalyzerField;
         private final JTextField edrDicDirField;
         private final JTextField edrtDicDirField;
-        private final JTextField jpwnDicDirField;
         private final JTextField jwoDicDirField;
         private final JTextField projectDirField;
         private final JTextField perlDirField;
@@ -566,7 +560,6 @@ public class OptionDialog extends JDialog implements ActionListener {
         private final JButton browseJapaneseDependencyStructureAnalyzerButton;
         private final JButton browseEDRDicDirButton;
         private final JButton browseEDRTDicDirButton;
-        private final JButton browseJpwnDicDirButton;
         private final JButton browseJwoDicDirButton;
         private final JButton browseProjectDirButton;
         private final JButton browsePerlDirButton;
@@ -594,10 +587,6 @@ public class OptionDialog extends JDialog implements ActionListener {
             edrtDicDirField = new JTextField(FIELD_SIZE);
             browseEDRTDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
             initComponent(edrtDicDirField, browseEDRTDicDirButton, DODDLEConstants.EDRT_HOME);
-
-            jpwnDicDirField = new JTextField(FIELD_SIZE);
-            browseJpwnDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
-            initComponent(jpwnDicDirField, browseJpwnDicDirButton, DODDLEConstants.JPWN_HOME);
 
             jwoDicDirField = new JTextField(FIELD_SIZE);
             browseJwoDicDirButton = new JButton(Translator.getTerm("ReferenceButton"));
@@ -635,8 +624,6 @@ public class OptionDialog extends JDialog implements ActionListener {
             panel.add(getPanel(stopWordListField, browseStopWordListButton,
                     Translator.getTerm("StopWordsTextField")));
 
-            panel.add(getPanel(jpwnDicDirField, browseJpwnDicDirButton,
-                    Translator.getTerm("JPNWNFolderTextField")));
             panel.add(getPanel(jwoDicDirField, browseJwoDicDirButton,
                     Translator.getTerm("JWOFolderTextField")));
 
@@ -703,14 +690,6 @@ public class OptionDialog extends JDialog implements ActionListener {
 
         String getEDRTDicDir() {
             return edrtDicDirField.getText();
-        }
-
-        void setJpwnDicDir(String dir) {
-            jpwnDicDirField.setText(dir);
-        }
-
-        String getJpwnDicDir() {
-            return jpwnDicDirField.getText();
         }
 
         void setJwoDicDir(String dir) {
@@ -804,8 +783,6 @@ public class OptionDialog extends JDialog implements ActionListener {
                         DODDLEConstants.EDR_HOME = fileOrDirectoryName;
                     } else if (directoryField == edrtDicDirField) {
                         DODDLEConstants.EDRT_HOME = fileOrDirectoryName;
-                    } else if (directoryField == jpwnDicDirField) {
-                        DODDLEConstants.JPWN_HOME = fileOrDirectoryName;
                     } else if (directoryField == jwoDicDirField) {
                         DODDLEConstants.JWO_HOME = fileOrDirectoryName;
                     } else if (directoryField == projectDirField) {

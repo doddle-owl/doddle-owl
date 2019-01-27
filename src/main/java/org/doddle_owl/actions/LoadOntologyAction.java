@@ -24,12 +24,12 @@
 package org.doddle_owl.actions;
 
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.riot.RDFDataMgr;
 import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.common.DODDLELiteral;
 import org.doddle_owl.models.common.FreeMindFileFilter;
-import org.doddle_owl.models.common.OWLFileFilter;
+import org.doddle_owl.models.common.TurtleFileFilter;
 import org.doddle_owl.models.concept_selection.Concept;
 import org.doddle_owl.models.concept_tree.ConceptTreeNode;
 import org.doddle_owl.models.concept_tree.VerbConcept;
@@ -51,193 +51,180 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import java.awt.event.ActionEvent;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * @author Takeshi Morita
  */
 public class LoadOntologyAction extends AbstractAction {
 
-	private final String conversionType;
-	private final FileFilter owlFileFilter;
-	private final FileFilter freeMindFileFilter;
-	public static final String OWL_ONTOLOGY = "OWL";
-	public static final String FREEMIND_ONTOLOGY = "FREEMIND";
+    private final String conversionType;
+    private final FileFilter turtleFileFilter;
+    private final FileFilter freeMindFileFilter;
+    public static final String OWL_ONTOLOGY = "OWL";
+    public static final String FREEMIND_ONTOLOGY = "FREEMIND";
 
-	public LoadOntologyAction(String title, String type) {
-		super(title);
-		conversionType = type;
-		owlFileFilter = new OWLFileFilter();
-		freeMindFileFilter = new FreeMindFileFilter();
-	}
+    public LoadOntologyAction(String title, String type) {
+        super(title);
+        conversionType = type;
+        turtleFileFilter = new TurtleFileFilter();
+        freeMindFileFilter = new FreeMindFileFilter();
+    }
 
-	private void loadFreeMindOntology(DODDLEProjectPanel currentProject, File file) {
-		ConceptSelectionPanel conceptSelectionPanel = currentProject
-				.getConceptSelectionPanel();
-		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
-		PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+    private void loadFreeMindOntology(DODDLEProjectPanel currentProject, File file) {
+        ConceptSelectionPanel conceptSelectionPanel = currentProject
+                .getConceptSelectionPanel();
+        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
-		if (!file.exists()) {
-			return;
-		}
-		constructClassPanel.initialize();
-		constructPropertyPanel.initialize();
-		currentProject.resetURIConceptMap();
-		ConceptTreeMaker.getInstance().setInputConceptSet(
-				conceptSelectionPanel.getInputConceptSet());
+        if (!file.exists()) {
+            return;
+        }
+        constructClassPanel.initialize();
+        constructPropertyPanel.initialize();
+        currentProject.resetURIConceptMap();
+        ConceptTreeMaker.getInstance().setInputConceptSet(
+                conceptSelectionPanel.getInputConceptSet());
 
-		Element docElement = FreeMindModelMaker.getDocumentElement(file);
-		Element rootNode = null;
-		Element nounRootNode = null;
-		Element verbRootNode = null;
-		NodeList rootNodeList = docElement.getChildNodes();
-		for (int i = 0; i < rootNodeList.getLength(); i++) {
-			if (rootNodeList.item(i).getNodeName().equals("node")) {
-				rootNode = (Element) rootNodeList.item(i);
-			}
-		}
-		rootNodeList = rootNode.getChildNodes();
-		for (int i = 0; i < rootNodeList.getLength(); i++) {
-			if (rootNodeList.item(i).getNodeName().equals("node")) {
-				rootNode = (Element) rootNodeList.item(i);
-				if (rootNode.getAttribute("ID").equals(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI)) {
-					nounRootNode = rootNode;
-				} else if (rootNode.getAttribute("ID").equals(
-						ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI)) {
-					verbRootNode = rootNode;
-				}
-			}
-		}
+        Element docElement = FreeMindModelMaker.getDocumentElement(file);
+        Element rootNode = null;
+        Element nounRootNode = null;
+        Element verbRootNode = null;
+        NodeList rootNodeList = docElement.getChildNodes();
+        for (int i = 0; i < rootNodeList.getLength(); i++) {
+            if (rootNodeList.item(i).getNodeName().equals("node")) {
+                rootNode = (Element) rootNodeList.item(i);
+            }
+        }
+        rootNodeList = rootNode.getChildNodes();
+        for (int i = 0; i < rootNodeList.getLength(); i++) {
+            if (rootNodeList.item(i).getNodeName().equals("node")) {
+                rootNode = (Element) rootNodeList.item(i);
+                if (rootNode.getAttribute("ID").equals(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI)) {
+                    nounRootNode = rootNode;
+                } else if (rootNode.getAttribute("ID").equals(
+                        ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI)) {
+                    verbRootNode = rootNode;
+                }
+            }
+        }
 
-		Concept rootNounConcept = new VerbConcept(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI, "");
-		rootNounConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (Is-a)"));
-		rootNounConcept.addLabel(new DODDLELiteral("en", "Is-a Root Class"));
-		ConceptTreeNode rootTreeNode = new ConceptTreeNode(rootNounConcept,
-				DODDLE_OWL.getCurrentProject());
-		FreeMindModelMaker.setConceptTreeModel(rootTreeNode, nounRootNode);
+        Concept rootNounConcept = new VerbConcept(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI, "");
+        rootNounConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (Is-a)"));
+        rootNounConcept.addLabel(new DODDLELiteral("en", "Is-a Root Class"));
+        ConceptTreeNode rootTreeNode = new ConceptTreeNode(rootNounConcept,
+                DODDLE_OWL.getCurrentProject());
+        FreeMindModelMaker.setConceptTreeModel(rootTreeNode, nounRootNode);
 
-		currentProject.initUserIDCount();
-		DefaultTreeModel treeModel = new DefaultTreeModel(rootTreeNode);
-		treeModel = constructClassPanel.setConceptTreeModel(treeModel);
-		constructClassPanel.setVisibleIsaTree(true);
-		currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
-		ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
-		constructClassPanel.setConceptDriftManagementResult();
-		treeModel.reload();
+        currentProject.initUserIDCount();
+        DefaultTreeModel treeModel = new DefaultTreeModel(rootTreeNode);
+        treeModel = constructClassPanel.setConceptTreeModel(treeModel);
+        constructClassPanel.setVisibleIsaTree(true);
+        currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
+        ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
+        constructClassPanel.setConceptDriftManagementResult();
+        treeModel.reload();
 
-		currentProject.setUserIDCount(currentProject.getUserIDCount());
-		VerbConcept rootVerbConcept = new VerbConcept(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI, "");
-		rootVerbConcept.addLabel(new DODDLELiteral("ja", "動詞的概念"));
-		rootVerbConcept.addLabel(new DODDLELiteral("en", "Root Property"));
-		rootTreeNode = new ConceptTreeNode(rootVerbConcept, DODDLE_OWL.getCurrentProject());
-		FreeMindModelMaker.setConceptTreeModel(rootTreeNode, verbRootNode);
-		treeModel = new DefaultTreeModel(rootTreeNode);
-		treeModel = constructPropertyPanel.setConceptTreeModel(treeModel);
-		constructPropertyPanel.setVisibleIsaTree(true);
-		ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
-		constructPropertyPanel.setConceptDriftManagementResult();
-		treeModel.reload();
-		currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
-		expandTrees(currentProject);
-	}
+        currentProject.setUserIDCount(currentProject.getUserIDCount());
+        VerbConcept rootVerbConcept = new VerbConcept(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI, "");
+        rootVerbConcept.addLabel(new DODDLELiteral("ja", "動詞的概念"));
+        rootVerbConcept.addLabel(new DODDLELiteral("en", "Root Property"));
+        rootTreeNode = new ConceptTreeNode(rootVerbConcept, DODDLE_OWL.getCurrentProject());
+        FreeMindModelMaker.setConceptTreeModel(rootTreeNode, verbRootNode);
+        treeModel = new DefaultTreeModel(rootTreeNode);
+        treeModel = constructPropertyPanel.setConceptTreeModel(treeModel);
+        constructPropertyPanel.setVisibleIsaTree(true);
+        ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
+        constructPropertyPanel.setConceptDriftManagementResult();
+        treeModel.reload();
+        currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
+        expandTrees(currentProject);
+    }
 
-	public void loadOWLOntology(DODDLEProjectPanel currentProject, File file) {
-		if (!file.exists()) {
-			return;
-		}
-		try {
-			Model model = ModelFactory.createDefaultModel();
-			BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
-			try (reader) {
-				model.read(reader, DODDLEConstants.BASE_URI, "TURTLE");
-			}
-			loadOWLOntology(currentProject, model);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    public void loadOWLOntology(DODDLEProjectPanel currentProject, File file) {
+        if (file.exists()) {
+            loadOWLOntology(currentProject, RDFDataMgr.loadModel(file.getAbsolutePath()));
+        }
+    }
 
-	private void loadOWLOntology(DODDLEProjectPanel currentProject, Model model) {
-		ConceptSelectionPanel conceptSelectionPanel = currentProject
-				.getConceptSelectionPanel();
-		ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
-		PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+    private void loadOWLOntology(DODDLEProjectPanel currentProject, Model model) {
+        ConceptSelectionPanel conceptSelectionPanel = currentProject
+                .getConceptSelectionPanel();
+        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
-		constructClassPanel.initialize();
-		constructPropertyPanel.initialize();
-		currentProject.resetURIConceptMap();
-		ConceptTreeMaker.getInstance().setInputConceptSet(
-				conceptSelectionPanel.getInputConceptSet());
+        constructClassPanel.initialize();
+        constructPropertyPanel.initialize();
+        currentProject.resetURIConceptMap();
+        ConceptTreeMaker.getInstance().setInputConceptSet(
+                conceptSelectionPanel.getInputConceptSet());
 
-		currentProject.initUserIDCount();
-		TreeNode rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject,
-				model, ResourceFactory.createResource(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI),
-				ConceptTreePanel.CLASS_ISA_TREE);
-		DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
-		treeModel = constructClassPanel.setConceptTreeModel(treeModel);
-		constructClassPanel.setVisibleIsaTree(true);
-		currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
-		ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
-		constructClassPanel.setConceptDriftManagementResult();
-		treeModel.reload();
+        currentProject.initUserIDCount();
+        TreeNode rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject,
+                model, ResourceFactory.createResource(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI),
+                ConceptTreePanel.CLASS_ISA_TREE);
+        DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
+        treeModel = constructClassPanel.setConceptTreeModel(treeModel);
+        constructClassPanel.setVisibleIsaTree(true);
+        currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
+        ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
+        constructClassPanel.setConceptDriftManagementResult();
+        treeModel.reload();
 
-		rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject, model,
-				ResourceFactory.createResource(ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI),
-				ConceptTreePanel.CLASS_HASA_TREE);
-		treeModel = new DefaultTreeModel(rootNode);
-		constructClassPanel.setHasaTreeModel(treeModel);
-		constructClassPanel.setVisibleHasaTree(true);
-		treeModel.reload();
+        rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject, model,
+                ResourceFactory.createResource(ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI),
+                ConceptTreePanel.CLASS_HASA_TREE);
+        treeModel = new DefaultTreeModel(rootNode);
+        constructClassPanel.setHasaTreeModel(treeModel);
+        constructClassPanel.setVisibleHasaTree(true);
+        treeModel.reload();
 
-		currentProject.setUserIDCount(currentProject.getUserIDCount());
-		rootNode = ConceptTreeMaker.getInstance().getPropertyTreeRoot(currentProject, model,
-				ResourceFactory.createResource(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI),
-				ConceptTreePanel.PROPERTY_ISA_TREE);
-		treeModel = new DefaultTreeModel(rootNode);
-		treeModel = constructPropertyPanel.setConceptTreeModel(treeModel);
-		constructPropertyPanel.setVisibleIsaTree(true);
-		ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
-		constructPropertyPanel.setConceptDriftManagementResult();
-		treeModel.reload();
+        currentProject.setUserIDCount(currentProject.getUserIDCount());
+        rootNode = ConceptTreeMaker.getInstance().getPropertyTreeRoot(currentProject, model,
+                ResourceFactory.createResource(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI),
+                ConceptTreePanel.PROPERTY_ISA_TREE);
+        treeModel = new DefaultTreeModel(rootNode);
+        treeModel = constructPropertyPanel.setConceptTreeModel(treeModel);
+        constructPropertyPanel.setVisibleIsaTree(true);
+        ConceptTreeMaker.getInstance().conceptDriftManagement(treeModel);
+        constructPropertyPanel.setConceptDriftManagementResult();
+        treeModel.reload();
 
-		rootNode = ConceptTreeMaker.getInstance().getPropertyTreeRoot(currentProject, model,
-				ResourceFactory.createResource(ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI),
-				ConceptTreePanel.PROPERTY_HASA_TREE);
-		treeModel = new DefaultTreeModel(rootNode);
-		constructPropertyPanel.setHasaTreeModel(treeModel);
-		constructPropertyPanel.setVisibleHasaTree(true);
-		treeModel.reload();
+        rootNode = ConceptTreeMaker.getInstance().getPropertyTreeRoot(currentProject, model,
+                ResourceFactory.createResource(ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI),
+                ConceptTreePanel.PROPERTY_HASA_TREE);
+        treeModel = new DefaultTreeModel(rootNode);
+        constructPropertyPanel.setHasaTreeModel(treeModel);
+        constructPropertyPanel.setVisibleHasaTree(true);
+        treeModel.reload();
 
-		currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
-		expandTrees(currentProject);
-	}
+        currentProject.setUserIDCount(currentProject.getUserIDCount() + 1);
+        expandTrees(currentProject);
+    }
 
-	private void expandTrees(DODDLEProjectPanel currentProject) {
-		currentProject.getConstructClassPanel().expandIsaTree();
-		currentProject.getConstructClassPanel().expandHasaTree();
-		currentProject.getConstructPropertyPanel().expandIsaTree();
-		currentProject.getConstructPropertyPanel().expandHasaTree();
-	}
+    private void expandTrees(DODDLEProjectPanel currentProject) {
+        currentProject.getConstructClassPanel().expandIsaTree();
+        currentProject.getConstructClassPanel().expandHasaTree();
+        currentProject.getConstructPropertyPanel().expandIsaTree();
+        currentProject.getConstructPropertyPanel().expandHasaTree();
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
-		if (conversionType.equals(OWL_ONTOLOGY)) {
-			chooser.addChoosableFileFilter(owlFileFilter);
-		} else if (conversionType.equals(FREEMIND_ONTOLOGY)) {
-			chooser.addChoosableFileFilter(freeMindFileFilter);
-		}
-		int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
-		if (retval == JFileChooser.APPROVE_OPTION) {
-			DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-			if (conversionType.equals(OWL_ONTOLOGY)) {
-				loadOWLOntology(currentProject, chooser.getSelectedFile());
-				DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenOWLOntologyAction"));
-			} else if (conversionType.equals(FREEMIND_ONTOLOGY)) {
-				loadFreeMindOntology(currentProject, chooser.getSelectedFile());
-				DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenFreeMindOntologyAction"));
-			}
-		}
-	}
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser chooser = new JFileChooser(DODDLEConstants.PROJECT_HOME);
+        if (conversionType.equals(OWL_ONTOLOGY)) {
+            chooser.addChoosableFileFilter(turtleFileFilter);
+        } else if (conversionType.equals(FREEMIND_ONTOLOGY)) {
+            chooser.addChoosableFileFilter(freeMindFileFilter);
+        }
+        int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
+        if (retval == JFileChooser.APPROVE_OPTION) {
+            DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
+            if (conversionType.equals(OWL_ONTOLOGY)) {
+                loadOWLOntology(currentProject, chooser.getSelectedFile());
+                DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenOWLOntologyAction"));
+            } else if (conversionType.equals(FREEMIND_ONTOLOGY)) {
+                loadFreeMindOntology(currentProject, chooser.getSelectedFile());
+                DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenFreeMindOntologyAction"));
+            }
+        }
+    }
 }

@@ -493,10 +493,8 @@ public class ConceptTreeMaker {
             rootConcept.addLabel(new DODDLELiteral("en", "Has-a Root Class"));
         }
         supSubSetMap = new HashMap<>();
-        for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext(); ) {
-            Resource resource = i.nextResource();
-            for (StmtIterator j = resource.listProperties(property); j.hasNext(); ) {
-                Statement stmt = j.nextStatement();
+        for (Resource resource : model.listSubjectsWithProperty(RDF.type).toList()) {
+            for (Statement stmt : resource.listProperties(property).toList()) {
                 Resource supResource = (Resource) stmt.getObject();
                 Set<Resource> subResourceSet = supSubSetMap.get(supResource);
                 if (subResourceSet == null) {
@@ -541,10 +539,8 @@ public class ConceptTreeMaker {
         }
 
         supSubSetMap = new HashMap<>();
-        for (ResIterator i = model.listSubjectsWithProperty(RDF.type); i.hasNext(); ) {
-            Resource resource = i.nextResource();
-            for (StmtIterator j = resource.listProperties(property); j.hasNext(); ) {
-                Statement stmt = j.nextStatement();
+        for (Resource resource : model.listSubjectsWithProperty(RDF.type).toList()) {
+            for (Statement stmt : resource.listProperties(property).toList()) {
                 Resource supResource = (Resource) stmt.getObject();
                 Set<Resource> subResourceSet = supSubSetMap.get(supResource);
                 if (subResourceSet == null) {
@@ -578,28 +574,24 @@ public class ConceptTreeMaker {
                 Literal prefLabel = (Literal) prefLabelStmt.getObject();
                 concept.setInputLabel(new DODDLELiteral(prefLabel.getLanguage(), prefLabel.getString()));
             }
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.label); stmtIter.hasNext(); ) {
-                Statement stmt = stmtIter.nextStatement();
+            for (Statement stmt : subRDFS.listProperties(RDFS.label).toList()) {
                 Literal lit = (Literal) stmt.getObject();
                 concept.addLabel(new DODDLELiteral(lit.getLanguage(), lit.getString()));
             }
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.comment); stmtIter.hasNext(); ) {
-                Statement stmt = stmtIter.nextStatement();
+            for (Statement stmt : subRDFS.listProperties(RDFS.comment).toList()) {
                 Literal lit = (Literal) stmt.getObject();
                 concept.addDescription(new DODDLELiteral(lit.getLanguage(), lit.getString()));
             }
 
             Set<String> domainSet = new HashSet<>();
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.domain); stmtIter.hasNext(); ) {
-                Statement stmt = stmtIter.nextStatement();
+            for (Statement stmt : subRDFS.listProperties(RDFS.domain).toList()) {
                 Resource domain = (Resource) stmt.getObject();
                 domainSet.add(domain.getURI());
             }
             concept.addAllDomain(domainSet);
 
             Set<String> rangeSet = new HashSet<>();
-            for (StmtIterator stmtIter = subRDFS.listProperties(RDFS.range); stmtIter.hasNext(); ) {
-                Statement stmt = stmtIter.nextStatement();
+            for (Statement stmt : subRDFS.listProperties(RDFS.range).toList()) {
                 Resource range = (Resource) stmt.getObject();
                 rangeSet.add(range.getURI());
             }

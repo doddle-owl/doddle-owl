@@ -417,10 +417,8 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
     }
 
     public Set<String> getURISet(String word) {
-        if (wordURIsMap.get(word.toLowerCase()) == null
-                && uri.equals(DODDLEConstants.JWO_HOME)) {
-            for (ResIterator i = ontModel.listSubjectsWithProperty(RDFS.label, word); i.hasNext(); ) {
-                Resource res = i.nextResource();
+        if (wordURIsMap.get(word.toLowerCase()) == null && uri.equals(DODDLEConstants.JWO_HOME)) {
+            for (Resource res : ontModel.listSubjectsWithProperty(RDFS.label, word).toList()) {
                 // System.out.println(res.getURI() + ": " + word);
                 if (wordURIsMap.get(word) != null) {
                     Set<String> uris = wordURIsMap.get(word);
@@ -530,8 +528,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
             pathToRootSet.add(pathToRoot);
             return pathToRootSet;
         }
-        for (NodeIterator i = ontModel.listObjectsOfProperty(conceptRes, subConceptOf); i.hasNext(); ) {
-            RDFNode node = i.nextNode();
+        for (RDFNode node : ontModel.listObjectsOfProperty(conceptRes, subConceptOf).toList()) {
             if (node instanceof Resource && !node.isAnon()) {
                 List<Concept> pathToRootClone = new ArrayList<>(pathToRoot);
                 Resource supConceptRes = (Resource) node;
@@ -562,8 +559,7 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
             pathToRootSet.add(pathToRoot);
             return pathToRootSet;
         }
-        for (NodeIterator i = ontModel.listObjectsOfProperty(conceptRes, subConceptOf); i.hasNext(); ) {
-            RDFNode node = i.nextNode();
+        for (RDFNode node : ontModel.listObjectsOfProperty(conceptRes, subConceptOf).toList()) {
             if (node instanceof Resource && !node.isAnon()) {
                 List<String> pathToRootClone = new ArrayList<>(pathToRoot);
                 Resource supConceptRes = (Resource) node;
