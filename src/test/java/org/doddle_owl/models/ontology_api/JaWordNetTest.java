@@ -1,6 +1,5 @@
 package org.doddle_owl.models.ontology_api;
 
-import org.doddle_owl.models.common.DODDLEConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +9,6 @@ class JaWordNetTest {
 
     @BeforeEach
     void setUp() {
-        DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
         JaWordNet.initJPNWNDic();
     }
 
