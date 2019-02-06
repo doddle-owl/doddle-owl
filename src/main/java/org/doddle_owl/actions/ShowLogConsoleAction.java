@@ -38,7 +38,7 @@ public class ShowLogConsoleAction extends AbstractAction {
     private final LogConsole logConsole;
 
     public ShowLogConsoleAction(String title, LogConsole console) {
-        super(title, Utils.getImageIcon("application_xp_terminal.png"));
+        super(title, Utils.getImageIcon("ic_message_black_18dp.png"));
         this.title = title;
         logConsole = console;
     }

@@ -1393,8 +1393,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
     }
 
-    private final ImageIcon bestMatchIcon = Utils.getImageIcon("class_best_match_icon.png");
-    private final ImageIcon ConceptNodeIcon = Utils.getImageIcon("class_sin_icon.png");
+    private final ImageIcon bestMatchIcon = Utils.getImageIcon("best_match_icon.png");
+    private final ImageIcon ConceptNodeIcon = Utils.getImageIcon("sin_icon.png");
 
     class AroundTreeCellRenderer extends DefaultTreeCellRenderer {
 

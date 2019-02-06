@@ -11,7 +11,7 @@ public class ShowDODDLEDicConverterAction extends AbstractAction {
     private final String title;
 
     public ShowDODDLEDicConverterAction(String title) {
-        super(title, Utils.getImageIcon("plugin.png"));
+        super(title, Utils.getImageIcon("baseline_build_black_18dp.png"));
         this.title = title;
     }
 

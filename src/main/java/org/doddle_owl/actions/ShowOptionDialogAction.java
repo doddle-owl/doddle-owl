@@ -37,7 +37,7 @@ public class ShowOptionDialogAction extends AbstractAction {
     private final DODDLE_OWL doddle;
 
     public ShowOptionDialogAction(String title, DODDLE_OWL ddl) {
-        super(title, Utils.getImageIcon("cog.png"));
+        super(title, Utils.getImageIcon("baseline_settings_black_18dp.png"));
         doddle = ddl;
     }
 

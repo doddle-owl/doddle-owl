@@ -68,7 +68,7 @@ public class SaveProjectAction extends AbstractAction {
     }
 
     public SaveProjectAction(String title, DODDLE_OWL ddl) {
-        super(title, Utils.getImageIcon("disk.png"));
+        super(title, Utils.getImageIcon("baseline_save_black_18dp.png"));
         this.title = title;
         doddle = ddl;
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));

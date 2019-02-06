@@ -94,8 +94,8 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     public static final String COMPOUND_WORD_JA = "複合語";
     public static final String COMPOUND_WORD_EN = "Compound Word";
 
-    private final ImageIcon addDocIcon = Utils.getImageIcon("page_white_add.png");
-    private final ImageIcon removeDocIcon = Utils.getImageIcon("page_white_delete.png");
+    private final ImageIcon addDocIcon = Utils.getImageIcon("baseline_add_circle_black_18dp.png");
+    private final ImageIcon removeDocIcon = Utils.getImageIcon("baseline_remove_circle_black_18dp.png");
 
     private TaskAnalyzer taskAnalyzer;
 
@@ -179,8 +179,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         documentPanel.add(southPanel, BorderLayout.SOUTH);
         documentPanel.setBorder(new TitledBorder(Translator.getTerm("InputDocumentList")));
 
-        termExtractionButton = new JButton(Translator.getTerm("InputTermExtractionButton"),
-                Utils.getImageIcon("input_term_selection.png"));
+        termExtractionButton = new JButton(Translator.getTerm("InputTermExtractionButton"));
         termExtractionButton.addActionListener(this);
 
         genSenCheckBox = new JCheckBox(Translator.getTerm("GensenCheckBox"));

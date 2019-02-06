@@ -54,7 +54,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
     private Thread timer;
 
     public StatusBarPanel() {
-        cancelButton = new JButton(Translator.getTerm("CancelButton"), Utils.getImageIcon("cancel.png"));
+        cancelButton = new JButton(Translator.getTerm("CancelButton"), Utils.getImageIcon("baseline_cancel_black_18dp.png"));
         cancelButton.addActionListener(this);
         cancelButton.setVisible(false);
         progressBar = new JProgressBar(JProgressBar.HORIZONTAL);

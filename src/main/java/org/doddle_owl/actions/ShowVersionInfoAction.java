@@ -40,7 +40,7 @@ public class ShowVersionInfoAction extends AbstractAction {
     private final Frame rootFrame;
     private WeakReference<VersionInfoDialog> versionInfoDialogRef;
     private static final String TITLE = Translator.getTerm("VersionMenu");
-    private static final ImageIcon ICON = Utils.getImageIcon("help.png");
+    private static final ImageIcon ICON = Utils.getImageIcon("baseline_help_black_18dp.png");
 
     public ShowVersionInfoAction(Frame frame) {
         super(TITLE, ICON);

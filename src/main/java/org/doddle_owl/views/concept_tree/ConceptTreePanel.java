@@ -90,15 +90,15 @@ public class ConceptTreePanel extends JPanel {
     // Utils.getImageIcon("add_undef_word.png");
     // private ImageIcon undefIcon = Utils.getImageIcon("undef.png");
 
-    private final ImageIcon copyIcon = Utils.getImageIcon("page_white_copy.png");
-    private final ImageIcon cutIcon = Utils.getImageIcon("cut.png");
-    private final ImageIcon pasteIcon = Utils.getImageIcon("page_white_paste.png");
-    private final ImageIcon removeConceptIcon = Utils.getImageIcon("remove_concept.png");
-    private final ImageIcon removeUpperLinkIcon = Utils.getImageIcon("remove_upper_link.png");
-    private final ImageIcon removeInternalConceptIcon = Utils.getImageIcon("remove_internal_concept.png");
+    private final ImageIcon copyIcon = Utils.getImageIcon("ic_content_copy_18pt.png");
+    private final ImageIcon cutIcon = Utils.getImageIcon("ic_content_cut_18pt.png");
+    private final ImageIcon pasteIcon = Utils.getImageIcon("ic_content_paste_18pt.png");
+    private final ImageIcon removeConceptIcon = Utils.getImageIcon("baseline_delete_black_18dp.png");
+    private final ImageIcon removeUpperLinkIcon = Utils.getImageIcon("baseline_link_off_black_18dp.png");
+    private final ImageIcon removeInternalConceptIcon = Utils.getImageIcon("baseline_delete_outline_black_18dp.png");
 
-    private final ImageIcon undoIcon = Utils.getImageIcon("arrow_undo.png");
-    private final ImageIcon redoIcon = Utils.getImageIcon("arrow_redo.png");
+    private final ImageIcon undoIcon = Utils.getImageIcon("baseline_undo_black_18dp.png");
+    private final ImageIcon redoIcon = Utils.getImageIcon("baseline_redo_black_18dp.png");
 
     private final UndefinedTermListPanel undefinedTermListPanel;
     private ConceptDriftManagementPanel conceptDriftManagementPanel;
@@ -114,9 +114,9 @@ public class ConceptTreePanel extends JPanel {
 
     private JTree hasaTree;
 
-    public static final String CLASS_ISA_TREE = "clas is-a Tree";
+    public static final String CLASS_ISA_TREE = "class is-a Tree";
     public static final String PROPERTY_ISA_TREE = "property is-a Tree";
-    public static final String CLASS_HASA_TREE = "clas has-a Tree";
+    public static final String CLASS_HASA_TREE = "class has-a Tree";
     public static final String PROPERTY_HASA_TREE = "property has-a Tree";
 
     public ConceptTreePanel(String title, String type, UndefinedTermListPanel undefPanel, DODDLEProjectPanel p) {

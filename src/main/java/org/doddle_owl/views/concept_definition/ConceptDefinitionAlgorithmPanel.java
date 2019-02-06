@@ -533,11 +533,9 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
             properties.setProperty("Gram_Count", gramCountField.getText());
             properties.setProperty("Front_Scope", frontScopeField.getText());
             properties.setProperty("Behind_Scope", behindScopeField.getText());
-            properties.setProperty("WordSpace_Value",
-                    String.valueOf(wordSpaceValueSlider.getValue()));
+            properties.setProperty("WordSpace_Value", String.valueOf(wordSpaceValueSlider.getValue()));
             properties.setProperty("Minimum_Support", minSupportField.getText());
-            properties.setProperty("Minimum_Confidence",
-                    String.valueOf(minConfidenceSlider.getValue()));
+            properties.setProperty("Minimum_Confidence", String.valueOf(minConfidenceSlider.getValue()));
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {
                 properties.store(writer, "Concept Definition Parameters");
@@ -594,11 +592,9 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
             gramCountField.setText(properties.getProperty("Gram_Count"));
             frontScopeField.setText(properties.getProperty("Front_Scope"));
             behindScopeField.setText(properties.getProperty("Behind_Scope"));
-            wordSpaceValueSlider.setValue(Integer.parseInt(properties
-                    .getProperty("WordSpace_Value")));
+            wordSpaceValueSlider.setValue(Integer.parseInt(properties.getProperty("WordSpace_Value")));
             minSupportField.setText(properties.getProperty("Minimum_Support"));
-            minConfidenceSlider.setValue(Integer.parseInt(properties
-                    .getProperty("Minimum_Confidence")));
+            minConfidenceSlider.setValue(Integer.parseInt(properties.getProperty("Minimum_Confidence")));
         } catch (IOException uee) {
             uee.printStackTrace();
         }
@@ -606,8 +602,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
 
     public void loadConceptDefinitionParameters(int projectID, Statement stmt) {
         try {
-            String sql = "SELECT * from  concept_definition_parameter where Project_ID="
-                    + projectID;
+            String sql = "SELECT * from  concept_definition_parameter where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 gramNumberField.setText(Integer.toString(rs.getInt("N_Gram")));
@@ -664,8 +659,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
                 if (apriori != null) {
                     apriori.setParameters(minSupport, minConfidence);
                     List<String> targetInputWordList = getTargetInputWordList(apriori.getDocument());
-                    docAprioriResultMap.put(apriori.getDocument(),
-                            apriori.calcAprioriResult(targetInputWordList));
+                    docAprioriResultMap.put(apriori.getDocument(), apriori.calcAprioriResult(targetInputWordList));
                 }
             }
             if (0 < inputConceptJList.getModel().getSize()) {
