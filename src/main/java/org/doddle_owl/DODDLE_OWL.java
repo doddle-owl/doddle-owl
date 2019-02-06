@@ -302,11 +302,7 @@ public class DODDLE_OWL extends JFrame {
         toolBar.add(saveProjectAction).setToolTipText(saveProjectAction.getTitle());
         toolBar.add(saveProjectAsAction).setToolTipText(saveProjectAsAction.getTitle());
         toolBar.addSeparator();
-        toolBar.add(showDODDLEDicConverterAction).setToolTipText(showDODDLEDicConverterAction.getTitle());
-        toolBar.addSeparator();
-        toolBar.add(showLogConsoleAction).setToolTipText(showLogConsoleAction.getTitle());
         toolBar.add(showOptionDialogAction).setToolTipText(saveProjectAsAction.getTitle());
-        toolBar.add(showVersionInfoAction).setToolTipText(showVersionInfoAction.getTitle());
         return toolBar;
     }
 
