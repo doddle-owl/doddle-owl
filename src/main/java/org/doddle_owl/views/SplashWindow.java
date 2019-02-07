@@ -48,8 +48,8 @@ public class SplashWindow extends JWindow implements HyperlinkListener {
         String builder = "<font face=TimesNewRoman>" +
                 "Name:  DODDLE-OWL  <br>" +
                 "Version: " + DODDLEConstants.VERSION + "<br>" +
-                "Copyright (C) 2004-2018 Yamaguchi Laboratory.<br>" +
-                "Contact: {t_morita, yamaguti}@ae.keio.ac.jp<br>" +
+                "Copyright (C) 2004-2019 Yamaguchi Laboratory.<br>" +
+                "Contact: t_morita@ae.keio.ac.jp<br>" +
                 "License: GPL<br>" +
                 "Project Website: <a href=http://doddle-owl.org>http://doddle-owl.org/</a>" +
                 "</font>";

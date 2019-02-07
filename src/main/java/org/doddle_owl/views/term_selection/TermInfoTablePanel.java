@@ -102,8 +102,7 @@ class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, 
         docArea = new JEditorPane("text/html", "");
         docArea.setEditable(false);
         JScrollPane docAreaScroll = new JScrollPane(docArea);
-        docAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("InputDocumentArea")));
+        docAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentArea")));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPanel, docAreaScroll);
         splitPane.setDividerLocation(300);
@@ -134,10 +133,8 @@ class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, 
         }
         int row = termInfoTable.getSelectedRow();
         if (0 <= row) {
-            String term = (String) termInfoTable.getValueAt(row,
-                    getColumnNamePosition(termInfoTable, Translator.getTerm("TermLabel")));
-            String targetLines = DODDLE_OWL.getCurrentProject().getDocumentSelectionPanel()
-                    .getTargetHtmlLines(term);
+            String term = (String) termInfoTable.getValueAt(row, getColumnNamePosition(termInfoTable, Translator.getTerm("TermLabel")));
+            String targetLines = DODDLE_OWL.getCurrentProject().getDocumentSelectionPanel().getTargetHtmlLines(term);
             docArea.setText(targetLines);
         }
     }

@@ -733,7 +733,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     public String getTargetHtmlLines(String word) {
         StringWriter writer = new StringWriter();
-        writer.write("<html><body>");
+        writer.write("<html><body style='line-height: 1.2em; font-size: 12px;'>");
         ListModel listModel = documentListModel;
         for (int i = 0; i < listModel.getSize(); i++) {
             Document doc = (Document) listModel.getElementAt(i);
@@ -745,21 +745,9 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                     String line = lines[j];
                     try {
                         if (line.matches(".*" + word + ".*")) {
-                            line = line.replaceAll(word, "<b><font size=3 color=red>" + word
-                                    + "</font></b>");
-                            buf.append("<b><font size=3 color=navy>");
-                            if (DODDLEConstants.LANG.equals("en")) {
-                                buf.append(Translator.getTerm("LineMessage"));
-                                buf.append(" ");
-                                buf.append((j + 1));
-                            } else {
-                                buf.append((j + 1));
-                                buf.append(Translator.getTerm("LineMessage"));
-                            }
-                            buf.append(": </font></b>");
-                            buf.append("<font size=3>");
+                            line = line.replaceAll(word, String.format("<span style='color: #1111cc; font-weight: bold;'>%s</span>", word));
+                            buf.append(String.format("<span style='font-weight: bold;'>%d: </span>", (j + 1)));
                             buf.append(line);
-                            buf.append("</font>");
                             buf.append("<br>");
                         }
                     } catch (PatternSyntaxException e) {
@@ -768,8 +756,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                 }
             }
             if (0 < buf.toString().length()) {
-                writer.write("<font size=3><b>" + doc.getFile().getAbsolutePath()
-                        + "</b></font><br>");
+                writer.write(String.format("<div style='font-weight: bold;'>%s</div>", doc.getFile().getAbsolutePath()));
                 writer.write(buf.toString());
             }
         }
