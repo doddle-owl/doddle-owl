@@ -39,7 +39,7 @@ import java.io.File;
 public class SaveProjectAsAction extends SaveProjectAction {
 
     public SaveProjectAsAction(String title, DODDLE_OWL ddl) {
-        super(title, Utils.getImageIcon("page_save.png"), ddl);
+        super(title, Utils.getImageIcon("baseline_save_alt_black_18dp.png"), ddl);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() + KeyEvent.SHIFT_DOWN_MASK));
     }
 

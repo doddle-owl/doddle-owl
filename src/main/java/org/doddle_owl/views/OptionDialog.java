@@ -73,7 +73,7 @@ public class OptionDialog extends JDialog implements ActionListener {
 
     public OptionDialog(Frame owner) {
         super(owner);
-        setIconImage(Utils.getImageIcon("cog.png").getImage());
+        setIconImage(Utils.getImageIcon("baseline_settings_black_18dp.png").getImage());
         basicOptionPanel = new BasicOptionPanel();
 
         isUsingSpreadActivatingAlgorithmForDisambiguationBox = new JCheckBox(

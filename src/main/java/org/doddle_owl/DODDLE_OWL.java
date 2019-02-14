@@ -132,7 +132,6 @@ public class DODDLE_OWL extends JFrame {
         });
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
-        setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
                 + DODDLEConstants.VERSION + " - " + Translator.getTerm("NewProjectAction"));
         setVisible(true);
@@ -303,11 +302,7 @@ public class DODDLE_OWL extends JFrame {
         toolBar.add(saveProjectAction).setToolTipText(saveProjectAction.getTitle());
         toolBar.add(saveProjectAsAction).setToolTipText(saveProjectAsAction.getTitle());
         toolBar.addSeparator();
-        toolBar.add(showDODDLEDicConverterAction).setToolTipText(showDODDLEDicConverterAction.getTitle());
-        toolBar.addSeparator();
-        toolBar.add(showLogConsoleAction).setToolTipText(showLogConsoleAction.getTitle());
         toolBar.add(showOptionDialogAction).setToolTipText(saveProjectAsAction.getTitle());
-        toolBar.add(showVersionInfoAction).setToolTipText(showVersionInfoAction.getTitle());
         return toolBar;
     }
 

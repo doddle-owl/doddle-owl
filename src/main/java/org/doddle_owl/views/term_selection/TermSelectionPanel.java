@@ -143,7 +143,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         var mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         mainSplitPane.add(mainTabbedPane);
         mainSplitPane.add(inputTermsAreaScroll);
-        mainSplitPane.setDividerLocation(0.6);
+        mainSplitPane.setDividerLocation(1000);
 
         setLayout(new BorderLayout());
         add(mainSplitPane, BorderLayout.CENTER);
@@ -258,7 +258,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             inputTermInfoTableModel.removeRow(inputTermInfoTable.convertRowIndexToModel(selectedRows[i]));
         }
         setWindowTitle();
-        documentViewer.setDocumentAndLinkArea();
+        documentViewer.setDocumentArea();
         termInfoTablePanel.setIsDeletingTableItems(false);
         removedTermInfoTablePanel.setIsDeletingTableItems(false);
     }
@@ -383,7 +383,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             // + selectedRows.length + "): " + returnTerm);
         }
         setWindowTitle();
-        documentViewer.setDocumentAndLinkArea();
+        documentViewer.setDocumentArea();
         termInfoTablePanel.setIsDeletingTableItems(false);
         removedTermInfoTablePanel.setIsDeletingTableItems(false);
     }
@@ -426,7 +426,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             returnTableItems(true);
             project.addLog("CompletelyDeleteTermButtonButton", "TermSelectionPanel");
         } else if (e.getSource() == reloadDocumentAreaButton) {
-            documentViewer.setDocumentAndLinkArea();
+            documentViewer.setDocumentArea();
         }
     }
 

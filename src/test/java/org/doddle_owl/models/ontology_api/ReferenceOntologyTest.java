@@ -16,7 +16,6 @@ class ReferenceOntologyTest {
     void setUp() {
         DODDLEConstants.EDR_HOME = "/Users/t_morita/DODDLE-OWL/EDR-DIC/";
         DODDLEConstants.EDRT_HOME = "/Users/t_morita/DODDLE-OWL/EDRT-DIC/";
-        DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
         DODDLEConstants.JWO_HOME = "/Users/t_morita/DODDLE-OWL/jwo";
 
         EDR.initEDRDic();

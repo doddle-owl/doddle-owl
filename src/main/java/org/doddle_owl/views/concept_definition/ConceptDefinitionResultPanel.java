@@ -634,8 +634,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         private final JButton addAcceptedPairButton;
         private final JButton addWrongPairButton;
 
-        private final ImageIcon rightIcon = Utils.getImageIcon("arrow_right.png");
-        private final ImageIcon leftIcon = Utils.getImageIcon("arrow_left.png");
+        private final ImageIcon rightIcon = Utils.getImageIcon("baseline_arrow_forward_black_18dp.png");
+        private final ImageIcon leftIcon = Utils.getImageIcon("baseline_arrow_back_black_18dp.png");
 
         ConceptDefinitionPanel() {
             c1Label = new JLabel();

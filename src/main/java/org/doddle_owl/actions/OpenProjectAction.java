@@ -68,7 +68,7 @@ public class OpenProjectAction extends AbstractAction {
     }
 
     public OpenProjectAction(String title, DODDLE_OWL ddl) {
-        super(title, Utils.getImageIcon("folder_page_white.png"));
+        super(title, Utils.getImageIcon("baseline_open_in_new_black_18dp.png"));
         this.title = title;
         doddle = ddl;
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));

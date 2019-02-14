@@ -42,7 +42,7 @@ public class NewProjectAction extends AbstractAction {
     private final String title;
 
     public NewProjectAction(String title) {
-        super(title, Utils.getImageIcon("page_white.png"));
+        super(title, Utils.getImageIcon("baseline_create_black_18dp.png"));
         this.title = title;
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
     }
