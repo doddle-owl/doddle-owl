@@ -1,3 +1,6 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 plugins {
     id 'java'
     id 'application'
@@ -9,7 +12,8 @@ plugins {
 }
 
 group 'org.doddle-owl'
-version = '1.0RC4'
+def minor_version = 1
+version = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM_")) + minor_version
 mainClassName = 'org.doddle_owl.DODDLE_OWL'
 sourceCompatibility = targetCompatibility = '11'
 
@@ -105,7 +109,6 @@ publishing {
         MyPublication(MavenPublication) {
             groupId = 'org.doddle-owl'
             artifactId = 'doddle-owl'
-            version = '1.0RC4'
 
             from components.java
             pom {

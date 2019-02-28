@@ -23,13 +23,17 @@
 
 package org.doddle_owl.models.common;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author Takeshi Morita
  */
 public class DODDLEConstants {
 
     public static final int DIVIDER_SIZE = 10;
-    public static final String VERSION = "1.0RC4";
+    private static final int MINOR_VERSION = 1;
+    public static final String VERSION = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM_")) + MINOR_VERSION;
 
     public static boolean DEBUG = false;
     public static boolean IS_INTEGRATING_SWOOGLE = true;
