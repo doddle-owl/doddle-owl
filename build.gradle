@@ -12,8 +12,7 @@ plugins {
 }
 
 group 'org.doddle-owl'
-def minor_version = 1
-version = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM_")) + minor_version
+version = '2019.03_1'
 mainClassName = 'org.doddle_owl.DODDLE_OWL'
 sourceCompatibility = targetCompatibility = '11'
 
