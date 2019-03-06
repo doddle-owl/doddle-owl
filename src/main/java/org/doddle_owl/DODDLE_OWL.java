@@ -3,7 +3,7 @@
  *
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2019 Yamaguchi Laboratory, Keio University. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -84,6 +84,7 @@ public class DODDLE_OWL extends JFrame {
     private ShowLogConsoleAction showLogConsoleAction;
     private ShowOptionDialogAction showOptionDialogAction;
     private ShowVersionInfoAction showVersionInfoAction;
+    private ShowManualAction showManualAction;
 
     private ShowDODDLEDicConverterAction showDODDLEDicConverterAction;
 
@@ -226,6 +227,7 @@ public class DODDLE_OWL extends JFrame {
         showLogConsoleAction = new ShowLogConsoleAction(Translator.getTerm("ShowLogConsoleAction"), logConsole);
         showOptionDialogAction = new ShowOptionDialogAction(Translator.getTerm("ShowOptionDialogAction"), this);
         showVersionInfoAction = new ShowVersionInfoAction(this);
+        showManualAction = new ShowManualAction(Translator.getTerm("ShowManualAction"));
         showDODDLEDicConverterAction = new ShowDODDLEDicConverterAction("DODDLE Dic Converter");
     }
 
@@ -291,6 +293,7 @@ public class DODDLE_OWL extends JFrame {
     private JMenu getHelpMenu() {
         JMenu menu = new JMenu(Translator.getTerm("HelpMenu"));
         menu.add(showVersionInfoAction);
+        menu.add(showManualAction);
         return menu;
     }
 

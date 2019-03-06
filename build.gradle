@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'org.doddle-owl'
-version = '1.0RC4'
+version = '2019.03_1'
 mainClassName = 'org.doddle_owl.DODDLE_OWL'
 sourceCompatibility = targetCompatibility = '11'
 
@@ -105,7 +105,6 @@ publishing {
         MyPublication(MavenPublication) {
             groupId = 'org.doddle-owl'
             artifactId = 'doddle-owl'
-            version = '1.0RC4'
 
             from components.java
             pom {
