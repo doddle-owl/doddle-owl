@@ -3,7 +3,7 @@
 
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2019 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *

@@ -12,6 +12,7 @@ DODDLE-OWL is Free Software; you may redistribute it and/or modify it under the 
 ## Acknowledgements
 DODDLE-OWL uses the following libraries.
 
+* [FlatLaf - Flat Look and Feel](https://www.formdev.com/flatlaf/)([License](http://www.apache.org/licenses/LICENSE-2.0))
 * [WordNet](http://wordnet.princeton.edu/) ([License](http://wordnet.princeton.edu/wordnet/license/))
 * [Japanese WordNet](http://compling.hss.ntu.edu.sg/wnja/)([License](http://nlpwww.nict.go.jp/wn-ja/license.txt))
 * [Japanese Wikipedia Ontology](http://www.wikipediaontology.org/)([License](http://www.wikipediaontology.org/download.html))
@@ -25,3 +26,6 @@ DODDLE-OWL uses the following libraries.
 * [Lombok](http://projectlombok.org/)([License](http://opensource.org/licenses/mit-license.php))
 * [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml)([License](http://www.gnu.org/licenses/gpl-2.0.html))
 * [Material Design icons by Google](https://github.com/google/material-design-icons)([License](https://www.apache.org/licenses/LICENSE-2.0.txt))
+
+## Contact
+* Takeshi Morita (morita@it.aoyama.ac.jp)

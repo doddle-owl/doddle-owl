@@ -12,6 +12,7 @@ DODDLE-OWLはフリーソフトウェアです．Free Software Foundation によ
 ## 利用ライブラリとライセンス
 DODDLE-OWLは以下のライブラリを利用しています．
 
+* [FlatLaf - Flat Look and Feel](https://www.formdev.com/flatlaf/)([License](http://www.apache.org/licenses/LICENSE-2.0))
 * [WordNet](http://wordnet.princeton.edu/) ([License](http://wordnet.princeton.edu/wordnet/license/))
 * [Japanese WordNet](http://compling.hss.ntu.edu.sg/wnja/)([License](http://nlpwww.nict.go.jp/wn-ja/license.txt))
 * [Japanese Wikipedia Ontology](http://www.wikipediaontology.org/)([License](http://www.wikipediaontology.org/download.html))
@@ -25,3 +26,6 @@ DODDLE-OWLは以下のライブラリを利用しています．
 * [Lombok](http://projectlombok.org/)([License](http://opensource.org/licenses/mit-license.php))
 * [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml)([License](http://www.gnu.org/licenses/gpl-2.0.html))
 * [Material Design icons by Google](https://github.com/google/material-design-icons)([License](https://www.apache.org/licenses/LICENSE-2.0.txt))
+
+## 連絡先
+* 森田武史 (morita@it.aoyama.ac.jp)

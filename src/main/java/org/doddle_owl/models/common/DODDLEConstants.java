@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2019 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -29,7 +29,7 @@ package org.doddle_owl.models.common;
 public class DODDLEConstants {
 
     public static final int DIVIDER_SIZE = 10;
-    public static final String VERSION = "2019.03_1";
+    public static final String VERSION = "20.5.1";
 
     public static boolean DEBUG = false;
     public static boolean IS_INTEGRATING_SWOOGLE = true;
