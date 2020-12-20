@@ -124,7 +124,7 @@ public class Document implements Comparable<Document> {
 		StringBuilder builder = new StringBuilder();
 		for (String text : texts) {
 			builder.append(text);
-			builder.append("\n");
+			builder.append(System.lineSeparator());
 		}
 		return builder.toString();
 	}

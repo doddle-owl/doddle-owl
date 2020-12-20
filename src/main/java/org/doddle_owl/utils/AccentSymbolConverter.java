@@ -124,7 +124,8 @@ class AccentSymbolConverter {
             while (br.ready()) {
                 String line = br.readLine();
                 line = AccentSymbolConverter.convertAccentSymbol(line);
-                bw.write(line + "\n");
+                bw.write(line);
+                bw.newLine();
             }
             br.close();
             bw.close();

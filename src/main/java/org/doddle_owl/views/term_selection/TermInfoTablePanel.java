@@ -309,9 +309,11 @@ class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, 
         try {
             FileOutputStream fos = new FileOutputStream(saveFile);
             writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
-            writer.write("docNum=" + docNum + "\n");
+            writer.write("docNum=" + docNum);
+            writer.newLine();
             for (TermInfo info : termInfoMap.values()) {
-                writer.write(info.toString() + "\n");
+                writer.write(info.toString());
+                writer.newLine();
             }
         } catch (IOException ioex) {
             ioex.printStackTrace();

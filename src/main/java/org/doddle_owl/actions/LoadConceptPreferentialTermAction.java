@@ -60,7 +60,7 @@ public class LoadConceptPreferentialTermAction extends AbstractAction {
             try (reader) {
                 while (reader.ready()) {
                     String line = reader.readLine();
-                    String[] idInputWord = line.replaceAll("\n", "").split("\t");
+                    String[] idInputWord = line.replaceAll(System.lineSeparator(), "").split("\t");
                     if (idInputWord.length == 2) {
                         idPreferentialTermMap.put(idInputWord[0], idInputWord[1]);
                     }

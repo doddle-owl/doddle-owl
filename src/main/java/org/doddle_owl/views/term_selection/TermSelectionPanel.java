@@ -205,14 +205,14 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
 
     private void setInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("SetInputTermListButton"));
-        String[] inputTerms = termTextArea.getText().split("\n");
+        String[] inputTerms = termTextArea.getText().split(System.lineSeparator());
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         conceptSelectionPanel.loadInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("AddInputTermListButton"));
-        String[] inputTerms = termTextArea.getText().split("\n");
+        String[] inputTerms = termTextArea.getText().split(System.lineSeparator());
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         conceptSelectionPanel.addInputTermSet(inputTermSet, taskCnt);
     }

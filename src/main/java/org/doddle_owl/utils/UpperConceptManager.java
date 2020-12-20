@@ -54,7 +54,7 @@ public class UpperConceptManager {
                 try (reader) {
                     while (reader.ready()) {
                         String line = reader.readLine();
-                        String[] labelAndURI = line.replaceAll("\n", "").split(",");
+                        String[] labelAndURI = line.replaceAll(System.lineSeparator(), "").split(",");
                         // System.out.println(labelAndURI[0] + ":" + labelAndURI[1]
                         // + ": " + labelAndURI[0].indexOf("//"));
                         if (!labelAndURI[0].contains("//")) {

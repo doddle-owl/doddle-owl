@@ -25,6 +25,16 @@ package org.doddle_owl.views.document_selection;
 
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
+import com.google.common.base.Optional;
+import com.optimaize.langdetect.LanguageDetector;
+import com.optimaize.langdetect.LanguageDetectorBuilder;
+import com.optimaize.langdetect.i18n.LdLocale;
+import com.optimaize.langdetect.ngram.NgramExtractors;
+import com.optimaize.langdetect.profiles.LanguageProfile;
+import com.optimaize.langdetect.profiles.LanguageProfileReader;
+import com.optimaize.langdetect.text.CommonTextObjectFactories;
+import com.optimaize.langdetect.text.TextObject;
+import com.optimaize.langdetect.text.TextObjectFactory;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.SentenceUtils;
 import edu.stanford.nlp.ling.TaggedWord;
@@ -740,11 +750,11 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
             String text = doc.getText();
             StringBuilder buf = new StringBuilder();
             if (text != null) {
-                String[] lines = text.split("\n");
+                String[] lines = text.split(System.lineSeparator());
                 for (int j = 0; j < lines.length; j++) {
                     String line = lines[j];
                     try {
-                        if (line.matches(".*" + word + ".*")) {
+                        if (line.contains(word)) {
                             line = line.replaceAll(word, String.format("<span style='color: #1111cc; font-weight: bold;'>%s</span>", word));
                             buf.append(String.format("<span style='font-weight: bold;'>%d: </span>", (j + 1)));
                             buf.append(line);
@@ -769,9 +779,20 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         for (Object o : fileSet) {
             File file = (File) o;
             Document doc = new Document(file);
-            String text = doc.getText();
-            if (30 < text.split(" ").length) { // 適当．スペース数が一定以上あれば英文とみなす
-                doc.setLang("en");
+            doc.setLang("en");
+            try {
+                List<LanguageProfile> languageProfiles = new LanguageProfileReader().readAllBuiltIn();
+                LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
+                        .withProfiles(languageProfiles)
+                        .build();
+                TextObjectFactory textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
+                TextObject textObject = textObjectFactory.forText(doc.getText());
+                Optional<LdLocale> lang = languageDetector.detect(textObject);
+                if (lang.isPresent()) {
+                    doc.setLang(lang.get().getLanguage());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             model.addElement(doc);
         }

@@ -200,7 +200,7 @@ public class JenaModelMaker {
                     builder.append(",");
                 }
             }
-            builder.append("\n");
+            builder.append(System.lineSeparator());
         }
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFileName),

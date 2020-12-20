@@ -25,6 +25,7 @@ DODDLE-OWL uses the following libraries.
 * [Apache PDFBox](https://pdfbox.apache.org/)([License](http://www.apache.org/licenses/LICENSE-2.0))
 * [Lombok](http://projectlombok.org/)([License](http://opensource.org/licenses/mit-license.php))
 * [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml)([License](http://www.gnu.org/licenses/gpl-2.0.html))
+* [language-detector](https://github.com/optimaize/language-detector)
 * [Material Design icons by Google](https://github.com/google/material-design-icons)([License](https://www.apache.org/licenses/LICENSE-2.0.txt))
 
 ## Contact

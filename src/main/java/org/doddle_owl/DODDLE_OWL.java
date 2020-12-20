@@ -195,7 +195,7 @@ public class DODDLE_OWL extends JFrame {
                         break;
                     }
                     writer.write(project);
-                    writer.write("\n");
+                    writer.newLine();
                     JMenuItem item = new JMenuItem(project);
                     item.addActionListener(new OpenRecentProjectAction(project, this));
                     DODDLE_OWL.recentProjectMenu.add(item);

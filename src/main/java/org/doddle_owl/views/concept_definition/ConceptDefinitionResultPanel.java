@@ -227,7 +227,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                 StringBuilder builder = new StringBuilder();
                 for (NonTaxonomicRelation nonTaxRel : nonTaxRelSet) {
                     builder.append(nonTaxRel);
-                    builder.append("\n");
+                    builder.append(System.lineSeparator());
                 }
                 writer.write(builder.toString());
             }
@@ -270,7 +270,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                     builder.append(wp.getDomain());
                     builder.append("\t");
                     builder.append(wp.getRange());
-                    builder.append("\n");
+                    builder.append(System.lineSeparator());
                 }
                 writer.write(builder.toString());
             }

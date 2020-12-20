@@ -132,7 +132,7 @@ public class DODDLEStringTagger {
 		StringBuilder text = new StringBuilder();
 		while (reader.ready()) {
 			String line = reader.readLine();
-			text.append(line).append("\n");
+			text.append(line).append(System.lineSeparator());
 
 		}
 		reader.close();

@@ -1010,7 +1010,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             try (reader) {
                 while (reader.ready()) {
                     String line = reader.readLine();
-                    String[] termURI = line.replaceAll("\n", "").split(",");
+                    String[] termURI = line.replaceAll(System.lineSeparator(), "").split(",");
                     if (0 < termURI[0].length()) {
                         String term = termURI[0];
                         TermModel iwModel = inputModule.makeInputTermModel(term);
@@ -1507,7 +1507,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             try (reader) {
                 while (reader.ready()) {
                     String line = reader.readLine();
-                    String term = line.replaceAll("\n", "");
+                    String term = line.replaceAll(System.lineSeparator(), "");
                     termSet.add(term);
                 }
             }
@@ -2217,7 +2217,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             for (int i = 0; i < undefinedTermListModel.getSize(); i++) {
                 String undefinedTerm = (String) undefinedTermListModel.getElementAt(i);
                 buf.append(undefinedTerm);
-                buf.append("\n");
+                buf.append(System.lineSeparator());
             }
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {
@@ -2240,7 +2240,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             for (Concept c : inputConceptSet) {
                 if (!systemAddedInputConceptSet.contains(c)) {
                     buf.append(c.getURI());
-                    buf.append("\n");
+                    buf.append(System.lineSeparator());
                 }
             }
             writer.write(buf.toString());
