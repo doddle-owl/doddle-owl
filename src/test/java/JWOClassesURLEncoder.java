@@ -8,7 +8,7 @@ import org.apache.jena.vocabulary.RDFS;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-class JWOClassesURLEncoder {
+public class JWOClassesURLEncoder {
 	public static void main(String[] args) {
 		Model model = FileManager.get().loadModel("/Users/t_morita/Downloads/jwo_classes_org.owl");
 		Dataset dataset = TDBFactory.createDataset("/Users/t_morita/Downloads/jwo");

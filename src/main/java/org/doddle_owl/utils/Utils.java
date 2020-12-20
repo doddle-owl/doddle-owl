@@ -309,9 +309,11 @@ public class Utils {
     }
 
     public static File getJPWNFile(String resName) {
-        String userDir = System.getProperty("user.dir").replace("bin", "");
-        return new File(userDir + File.separator +
-                "ontologies" + File.separator + "jpwn_dict_1.1" + File.separator + resName);
+//        String userDir = System.getProperty("user.dir").replace("bin", "");
+//        System.out.println(userDir);
+//        return new File(userDir + File.separator +
+//                "ontologies" + File.separator + "jpwn_dict_1.1" + File.separator + resName);
+        return new File(DODDLEConstants.JWN_HOME + File.separator + resName);
     }
 
 }

@@ -356,6 +356,7 @@ public class DODDLE_OWL extends JFrame {
     private static void setPath(Properties properties) {
         DODDLEConstants.EDR_HOME = properties.getProperty("EDR_HOME");
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
+        DODDLEConstants.JWN_HOME = properties.getProperty("JWN_HOME");
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
         DocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         DocumentSelectionPanel.Japanese_Morphological_Analyzer = properties

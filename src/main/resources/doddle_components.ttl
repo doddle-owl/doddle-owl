@@ -1486,6 +1486,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Aprioriの実行" .
 
+<http://doddle-owl.org#JWNFolderTextField>
+        a       <http://www.w3.org/2002/07/owl#Class> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "JWO Folder"@en , "JWN フォルダ"@ja ;
+        <http://www.w3.org/2000/01/rdf-schema#subClassOf>
+                <http://doddle-owl.org#TextField> ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "JWN フォルダ" .
+
 <http://doddle-owl.org#JWOFolderTextField>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
