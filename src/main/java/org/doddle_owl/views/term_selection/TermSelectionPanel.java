@@ -77,7 +77,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
 
         termTextArea = new JTextArea();
         var inputTermsAreaScroll = new JScrollPane(termTextArea);
-        inputTermsAreaScroll.setBorder(BorderFactory.createTitledBorder("Input Term List"));
+        inputTermsAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputTermListArea")));
 
         addTermListButton = new JButton(Translator.getTerm("AddInputTermListButton"));
         addTermListButton.addActionListener(this);

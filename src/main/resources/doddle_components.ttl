@@ -1782,7 +1782,7 @@
 <http://doddle-owl.org#MinimumConfidenceLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Minimum Confidence"@en , "Minimum Confidence"@ja ;
+                "Minimum Confidence"@en , "最小確信度"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <http://doddle-owl.org#Label> ;
         <http://doddle-owl.org#partOf>  <http://doddle-owl.org#AprioriParameterPanel> ;
@@ -1930,7 +1930,7 @@
 <http://doddle-owl.org#MinimumSupportLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Minimum Support"@en , "Minimum Support"@ja ;
+                "Minimum Support"@en , "最小支持度"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <http://doddle-owl.org#Label> ;
         <http://doddle-owl.org#partOf>  <http://doddle-owl.org#AprioriParameterPanel> ;
@@ -2119,12 +2119,12 @@
 <http://doddle-owl.org#AprioriValueLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Apriori Value"@en , "Apriori値"@ja ;
+                "Confidence"@en , "確信度"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <http://doddle-owl.org#Label> ;
         <http://doddle-owl.org#partOf>  <http://doddle-owl.org#WordSpaceAndAprioriResultTable> , <http://doddle-owl.org#AprioriResultTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Apriori値" .
+                "確信度" .
 
 <http://doddle-owl.org#ElapsedTimeMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -3011,12 +3011,12 @@
 <http://doddle-owl.org#InputTermListArea>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Term List"@en , "用語リスト"@ja ;
+                "Input Term List"@en , "入力用語リスト"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <http://doddle-owl.org#TextArea> ;
         <http://doddle-owl.org#partOf>  <http://doddle-owl.org#SwoogleWebServiceWrapperPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "用語リスト" .
+                "入力用語リスト" .
 
 <http://doddle-owl.org#PROPERTY_HASA_ROOT>
         a       <http://www.w3.org/2002/07/owl#ObjectProperty> .

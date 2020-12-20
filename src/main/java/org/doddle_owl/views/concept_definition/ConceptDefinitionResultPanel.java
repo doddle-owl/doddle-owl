@@ -318,6 +318,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void setInputDocList() {
+        documentListModel.clear();
         documentListModel.addAll(doddleProjectPanel.getDocumentSelectionPanel().getDocSet());
     }
 

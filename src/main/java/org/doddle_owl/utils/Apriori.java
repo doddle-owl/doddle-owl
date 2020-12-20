@@ -69,6 +69,14 @@ public class Apriori {
         minConfidence = minc;
     }
 
+    public double getMinSupport() {
+        return minSupport;
+    }
+
+    public double getMinConfidence() {
+        return minConfidence;
+    }
+
     // 1行単位での形態素解析
     private List<String> getJaLineWordList(String line) {
         List<String> lineWordList = new ArrayList<>();
@@ -88,7 +96,7 @@ public class Apriori {
 
     // 1行単位での形態素解析
     private List<String> getEnLineWordList(String line) {
-        line = line.replaceAll("\\.|．", "");
+        line = line.replaceAll(",|\\.|．", "");
         List<String> lineWordList = new ArrayList<>();
         for (String lineWord : line.split("\\s+")) {
             lineWordList.add(lineWord.toLowerCase());
@@ -124,36 +132,35 @@ public class Apriori {
         pairSet.clear();
         allRelation.clear();
         aprioriResult.clear();
+        indexPairAppearence.clear();
         if (targetInputWordList == null) {
             return aprioriResult;
         }
-        int[] conceptAppearence = new int[targetInputWordList.size()];
+        int[] conceptAppearance = new int[targetInputWordList.size()];
 
         List<Integer> itemList = new ArrayList<>();
-        int lineNum = lineList.size();
-        // System.out.println("line_num: " + lineNum);
+        int numOfLines = lineList.size();
         for (List<String> lineWordList : lineList) {
             for (String lineWord : lineWordList) {
                 for (int k = 0; k < targetInputWordList.size(); k++) {
                     String word = targetInputWordList.get(k);
                     if (word.equals(lineWord)) {
                         itemList.add(k);
-                        ++conceptAppearence[k];
+                        ++conceptAppearance[k];
                         break;
                     }
                 }
             }
-            // System.out.println(itemList);
-            culAprioriPair(itemList);
+            calcAprioriPair(itemList);
             itemList.clear();
         }
         DODDLE_OWL.STATUS_BAR.addProjectValue();
-        makePair(conceptAppearence, lineNum, targetInputWordList);
+        makePair(conceptAppearance, numOfLines, targetInputWordList);
         DODDLE_OWL.STATUS_BAR.addProjectValue();
         return aprioriResult;
     }
 
-    private void culAprioriPair(List<Integer> itemList) {
+    private void calcAprioriPair(List<Integer> itemList) {
         for (int i = 0; i < itemList.size(); i++) {
             for (int j = 0; j < itemList.size(); j++) {
                 if (i != j) {
@@ -177,33 +184,31 @@ public class Apriori {
      * concept[A|B]Support ... ある概念の出現回数/全文の数(いくつの文に含まれていたか．一回でも出現すればよい）
      * pairAppearance ... 全文の中である概念対が出現する回数
      *
-     * @param conceptAppearence
-     * @param lineNum
+     * @param conceptAppearance
+     * @param numOfLines
      */
-    private void makePair(int[] conceptAppearence, double lineNum, List<String> inputWordList) {
+    private void makePair(int[] conceptAppearance, double numOfLines, List<String> inputWordList) {
         List<ConceptPair> rpList;
         for (List<Integer> pair : pairSet) {
             int conceptAIndex = pair.get(0);
             String word1 = inputWordList.get(conceptAIndex);
             int conceptBIndex = pair.get(1);
             String word2 = inputWordList.get(conceptBIndex);
-            // System.out.println(conceptAIndex + ":" + conceptBIndex);
-            double conceptASupport = conceptAppearence[conceptAIndex] / lineNum;
-            double conceptBSupport = conceptAppearence[conceptBIndex] / lineNum;
+//            System.out.println(conceptAIndex + ":" + conceptBIndex);
+            double conceptASupport = conceptAppearance[conceptAIndex] / numOfLines;
+            double conceptBSupport = conceptAppearance[conceptBIndex] / numOfLines;
 
-            // System.out.println(conceptAppearence[conceptAIndex]+"/"+lines+
-            // "=" +conceptASupport);
-            // System.out.println(conceptAppearence[conceptBIndex]+"/"+lines+
-            // "=" +conceptBSupport);
+//            System.out.println(conceptAppearance[conceptAIndex] + "/" + numOfLines + "=" + conceptASupport);
+//            System.out.println(conceptAppearance[conceptBIndex] + "/" + numOfLines + "=" + conceptBSupport);
 
-            double aprioriValue = 0;
+            double confidence = 0;
             if (conceptASupport >= minSupport && conceptBSupport >= minSupport) {
-                int pairAppearence = indexPairAppearence.get(pair);
-                aprioriValue = (double) pairAppearence / (double) conceptAppearence[conceptAIndex];
+                int pairAppearance = indexPairAppearence.get(pair);
+                confidence = (double) pairAppearance / (double) conceptAppearance[conceptAIndex];
             }
 
-            if (aprioriValue > minConfidence) {
-                ConceptPair rp = new ConceptPair(word1, word2, aprioriValue);
+            if (confidence > minConfidence) {
+                ConceptPair rp = new ConceptPair(word1, word2, confidence);
                 // rp.setrelationValue(value);
                 // System.out.println(conceptA + "<>" + rp.toString());
                 // System.out.println("Apriori:" + rp.toString());

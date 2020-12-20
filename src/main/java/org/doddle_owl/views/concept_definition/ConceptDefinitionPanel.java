@@ -137,6 +137,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
     }
 
     public void setTermList() {
+        termListModel.clear();
         termListModel.addAll(getInputTermList());
     }
 
