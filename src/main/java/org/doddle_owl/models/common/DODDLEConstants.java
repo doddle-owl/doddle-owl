@@ -29,7 +29,7 @@ package org.doddle_owl.models.common;
 public class DODDLEConstants {
 
     public static final int DIVIDER_SIZE = 10;
-    public static final String VERSION = "20.5.1";
+    public static final String VERSION = "20.12.1";
 
     public static boolean DEBUG = false;
     public static boolean IS_INTEGRATING_SWOOGLE = true;

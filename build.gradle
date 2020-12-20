@@ -2,14 +2,14 @@ plugins {
     id 'java'
     id 'application'
     id 'com.jfrog.bintray' version '1.8.4'
-    id "org.beryx.runtime" version "1.8.4"
+    id "org.beryx.runtime" version "1.12.0"
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id 'maven-publish'
     id 'idea'
 }
 
 group 'org.doddle-owl'
-version = '20.5.1'
+version = '20.12.1'
 mainClassName = 'org.doddle_owl.DODDLE_OWL'
 sourceCompatibility = targetCompatibility = '11'
 
@@ -23,7 +23,7 @@ repositories {
 }
 
 wrapper {
-    gradleVersion = '6.4.1'
+    gradleVersion = '6.7.1'
 }
 
 tasks.withType(JavaCompile) {
@@ -101,19 +101,19 @@ shadowJar {
 }
 
 dependencies {
-    compile 'com.formdev:flatlaf:0.35'
-    compile 'org.xerial:sqlite-jdbc:3.31.1'
+    compile 'com.formdev:flatlaf:0.45'
+    compile 'org.xerial:sqlite-jdbc:3.34.0'
     compile 'commons-cli:commons-cli:1.4'
     compile 'org.apache.pdfbox:pdfbox:2.0.19'
-    compile 'net.sf.extjwnl:extjwnl:2.0.2'
+    compile 'net.sf.extjwnl:extjwnl:2.0.3'
     compile 'net.sf.extjwnl:extjwnl-data-wn31:1.2'
     compile 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
     compile 'org.apache.poi:poi-ooxml:3.7'
     compile 'edu.stanford.nlp:stanford-parser:3.9.2'
-    compile 'org.apache.jena:apache-jena-libs:3.15.0'
+    compile 'org.apache.jena:apache-jena-libs:3.17.0'
     compile 'org.slf4j:slf4j-simple:1.7.30'
     compile 'log4j:log4j:1.2.17'
-    compileOnly 'org.projectlombok:lombok:1.18.12'
+    compileOnly 'org.projectlombok:lombok:1.18.16'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 }
