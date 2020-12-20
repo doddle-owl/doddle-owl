@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -54,7 +54,7 @@ public class StatusBarPanel extends Panel implements ActionListener {
     private Thread timer;
 
     public StatusBarPanel() {
-        cancelButton = new JButton(Translator.getTerm("CancelButton"), Utils.getImageIcon("cancel.png"));
+        cancelButton = new JButton(Translator.getTerm("CancelButton"), Utils.getImageIcon("baseline_cancel_black_18dp.png"));
         cancelButton.addActionListener(this);
         cancelButton.setVisible(false);
         progressBar = new JProgressBar(JProgressBar.HORIZONTAL);

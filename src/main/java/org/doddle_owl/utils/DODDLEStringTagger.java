@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -132,7 +132,7 @@ public class DODDLEStringTagger {
 		StringBuilder text = new StringBuilder();
 		while (reader.ready()) {
 			String line = reader.readLine();
-			text.append(line).append("\n");
+			text.append(line).append(System.lineSeparator());
 
 		}
 		reader.close();

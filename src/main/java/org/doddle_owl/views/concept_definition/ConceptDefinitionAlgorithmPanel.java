@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -64,10 +64,10 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
     private final TreeMap<Document, Map<String, List<ConceptPair>>> docWSResultMap;
     private final TreeMap<Document, Map<String, List<ConceptPair>>> docAprioriResultMap;
 
-    private final JLabel minSupport;
-    private final JTextField minSupportField;
+    private JLabel minSupportValueLabel;
+    private JLabel minConfidenceValueLabel;
+    private final JSlider minSupportSlider;
     private final JSlider minConfidenceSlider;
-    private JLabel confidenceValue;
 
     private JLabel wordSpaceValue;
     private final JSlider wordSpaceValueSlider;
@@ -101,6 +101,8 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
 
         wordSpaceValueSlider = new JSlider();
         wordSpaceValueSlider.addChangeListener(this);
+        minSupportSlider = new JSlider();
+        minSupportSlider.addChangeListener(this);
         minConfidenceSlider = new JSlider();
         minConfidenceSlider.addChangeListener(this);
 
@@ -108,8 +110,6 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
         gramCount = new JLabel("Gram Count    ");
         frontscope = new JLabel("Front Scope    ");
         behindscope = new JLabel("Behind Scope    ");
-
-        minSupport = new JLabel("Minimum Support     ");
 
         gramNumberField = new JTextField();
         gramNumberField.setHorizontalAlignment(JTextField.RIGHT);
@@ -123,10 +123,6 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
         behindScopeField = new JTextField();
         behindScopeField.setHorizontalAlignment(JTextField.RIGHT);
         behindScopeField.setText("10");
-
-        minSupportField = new JTextField();
-        minSupportField.setHorizontalAlignment(JTextField.RIGHT);
-        minSupportField.setText("0");
 
         exeWordSpaceButton = new JButton(Translator.getTerm("ExecuteWordSpaceButton"));
         exeWordSpaceButton.addActionListener(this);
@@ -186,11 +182,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
     }
 
     private double getMinSupport() {
-        double minSupport = 0;
-        if (minSupportField.getText() != null) {
-            minSupport = Double.valueOf(minSupportField.getText());
-        }
-        return minSupport;
+        return Double.parseDouble(minSupportValueLabel.getText());
     }
 
     private JComponent getEastComponent(JComponent comp) {
@@ -211,20 +203,29 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
     }
 
     private JPanel getAprioriPanel() {
-        confidenceValue = new JLabel("0.50");
-        confidenceValue.setFont(new Font("Dialog", Font.PLAIN, 14));
-        JPanel barPanel = new JPanel();
-        barPanel.setPreferredSize(new Dimension(150, 20));
-        barPanel.setLayout(new BorderLayout());
-        barPanel.add(confidenceValue, BorderLayout.WEST);
-        barPanel.add(minConfidenceSlider, BorderLayout.CENTER);
+        minConfidenceValueLabel = new JLabel("0.50");
+        minConfidenceValueLabel.setFont(new Font("Dialog", Font.PLAIN, 14));
+        JPanel minConfidencePanel = new JPanel();
+        minConfidencePanel.setPreferredSize(new Dimension(150, 20));
+        minConfidencePanel.setLayout(new BorderLayout());
+        minConfidencePanel.add(minConfidenceValueLabel, BorderLayout.WEST);
+        minConfidencePanel.add(minConfidenceSlider, BorderLayout.CENTER);
+
+        minSupportValueLabel = new JLabel("0.50");
+        minSupportValueLabel.setFont(new Font("Dialog", Font.PLAIN, 14));
+        JPanel minSupportPanel = new JPanel();
+        minSupportPanel.setPreferredSize(new Dimension(150, 20));
+        minSupportPanel.setLayout(new BorderLayout());
+        minSupportPanel.add(minSupportValueLabel, BorderLayout.WEST);
+        minSupportPanel.add(minSupportSlider, BorderLayout.CENTER);
+
 
         JPanel paramPanel = new JPanel();
         paramPanel.setLayout(new GridLayout(2, 2, 0, 0));
-        paramPanel.add(minSupport);
-        paramPanel.add(minSupportField);
-        paramPanel.add(new JLabel("Minimum Confidence"));
-        paramPanel.add(barPanel);
+        paramPanel.add(new JLabel(Translator.getTerm("MinimumSupportLabel")));
+        paramPanel.add(minSupportPanel);
+        paramPanel.add(new JLabel(Translator.getTerm("MinimumConfidenceLabel")));
+        paramPanel.add(minConfidencePanel);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -235,7 +236,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
     }
 
     private double getMinConfidence() {
-        return Double.parseDouble(confidenceValue.getText());
+        return Double.parseDouble(minConfidenceValueLabel.getText());
     }
 
     private double getWordSpaceUnderValue() {
@@ -271,13 +272,21 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
     }
 
     public void stateChanged(ChangeEvent e) {
-        if (e.getSource() == minConfidenceSlider) {
+        if (e.getSource() == minSupportSlider) {
+            Integer inte = minSupportSlider.getValue();
+            double value = inte.doubleValue() / 100;
+            if (Double.toString(value).length() == 4) {
+                minSupportValueLabel.setText(Double.toString(value));
+            } else {
+                minSupportValueLabel.setText(value + "0");
+            }
+        } else if (e.getSource() == minConfidenceSlider) {
             Integer inte = minConfidenceSlider.getValue();
             double value = inte.doubleValue() / 100;
             if (Double.toString(value).length() == 4) {
-                confidenceValue.setText(Double.toString(value));
+                minConfidenceValueLabel.setText(Double.toString(value));
             } else {
-                confidenceValue.setText(value + "0");
+                minConfidenceValueLabel.setText(value + "0");
             }
         } else if (e.getSource() == wordSpaceValueSlider) {
             Integer inte = wordSpaceValueSlider.getValue();
@@ -533,11 +542,9 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
             properties.setProperty("Gram_Count", gramCountField.getText());
             properties.setProperty("Front_Scope", frontScopeField.getText());
             properties.setProperty("Behind_Scope", behindScopeField.getText());
-            properties.setProperty("WordSpace_Value",
-                    String.valueOf(wordSpaceValueSlider.getValue()));
-            properties.setProperty("Minimum_Support", minSupportField.getText());
-            properties.setProperty("Minimum_Confidence",
-                    String.valueOf(minConfidenceSlider.getValue()));
+            properties.setProperty("WordSpace_Value", String.valueOf(wordSpaceValueSlider.getValue()));
+            properties.setProperty("Minimum_Support", String.valueOf(minSupportSlider.getValue()));
+            properties.setProperty("Minimum_Confidence", String.valueOf(minConfidenceSlider.getValue()));
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {
                 properties.store(writer, "Concept Definition Parameters");
@@ -550,7 +557,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
     public void saveConceptDefinitionParameters(int projectID, Statement stmt) {
         try {
             int minimumConfidence = minConfidenceSlider.getValue();
-            double minimumSupport = Double.parseDouble(minSupportField.getText());
+            double minimumSupport = minSupportSlider.getValue();
             int frontScope = Integer.parseInt(frontScopeField.getText());
             int behindScope = Integer.parseInt(behindScopeField.getText());
             int nGram = Integer.parseInt(gramNumberField.getText());
@@ -594,11 +601,9 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
             gramCountField.setText(properties.getProperty("Gram_Count"));
             frontScopeField.setText(properties.getProperty("Front_Scope"));
             behindScopeField.setText(properties.getProperty("Behind_Scope"));
-            wordSpaceValueSlider.setValue(Integer.parseInt(properties
-                    .getProperty("WordSpace_Value")));
-            minSupportField.setText(properties.getProperty("Minimum_Support"));
-            minConfidenceSlider.setValue(Integer.parseInt(properties
-                    .getProperty("Minimum_Confidence")));
+            wordSpaceValueSlider.setValue(Integer.parseInt(properties.getProperty("WordSpace_Value")));
+            minSupportSlider.setValue(Integer.parseInt(properties.getProperty("Minimum_Support")));
+            minConfidenceSlider.setValue(Integer.parseInt(properties.getProperty("Minimum_Confidence")));
         } catch (IOException uee) {
             uee.printStackTrace();
         }
@@ -606,8 +611,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
 
     public void loadConceptDefinitionParameters(int projectID, Statement stmt) {
         try {
-            String sql = "SELECT * from  concept_definition_parameter where Project_ID="
-                    + projectID;
+            String sql = "SELECT * from  concept_definition_parameter where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 gramNumberField.setText(Integer.toString(rs.getInt("N_Gram")));
@@ -615,7 +619,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
                 frontScopeField.setText(Integer.toString(rs.getInt("Front_Scope")));
                 behindScopeField.setText(Integer.toString(rs.getInt("Behind_Scope")));
                 wordSpaceValueSlider.setValue((int) rs.getDouble("Word_Space_Value"));
-                minSupportField.setText(Double.toString(rs.getDouble("Minimum_Support")));
+                minSupportSlider.setValue((int) rs.getDouble("Minimum_Support"));
                 minConfidenceSlider.setValue((int) rs.getDouble("Minimum_Confidence"));
             }
         } catch (SQLException e) {
@@ -664,8 +668,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
                 if (apriori != null) {
                     apriori.setParameters(minSupport, minConfidence);
                     List<String> targetInputWordList = getTargetInputWordList(apriori.getDocument());
-                    docAprioriResultMap.put(apriori.getDocument(),
-                            apriori.calcAprioriResult(targetInputWordList));
+                    docAprioriResultMap.put(apriori.getDocument(), apriori.calcAprioriResult(targetInputWordList));
                 }
             }
             if (0 < inputConceptJList.getModel().getSize()) {

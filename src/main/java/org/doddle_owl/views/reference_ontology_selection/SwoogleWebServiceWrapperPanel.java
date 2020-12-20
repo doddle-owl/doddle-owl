@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  * 
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  * 
  * This file is part of DODDLE-OWL.
  * 
@@ -223,7 +223,7 @@ class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
 	private void acquireOntologies() {
 		initListData();
 		Set<String> inputWordSet = new HashSet<>();
-		String[] inputWords = inputWordArea.getText().split("\n");
+		String[] inputWords = inputWordArea.getText().split(System.lineSeparator());
 		Collections.addAll(inputWordSet, inputWords);
 		SwoogleWebServiceWrapper.acquireRelevantOWLOntologies(inputWordSet, true);
 		SwoogleWebServiceData swServiceData = SwoogleWebServiceWrapper.getSwoogleWebServiceData();

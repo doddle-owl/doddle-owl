@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class JaWordNetTest {
+public class JaWordNetTest {
 
     @BeforeEach
     void setUp() {
-        DODDLEConstants.JPWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1/";
+        DODDLEConstants.JWN_HOME = "/Users/t_morita/DODDLE-OWL/jpwn_dict_1.1";
         JaWordNet.initJPNWNDic();
     }
 

@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -25,6 +25,16 @@ package org.doddle_owl.views.document_selection;
 
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
+import com.google.common.base.Optional;
+import com.optimaize.langdetect.LanguageDetector;
+import com.optimaize.langdetect.LanguageDetectorBuilder;
+import com.optimaize.langdetect.i18n.LdLocale;
+import com.optimaize.langdetect.ngram.NgramExtractors;
+import com.optimaize.langdetect.profiles.LanguageProfile;
+import com.optimaize.langdetect.profiles.LanguageProfileReader;
+import com.optimaize.langdetect.text.CommonTextObjectFactories;
+import com.optimaize.langdetect.text.TextObject;
+import com.optimaize.langdetect.text.TextObjectFactory;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.SentenceUtils;
 import edu.stanford.nlp.ling.TaggedWord;
@@ -94,8 +104,8 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     public static final String COMPOUND_WORD_JA = "複合語";
     public static final String COMPOUND_WORD_EN = "Compound Word";
 
-    private final ImageIcon addDocIcon = Utils.getImageIcon("page_white_add.png");
-    private final ImageIcon removeDocIcon = Utils.getImageIcon("page_white_delete.png");
+    private final ImageIcon addDocIcon = Utils.getImageIcon("baseline_add_circle_black_18dp.png");
+    private final ImageIcon removeDocIcon = Utils.getImageIcon("baseline_remove_circle_black_18dp.png");
 
     private TaskAnalyzer taskAnalyzer;
 
@@ -179,8 +189,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         documentPanel.add(southPanel, BorderLayout.SOUTH);
         documentPanel.setBorder(new TitledBorder(Translator.getTerm("InputDocumentList")));
 
-        termExtractionButton = new JButton(Translator.getTerm("InputTermExtractionButton"),
-                Utils.getImageIcon("input_term_selection.png"));
+        termExtractionButton = new JButton(Translator.getTerm("InputTermExtractionButton"));
         termExtractionButton.addActionListener(this);
 
         genSenCheckBox = new JCheckBox(Translator.getTerm("GensenCheckBox"));
@@ -734,33 +743,21 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     public String getTargetHtmlLines(String word) {
         StringWriter writer = new StringWriter();
-        writer.write("<html><body>");
+        writer.write("<html><body style='line-height: 1.2em; font-size: 12px;'>");
         ListModel listModel = documentListModel;
         for (int i = 0; i < listModel.getSize(); i++) {
             Document doc = (Document) listModel.getElementAt(i);
             String text = doc.getText();
             StringBuilder buf = new StringBuilder();
             if (text != null) {
-                String[] lines = text.split("\n");
+                String[] lines = text.split(System.lineSeparator());
                 for (int j = 0; j < lines.length; j++) {
                     String line = lines[j];
                     try {
-                        if (line.matches(".*" + word + ".*")) {
-                            line = line.replaceAll(word, "<b><font size=3 color=red>" + word
-                                    + "</font></b>");
-                            buf.append("<b><font size=3 color=navy>");
-                            if (DODDLEConstants.LANG.equals("en")) {
-                                buf.append(Translator.getTerm("LineMessage"));
-                                buf.append(" ");
-                                buf.append((j + 1));
-                            } else {
-                                buf.append((j + 1));
-                                buf.append(Translator.getTerm("LineMessage"));
-                            }
-                            buf.append(": </font></b>");
-                            buf.append("<font size=3>");
+                        if (line.contains(word)) {
+                            line = line.replaceAll(word, String.format("<span style='color: #1111cc; font-weight: bold;'>%s</span>", word));
+                            buf.append(String.format("<span style='font-weight: bold;'>%d: </span>", (j + 1)));
                             buf.append(line);
-                            buf.append("</font>");
                             buf.append("<br>");
                         }
                     } catch (PatternSyntaxException e) {
@@ -769,8 +766,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                 }
             }
             if (0 < buf.toString().length()) {
-                writer.write("<font size=3><b>" + doc.getFile().getAbsolutePath()
-                        + "</b></font><br>");
+                writer.write(String.format("<div style='font-weight: bold;'>%s</div>", doc.getFile().getAbsolutePath()));
                 writer.write(buf.toString());
             }
         }
@@ -783,9 +779,20 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         for (Object o : fileSet) {
             File file = (File) o;
             Document doc = new Document(file);
-            String text = doc.getText();
-            if (30 < text.split(" ").length) { // 適当．スペース数が一定以上あれば英文とみなす
-                doc.setLang("en");
+            doc.setLang("en");
+            try {
+                List<LanguageProfile> languageProfiles = new LanguageProfileReader().readAllBuiltIn();
+                LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
+                        .withProfiles(languageProfiles)
+                        .build();
+                TextObjectFactory textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
+                TextObject textObject = textObjectFactory.forText(doc.getText());
+                Optional<LdLocale> lang = languageDetector.detect(textObject);
+                if (lang.isPresent()) {
+                    doc.setLang(lang.get().getLanguage());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             model.addElement(doc);
         }

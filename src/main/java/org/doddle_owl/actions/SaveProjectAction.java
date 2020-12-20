@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -68,7 +68,7 @@ public class SaveProjectAction extends AbstractAction {
     }
 
     public SaveProjectAction(String title, DODDLE_OWL ddl) {
-        super(title, Utils.getImageIcon("disk.png"));
+        super(title, Utils.getImageIcon("baseline_save_black_18dp.png"));
         this.title = title;
         doddle = ddl;
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
@@ -159,57 +159,57 @@ public class SaveProjectAction extends AbstractAction {
         PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         try {
             StringBuilder buf = new StringBuilder();
-            buf.append(DODDLEConstants.BASE_URI).append("\n");
+            buf.append(DODDLEConstants.BASE_URI).append(System.lineSeparator());
 
-            buf.append(Translator.getTerm("AvailableGeneralOntologiesMessage")).append(": ").append(ontSelectionPanel.getEnableDicList()).append("\n");
+            buf.append(Translator.getTerm("AvailableGeneralOntologiesMessage")).append(": ").append(ontSelectionPanel.getEnableDicList()).append(System.lineSeparator());
             if (conceptSelectionPanel.getTermModelSet() != null) {
-                buf.append(Translator.getTerm("InputTermCountMessage")).append(": ").append(conceptSelectionPanel.getInputTermCnt()).append("\n");
+                buf.append(Translator.getTerm("InputTermCountMessage")).append(": ").append(conceptSelectionPanel.getInputTermCnt()).append(System.lineSeparator());
             }
-            buf.append(Translator.getTerm("ExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPerfectlyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("SystemAddedExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("PartialMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPartiallyMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("MatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getMatchedTermCnt()).append("\n");
-            buf.append(Translator.getTerm("UndefinedTermCountMessage")).append(": ").append(conceptSelectionPanel.getUndefinedTermCnt()).append("\n");
+            buf.append(Translator.getTerm("ExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPerfectlyMatchedTermCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("SystemAddedExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("PartialMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPartiallyMatchedTermCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("MatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getMatchedTermCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("UndefinedTermCountMessage")).append(": ").append(conceptSelectionPanel.getUndefinedTermCnt()).append(System.lineSeparator());
 
             if (conceptSelectionPanel.getInputConceptSet() != null) {
-                buf.append(Translator.getTerm("InputConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputConceptSet().size()).append("\n");
+                buf.append(Translator.getTerm("InputConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputConceptSet().size()).append(System.lineSeparator());
             }
             if (conceptSelectionPanel.getInputNounConceptSet() != null) {
-                buf.append(Translator.getTerm("InputNounConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputNounConceptSet().size()).append("\n");
+                buf.append(Translator.getTerm("InputNounConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputNounConceptSet().size()).append(System.lineSeparator());
             }
             if (conceptSelectionPanel.getInputVerbConceptSet() != null) {
-                buf.append(Translator.getTerm("InputVerbConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputVerbConceptSet().size()).append("\n");
+                buf.append(Translator.getTerm("InputVerbConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputVerbConceptSet().size()).append(System.lineSeparator());
             }
 
-            buf.append(Translator.getTerm("ClassSINCountMessage")).append(": ").append(constructClassPanel.getAddedSINNum()).append("\n");
-            buf.append(Translator.getTerm("BeforeTrimmingClassCountMessage")).append(": ").append(constructClassPanel.getBeforeTrimmingConceptNum()).append("\n");
-            buf.append(Translator.getTerm("TrimmedClassCountMessage")).append(": ").append(constructClassPanel.getTrimmedConceptNum()).append("\n");
+            buf.append(Translator.getTerm("ClassSINCountMessage")).append(": ").append(constructClassPanel.getAddedSINNum()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("BeforeTrimmingClassCountMessage")).append(": ").append(constructClassPanel.getBeforeTrimmingConceptNum()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("TrimmedClassCountMessage")).append(": ").append(constructClassPanel.getTrimmedConceptNum()).append(System.lineSeparator());
             int afterTrimmingConceptNum = constructClassPanel.getAfterTrimmingConceptNum();
-            buf.append(Translator.getTerm("AfterTrimmingClassCountMessage")).append(": ").append(afterTrimmingConceptNum).append("\n");
+            buf.append(Translator.getTerm("AfterTrimmingClassCountMessage")).append(": ").append(afterTrimmingConceptNum).append(System.lineSeparator());
 
-            buf.append(Translator.getTerm("PropertySINCountMessage")).append(": ").append(constructPropertyPanel.getAddedSINNum()).append("\n");
-            buf.append(Translator.getTerm("BeforeTrimmingPropertyCountMessage")).append(": ").append(constructPropertyPanel.getBeforeTrimmingConceptNum()).append("\n");
-            buf.append(Translator.getTerm("TrimmedPropertyCountMessage")).append(": ").append(constructPropertyPanel.getTrimmedConceptNum()).append("\n");
+            buf.append(Translator.getTerm("PropertySINCountMessage")).append(": ").append(constructPropertyPanel.getAddedSINNum()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("BeforeTrimmingPropertyCountMessage")).append(": ").append(constructPropertyPanel.getBeforeTrimmingConceptNum()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("TrimmedPropertyCountMessage")).append(": ").append(constructPropertyPanel.getTrimmedConceptNum()).append(System.lineSeparator());
             int afterTrimmingPropertyNum = constructPropertyPanel.getAfterTrimmingConceptNum();
-            buf.append(Translator.getTerm("AfterTrimmingPropertyCountMessage")).append(": ").append(afterTrimmingPropertyNum).append("\n");
+            buf.append(Translator.getTerm("AfterTrimmingPropertyCountMessage")).append(": ").append(afterTrimmingPropertyNum).append(System.lineSeparator());
 
-            buf.append(Translator.getTerm("AbstractInternalClassCountMessage")).append(": ").append(constructClassPanel.getAddedAbstractCompoundConceptCnt()).append("\n");
-            buf.append(Translator.getTerm("AverageAbstractSiblingConceptCountInClassesMessage")).append(": ").append(constructClassPanel.getAverageAbstracCompoundConceptGroupSiblingConceptCnt()).append("\n");
+            buf.append(Translator.getTerm("AbstractInternalClassCountMessage")).append(": ").append(constructClassPanel.getAddedAbstractCompoundConceptCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("AverageAbstractSiblingConceptCountInClassesMessage")).append(": ").append(constructClassPanel.getAverageAbstracCompoundConceptGroupSiblingConceptCnt()).append(System.lineSeparator());
 
-            buf.append(Translator.getTerm("AbstractInternalPropertyCountMessage")).append(": ").append(constructPropertyPanel.getAddedAbstractCompoundConceptCnt()).append("\n");
-            buf.append(Translator.getTerm("AverageAbstractSiblingConceptCountInPropertiesMessage")).append(": ").append(constructPropertyPanel.getAverageAbstracCompoundConceptGroupSiblingConceptCnt()).append("\n");
+            buf.append(Translator.getTerm("AbstractInternalPropertyCountMessage")).append(": ").append(constructPropertyPanel.getAddedAbstractCompoundConceptCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("AverageAbstractSiblingConceptCountInPropertiesMessage")).append(": ").append(constructPropertyPanel.getAverageAbstracCompoundConceptGroupSiblingConceptCnt()).append(System.lineSeparator());
 
             int lastClassNum = constructClassPanel.getAllConceptCnt();
             int lastPropertyNum = constructPropertyPanel.getAllConceptCnt();
 
-            buf.append(Translator.getTerm("ClassFromCompoundWordCountMessage")).append(": ").append(lastClassNum - afterTrimmingConceptNum).append("\n");
-            buf.append(Translator.getTerm("PropertyFromCompoundWordCountMessage")).append(": ").append(lastPropertyNum - afterTrimmingPropertyNum).append("\n");
+            buf.append(Translator.getTerm("ClassFromCompoundWordCountMessage")).append(": ").append(lastClassNum - afterTrimmingConceptNum).append(System.lineSeparator());
+            buf.append(Translator.getTerm("PropertyFromCompoundWordCountMessage")).append(": ").append(lastPropertyNum - afterTrimmingPropertyNum).append(System.lineSeparator());
 
-            buf.append(Translator.getTerm("TotalClassCountMessage")).append(": ").append(lastClassNum).append("\n");
-            buf.append(Translator.getTerm("TotalPropertyCountMessage")).append(": ").append(lastPropertyNum).append("\n");
+            buf.append(Translator.getTerm("TotalClassCountMessage")).append(": ").append(lastClassNum).append(System.lineSeparator());
+            buf.append(Translator.getTerm("TotalPropertyCountMessage")).append(": ").append(lastPropertyNum).append(System.lineSeparator());
 
-            buf.append(Translator.getTerm("AverageSiblingClassesMessage")).append(": ").append(constructClassPanel.getChildCntAverage()).append("\n");
-            buf.append(Translator.getTerm("AverageSiblingPropertiesMessage")).append(": ").append(constructPropertyPanel.getChildCntAverage()).append("\n");
+            buf.append(Translator.getTerm("AverageSiblingClassesMessage")).append(": ").append(constructClassPanel.getChildCntAverage()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("AverageSiblingPropertiesMessage")).append(": ").append(constructPropertyPanel.getChildCntAverage()).append(System.lineSeparator());
 
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {

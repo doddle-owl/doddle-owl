@@ -360,7 +360,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println(s);
 
-            target.append(new String(s) + "\n");
+            target.append(new String(s) + System.lineSeparator());
             target.setCaretPosition(target.getText().length());
         }
 
@@ -382,7 +382,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println(d);
 
-            target.append(d + "\n");
+            target.append(d + System.lineSeparator());
             target.setCaretPosition(target.getText().length());
         }
 
@@ -404,7 +404,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println(f);
 
-            target.append(f + "\n");
+            target.append(f + System.lineSeparator());
             target.setCaretPosition(target.getText().length());
         }
 
@@ -426,7 +426,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println(i);
 
-            target.append(i + "\n");
+            target.append(i + System.lineSeparator());
             target.setCaretPosition(target.getText().length());
         }
 
@@ -448,7 +448,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println(l);
 
-            target.append(l + "\n");
+            target.append(l + System.lineSeparator());
             target.setCaretPosition(target.getText().length());
         }
 
@@ -470,7 +470,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println(o);
 
-            target.append(o.toString() + "\n");
+            target.append(o.toString() + System.lineSeparator());
             target.setCaretPosition(target.getText().length());
         }
 
@@ -495,7 +495,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println(s);
 
-            target.append(s + "\n");
+            target.append(s + System.lineSeparator());
             target.setCaretPosition(target.getText().length());
             if (orig == stderr) {
                 // setVisible(true);
@@ -509,7 +509,7 @@ public class LogConsole extends JDialog {
             if (showOrig)
                 orig.println();
 
-            target.append("\n");
+            target.append(System.lineSeparator());
             target.setCaretPosition(target.getText().length());
         }
     }

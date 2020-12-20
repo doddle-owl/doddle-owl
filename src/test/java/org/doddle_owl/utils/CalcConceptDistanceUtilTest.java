@@ -22,7 +22,7 @@ import java.util.Set;
 import static org.doddle_owl.utils.CalcConceptDistanceUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CalcConceptDistanceUtilTest {
+public class CalcConceptDistanceUtilTest {
 
     @Nested
     @DisplayName("EDRにおける概念距離計算のテスト")

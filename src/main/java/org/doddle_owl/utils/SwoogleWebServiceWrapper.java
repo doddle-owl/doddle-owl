@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -243,7 +243,7 @@ public class SwoogleWebServiceWrapper {
             String line;
             while ((line = reader.readLine()) != null) { // reader.ready()を使うと書き込み途中で終了する場合がある.
                 writer.write(line);
-                writer.write("\n");
+                writer.newLine();
             }
         } catch (FileNotFoundException fne) {
             System.out.println("fileName error: " + file);
@@ -268,7 +268,7 @@ public class SwoogleWebServiceWrapper {
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
             writer.append(uri);
-            writer.append("\n");
+            writer.newLine();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

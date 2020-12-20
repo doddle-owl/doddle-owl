@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
 
-class ReferenceOWLOntologyTest {
+public class ReferenceOWLOntologyTest {
 
     @BeforeEach
     void setUp() {

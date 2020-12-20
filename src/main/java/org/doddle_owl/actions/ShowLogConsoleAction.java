@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  * 
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  * 
  * This file is part of DODDLE-OWL.
  * 
@@ -38,7 +38,7 @@ public class ShowLogConsoleAction extends AbstractAction {
     private final LogConsole logConsole;
 
     public ShowLogConsoleAction(String title, LogConsole console) {
-        super(title, Utils.getImageIcon("application_xp_terminal.png"));
+        super(title, Utils.getImageIcon("ic_message_black_18dp.png"));
         this.title = title;
         logConsole = console;
     }

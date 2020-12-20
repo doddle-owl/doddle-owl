@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -124,7 +124,8 @@ class AccentSymbolConverter {
             while (br.ready()) {
                 String line = br.readLine();
                 line = AccentSymbolConverter.convertAccentSymbol(line);
-                bw.write(line + "\n");
+                bw.write(line);
+                bw.newLine();
             }
             br.close();
             bw.close();

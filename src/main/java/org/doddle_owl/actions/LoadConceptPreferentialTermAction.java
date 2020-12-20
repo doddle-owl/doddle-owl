@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -60,7 +60,7 @@ public class LoadConceptPreferentialTermAction extends AbstractAction {
             try (reader) {
                 while (reader.ready()) {
                     String line = reader.readLine();
-                    String[] idInputWord = line.replaceAll("\n", "").split("\t");
+                    String[] idInputWord = line.replaceAll(System.lineSeparator(), "").split("\t");
                     if (idInputWord.length == 2) {
                         idPreferentialTermMap.put(idInputWord[0], idInputWord[1]);
                     }

@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -39,7 +39,7 @@ public class ExitAction extends AbstractAction {
     private final DODDLE_OWL doddle;
 
     public ExitAction(String title, DODDLE_OWL ddl) {
-        super(title, Utils.getImageIcon("application_delete.png"));
+        super(title, Utils.getImageIcon("ic_exit_to_app_18pt.png"));
         doddle = ddl;
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Q,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));

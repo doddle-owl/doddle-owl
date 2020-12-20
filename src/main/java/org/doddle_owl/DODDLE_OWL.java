@@ -3,7 +3,7 @@
  *
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -24,6 +24,7 @@
 
 package org.doddle_owl;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import org.apache.commons.cli.*;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -84,6 +85,7 @@ public class DODDLE_OWL extends JFrame {
     private ShowLogConsoleAction showLogConsoleAction;
     private ShowOptionDialogAction showOptionDialogAction;
     private ShowVersionInfoAction showVersionInfoAction;
+    private ShowManualAction showManualAction;
 
     private ShowDODDLEDicConverterAction showDODDLEDicConverterAction;
 
@@ -132,7 +134,6 @@ public class DODDLE_OWL extends JFrame {
         });
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
-        setIconImage(Utils.getImageIcon("application.png").getImage());
         setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
                 + DODDLEConstants.VERSION + " - " + Translator.getTerm("NewProjectAction"));
         setVisible(true);
@@ -194,7 +195,7 @@ public class DODDLE_OWL extends JFrame {
                         break;
                     }
                     writer.write(project);
-                    writer.write("\n");
+                    writer.newLine();
                     JMenuItem item = new JMenuItem(project);
                     item.addActionListener(new OpenRecentProjectAction(project, this));
                     DODDLE_OWL.recentProjectMenu.add(item);
@@ -227,6 +228,7 @@ public class DODDLE_OWL extends JFrame {
         showLogConsoleAction = new ShowLogConsoleAction(Translator.getTerm("ShowLogConsoleAction"), logConsole);
         showOptionDialogAction = new ShowOptionDialogAction(Translator.getTerm("ShowOptionDialogAction"), this);
         showVersionInfoAction = new ShowVersionInfoAction(this);
+        showManualAction = new ShowManualAction(Translator.getTerm("ShowManualAction"));
         showDODDLEDicConverterAction = new ShowDODDLEDicConverterAction("DODDLE Dic Converter");
     }
 
@@ -292,6 +294,7 @@ public class DODDLE_OWL extends JFrame {
     private JMenu getHelpMenu() {
         JMenu menu = new JMenu(Translator.getTerm("HelpMenu"));
         menu.add(showVersionInfoAction);
+        menu.add(showManualAction);
         return menu;
     }
 
@@ -303,11 +306,7 @@ public class DODDLE_OWL extends JFrame {
         toolBar.add(saveProjectAction).setToolTipText(saveProjectAction.getTitle());
         toolBar.add(saveProjectAsAction).setToolTipText(saveProjectAsAction.getTitle());
         toolBar.addSeparator();
-        toolBar.add(showDODDLEDicConverterAction).setToolTipText(showDODDLEDicConverterAction.getTitle());
-        toolBar.addSeparator();
-        toolBar.add(showLogConsoleAction).setToolTipText(showLogConsoleAction.getTitle());
         toolBar.add(showOptionDialogAction).setToolTipText(saveProjectAsAction.getTitle());
-        toolBar.add(showVersionInfoAction).setToolTipText(showVersionInfoAction.getTitle());
         return toolBar;
     }
 
@@ -357,6 +356,7 @@ public class DODDLE_OWL extends JFrame {
     private static void setPath(Properties properties) {
         DODDLEConstants.EDR_HOME = properties.getProperty("EDR_HOME");
         DODDLEConstants.EDRT_HOME = properties.getProperty("EDRT_HOME");
+        DODDLEConstants.JWN_HOME = properties.getProperty("JWN_HOME");
         DODDLEConstants.JWO_HOME = properties.getProperty("JWO_HOME");
         DocumentSelectionPanel.PERL_EXE = properties.getProperty("PERL_EXE");
         DocumentSelectionPanel.Japanese_Morphological_Analyzer = properties
@@ -441,22 +441,13 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static void main(String[] args) {
+        FlatLightLaf.install();
         SplashWindow splashWindow = new SplashWindow(null);
         DODDLE_OWL.initOptions(args);
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
         try {
             ToolTipManager.sharedInstance().setEnabled(true);
             UIManager.put("TitledBorder.border", new LineBorder(new Color(200, 200, 200), 1));
-            try {
-                for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                    if ("Nimbus".equals(info.getName())) {
-                        UIManager.setLookAndFeel(info.getClassName());
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             if (Taskbar.isTaskbarSupported()) {
                 var taskbar = Taskbar.getTaskbar();
                 if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {

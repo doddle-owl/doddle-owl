@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -64,8 +64,6 @@ public class ConceptTreePanel extends JPanel {
     private final JCheckBox perfectlyMatchedSearchOptionCheckBox;
     private final JCheckBox searchURICheckBox;
     private final JCheckBox caseSensitivityCheckBox;
-    private final JList<String> labelLangJList;
-    private final JList<String> descriptionLangJList;
 
     private final JTree conceptTree;
     private ConceptTreeNode targetConceptTreeNode;
@@ -90,15 +88,15 @@ public class ConceptTreePanel extends JPanel {
     // Utils.getImageIcon("add_undef_word.png");
     // private ImageIcon undefIcon = Utils.getImageIcon("undef.png");
 
-    private final ImageIcon copyIcon = Utils.getImageIcon("page_white_copy.png");
-    private final ImageIcon cutIcon = Utils.getImageIcon("cut.png");
-    private final ImageIcon pasteIcon = Utils.getImageIcon("page_white_paste.png");
-    private final ImageIcon removeConceptIcon = Utils.getImageIcon("remove_concept.png");
-    private final ImageIcon removeUpperLinkIcon = Utils.getImageIcon("remove_upper_link.png");
-    private final ImageIcon removeInternalConceptIcon = Utils.getImageIcon("remove_internal_concept.png");
+    private final ImageIcon copyIcon = Utils.getImageIcon("ic_content_copy_18pt.png");
+    private final ImageIcon cutIcon = Utils.getImageIcon("ic_content_cut_18pt.png");
+    private final ImageIcon pasteIcon = Utils.getImageIcon("ic_content_paste_18pt.png");
+    private final ImageIcon removeConceptIcon = Utils.getImageIcon("baseline_delete_black_18dp.png");
+    private final ImageIcon removeUpperLinkIcon = Utils.getImageIcon("baseline_link_off_black_18dp.png");
+    private final ImageIcon removeInternalConceptIcon = Utils.getImageIcon("baseline_delete_outline_black_18dp.png");
 
-    private final ImageIcon undoIcon = Utils.getImageIcon("arrow_undo.png");
-    private final ImageIcon redoIcon = Utils.getImageIcon("arrow_redo.png");
+    private final ImageIcon undoIcon = Utils.getImageIcon("baseline_undo_black_18dp.png");
+    private final ImageIcon redoIcon = Utils.getImageIcon("baseline_redo_black_18dp.png");
 
     private final UndefinedTermListPanel undefinedTermListPanel;
     private ConceptDriftManagementPanel conceptDriftManagementPanel;
@@ -114,20 +112,18 @@ public class ConceptTreePanel extends JPanel {
 
     private JTree hasaTree;
 
-    public static final String CLASS_ISA_TREE = "clas is-a Tree";
+    public static final String CLASS_ISA_TREE = "class is-a Tree";
     public static final String PROPERTY_ISA_TREE = "property is-a Tree";
-    public static final String CLASS_HASA_TREE = "clas has-a Tree";
+    public static final String CLASS_HASA_TREE = "class has-a Tree";
     public static final String PROPERTY_HASA_TREE = "property has-a Tree";
 
     public ConceptTreePanel(String title, String type, UndefinedTermListPanel undefPanel, DODDLEProjectPanel p) {
         project = p;
         treeType = type;
         if (type.equals(CLASS_HASA_TREE)) {
-            conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE,
-                    "Class Is-a Selection Dialog");
+            conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE, "Class Is-a Selection Dialog");
         } else if (type.equals(PROPERTY_HASA_TREE)) {
-            conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.VERB_CONCEPT_TREE,
-                    "Property Is-a Selection Dialog");
+            conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.VERB_CONCEPT_TREE, "Property Is-a Selection Dialog");
         }
         undefinedTermListPanel = undefPanel;
         abstractLabelSet = new HashSet<>();
@@ -154,29 +150,9 @@ public class ConceptTreePanel extends JPanel {
         searchCheckBoxPanel.add(searchURICheckBox);
         searchCheckBoxPanel.add(caseSensitivityCheckBox);
 
-        labelLangJList = new JList<>(new String[]{"en", "ja", "ALL", "NULL"});
-        labelLangJList.setSelectedValue("ALL", true);
-        JScrollPane labelLangJListScroll = new JScrollPane(labelLangJList);
-        labelLangJListScroll.setPreferredSize(new Dimension(LANG_SIZE, 70));
-        labelLangJListScroll.setMinimumSize(new Dimension(LANG_SIZE, 70));
-        labelLangJListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("LabelLangList")));
-        descriptionLangJList = new JList<>(new String[]{"en", "ja", "ALL", "NULL"});
-        JScrollPane descriptionLangJListScroll = new JScrollPane(descriptionLangJList);
-        descriptionLangJListScroll.setBorder(BorderFactory
-                .createTitledBorder(Translator.getTerm("DescriptionLangList")));
-        descriptionLangJListScroll.setPreferredSize(new Dimension(LANG_SIZE, 70));
-        descriptionLangJListScroll.setMinimumSize(new Dimension(LANG_SIZE, 70));
-
-        JPanel searchRangePanel = new JPanel();
-        searchRangePanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("SearchOptionBorder")));
-        searchRangePanel.setLayout(new GridLayout(1, 2));
-        searchRangePanel.add(labelLangJListScroll);
-        searchRangePanel.add(descriptionLangJListScroll);
-
         JPanel searchOptionPanel = new JPanel();
         searchOptionPanel.setLayout(new BorderLayout());
-        searchOptionPanel.add(searchCheckBoxPanel, BorderLayout.NORTH);
-        searchOptionPanel.add(searchRangePanel, BorderLayout.CENTER);
+        searchOptionPanel.add(searchCheckBoxPanel, BorderLayout.CENTER);
 
         JPanel searchDirectionPanel = new JPanel();
         searchDirectionPanel.setLayout(new GridLayout(1, 2));
@@ -376,7 +352,6 @@ public class ConceptTreePanel extends JPanel {
 
         private boolean isSearchURI(Concept c) {
             if (searchURICheckBox.isSelected()) {
-                String searchString = c.getURI();
                 if (!caseSensitivityCheckBox.isSelected()) {
                     searchKeyWord = searchKeyWord.toLowerCase();
                 }
@@ -390,57 +365,19 @@ public class ConceptTreePanel extends JPanel {
         }
 
         private boolean isSearchLabel(Concept c) {
-            boolean checkAllLabel = false;
-            boolean checkNullLabel = false;
-
-            List selectedLabelLangList = labelLangJList.getSelectedValuesList();
-            for (Object labelLang : selectedLabelLangList) {
-                if (labelLang.equals("ALL")) {
-                    checkAllLabel = true;
-                }
-                if (labelLang.equals("NULL")) {
-                    checkNullLabel = true;
-                }
-            }
-
-            if (!checkNullLabel) {
-                Map<String, List<DODDLELiteral>> langLabelListMap = c.getLangLabelListMap();
-                if (checkAllLabel) {
-                    for (List<DODDLELiteral> labelList : langLabelListMap.values()) {
-                        for (DODDLELiteral label : labelList) {
-                            String targetString = label.getString();
-                            if (!caseSensitivityCheckBox.isSelected()) {
-                                targetString = targetString.toLowerCase();
-                                searchKeyWord = searchKeyWord.toLowerCase();
-                            }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
-                                return targetString
-                                        .matches(searchKeyWord);
-                            }
-                            if (targetString.contains(searchKeyWord)) {
-                                return true;
-                            }
-                        }
+            Map<String, List<DODDLELiteral>> langLabelListMap = c.getLangLabelListMap();
+            for (List<DODDLELiteral> labelList : langLabelListMap.values()) {
+                for (DODDLELiteral label : labelList) {
+                    String targetString = label.getString();
+                    if (!caseSensitivityCheckBox.isSelected()) {
+                        targetString = targetString.toLowerCase();
+                        searchKeyWord = searchKeyWord.toLowerCase();
                     }
-                } else {
-                    for (Object selectedLabelLang : selectedLabelLangList) {
-                        if (langLabelListMap.get(selectedLabelLang) == null) {
-                            continue;
-                        }
-                        for (DODDLELiteral label : langLabelListMap.get(selectedLabelLang)) {
-                            String targetString = label.getString();
-                            if (!caseSensitivityCheckBox.isSelected()) {
-                                targetString = targetString.toLowerCase();
-                                searchKeyWord = searchKeyWord.toLowerCase();
-                            }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
-                                return targetString
-                                        .matches(searchKeyWord);
-                            }
-                            if (targetString.contains(searchKeyWord)) {
-                                return true;
-                            }
-                        }
+                    if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
+                        return targetString.matches(searchKeyWord);
+                    }
+                    if (targetString.contains(searchKeyWord)) {
+                        return true;
                     }
                 }
             }
@@ -448,56 +385,19 @@ public class ConceptTreePanel extends JPanel {
         }
 
         private boolean isSearchDescription(Concept c) {
-            boolean checkAllDescription = false;
-            boolean checkNullDescription = false;
-
-            List selectedDescriptionLangList = descriptionLangJList.getSelectedValuesList();
-            for (Object lang : selectedDescriptionLangList) {
-                if (lang.equals("ALL")) {
-                    checkAllDescription = true;
-                }
-                if (lang.equals("NULL")) {
-                    checkNullDescription = true;
-                }
-            }
-            if (!checkNullDescription) {
-                Map<String, List<DODDLELiteral>> langDescriptionListMap = c.getLangDescriptionListMap();
-                if (checkAllDescription) {
-                    for (List<DODDLELiteral> descriptionList : langDescriptionListMap.values()) {
-                        for (DODDLELiteral description : descriptionList) {
-                            String targetString = description.getString();
-                            if (!caseSensitivityCheckBox.isSelected()) {
-                                targetString = targetString.toLowerCase();
-                                searchKeyWord = searchKeyWord.toLowerCase();
-                            }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
-                                return targetString
-                                        .matches(searchKeyWord);
-                            }
-                            if (targetString.contains(searchKeyWord)) {
-                                return true;
-                            }
-                        }
+            Map<String, List<DODDLELiteral>> langDescriptionListMap = c.getLangDescriptionListMap();
+            for (List<DODDLELiteral> descriptionList : langDescriptionListMap.values()) {
+                for (DODDLELiteral description : descriptionList) {
+                    String targetString = description.getString();
+                    if (!caseSensitivityCheckBox.isSelected()) {
+                        targetString = targetString.toLowerCase();
+                        searchKeyWord = searchKeyWord.toLowerCase();
                     }
-                } else {
-                    for (Object selectedDescriptionLang : selectedDescriptionLangList) {
-                        if (langDescriptionListMap.get(selectedDescriptionLangList) == null) {
-                            continue;
-                        }
-                        for (DODDLELiteral description : langDescriptionListMap.get(selectedDescriptionLangList)) {
-                            String targetString = description.getString();
-                            if (!caseSensitivityCheckBox.isSelected()) {
-                                targetString = targetString.toLowerCase();
-                                searchKeyWord = searchKeyWord.toLowerCase();
-                            }
-                            if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
-                                return targetString
-                                        .matches(searchKeyWord);
-                            }
-                            if (targetString.contains(searchKeyWord)) {
-                                return true;
-                            }
-                        }
+                    if (perfectlyMatchedSearchOptionCheckBox.isSelected()) {
+                        return targetString.matches(searchKeyWord);
+                    }
+                    if (targetString.contains(searchKeyWord)) {
+                        return true;
                     }
                 }
             }

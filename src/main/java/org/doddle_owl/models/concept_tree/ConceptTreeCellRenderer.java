@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  * 
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  * 
  * This file is part of DODDLE-OWL.
  * 
@@ -45,22 +45,22 @@ public class ConceptTreeCellRenderer extends DefaultTreeCellRenderer {
 
     public ConceptTreeCellRenderer(String type) {
         if (type.equals(NOUN_CONCEPT_TREE)) {
-            ImageIcon CLASS_SIN_ICON = Utils.getImageIcon("class_sin_icon.png");
+            ImageIcon CLASS_SIN_ICON = Utils.getImageIcon("sin_icon.png");
             SIN_ICON = CLASS_SIN_ICON;
-            ImageIcon CLASS_MULTIPLE_SIN_ICON = Utils.getImageIcon("class_multiple_sin_icon.png");
+            ImageIcon CLASS_MULTIPLE_SIN_ICON = Utils.getImageIcon("multiple_sin_icon.png");
             MULTIPLE_SIN_ICON = CLASS_MULTIPLE_SIN_ICON;
-            ImageIcon CLASS_BEST_MATCH_ICON = Utils.getImageIcon("class_best_match_icon.png");
+            ImageIcon CLASS_BEST_MATCH_ICON = Utils.getImageIcon("best_match_icon.png");
             BEST_MATCH_ICON = CLASS_BEST_MATCH_ICON;
-            ImageIcon CLASS_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("class_multiple_best_match_icon.png");
+            ImageIcon CLASS_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("multiple_best_match_icon.png");
             MULTIPLE_BEST_MATCH_ICON = CLASS_MULTIPLE_BEST_MATCH_ICON;
         } else if (type.equals(VERB_CONCEPT_TREE)) {
-            ImageIcon PROP_SIN_ICON = Utils.getImageIcon("property_sin_icon.png");
+            ImageIcon PROP_SIN_ICON = Utils.getImageIcon("sin_icon.png");
             SIN_ICON = PROP_SIN_ICON;
-            ImageIcon PROP_MULTIPLE_SIN_ICON = Utils.getImageIcon("property_multiple_sin_icon.png");
+            ImageIcon PROP_MULTIPLE_SIN_ICON = Utils.getImageIcon("multiple_sin_icon.png");
             MULTIPLE_SIN_ICON = PROP_MULTIPLE_SIN_ICON;
-            ImageIcon PROP_BEST_MATCH_ICON = Utils.getImageIcon("property_best_match_icon.png");
+            ImageIcon PROP_BEST_MATCH_ICON = Utils.getImageIcon("best_match_icon.png");
             BEST_MATCH_ICON = PROP_BEST_MATCH_ICON;
-            ImageIcon PROP_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("property_multiple_best_match_icon.png");
+            ImageIcon PROP_MULTIPLE_BEST_MATCH_ICON = Utils.getImageIcon("multiple_best_match_icon.png");
             MULTIPLE_BEST_MATCH_ICON = PROP_MULTIPLE_BEST_MATCH_ICON;
         }
         setOpaque(true);

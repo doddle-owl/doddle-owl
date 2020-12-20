@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -227,7 +227,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                 StringBuilder builder = new StringBuilder();
                 for (NonTaxonomicRelation nonTaxRel : nonTaxRelSet) {
                     builder.append(nonTaxRel);
-                    builder.append("\n");
+                    builder.append(System.lineSeparator());
                 }
                 writer.write(builder.toString());
             }
@@ -270,7 +270,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                     builder.append(wp.getDomain());
                     builder.append("\t");
                     builder.append(wp.getRange());
-                    builder.append("\n");
+                    builder.append(System.lineSeparator());
                 }
                 writer.write(builder.toString());
             }
@@ -318,6 +318,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     public void setInputDocList() {
+        documentListModel.clear();
         documentListModel.addAll(doddleProjectPanel.getDocumentSelectionPanel().getDocSet());
     }
 
@@ -634,8 +635,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         private final JButton addAcceptedPairButton;
         private final JButton addWrongPairButton;
 
-        private final ImageIcon rightIcon = Utils.getImageIcon("arrow_right.png");
-        private final ImageIcon leftIcon = Utils.getImageIcon("arrow_left.png");
+        private final ImageIcon rightIcon = Utils.getImageIcon("baseline_arrow_forward_black_18dp.png");
+        private final ImageIcon leftIcon = Utils.getImageIcon("baseline_arrow_back_black_18dp.png");
 
         ConceptDefinitionPanel() {
             c1Label = new JLabel();

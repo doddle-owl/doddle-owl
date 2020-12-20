@@ -7,7 +7,7 @@ import org.apache.jena.vocabulary.RDFS;
 
 import java.io.File;
 
-class JWOTDBReadTest {
+public class JWOTDBReadTest {
     public static void main(String[] args) {
         File dir = new File("/Users/t_morita/DODDLE-OWL/jwo");
         for (File f : dir.listFiles()) {

@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -52,17 +52,16 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class TermsInDocumentViewer extends JPanel implements MouseListener, ActionListener,
-        HyperlinkListener, KeyListener {
-    private final JList documentList;
-    private ListModel inputDocumentListModel;
+public class TermsInDocumentViewer extends JPanel implements MouseListener, ActionListener, HyperlinkListener, KeyListener {
+
+    private Document selectedDoc = null;
+    private DODDLE_POS selectedPOS = null;
+
+    private final JList<Document> documentList;
+    private DefaultListModel<Document> documentListModel;
     private final JEditorPane documentArea;
-    private final JEditorPane linkArea;
 
     private final TitledBorder documentAreaBorder;
-
-    private final JTextField displayLineNumField;
-    private final JButton setDisplayLineNumButton;
 
     private final JTextField searchField;
     private final JButton addTermButton;
@@ -74,50 +73,41 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
     private final JTable wordInfoTable;
     private DefaultTableModel wordInfoTableModel;
 
-    private static final String CORRECT_WORD_LINK_COLOR = "#325eff";
+    private static final String HTML_START = "<html><body style='font-size: 12px;'>";
+    private static final String HTML_END = "</body></html>";
+    private static final String CORRECT_WORD_LINK_COLOR = "#1111cc";
     private static final String REMOVED_WORD_LINK_COLOR = "gray";
-    private static int DISPLAY_LINE_NUM = 20;
 
     public void initialize() {
-        documentList.removeAll();
+        documentListModel.clear();
         documentArea.setText("");
-        linkArea.setText("");
         searchField.setText("");
     }
 
     public TermsInDocumentViewer() {
-        documentList = new JList();
-        documentList.addMouseListener(this);
-        documentList.setCellRenderer(new DocumentListCellRenderer());
+        documentListModel = new DefaultListModel<>();
+        documentList = new JList(documentListModel);
+        documentList.addListSelectionListener(e -> {
+            if (!documentListModel.isEmpty()) {
+                selectedDoc = documentList.getSelectedValue();
+                setDocumentArea();
+            }
+        });
         JScrollPane documentListScroll = new JScrollPane(documentList);
-        documentListScroll.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("InputDocumentList")));
+        documentListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentList")));
         documentArea = new JEditorPane("text/html", "");
         documentArea.addMouseListener(this);
         documentArea.addHyperlinkListener(this);
         documentArea.setEditable(false);
         JScrollPane documentAreaScroll = new JScrollPane(documentArea);
-        documentAreaBorder = BorderFactory.createTitledBorder(Translator
-                .getTerm("InputDocumentArea"));
+        documentAreaBorder = BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentArea"));
         documentAreaScroll.setBorder(documentAreaBorder);
 
-        linkArea = new JEditorPane("text/html", "");
-        linkArea.addHyperlinkListener(this);
-        linkArea.setEditable(false);
-        JScrollPane linkAreaScroll = new JScrollPane(linkArea);
-        linkAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("PageLinesList")));
-        linkAreaScroll.setMinimumSize(new Dimension(120, 50));
-        linkAreaScroll.setPreferredSize(new Dimension(120, 50));
+        documentList.addMouseListener(this);
 
         JPanel documentPanel = new JPanel();
         documentPanel.setLayout(new BorderLayout());
         documentPanel.add(documentAreaScroll, BorderLayout.CENTER);
-        documentPanel.add(linkAreaScroll, BorderLayout.WEST);
-
-        displayLineNumField = new JTextField(5);
-        setDisplayLineNumButton = new JButton(Translator.getTerm("SetLinesPerPageButton"));
-        setDisplayLineNumButton.addActionListener(this);
 
         searchField = new JTextField(15);
         searchField.addActionListener(this);
@@ -140,8 +130,6 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         group.add(verbRadioButton);
         group.add(otherRadioButton);
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(displayLineNumField);
-        buttonPanel.add(setDisplayLineNumButton);
         buttonPanel.add(searchField);
         buttonPanel.add(addTermButton);
         buttonPanel.add(compoundWordRadioButton);
@@ -160,8 +148,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         southPanel.add(buttonPanel, BorderLayout.SOUTH);
         southPanel.add(wordInfoTableScroll, BorderLayout.CENTER);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, documentListScroll,
-                documentPanel);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, documentListScroll, documentPanel);
         splitPane.setDividerSize(DODDLEConstants.DIVIDER_SIZE);
         splitPane.setOneTouchExpandable(true);
         setLayout(new BorderLayout());
@@ -185,8 +172,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         wordInfoTable.getTableHeader().setToolTipText("sorted by column");
     }
 
-    private final Highlighter.HighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
-            Color.YELLOW);
+    private final Highlighter.HighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
 
     private void removeHighlights(JTextComponent jtc) {
         Highlighter highlight = jtc.getHighlighter();
@@ -221,16 +207,16 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == compoundWordRadioButton) {
             selectedPOS = DODDLE_POS.COMPOUND_WORD;
-            setDocumentAndLinkArea();
+            setDocumentArea();
         } else if (e.getSource() == nounRadioButton) {
             selectedPOS = DODDLE_POS.NOUN;
-            setDocumentAndLinkArea();
+            setDocumentArea();
         } else if (e.getSource() == verbRadioButton) {
             selectedPOS = DODDLE_POS.VERB;
-            setDocumentAndLinkArea();
+            setDocumentArea();
         } else if (e.getSource() == otherRadioButton) {
             selectedPOS = DODDLE_POS.OTHER;
-            setDocumentAndLinkArea();
+            setDocumentArea();
         } else if (e.getSource() == searchField) {
             if (searchField.getText().length() == 0) {
                 removeHighlights(documentArea);
@@ -239,17 +225,6 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
             }
         } else if (e.getSource() == addTermButton) {
             addUserDefinedWord(searchField.getText());
-        } else if (e.getSource() == setDisplayLineNumButton) {
-            try {
-                int num = Integer.parseInt(displayLineNumField.getText());
-                if (0 < num) {
-                    DISPLAY_LINE_NUM = num;
-                    documentArea.setCaretPosition(0);
-                    setDocumentAndLinkArea();
-                }
-            } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
-            }
         }
     }
 
@@ -295,46 +270,16 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
             word = basicWord.toString();
         }
         String pos = Translator.getTerm("UserDefinedInputTermCheckBox");
-        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
-                .getInputTermSelectionPanel();
+        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject().getInputTermSelectionPanel();
         TermInfo info = new TermInfo(word, 1);
         info.addPos(pos);
         info.putInputDoc(selectedDoc.getFile());
         termSelectionPanel.addInputTermInfo(info);
-        setDocumentAndLinkArea();
-    }
-
-    class DocumentListCellRenderer extends JRadioButton implements ListCellRenderer {
-        public Component getListCellRendererComponent(JList list, Object value, int index,
-                                                      boolean isSelected, boolean cellHasFocus) {
-            JRadioButton radioButton = (JRadioButton) value;
-            setText(radioButton.getText());
-            setSelected(radioButton.isSelected());
-            return this;
-        }
+        setDocumentArea();
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == documentList) {
-            Point p = e.getPoint();
-            int index = documentList.locationToIndex(p);
-            if (0 < documentList.getModel().getSize()) {
-                lineNum = 0;
-                documentList.setSelectedIndex(0);
-                documentAreaBorder.setTitle(Translator.getTerm("InputDocumentArea") + " ("
-                        + (lineNum + 1) + "-" + (lineNum + DISPLAY_LINE_NUM) + ")");
-                JRadioButton radioButton = (JRadioButton) documentList.getModel().getElementAt(
-                        index);
-                radioButton.setSelected(true);
-            }
-            if (inputDocumentListModel != null) {
-                selectedDoc = (Document) inputDocumentListModel.getElementAt(index);
-                setDocumentAndLinkArea();
-            }
-            repaint();
-        } else if (e.getSource() == documentArea) {
-            addUserDefinedWord(documentArea.getSelectedText());
-        }
+        addUserDefinedWord(documentArea.getSelectedText());
     }
 
     public void mouseEntered(MouseEvent e) {
@@ -349,17 +294,11 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
     public void mouseReleased(MouseEvent e) {
     }
 
-    public void setDocumentList(ListModel inputDocListModel) {
-        inputDocumentListModel = inputDocListModel;
-        DefaultListModel listModel = new DefaultListModel();
-        ButtonGroup group = new ButtonGroup();
-        for (int i = 0; i < inputDocumentListModel.getSize(); i++) {
-            Document doc = (Document) inputDocListModel.getElementAt(i);
-            JRadioButton radioButton = new JRadioButton(doc.getFile().getAbsolutePath());
-            listModel.addElement(radioButton);
-            group.add(radioButton);
+    public void setDocumentList(ListModel<Document> docListModel) {
+        documentListModel.clear();
+        for (int i = 0; i < docListModel.getSize(); i++) {
+            documentListModel.add(i, docListModel.getElementAt(i));
         }
-        documentList.setModel(listModel);
     }
 
     private boolean isNoun(String pos) {
@@ -555,8 +494,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         } else {
             color = REMOVED_WORD_LINK_COLOR;
         }
-        return "<font color=\"" + color + "\"><a href=\"" + type + ":" + basic + "\">" + word
-                + "</a></font>";
+        return String.format("<a style='color: %s' href='%s:%s'>%s</a>", color, type, basic, word);
     }
 
     private Set<List<String>> getTermInfoEnCompoundWordSet(Collection<TermInfo> termInfoSet) {
@@ -647,7 +585,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                         basicWord.append(" ");
                     }
                 }
-                builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR + "\"><a href=\"inputTerm:").append(basicWord).append("\">").append(word).append("</a></font> ");
+                builder.append(String.format("<a style='color: %s' href='inputTerm:%s'>%s</a>", CORRECT_WORD_LINK_COLOR, basicWord, word));
                 i += compoundWordSize - 1;
             } else if (0 < removedCompoundWordSize) {
                 for (int j = i; j < i + removedCompoundWordSize; j++) {
@@ -659,7 +597,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                     }
                 }
                 basicWord = new StringBuilder(basicWord.toString().replace("\\s+$", ""));
-                builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR + "\"><a href=\"removedTerm:").append(basicWord).append("\">").append(word).append("</a></font> ");
+                builder.append(String.format("<a style='color: %s' href='removedTerm:%s'>%s</a>", REMOVED_WORD_LINK_COLOR, basicWord, word));
                 i += removedCompoundWordSize - 1;
             } else {
                 word = new StringBuilder(texts[i] + " ");
@@ -673,8 +611,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         StringBuilder builder = new StringBuilder();
         List<String> basicStringList = getJaBasicWordList(text);
 
-        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject()
-                .getInputTermSelectionPanel();
+        TermSelectionPanel termSelectionPanel = DODDLE_OWL.getCurrentProject().getInputTermSelectionPanel();
         Collection<TermInfo> wordInfoSet = termSelectionPanel.getTermInfoSet();
         Collection<TermInfo> removedWordInfoSet = termSelectionPanel.getRemovedTermInfoSet();
 
@@ -684,8 +621,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         List<String> surfaceList = getJaSurfaceWordList(text);
         for (int i = 0; i < basicStringList.size(); i++) {
             int compoundWordSize = getTermSize(basicStringList, termInfoCompoundWordSet, i);
-            int removedCompoundWordSize = getTermSize(basicStringList,
-                    removedTermInfoCompoundWordSet, i);
+            int removedCompoundWordSize = getTermSize(basicStringList, removedTermInfoCompoundWordSet, i);
             StringBuilder word = new StringBuilder();
             StringBuilder basicWord = new StringBuilder();
             if (0 < compoundWordSize) {
@@ -694,7 +630,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                     basicWord.append(basicStringList.get(j));
                 }
                 if (termSelectionPanel.getInputTermInfo(basicWord.toString()) != null) {
-                    builder.append("<font color=\"" + CORRECT_WORD_LINK_COLOR + "\"><a href=\"inputTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
+                    builder.append(String.format("<a style='color: %s' href='inputTerm:%s'>%s</a>", CORRECT_WORD_LINK_COLOR, basicWord, word));
                     i += compoundWordSize - 1;
                 } else {
                     word = new StringBuilder(surfaceList.get(i));
@@ -706,7 +642,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                     basicWord.append(basicStringList.get(j));
                 }
                 if (termSelectionPanel.getRemovedTermInfo(basicWord.toString()) != null) {
-                    builder.append("<font color=\"" + REMOVED_WORD_LINK_COLOR + "\"><a href=\"removedTerm:").append(basicWord).append("\">").append(word).append("</a></font>");
+                    builder.append(String.format("<a style='color: %s' href='removedTerm:%s'>%s</a>", REMOVED_WORD_LINK_COLOR, basicWord, word));
                     i += removedCompoundWordSize - 1;
                 } else {
                     word = new StringBuilder(surfaceList.get(i));
@@ -746,21 +682,13 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         return compoundWordSize;
     }
 
-    private int lineNum = 0;
-    private Document selectedDoc = null;
-    private DODDLE_POS selectedPOS = null;
-
     private String getHighlightedString() {
         if (selectedDoc == null) {
             return "";
         }
         StringBuilder text = new StringBuilder();
         String[] texts = selectedDoc.getTexts();
-        int num = 0;
-        for (int i = lineNum; i < selectedDoc.getSize(); i++, num++) {
-            if (num == DISPLAY_LINE_NUM) {
-                break;
-            }
+        for (int i = 0; i < selectedDoc.getSize(); i++) {
             text.append(texts[i]).append("<br>");
         }
 
@@ -780,21 +708,16 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         return text.toString();
     }
 
-    public void setDocumentAndLinkArea() {
-        setDocumentArea();
-        setLinkArea();
-    }
-
-    private void setDocumentArea() {
-        if (inputDocumentListModel == null) {
+    public void setDocumentArea() {
+        if (documentListModel == null) {
             return;
         }
         StringBuilder docBuilder = new StringBuilder();
-        docBuilder.append("<html><body>");
+        docBuilder.append(HTML_START);
         String text = getHighlightedString();
         docBuilder.append(text);
         docBuilder.append("<br><br>");
-        docBuilder.append("</body></html>");
+        docBuilder.append(HTML_END);
         setDocumentArea(docBuilder.toString());
     }
 
@@ -806,22 +729,6 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void setLinkArea() {
-        StringBuilder linkBuilder = new StringBuilder();
-        linkBuilder.append("<html><body>");
-        if (selectedDoc != null) {
-            for (int j = 0; j < selectedDoc.getSize(); j += DISPLAY_LINE_NUM) {
-                if (j == lineNum) {
-                    linkBuilder.append("<font size=5 color=red><a href=\"").append(j).append("\">").append(j + 1).append("-").append(j + DISPLAY_LINE_NUM).append("</a></font><br>");
-                } else {
-                    linkBuilder.append("<font color=" + CORRECT_WORD_LINK_COLOR + "><a href=\"").append(j).append("\">").append(j + 1).append("-").append(j + DISPLAY_LINE_NUM).append("</a></font><br>");
-                }
-            }
-        }
-        linkBuilder.append("</body></html>");
-        linkArea.setText(linkBuilder.toString());
     }
 
     private boolean isRegisteredWord(String word, String type) {
@@ -836,12 +743,8 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
     private String getSelectedLinkText(String type, String word) {
         if (!isRegisteredWord(word, type)) {
             if (selectedDoc.getLang().equals("ja")) {
-                int num = 0;
                 StringBuilder text = new StringBuilder();
-                for (int i = lineNum; i < selectedDoc.getSize(); i++, num++) {
-                    if (num == DISPLAY_LINE_NUM) {
-                        break;
-                    }
+                for (int i = 0; i < selectedDoc.getSize(); i++) {
                     text.append(selectedDoc.getTexts()[i]).append("<br>");
                 }
                 Tokenizer tokenizer = new Tokenizer();
@@ -888,9 +791,8 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
             String[] descriptions = e.getDescription().split(":");
             StringBuilder builder = new StringBuilder();
-            builder.append("<html><body>");
+            builder.append(HTML_START);
             if (descriptions.length == 1) {
-                lineNum = Integer.parseInt(e.getDescription());
                 builder.append(getHighlightedString());
             } else {
                 String type = descriptions[0];
@@ -905,11 +807,8 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                 }
                 builder.append(getHighlightedString());
             }
-            builder.append("</body></html>");
+            builder.append(HTML_END);
             setDocumentArea(builder.toString());
-            documentAreaBorder.setTitle(Translator.getTerm("InputDocumentArea") + " ("
-                    + (lineNum + 1) + "-" + (lineNum + DISPLAY_LINE_NUM) + ")");
-            setLinkArea();
             if (descriptions.length == 1) {
                 documentArea.setCaretPosition(0);
             }

@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -77,7 +77,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
 
         termTextArea = new JTextArea();
         var inputTermsAreaScroll = new JScrollPane(termTextArea);
-        inputTermsAreaScroll.setBorder(BorderFactory.createTitledBorder("Input Term List"));
+        inputTermsAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputTermListArea")));
 
         addTermListButton = new JButton(Translator.getTerm("AddInputTermListButton"));
         addTermListButton.addActionListener(this);
@@ -143,7 +143,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         var mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         mainSplitPane.add(mainTabbedPane);
         mainSplitPane.add(inputTermsAreaScroll);
-        mainSplitPane.setDividerLocation(0.6);
+        mainSplitPane.setDividerLocation(1000);
 
         setLayout(new BorderLayout());
         add(mainSplitPane, BorderLayout.CENTER);
@@ -205,14 +205,14 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
 
     private void setInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("SetInputTermListButton"));
-        String[] inputTerms = termTextArea.getText().split("\n");
+        String[] inputTerms = termTextArea.getText().split(System.lineSeparator());
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         conceptSelectionPanel.loadInputTermSet(inputTermSet, taskCnt);
     }
 
     private void addInputTermSet(int taskCnt) {
         DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("AddInputTermListButton"));
-        String[] inputTerms = termTextArea.getText().split("\n");
+        String[] inputTerms = termTextArea.getText().split(System.lineSeparator());
         Set<String> inputTermSet = new HashSet<>(Arrays.asList(inputTerms));
         conceptSelectionPanel.addInputTermSet(inputTermSet, taskCnt);
     }
@@ -258,7 +258,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             inputTermInfoTableModel.removeRow(inputTermInfoTable.convertRowIndexToModel(selectedRows[i]));
         }
         setWindowTitle();
-        documentViewer.setDocumentAndLinkArea();
+        documentViewer.setDocumentArea();
         termInfoTablePanel.setIsDeletingTableItems(false);
         removedTermInfoTablePanel.setIsDeletingTableItems(false);
     }
@@ -383,7 +383,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             // + selectedRows.length + "): " + returnTerm);
         }
         setWindowTitle();
-        documentViewer.setDocumentAndLinkArea();
+        documentViewer.setDocumentArea();
         termInfoTablePanel.setIsDeletingTableItems(false);
         removedTermInfoTablePanel.setIsDeletingTableItems(false);
     }
@@ -426,7 +426,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             returnTableItems(true);
             project.addLog("CompletelyDeleteTermButtonButton", "TermSelectionPanel");
         } else if (e.getSource() == reloadDocumentAreaButton) {
-            documentViewer.setDocumentAndLinkArea();
+            documentViewer.setDocumentArea();
         }
     }
 

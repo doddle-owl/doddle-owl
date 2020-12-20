@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: http://doddle-owl.org/
  *
- * Copyright (C) 2004-2018 Yamaguchi Laboratory, Keio University. All rights reserved.
+ * Copyright (C) 2004-2020 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -102,8 +102,7 @@ class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, 
         docArea = new JEditorPane("text/html", "");
         docArea.setEditable(false);
         JScrollPane docAreaScroll = new JScrollPane(docArea);
-        docAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("InputDocumentArea")));
+        docAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentArea")));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPanel, docAreaScroll);
         splitPane.setDividerLocation(300);
@@ -134,10 +133,8 @@ class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, 
         }
         int row = termInfoTable.getSelectedRow();
         if (0 <= row) {
-            String term = (String) termInfoTable.getValueAt(row,
-                    getColumnNamePosition(termInfoTable, Translator.getTerm("TermLabel")));
-            String targetLines = DODDLE_OWL.getCurrentProject().getDocumentSelectionPanel()
-                    .getTargetHtmlLines(term);
+            String term = (String) termInfoTable.getValueAt(row, getColumnNamePosition(termInfoTable, Translator.getTerm("TermLabel")));
+            String targetLines = DODDLE_OWL.getCurrentProject().getDocumentSelectionPanel().getTargetHtmlLines(term);
             docArea.setText(targetLines);
         }
     }
@@ -312,9 +309,11 @@ class TermInfoTablePanel extends JPanel implements ActionListener, KeyListener, 
         try {
             FileOutputStream fos = new FileOutputStream(saveFile);
             writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
-            writer.write("docNum=" + docNum + "\n");
+            writer.write("docNum=" + docNum);
+            writer.newLine();
             for (TermInfo info : termInfoMap.values()) {
-                writer.write(info.toString() + "\n");
+                writer.write(info.toString());
+                writer.newLine();
             }
         } catch (IOException ioex) {
             ioex.printStackTrace();
