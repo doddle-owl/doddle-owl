@@ -56,7 +56,7 @@ runtime {
 
     jpackage {
         // macOS
-        jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-14.0.1.jdk/Contents/Home'
+        jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home'
         imageOptions = ['--verbose', '--icon', './src/main/resources/images/doddle-owl.icns']
         outputDir = 'my-packaging'
         mainJar = "doddle-owl-${version}.jar"
@@ -64,7 +64,7 @@ runtime {
         skipInstaller = false
         installerName = "doddle-owl"
         // Windows
-//        jpackageHome = 'C://jdk-14.0.1'
+//        jpackageHome = 'C://jdk-15.0.1'
 //        installerType = 'msi'
 //        imageOptions = ['--icon', './src/main/resources/images/doddle-owl.ico']
 //        installerOptions = ['--vendor', 'Takeshi Morita', '--win-shortcut']
