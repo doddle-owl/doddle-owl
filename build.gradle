@@ -55,19 +55,20 @@ runtime {
     imageZip = file("$buildDir/doddle-owl-${version}.zip")
 
     jpackage {
-        // macOS
-        jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home'
-        imageOptions = ['--verbose', '--icon', './src/main/resources/images/doddle-owl.icns']
+        // Windows and macOS
         outputDir = 'my-packaging'
         mainJar = "doddle-owl-${version}.jar"
         imageName = "doddle-owl-${version}"
         skipInstaller = false
         installerName = "doddle-owl"
+        // macOS
+//        jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home'
+//        imageOptions = ['--verbose', '--icon', './src/main/resources/images/doddle-owl.icns']
         // Windows
-//        jpackageHome = 'C://jdk-15.0.1'
-//        installerType = 'msi'
-//        imageOptions = ['--icon', './src/main/resources/images/doddle-owl.ico']
-//        installerOptions = ['--vendor', 'Takeshi Morita', '--win-shortcut']
+        jpackageHome = 'C:/Program Files/Java/jdk-14.0.2'
+        installerType = 'msi'
+        imageOptions = ['--icon', './src/main/resources/images/doddle-owl.ico']
+        installerOptions = ['--vendor', 'Takeshi Morita', '--win-shortcut']
     }
 
 }
