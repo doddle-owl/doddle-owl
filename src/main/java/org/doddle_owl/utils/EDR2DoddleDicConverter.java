@@ -28,7 +28,7 @@ import org.doddle_owl.models.common.DODDLEConstants;
 import org.doddle_owl.models.common.DODDLELiteral;
 import org.doddle_owl.views.DODDLEDicConverterUI;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.RDFWriter;
+import org.apache.jena.rdf.model.RDFWriterI;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.OWL;
@@ -1121,7 +1121,7 @@ public class EDR2DoddleDicConverter {
         try {
             OutputStream os = new FileOutputStream(DODDLE_DIC_HOME + fileName);
             writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-            RDFWriter rdfWriter = ontModel.getWriter("RDF/XML");
+            RDFWriterI rdfWriter = ontModel.getWriter("RDF/XML");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
             rdfWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
             rdfWriter.write(ontModel, writer, DODDLEConstants.BASE_URI);
