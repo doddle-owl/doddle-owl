@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'org.doddle-owl'
-version = '21.5.1'
+version = '21.12.1'
 mainClassName = 'org.doddle_owl.DODDLE_OWL'
 sourceCompatibility = targetCompatibility = '11'
 
@@ -28,6 +28,14 @@ wrapper {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+tasks.withType(JavaExec) {
+    systemProperty 'file.encoding', 'UTF-8'
 }
 
 test {
@@ -65,7 +73,7 @@ runtime {
 //        jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-16.0.1.jdk/Contents/Home'
 //        imageOptions = ['--verbose', '--icon', './src/main/resources/images/doddle-owl.icns']
         // Windows
-        jpackageHome = 'C:/Program Files/Java/jdk-16.0.1'
+        jpackageHome = 'C:/Program Files/Java/jdk-17.0.1'
         installerType = 'msi'
         imageOptions = ['--icon', './src/main/resources/images/doddle-owl.ico']
         installerOptions = ['--vendor', 'Takeshi Morita', '--win-shortcut']
