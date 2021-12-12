@@ -223,7 +223,7 @@ class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
 	private void acquireOntologies() {
 		initListData();
 		Set<String> inputWordSet = new HashSet<>();
-		String[] inputWords = inputWordArea.getText().split(System.lineSeparator());
+		String[] inputWords = inputWordArea.getText().split("\\r\\n|\\n|\\r");
 		Collections.addAll(inputWordSet, inputWords);
 		SwoogleWebServiceWrapper.acquireRelevantOWLOntologies(inputWordSet, true);
 		SwoogleWebServiceData swServiceData = SwoogleWebServiceWrapper.getSwoogleWebServiceData();
