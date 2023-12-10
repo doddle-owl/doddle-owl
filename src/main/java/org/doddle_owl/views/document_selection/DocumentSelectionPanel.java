@@ -750,7 +750,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
             String text = doc.getText();
             StringBuilder buf = new StringBuilder();
             if (text != null) {
-                String[] lines = text.split(System.lineSeparator());
+                String[] lines = text.split("\\r\\n|\\n|\\r");
                 for (int j = 0; j < lines.length; j++) {
                     String line = lines[j];
                     try {

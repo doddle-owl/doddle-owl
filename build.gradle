@@ -2,14 +2,14 @@ plugins {
     id 'java'
     id 'application'
     id 'com.jfrog.bintray' version '1.8.4'
-    id "org.beryx.runtime" version "1.12.0"
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "org.beryx.runtime" version "1.12.4"
+    id "com.github.johnrengelman.shadow" version "7.0.0"
     id 'maven-publish'
     id 'idea'
 }
 
 group 'org.doddle-owl'
-version = '20.12.1'
+version = '21.12.1'
 mainClassName = 'org.doddle_owl.DODDLE_OWL'
 sourceCompatibility = targetCompatibility = '11'
 
@@ -19,15 +19,23 @@ project.ext {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 wrapper {
-    gradleVersion = '6.7.1'
+    gradleVersion = '7.0'
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+tasks.withType(JavaExec) {
+    systemProperty 'file.encoding', 'UTF-8'
 }
 
 test {
@@ -62,10 +70,10 @@ runtime {
         skipInstaller = false
         installerName = "doddle-owl"
         // macOS
-//        jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home'
+//        jpackageHome = '/Library/Java/JavaVirtualMachines/jdk-16.0.1.jdk/Contents/Home'
 //        imageOptions = ['--verbose', '--icon', './src/main/resources/images/doddle-owl.icns']
         // Windows
-        jpackageHome = 'C:/Program Files/Java/jdk-14.0.2'
+        jpackageHome = 'C:/Program Files/Java/jdk-17.0.1'
         installerType = 'msi'
         imageOptions = ['--icon', './src/main/resources/images/doddle-owl.ico']
         installerOptions = ['--vendor', 'Takeshi Morita', '--win-shortcut']
@@ -102,22 +110,22 @@ shadowJar {
 }
 
 dependencies {
-    compile 'com.formdev:flatlaf:0.45'
-    compile 'org.xerial:sqlite-jdbc:3.34.0'
-    compile 'commons-cli:commons-cli:1.4'
-    compile 'org.apache.pdfbox:pdfbox:2.0.19'
-    compile 'net.sf.extjwnl:extjwnl:2.0.3'
-    compile 'net.sf.extjwnl:extjwnl-data-wn31:1.2'
-    compile 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
-    compile 'org.apache.poi:poi-ooxml:3.7'
-    compile 'edu.stanford.nlp:stanford-parser:3.9.2'
-    compile 'org.apache.jena:apache-jena-libs:3.17.0'
-    compile 'org.slf4j:slf4j-simple:1.7.30'
-    compile 'log4j:log4j:1.2.17'
-    compile 'com.optimaize.languagedetector:language-detector:0.6'
-    compileOnly 'org.projectlombok:lombok:1.18.16'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    implementation 'com.formdev:flatlaf:1.1.2'
+    implementation 'org.xerial:sqlite-jdbc:3.34.0'
+    implementation 'commons-cli:commons-cli:1.4'
+    implementation 'org.apache.pdfbox:pdfbox:2.0.23'
+    implementation 'net.sf.extjwnl:extjwnl:2.0.3'
+    implementation 'net.sf.extjwnl:extjwnl-data-wn31:1.2'
+    implementation 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
+    implementation 'org.apache.poi:poi-ooxml:3.7'
+    implementation 'edu.stanford.nlp:stanford-parser:3.9.2'
+    implementation 'org.apache.jena:apache-jena-libs:4.0.0'
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'com.optimaize.languagedetector:language-detector:0.6'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 }
 
 publishing {

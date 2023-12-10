@@ -115,7 +115,7 @@ public class Apriori {
         if (corpusString == null) {
             return;
         }
-        String[] lines = corpusString.split(System.lineSeparator());
+        String[] lines = corpusString.split("\\r\\n|\\n|\\r");
         for (String line : lines) {
             if (document.getLang().equals("en")) {
                 lineList.add(getEnLineWordList(line));
