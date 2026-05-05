@@ -113,6 +113,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         automaticDisambiguationCheckBoxOptionPanel.add(siblingDisambiguationCheckBox);
 
         JPanel automaticDisambiguationOptionPanel = new JPanel();
+        automaticDisambiguationOptionPanel.setBorder(Utils.createEmptyBorder());
         automaticDisambiguationOptionPanel.setLayout(new BorderLayout());
         automaticDisambiguationOptionPanel.add(
                 Utils.createWestPanel(spreadActivatingAlgorithmOptionPanel), BorderLayout.NORTH);
@@ -129,6 +130,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         compoundWordButtonGroup.add(compoundWordSetSameConceptButton);
         compoundWordButtonGroup.add(compoundWordSetSubConceptButton);
         JPanel compoundWordOptionPanel = new JPanel();
+        compoundWordOptionPanel.setBorder(Utils.createEmptyBorder());
         compoundWordOptionPanel.setLayout(new GridLayout(1, 2));
         compoundWordOptionPanel.add(compoundWordSetSameConceptButton);
         compoundWordOptionPanel.add(compoundWordSetSubConceptButton);
@@ -136,6 +138,7 @@ public class OptionDialog extends JDialog implements ActionListener {
         showQNameCheckBox = new JCheckBox(Translator.getTerm("DisplayQNameCheckBox"));
         showQNameCheckBox.addActionListener(this);
         JPanel viewPanel = new JPanel();
+        viewPanel.setBorder(Utils.createEmptyBorder());
         viewPanel.setLayout(new BorderLayout());
         viewPanel.add(showQNameCheckBox, BorderLayout.NORTH);
 
@@ -210,6 +213,7 @@ public class OptionDialog extends JDialog implements ActionListener {
             mainPanel.add(baseURILabel);
             mainPanel.add(baseURIField);
 
+            setBorder(Utils.createEmptyBorder());
             setLayout(new BorderLayout());
             add(mainPanel, BorderLayout.NORTH);
         }
