@@ -24,7 +24,6 @@
 package io.github.doddle_owl.utils;
 
 import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.ipadic.Tokenizer;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.concept_definition.ConceptPair;
@@ -99,8 +98,7 @@ public class WordSpace {
         if (text == null) {
             return;
         }
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenList = tokenizer.tokenize(text);
+        List<Token> tokenList = Utils.tokenizer.tokenize(text);
         for (Token token : tokenList) {
             String basicStr = token.getBaseForm();
             if (basicStr.equals("*")) {

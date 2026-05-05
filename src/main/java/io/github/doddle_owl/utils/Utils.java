@@ -57,6 +57,8 @@ public class Utils {
 
     public static final int MARGIN = 10;
 
+    public static Tokenizer tokenizer = new Tokenizer();
+
     public static ImageIcon getImageIcon(String icon) {
         return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource("images/" + icon));
     }
@@ -69,8 +71,7 @@ public class Utils {
         Set<String> compoundWordSet = new HashSet<>();
         Map<String, List<String>> compoundWordElementListMap = new HashMap<>();
         for (String compoundWord : inputWordList) {
-            Tokenizer tokenizer = new Tokenizer();
-            List<Token> compoundWordTokenList = tokenizer.tokenize(compoundWord);
+            List<Token> compoundWordTokenList = Utils.tokenizer.tokenize(compoundWord);
             if (compoundWordTokenList.size() == 1) {
                 continue; // 複合ではない
             }

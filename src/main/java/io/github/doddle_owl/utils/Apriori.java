@@ -24,7 +24,6 @@
 package io.github.doddle_owl.utils;
 
 import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.ipadic.Tokenizer;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.concept_definition.ConceptPair;
 import io.github.doddle_owl.models.document_selection.Document;
@@ -46,7 +45,7 @@ public class Apriori {
     private final Map<List<Integer>, Integer> indexPairAppearence;
     private double minSupport;
     private double minConfidence;
-    private final List<String> inputWordList;
+    private final List<String> inputTermList;
 
     private final Document document;
 
@@ -56,7 +55,7 @@ public class Apriori {
         aprioriResult = new HashMap<>();
         indexPairAppearence = new HashMap<>();
         allRelation = new ArrayList<>();
-        inputWordList = conceptDefinitionPanel.getInputTermList();
+        inputTermList = conceptDefinitionPanel.getInputTermList();
         makeLineList();
     }
 
@@ -80,8 +79,7 @@ public class Apriori {
     // 1行単位での形態素解析
     private List<String> getJaLineWordList(String line) {
         List<String> lineWordList = new ArrayList<>();
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenList = tokenizer.tokenize(line);
+        List<Token> tokenList = Utils.tokenizer.tokenize(line);
         for (Token token : tokenList) {
             String basicStr = token.getBaseForm();
             if (basicStr.equals("*")) {
@@ -89,7 +87,7 @@ public class Apriori {
             }
             lineWordList.add(basicStr);
         }
-        Utils.addJaCompoundWord(lineWordList, inputWordList); // 複合語の追加
+        Utils.addJaCompoundWord(lineWordList, inputTermList); // 複合語の追加
 
         return lineWordList;
     }
@@ -101,7 +99,7 @@ public class Apriori {
         for (String lineWord : line.split("\\s+")) {
             lineWordList.add(lineWord.toLowerCase());
         }
-        Utils.addEnCompoundWord(lineWordList, inputWordList); // 複合語の追加
+        Utils.addEnCompoundWord(lineWordList, inputTermList); // 複合語の追加
         return lineWordList;
     }
 
@@ -110,7 +108,6 @@ public class Apriori {
      */
     private void makeLineList() {
         lineList = new ArrayList<>();
-        // String corpusString = DocumentSelectionPanel.getTextString(document);
         String corpusString = document.getText();
         if (corpusString == null) {
             return;

@@ -24,19 +24,19 @@
 package io.github.doddle_owl.models.concept_selection;
 
 import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.ipadic.Tokenizer;
-import net.sf.extjwnl.data.IndexWord;
-import net.sf.extjwnl.data.Synset;
+import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.ontology_api.EDR;
 import io.github.doddle_owl.models.ontology_api.JaWordNet;
 import io.github.doddle_owl.models.ontology_api.WordNet;
 import io.github.doddle_owl.models.term_selection.TermModel;
-import io.github.doddle_owl.views.DODDLEProjectPanel;
-import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.task_analyzer.Morpheme;
 import io.github.doddle_owl.utils.OWLOntologyManager;
 import io.github.doddle_owl.utils.Translator;
+import io.github.doddle_owl.utils.Utils;
+import io.github.doddle_owl.views.DODDLEProjectPanel;
+import net.sf.extjwnl.data.IndexWord;
+import net.sf.extjwnl.data.Synset;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
@@ -243,8 +243,7 @@ public class InputModule {
      */
     private List<Morpheme> getJaMorphemeList(String iw) {
         List<Morpheme> morphemeList = new ArrayList<>();
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenList = tokenizer.tokenize(iw);
+        List<Token> tokenList = Utils.tokenizer.tokenize(iw);
         for (Token t : tokenList) {
             String basicForm = t.getBaseForm();
             if (basicForm.equals("*")) {
@@ -255,13 +254,13 @@ public class InputModule {
         return morphemeList;
     }
 
-    class InputTermModelWorker extends SwingWorker<String, String> implements
-            PropertyChangeListener {
+    class InputTermModelWorker extends SwingWorker<String, String> implements PropertyChangeListener {
 
-        private int division;
+        private int itemsPerStep;
         private final int initialTaskCnt;
         private int currentTaskCnt;
         private final Set<String> termSet;
+        private static final int TOTAL_PROGRESS_STEPS = 50;
 
         InputTermModelWorker(Set<String> termSet, int taskCnt) {
             initialTaskCnt = taskCnt;
@@ -269,15 +268,10 @@ public class InputModule {
             if (initialTaskCnt == 0) {
                 addPropertyChangeListener(this);
                 currentTaskCnt = taskCnt;
-                int progressCountSize = 50;
-                if (termSet.size() < progressCountSize) {
-                    division = 1;
-                } else {
-                    division = termSet.size() / progressCountSize;
-                }
+                itemsPerStep = Math.max(1, termSet.size() / TOTAL_PROGRESS_STEPS);
                 DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("SetInputTermSetButton"));
                 DODDLE_OWL.STATUS_BAR.startTime();
-                DODDLE_OWL.STATUS_BAR.initNormal(progressCountSize);
+                DODDLE_OWL.STATUS_BAR.initNormal(itemsPerStep);
                 DODDLE_OWL.STATUS_BAR.lock();
             }
         }
@@ -291,7 +285,7 @@ public class InputModule {
                     i++;
                     DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("SetInputTermSetButton")
                             + ": " + i + "/" + termSet.size());
-                    if (initialTaskCnt == 0 && i % division == 0) {
+                    if (initialTaskCnt == 0 && i % itemsPerStep == 0) {
                         setProgress(currentTaskCnt++);
                     }
                     TermModel itModel = makeInputTermModel(term);

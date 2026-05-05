@@ -200,11 +200,6 @@ public class LogConsole extends JDialog {
                 .withConfiguration(config)
                 .build();
 
-//        JTextComponentAppender appender = new JTextComponentAppender();
-//        appender.setLayout(new PatternLayout("[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"));
-//        appender.setJTextCompnent(stdoutText);
-//        Logger.getRootLogger().addAppender(appender);
-
         JTextComponentAppender appender = new JTextComponentAppender("JTextAppender", null, layout);
         appender.setJTextCompnent(stdoutText);
         appender.start();

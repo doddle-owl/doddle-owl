@@ -24,7 +24,6 @@
 package io.github.doddle_owl.views.document_selection;
 
 import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.google.common.base.Optional;
 import com.optimaize.langdetect.LanguageDetector;
 import com.optimaize.langdetect.LanguageDetectorBuilder;
@@ -39,9 +38,6 @@ import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.SentenceUtils;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
-import net.sf.extjwnl.data.IndexWord;
-import net.sf.extjwnl.data.POS;
-import org.apache.commons.io.FileUtils;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.ProjectFileNames;
@@ -55,6 +51,9 @@ import io.github.doddle_owl.utils.UpperConceptManager;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.term_selection.TermSelectionPanel;
+import net.sf.extjwnl.data.IndexWord;
+import net.sf.extjwnl.data.POS;
+import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -71,8 +70,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
@@ -366,8 +365,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
     private void jaTermExtraction(Document doc) {
         File file = doc.getFile();
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenList = tokenizer.tokenize(doc.getText());
+        List<Token> tokenList = Utils.tokenizer.tokenize(doc.getText());
         for (Token token : tokenList) {
             String pos = token.getPartOfSpeechLevel1();
             String basicStr = token.getBaseForm();

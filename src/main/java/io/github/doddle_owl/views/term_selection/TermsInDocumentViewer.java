@@ -24,16 +24,16 @@
 package io.github.doddle_owl.views.term_selection;
 
 import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.ipadic.Tokenizer;
-import net.sf.extjwnl.data.IndexWord;
-import net.sf.extjwnl.data.POS;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.document_selection.Document;
 import io.github.doddle_owl.models.ontology_api.WordNet;
 import io.github.doddle_owl.models.term_selection.TermInfo;
 import io.github.doddle_owl.utils.Translator;
+import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.document_selection.DocumentSelectionPanel;
+import net.sf.extjwnl.data.IndexWord;
+import net.sf.extjwnl.data.POS;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -46,8 +46,8 @@ import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author Takeshi Morita
@@ -239,8 +239,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
         word = word.replaceAll(">", "");
         StringBuilder basicWord = new StringBuilder();
         if (selectedDoc.getLang().equals("ja")) {
-            Tokenizer tokenizer = new Tokenizer();
-            List<Token> tokenList = tokenizer.tokenize(word);
+            List<Token> tokenList = Utils.tokenizer.tokenize(word);
             for (Token token : tokenList) {
                 String bw = token.getBaseForm();
                 if (bw.equals("*")) {
@@ -358,8 +357,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
 
     private List<String> getJaBasicWordList(String text) {
         List<String> basicWordList = new ArrayList<>();
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenList = tokenizer.tokenize(text);
+        List<Token> tokenList = Utils.tokenizer.tokenize(text);
         for (Token token : tokenList) {
             String basicForm = token.getBaseForm();
             if (basicForm.equals("*")) {
@@ -372,8 +370,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
 
     private List<String> getJaSurfaceWordList(String text) {
         List<String> surfaceList = new ArrayList<>();
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenList = tokenizer.tokenize(text);
+        List<Token> tokenList = Utils.tokenizer.tokenize(text);
         for (Token token : tokenList) {
             surfaceList.add(token.getSurface());
         }
@@ -442,8 +439,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
 
     private String highlightJaText(String text) {
         StringBuilder builder = new StringBuilder();
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenList = tokenizer.tokenize(text);
+        List<Token> tokenList = Utils.tokenizer.tokenize(text);
         for (Token token : tokenList) {
             String basic = token.getBaseForm();
             if (basic.equals("*")) {
@@ -540,8 +536,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
             for (String pos : posSet) {
                 if (isCompoundWord(pos) || isUserDefinedWord(pos)) {
                     List<String> compoundWordList = new ArrayList<>();
-                    Tokenizer tokenizer = new Tokenizer();
-                    List<Token> tokenList = tokenizer.tokenize(word);
+                    List<Token> tokenList = Utils.tokenizer.tokenize(word);
                     for (Token token : tokenList) {
                         String bf = token.getBaseForm();
                         if (bf.equals("*")) {
@@ -747,8 +742,7 @@ public class TermsInDocumentViewer extends JPanel implements MouseListener, Acti
                 for (int i = 0; i < selectedDoc.getSize(); i++) {
                     text.append(selectedDoc.getTexts()[i]).append("<br>");
                 }
-                Tokenizer tokenizer = new Tokenizer();
-                List<Token> tokenList = tokenizer.tokenize(text.toString());
+                List<Token> tokenList = Utils.tokenizer.tokenize(text.toString());
                 for (Token token : tokenList) {
                     if (token.getSurface().equals(word)) {
                         String basic = token.getBaseForm();
