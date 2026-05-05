@@ -136,8 +136,7 @@ public class DODDLE_OWL extends JFrame {
         });
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
-        setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("VersionMenu") + ": "
-                + DODDLEConstants.VERSION + " - " + Translator.getTerm("NewProjectAction"));
+        setTitle(Translator.getTerm("ApplicationName") + " - " + Translator.getTerm("NewProjectAction"));
         setVisible(true);
     }
 

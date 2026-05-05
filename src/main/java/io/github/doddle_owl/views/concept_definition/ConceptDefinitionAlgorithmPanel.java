@@ -29,10 +29,12 @@ import io.github.doddle_owl.models.document_selection.Document;
 import io.github.doddle_owl.models.concept_definition.WordSpaceData;
 import io.github.doddle_owl.utils.Apriori;
 import io.github.doddle_owl.utils.Translator;
+import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.utils.WordSpace;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -194,6 +196,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
 
     private JComponent getNorthWestComponent(JComponent comp) {
         JPanel p = new JPanel();
+        p.setBorder(Utils.createEmptyBorder());
         p.setLayout(new BorderLayout());
         p.add(comp, BorderLayout.WEST);
         JPanel p2 = new JPanel();

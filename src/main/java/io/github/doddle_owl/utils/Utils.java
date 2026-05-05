@@ -38,6 +38,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.vocabulary.OWL;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
@@ -53,8 +54,15 @@ import java.util.List;
  * @author Takeshi Morita
  */
 public class Utils {
+
+    public static final int MARGIN = 10;
+
     public static ImageIcon getImageIcon(String icon) {
         return new ImageIcon(DODDLE_OWL.class.getClassLoader().getResource("images/" + icon));
+    }
+
+    public static EmptyBorder createEmptyBorder() {
+        return new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN);
     }
 
     public static void addJaCompoundWord(List tokenList, List<String> inputWordList) {

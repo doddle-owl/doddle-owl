@@ -86,6 +86,7 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         treeTabbedPane.addTab(Translator.getTerm("HasaConceptTreePanel"), null, hasaTreePanel);
 
         var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        leftSplitPane.setBorder(Utils.createEmptyBorder());
         leftSplitPane.setOneTouchExpandable(true);
         leftSplitPane.add(undefinedTermListPanel);
         leftSplitPane.add(treeTabbedPane);
@@ -95,6 +96,7 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         southTabbedPane.addTab(Translator.getTerm("ConceptDriftManagementPanel"), null, conceptDriftManagementPanel);
 
         var rightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplitPane.setBorder(Utils.createEmptyBorder());
         rightSplitPane.setOneTouchExpandable(true);
         rightSplitPane.add(conceptInfoPanel);
         rightSplitPane.add(southTabbedPane);

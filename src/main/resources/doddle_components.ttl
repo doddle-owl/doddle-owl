@@ -436,11 +436,11 @@
 <https://doddle-owl.github.io#IsaConceptTree>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "is-a Tree"@en , "is-a階層"@ja ;
+                "is-a Tree"@en , "is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ConceptTree> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "is-a階層" .
+                "is-a 階層" .
 
 <https://doddle-owl.github.io#ClassSINCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -472,12 +472,12 @@
 <https://doddle-owl.github.io#ClassHasaTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "partOf Tree (Class)"@en , "partOf階層(クラス)"@ja ;
+                "partOf Tree (Class)"@en , "partOf階層（クラス）"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#HasaTreeBorder> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ClassTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "partOf階層(クラス)" .
+                "partOf階層（クラス）" .
 
 <https://doddle-owl.github.io#AutomaticInputConceptSelectionAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1422,12 +1422,12 @@
 <https://doddle-owl.github.io#IsaTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Tree"@en , "Is-a階層"@ja ;
+                "Is-a Tree"@en , "Is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Is-a階層" .
+                "Is-a 階層" .
 
 <https://doddle-owl.github.io#WrongConceptPairsCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1967,22 +1967,22 @@
 <https://doddle-owl.github.io#ConceptTreePanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Concept Tree"@en , "概念階層"@ja ;
+                "Is-a Tree"@en , "Is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "概念階層" .
+                "Is-a 階層" .
 
 <https://doddle-owl.github.io#HasaTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Has-a Concept Tree"@en , "Has-a階層"@ja ;
+                "Has-a Concept Tree"@en , "Has-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HasaConceptTreePanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Has-a階層" .
+                "Has-a 階層" .
 
 <https://doddle-owl.github.io#RemoveMultipleInheritanceBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -2041,12 +2041,12 @@
 <https://doddle-owl.github.io#PropertyIs-aTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Tree (Property)"@en , "Is-a階層(プロパティ)"@ja ;
+                "Property Tree"@en , "プロパティ階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#IsaTreeBorder> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Is-a階層(プロパティ)" .
+                "プロパティ階層" .
 
 <https://doddle-owl.github.io#XGALayoutAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2060,12 +2060,12 @@
 <https://doddle-owl.github.io#ClassIsaTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Tree (Property)"@en , "Is-a階層(クラス)"@ja ;
+                "Class Tree"@en , "クラス階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#IsaTreeBorder> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ClassTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Is-a階層(クラス)" .
+                "クラス階層" .
 
 <https://doddle-owl.github.io#OntologyList>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -2878,12 +2878,12 @@
 <https://doddle-owl.github.io#IsaConceptTreePanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Concept Tree"@en , "Is-a階層"@ja ;
+                "Is-a Tree"@en , "Is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ConceptTreePanel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Is-a階層" .
+                "Is-a 階層" .
 
 <https://doddle-owl.github.io#UserNameLabel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -3148,12 +3148,12 @@
 <https://doddle-owl.github.io#PropertyHasaTreeBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "partOf Tree (Property)"@en , "partOf階層(プロパティ)"@ja ;
+                "partOf Tree (Property)"@en , "partOf階層（プロパティ）"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#HasaTreeBorder> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "partOf階層(プロパティ)" .
+                "partOf階層（プロパティ）" .
 
 <https://doddle-owl.github.io#VisualizationPanel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -3496,7 +3496,7 @@
 <https://doddle-owl.github.io#VersionMenu>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Version"@en , "バージョン"@ja ;
+                "About DODDLE-OWL"@en , "DODDLE-OWLについて"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Menu> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>

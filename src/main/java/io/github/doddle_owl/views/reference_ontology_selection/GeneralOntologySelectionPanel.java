@@ -29,6 +29,7 @@ import io.github.doddle_owl.models.ontology_api.JWO;
 import io.github.doddle_owl.models.ontology_api.JaWordNet;
 import io.github.doddle_owl.models.ontology_api.WordNet;
 import io.github.doddle_owl.utils.Translator;
+import io.github.doddle_owl.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,6 +71,7 @@ class GeneralOntologySelectionPanel extends JPanel {
         jwoCheckBox = new JCheckBox(Translator.getTerm("JWOCheckBox"), false);
         jwoCheckBox.addActionListener(e -> enableJWO(jwoCheckBox.isSelected()));
         JPanel checkPanel = new JPanel();
+        checkPanel.setBorder(Utils.createEmptyBorder());
         checkPanel.setLayout(new BoxLayout(checkPanel, BoxLayout.Y_AXIS));
         checkPanel.add(wnCheckBox);
         checkPanel.add(jpnWnCheckBox);

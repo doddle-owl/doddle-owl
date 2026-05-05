@@ -167,8 +167,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         documentJList = new JList(documentListModel);
         documentJList.addListSelectionListener(this);
         JScrollPane inputDocJListScroll = new JScrollPane(documentJList);
-        inputDocJListScroll.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("InputDocumentList")));
+        inputDocJListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentList")));
         inputDocJListScroll.setPreferredSize(new Dimension(80, 80));
         inputDocJListScroll.setMinimumSize(new Dimension(80, 80));
         inputDocPanel = new JPanel();

@@ -68,6 +68,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         prefixNSMap = new HashMap<>();
         nsInfoMap = new HashMap<>();
         initTable();
+        setBorder(Utils.createEmptyBorder());
         setLayout(new BorderLayout());
         setTableLayout();
         setInputLayout();

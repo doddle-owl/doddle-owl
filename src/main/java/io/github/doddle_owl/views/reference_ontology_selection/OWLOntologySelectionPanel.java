@@ -104,6 +104,7 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
         splitPane.setDividerSize(DODDLEConstants.DIVIDER_SIZE);
         setLayout(new BorderLayout());
         add(splitPane, BorderLayout.CENTER);
+        setBorder(Utils.createEmptyBorder());
     }
 
     private String getType(String str) {

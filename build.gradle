@@ -99,19 +99,19 @@ runtime {
 tasks.runtime.doLast {
     copy {
         from('./README.md')
-        into("$buildDir/doddle-owl-${version}")
+        into(layout.buildDirectory.file("doddle-owl-${version}"))
     }
     copy {
         from('./README.ja.md')
-        into("$buildDir/doddle-owl-${version}")
+        into(layout.buildDirectory.file("doddle-owl-${version}"))
     }
     copy {
         from('./LICENSE')
-        into("$buildDir/doddle-owl-${version}")
+        into(layout.buildDirectory.file("doddle-owl-${version}"))
     }
     copy {
         from('./src/main/resources/jpwn_dict_1.1/')
-        into("$buildDir/doddle-owl-${version}/ontologies/jpwn_dict_1.1/")
+        into(layout.buildDirectory.file("doddle-owl-${version}/ontologies/jpwn_dict_1.1/"))
     }
 }
 

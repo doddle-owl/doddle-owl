@@ -103,7 +103,6 @@ class ConceptInformationPanel extends JPanel implements ActionListener {
 
         JLabel nodeTypeLabel = new JLabel(Translator.getTerm("NodeTypeLabel") + ": ");
         nodeTypeBox = new JComboBox(new Object[] {Translator.getTerm("SINLabel"), Translator.getTerm("BestMatchNodeLabel")});
-        nodeTypeBox.setPreferredSize(new Dimension(150, 20));
         nodeTypeBox.addActionListener(this);
         JPanel nodeTypePanel = new JPanel();
         nodeTypePanel.add(nodeTypeLabel);

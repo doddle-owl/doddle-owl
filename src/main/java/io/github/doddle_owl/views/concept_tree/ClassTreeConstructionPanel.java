@@ -30,6 +30,7 @@ import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
 import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.Translator;
+import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.common.UndefinedTermListPanel;
 
@@ -73,11 +74,13 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
                 new ConceptTreeCellRenderer(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE), conceptDriftManagementPanel);
 
         var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        leftSplitPane.setBorder(Utils.createEmptyBorder());
         leftSplitPane.setOneTouchExpandable(true);
         leftSplitPane.add(undefinedTermListPanel);
         leftSplitPane.add(treeTabbedPane);
 
         var rightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplitPane.setBorder(Utils.createEmptyBorder());
         rightSplitPane.setOneTouchExpandable(true);
         rightSplitPane.add(conceptInfoPanel);
         rightSplitPane.add(conceptDriftManagementPanel);
