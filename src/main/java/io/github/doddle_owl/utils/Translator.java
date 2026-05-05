@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: https://doddle-owl.github.io/
  *
- * Copyright (C) 2004-2024 Takeshi Morita. All rights reserved.
+ * Copyright (C) 2004-2026 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -24,6 +24,8 @@
 package io.github.doddle_owl.utils;
 
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
@@ -64,7 +66,7 @@ public class Translator {
         uriDescriptionMap = new HashMap<>();
         Model ontModel = ModelFactory.createDefaultModel();
         InputStream ins = Utils.class.getClassLoader().getResourceAsStream("doddle_components.ttl");
-        ontModel.read(ins, DODDLEConstants.BASE_URI, "TURTLE");
+        RDFDataMgr.read(ontModel, ins, DODDLEConstants.BASE_URI, Lang.TURTLE);
 
         for (Resource res : ontModel.listSubjectsWithProperty(RDF.type, OWL.Class).toList()) {
             for (Statement stmt : res.listProperties(RDFS.label).toList()) {

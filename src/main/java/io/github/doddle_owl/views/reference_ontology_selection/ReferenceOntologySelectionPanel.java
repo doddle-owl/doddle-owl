@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: https://doddle-owl.github.io/
  *
- * Copyright (C) 2004-2024 Takeshi Morita. All rights reserved.
+ * Copyright (C) 2004-2026 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -40,12 +40,12 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
 
     private final NameSpaceTable nsTable;
 
-    private SwoogleWebServiceWrapperPanel swoogleWebServiceWrapperPanel;
+//    private SwoogleWebServiceWrapperPanel swoogleWebServiceWrapperPanel;
     private final GeneralOntologySelectionPanel generalOntologySelectionPanel;
     private final OWLOntologySelectionPanel owlOntologySelectionPanel;
 
     public void initialize() {
-        swoogleWebServiceWrapperPanel.initialize();
+//        swoogleWebServiceWrapperPanel.initialize();
         generalOntologySelectionPanel.initialize();
         owlOntologySelectionPanel.initialize();
     }
@@ -54,10 +54,10 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
         nsTable = new NameSpaceTable();
         owlOntologySelectionPanel = new OWLOntologySelectionPanel(nsTable);
         generalOntologySelectionPanel = new GeneralOntologySelectionPanel(nsTable);
-        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
-            swoogleWebServiceWrapperPanel = new SwoogleWebServiceWrapperPanel(nsTable,
-                    owlOntologySelectionPanel);
-        }
+//        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
+//            swoogleWebServiceWrapperPanel = new SwoogleWebServiceWrapperPanel(nsTable,
+//                    owlOntologySelectionPanel);
+//        }
 
         JButton nextTabButton = new JButton(Translator.getTerm("DocumentSelectionPanel"));
         nextTabButton.addActionListener(this);
@@ -70,13 +70,13 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
         mainTabbedPane.addTab(Translator.getTerm("NameSpaceTable"), null, nsTable);
         mainTabbedPane.addTab(Translator.getTerm("OWLOntologySelectionPanel"), null,
                 owlOntologySelectionPanel);
-        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
-            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
-                    swoogleWebServiceWrapperPanel);
-        } else {
-            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
-                    new JPanel());
-        }
+//        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
+//            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
+//                    swoogleWebServiceWrapperPanel);
+//        } else {
+//            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
+//                    new JPanel());
+//        }
 
         setLayout(new BorderLayout());
         add(mainTabbedPane, BorderLayout.CENTER);

@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: https://doddle-owl.github.io/
  *
- * Copyright (C) 2004-2024 Takeshi Morita. All rights reserved.
+ * Copyright (C) 2004-2026 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -103,7 +103,7 @@ class ConceptInformationPanel extends JPanel implements ActionListener {
 
         JLabel nodeTypeLabel = new JLabel(Translator.getTerm("NodeTypeLabel") + ": ");
         nodeTypeBox = new JComboBox(new Object[] {Translator.getTerm("SINLabel"), Translator.getTerm("BestMatchNodeLabel")});
-        nodeTypeBox.setPreferredSize(new Dimension(120, 20));
+        nodeTypeBox.setPreferredSize(new Dimension(150, 20));
         nodeTypeBox.addActionListener(this);
         JPanel nodeTypePanel = new JPanel();
         nodeTypePanel.add(nodeTypeLabel);

@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: https://doddle-owl.github.io/
  *
- * Copyright (C) 2004-2024 Takeshi Morita. All rights reserved.
+ * Copyright (C) 2004-2026 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *

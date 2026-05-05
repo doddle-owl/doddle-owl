@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: https://doddle-owl.github.io/
  *
- * Copyright (C) 2004-2024 Takeshi Morita. All rights reserved.
+ * Copyright (C) 2004-2026 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -25,16 +25,17 @@ package io.github.doddle_owl.utils;
 
 import com.atilika.kuromoji.ipadic.Token;
 import com.atilika.kuromoji.ipadic.Tokenizer;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import org.apache.jena.ontapi.OntModelFactory;
+import org.apache.jena.ontapi.OntSpecification;
+import org.apache.jena.ontapi.model.OntModel;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.vocabulary.OWL;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -45,8 +46,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author Takeshi Morita
@@ -290,29 +291,24 @@ public class Utils {
     }
 
     public static Model getOntModel(InputStream inputStream, String fileType, String rdfType, String baseURI) {
-        OntModel model = null;
+        OntModel model = OntModelFactory.createModel(OntSpecification.OWL2_DL_MEM);
         try {
             if (fileType.equals("owl") || fileType.equals("rdfs")) {
-                model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
                 model.read(inputStream, baseURI, rdfType);
             } else {
-                model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
                 model.read(inputStream, baseURI);
-                if (0 < model.listImportedOntologyURIs().size()) {
+                boolean hasImports = model.listObjectsOfProperty(OWL.imports).hasNext();
+                if (hasImports) {
                     return model;
                 }
             }
         } catch (Exception e) {
-            System.out.println("RDF Parse Exception");
+            System.err.println("RDF Parse Exception: " + e.getMessage());
         }
         return model;
     }
 
     public static File getJPWNFile(String resName) {
-//        String userDir = System.getProperty("user.dir").replace("bin", "");
-//        System.out.println(userDir);
-//        return new File(userDir + File.separator +
-//                "ontologies" + File.separator + "jpwn_dict_1.1" + File.separator + resName);
         return new File(DODDLEConstants.JWN_HOME + File.separator + resName);
     }
 

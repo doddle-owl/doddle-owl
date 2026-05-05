@@ -2,7 +2,7 @@
  * Project Name: DODDLE-OWL (a Domain Ontology rapiD DeveLopment Environment - OWL extension)
  * Project Website: https://doddle-owl.github.io/
  *
- * Copyright (C) 2004-2024 Takeshi Morita. All rights reserved.
+ * Copyright (C) 2004-2026 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -48,7 +48,7 @@ public class SplashWindow extends JWindow implements HyperlinkListener {
         String builder = "<font face=TimesNewRoman>" +
                 "Name:  DODDLE-OWL  <br>" +
                 "Version: " + DODDLEConstants.VERSION + "<br>" +
-                "Copyright (C) 2004-2024 Takeshi Morita.<br>" +
+                "Copyright (C) 2004-2026 Takeshi Morita.<br>" +
                 "Contact: morita@it.aoyama.ac.jp<br>" +
                 "License: GPL<br>" +
                 "Project Website: <a href=https://doddle-owl.github.io/>https://doddle-owl.github.io/</a>" +

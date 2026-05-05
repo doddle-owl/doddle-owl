@@ -3,7 +3,7 @@
  *
  * Project Website: https://doddle-owl.github.io/
  *
- * Copyright (C) 2004-2024 Takeshi Morita. All rights reserved.
+ * Copyright (C) 2004-2026 Takeshi Morita. All rights reserved.
  *
  * This file is part of DODDLE-OWL.
  *
@@ -25,6 +25,7 @@
 package io.github.doddle_owl;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import io.github.doddle_owl.actions.*;
 import io.github.doddle_owl.views.*;
 import org.apache.commons.cli.*;
@@ -38,6 +39,7 @@ import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.UpperConceptManager;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.document_selection.DocumentSelectionPanel;
+import org.apache.jena.sys.JenaSystem;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -441,7 +443,16 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public static void main(String[] args) {
-        FlatLightLaf.install();
+        JenaSystem.init();
+        System.setProperty("javax.accessibility.assistive_technologies", "");
+        System.setProperty("flatlaf.useJetBrainsCustomWindowDecorations", "true");
+        if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            FlatMacLightLaf.setup();
+        } else {
+            FlatLightLaf.setup();
+        }
+
         SplashWindow splashWindow = new SplashWindow(null);
         DODDLE_OWL.initOptions(args);
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);

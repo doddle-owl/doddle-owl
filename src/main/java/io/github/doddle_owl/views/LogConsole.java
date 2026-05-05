@@ -21,12 +21,17 @@
 
 package io.github.doddle_owl.views;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Layout;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.spi.LoggingEvent;
 import io.github.doddle_owl.models.common.DODDLEConstants;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.Layout;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.Property;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -36,6 +41,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Shows the System.in and System.out in a nice JFrame.
@@ -186,10 +192,26 @@ public class LogConsole extends JDialog {
      * Sets the new OutputStream for System.out and System.err
      */
     private void redirect() {
-        JTextComponentAppender appender = new JTextComponentAppender();
-        appender.setLayout(new PatternLayout("[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"));
+        final LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+        final Configuration config = ctx.getConfiguration();
+
+        PatternLayout layout = PatternLayout.newBuilder()
+                .withPattern("[%5p][%c{1}][%d{yyyy-MM-dd HH:mm:ss}]: %m%n")
+                .withConfiguration(config)
+                .build();
+
+//        JTextComponentAppender appender = new JTextComponentAppender();
+//        appender.setLayout(new PatternLayout("[%5p][%c{1}][%d{yyyy-MMM-dd HH:mm:ss}]: %m\n"));
+//        appender.setJTextCompnent(stdoutText);
+//        Logger.getRootLogger().addAppender(appender);
+
+        JTextComponentAppender appender = new JTextComponentAppender("JTextAppender", null, layout);
         appender.setJTextCompnent(stdoutText);
-        Logger.getRootLogger().addAppender(appender);
+        appender.start();
+
+        config.addAppender(appender);
+        config.getRootLogger().addAppender(appender, Level.ALL, null);
+        ctx.updateLoggers();
 
         /**
          * The PrintStream for the System.out
@@ -207,17 +229,18 @@ public class LogConsole extends JDialog {
     /**
      * JTextComponentにログを表示するためのAppender
      */
-    class JTextComponentAppender extends AppenderSkeleton {
+    class JTextComponentAppender extends AbstractAppender {
 
         private JTextComponent textComponent;
 
-        JTextComponentAppender() {
+        protected JTextComponentAppender(String name, Filter filter, Layout<? extends Serializable> layout) {
+            super(name, filter, layout, true, Property.EMPTY_ARRAY);
         }
 
-        public JTextComponentAppender(final Layout layout) {
-            setLayout(layout);
-            activateOptions();
-        }
+//        public JTextComponentAppender(final Layout layout) {
+//            setLayout(layout);
+//            activateOptions();
+//        }
 
         public JTextComponent getJTextComponent() {
             return textComponent;
@@ -227,18 +250,27 @@ public class LogConsole extends JDialog {
             this.textComponent = component;
         }
 
-        public void activateOptions() {
-            if (textComponent == null) {
-                textComponent = new JTextPane();
-            }
-        }
+//        public void activateOptions() {
+//            if (textComponent == null) {
+//                textComponent = new JTextPane();
+//            }
+//        }
 
-        protected void append(LoggingEvent event) {
-            if (layout == null) {
-                textComponent.setText(textComponent.getText() + event.getRenderedMessage());
-            } else {
-                textComponent.setText(textComponent.getText() + layout.format(event));
-            }
+        @Override
+        public void append(LogEvent event) {
+//            if (layout == null) {
+//                textComponent.setText(textComponent.getText() + event.getRenderedMessage());
+//            } else {
+//                textComponent.setText(textComponent.getText() + layout.format(event));
+//            }
+
+            if (textComponent == null) return;
+
+            final String message = new String(getLayout().toByteArray(event), StandardCharsets.UTF_8);
+
+            SwingUtilities.invokeLater(() -> {
+                textComponent.setText(textComponent.getText() + message);
+            });
         }
 
         public void close() {
@@ -249,9 +281,9 @@ public class LogConsole extends JDialog {
             textComponent.setText("");
         }
 
-        public boolean requiresLayout() {
-            return false;
-        }
+//        public boolean requiresLayout() {
+//            return false;
+//        }
     }
 
     /**
