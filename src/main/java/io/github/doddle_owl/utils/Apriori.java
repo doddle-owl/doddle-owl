@@ -37,8 +37,8 @@ import java.util.*;
  */
 public class Apriori {
 
+    private final Document document;
     private List<List<String>> lineList;
-
     private final Set<List<Integer>> pairSet;
     private final List<ConceptPair> allRelation;
     private final Map<String, List<ConceptPair>> aprioriResult;
@@ -46,8 +46,6 @@ public class Apriori {
     private double minSupport;
     private double minConfidence;
     private final List<String> inputTermList;
-
-    private final Document document;
 
     public Apriori(ConceptDefinitionPanel conceptDefinitionPanel, Document doc) {
         document = doc;
@@ -81,13 +79,17 @@ public class Apriori {
         List<String> lineWordList = new ArrayList<>();
         List<Token> tokenList = Utils.tokenizer.tokenize(line);
         for (Token token : tokenList) {
+            if (token.getPartOfSpeechLevel1().equals("助詞") || token.getPartOfSpeechLevel1().equals("記号") ||
+                    token.getSurface().matches("\\[||\\]||\\(||\\)||\\{||\\}")) {
+                continue;
+            }
             String basicStr = token.getBaseForm();
             if (basicStr.equals("*")) {
                 basicStr = token.getSurface();
             }
             lineWordList.add(basicStr);
         }
-        Utils.addJaCompoundWord(lineWordList, inputTermList); // 複合語の追加
+        Utils.addJaCompoundWord(lineWordList, inputTermList);
 
         return lineWordList;
     }
@@ -114,6 +116,9 @@ public class Apriori {
         }
         String[] lines = corpusString.split("\\r\\n|\\n|\\r");
         for (String line : lines) {
+            if (line.isEmpty()) {
+                continue;
+            }
             if (document.getLang().equals("en")) {
                 lineList.add(getEnLineWordList(line));
             } else if (document.getLang().equals("ja")) {
@@ -138,7 +143,7 @@ public class Apriori {
         List<Integer> itemList = new ArrayList<>();
         int numOfLines = lineList.size();
         for (List<String> lineWordList : lineList) {
-            for (String lineWord : lineWordList) {
+            for (String lineWord : new HashSet<>(lineWordList)) {
                 for (int k = 0; k < targetInputWordList.size(); k++) {
                     String word = targetInputWordList.get(k);
                     if (word.equals(lineWord)) {
@@ -148,7 +153,7 @@ public class Apriori {
                     }
                 }
             }
-            calcAprioriPair(itemList);
+            calcAprioriPair(itemList, targetInputWordList);
             itemList.clear();
         }
         DODDLE_OWL.STATUS_BAR.addProjectValue();
@@ -157,10 +162,12 @@ public class Apriori {
         return aprioriResult;
     }
 
-    private void calcAprioriPair(List<Integer> itemList) {
+    private void calcAprioriPair(List<Integer> itemList, List<String> targetInputWordList) {
         for (int i = 0; i < itemList.size(); i++) {
             for (int j = 0; j < itemList.size(); j++) {
-                if (i != j) {
+                String wi = targetInputWordList.get(itemList.get(i));
+                String wj = targetInputWordList.get(itemList.get(j));
+                if (i != j && !wi.equals(wj)) {
                     List<Integer> pair = new ArrayList<>();
                     pair.add(itemList.get(i));
                     pair.add(itemList.get(j));
@@ -191,6 +198,7 @@ public class Apriori {
             String word1 = inputWordList.get(conceptAIndex);
             int conceptBIndex = pair.get(1);
             String word2 = inputWordList.get(conceptBIndex);
+//            System.out.println(word1 + " " + word2);
 //            System.out.println(conceptAIndex + ":" + conceptBIndex);
             double conceptASupport = conceptAppearance[conceptAIndex] / numOfLines;
             double conceptBSupport = conceptAppearance[conceptBIndex] / numOfLines;
@@ -201,6 +209,7 @@ public class Apriori {
             double confidence = 0;
             if (conceptASupport >= minSupport && conceptBSupport >= minSupport) {
                 int pairAppearance = indexPairAppearence.get(pair);
+//                System.out.println(word1 + ", " + conceptAppearance[conceptAIndex] + " " + pairAppearance);
                 confidence = (double) pairAppearance / (double) conceptAppearance[conceptAIndex];
             }
 
