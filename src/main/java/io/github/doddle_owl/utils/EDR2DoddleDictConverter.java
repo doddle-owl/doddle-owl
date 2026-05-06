@@ -26,7 +26,7 @@ package io.github.doddle_owl.utils;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
-import io.github.doddle_owl.views.DODDLEDicConverterUI;
+import io.github.doddle_owl.views.DODDLEDictConverterUI;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFWriterI;
 import org.apache.jena.rdf.model.Resource;
@@ -53,7 +53,7 @@ import java.util.Map.Entry;
  *
  * @author Takeshi Morita
  */
-public class EDR2DoddleDicConverter {
+public class EDR2DoddleDictConverter {
 
     public enum DictionaryType {
         EDR, EDRT, JPNWN
@@ -169,7 +169,7 @@ public class EDR2DoddleDicConverter {
         BufferedReader reader = null;
         try {
             System.out.println("Make Tree Data: Reading CPC.DIC");
-            DODDLEDicConverterUI.setProgressText("Make Tree Data: Reading CPC.DIC");
+            DODDLEDictConverterUI.setProgressText("Make Tree Data: Reading CPC.DIC");
             FileInputStream fis = new FileInputStream(CPC_DIC_PATH);
             reader = new BufferedReader(new InputStreamReader(fis, "JISAutoDetect"));
             while (reader.ready()) {
@@ -198,7 +198,7 @@ public class EDR2DoddleDicConverter {
             edrTreeModel = new DefaultTreeModel(rootNode);
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             try {
                 if (reader != null) {
@@ -270,7 +270,7 @@ public class EDR2DoddleDicConverter {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             try {
                 if (writer != null) {
@@ -296,14 +296,14 @@ public class EDR2DoddleDicConverter {
                 writer.write("\r\n");
                 i++;
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Make Tree Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Tree Index: " + i);
                     System.out.println("Make Tree Index: " + i);
                 }
             }
             raf.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -329,14 +329,14 @@ public class EDR2DoddleDicConverter {
                 dfp = raf.getFilePointer();
                 i++;
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Make Concept Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Concept Index: " + i);
                     System.out.println("Make Concept Index: " + i);
                 }
             }
             raf.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         }
     }
 
@@ -353,7 +353,7 @@ public class EDR2DoddleDicConverter {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -368,20 +368,20 @@ public class EDR2DoddleDicConverter {
     public static void readConceptData() {
         try {
             System.out.println("Make Concept Data: Reading CPH.DIC");
-            DODDLEDicConverterUI.setProgressText("Make Concept Data: Reading CPH.DIC");
+            DODDLEDictConverterUI.setProgressText("Make Concept Data: Reading CPH.DIC");
             readCPHDic();
-            DODDLEDicConverterUI.addProgressValue();
+            DODDLEDictConverterUI.addProgressValue();
             System.out.println("Make Concept Data: Reading JWD.DIC");
-            DODDLEDicConverterUI.setProgressText("Make Concept Data: Reading JWD.DIC");
+            DODDLEDictConverterUI.setProgressText("Make Concept Data: Reading JWD.DIC");
             readJWDDic();
-            DODDLEDicConverterUI.addProgressValue();
+            DODDLEDictConverterUI.addProgressValue();
             System.out.println("Make Concept Data: Reading EWD.DIC");
-            DODDLEDicConverterUI.setProgressText("Make Concept Data: Reading EWD.DIC");
+            DODDLEDictConverterUI.setProgressText("Make Concept Data: Reading EWD.DIC");
             readEWDDic();
-            DODDLEDicConverterUI.addProgressValue();
+            DODDLEDictConverterUI.addProgressValue();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } catch (IOException uee) {
             uee.printStackTrace();
         }
@@ -393,7 +393,7 @@ public class EDR2DoddleDicConverter {
             FileOutputStream fos = new FileOutputStream(DODDLE_DIC_HOME + CONCEPT_DATA);
             writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
             System.out.println("Make Concept Data: Writing concept.data");
-            DODDLEDicConverterUI.setProgressText("Make Concept Data: Writing concept.data");
+            DODDLEDictConverterUI.setProgressText("Make Concept Data: Writing concept.data");
             for (Entry<String, Concept> entry : idDefinitionMap.entrySet()) {
                 String id = entry.getKey();
                 Concept concept = entry.getValue();
@@ -410,7 +410,7 @@ public class EDR2DoddleDicConverter {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } catch (IOException uee) {
             uee.printStackTrace();
         } finally {
@@ -437,12 +437,12 @@ public class EDR2DoddleDicConverter {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         }
     }
 
     public static void writeOWLConceptData(Model jaOntModel, Model enOntModel, String ns) {
-        DODDLEDicConverterUI.setProgressText("Writing OWL Concept");
+        DODDLEDictConverterUI.setProgressText("Writing OWL Concept");
         System.out.println("Writing OWL Concept");
         writeOWLCPHData(jaOntModel, enOntModel, ns);
         writeOWLEWDData(jaOntModel, enOntModel, ns);
@@ -487,7 +487,7 @@ public class EDR2DoddleDicConverter {
     }
 
     private static void writeOWLEWDData(Model jaOntModel, Model enOntModel, String ns) {
-        DODDLEDicConverterUI.setProgressText("Writing OWL EWD Data");
+        DODDLEDictConverterUI.setProgressText("Writing OWL EWD Data");
         System.out.println("Writing OWL EWD Data");
         BufferedReader reader = null;
         try {
@@ -521,13 +521,13 @@ public class EDR2DoddleDicConverter {
                             .add(uri, RDFS.comment, enOntModel.createLiteral("en", enDescription));
                 }
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Writing OWL EWD Data: " + i);
+                    DODDLEDictConverterUI.setProgressText("Writing OWL EWD Data: " + i);
                     System.out.println(i);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -537,7 +537,7 @@ public class EDR2DoddleDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     /**
@@ -590,7 +590,7 @@ public class EDR2DoddleDicConverter {
     }
 
     private static void writeOWLJWDData(Model jaOntModel, Model enOntModel, String ns) {
-        DODDLEDicConverterUI.setProgressText("Writing OWL JWD Data");
+        DODDLEDictConverterUI.setProgressText("Writing OWL JWD Data");
         System.out.println("Writing OWL JWD Data");
         BufferedReader reader = null;
         try {
@@ -636,13 +636,13 @@ public class EDR2DoddleDicConverter {
                             .add(uri, RDFS.comment, enOntModel.createLiteral(enDescription, "en"));
                 }
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Writing OWL JWD Data: " + i);
+                    DODDLEDictConverterUI.setProgressText("Writing OWL JWD Data: " + i);
                     System.out.println(i);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -652,7 +652,7 @@ public class EDR2DoddleDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     /**
@@ -702,7 +702,7 @@ public class EDR2DoddleDicConverter {
     private static void writeOWLCPHData(Model jaOntModel, Model enOntModel, String ns) {
         BufferedReader reader = null;
         try {
-            DODDLEDicConverterUI.setProgressText("Writing OWL CPH Data");
+            DODDLEDictConverterUI.setProgressText("Writing OWL CPH Data");
             System.out.println("Writing OWL CPH Data");
             FileInputStream fis = new FileInputStream(CPH_DIC_PATH);
             reader = new BufferedReader(new InputStreamReader(fis, "JISAutoDetect"));
@@ -736,13 +736,13 @@ public class EDR2DoddleDicConverter {
                 enOntModel.add(uri, RDFS.label, enOntModel.createLiteral("en", enWord));
                 enOntModel.add(uri, RDFS.comment, enOntModel.createLiteral("en", enDescription));
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Writing OWL CPH Data: " + i);
+                    DODDLEDictConverterUI.setProgressText("Writing OWL CPH Data: " + i);
                     System.out.println(i);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -752,7 +752,7 @@ public class EDR2DoddleDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     private static void putWordFilePointer(String word, String id) {
@@ -795,7 +795,7 @@ public class EDR2DoddleDicConverter {
 
     public static void writeWordData() {
         System.out.println("Make Word Data: Writing word.data");
-        DODDLEDicConverterUI.setProgressText("Make Word Data: Writing word.data");
+        DODDLEDictConverterUI.setProgressText("Make Word Data: Writing word.data");
         try {
             Path path = Paths.get(DODDLE_DIC_HOME + WORD_DATA);
             BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
@@ -814,7 +814,7 @@ public class EDR2DoddleDicConverter {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         }
     }
 
@@ -832,14 +832,14 @@ public class EDR2DoddleDicConverter {
                 writer.write("\r\n");
                 i++;
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Make Word Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Word Index: " + i);
                     System.out.println("Make Word Index: " + i);
                 }
             }
             raf.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -852,7 +852,7 @@ public class EDR2DoddleDicConverter {
     }
 
     public static void writeOWLTreeData(Model ontModel, String ns) {
-        DODDLEDicConverterUI.setProgressText("Writing OWL Tree Data");
+        DODDLEDictConverterUI.setProgressText("Writing OWL Tree Data");
         System.out.println("Writing OWL Tree Data");
         BufferedReader reader = null;
         try {
@@ -872,13 +872,13 @@ public class EDR2DoddleDicConverter {
                 Resource subConcept = ResourceFactory.createResource(ns + subID);
                 ontModel.add(subConcept, RDFS.subClassOf, concept);
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Writing OWL Tree Data: " + i);
+                    DODDLEDictConverterUI.setProgressText("Writing OWL Tree Data: " + i);
                     System.out.println(i);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             try {
                 if (reader != null) {
@@ -888,7 +888,7 @@ public class EDR2DoddleDicConverter {
                 ioe2.printStackTrace();
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     private static void putID(String fid, String tid, Map<String, Set<String>> map) {
@@ -907,7 +907,7 @@ public class EDR2DoddleDicConverter {
         BufferedReader reader = null;
         try {
             System.out.println("Make Relation Data: Reading CPT.DIC");
-            DODDLEDicConverterUI.setProgressText("Make Relation Data: Reading CPT.DIC");
+            DODDLEDictConverterUI.setProgressText("Make Relation Data: Reading CPT.DIC");
             FileInputStream fis = new FileInputStream(CPT_DIC_PATH);
             reader = new BufferedReader(new InputStreamReader(fis, "JISAutoDetect"));
             while (reader.ready()) {
@@ -953,7 +953,7 @@ public class EDR2DoddleDicConverter {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         } finally {
             try {
                 if (reader != null) {
@@ -972,7 +972,7 @@ public class EDR2DoddleDicConverter {
             writer = new BufferedWriter(new OutputStreamWriter(fos, "ISO8859_1"));
 
             System.out.println("Make Relation Data: Writing relation.data");
-            DODDLEDicConverterUI.setProgressText("Make Relation Data: Writing relation.dat");
+            DODDLEDictConverterUI.setProgressText("Make Relation Data: Writing relation.dat");
 
             for (String id : relationConceptIDSet) {
                 writer.write(id);
@@ -1032,7 +1032,7 @@ public class EDR2DoddleDicConverter {
                 writer.write("\r\n");
                 i++;
                 if (i % 10000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Make Relation Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Relation Index: " + i);
                     System.out.println("Make Relation Index: " + i);
                 }
             }
@@ -1052,7 +1052,7 @@ public class EDR2DoddleDicConverter {
 
     public static void writeOWLRegionData(Model ontModel, String ns) {
         System.out.println("Writing OWL Domain and Range Data");
-        DODDLEDicConverterUI.setProgressText("Writing OWL Domain and Range Data");
+        DODDLEDictConverterUI.setProgressText("Writing OWL Domain and Range Data");
         BufferedReader reader = null;
         try {
             FileInputStream fis = new FileInputStream(CPT_DIC_PATH);
@@ -1096,7 +1096,7 @@ public class EDR2DoddleDicConverter {
                         break;
                 }
                 if (i % 1000 == 0) {
-                    DODDLEDicConverterUI.setProgressText("Writing OWL Domain and Range Data: " + i);
+                    DODDLEDictConverterUI.setProgressText("Writing OWL Domain and Range Data: " + i);
                     System.out.println(i);
                 }
             }
@@ -1111,11 +1111,11 @@ public class EDR2DoddleDicConverter {
                 ioe2.printStackTrace();
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void saveOntology(Model ontModel, String fileName) {
-        DODDLEDicConverterUI.setProgressText("Save " + fileName);
+        DODDLEDictConverterUI.setProgressText("Save " + fileName);
         System.out.println("Save " + fileName);
         BufferedWriter writer = null;
         try {
@@ -1137,6 +1137,6 @@ public class EDR2DoddleDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 }

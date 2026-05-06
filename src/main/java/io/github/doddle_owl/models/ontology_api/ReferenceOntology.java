@@ -25,7 +25,7 @@ package io.github.doddle_owl.models.ontology_api;
 
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Utils;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -42,7 +42,7 @@ public class ReferenceOntology {
         Resource res = ResourceFactory.createResource(uri);
         String id = Utils.getLocalName(res);
         String ns = Utils.getNameSpace(res);
-        Concept c = OWLOntologyManager.getConcept(uri);
+        Concept c = WebOntologyManager.getConcept(uri);
 
         if (c != null) {
             return c;
@@ -75,7 +75,7 @@ public class ReferenceOntology {
         }
         uriSet.addAll(WordNet.getURISet(word));
         uriSet.addAll(JaWordNet.getSynsetSet(word));
-        uriSet.addAll(OWLOntologyManager.getURISet(word));
+        uriSet.addAll(WebOntologyManager.getURISet(word));
         return uriSet;
     }
 }

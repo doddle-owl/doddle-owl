@@ -266,7 +266,7 @@ class ConceptDefinitionAlgorithmPanel extends JPanel implements ChangeListener,
         paramPanel.add(frontScopeField);
         paramPanel.add(behindscope);
         paramPanel.add(behindScopeField);
-        paramPanel.add(new JLabel("WordSpace Value"));
+        paramPanel.add(new JLabel(Translator.getTerm("WordSpaceValueLabel")));
         paramPanel.add(barPanel);
         paramPanel.add(new Label()); // dammy
         paramPanel.add(exeWordSpaceButton);

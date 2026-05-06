@@ -3,8 +3,8 @@ package io.github.doddle_owl.models.ontology_api;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import io.github.doddle_owl.models.common.DODDLEConstants;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.apache.jena.tdb2.TDB2Factory;
 
@@ -18,11 +18,11 @@ public class JWO {
     public static boolean initJWODic(NameSpaceTable nameSpaceTable) {
         File jwoDir = new File(DODDLEConstants.JWO_HOME);
         if (jwoDir.exists()) {
-            if (OWLOntologyManager.getRefOntology(jwoDir.getAbsolutePath()) == null) {
+            if (WebOntologyManager.getRefOntology(jwoDir.getAbsolutePath()) == null) {
                 dataset = TDB2Factory.connectDataset(jwoDir.getAbsolutePath());
                 Model ontModel = dataset.getDefaultModel();
-                ReferenceOWLOntology refOnt = new ReferenceOWLOntology(ontModel, jwoDir.getAbsolutePath(), nameSpaceTable);
-                OWLOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
+                ReferenceWebOntology refOnt = new ReferenceWebOntology(ontModel, jwoDir.getAbsolutePath(), nameSpaceTable);
+                WebOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
             }
             isAvailable = true;
         } else {

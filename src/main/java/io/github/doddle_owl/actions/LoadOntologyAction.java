@@ -140,13 +140,13 @@ public class LoadOntologyAction extends AbstractAction {
         expandTrees(currentProject);
     }
 
-    public void loadOWLOntology(DODDLEProjectPanel currentProject, File file) {
+    public void loadWebOntology(DODDLEProjectPanel currentProject, File file) {
         if (file.exists()) {
-            loadOWLOntology(currentProject, RDFDataMgr.loadModel(file.getAbsolutePath()));
+            loadWebOntology(currentProject, RDFDataMgr.loadModel(file.getAbsolutePath()));
         }
     }
 
-    private void loadOWLOntology(DODDLEProjectPanel currentProject, Model model) {
+    private void loadWebOntology(DODDLEProjectPanel currentProject, Model model) {
         ConceptSelectionPanel conceptSelectionPanel = currentProject
                 .getConceptSelectionPanel();
         ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
@@ -219,8 +219,8 @@ public class LoadOntologyAction extends AbstractAction {
         if (retval == JFileChooser.APPROVE_OPTION) {
             DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
             if (conversionType.equals(OWL_ONTOLOGY)) {
-                loadOWLOntology(currentProject, chooser.getSelectedFile());
-                DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenOWLOntologyAction"));
+                loadWebOntology(currentProject, chooser.getSelectedFile());
+                DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenWebOntologyAction"));
             } else if (conversionType.equals(FREEMIND_ONTOLOGY)) {
                 loadFreeMindOntology(currentProject, chooser.getSelectedFile());
                 DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("OpenFreeMindOntologyAction"));

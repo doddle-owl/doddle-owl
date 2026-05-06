@@ -49,7 +49,7 @@ public class CalcConceptDistanceUtil {
     }
 
     private static Set<List<String>> getPathToRootSet(Concept c) {
-        Set<List<String>> pathSet = OWLOntologyManager.getURIPathToRootSet(c.getURI());
+        Set<List<String>> pathSet = WebOntologyManager.getURIPathToRootSet(c.getURI());
         if (pathSet.size() != 0) {
             return pathSet;
         }
@@ -79,8 +79,8 @@ public class CalcConceptDistanceUtil {
     }
 
     private static Set<List<String>[]> getCombinationSet(Concept c1, Concept c2) {
-        Set<List<String>> pathSet1 = OWLOntologyManager.getURIPathToRootSet(c1.getURI());
-        Set<List<String>> pathSet2 = OWLOntologyManager.getURIPathToRootSet(c2.getURI());
+        Set<List<String>> pathSet1 = WebOntologyManager.getURIPathToRootSet(c1.getURI());
+        Set<List<String>> pathSet2 = WebOntologyManager.getURIPathToRootSet(c2.getURI());
         if (0 < pathSet1.size() && 0 < pathSet2.size()) {
             return makeCombination(pathSet1, pathSet2);
         }

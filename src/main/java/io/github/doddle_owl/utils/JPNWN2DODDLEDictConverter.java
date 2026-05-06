@@ -26,7 +26,7 @@ package io.github.doddle_owl.utils;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
-import io.github.doddle_owl.views.DODDLEDicConverterUI;
+import io.github.doddle_owl.views.DODDLEDictConverterUI;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFWriterI;
 import org.apache.jena.rdf.model.Resource;
@@ -55,7 +55,7 @@ import java.util.Map.Entry;
 /**
  * @author Takeshi Morita
  */
-public class JPNWN2DODDLEDicConverter {
+public class JPNWN2DODDLEDictConverter {
 
     private static final String WORD_DATA = "word.data";
     private static final String WORD_INDEX = "word.index";
@@ -115,21 +115,21 @@ public class JPNWN2DODDLEDicConverter {
         try {
             stmt.execute("DROP INDEX sense_idx;");
             System.out.println("CREATE INDEX sense_synset_idx ON sense (synset);");
-            DODDLEDicConverterUI.setProgressText("CREATE INDEX sense_synset_idx ON sense (synset);");
+            DODDLEDictConverterUI.setProgressText("CREATE INDEX sense_synset_idx ON sense (synset);");
             stmt.execute("CREATE INDEX sense_synset_idx ON sense (synset);");
             System.out.println("CREATE INDEX sense_wordid_idx ON sense (wordid);");
-            DODDLEDicConverterUI.setProgressText("CREATE INDEX sense_wordid_idx ON sense (wordid);");
+            DODDLEDictConverterUI.setProgressText("CREATE INDEX sense_wordid_idx ON sense (wordid);");
             stmt.execute("CREATE INDEX sense_wordid_idx ON sense (wordid);");
             System.out.println("CREATE INDEX synset_id_idx ON synset (synset);");
-            DODDLEDicConverterUI.setProgressText("CREATE INDEX synset_id_idx ON synset (synset);");
+            DODDLEDictConverterUI.setProgressText("CREATE INDEX synset_id_idx ON synset (synset);");
             stmt.execute("CREATE INDEX synset_id_idx ON synset (synset);");
             System.out.println("CREATE INDEX synset_def_id_idx ON synset_def (synset);");
-            DODDLEDicConverterUI.setProgressText("CREATE INDEX synset_def_id_idx ON synset_def (synset);");
+            DODDLEDictConverterUI.setProgressText("CREATE INDEX synset_def_id_idx ON synset_def (synset);");
             stmt.execute("CREATE INDEX synset_def_id_idx ON synset_def (synset);");
         } catch (SQLException sqle) {
             // sqle.printStackTrace();
             System.out.println("SKIP: CREATE INDEX");
-            DODDLEDicConverterUI.setProgressText("SKIP: CREATE INDEX");
+            DODDLEDictConverterUI.setProgressText("SKIP: CREATE INDEX");
         }
     }
 
@@ -201,7 +201,7 @@ public class JPNWN2DODDLEDicConverter {
         BufferedReader reader = null;
         try {
             System.out.println("Make Tree Data");
-            DODDLEDicConverterUI.setProgressText("Make Tree Data");
+            DODDLEDictConverterUI.setProgressText("Make Tree Data");
             ResultSet rs = stmt.executeQuery("select * from synlink where link='hype'");
             while (rs.next()) {
                 String id = rs.getString("synset2");
@@ -224,7 +224,7 @@ public class JPNWN2DODDLEDicConverter {
             jpnwnTreeModel = new DefaultTreeModel(rootNode);
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             try {
                 if (reader != null) {
@@ -234,7 +234,7 @@ public class JPNWN2DODDLEDicConverter {
                 ioe2.printStackTrace();
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     private static void makeJPNWNTree(String id, DefaultMutableTreeNode node) {
@@ -294,7 +294,7 @@ public class JPNWN2DODDLEDicConverter {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             try {
                 if (writer != null) {
@@ -304,7 +304,7 @@ public class JPNWN2DODDLEDicConverter {
                 ioe2.printStackTrace();
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void writeTreeIndex() {
@@ -322,13 +322,13 @@ public class JPNWN2DODDLEDicConverter {
                 i++;
                 if (i % 10000 == 0) {
                     System.out.println("Make Tree Index: " + i);
-                    DODDLEDicConverterUI.setProgressText("Make Tree Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Tree Index: " + i);
                 }
             }
             raf.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -338,7 +338,7 @@ public class JPNWN2DODDLEDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void readConceptIndex() {
@@ -358,15 +358,15 @@ public class JPNWN2DODDLEDicConverter {
                 i++;
                 if (i % 10000 == 0) {
                     System.out.println("Make Concept Index: " + i);
-                    DODDLEDicConverterUI.setProgressText("Make Concept Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Concept Index: " + i);
                 }
             }
             raf.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void writeConceptIndex() {
@@ -382,7 +382,7 @@ public class JPNWN2DODDLEDicConverter {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -392,13 +392,13 @@ public class JPNWN2DODDLEDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void readConceptData() {
         try {
             System.out.println("Make Concept Data");
-            DODDLEDicConverterUI.setProgressText("Make Concept Data");
+            DODDLEDictConverterUI.setProgressText("Make Concept Data");
             List<String> synsetList = new ArrayList<>();
             ResultSet rs = stmt.executeQuery("select * from synset");
             while (rs.next()) {
@@ -412,7 +412,7 @@ public class JPNWN2DODDLEDicConverter {
                 Concept c = new Concept(synset, "");
                 if (n % 10000 == 0) {
                     System.out.println(n + ": " + Calendar.getInstance().getTime());
-                    DODDLEDicConverterUI.setProgressText(n + ": " + Calendar.getInstance().getTime());
+                    DODDLEDictConverterUI.setProgressText(n + ": " + Calendar.getInstance().getTime());
                 }
                 n++;
                 rs = stmt.executeQuery("select * from synset_def where synset='" + synset + "'");
@@ -449,7 +449,7 @@ public class JPNWN2DODDLEDicConverter {
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     private static void addJPNWNRootConcept() {
@@ -481,7 +481,7 @@ public class JPNWN2DODDLEDicConverter {
             Path path = Paths.get(DODDLE_DIC_HOME + CONCEPT_DATA);
             BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
             System.out.println("Make Concept Data: Writing concept.data");
-            DODDLEDicConverterUI.setProgressText("Make Concept Data: Writing concept.data");
+            DODDLEDictConverterUI.setProgressText("Make Concept Data: Writing concept.data");
             try (writer) {
                 for (Entry<String, Concept> entry : idDefinitionMap.entrySet()) {
                     String id = entry.getKey();
@@ -499,11 +499,11 @@ public class JPNWN2DODDLEDicConverter {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } catch (IOException uee) {
             uee.printStackTrace();
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     private static void writerLiteralString(Writer writer, List<DODDLELiteral> labelList) {
@@ -519,7 +519,7 @@ public class JPNWN2DODDLEDicConverter {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         }
     }
 
@@ -530,7 +530,7 @@ public class JPNWN2DODDLEDicConverter {
      */
     public static void writeOWLConceptData(Model ontModel, String ns) {
         System.out.println("Writing OWL Concept Data");
-        DODDLEDicConverterUI.setProgressText("Writing OWL Concept Data");
+        DODDLEDictConverterUI.setProgressText("Writing OWL Concept Data");
         int i = 0;
         for (Entry<String, Concept> entry : idDefinitionMap.entrySet()) {
             String id = entry.getKey();
@@ -565,11 +565,11 @@ public class JPNWN2DODDLEDicConverter {
             }
             if (i % 10000 == 0) {
                 System.out.println("Writing OWL Concept Data: " + i);
-                DODDLEDicConverterUI.setProgressText("Writing OWL Concept Data: " + i);
+                DODDLEDictConverterUI.setProgressText("Writing OWL Concept Data: " + i);
             }
             i++;
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     private static void putWordFilePointer(String word, String id) {
@@ -608,12 +608,12 @@ public class JPNWN2DODDLEDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void writeWordData() {
         System.out.println("Make Word Data: Writing word.data");
-        DODDLEDicConverterUI.setProgressText("Make Word Data: Writing word.data");
+        DODDLEDictConverterUI.setProgressText("Make Word Data: Writing word.data");
         BufferedWriter writer = null;
         try {
             FileOutputStream fos = new FileOutputStream(DODDLE_DIC_HOME + WORD_DATA);
@@ -631,7 +631,7 @@ public class JPNWN2DODDLEDicConverter {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(e.getMessage());
+            DODDLEDictConverterUI.initProgressBar(e.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -641,7 +641,7 @@ public class JPNWN2DODDLEDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void writeWordIndex() {
@@ -659,13 +659,13 @@ public class JPNWN2DODDLEDicConverter {
                 i++;
                 if (i % 10000 == 0) {
                     System.out.println("Make Word Index: " + i);
-                    DODDLEDicConverterUI.setProgressText("Make Word Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Word Index: " + i);
                 }
             }
             raf.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(ioe.getMessage());
+            DODDLEDictConverterUI.initProgressBar(ioe.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -675,12 +675,12 @@ public class JPNWN2DODDLEDicConverter {
                 }
             }
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void writeOWLTreeData(Model ontModel, String ns) {
         System.out.println("Writing OWL Tree Data");
-        DODDLEDicConverterUI.setProgressText("Writing OWL Tree Data");
+        DODDLEDictConverterUI.setProgressText("Writing OWL Tree Data");
         try {
             int i = 0;
             ResultSet rs = stmt.executeQuery("select * from synlink where link='hype'");
@@ -692,15 +692,15 @@ public class JPNWN2DODDLEDicConverter {
                 ontModel.add(subConcept, RDFS.subClassOf, concept);
                 if (i % 10000 == 0) {
                     System.out.println("Writing OWL Tree Data: " + i);
-                    DODDLEDicConverterUI.setProgressText("Writing OWL Tree Data: " + i);
+                    DODDLEDictConverterUI.setProgressText("Writing OWL Tree Data: " + i);
                 }
                 i++;
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            DODDLEDicConverterUI.initProgressBar(sqle.getMessage());
+            DODDLEDictConverterUI.initProgressBar(sqle.getMessage());
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void readRelationData() {
@@ -724,7 +724,7 @@ public class JPNWN2DODDLEDicConverter {
                 i++;
                 if (i % 10000 == 0) {
                     System.out.println("Make Relation Index: " + i);
-                    DODDLEDicConverterUI.setProgressText("Make Relation Index: " + i);
+                    DODDLEDictConverterUI.setProgressText("Make Relation Index: " + i);
                 }
             }
             raf.close();
@@ -742,13 +742,13 @@ public class JPNWN2DODDLEDicConverter {
     }
 
     public static void writeOWLRegionData(Model ontModel, String ns) {
-        DODDLEDicConverterUI.setProgressText("Writing OWL Domain and Range Data");
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.setProgressText("Writing OWL Domain and Range Data");
+        DODDLEDictConverterUI.addProgressValue();
     }
 
     public static void saveOntology(Model ontModel, String fileName) {
         System.out.println("Save " + fileName);
-        DODDLEDicConverterUI.setProgressText("Save " + fileName);
+        DODDLEDictConverterUI.setProgressText("Save " + fileName);
         try {
             RDFWriterI rdfWriter = ontModel.getWriter("RDF/XML");
             rdfWriter.setProperty("xmlbase", DODDLEConstants.BASE_URI);
@@ -761,7 +761,7 @@ public class JPNWN2DODDLEDicConverter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        DODDLEDicConverterUI.addProgressValue();
+        DODDLEDictConverterUI.addProgressValue();
     }
 
 }

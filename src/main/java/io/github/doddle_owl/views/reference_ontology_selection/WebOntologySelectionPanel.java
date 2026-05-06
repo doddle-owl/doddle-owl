@@ -29,10 +29,10 @@ import org.apache.jena.util.FileUtils;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.ProjectFileNames;
-import io.github.doddle_owl.models.reference_ontology_selection.OWLOntologyExtractionTemplate;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.WebOntologyExtractionTemplate;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.utils.FreeMindModelMaker;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 
@@ -55,8 +55,7 @@ import java.util.Properties;
 /**
  * @author Takeshi Morita
  */
-class OWLOntologySelectionPanel extends JPanel implements ActionListener,
-        ListSelectionListener {
+class WebOntologySelectionPanel extends JPanel implements ActionListener, ListSelectionListener {
 
     private final JList ontologyList;
     private final DefaultListModel listModel;
@@ -71,7 +70,7 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
 
     }
 
-    public OWLOntologySelectionPanel(NameSpaceTable nst) {
+    public WebOntologySelectionPanel(NameSpaceTable nst) {
         nsTable = nst;
         listModel = new DefaultListModel();
         ontologyList = new JList(listModel);
@@ -116,17 +115,17 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
         return type;
     }
 
-    public void addOWLOntology(ReferenceOWLOntology refOnt) {
-        OWLOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
+    public void addWebOntology(ReferenceWebOntology refOnt) {
+        WebOntologyManager.addRefOntology(refOnt.getURI(), refOnt);
         listModel.addElement(refOnt.getURI());
         owlMetaDataPanel.setMetaData(refOnt);
     }
 
-    private void addOWLOntology(Model ontModel, String uri) {
+    private void addWebOntology(Model ontModel, String uri) {
         try {
-            ReferenceOWLOntology refOnt = new ReferenceOWLOntology(ontModel, uri, nsTable);
-            addOWLOntology(refOnt);
-            DODDLE_OWL.STATUS_BAR.setText("Add Reference OWL Ontology");
+            ReferenceWebOntology refOnt = new ReferenceWebOntology(ontModel, uri, nsTable);
+            addWebOntology(refOnt);
+            DODDLE_OWL.STATUS_BAR.setText("Add Reference Web Ontology");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Can not set the selected ontology_api", "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -150,7 +149,7 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
                         ontModel = Utils.getOntModel(fileInputStream, "---", getType(uri),
                                 DODDLEConstants.BASE_URI);
                     }
-                    addOWLOntology(ontModel, uri);
+                    addWebOntology(ontModel, uri);
                 } catch (FileNotFoundException fne) {
                     fne.printStackTrace();
                 } catch (Exception e) {
@@ -171,7 +170,7 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
                     InputStream inputStream = new URL(url).openStream();
                     Model ontModel = Utils.getOntModel(inputStream, "---", getType(url),
                             DODDLEConstants.BASE_URI);
-                    addOWLOntology(ontModel, url);
+                    addWebOntology(ontModel, url);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Error",
                             "Can not set the selected ontology_api", JOptionPane.ERROR_MESSAGE);
@@ -184,7 +183,7 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
     private void delete() {
         List<String> values = ontologyList.getSelectedValuesList();
         for (String value : values) {
-            OWLOntologyManager.removeRefOntology(value);
+            WebOntologyManager.removeRefOntology(value);
             listModel.removeElement(value);
         }
     }
@@ -204,11 +203,11 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
             for (int i = 0; i < listModel.getSize(); i++) {
                 int num = i + 1;
                 String uri = (String) listModel.getElementAt(i);
-                ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(uri);
+                ReferenceWebOntology refOnt = WebOntologyManager.getRefOntology(uri);
                 Properties properties = new Properties();
                 properties.setProperty("isAvailable", String.valueOf(refOnt.isAvailable()));
                 properties.setProperty("Location", refOnt.getURI());
-                OWLOntologyExtractionTemplate template = refOnt.getOWLOntologyExtractionTemplate();
+                WebOntologyExtractionTemplate template = refOnt.getWebOntologyExtractionTemplate();
                 properties.setProperty("SearchConceptTemplate", template.getSearchConceptTemplate()
                         .getAbsolutePath());
                 properties.setProperty("SearchSubConceptTemplate", template
@@ -257,17 +256,17 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
                         ontModel = ModelFactory.createDefaultModel();
                         ontModel.read(inputStream, DODDLEConstants.BASE_URI, getType(uri));
                     }
-                    addOWLOntology(ontModel, uri);
+                    addWebOntology(ontModel, uri);
                 } else {
                     InputStream inputStream = new URL(uri).openStream();
                     Model ontModel = Utils.getOntModel(inputStream, "---", getType(uri),
                             DODDLEConstants.BASE_URI);
                     ontModel.read(inputStream, DODDLEConstants.BASE_URI, getType(uri));
-                    addOWLOntology(ontModel, uri);
+                    addWebOntology(ontModel, uri);
                 }
-                ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(uri);
+                ReferenceWebOntology refOnt = WebOntologyManager.getRefOntology(uri);
                 refOnt.setAvailable(isAvailable);
-                OWLOntologyExtractionTemplate template = refOnt.getOWLOntologyExtractionTemplate();
+                WebOntologyExtractionTemplate template = refOnt.getWebOntologyExtractionTemplate();
                 template.setSearchConceptTemplate(new File(properties
                         .getProperty("SearchConceptTemplate")));
                 template.setSearchSubConceptTemplate(new File(properties
@@ -302,14 +301,14 @@ class OWLOntologySelectionPanel extends JPanel implements ActionListener,
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
         JFrame frame = new JFrame();
         NameSpaceTable nsTable = new NameSpaceTable();
-        frame.getContentPane().add(new OWLOntologySelectionPanel(nsTable));
+        frame.getContentPane().add(new WebOntologySelectionPanel(nsTable));
         frame.setSize(new Dimension(500, 400));
         frame.setVisible(true);
     }
 
     public void valueChanged(ListSelectionEvent e) {
         String uri = (String) ontologyList.getSelectedValue();
-        ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(uri);
+        ReferenceWebOntology refOnt = WebOntologyManager.getRefOntology(uri);
         if (refOnt != null) {
             owlMetaDataPanel.setMetaData(refOnt);
         }

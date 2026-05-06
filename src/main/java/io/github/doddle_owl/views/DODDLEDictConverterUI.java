@@ -25,9 +25,9 @@ package io.github.doddle_owl.views;
 
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
-import io.github.doddle_owl.utils.EDR2DoddleDicConverter;
-import io.github.doddle_owl.utils.EDR2DoddleDicConverter.DictionaryType;
-import io.github.doddle_owl.utils.JPNWN2DODDLEDicConverter;
+import io.github.doddle_owl.utils.EDR2DoddleDictConverter;
+import io.github.doddle_owl.utils.EDR2DoddleDictConverter.DictionaryType;
+import io.github.doddle_owl.utils.JPNWN2DODDLEDictConverter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
@@ -40,7 +40,7 @@ import java.io.File;
 /**
  * @author Takeshi Morita
  */
-public class DODDLEDicConverterUI extends JDialog implements ActionListener {
+public class DODDLEDictConverterUI extends JDialog implements ActionListener {
 
 	private final JRadioButton edrRadioButton;
 	private final JRadioButton edrtRadioButton;
@@ -59,7 +59,7 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 	private static final JLabel progressLabel = new JLabel();
 	private static final JProgressBar progressBar = new JProgressBar();
 
-	public DODDLEDicConverterUI() {
+	public DODDLEDictConverterUI() {
 		edrRadioButton = new JRadioButton("EDR");
 		edrRadioButton.setSelected(true);
 		edrtRadioButton = new JRadioButton("EDRT");
@@ -142,7 +142,7 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 		contentPane.add(mainPanel, BorderLayout.CENTER);
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 		pack();
-		setTitle("DODDLE Dic Converter");
+		setTitle("DODDLE Dict Converter");
 		setLocationRelativeTo(null);
 	}
 
@@ -186,9 +186,9 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			private void makeRelationData(DictionaryType dicType) {
 				if (dicType == DictionaryType.EDR) {
 					progressLabel.setText("Make Relation Data");
-					EDR2DoddleDicConverter.readRelationData();
-					EDR2DoddleDicConverter.writeRelationData();
-					EDR2DoddleDicConverter.clearRelationMaps();
+					EDR2DoddleDictConverter.readRelationData();
+					EDR2DoddleDictConverter.writeRelationData();
+					EDR2DoddleDictConverter.clearRelationMaps();
 					addProgressValue();
 				} else if (dicType == DictionaryType.JPNWN) {
 					// has-a関係の抽出を行う
@@ -198,7 +198,7 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			private void makeRelationIndex(DictionaryType dicType) {
 				if (dicType == DictionaryType.EDR) {
 					progressLabel.setText("Make Relation Index");
-					EDR2DoddleDicConverter.writeRelationIndex();
+					EDR2DoddleDictConverter.writeRelationIndex();
 					addProgressValue();
 				} else if (dicType == DictionaryType.JPNWN) {
 					// make has-a dic index
@@ -209,17 +209,17 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 				progressLabel.setText("Make ID SubIDSet Map");
 
 				if (dicType == DictionaryType.JPNWN) {
-					JPNWN2DODDLEDicConverter.readTreeData(ConceptTreeMaker.JPNWN_CLASS_ROOT_ID);
-					JPNWN2DODDLEDicConverter.writeTreeData();
-					JPNWN2DODDLEDicConverter.clearTreeData();
+					JPNWN2DODDLEDictConverter.readTreeData(ConceptTreeMaker.JPNWN_CLASS_ROOT_ID);
+					JPNWN2DODDLEDictConverter.writeTreeData();
+					JPNWN2DODDLEDictConverter.clearTreeData();
 				} else {
 					if (dicType == DictionaryType.EDR) {
-						EDR2DoddleDicConverter.readTreeData(ConceptTreeMaker.EDR_CLASS_ROOT_ID);
+						EDR2DoddleDictConverter.readTreeData(ConceptTreeMaker.EDR_CLASS_ROOT_ID);
 					} else {
-						EDR2DoddleDicConverter.readTreeData(ConceptTreeMaker.EDRT_CLASS_ROOT_ID);
+						EDR2DoddleDictConverter.readTreeData(ConceptTreeMaker.EDRT_CLASS_ROOT_ID);
 					}
-					EDR2DoddleDicConverter.writeTreeData();
-					EDR2DoddleDicConverter.clearTreeData();
+					EDR2DoddleDictConverter.writeTreeData();
+					EDR2DoddleDictConverter.clearTreeData();
 				}
 				addProgressValue();
 			}
@@ -227,9 +227,9 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			private void makeTreeIndex(DictionaryType dicType) {
 				progressLabel.setText("Make Tree Index");
 				if (dicType == DictionaryType.JPNWN) {
-					JPNWN2DODDLEDicConverter.writeTreeIndex();
+					JPNWN2DODDLEDictConverter.writeTreeIndex();
 				} else {
-					EDR2DoddleDicConverter.writeTreeIndex();
+					EDR2DoddleDictConverter.writeTreeIndex();
 				}
 				addProgressValue();
 			}
@@ -237,11 +237,11 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			private void makeConceptData(DictionaryType dicType) {
 				progressLabel.setText("Make Concept Data");
 				if (dicType == DictionaryType.JPNWN) {
-					JPNWN2DODDLEDicConverter.readConceptData();
-					JPNWN2DODDLEDicConverter.writeConceptData();
+					JPNWN2DODDLEDictConverter.readConceptData();
+					JPNWN2DODDLEDictConverter.writeConceptData();
 				} else {
-					EDR2DoddleDicConverter.readConceptData();
-					EDR2DoddleDicConverter.writeConceptData();
+					EDR2DoddleDictConverter.readConceptData();
+					EDR2DoddleDictConverter.writeConceptData();
 				}
 				addProgressValue();
 			}
@@ -249,13 +249,13 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			private void makeConceptIndex(DictionaryType dicType) {
 				progressLabel.setText("Make Concept Index");
 				if (dicType == DictionaryType.JPNWN) {
-					JPNWN2DODDLEDicConverter.readConceptIndex();
-					JPNWN2DODDLEDicConverter.writeConceptIndex();
-					JPNWN2DODDLEDicConverter.clearDataFilePointerList();
+					JPNWN2DODDLEDictConverter.readConceptIndex();
+					JPNWN2DODDLEDictConverter.writeConceptIndex();
+					JPNWN2DODDLEDictConverter.clearDataFilePointerList();
 				} else {
-					EDR2DoddleDicConverter.readConceptIndex();
-					EDR2DoddleDicConverter.writeConceptIndex();
-					EDR2DoddleDicConverter.clearDataFilePointerList();
+					EDR2DoddleDictConverter.readConceptIndex();
+					EDR2DoddleDictConverter.writeConceptIndex();
+					EDR2DoddleDictConverter.clearDataFilePointerList();
 				}
 				addProgressValue();
 			}
@@ -263,12 +263,12 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			private void makeWordData(DictionaryType dicType) {
 				progressLabel.setText("Make Word Data");
 				if (dicType == DictionaryType.JPNWN) {
-					JPNWN2DODDLEDicConverter.readWordData();
-					JPNWN2DODDLEDicConverter.writeWordData();
+					JPNWN2DODDLEDictConverter.readWordData();
+					JPNWN2DODDLEDictConverter.writeWordData();
 					clearJPNWNDicMap();
 				} else {
-					EDR2DoddleDicConverter.readWordData();
-					EDR2DoddleDicConverter.writeWordData();
+					EDR2DoddleDictConverter.readWordData();
+					EDR2DoddleDictConverter.writeWordData();
 					clearEDRDicMap();
 				}
 				addProgressValue();
@@ -277,27 +277,27 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			private void makeWordIndex(DictionaryType dicType) {
 				progressLabel.setText("Make Word Index");
 				if (dicType == DictionaryType.JPNWN) {
-					JPNWN2DODDLEDicConverter.writeWordIndex();
+					JPNWN2DODDLEDictConverter.writeWordIndex();
 				} else {
-					EDR2DoddleDicConverter.writeWordIndex();
+					EDR2DoddleDictConverter.writeWordIndex();
 				}
 				addProgressValue();
 			}
 
 			private void clearJPNWNDicMap() {
 				progressLabel.setText("Clear Maps");
-				JPNWN2DODDLEDicConverter.clearIDDefinitionMap();
-				JPNWN2DODDLEDicConverter.clearWordIDSetMap();
-				JPNWN2DODDLEDicConverter.clearIDFilePointerMap();
-				JPNWN2DODDLEDicConverter.clearWordFilePointerSetMap();
+				JPNWN2DODDLEDictConverter.clearIDDefinitionMap();
+				JPNWN2DODDLEDictConverter.clearWordIDSetMap();
+				JPNWN2DODDLEDictConverter.clearIDFilePointerMap();
+				JPNWN2DODDLEDictConverter.clearWordFilePointerSetMap();
 			}
 
 			private void clearEDRDicMap() {
 				progressLabel.setText("Clear Maps");
-				EDR2DoddleDicConverter.clearIDDefinitionMap();
-				EDR2DoddleDicConverter.clearWordIDSetMap();
-				EDR2DoddleDicConverter.clearIDFilePointerMap();
-				EDR2DoddleDicConverter.clearWordFilePointerSetMap();
+				EDR2DoddleDictConverter.clearIDDefinitionMap();
+				EDR2DoddleDictConverter.clearWordIDSetMap();
+				EDR2DoddleDictConverter.clearIDFilePointerMap();
+				EDR2DoddleDictConverter.clearWordFilePointerSetMap();
 			}
 
 			private void makeTextDataAndIndex(DictionaryType dicType) {
@@ -314,14 +314,14 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			void convertOWL(DictionaryType dicType) {
 				if (dicType == DictionaryType.JPNWN) {
 					Model ontModel = ModelFactory.createDefaultModel();
-					JPNWN2DODDLEDicConverter.readConceptData();
-					JPNWN2DODDLEDicConverter.writeOWLConceptData(ontModel,
+					JPNWN2DODDLEDictConverter.readConceptData();
+					JPNWN2DODDLEDictConverter.writeOWLConceptData(ontModel,
 							DODDLEConstants.JPN_WN_URI);
-					JPNWN2DODDLEDicConverter.saveOntology(ontModel, dicType + ".owl");
+					JPNWN2DODDLEDictConverter.saveOntology(ontModel, dicType + ".owl");
 					Model treeOntModel = ModelFactory.createDefaultModel();
-					JPNWN2DODDLEDicConverter.writeOWLTreeData(treeOntModel,
+					JPNWN2DODDLEDictConverter.writeOWLTreeData(treeOntModel,
 							DODDLEConstants.JPN_WN_URI);
-					JPNWN2DODDLEDicConverter.saveOntology(treeOntModel, dicType + "_tree.owl");
+					JPNWN2DODDLEDictConverter.saveOntology(treeOntModel, dicType + "_tree.owl");
 				} else {
 					String ns = "";
 					if (dicType == DictionaryType.EDR) {
@@ -331,17 +331,17 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 					}
 					Model jaOntModel = ModelFactory.createDefaultModel();
 					Model enOntModel = ModelFactory.createDefaultModel();
-					EDR2DoddleDicConverter.writeOWLConceptData(jaOntModel, enOntModel, ns);
-					EDR2DoddleDicConverter.saveOntology(jaOntModel, dicType + "_ja.owl");
-					EDR2DoddleDicConverter.saveOntology(enOntModel, dicType + "_en.owl");
+					EDR2DoddleDictConverter.writeOWLConceptData(jaOntModel, enOntModel, ns);
+					EDR2DoddleDictConverter.saveOntology(jaOntModel, dicType + "_ja.owl");
+					EDR2DoddleDictConverter.saveOntology(enOntModel, dicType + "_en.owl");
 					Model treeOntModel = ModelFactory.createDefaultModel();
-					EDR2DoddleDicConverter.writeOWLTreeData(treeOntModel, ns);
-					EDR2DoddleDicConverter.saveOntology(treeOntModel, dicType + "_tree.owl");
+					EDR2DoddleDictConverter.writeOWLTreeData(treeOntModel, ns);
+					EDR2DoddleDictConverter.saveOntology(treeOntModel, dicType + "_tree.owl");
 
 					if (dicType == DictionaryType.EDR) {
 						Model regionOntModel = ModelFactory.createDefaultModel();
-						EDR2DoddleDicConverter.writeOWLRegionData(regionOntModel, ns);
-						EDR2DoddleDicConverter
+						EDR2DoddleDictConverter.writeOWLRegionData(regionOntModel, ns);
+						EDR2DoddleDictConverter
 								.saveOntology(regionOntModel, dicType + "_region.owl");
 					}
 				}
@@ -378,21 +378,21 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 			public void run() {
 				DictionaryType dicType = getDicType();
 				if (dicType == DictionaryType.JPNWN) {
-					JPNWN2DODDLEDicConverter.setJPNWNPath(orgDicPathField.getText());
-					boolean isEnable = JPNWN2DODDLEDicConverter.initJPNWNDB();
+					JPNWN2DODDLEDictConverter.setJPNWNPath(orgDicPathField.getText());
+					boolean isEnable = JPNWN2DODDLEDictConverter.initJPNWNDB();
 					if (!isEnable) {
 						initProgressBar("Error: FileNotFound");
 						return;
 					}
-					JPNWN2DODDLEDicConverter.setDODDLEDicPath(doddleDicPathField.getText());
+					JPNWN2DODDLEDictConverter.setDODDLEDicPath(doddleDicPathField.getText());
 				} else {
-					boolean isEnable = EDR2DoddleDicConverter.setEDRDicPath(
+					boolean isEnable = EDR2DoddleDictConverter.setEDRDicPath(
 							orgDicPathField.getText(), dicType);
 					if (!isEnable) {
 						initProgressBar("Error: FileNotFound");
 						return;
 					}
-					EDR2DoddleDicConverter.setDODDLEDicPath(doddleDicPathField.getText());
+					EDR2DoddleDictConverter.setDODDLEDicPath(doddleDicPathField.getText());
 				}
 				try {
 					if (owlBox.isSelected()) {
@@ -431,7 +431,7 @@ public class DODDLEDicConverterUI extends JDialog implements ActionListener {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			DODDLEDicConverterUI converter = new DODDLEDicConverterUI();
+			DODDLEDictConverterUI converter = new DODDLEDictConverterUI();
 			converter.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

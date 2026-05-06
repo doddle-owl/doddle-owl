@@ -33,7 +33,7 @@ import io.github.doddle_owl.models.ontology_api.EDR;
 import io.github.doddle_owl.models.term_selection.TermModel;
 import io.github.doddle_owl.task_analyzer.Morpheme;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
@@ -760,7 +760,7 @@ public class ConstructTreeAction {
             if (project.getOntologySelectionPanel().isEDREnable()) {
                 inputVerbConceptSet.addAll(EDR.getVerbConceptSet(inputConceptSet)); // EDRにおける動詞的概念の抽出
             }
-            inputVerbConceptSet.addAll(OWLOntologyManager.getVerbConceptSet(inputConceptSet)); // OWLオントロジー中のプロパティセット
+            inputVerbConceptSet.addAll(WebOntologyManager.getVerbConceptSet(inputConceptSet)); // OWLオントロジー中のプロパティセット
             Set<Concept> inputNounConceptSet = new HashSet<>(inputConceptSet);
             inputNounConceptSet.removeAll(inputVerbConceptSet);
 

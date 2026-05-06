@@ -26,7 +26,7 @@ package io.github.doddle_owl.utils;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.common.DODDLEConstants;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.apache.jena.rdf.model.Model;
 
@@ -38,11 +38,11 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class OWLOntologyManager {
+public class WebOntologyManager {
 
-    private static final Map<String, ReferenceOWLOntology> refOntMap = new HashMap<>();
+    private static final Map<String, ReferenceWebOntology> refOntMap = new HashMap<>();
 
-    public static void addRefOntology(String uri, ReferenceOWLOntology ontInfo) {
+    public static void addRefOntology(String uri, ReferenceWebOntology ontInfo) {
         refOntMap.put(uri, ontInfo);
     }
 
@@ -51,7 +51,7 @@ public class OWLOntologyManager {
             String uri = ontFile.getAbsolutePath();
             Model ontModel = Utils.getOntModel(new FileInputStream(ontFile), "---", "RDF/XML",
                     DODDLEConstants.BASE_URI);
-            ReferenceOWLOntology refOnt = new ReferenceOWLOntology(ontModel, uri,
+            ReferenceWebOntology refOnt = new ReferenceWebOntology(ontModel, uri,
                     new NameSpaceTable());
             addRefOntology(uri, refOnt);
         } catch (FileNotFoundException fnfe) {
@@ -59,7 +59,7 @@ public class OWLOntologyManager {
         }
     }
 
-    public static ReferenceOWLOntology getRefOntology(String uri) {
+    public static ReferenceWebOntology getRefOntology(String uri) {
         return refOntMap.get(uri);
     }
 
@@ -67,13 +67,13 @@ public class OWLOntologyManager {
         refOntMap.remove(uri);
     }
 
-    private static Collection<ReferenceOWLOntology> getRefOntologySet() {
+    private static Collection<ReferenceWebOntology> getRefOntologySet() {
         return refOntMap.values();
     }
 
     public static Set<List<Concept>> getPathToRootSet(String uri) {
         Set<List<Concept>> pathToRootSet = new HashSet<>();
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 Set<List<Concept>> set = refOnt.getPathToRootSet(uri);
                 if (set != null) {
@@ -86,7 +86,7 @@ public class OWLOntologyManager {
 
     public static Set<List<String>> getURIPathToRootSet(String uri) {
         Set<List<String>> pathToRootSet = new HashSet<>();
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 Set<List<String>> set = refOnt.getURIPathToRootSet(uri);
                 if (set != null) {
@@ -99,7 +99,7 @@ public class OWLOntologyManager {
 
     public static Set<Concept> getVerbConceptSet(Set<Concept> inputConceptSet) {
         Set<Concept> verbConceptSet = new HashSet<>();
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 for (String uri : refOnt.getPropertySet()) {
                     Concept c = refOnt.getConcept(uri);
@@ -114,7 +114,7 @@ public class OWLOntologyManager {
 
     public static Concept getConcept(String uri) {
         Concept concept = null;
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 concept = refOnt.getConcept(uri);
             }
@@ -124,7 +124,7 @@ public class OWLOntologyManager {
 
     public static Set<String> getDomainSet(Concept c, List<List<Concept>> trimmedConceptList) {
         Set<String> domainSet = new HashSet<>();
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 domainSet.addAll(refOnt.getDomainSet(c.getURI()));
                 for (List<Concept> list : trimmedConceptList) {
@@ -139,7 +139,7 @@ public class OWLOntologyManager {
 
     public static Set<String> getRangeSet(Concept c, List<List<Concept>> trimmedConceptList) {
         Set<String> rangeSet = new HashSet<>();
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 rangeSet.addAll(refOnt.getRangeSet(c.getURI()));
                 for (List<Concept> list : trimmedConceptList) {
@@ -154,7 +154,7 @@ public class OWLOntologyManager {
 
     public static Set<String> getSubURISet(String uri, Set<String> nounURISet) {
         Set<String> subURISet = new HashSet<>();
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 Set<String> uriSet = new HashSet<>();
                 refOnt.getSubURISet(uri, nounURISet, uriSet);
@@ -166,7 +166,7 @@ public class OWLOntologyManager {
 
     public static Set<String> getURISet(String word) {
         Set<String> uriSet = new HashSet<>();
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 Set<String> set = refOnt.getURISet(word);
                 if (set == null) {
@@ -188,7 +188,7 @@ public class OWLOntologyManager {
     }
 
     public static void setOWLConceptSet(String word, Set<Concept> conceptSet) {
-        for (ReferenceOWLOntology refOnt : getRefOntologySet()) {
+        for (ReferenceWebOntology refOnt : getRefOntologySet()) {
             if (refOnt.isAvailable()) {
                 Set<String> uriSet = refOnt.getURISet(word);
                 if (uriSet == null) {

@@ -4,7 +4,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
 
-public class ReferenceOWLOntologyTest {
+public class ReferenceWebOntologyTest {
 
     @BeforeEach
     void setUp() {
@@ -59,7 +59,7 @@ public class ReferenceOWLOntologyTest {
             Model ontModel = ModelFactory.createDefaultModel();
             String fileName = DODDLEConstants.PROJECT_HOME + "test.owl";
             ontModel.read(new FileInputStream(fileName), DODDLEConstants.BASE_URI, "RDF/XML");
-            ReferenceOWLOntology info = new ReferenceOWLOntology(ontModel, fileName, nsTable);
+            ReferenceWebOntology info = new ReferenceWebOntology(ontModel, fileName, nsTable);
             System.out.println("res: " + info.getURISet("Resource")); // すべて小文字に変換しているため
             System.out.println(info.getURISet("animal"));
             System.out.println(info.getURISet("dog"));

@@ -137,9 +137,9 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         documentListModel.clear();
         DefaultTableModel resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
         wsResultTable.setModel(resultModel);
-        resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
+        resultModel = new DefaultTableModel(null, AR_COLUMN_NAMES);
         arResultTable.setModel(resultModel);
-        resultModel = new DefaultTableModel(null, WS_COLUMN_NAMES);
+        resultModel = new DefaultTableModel(null, WA_COLUMN_NAMES);
         waResultTable.setModel(resultModel);
         var resultTableModel = new ResultTableModel(null, definedColumnNames);
         resultTableModel.addTableModelListener(this);

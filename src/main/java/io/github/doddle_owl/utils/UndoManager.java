@@ -51,9 +51,9 @@ public class UndoManager {
     public UndoManager(DODDLEProjectPanel project) {
         index = -1;
         commandList = new ArrayList<>();
-        loadOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenOWLOntologyAction"),
+        loadOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenWebOntologyAction"),
                 LoadOntologyAction.OWL_ONTOLOGY);
-        saveOntologyAction = new SaveOntologyAction(Translator.getTerm("SaveOWLOntologyAction"),
+        saveOntologyAction = new SaveOntologyAction(Translator.getTerm("SaveWebOntologyAction"),
                 SaveOntologyAction.OWL_ONTOLOGY);
         this.project = project;        
     }
@@ -79,7 +79,7 @@ public class UndoManager {
     }
 
     private void loadFiles() {
-        loadOntologyAction.loadOWLOntology(project, lastCommand.getOntFile());
+        loadOntologyAction.loadWebOntology(project, lastCommand.getOntFile());
         ClassTreeConstructionPanel classPanel = project.getConstructClassPanel();
         PropertyTreeConstructionPanel propertyPanel = project.getConstructPropertyPanel();
         classPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getClassTRAFile());
@@ -180,7 +180,7 @@ public class UndoManager {
             } catch(IOException ioe) {
                 ioe.printStackTrace();
             }
-            saveOntologyAction.saveOWLOntology(project, ontFile);
+            saveOntologyAction.saveWebOntology(project, ontFile);
             project.getConstructClassPanel().getConceptDriftManagementPanel().saveTrimmedResultAnalysis(classTRAFile);
             project.getConstructPropertyPanel().getConceptDriftManagementPanel().saveTrimmedResultAnalysis(propertyTRAFile);
         }

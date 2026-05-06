@@ -24,8 +24,8 @@
 package io.github.doddle_owl.views.reference_ontology_selection;
 
 import io.github.doddle_owl.DODDLE_OWL;
-import io.github.doddle_owl.models.reference_ontology_selection.OWLOntologyExtractionTemplate;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.WebOntologyExtractionTemplate;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 
@@ -57,7 +57,7 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
     private final JTextField searchRegionSetTemplateField;
     private final JButton setSearchRegionSetTemplateButton;
 
-    private ReferenceOWLOntology refOnt;
+    private ReferenceWebOntology refOnt;
     private static final int TEXT_FIELD_WIDTH = 30;
 
     public OWLMetaDataPanel() {
@@ -132,9 +132,9 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
         add(mainPanel, BorderLayout.WEST);
     }
 
-    public void setMetaData(ReferenceOWLOntology ont) {
+    public void setMetaData(ReferenceWebOntology ont) {
         refOnt = ont;
-        OWLOntologyExtractionTemplate owlExtractionTemplate = refOnt.getOWLOntologyExtractionTemplate();
+        WebOntologyExtractionTemplate owlExtractionTemplate = refOnt.getWebOntologyExtractionTemplate();
         owlMetaDataTablePanel.setModel(refOnt.getOWLMetaDataTableModel());
         isAvailableCheckBox.setSelected(refOnt.isAvailable());
         locationLabel.setText(refOnt.getURI());
@@ -163,7 +163,7 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (refOnt == null) { return; }
         String templateFileName;
-        OWLOntologyExtractionTemplate owlExtractionTemplate = refOnt.getOWLOntologyExtractionTemplate();
+        WebOntologyExtractionTemplate owlExtractionTemplate = refOnt.getWebOntologyExtractionTemplate();
         if (e.getSource() == setSearchClassSetTemplateButton) {
             templateFileName = getTemplateFileName(searchClassSetTemplateField.getText());
             if (0 < templateFileName.length()) {

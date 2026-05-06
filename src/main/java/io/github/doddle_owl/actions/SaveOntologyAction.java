@@ -131,7 +131,7 @@ public class SaveOntologyAction extends AbstractAction {
         }
     }
 
-    public void saveOWLOntology(DODDLEProjectPanel project, File file) {
+    public void saveWebOntology(DODDLEProjectPanel project, File file) {
         try {
             var outputStream = Files.newOutputStream(Paths.get(file.getAbsolutePath()));
             try (outputStream) {
@@ -157,8 +157,8 @@ public class SaveOntologyAction extends AbstractAction {
                 if (!file.getName().endsWith(".ttl")) {
                     file = new File(file.getAbsolutePath() + ".ttl");
                 }
-                saveOWLOntology(currentProject, file);
-                DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveOWLOntologyAction"));
+                saveWebOntology(currentProject, file);
+                DODDLE_OWL.STATUS_BAR.setText(Translator.getTerm("SaveWebOntologyAction"));
             } else if (conversionType.equals(FREEMIND_ONTOLOGY)) {
                 File file = chooser.getSelectedFile();
                 if (!file.getName().endsWith(".mm")) {

@@ -245,7 +245,7 @@ public class OpenProjectAction extends AbstractAction {
                 conceptSelectionPanel.loadUndefinedTermSet(new File(openDir,
                         ProjectFileNames.UNDEFINED_TERM_SET_FILE));
                 setProgress(currentTaskCnt++);
-                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenOWLOntologyAction"));
+                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("OpenWebOntologyAction"));
                 doddle.loadOntology(currentProject, new File(openDir,
                         ProjectFileNames.ONTOLOGY_FILE));
                 setProgress(currentTaskCnt++);

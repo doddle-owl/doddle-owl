@@ -42,21 +42,21 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
 
 //    private SwoogleWebServiceWrapperPanel swoogleWebServiceWrapperPanel;
     private final GeneralOntologySelectionPanel generalOntologySelectionPanel;
-    private final OWLOntologySelectionPanel owlOntologySelectionPanel;
+    private final WebOntologySelectionPanel webOntologySelectionPanel;
 
     public void initialize() {
 //        swoogleWebServiceWrapperPanel.initialize();
         generalOntologySelectionPanel.initialize();
-        owlOntologySelectionPanel.initialize();
+        webOntologySelectionPanel.initialize();
     }
 
     public ReferenceOntologySelectionPanel() {
         nsTable = new NameSpaceTable();
-        owlOntologySelectionPanel = new OWLOntologySelectionPanel(nsTable);
+        webOntologySelectionPanel = new WebOntologySelectionPanel(nsTable);
         generalOntologySelectionPanel = new GeneralOntologySelectionPanel(nsTable);
 //        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
 //            swoogleWebServiceWrapperPanel = new SwoogleWebServiceWrapperPanel(nsTable,
-//                    owlOntologySelectionPanel);
+//                    WebOntologySelectionPanel);
 //        }
 
         JButton nextTabButton = new JButton(Translator.getTerm("DocumentSelectionPanel"));
@@ -67,9 +67,8 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
 
         var mainTabbedPane = new JTabbedPane();
         mainTabbedPane.addTab(Translator.getTerm("GenericOntologySelectionPanel"), null, generalOntologySelectionPanel);
+        mainTabbedPane.addTab(Translator.getTerm("WebOntologySelectionPanel"), null, webOntologySelectionPanel);
         mainTabbedPane.addTab(Translator.getTerm("NameSpaceTable"), null, nsTable);
-        mainTabbedPane.addTab(Translator.getTerm("OWLOntologySelectionPanel"), null,
-                owlOntologySelectionPanel);
 //        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
 //            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
 //                    swoogleWebServiceWrapperPanel);
@@ -96,11 +95,11 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
     }
 
     public void saveOWLMetaDataSet(File saveDir) {
-        owlOntologySelectionPanel.saveOWLMetaDataSet(saveDir);
+        webOntologySelectionPanel.saveOWLMetaDataSet(saveDir);
     }
 
     public void loadOWLMetaDataSet(File loadDir) {
-        owlOntologySelectionPanel.loadOWLMetaDataSet(loadDir);
+        webOntologySelectionPanel.loadOWLMetaDataSet(loadDir);
     }
 
     public void saveGeneralOntologyInfo(File saveFile) {

@@ -47,7 +47,7 @@ public class SwoogleWebServiceData {
     private final Map<Resource, Set<String>> conceptInputWordSetMap;
 
     private final Map<String, SwoogleOWLMetaData> uriSwoogleOWLMetaDataMap;
-    private static Map<String, ReferenceOWLOntology> uriRefOntologyMap;
+    private static Map<String, ReferenceWebOntology> uriRefOntologyMap;
 
     public SwoogleWebServiceData() {
         swtTermRankMap = new HashMap<>();
@@ -82,7 +82,7 @@ public class SwoogleWebServiceData {
         return swtTermRankMap.get(uri);
     }
 
-    public void putRefOntology(String uri, ReferenceOWLOntology refOntology) {
+    public void putRefOntology(String uri, ReferenceWebOntology refOntology) {
         if (isRelatedOntology(refOntology)) {
             uriRefOntologyMap.put(uri, refOntology);
             DODDLE_OWL.getLogger().info("Regist Ontology: " + uri);
@@ -91,7 +91,7 @@ public class SwoogleWebServiceData {
         }
     }
 
-    public ReferenceOWLOntology getRefOntology(String uri) {
+    public ReferenceWebOntology getRefOntology(String uri) {
         return uriRefOntologyMap.get(uri);
     }
 
@@ -99,7 +99,7 @@ public class SwoogleWebServiceData {
         return uriRefOntologyMap.keySet();
     }
 
-    public Collection<ReferenceOWLOntology> getRefOntologies() {
+    public Collection<ReferenceWebOntology> getRefOntologies() {
         return uriRefOntologyMap.values();
     }
 
@@ -180,7 +180,7 @@ public class SwoogleWebServiceData {
     private Set<Resource> getExpandClassSet(Resource cls) {
         Set<Resource> expandClassSet = new HashSet<>();
         for (String uri : uriRefOntologyMap.keySet()) {
-            ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
+            ReferenceWebOntology refOnto = uriRefOntologyMap.get(uri);
             Set<List<Concept>> pathToRoot = refOnto.getPathToRootSet(cls.getURI());
             for (List<Concept> clist : pathToRoot) {
                 for (Concept c : clist) {
@@ -244,7 +244,7 @@ public class SwoogleWebServiceData {
     public void addInheritedRegionSet() {
         for (Resource property : relatedPropertySet) {
             for (String uri : uriRefOntologyMap.keySet()) {
-                ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
+                ReferenceWebOntology refOnto = uriRefOntologyMap.get(uri);
                 Set<String> refOntDomainSet = refOnto.getDomainSet(property.getURI());
                 for (String domain : refOntDomainSet) {
                     addPropertyDomain(property, ResourceFactory.createResource(domain));
@@ -287,7 +287,7 @@ public class SwoogleWebServiceData {
     /**
      * クラス，プロパティ，関連プロパティのいずれかを含むオントロジーを関連オントロジーとする
      */
-    private boolean isRelatedOntology(ReferenceOWLOntology refOnto) {
+    private boolean isRelatedOntology(ReferenceWebOntology refOnto) {
         Set<Resource> conceptSet = getConceptSet();
         for (Resource concept : conceptSet) {
             if (refOnto.getConcept(concept.getURI()) != null) {
@@ -364,7 +364,7 @@ public class SwoogleWebServiceData {
     public int getDefinedRelationCount() {
         Set<String> relSet = new HashSet<>();
         for (String uri : uriRefOntologyMap.keySet()) {
-            ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
+            ReferenceWebOntology refOnto = uriRefOntologyMap.get(uri);
             // System.out.println("onturi: "+uri);
             // System.out.println("refontpropertyset:
             // "+refOnto.getPropertySet());
@@ -409,7 +409,7 @@ public class SwoogleWebServiceData {
         for (Resource concept : conceptSet) {
             Set<String> refOntoURISet = uriRefOntologyMap.keySet();
             for (String uri : refOntoURISet) {
-                ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
+                ReferenceWebOntology refOnto = uriRefOntologyMap.get(uri);
 //                System.out.println("concept: "+concept.getURI());
 //                System.out.println("uri: "+uri);
 //                System.out.println("refonto:"+refOnto.getURI());
@@ -435,7 +435,7 @@ public class SwoogleWebServiceData {
     public void calcOntologyRank(Set<String> inputWordSet) {
         Set<String> unnecessaryOntologyURISet = new HashSet<>();
         for (String uri : uriRefOntologyMap.keySet()) {
-            ReferenceOWLOntology refOnto = uriRefOntologyMap.get(uri);
+            ReferenceWebOntology refOnto = uriRefOntologyMap.get(uri);
             double inputConceptCnt = 0;
             for (String inputWord : inputWordSet) {
                 if (refOnto.getURISet(inputWord) != null) {

@@ -28,7 +28,7 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.RDFS;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.models.reference_ontology_selection.SwoogleOWLMetaData;
 import io.github.doddle_owl.models.reference_ontology_selection.SwoogleWebServiceData;
 import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
@@ -68,7 +68,7 @@ public class SwoogleWebServiceWrapper {
                 .createResource("http://www.w3.org/2001/XMLSchema#int"));
     }
 
-    private static List<String> owlOntologyList;
+    private static List<String> webOntologyList;
     private static List<String> swoogleQueryList;
 
     private static NameSpaceTable nsTable;
@@ -96,14 +96,14 @@ public class SwoogleWebServiceWrapper {
         return swoogleWebServiceData;
     }
 
-    private static void initOWLOntologyList() {
+    private static void initWebOntologyList() {
         File dir = new File(OWL_ONTOLOGIES_DIR);
         if (!dir.exists()) {
             dir.mkdir();
         }
         File file = new File(OWL_ONTOLOGIES_DIR + File.separator + OWL_ONTOLOGY_RESULT_LIST_FILE);
         // System.out.println(file.getAbsolutePath());
-        owlOntologyList = new ArrayList<>();
+        webOntologyList = new ArrayList<>();
         if (!file.exists()) {
             return;
         }
@@ -112,7 +112,7 @@ public class SwoogleWebServiceWrapper {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             while (reader.ready()) {
                 String line = reader.readLine();
-                owlOntologyList.add(line);
+                webOntologyList.add(line);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,7 +285,7 @@ public class SwoogleWebServiceWrapper {
     private static void appendOntology(String url) {
         appendURI(url,
                 new File(OWL_ONTOLOGIES_DIR + File.separator + OWL_ONTOLOGY_RESULT_LIST_FILE));
-        owlOntologyList.add(url);
+        webOntologyList.add(url);
     }
 
     private static void appendQuery(String url) {
@@ -380,14 +380,14 @@ public class SwoogleWebServiceWrapper {
                     fileType, rdfType, ontoRank);
             swoogleWebServiceData.putSwoogleOWLMetaData(ontologyURL.getURI(), owlMetaData);
             ontURL = new URL(ontologyURL.getURI());
-            int index = owlOntologyList.lastIndexOf(owlMetaData.getURL());
+            int index = webOntologyList.lastIndexOf(owlMetaData.getURL());
             index += 1;
             ontFile = new File(OWL_ONTOLOGIES_DIR + File.separator + "onto_" + index);
             if (!ontFile.exists()) {
                 DODDLE_OWL.getLogger().info("Save Ontology: " + ontologyURL);
                 try {
                     ontFile = new File(OWL_ONTOLOGIES_DIR + File.separator + "onto_"
-                            + (owlOntologyList.size() + 1));
+                            + (webOntologyList.size() + 1));
                     saveOntology(ontologyURL.getURI(), ontFile, ontURL.openStream(),
                             owlMetaData.getFileEncoding());
                 } catch (Exception e) {
@@ -400,7 +400,7 @@ public class SwoogleWebServiceWrapper {
                 Model ontModel = Utils.getOntModel(new FileInputStream(ontFile),
                         fileType.getString(), Utils.getRDFType(rdfType),
                         Utils.getNameSpace(ontologyURL));
-                ReferenceOWLOntology refOnto = new ReferenceOWLOntology(ontModel,
+                ReferenceWebOntology refOnto = new ReferenceWebOntology(ontModel,
                         ontologyURL.getURI(), nsTable);
                 refOnto.getOntologyRank().setSwoogleOntoRank(owlMetaData.getOntoRank());
                 swoogleWebServiceData.putRefOntology(ontologyURL.getURI(), refOnto);
@@ -418,7 +418,7 @@ public class SwoogleWebServiceWrapper {
      */
     private static void setSWTSet(Set<String> inputWordSet) {
         for (String uri : swoogleWebServiceData.getRefOntologyURISet()) {
-            ReferenceOWLOntology refOnt = swoogleWebServiceData.getRefOntology(uri);
+            ReferenceWebOntology refOnt = swoogleWebServiceData.getRefOntology(uri);
             for (String inputWord : inputWordSet) {
                 // 英単語はすべて小文字に変換してから検索する
                 Set<String> conceptURISet = refOnt.getURISet(inputWord);
@@ -772,7 +772,7 @@ public class SwoogleWebServiceWrapper {
             DODDLE_OWL.getLogger().info("defined concept cnt: " + definedConceptCnt);
             boolean isDefinedConcept = false;
             for (String uri : swoogleWebServiceData.getRefOntologyURISet()) {
-                ReferenceOWLOntology refOnto = swoogleWebServiceData.getRefOntology(uri);
+                ReferenceWebOntology refOnto = swoogleWebServiceData.getRefOntology(uri);
                 if (refOnto.getClassSet().contains(conceptResource.getURI())
                         || refOnto.getPropertySet().contains(conceptResource.getURI())) {
                     DODDLE_OWL.getLogger().info("defined concept: " + conceptResource);
@@ -854,8 +854,8 @@ public class SwoogleWebServiceWrapper {
     }
 
     public static void initSwoogleWebServiceWrapper() {
-        // System.out.println("Init OWL Ontology List");
-        initOWLOntologyList();
+        // System.out.println("Init Web Ontology List");
+        initWebOntologyList();
         // System.out.println("Init Swoogle Query List");
         initSwoogleQueryList();
         // System.out.println("Init Swoogle OWL MetaData");

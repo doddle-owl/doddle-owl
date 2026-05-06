@@ -45,7 +45,7 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
+public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
     private boolean isAvailable;
     private final String uri;
     private final Model ontModel;
@@ -62,13 +62,13 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
     private final OntologyRank ontoRank;
 
     private final NameSpaceTable nsTable;
-    private final OWLOntologyExtractionTemplate owlExtractionTemplate;
+    private final WebOntologyExtractionTemplate owlExtractionTemplate;
 
-    public ReferenceOWLOntology(Model model, String uri, NameSpaceTable nst) {
+    public ReferenceWebOntology(Model model, String uri, NameSpaceTable nst) {
         isAvailable = true;
         this.uri = uri;
         ontoRank = new OntologyRank();
-        owlExtractionTemplate = new OWLOntologyExtractionTemplate();
+        owlExtractionTemplate = new WebOntologyExtractionTemplate();
         nsTable = nst;
         ontModel = model;
         wordURIsMap = new HashMap<>();
@@ -135,11 +135,11 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         return uri;
     }
 
-    public OWLOntologyExtractionTemplate getOWLOntologyExtractionTemplate() {
+    public WebOntologyExtractionTemplate getWebOntologyExtractionTemplate() {
         return owlExtractionTemplate;
     }
 
-    private QueryExecution getQueryExcecution(InputStream inputStream) {
+    private QueryExecution getQueryExecution(InputStream inputStream) {
         String queryString = SPARQLQueryUtil.getQueryString(inputStream);
         Query query = QueryFactory.create(queryString);
         return QueryExecutionFactory.create(query, ontModel);
@@ -149,12 +149,12 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         QueryExecution qexec = null;
         if (searchOWLMetaDataTemplate.exists()) {
             try {
-                qexec = getQueryExcecution(new FileInputStream(searchOWLMetaDataTemplate));
+                qexec = getQueryExecution(new FileInputStream(searchOWLMetaDataTemplate));
             } catch (FileNotFoundException fnfe) {
                 fnfe.printStackTrace();
             }
         } else {
-            qexec = getQueryExcecution(owlExtractionTemplate.getDefaultSearchOWLMetaDataTemplate());
+            qexec = getQueryExecution(owlExtractionTemplate.getDefaultSearchOWLMetaDataTemplate());
         }
         try {
             ResultSet results = qexec.execSelect();
@@ -193,12 +193,12 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         QueryExecution qexec = null;
         if (searchPropertiesTemplate.exists()) {
             try {
-                qexec = getQueryExcecution(new FileInputStream(searchPropertiesTemplate));
+                qexec = getQueryExecution(new FileInputStream(searchPropertiesTemplate));
             } catch (FileNotFoundException fnfe) {
                 fnfe.printStackTrace();
             }
         } else {
-            qexec = getQueryExcecution(owlExtractionTemplate.getDefaultSearchPropertySetTemplate());
+            qexec = getQueryExecution(owlExtractionTemplate.getDefaultSearchPropertySetTemplate());
         }
         try {
             ResultSet results = qexec.execSelect();
@@ -220,12 +220,12 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         QueryExecution qexec = null;
         if (searchClassesTemplate.exists()) {
             try {
-                qexec = getQueryExcecution(new FileInputStream(searchClassesTemplate));
+                qexec = getQueryExecution(new FileInputStream(searchClassesTemplate));
             } catch (FileNotFoundException fnfe) {
                 fnfe.printStackTrace();
             }
         } else {
-            qexec = getQueryExcecution(owlExtractionTemplate.getDefaultSearchClassSetTemplate());
+            qexec = getQueryExecution(owlExtractionTemplate.getDefaultSearchClassSetTemplate());
         }
         try {
             ResultSet results = qexec.execSelect();
@@ -340,12 +340,12 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
         QueryExecution qexec = null;
         if (searchRegionSetTemplate.exists()) {
             try {
-                qexec = getQueryExcecution(new FileInputStream(searchRegionSetTemplate));
+                qexec = getQueryExecution(new FileInputStream(searchRegionSetTemplate));
             } catch (FileNotFoundException fnfe) {
                 fnfe.printStackTrace();
             }
         } else {
-            qexec = getQueryExcecution(owlExtractionTemplate.getDefaultSearchRegionSetTemplate());
+            qexec = getQueryExecution(owlExtractionTemplate.getDefaultSearchRegionSetTemplate());
         }
         try {
             ResultSet results = qexec.execSelect();
@@ -624,12 +624,12 @@ public class ReferenceOWLOntology implements Comparable<ReferenceOWLOntology> {
     }
 
     public boolean equals(Object obj) {
-        ReferenceOWLOntology refOnto = (ReferenceOWLOntology) obj;
+        ReferenceWebOntology refOnto = (ReferenceWebOntology) obj;
         return uri.equals(refOnto.getURI());
     }
 
     @Override
-    public int compareTo(ReferenceOWLOntology refOnt) {
+    public int compareTo(ReferenceWebOntology refOnt) {
         return refOnt.getOntologyRank().compareTo(getOntologyRank());
     }
 

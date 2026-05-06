@@ -1,7 +1,7 @@
 package io.github.doddle_owl.models.ontology_api;
 
 import io.github.doddle_owl.models.common.DODDLEConstants;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +28,7 @@ public class JWOTest {
     @Test
     void getJWOConcept() {
         String expected = "大学";
-        String actual = OWLOntologyManager.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", StandardCharsets.UTF_8)).getWord();
+        String actual = WebOntologyManager.getConcept(DODDLEConstants.JWO_URI + URLEncoder.encode("大学", StandardCharsets.UTF_8)).getWord();
         assertEquals(expected, actual);
     }
 }

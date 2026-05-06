@@ -5,7 +5,7 @@ import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.ontology_api.EDR;
 import io.github.doddle_owl.models.ontology_api.WordNet;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -147,9 +147,9 @@ public class CalcConceptDistanceUtilTest {
     }
 
     static void getOWLConceptDistance(String fname, String uri1, String uri2) {
-        OWLOntologyManager.addRefOntology(new File(fname));
-        Concept c1 = OWLOntologyManager.getConcept(uri1);
-        Concept c2 = OWLOntologyManager.getConcept(uri2);
+        WebOntologyManager.addRefOntology(new File(fname));
+        Concept c1 = WebOntologyManager.getConcept(uri1);
+        Concept c2 = WebOntologyManager.getConcept(uri2);
 
         ConceptDistanceModel resultModel = null;
         List<ConceptDistanceModel> cdModelList = getConceptDistanceModelList(c1, c2);
@@ -166,8 +166,8 @@ public class CalcConceptDistanceUtilTest {
     }
 
     static void getOWLLongestDepth(String fname) {
-        OWLOntologyManager.addRefOntology(new File(fname));
-        ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(new File(fname).getAbsolutePath());
+        WebOntologyManager.addRefOntology(new File(fname));
+        ReferenceWebOntology refOnt = WebOntologyManager.getRefOntology(new File(fname).getAbsolutePath());
         int depth = 0;
         Set<String> classSet = refOnt.getClassSet();
         for (String cls : classSet) {

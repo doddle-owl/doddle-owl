@@ -25,7 +25,7 @@ package io.github.doddle_owl.views.reference_ontology_selection;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.models.reference_ontology_selection.SwoogleWebServiceData;
 import io.github.doddle_owl.utils.SwoogleWebServiceWrapper;
 import io.github.doddle_owl.utils.Translator;
@@ -72,14 +72,14 @@ class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
 	private final JList domainJList;
 	private final JList rangeJList;
 
-	private final OWLOntologySelectionPanel owlOntologySelectionPanel;
+	private final WebOntologySelectionPanel webOntologySelectionPanel;
 
 	public void initialize() {
 
 	}
 
-	public SwoogleWebServiceWrapperPanel(NameSpaceTable nsTable, OWLOntologySelectionPanel owlPanel) {
-		owlOntologySelectionPanel = owlPanel;
+	public SwoogleWebServiceWrapperPanel(NameSpaceTable nsTable, WebOntologySelectionPanel owlPanel) {
+		webOntologySelectionPanel = owlPanel;
 
 		SwoogleWebServiceWrapper.setNameSpaceTable(nsTable);
 		SwoogleWebServiceWrapper.initSwoogleWebServiceWrapper();
@@ -259,8 +259,8 @@ class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
 			}
 		} else if (e.getSource() == setOWLOntologiesButton) {
 			for (int i = 0; i < acquiredOntologyModel.getSize(); i++) {
-				ReferenceOWLOntology refOnto = (ReferenceOWLOntology) acquiredOntologyModel.get(i);
-				owlOntologySelectionPanel.addOWLOntology(refOnto);
+				ReferenceWebOntology refOnto = (ReferenceWebOntology) acquiredOntologyModel.get(i);
+				webOntologySelectionPanel.addWebOntology(refOnto);
 			}
 		}
 	}
@@ -275,7 +275,7 @@ class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
-		ReferenceOWLOntology refOnto = (ReferenceOWLOntology) acquiredOntologyJList
+		ReferenceWebOntology refOnto = (ReferenceWebOntology) acquiredOntologyJList
 				.getSelectedValue();
 		if (refOnto == null) {
 			return;

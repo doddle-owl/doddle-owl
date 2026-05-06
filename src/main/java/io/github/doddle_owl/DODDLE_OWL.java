@@ -80,16 +80,16 @@ public class DODDLE_OWL extends JFrame {
     private LoadDescriptionsAction loadDescriptionAction;
     private LoadConceptPreferentialTermAction loadConceptDisplayTermAction;
     private SaveConceptPreferentialTermAction saveConceptDisplayTermAction;
-    private LoadOntologyAction loadOWLOntologyAction;
+    private LoadOntologyAction loadOntologyAction;
     private LoadOntologyAction loadFreeMindOntologyAction;
-    private SaveOntologyAction saveOWLOntologyAction;
+    private SaveOntologyAction saveOntologyAction;
     private SaveOntologyAction saveFreeMindOntologyAction;
     private ShowLogConsoleAction showLogConsoleAction;
     private ShowOptionDialogAction showOptionDialogAction;
     private ShowVersionInfoAction showVersionInfoAction;
     private ShowManualAction showManualAction;
 
-    private ShowDODDLEDicConverterAction showDODDLEDicConverterAction;
+    private ShowDODDLEDictConverterAction showDODDLEDictConverterAction;
 
     private static final int WINDOW_WIDTH = 1280;
     private static final int WINDOW_HEIGHT = 768;
@@ -218,11 +218,11 @@ public class DODDLE_OWL extends JFrame {
                 Translator.getTerm("OpenConceptPreferentialTermMapAction"));
         saveConceptDisplayTermAction = new SaveConceptPreferentialTermAction(
                 Translator.getTerm("SaveConceptPreferentialTermMapAction"));
-        saveOWLOntologyAction = new SaveOntologyAction(Translator.getTerm("SaveOWLOntologyAction"),
+        saveOntologyAction = new SaveOntologyAction(Translator.getTerm("SaveWebOntologyAction"),
                 SaveOntologyAction.OWL_ONTOLOGY);
         saveFreeMindOntologyAction = new SaveOntologyAction(Translator.getTerm("SaveFreeMindOntologyAction"),
                 SaveOntologyAction.FREEMIND_ONTOLOGY);
-        loadOWLOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenOWLOntologyAction"),
+        loadOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenWebOntologyAction"),
                 LoadOntologyAction.OWL_ONTOLOGY);
         loadFreeMindOntologyAction = new LoadOntologyAction(Translator.getTerm("OpenFreeMindOntologyAction"),
                 LoadOntologyAction.FREEMIND_ONTOLOGY);
@@ -230,7 +230,7 @@ public class DODDLE_OWL extends JFrame {
         showOptionDialogAction = new ShowOptionDialogAction(Translator.getTerm("ShowOptionDialogAction"), this);
         showVersionInfoAction = new ShowVersionInfoAction(this);
         showManualAction = new ShowManualAction(Translator.getTerm("ShowManualAction"));
-        showDODDLEDicConverterAction = new ShowDODDLEDicConverterAction("DODDLE Dic Converter");
+        showDODDLEDictConverterAction = new ShowDODDLEDictConverterAction("DODDLE Dict Converter");
     }
 
     private void makeMenuBar() {
@@ -249,7 +249,7 @@ public class DODDLE_OWL extends JFrame {
         loadMenu.add(loadDescriptionAction);
         loadMenu.add(new LoadTermEvalConceptSetAction(Translator.getTerm("OpenInputConceptSelectionResultAction")));
         loadMenu.add(new LoadTermConceptMapAction(Translator.getTerm("OpenInputTermConceptMapAction")));
-        loadMenu.add(loadOWLOntologyAction);
+        loadMenu.add(loadOntologyAction);
         loadMenu.add(loadFreeMindOntologyAction);
         loadMenu.add(loadConceptDisplayTermAction);
         fileMenu.add(loadMenu);
@@ -265,7 +265,7 @@ public class DODDLE_OWL extends JFrame {
         saveMenu.add(new SavePerfectlyMatchedTermAction(Translator.getTerm("SaveExactMatchTermListAction")));
         saveMenu.add(new SavePerfectlyMatchedTermWithCompoundWordAction(Translator
                 .getTerm("SaveExactMatchTermCompoundWordMapAction")));
-        saveMenu.add(saveOWLOntologyAction);
+        saveMenu.add(saveOntologyAction);
         saveMenu.add(saveFreeMindOntologyAction);
         saveMenu.add(saveConceptDisplayTermAction);
         fileMenu.add(saveMenu);
@@ -281,7 +281,7 @@ public class DODDLE_OWL extends JFrame {
         toolMenu.add(new ConstructNounTreeAction());
         toolMenu.add(new ConstructNounAndVerbTreeAction());
         toolMenu.addSeparator();
-        toolMenu.add(showDODDLEDicConverterAction);
+        toolMenu.add(showDODDLEDictConverterAction);
         toolMenu.addSeparator();
         toolMenu.add(showLogConsoleAction);
         toolMenu.addSeparator();
@@ -328,11 +328,11 @@ public class DODDLE_OWL extends JFrame {
     }
 
     public void saveOntology(DODDLEProjectPanel currentProject, File file) {
-        saveOWLOntologyAction.saveOWLOntology(currentProject, file);
+        saveOntologyAction.saveWebOntology(currentProject, file);
     }
 
     public void loadOntology(DODDLEProjectPanel currentProject, File file) {
-        loadOWLOntologyAction.loadOWLOntology(currentProject, file);
+        loadOntologyAction.loadWebOntology(currentProject, file);
     }
 
     public static void setSelectedIndex(int index) {

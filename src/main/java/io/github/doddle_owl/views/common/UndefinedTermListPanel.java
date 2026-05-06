@@ -66,9 +66,8 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
 
         undefinedTermListModel = new DefaultListModel();
         undefinedTermJList = new JList(undefinedTermListModel);
-        JScrollPane unefinedWordJListScroll = new JScrollPane(undefinedTermJList);
+        JScrollPane undefinedWordJListScroll = new JScrollPane(undefinedTermJList);
         undefinedTermJListTitle = BorderFactory.createTitledBorder(Translator.getTerm("UndefinedTermList"));
-        unefinedWordJListScroll.setBorder(undefinedTermJListTitle);
         undefinedTermJList.setDragEnabled(true);
         new DropTarget(undefinedTermJList, new UndefinedTermJListDropTargetAdapter());
 
@@ -92,8 +91,8 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
 
         setLayout(new BorderLayout());
         add(northPanel, BorderLayout.NORTH);
-        add(unefinedWordJListScroll, BorderLayout.CENTER);
-        setBorder(BorderFactory.createTitledBorder(Translator.getTerm("UndefinedTermListPanel")));
+        add(undefinedWordJListScroll, BorderLayout.CENTER);
+        setBorder(undefinedTermJListTitle);
     }
 
     class UndefinedTermJListDropTargetAdapter extends DropTargetAdapter {

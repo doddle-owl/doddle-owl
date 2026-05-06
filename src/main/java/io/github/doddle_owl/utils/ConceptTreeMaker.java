@@ -98,7 +98,7 @@ public class ConceptTreeMaker {
         inputConceptSet = conceptSet;
         Set<List<Concept>> pathSet = new HashSet<>();
         for (Concept c : conceptSet) {
-            Set<List<Concept>> tmpPathSet = OWLOntologyManager.getPathToRootSet(c.getURI());
+            Set<List<Concept>> tmpPathSet = WebOntologyManager.getPathToRootSet(c.getURI());
             int pathSize = 0;
             for (List<Concept> pathToRoot : tmpPathSet) {
                 if (pathSize < pathToRoot.size()) {

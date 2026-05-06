@@ -31,7 +31,7 @@ import io.github.doddle_owl.models.ontology_api.JaWordNet;
 import io.github.doddle_owl.models.ontology_api.WordNet;
 import io.github.doddle_owl.models.term_selection.TermModel;
 import io.github.doddle_owl.task_analyzer.Morpheme;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
@@ -145,7 +145,7 @@ public class InputModule {
         setEDRTConceptSet(subInputTerm, conceptSet);
         setWordNetConceptSet(subInputTerm, conceptSet); // スペースを_に置き換えるとマッチしなくなる
         setJpnWordNetConceptSet(subInputTerm, conceptSet);
-        OWLOntologyManager.setOWLConceptSet(subInputTerm, conceptSet);
+        WebOntologyManager.setOWLConceptSet(subInputTerm, conceptSet);
         return conceptSet;
     }
 

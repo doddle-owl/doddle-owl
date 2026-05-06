@@ -35,7 +35,7 @@ import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.ontology_api.EDR;
 import io.github.doddle_owl.models.ontology_api.WordNet;
 import io.github.doddle_owl.models.term_selection.TermModel;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
@@ -164,7 +164,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
             return concept;
         }
 
-        concept = OWLOntologyManager.getConcept(c.getURI());
+        concept = WebOntologyManager.getConcept(c.getURI());
         if (concept != null) {
             return concept;
         }

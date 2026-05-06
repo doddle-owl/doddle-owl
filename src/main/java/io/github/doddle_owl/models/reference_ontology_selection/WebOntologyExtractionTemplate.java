@@ -31,7 +31,7 @@ import java.io.InputStream;
 /**
  * @author Takeshi Morita
  */
-public class OWLOntologyExtractionTemplate {
+public class WebOntologyExtractionTemplate {
 
     private File searchOWLMetaDataTemplate;
     private File searchClassSetTemplate;
@@ -40,7 +40,7 @@ public class OWLOntologyExtractionTemplate {
     private File searchRegionSetTemplate;
     private File searchSubConceptTemplate;
 
-    public OWLOntologyExtractionTemplate() {
+    public WebOntologyExtractionTemplate() {
         setSearchOWLMetaDataTemplate(new File("ontology_templates/SearchOWLMetaData.rq"));
         setSearchClassSetTemplate(new File("ontology_templates/SearchClassSet.rq"));
         setSearchPropertySetTemplate(new File("ontology_templates/SearchPropertySet.rq"));

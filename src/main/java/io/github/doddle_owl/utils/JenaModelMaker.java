@@ -36,7 +36,7 @@ import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
 import io.github.doddle_owl.models.concept_tree.VerbConcept;
-import io.github.doddle_owl.models.reference_ontology_selection.ReferenceOWLOntology;
+import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.views.concept_tree.ConceptTreePanel;
 
 import java.io.BufferedWriter;
@@ -179,8 +179,8 @@ public class JenaModelMaker {
         String outputFileName = args[1];
 
         File ontFile = new File(ontFileName);
-        OWLOntologyManager.addRefOntology(ontFile);
-        ReferenceOWLOntology refOnt = OWLOntologyManager.getRefOntology(ontFile.getAbsolutePath());
+        WebOntologyManager.addRefOntology(ontFile);
+        ReferenceWebOntology refOnt = WebOntologyManager.getRefOntology(ontFile.getAbsolutePath());
 
         Collection<String> classSet = refOnt.getClassSet();
         StringBuilder builder = new StringBuilder();

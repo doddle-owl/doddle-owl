@@ -28,7 +28,7 @@ import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
 import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
 import io.github.doddle_owl.models.concept_tree.VerbConcept;
 import io.github.doddle_owl.models.ontology_api.EDR;
-import io.github.doddle_owl.utils.OWLOntologyManager;
+import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
@@ -117,7 +117,7 @@ class EDRConceptDefinitionPanel extends JPanel implements ActionListener {
         for (String uri : domainSet) {
             Concept c = project.getConcept(uri);
             if (c == null) {
-                c = OWLOntologyManager.getConcept(uri);
+                c = WebOntologyManager.getConcept(uri);
             }
             if (project.getOntologySelectionPanel().isEDREnable() && c == null) {
                 c = EDR.getEDRConcept(Utils.getLocalName(uri));
@@ -133,7 +133,7 @@ class EDRConceptDefinitionPanel extends JPanel implements ActionListener {
         for (String uri : rangeSet) {
             Concept c = project.getConcept(uri);
             if (c == null) {
-                c = OWLOntologyManager.getConcept(uri);
+                c = WebOntologyManager.getConcept(uri);
             }
             if (project.getOntologySelectionPanel().isEDREnable() && c == null) {
                 c = EDR.getEDRConcept(Utils.getLocalName(uri));

@@ -1,16 +1,16 @@
 package io.github.doddle_owl.actions;
 
 import io.github.doddle_owl.utils.Utils;
-import io.github.doddle_owl.views.DODDLEDicConverterUI;
+import io.github.doddle_owl.views.DODDLEDictConverterUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class ShowDODDLEDicConverterAction extends AbstractAction {
+public class ShowDODDLEDictConverterAction extends AbstractAction {
 
     private final String title;
 
-    public ShowDODDLEDicConverterAction(String title) {
+    public ShowDODDLEDictConverterAction(String title) {
         super(title, Utils.getImageIcon("baseline_build_black_18dp.png"));
         this.title = title;
     }
@@ -20,7 +20,7 @@ public class ShowDODDLEDicConverterAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        DODDLEDicConverterUI converter = new DODDLEDicConverterUI();
+        DODDLEDictConverterUI converter = new DODDLEDictConverterUI();
         converter.setVisible(true);
     }
 }

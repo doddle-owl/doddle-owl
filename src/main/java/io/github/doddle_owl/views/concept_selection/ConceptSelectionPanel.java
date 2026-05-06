@@ -1351,7 +1351,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             List<EvalConcept> evalConceptList = conceptSetJList.getSelectedValuesList();
             Set<List<Concept>> pathToRootSet = new HashSet<>();
             for (EvalConcept ec : evalConceptList) {
-                pathToRootSet.addAll(OWLOntologyManager.getPathToRootSet(ec.getConcept().getURI()));
+                pathToRootSet.addAll(WebOntologyManager.getPathToRootSet(ec.getConcept().getURI()));
                 int pathSize = 0;
                 for (List<Concept> pathToRoot : pathToRootSet) {
                     if (pathSize < pathToRoot.size()) {
@@ -1937,7 +1937,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             }
             termSet.addAll(inputModule.getUndefinedTermSet());
             JList list = new JList();
-            list.setBorder(BorderFactory.createTitledBorder("入力されたすべての単語(" + termSet.size() + ")"));
+            list.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputTermListArea") + " (" + termSet.size() + ")"));
             list.setListData(termSet.toArray());
             JScrollPane listScroll = new JScrollPane(list);
             frame.getContentPane().add(listScroll);

@@ -101,7 +101,7 @@ public class UpperConceptManager {
                     }
                     break;
                 default:
-                    for (List<String> path : OWLOntologyManager.getURIPathToRootSet(uri)) {
+                    for (List<String> path : WebOntologyManager.getURIPathToRootSet(uri)) {
                         upperURISet.addAll(path);
                     }
                     break;
