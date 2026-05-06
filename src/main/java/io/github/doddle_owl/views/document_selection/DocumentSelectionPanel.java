@@ -160,6 +160,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
 
         documentTextArea = new JTextArea();
         documentTextArea.setLineWrap(true);
+        documentTextArea.setWrapStyleWord(true);
         var documentTextAreaScroll = new JScrollPane(documentTextArea);
         documentTextAreaScroll.setBorder(new TitledBorder(Translator.getTerm("InputDocumentArea")));
 

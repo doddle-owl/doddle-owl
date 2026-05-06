@@ -58,6 +58,7 @@ class EditDescriptionDialog extends JDialog implements ActionListener {
         JComponent langFieldP = Utils.createTitledPanel(langField, Translator.getTerm("LangTextField"), 50, 20);
         descriptionArea = new JTextArea(5, 20);
         descriptionArea.setLineWrap(true);
+        descriptionArea.setWrapStyleWord(true);
         JScrollPane commentAreaScroll = new JScrollPane(descriptionArea);
         commentAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("DescriptionBorder")));
 
