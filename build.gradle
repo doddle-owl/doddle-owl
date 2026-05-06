@@ -74,8 +74,6 @@ runtime {
     imageZip = file(layout.buildDirectory.file("doddle-owl-${version}.zip"))
 
     jpackage {
-        outputDir = 'my-packaging'
-        mainJar = "doddle-owl-${version}.jar"
         imageName = "DODDLE-OWL"
         skipInstaller = false
         installerName = "doddle-owl"
@@ -119,7 +117,6 @@ shadowJar {
     manifest {
         attributes 'Main-Class': 'io.github.doddle_owl.DODDLE_OWL'
     }
-    archiveFileName = "doddle-owl-${version}.jar"
     exclude 'jpwn_dict_1.1/'
 }
 
