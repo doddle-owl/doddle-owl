@@ -95,11 +95,11 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
     private final JCheckBox otherCheckBox;
     private final JCheckBox oneWordCheckBox;
 
-    private final JTextField punctuationField;
-    private final JButton setPunctuationButton;
+    private final JTextField sentenceDelimitersField;
+    private final JButton setSentenceDelimitersButton;
     private final JButton termExtractionButton;
 
-    public static String PUNCTUATION_CHARS = "．|。|\\.";
+    public static String SENTENCE_DELIMITERS = "．|。|\\.";
     public static final String COMPOUND_WORD_JA = "複合語";
     public static final String COMPOUND_WORD_EN = "Compound Word";
 
@@ -140,7 +140,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         verbCheckBox.setSelected(false);
         otherCheckBox.setSelected(false);
         oneWordCheckBox.setSelected(false);
-        punctuationField.setText(PUNCTUATION_CHARS);
+        sentenceDelimitersField.setText(SENTENCE_DELIMITERS);
         documentTextArea.setText("");
     }
 
@@ -164,13 +164,13 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         var documentTextAreaScroll = new JScrollPane(documentTextArea);
         documentTextAreaScroll.setBorder(new TitledBorder(Translator.getTerm("InputDocumentArea")));
 
-        punctuationField = new JTextField(10);
-        setPunctuationButton = new JButton(Translator.getTerm("SetPunctuationCharacterButton"));
-        setPunctuationButton.addActionListener(this);
+        sentenceDelimitersField = new JTextField(10);
+        setSentenceDelimitersButton = new JButton(Translator.getTerm("SetSentenceDelimitersButton"));
+        setSentenceDelimitersButton.addActionListener(this);
 
-        var punctuationPanel = new JPanel();
-        punctuationPanel.add(punctuationField);
-        punctuationPanel.add(setPunctuationButton);
+        var sentenceDelimitersPanel = new JPanel();
+        sentenceDelimitersPanel.add(sentenceDelimitersField);
+        sentenceDelimitersPanel.add(setSentenceDelimitersButton);
 
         var documentButtonPanel = new JPanel();
         documentButtonPanel.setLayout(new GridLayout(1, 3));
@@ -181,7 +181,7 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
         var southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
         southPanel.add(documentButtonPanel, BorderLayout.WEST);
-        southPanel.add(punctuationPanel, BorderLayout.EAST);
+        southPanel.add(sentenceDelimitersPanel, BorderLayout.EAST);
 
         var documentPanel = new JPanel();
         documentPanel.setLayout(new BorderLayout());
@@ -678,8 +678,8 @@ public class DocumentSelectionPanel extends JPanel implements ListSelectionListe
                 doc.setLang(lang);
                 updateUI();
             }
-        } else if (e.getSource() == setPunctuationButton) {
-            PUNCTUATION_CHARS = punctuationField.getText();
+        } else if (e.getSource() == setSentenceDelimitersButton) {
+            SENTENCE_DELIMITERS = sentenceDelimitersField.getText();
             for (int i = 0; i < documentListModel.getSize(); i++) {
                 Document doc = documentListModel.getElementAt(i);
                 doc.resetText();

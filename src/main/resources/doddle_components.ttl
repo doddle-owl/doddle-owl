@@ -3765,14 +3765,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "この名前空間はベースURIです．" .
 
-<https://doddle-owl.github.io#SetPunctuationCharacterButton>
+<https://doddle-owl.github.io#SetSentenceDelimitersButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Set Punctuation Character"@en , "1文の区切り文字を設定"@ja ;
+                "Set sentence delimiters"@en , "文区切り文字の設定"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "1文の区切り文字を設定" .
+                "文区切り文字の設定" .
 
 <https://doddle-owl.github.io#LineMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;

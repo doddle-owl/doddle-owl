@@ -67,7 +67,7 @@ public class Document implements Comparable<Document> {
 	}
 
 	private String[] getSplitText() {
-		return text.split(DocumentSelectionPanel.PUNCTUATION_CHARS + "|\n");
+		return text.split(DocumentSelectionPanel.SENTENCE_DELIMITERS + "|\n");
 	}
 
 	private String getTextString() {
