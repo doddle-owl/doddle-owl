@@ -6,7 +6,7 @@ import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.utils.Translator;
-import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
+import io.github.doddle_owl.views.reference_ontology_selection.NamespaceTable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +55,7 @@ public class ReferenceWebOntologyTest {
     static void main(String[] args) {
         try {
             Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
-            NameSpaceTable nsTable = new NameSpaceTable();
+            NamespaceTable nsTable = new NamespaceTable();
             Model ontModel = ModelFactory.createDefaultModel();
             String fileName = DODDLEConstants.PROJECT_HOME + "test.owl";
             ontModel.read(new FileInputStream(fileName), DODDLEConstants.BASE_URI, "RDF/XML");

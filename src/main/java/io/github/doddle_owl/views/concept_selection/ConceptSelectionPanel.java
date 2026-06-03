@@ -1360,9 +1360,9 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 }
                 if (pathSize <= 1
                         && DODDLE_OWL.GENERAL_ONTOLOGY_NAMESPACE_SET.contains(ec.getConcept()
-                        .getNameSpace())) {
+                        .getNamespace())) {
                     pathToRootSet.clear();
-                    switch (ec.getConcept().getNameSpace()) {
+                    switch (ec.getConcept().getNamespace()) {
                         case DODDLEConstants.EDR_URI:
                             pathToRootSet.addAll(EDRTree.getEDRTree().getConceptPathToRootSet(
                                     ec.getConcept().getLocalName()));
@@ -1565,7 +1565,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 continue;
             }
             for (Concept c : termConceptSetMap.get(term)) {
-                if (c.getNameSpace().equals(ns)) {
+                if (c.getNamespace().equals(ns)) {
                     idSet.add(c.getLocalName());
                 }
             }
@@ -1755,7 +1755,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
         private Set<Set<String>> getSiblingConceptSet(Concept c) {
             Set<Set<String>> siblingConceptSet = null;
-            switch (c.getNameSpace()) {
+            switch (c.getNamespace()) {
                 case DODDLEConstants.EDR_URI:
                     siblingConceptSet = EDRTree.getEDRTree().getSiblingURISet(c.getURI());
                     break;
@@ -1771,7 +1771,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
         private Set<Set<String>> getSubConceptSet(Concept c) {
             Set<Set<String>> subConceptSet = null;
-            switch (c.getNameSpace()) {
+            switch (c.getNamespace()) {
                 case DODDLEConstants.EDR_URI:
                     subConceptSet = EDRTree.getEDRTree().getSubURISet(c.getURI());
                     break;
@@ -1787,7 +1787,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
         private Set<List<String>> getPathToRootSet(Concept c) {
             Set<List<String>> pathSet = null;
-            switch (c.getNameSpace()) {
+            switch (c.getNamespace()) {
                 case DODDLEConstants.EDR_URI:
                     pathSet = EDRTree.getEDRTree().getURIPathToRootSet(c.getLocalName());
                     break;

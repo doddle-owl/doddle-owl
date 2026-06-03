@@ -76,7 +76,7 @@ public class UpperConceptManager {
         Set<String> uriSet = ReferenceOntology.getURISet(word);
         Set<String> upperURISet = new HashSet<>();
         for (String uri : uriSet) {
-            String ns = Utils.getNameSpace(uri);
+            String ns = Utils.getNamespace(uri);
             String id = Utils.getLocalName(uri);
             upperURISet.add(uri);
             switch (ns) {

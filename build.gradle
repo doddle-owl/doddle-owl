@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'org.doddle-owl'
-version = '26.5.1'
+version = '26.6.1'
 
 java {
     sourceCompatibility = '21'

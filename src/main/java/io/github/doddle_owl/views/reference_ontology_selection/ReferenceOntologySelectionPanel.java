@@ -38,7 +38,7 @@ import java.io.File;
  */
 public class ReferenceOntologySelectionPanel extends JPanel implements ActionListener {
 
-    private final NameSpaceTable nsTable;
+    private final NamespaceTable nsTable;
 
 //    private SwoogleWebServiceWrapperPanel swoogleWebServiceWrapperPanel;
     private final GeneralOntologySelectionPanel generalOntologySelectionPanel;
@@ -51,7 +51,7 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
     }
 
     public ReferenceOntologySelectionPanel() {
-        nsTable = new NameSpaceTable();
+        nsTable = new NamespaceTable();
         webOntologySelectionPanel = new WebOntologySelectionPanel(nsTable);
         generalOntologySelectionPanel = new GeneralOntologySelectionPanel(nsTable);
 //        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
@@ -68,7 +68,7 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
         var mainTabbedPane = new JTabbedPane();
         mainTabbedPane.addTab(Translator.getTerm("GenericOntologySelectionPanel"), null, generalOntologySelectionPanel);
         mainTabbedPane.addTab(Translator.getTerm("WebOntologySelectionPanel"), null, webOntologySelectionPanel);
-        mainTabbedPane.addTab(Translator.getTerm("NameSpaceTable"), null, nsTable);
+        mainTabbedPane.addTab(Translator.getTerm("NamespaceTable"), null, nsTable);
 //        if (DODDLEConstants.IS_INTEGRATING_SWOOGLE) {
 //            mainTabbedPane.addTab(Translator.getTerm("SwoogleWebServiceWrapperPanel"), null,
 //                    swoogleWebServiceWrapperPanel);
@@ -82,7 +82,7 @@ public class ReferenceOntologySelectionPanel extends JPanel implements ActionLis
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public NameSpaceTable getNSTable() {
+    public NamespaceTable getNSTable() {
         return nsTable;
     }
 

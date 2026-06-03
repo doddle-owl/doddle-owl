@@ -27,7 +27,7 @@ import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
-import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
+import io.github.doddle_owl.views.reference_ontology_selection.NamespaceTable;
 import org.apache.jena.rdf.model.Model;
 
 import java.io.File;
@@ -52,7 +52,7 @@ public class WebOntologyManager {
             Model ontModel = Utils.getOntModel(new FileInputStream(ontFile), "---", "RDF/XML",
                     DODDLEConstants.BASE_URI);
             ReferenceWebOntology refOnt = new ReferenceWebOntology(ontModel, uri,
-                    new NameSpaceTable());
+                    new NamespaceTable());
             addRefOntology(uri, refOnt);
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();

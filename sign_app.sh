@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-VERSION=${1:-"26.5.1"}
+VERSION=${1:-"26.6.1"}
 APP_NAME="DODDLE-OWL.app"
 DMG_NAME="doddle-owl-${VERSION}.dmg"
 

@@ -168,7 +168,7 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
         if (concept != null) {
             return concept;
         }
-        switch (c.getNameSpace()) {
+        switch (c.getNamespace()) {
             case DODDLEConstants.EDR_URI:
                 concept = EDR.getEDRConcept(c.getLocalName());
                 break;

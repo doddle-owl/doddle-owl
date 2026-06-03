@@ -78,10 +78,10 @@ class SwoogleWebServiceWrapperPanel extends JPanel implements ActionListener,
 
 	}
 
-	public SwoogleWebServiceWrapperPanel(NameSpaceTable nsTable, WebOntologySelectionPanel owlPanel) {
+	public SwoogleWebServiceWrapperPanel(NamespaceTable nsTable, WebOntologySelectionPanel owlPanel) {
 		webOntologySelectionPanel = owlPanel;
 
-		SwoogleWebServiceWrapper.setNameSpaceTable(nsTable);
+		SwoogleWebServiceWrapper.setNamespaceTable(nsTable);
 		SwoogleWebServiceWrapper.initSwoogleWebServiceWrapper();
 
 		inputWordArea = new JTextArea();

@@ -52,13 +52,13 @@ class GeneralOntologySelectionPanel extends JPanel {
     private final JCheckBox jpnWnCheckBox;
     private final JCheckBox jwoCheckBox;
 
-    private final NameSpaceTable nameSpaceTable;
+    private final NamespaceTable nameSpaceTable;
 
     public void initialize() {
         resetCheckBoxes();
     }
 
-    public GeneralOntologySelectionPanel(NameSpaceTable nsTable) {
+    public GeneralOntologySelectionPanel(NamespaceTable nsTable) {
         nameSpaceTable = nsTable;
         wnCheckBox = new JCheckBox(Translator.getTerm("WordNetCheckBox"), false);
         wnCheckBox.addActionListener(e -> enableWordNetDic(wnCheckBox.isSelected()));

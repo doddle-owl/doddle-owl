@@ -275,8 +275,8 @@ public class Concept implements Serializable {
 		return uri.getURI();
 	}
 
-	public String getNameSpace() {
-		return Utils.getNameSpace(uri);
+	public String getNamespace() {
+		return Utils.getNamespace(uri);
 	}
 
 	public String getLocalName() {
@@ -289,7 +289,7 @@ public class Concept implements Serializable {
 		}
 		ReferenceOntologySelectionPanel ontSelectionPanel = DODDLE_OWL.getCurrentProject()
 				.getOntologySelectionPanel();
-		String prefix = ontSelectionPanel.getPrefix(getNameSpace());
+		String prefix = ontSelectionPanel.getPrefix(getNamespace());
 		return prefix + ":" + getLocalName();
 	}
 

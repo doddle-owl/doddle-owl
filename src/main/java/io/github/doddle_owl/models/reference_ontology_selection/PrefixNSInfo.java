@@ -30,12 +30,12 @@ package io.github.doddle_owl.models.reference_ontology_selection;
 public class PrefixNSInfo {
 
     private final String prefix;
-    private final String nameSpace;
+    private final String namespace;
     private final boolean isAvailable;
 
     public PrefixNSInfo(String p, String ns, boolean t) {
         prefix = p;
-        nameSpace = ns;
+        namespace = ns;
         isAvailable = t;
     }
 
@@ -43,8 +43,8 @@ public class PrefixNSInfo {
         return prefix;
     }
 
-    public String getNameSpace() {
-        return nameSpace;
+    public String getNamespace() {
+        return namespace;
     }
 
     public boolean isAvailable() {
@@ -52,6 +52,6 @@ public class PrefixNSInfo {
     }
 
     public String toString() {
-        return "prefix: " + prefix + " | NameSpace: " + nameSpace + " | available: " + isAvailable;
+        return "prefix: " + prefix + " | Namespace: " + namespace + " | available: " + isAvailable;
     }
 }

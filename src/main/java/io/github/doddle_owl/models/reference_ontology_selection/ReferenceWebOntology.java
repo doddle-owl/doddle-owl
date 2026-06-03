@@ -26,7 +26,7 @@ package io.github.doddle_owl.models.reference_ontology_selection;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
+import io.github.doddle_owl.views.reference_ontology_selection.NamespaceTable;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.SPARQLQueryUtil;
 import io.github.doddle_owl.utils.Utils;
@@ -61,10 +61,10 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
 
     private final OntologyRank ontoRank;
 
-    private final NameSpaceTable nsTable;
+    private final NamespaceTable nsTable;
     private final WebOntologyExtractionTemplate owlExtractionTemplate;
 
-    public ReferenceWebOntology(Model model, String uri, NameSpaceTable nst) {
+    public ReferenceWebOntology(Model model, String uri, NamespaceTable nst) {
         isAvailable = true;
         this.uri = uri;
         ontoRank = new OntologyRank();
@@ -81,9 +81,9 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
         Object[] columnNames = new Object[]{"Property", "Value"};
         owlMetaDataTableModel = new OWLMetaDataTableModel(nsTable, columnNames, 0);
 
-        setOWLMetaData(owlExtractionTemplate.getSearchOWLMetaDataTemplate());
-        setClassSet(owlExtractionTemplate.getSearchClassSetTemplate());
-        setPropertySet(owlExtractionTemplate.getSearchPropertySetTemplate());
+        setOWLMetaData(owlExtractionTemplate.getOWLMetaDataExtractionTemplate());
+        setClassSet(owlExtractionTemplate.getClassExtractionTemplate());
+        setPropertySet(owlExtractionTemplate.getPropertyExtractionTemplate());
         if (!uri.equals(DODDLEConstants.JWO_HOME)) {
             makeWordURIsMap();
         }
@@ -102,9 +102,9 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
         conceptResourceSet.clear();
         domainMap.clear();
         rangeMap.clear();
-        setOWLMetaData(owlExtractionTemplate.getSearchOWLMetaDataTemplate());
-        setClassSet(owlExtractionTemplate.getSearchClassSetTemplate());
-        setPropertySet(owlExtractionTemplate.getSearchPropertySetTemplate());
+        setOWLMetaData(owlExtractionTemplate.getOWLMetaDataExtractionTemplate());
+        setClassSet(owlExtractionTemplate.getClassExtractionTemplate());
+        setPropertySet(owlExtractionTemplate.getPropertyExtractionTemplate());
         if (!uri.equals(DODDLEConstants.JWO_HOME)) {
             makeWordURIsMap();
         }
@@ -165,7 +165,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
                 if (propertyRes.equals(RDF.type)) {
                     continue;
                 }
-                nsTable.addNameSpaceTable(Utils.getNameSpace(propertyRes));
+                nsTable.addNameSpaceTable(Utils.getNamespace(propertyRes));
                 RDFNode value = qs.get(VALUE_QUERY_STRING);
                 if (propertyRDFNodeSetMap.get(propertyRes) != null) {
                     Set<RDFNode> rdfNodeSet = propertyRDFNodeSetMap.get(propertyRes);
@@ -198,7 +198,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
                 fnfe.printStackTrace();
             }
         } else {
-            qexec = getQueryExecution(owlExtractionTemplate.getDefaultSearchPropertySetTemplate());
+            qexec = getQueryExecution(owlExtractionTemplate.getDefaultPropertyExtractionTemplate());
         }
         try {
             ResultSet results = qexec.execSelect();
@@ -207,7 +207,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
                 Resource propertyRes = (Resource) qs.get(PROPERTY_QUERY_STRING);
                 propertySet.add(propertyRes.getURI());
                 conceptResourceSet.add(propertyRes);
-                nsTable.addNameSpaceTable(Utils.getNameSpace(propertyRes));
+                nsTable.addNameSpaceTable(Utils.getNamespace(propertyRes));
             }
         } finally {
             if (qexec != null) {
@@ -225,7 +225,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
                 fnfe.printStackTrace();
             }
         } else {
-            qexec = getQueryExecution(owlExtractionTemplate.getDefaultSearchClassSetTemplate());
+            qexec = getQueryExecution(owlExtractionTemplate.getDefaultClassExtractionTemplate());
         }
         try {
             ResultSet results = qexec.execSelect();
@@ -235,7 +235,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
                 classSet.add(classRes.getURI());
                 conceptResourceSet.add(classRes);
                 if (nsTable != null) {
-                    nsTable.addNameSpaceTable(Utils.getNameSpace(classRes));
+                    nsTable.addNameSpaceTable(Utils.getNamespace(classRes));
                 }
             }
         } catch (Exception e) {
@@ -264,7 +264,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
                 uris.add(conceptResource.getURI());
                 wordURIsMap.put(localName, uris);
             }
-            setWordURIsMap(conceptResource.getURI(), owlExtractionTemplate.getSearchConceptTemplate());
+            setWordURIsMap(conceptResource.getURI(), owlExtractionTemplate.getAnnotationExtractionTemplate());
         }
     }
 
@@ -281,7 +281,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
             }
         } else {
             queryString = SPARQLQueryUtil.getQueryString(owlExtractionTemplate
-                    .getDefaultSearchConceptTemplate());
+                    .getDefaultAnnotationExtractionTemplate());
         }
         queryString = queryString.replaceAll("\\?concept", "<" + uri + ">"); // ?conceptを<概念URI>に置換
         QueryExecution qexec = null;
@@ -345,7 +345,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
                 fnfe.printStackTrace();
             }
         } else {
-            qexec = getQueryExecution(owlExtractionTemplate.getDefaultSearchRegionSetTemplate());
+            qexec = getQueryExecution(owlExtractionTemplate.getDefaultDomainRangeExtractionTemplate());
         }
         try {
             ResultSet results = qexec.execSelect();
@@ -390,7 +390,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
 
     private void setRegionSet() {
         if (domainMap.size() == 0 || rangeMap.size() == 0) {
-            setRegionSet(owlExtractionTemplate.getSearchRegionSetTemplate());
+            setRegionSet(owlExtractionTemplate.getDomainRangeExtractionTemplate());
         }
     }
 
@@ -434,7 +434,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
     }
 
     public Concept getConcept(String uri) {
-        return getConcept(uri, owlExtractionTemplate.getSearchConceptTemplate());
+        return getConcept(uri, owlExtractionTemplate.getAnnotationExtractionTemplate());
     }
 
     private Concept getConcept(String uri, File searchConceptTemplate) {
@@ -455,7 +455,7 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
             }
         } else {
             queryString = SPARQLQueryUtil.getQueryString(owlExtractionTemplate
-                    .getDefaultSearchConceptTemplate());
+                    .getDefaultAnnotationExtractionTemplate());
         }
         queryString = queryString.replaceAll("\\?concept", "<" + uri + ">"); // ?conceptを<概念URI>に置換
         Query query = QueryFactory.create(queryString);
@@ -581,16 +581,16 @@ public class ReferenceWebOntology implements Comparable<ReferenceWebOntology> {
     private Set<String> getSubURISet(String uri) {
         Set<String> subURISet = new HashSet<>();
         String queryString = "";
-        if (owlExtractionTemplate.getSearchSubConceptTemplate().exists()) {
+        if (owlExtractionTemplate.getIsaRelationExtractionTemplate().exists()) {
             try {
                 queryString = SPARQLQueryUtil.getQueryString(new FileInputStream(
-                        owlExtractionTemplate.getSearchSubConceptTemplate()));
+                        owlExtractionTemplate.getIsaRelationExtractionTemplate()));
             } catch (FileNotFoundException fnfe) {
                 fnfe.printStackTrace();
             }
         } else {
             queryString = SPARQLQueryUtil.getQueryString(owlExtractionTemplate
-                    .getDefaultSearchSubConceptTemplate());
+                    .getDefaultIsaRelationExtractionTemplate());
         }
         queryString = queryString.replaceAll("\\?concept", "<" + uri + ">"); // ?conceptを<概念URI>に置換
         Query query = QueryFactory.create(queryString);

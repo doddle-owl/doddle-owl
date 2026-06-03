@@ -401,7 +401,7 @@
                 "Prefix"@en , "接頭辞"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#TextField> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NameSpaceTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "接頭辞" .
 
@@ -498,10 +498,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "抽象概念を追加" .
 
-<https://doddle-owl.github.io#ValidCheckBox>
+<https://doddle-owl.github.io#AvailableCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Valid"@en , "有効"@ja ;
+                "Available"@en , "有効"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WebOntologySelectionPanel> ;
@@ -562,13 +562,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "入力用語の設定完了" .
 
-<https://doddle-owl.github.io#ValidLabel>
+<https://doddle-owl.github.io#AvailableLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Valid"@en , "有効"@ja ;
+                "Available"@en , "有効"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NameSpaceTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "有効" .
 
@@ -794,7 +794,7 @@
 <https://doddle-owl.github.io#SystemURIMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "This NameSpace is System URI."@en , "この名前空間はシステムで使われるURIです．"@ja ;
+                "This namespace is System URI."@en , "この名前空間はシステムで使われるURIです．"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#WarningMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -1214,10 +1214,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクトの説明" .
 
-<https://doddle-owl.github.io#NameSpaceTable>
+<https://doddle-owl.github.io#NamespaceTable>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "NameSpace Table"@en , "名前空間テーブル"@ja ;
+                "Namespace Table"@en , "名前空間テーブル"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#OntologySelectionPanel> ;
@@ -1316,10 +1316,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念定義" .
 
-<https://doddle-owl.github.io#NotValidNameSpaceMessage>
+<https://doddle-owl.github.io#InvalidNamespaceMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "This NameSpace is not valid."@en , "この名前空間は使えません．"@ja ;
+                "This namespace is invalid."@en , "この名前空間は使えません．"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#WarningMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -1514,13 +1514,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "クラス階層構築" .
 
-<https://doddle-owl.github.io#NameSpaceTextField>
+<https://doddle-owl.github.io#NamespaceTextField>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "NameSpace"@en , "名前空間"@ja ;
+                "Namespace"@en , "名前空間"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#TextField> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NameSpaceTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "名前空間" .
 
@@ -1562,10 +1562,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念の貼り付け" .
 
-<https://doddle-owl.github.io#NotValidPrefixMessage>
+<https://doddle-owl.github.io#InvalidPrefixMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "This prefix is not valid."@en , "この接頭辞は使えません．"@ja ;
+                "This prefix is invalid."@en , "この接頭辞は使えません．"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#WarningMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -1750,15 +1750,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "部分照合語数" .
 
-<https://doddle-owl.github.io#SearchSubConceptTemplateLabel>
+<https://doddle-owl.github.io#IsaRelationExtractionTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Super-Subrelation Extracting Template"@en , "上位・下位概念抽出テンプレート"@ja ;
+                "Is-a Relation Extraction Template"@en , "Is-a関係抽出テンプレート"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WebOntologySelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "上位・下位概念抽出テンプレート" .
+                "Is-a関係抽出テンプレート" .
 
 <https://doddle-owl.github.io#StanfordParserModelFolderTextField>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2087,10 +2087,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "その他の品詞" .
 
-<https://doddle-owl.github.io#SearchRegionSetTemplateLabel>
+<https://doddle-owl.github.io#DomainRangeExtractionTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Other Relation Extracting Template"@en , "定義域・値域抽出テンプレート"@ja ;
+                "Domain and Range Extraction Template"@en , "定義域・値域抽出テンプレート"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WebOntologySelectionPanel> ;
@@ -2612,15 +2612,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "用語と概念の対応を保存" .
 
-<https://doddle-owl.github.io#SearchConceptTemplateLabel>
+<https://doddle-owl.github.io#AnnotationExtractionTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Label and Description Extracting Template"@en , "見出し・説明抽出テンプレート"@ja ;
+                "Annotation Extraction Template"@en , "アノテーション抽出テンプレート"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WebOntologySelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "見出し・説明抽出テンプレート" .
+                "アノテーション抽出テンプレート" .
 
 <https://doddle-owl.github.io#PageLinesList>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2637,7 +2637,7 @@
                 "Add"@en , "追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NameSpaceTable> , <https://doddle-owl.github.io#UndefinedTermListPanel> , <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#DescriptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> , <https://doddle-owl.github.io#UndefinedTermListPanel> , <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#DescriptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "追加" .
 
@@ -3088,10 +3088,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "文書内容" .
 
-<https://doddle-owl.github.io#SearchPropertySetTemplateLabel>
+<https://doddle-owl.github.io#PropertyExtractionTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Property Extracting Template"@en , "プロパティ抽出テンプレート"@ja ;
+                "Property Extraction Template"@en , "プロパティ抽出テンプレート"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WebOntologySelectionPanel> ;
@@ -3188,7 +3188,7 @@
                 "URI"@en , "URI"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NameSpaceTable> , <https://doddle-owl.github.io#ConceptInformationPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> , <https://doddle-owl.github.io#ConceptInformationPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "URI" .
 
@@ -3234,7 +3234,7 @@
                 "削除"@ja , "Remove"@en ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#SwoogleWebServiceWrapperPanel> , <https://doddle-owl.github.io#DescriptionPanel> , <https://doddle-owl.github.io#WebOntologySelectionPanel> , <https://doddle-owl.github.io#NameSpaceTable> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#UndefinedTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#SwoogleWebServiceWrapperPanel> , <https://doddle-owl.github.io#DescriptionPanel> , <https://doddle-owl.github.io#WebOntologySelectionPanel> , <https://doddle-owl.github.io#NamespaceTable> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#UndefinedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "削除" .
 
@@ -3421,7 +3421,7 @@
                 "Prefix"@en , "接頭辞"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NameSpaceTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "接頭辞" .
 
@@ -3469,7 +3469,7 @@
                 "Cancel"@en , "取消し"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NameSpaceTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "取消し" .
 
@@ -3588,7 +3588,7 @@
 <https://doddle-owl.github.io#WordNetLoadErrorMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Word Net dictionary path is not valid."@en , "WordNet辞書のパスが間違っています．"@ja ;
+                "WordNet dictionary path is not available."@en , "WordNet辞書のパスが間違っています．"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#WarningMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3756,10 +3756,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "アクション" .
 
-<https://doddle-owl.github.io#BaseURINameSpaceMessage>
+<https://doddle-owl.github.io#BaseURINamespaceMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "This NameSpace is base URI."@en , "この名前空間はベースURIです．"@ja ;
+                "This namespace is base URI."@en , "この名前空間はベースURIです．"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#WarningMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3905,10 +3905,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクトの削除" .
 
-<https://doddle-owl.github.io#SearchClassSetTemplateLabel>
+<https://doddle-owl.github.io#ClassExtractionTemplateLabel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Extracting Template"@en , "クラス抽出テンプレート"@ja ;
+                "Class Extraction Template"@en , "クラス抽出テンプレート"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WebOntologySelectionPanel> ;

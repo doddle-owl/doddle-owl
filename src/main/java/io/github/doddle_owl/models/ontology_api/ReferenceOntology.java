@@ -41,7 +41,7 @@ public class ReferenceOntology {
     public static Concept getConcept(String uri) {
         Resource res = ResourceFactory.createResource(uri);
         String id = Utils.getLocalName(res);
-        String ns = Utils.getNameSpace(res);
+        String ns = Utils.getNamespace(res);
         Concept c = WebOntologyManager.getConcept(uri);
 
         if (c != null) {

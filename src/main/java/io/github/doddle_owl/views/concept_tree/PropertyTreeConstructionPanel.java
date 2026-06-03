@@ -168,7 +168,7 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         for (String uri : regionSet) {
             if (nounURISet.contains(uri)) {
                 refineRegionSet.add(uri);
-            } else if (Utils.getNameSpace(uri).equals(DODDLEConstants.EDR_URI)) { // EDRに関する定義域，値域
+            } else if (Utils.getNamespace(uri).equals(DODDLEConstants.EDR_URI)) { // EDRに関する定義域，値域
                 if (project.getOntologySelectionPanel().isEDREnable()) {
                     Set<String> subURISet = new HashSet<>();
                     EDRTree.getEDRTree().getSubURISet(uri, nounURISet, subURISet);

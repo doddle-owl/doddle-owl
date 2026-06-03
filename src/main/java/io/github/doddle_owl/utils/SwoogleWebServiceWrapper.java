@@ -31,7 +31,7 @@ import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
 import io.github.doddle_owl.models.reference_ontology_selection.SwoogleOWLMetaData;
 import io.github.doddle_owl.models.reference_ontology_selection.SwoogleWebServiceData;
-import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
+import io.github.doddle_owl.views.reference_ontology_selection.NamespaceTable;
 import io.github.doddle_owl.views.StatusBarPanel;
 
 import java.io.*;
@@ -71,7 +71,7 @@ public class SwoogleWebServiceWrapper {
     private static List<String> webOntologyList;
     private static List<String> swoogleQueryList;
 
-    private static NameSpaceTable nsTable;
+    private static NamespaceTable nsTable;
     private static final SwoogleWebServiceData swoogleWebServiceData = new SwoogleWebServiceData();
 
     private static final String SWOOGLE_WEB_SERVICE_URI = " http://sparql.cs.umbc.edu:80/swoogle31/q?";
@@ -183,7 +183,7 @@ public class SwoogleWebServiceWrapper {
         }
     }
 
-    public static void setNameSpaceTable(NameSpaceTable nstbl) {
+    public static void setNamespaceTable(NamespaceTable nstbl) {
         nsTable = nstbl;
     }
 
@@ -399,7 +399,7 @@ public class SwoogleWebServiceWrapper {
             if (swoogleWebServiceData.getRefOntology(ontologyURL.getURI()) == null) {
                 Model ontModel = Utils.getOntModel(new FileInputStream(ontFile),
                         fileType.getString(), Utils.getRDFType(rdfType),
-                        Utils.getNameSpace(ontologyURL));
+                        Utils.getNamespace(ontologyURL));
                 ReferenceWebOntology refOnto = new ReferenceWebOntology(ontModel,
                         ontologyURL.getURI(), nsTable);
                 refOnto.getOntologyRank().setSwoogleOntoRank(owlMetaData.getOntoRank());
@@ -869,7 +869,7 @@ public class SwoogleWebServiceWrapper {
         DODDLE_OWL.setFileLogger();
 
         initSwoogleWebServiceWrapper();
-        SwoogleWebServiceWrapper.setNameSpaceTable(new NameSpaceTable());
+        SwoogleWebServiceWrapper.setNamespaceTable(new NamespaceTable());
 
         /*
          * String[] inputWords = new String[] { "time", "address", "act",

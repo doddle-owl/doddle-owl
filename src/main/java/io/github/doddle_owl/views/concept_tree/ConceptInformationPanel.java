@@ -33,7 +33,7 @@ import io.github.doddle_owl.utils.Utils;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import io.github.doddle_owl.views.concept_selection.LiteralPanel;
-import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
+import io.github.doddle_owl.views.reference_ontology_selection.NamespaceTable;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -189,13 +189,13 @@ class ConceptInformationPanel extends JPanel implements ActionListener {
     }
 
     private void setURI(String uri) {
-        NameSpaceTable nsTable = DODDLE_OWL.getCurrentProject().getOntologySelectionPanel().getNSTable();
+        NamespaceTable nsTable = DODDLE_OWL.getCurrentProject().getOntologySelectionPanel().getNSTable();
         Object[] prefixSet = nsTable.getPrefixSet().toArray();
         Arrays.sort(prefixSet);
         DefaultComboBoxModel model = new DefaultComboBoxModel(prefixSet);
         prefixComboBox.setModel(model);
         Resource uriRes = ResourceFactory.createResource(uri);
-        String ns = Utils.getNameSpace(uriRes);
+        String ns = Utils.getNamespace(uriRes);
         String ln = Utils.getLocalName(uriRes);
         String prefix = nsTable.getPrefix(ns);
         if (prefix != null) {
@@ -278,7 +278,7 @@ class ConceptInformationPanel extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == setURIButton) {
-            NameSpaceTable nsTable = DODDLE_OWL.getCurrentProject().getOntologySelectionPanel().getNSTable();
+            NamespaceTable nsTable = DODDLE_OWL.getCurrentProject().getOntologySelectionPanel().getNSTable();
             String ns = nsTable.getNS((String) prefixComboBox.getSelectedItem());
             String uri = ns + localNameField.getText();
             selectedConcept.setURI(uri);

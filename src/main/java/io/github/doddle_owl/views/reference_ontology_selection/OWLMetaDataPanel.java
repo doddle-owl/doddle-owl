@@ -46,16 +46,16 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
 
     private final OWLMetaDataTablePanel owlMetaDataTablePanel;
 
-    private final JTextField searchSubConceptTemplateField;
-    private final JButton setSearchSubConceptTemplateButton;
-    private final JTextField searchConceptTemplateField;
-    private final JButton setSearchConceptTemplateButton;
-    private final JTextField searchClassSetTemplateField;
-    private final JButton setSearchClassSetTemplateButton;
-    private final JTextField searchPropertySetTemplateField;
-    private final JButton setSearchPropertySetTemplateButton;
-    private final JTextField searchRegionSetTemplateField;
-    private final JButton setSearchRegionSetTemplateButton;
+    private final JTextField isaRelationExtractionTemplateField;
+    private final JButton setIsaRelationExtractionTemplateButton;
+    private final JTextField annotationExtractionTemplateField;
+    private final JButton setAnnotationExtractionTemplateButton;
+    private final JTextField classExtractionTemplateField;
+    private final JButton setClassExtractionTemplateButton;
+    private final JTextField propertyExtractionTemplateField;
+    private final JButton setPropertyExtractionTemplateButton;
+    private final JTextField domainRangeExtractionTemplateField;
+    private final JButton setDomainRangeExtractionTemplateButton;
 
     private ReferenceWebOntology refOnt;
     private static final int TEXT_FIELD_WIDTH = 30;
@@ -65,7 +65,7 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
         JPanel templatePanel = new JPanel();
         templatePanel.setLayout(new GridLayout(8, 1));
 
-        isAvailableCheckBox = new JCheckBox(Translator.getTerm("ValidCheckBox"));
+        isAvailableCheckBox = new JCheckBox(Translator.getTerm("AvailableCheckBox"));
         isAvailableCheckBox.addActionListener(this);
         templatePanel.add(isAvailableCheckBox);
 
@@ -78,48 +78,48 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
         templatePanel.add(locationPanel);
         String browse = Translator.getTerm("ReferenceButton");
 
-        JLabel searchClassSetTemplateLabel = new JLabel(Translator.getTerm("SearchClassSetTemplateLabel") + ": ");
-        searchClassSetTemplateField = new JTextField(TEXT_FIELD_WIDTH);
-        searchClassSetTemplateField.setEditable(false);
-        setSearchClassSetTemplateButton = new JButton(browse);
-        setSearchClassSetTemplateButton.addActionListener(this);
-        JPanel panel = getTemplatePanel(searchClassSetTemplateLabel, searchClassSetTemplateField,
-                setSearchClassSetTemplateButton);
+        JLabel searchClassSetTemplateLabel = new JLabel(Translator.getTerm("ClassExtractionTemplateLabel") + ": ");
+        classExtractionTemplateField = new JTextField(TEXT_FIELD_WIDTH);
+        classExtractionTemplateField.setEditable(false);
+        setClassExtractionTemplateButton = new JButton(browse);
+        setClassExtractionTemplateButton.addActionListener(this);
+        JPanel panel = getTemplatePanel(searchClassSetTemplateLabel, classExtractionTemplateField,
+                setClassExtractionTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        JLabel searchPropertySetTemplateLabel = new JLabel(Translator.getTerm("SearchPropertySetTemplateLabel") + ": ");
-        searchPropertySetTemplateField = new JTextField(TEXT_FIELD_WIDTH);
-        searchPropertySetTemplateField.setEditable(false);
-        setSearchPropertySetTemplateButton = new JButton(browse);
-        setSearchPropertySetTemplateButton.addActionListener(this);
-        panel = getTemplatePanel(searchPropertySetTemplateLabel, searchPropertySetTemplateField,
-                setSearchPropertySetTemplateButton);
+        JLabel searchPropertySetTemplateLabel = new JLabel(Translator.getTerm("PropertyExtractionTemplateLabel") + ": ");
+        propertyExtractionTemplateField = new JTextField(TEXT_FIELD_WIDTH);
+        propertyExtractionTemplateField.setEditable(false);
+        setPropertyExtractionTemplateButton = new JButton(browse);
+        setPropertyExtractionTemplateButton.addActionListener(this);
+        panel = getTemplatePanel(searchPropertySetTemplateLabel, propertyExtractionTemplateField,
+                setPropertyExtractionTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        JLabel searchConceptTemplateLabel = new JLabel(Translator.getTerm("SearchConceptTemplateLabel") + ": ");
-        searchConceptTemplateField = new JTextField(TEXT_FIELD_WIDTH);
-        searchConceptTemplateField.setEditable(false);
-        setSearchConceptTemplateButton = new JButton(browse);
-        setSearchConceptTemplateButton.addActionListener(this);
-        panel = getTemplatePanel(searchConceptTemplateLabel, searchConceptTemplateField, setSearchConceptTemplateButton);
+        JLabel searchConceptTemplateLabel = new JLabel(Translator.getTerm("AnnotationExtractionTemplateLabel") + ": ");
+        annotationExtractionTemplateField = new JTextField(TEXT_FIELD_WIDTH);
+        annotationExtractionTemplateField.setEditable(false);
+        setAnnotationExtractionTemplateButton = new JButton(browse);
+        setAnnotationExtractionTemplateButton.addActionListener(this);
+        panel = getTemplatePanel(searchConceptTemplateLabel, annotationExtractionTemplateField, setAnnotationExtractionTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        JLabel searchSubConceptTemplateLabel = new JLabel(Translator.getTerm("SearchSubConceptTemplateLabel") + ": ");
-        searchSubConceptTemplateField = new JTextField(TEXT_FIELD_WIDTH);
-        searchSubConceptTemplateField.setEditable(false);
-        setSearchSubConceptTemplateButton = new JButton(browse);
-        setSearchSubConceptTemplateButton.addActionListener(this);
-        panel = getTemplatePanel(searchSubConceptTemplateLabel, searchSubConceptTemplateField,
-                setSearchSubConceptTemplateButton);
+        JLabel searchSubConceptTemplateLabel = new JLabel(Translator.getTerm("IsaRelationExtractionTemplateLabel") + ": ");
+        isaRelationExtractionTemplateField = new JTextField(TEXT_FIELD_WIDTH);
+        isaRelationExtractionTemplateField.setEditable(false);
+        setIsaRelationExtractionTemplateButton = new JButton(browse);
+        setIsaRelationExtractionTemplateButton.addActionListener(this);
+        panel = getTemplatePanel(searchSubConceptTemplateLabel, isaRelationExtractionTemplateField,
+                setIsaRelationExtractionTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
-        JLabel searchRegionSetTemplateLabel = new JLabel(Translator.getTerm("SearchRegionSetTemplateLabel") + ": ");
-        searchRegionSetTemplateField = new JTextField(TEXT_FIELD_WIDTH);
-        searchRegionSetTemplateField.setEditable(false);
-        setSearchRegionSetTemplateButton = new JButton(browse);
-        setSearchRegionSetTemplateButton.addActionListener(this);
-        panel = getTemplatePanel(searchRegionSetTemplateLabel, searchRegionSetTemplateField,
-                setSearchRegionSetTemplateButton);
+        JLabel searchRegionSetTemplateLabel = new JLabel(Translator.getTerm("DomainRangeExtractionTemplateLabel") + ": ");
+        domainRangeExtractionTemplateField = new JTextField(TEXT_FIELD_WIDTH);
+        domainRangeExtractionTemplateField.setEditable(false);
+        setDomainRangeExtractionTemplateButton = new JButton(browse);
+        setDomainRangeExtractionTemplateButton.addActionListener(this);
+        panel = getTemplatePanel(searchRegionSetTemplateLabel, domainRangeExtractionTemplateField,
+                setDomainRangeExtractionTemplateButton);
         templatePanel.add(Utils.createEastPanel(panel));
 
         owlMetaDataTablePanel = new OWLMetaDataTablePanel();
@@ -138,11 +138,11 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
         owlMetaDataTablePanel.setModel(refOnt.getOWLMetaDataTableModel());
         isAvailableCheckBox.setSelected(refOnt.isAvailable());
         locationLabel.setText(refOnt.getURI());
-        searchConceptTemplateField.setText(owlExtractionTemplate.getSearchConceptTemplateLabel());
-        searchSubConceptTemplateField.setText(owlExtractionTemplate.getSearchSubConceptTemplateLabel());
-        searchClassSetTemplateField.setText(owlExtractionTemplate.getSearchClassSetTemplateLabel());
-        searchPropertySetTemplateField.setText(owlExtractionTemplate.getSearchPropertySetTemplateLabel());
-        searchRegionSetTemplateField.setText(owlExtractionTemplate.getSearchRegionSetTemplateLabel());
+        annotationExtractionTemplateField.setText(owlExtractionTemplate.getAnnotationExtractionTemplateLabel());
+        isaRelationExtractionTemplateField.setText(owlExtractionTemplate.getIsaRelationExtractionTemplateLabel());
+        classExtractionTemplateField.setText(owlExtractionTemplate.getClassExtractionTemplateLabel());
+        propertyExtractionTemplateField.setText(owlExtractionTemplate.getPropertyExtractionTemplateLabel());
+        domainRangeExtractionTemplateField.setText(owlExtractionTemplate.getDomainRangeExtractionTemplateLabel());
     }
 
     private JPanel getTemplatePanel(JLabel label, JTextField field, JButton button) {
@@ -164,39 +164,39 @@ class OWLMetaDataPanel extends JPanel implements ActionListener {
         if (refOnt == null) { return; }
         String templateFileName;
         WebOntologyExtractionTemplate owlExtractionTemplate = refOnt.getWebOntologyExtractionTemplate();
-        if (e.getSource() == setSearchClassSetTemplateButton) {
-            templateFileName = getTemplateFileName(searchClassSetTemplateField.getText());
+        if (e.getSource() == setClassExtractionTemplateButton) {
+            templateFileName = getTemplateFileName(classExtractionTemplateField.getText());
             if (0 < templateFileName.length()) {
-                searchClassSetTemplateField.setText(templateFileName);
-                owlExtractionTemplate.setSearchClassSetTemplate(new File(templateFileName));
+                classExtractionTemplateField.setText(templateFileName);
+                owlExtractionTemplate.setClassExtractionTemplate(new File(templateFileName));
                 refOnt.reload();
             }
-        } else if (e.getSource() == setSearchPropertySetTemplateButton) {
-            templateFileName = getTemplateFileName(searchPropertySetTemplateField.getText());
+        } else if (e.getSource() == setPropertyExtractionTemplateButton) {
+            templateFileName = getTemplateFileName(propertyExtractionTemplateField.getText());
             if (0 < templateFileName.length()) {
-                searchPropertySetTemplateField.setText(templateFileName);
-                owlExtractionTemplate.setSearchPropertySetTemplate(new File(templateFileName));
+                propertyExtractionTemplateField.setText(templateFileName);
+                owlExtractionTemplate.setPropertyExtractionTemplate(new File(templateFileName));
                 refOnt.reload();
             }
-        } else if (e.getSource() == setSearchRegionSetTemplateButton) {
-            templateFileName = getTemplateFileName(searchRegionSetTemplateField.getText());
+        } else if (e.getSource() == setDomainRangeExtractionTemplateButton) {
+            templateFileName = getTemplateFileName(domainRangeExtractionTemplateField.getText());
             if (0 < templateFileName.length()) {
-                searchRegionSetTemplateField.setText(templateFileName);
-                owlExtractionTemplate.setSearchRegionSetTemplate(new File(templateFileName));
+                domainRangeExtractionTemplateField.setText(templateFileName);
+                owlExtractionTemplate.setDomainRangeExtractionTemplate(new File(templateFileName));
                 refOnt.reload();
             }
-        } else if (e.getSource() == setSearchConceptTemplateButton) {
-            templateFileName = getTemplateFileName(searchConceptTemplateField.getText());
+        } else if (e.getSource() == setAnnotationExtractionTemplateButton) {
+            templateFileName = getTemplateFileName(annotationExtractionTemplateField.getText());
             if (0 < templateFileName.length()) {
-                searchConceptTemplateField.setText(templateFileName);
-                owlExtractionTemplate.setSearchConceptTemplate(new File(templateFileName));
+                annotationExtractionTemplateField.setText(templateFileName);
+                owlExtractionTemplate.setAnnotationExtractionTemplate(new File(templateFileName));
                 refOnt.reload();
             }
-        } else if (e.getSource() == setSearchSubConceptTemplateButton) {
-            templateFileName = getTemplateFileName(searchSubConceptTemplateField.getText());
+        } else if (e.getSource() == setIsaRelationExtractionTemplateButton) {
+            templateFileName = getTemplateFileName(isaRelationExtractionTemplateField.getText());
             if (0 < templateFileName.length()) {
-                searchSubConceptTemplateField.setText(templateFileName);
-                owlExtractionTemplate.setSearchSubConceptTemplate(new File(templateFileName));
+                isaRelationExtractionTemplateField.setText(templateFileName);
+                owlExtractionTemplate.setIsaRelationExtractionTemplate(new File(templateFileName));
                 refOnt.reload();
             }
         } else if (e.getSource() == isAvailableCheckBox) {

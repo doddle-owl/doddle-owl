@@ -205,7 +205,7 @@ public class Utils {
      * 独自に実装している．（不完全）
      */
     public static String getLocalName(Resource res) {
-        String ns = getNameSpace(res);
+        String ns = getNamespace(res);
         String localName = res.getURI().replaceAll(ns, "");
         if (ns.equals(DODDLEConstants.JWO_URI)) {
             localName = URLDecoder.decode(localName, StandardCharsets.UTF_8);
@@ -215,14 +215,14 @@ public class Utils {
 
     public static String getLocalName(String uri) {
         Resource res = ResourceFactory.createResource(uri);
-        return res.getURI().replaceAll(getNameSpace(res), "");
+        return res.getURI().replaceAll(getNamespace(res), "");
     }
 
     /**
-     * ResourceクラスのgetNameSpaceメソッドは，ローカル名が数字からはじまる場合に名前空間の分割がうまくできないため，
+     * ResourceクラスのgetNamespaceメソッドは，ローカル名が数字からはじまる場合に名前空間の分割がうまくできないため，
      * 独自に実装している．（不完全）
      */
-    public static String getNameSpace(Resource res) {
+    public static String getNamespace(Resource res) {
         String ns = res.getNameSpace();
         if (ns == null) {
             return "";
@@ -241,8 +241,8 @@ public class Utils {
         return "";
     }
 
-    public static String getNameSpace(String uri) {
-        return getNameSpace(ResourceFactory.createResource(uri));
+    public static String getNamespace(String uri) {
+        return getNamespace(ResourceFactory.createResource(uri));
     }
 
     public static JComponent createWestPanel(JComponent p) {

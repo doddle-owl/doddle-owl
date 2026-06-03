@@ -105,8 +105,8 @@ public class ConceptTreeMaker {
                     pathSize = pathToRoot.size();
                 }
             }
-            if (pathSize <= 1 && DODDLE_OWL.GENERAL_ONTOLOGY_NAMESPACE_SET.contains(c.getNameSpace())) {
-                switch (c.getNameSpace()) {
+            if (pathSize <= 1 && DODDLE_OWL.GENERAL_ONTOLOGY_NAMESPACE_SET.contains(c.getNamespace())) {
+                switch (c.getNamespace()) {
                     case DODDLEConstants.EDR_URI:
                         pathSet.addAll(EDRTree.getEDRTree().getConceptPathToRootSet(c.getLocalName()));
                         break;

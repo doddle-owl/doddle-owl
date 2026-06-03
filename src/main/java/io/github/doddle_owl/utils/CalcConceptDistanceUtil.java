@@ -53,7 +53,7 @@ public class CalcConceptDistanceUtil {
         if (pathSet.size() != 0) {
             return pathSet;
         }
-        switch (c.getNameSpace()) {
+        switch (c.getNamespace()) {
             case DODDLEConstants.EDR_URI:
                 pathSet = EDRTree.getEDRTree().getURIPathToRootSet(c.getLocalName());
                 break;
@@ -85,18 +85,18 @@ public class CalcConceptDistanceUtil {
             return makeCombination(pathSet1, pathSet2);
         }
 
-        if (c1.getNameSpace().equals(DODDLEConstants.EDR_URI) && c2.getNameSpace().equals(DODDLEConstants.EDR_URI)) {
+        if (c1.getNamespace().equals(DODDLEConstants.EDR_URI) && c2.getNamespace().equals(DODDLEConstants.EDR_URI)) {
             pathSet1 = EDRTree.getEDRTree().getURIPathToRootSet(c1.getLocalName());
             pathSet2 = EDRTree.getEDRTree().getURIPathToRootSet(c2.getLocalName());
-        } else if (c1.getNameSpace().equals(DODDLEConstants.EDRT_URI)
-                && c2.getNameSpace().equals(DODDLEConstants.EDRT_URI)) {
+        } else if (c1.getNamespace().equals(DODDLEConstants.EDRT_URI)
+                && c2.getNamespace().equals(DODDLEConstants.EDRT_URI)) {
             pathSet1 = EDRTree.getEDRTTree().getURIPathToRootSet(c1.getLocalName());
             pathSet2 = EDRTree.getEDRTTree().getURIPathToRootSet(c2.getLocalName());
-        } else if (c1.getNameSpace().equals(DODDLEConstants.WN_URI) && c2.getNameSpace().equals(DODDLEConstants.WN_URI)) {
+        } else if (c1.getNamespace().equals(DODDLEConstants.WN_URI) && c2.getNamespace().equals(DODDLEConstants.WN_URI)) {
             pathSet1 = WordNet.getURIPathToRootSet(Long.valueOf(c1.getLocalName()));
             pathSet2 = WordNet.getURIPathToRootSet(Long.valueOf(c2.getLocalName()));
-        } else if (c1.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)
-                && c2.getNameSpace().equals(DODDLEConstants.JPN_WN_URI)) {
+        } else if (c1.getNamespace().equals(DODDLEConstants.JPN_WN_URI)
+                && c2.getNamespace().equals(DODDLEConstants.JPN_WN_URI)) {
             pathSet1 = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c1.getLocalName());
             pathSet2 = JaWordNetTree.getJPNWNTree().getURIPathToRootSet(c2.getLocalName());
         }

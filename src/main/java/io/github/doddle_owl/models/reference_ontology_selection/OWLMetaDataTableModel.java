@@ -23,7 +23,7 @@
 
 package io.github.doddle_owl.models.reference_ontology_selection;
 
-import io.github.doddle_owl.views.reference_ontology_selection.NameSpaceTable;
+import io.github.doddle_owl.views.reference_ontology_selection.NamespaceTable;
 import io.github.doddle_owl.utils.Utils;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -35,9 +35,9 @@ import javax.swing.table.DefaultTableModel;
  */
 class OWLMetaDataTableModel extends DefaultTableModel {
 
-    private final NameSpaceTable nsTable;
+    private final NamespaceTable nsTable;
     
-    public OWLMetaDataTableModel(NameSpaceTable nstbl, Object[] columnNames, int rowCount) {
+    public OWLMetaDataTableModel(NamespaceTable nstbl, Object[] columnNames, int rowCount) {
         super(columnNames, rowCount);
         nsTable = nstbl;
     }
@@ -68,7 +68,7 @@ class OWLMetaDataTableModel extends DefaultTableModel {
             if (resource == null) {
                 resource = ResourceFactory.createResource(resourceStr);
             }
-            String prefix = nsTable.getPrefix(Utils.getNameSpace(resource));
+            String prefix = nsTable.getPrefix(Utils.getNamespace(resource));
             if (prefix != null) {
                 String localName = Utils.getLocalName(resource);
                 newValue = prefix + ":" + localName;

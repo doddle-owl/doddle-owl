@@ -48,7 +48,7 @@ import java.util.*;
 /**
  * @author Takeshi Morita
  */
-public class NameSpaceTable extends JPanel implements ActionListener, TableModelListener {
+public class NamespaceTable extends JPanel implements ActionListener, TableModelListener {
 
     private JTable nsTable;
     private NSTableModel nsTableModel;
@@ -64,7 +64,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     private final Map<String, PrefixNSInfo> nsInfoMap;
     private static final String WARNING = Translator.getTerm("WarningMessage");
 
-    public NameSpaceTable() {
+    public NamespaceTable() {
         prefixNSMap = new HashMap<>();
         nsInfoMap = new HashMap<>();
         initTable();
@@ -163,14 +163,14 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     public void setCurrentNSPrefix(Model model) {
         Set<String> nsSet = new HashSet<>();
         for (Statement stmt : model.listStatements().toList()) {
-            String ns = Utils.getNameSpace(stmt.getSubject());
+            String ns = Utils.getNamespace(stmt.getSubject());
             if (ns != null) {
                 nsSet.add(ns);
             }
             RDFNode object = stmt.getObject();
             if (object instanceof Resource) {
                 Resource res = (Resource) object;
-                ns = Utils.getNameSpace(res);
+                ns = Utils.getNamespace(res);
                 if (ns != null) {
                     nsSet.add(ns);
                 }
@@ -219,7 +219,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
     }
 
     private void initTable() {
-        Object[] columnNames = new Object[]{Translator.getTerm("ValidLabel"), Translator.getTerm("PrefixLabel"),
+        Object[] columnNames = new Object[]{Translator.getTerm("AvailableLabel"), Translator.getTerm("PrefixLabel"),
                 Translator.getTerm("URILabel")};
         nsTableModel = new NSTableModel(columnNames, 0);
         nsTableModel.addTableModelListener(this);
@@ -243,7 +243,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         JComponent prefixFieldP = Utils.createTitledPanel(prefixField, Translator.getTerm("PrefixTextField"));
 
         nsField = new JTextField(30);
-        JComponent nsFieldP = Utils.createTitledPanel(nsField, Translator.getTerm("NameSpaceTextField"));
+        JComponent nsFieldP = Utils.createTitledPanel(nsField, Translator.getTerm("NamespaceTextField"));
 
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
@@ -299,7 +299,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         if (isValidPrefix(prefix)) {
             return true;
         }
-        JOptionPane.showMessageDialog(null, Translator.getTerm("NotValidPrefixMessage"), WARNING,
+        JOptionPane.showMessageDialog(null, Translator.getTerm("InvalidPrefixMessage"), WARNING,
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }
@@ -311,7 +311,7 @@ public class NameSpaceTable extends JPanel implements ActionListener, TableModel
         if (isValidNS(ns)) {
             return true;
         }
-        JOptionPane.showMessageDialog(null, Translator.getTerm("NotValidNameSpaceMessage"), WARNING,
+        JOptionPane.showMessageDialog(null, Translator.getTerm("InvalidNamespaceMessage"), WARNING,
                 JOptionPane.ERROR_MESSAGE);
         return false;
     }

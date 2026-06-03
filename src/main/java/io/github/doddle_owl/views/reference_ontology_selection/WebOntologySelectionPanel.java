@@ -63,14 +63,14 @@ class WebOntologySelectionPanel extends JPanel implements ActionListener, ListSe
     private final JButton addOWLFileButton;
     private final JButton addOWLURIButton;
     private final JButton deleteButton;
-    private final NameSpaceTable nsTable;
+    private final NamespaceTable nsTable;
 
 
     public void initialize() {
 
     }
 
-    public WebOntologySelectionPanel(NameSpaceTable nst) {
+    public WebOntologySelectionPanel(NamespaceTable nst) {
         nsTable = nst;
         listModel = new DefaultListModel();
         ontologyList = new JList(listModel);
@@ -163,7 +163,7 @@ class WebOntologySelectionPanel extends JPanel implements ActionListener, ListSe
 
     private void addOWLURI() {
         String url = JOptionPane.showInputDialog(this, Translator.getTerm("InputURIMessage"),
-                "http://www.yamaguchi.comp.ae.keio.ac.jp/doddle/sample.owl");
+                "https://doddle-owl.github.io/sample.owl");
         if (url != null) {
             if (!listModel.contains(url)) {
                 try {
@@ -208,16 +208,16 @@ class WebOntologySelectionPanel extends JPanel implements ActionListener, ListSe
                 properties.setProperty("isAvailable", String.valueOf(refOnt.isAvailable()));
                 properties.setProperty("Location", refOnt.getURI());
                 WebOntologyExtractionTemplate template = refOnt.getWebOntologyExtractionTemplate();
-                properties.setProperty("SearchConceptTemplate", template.getSearchConceptTemplate()
+                properties.setProperty("AnnotationExtractionTemplate", template.getAnnotationExtractionTemplate()
                         .getAbsolutePath());
-                properties.setProperty("SearchSubConceptTemplate", template
-                        .getSearchSubConceptTemplate().getAbsolutePath());
-                properties.setProperty("SearchClassSetTemplate", template
-                        .getSearchClassSetTemplate().getAbsolutePath());
-                properties.setProperty("SearchPropertySetTemplate", template
-                        .getSearchPropertySetTemplate().getAbsolutePath());
-                properties.setProperty("SearchRegionSetTemplate", template
-                        .getSearchRegionSetTemplate().getAbsolutePath());
+                properties.setProperty("IsaRelationExtractionTemplate", template
+                        .getIsaRelationExtractionTemplate().getAbsolutePath());
+                properties.setProperty("ClassExtractionTemplate", template
+                        .getClassExtractionTemplate().getAbsolutePath());
+                properties.setProperty("PropertyExtractionTemplate", template
+                        .getPropertyExtractionTemplate().getAbsolutePath());
+                properties.setProperty("DomainRangeExtractionTemplate", template
+                        .getDomainRangeExtractionTemplate().getAbsolutePath());
                 Path path = Paths.get(saveDir + "/" + ProjectFileNames.OWL_META_DATA_FILE + num + ".txt");
                 BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
                 try (writer) {
@@ -267,16 +267,16 @@ class WebOntologySelectionPanel extends JPanel implements ActionListener, ListSe
                 ReferenceWebOntology refOnt = WebOntologyManager.getRefOntology(uri);
                 refOnt.setAvailable(isAvailable);
                 WebOntologyExtractionTemplate template = refOnt.getWebOntologyExtractionTemplate();
-                template.setSearchConceptTemplate(new File(properties
-                        .getProperty("SearchConceptTemplate")));
-                template.setSearchSubConceptTemplate(new File(properties
-                        .getProperty("SearchSubConceptTemplate")));
-                template.setSearchClassSetTemplate(new File(properties
-                        .getProperty("SearchClassSetTemplate")));
-                template.setSearchPropertySetTemplate(new File(properties
-                        .getProperty("SearchPropertySetTemplate")));
-                template.setSearchRegionSetTemplate(new File(properties
-                        .getProperty("SearchRegionSetTemplate")));
+                template.setAnnotationExtractionTemplate(new File(properties
+                        .getProperty("AnnotationExtractionTemplate")));
+                template.setIsaRelationExtractionTemplate(new File(properties
+                        .getProperty("IsaRelationExtractionTemplate")));
+                template.setClassExtractionTemplate(new File(properties
+                        .getProperty("ClassExtractionTemplate")));
+                template.setPropertyExtractionTemplate(new File(properties
+                        .getProperty("PropertyExtractionTemplate")));
+                template.setDomainRangeExtractionTemplate(new File(properties
+                        .getProperty("DomainRangeExtractionTemplate")));
             }
         } catch (MalformedURLException mue) {
             mue.printStackTrace();
@@ -300,7 +300,7 @@ class WebOntologySelectionPanel extends JPanel implements ActionListener, ListSe
     public static void main(String[] args) {
         Translator.loadDODDLEComponentOntology(DODDLEConstants.LANG);
         JFrame frame = new JFrame();
-        NameSpaceTable nsTable = new NameSpaceTable();
+        NamespaceTable nsTable = new NamespaceTable();
         frame.getContentPane().add(new WebOntologySelectionPanel(nsTable));
         frame.setSize(new Dimension(500, 400));
         frame.setVisible(true);
