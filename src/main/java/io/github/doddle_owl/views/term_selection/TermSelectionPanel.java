@@ -54,7 +54,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
     private final JButton deleteTableItemButton;
     private final JButton returnTableItemButton;
     private final JButton reloadDocumentAreaButton;
-    private final JButton completelyDeleteTableItemButton;
+    private final JButton permanentlyDeleteTableItemButton;
     private final JButton setTermSetButton;
     private final JButton addTermSetButton;
 
@@ -79,7 +79,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         var inputTermsAreaScroll = new JScrollPane(termTextArea);
         inputTermsAreaScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputTermListArea")));
 
-        addTermListButton = new JButton(Translator.getTerm("AddInputTermListButton"));
+        addTermListButton = new JButton(Translator.getTerm("AddSelectedTermsToInputTermsButton"));
         addTermListButton.addActionListener(this);
         deleteTableItemButton = new JButton(Translator.getTerm("RemoveButton"));
         deleteTableItemButton.addActionListener(this);
@@ -87,15 +87,15 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         returnTableItemButton.addActionListener(this);
         reloadDocumentAreaButton = new JButton(Translator.getTerm("ReloadButton"));
         reloadDocumentAreaButton.addActionListener(this);
-        completelyDeleteTableItemButton = new JButton(Translator.getTerm("CompletelyDeleteTermButton"));
-        completelyDeleteTableItemButton.addActionListener(this);
+        permanentlyDeleteTableItemButton = new JButton(Translator.getTerm("PermanentlyDeleteTermButton"));
+        permanentlyDeleteTableItemButton.addActionListener(this);
 
         var tableButtonPanel = new JPanel();
         tableButtonPanel.add(addTermListButton);
         tableButtonPanel.add(deleteTableItemButton);
         tableButtonPanel.add(returnTableItemButton);
         tableButtonPanel.add(reloadDocumentAreaButton);
-        tableButtonPanel.add(completelyDeleteTableItemButton);
+        tableButtonPanel.add(permanentlyDeleteTableItemButton);
 
         setTermSetButton = new JButton(Translator.getTerm("SetInputTermSetButton"));
         setTermSetButton.addActionListener(this);
@@ -117,20 +117,20 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
                     addTermListButton.setVisible(false);
                     deleteTableItemButton.setVisible(false);
                     returnTableItemButton.setVisible(false);
-                    completelyDeleteTableItemButton.setVisible(false);
+                    permanentlyDeleteTableItemButton.setVisible(false);
                     break;
                 case 1:
                     addTermListButton.setVisible(true);
                     deleteTableItemButton.setVisible(true);
                     returnTableItemButton.setVisible(false);
-                    completelyDeleteTableItemButton.setVisible(false);
+                    permanentlyDeleteTableItemButton.setVisible(false);
                     reloadDocumentAreaButton.setVisible(false);
                     break;
                 case 2:
                     addTermListButton.setVisible(false);
                     deleteTableItemButton.setVisible(false);
                     returnTableItemButton.setVisible(true);
-                    completelyDeleteTableItemButton.setVisible(true);
+                    permanentlyDeleteTableItemButton.setVisible(true);
                     reloadDocumentAreaButton.setVisible(false);
                     break;
             }
@@ -352,7 +352,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         setWindowTitle();
     }
 
-    private void returnTableItems(boolean isCompleteDelete) {
+    private void returnTableItems(boolean isPermanentlyDelete) {
         termInfoTablePanel.setIsDeletingTableItems(true);
         removedTermInfoTablePanel.setIsDeletingTableItems(true);
         JTable inputTermInfoTable = termInfoTablePanel.getTermInfoTable();
@@ -367,7 +367,7 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
             String returnTerm = (String) removedTermInfoTable.getValueAt(selectedRows[i], getColumnNamePosition(
                     removedTermInfoTable, Translator.getTerm("TermLabel"))); // 現在選択されている行のデータがほしいのでTableを使う
             TermInfo info = removedTermInfoTablePanel.getTermInfo(returnTerm);
-            if (!isCompleteDelete) {
+            if (!isPermanentlyDelete) {
                 termInfoTablePanel.addTermInfoMapKey(returnTerm, info);
             }
             removedTermInfoTablePanel.removeTermInfoMapKey(returnTerm);
@@ -422,9 +422,9 @@ public class TermSelectionPanel extends JPanel implements ActionListener, KeyLis
         } else if (e.getSource() == returnTableItemButton) {
             returnTableItems(false);
             project.addLog("ReturnButton", "TermSelectionPanel");
-        } else if (e.getSource() == completelyDeleteTableItemButton) {
+        } else if (e.getSource() == permanentlyDeleteTableItemButton) {
             returnTableItems(true);
-            project.addLog("CompletelyDeleteTermButtonButton", "TermSelectionPanel");
+            project.addLog("PermanentlyDeleteTermButtonButton", "TermSelectionPanel");
         } else if (e.getSource() == reloadDocumentAreaButton) {
             documentViewer.setDocumentArea();
         }

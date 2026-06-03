@@ -638,14 +638,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "抽象中間クラス数" .
 
-<https://doddle-owl.github.io#CompletelyDeleteTermButton>
+<https://doddle-owl.github.io#PermanentlyDeleteTermButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Completely Delete Term"@en , "完全削除"@ja ;
+                "Permanently Delete Terms"@en , "完全削除"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#RemoveButton> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Completely Delete Term" .
+                "Permanently Delete Terms" .
 
 <https://doddle-owl.github.io#WordNetCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -1151,7 +1151,7 @@
 <https://doddle-owl.github.io#SetInputTermSetButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Set Input Term Set"@en , "入力用語の設定"@ja ;
+                "Set Input Terms"@en , "入力用語の設定"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -1792,7 +1792,7 @@
 <https://doddle-owl.github.io#TermInfoTable>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Term Info Table"@en , "用語情報テーブル"@ja ;
+                "Term Information Table"@en , "用語情報テーブル"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Table> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -1855,7 +1855,7 @@
 <https://doddle-owl.github.io#InputTermInfoTablePanel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Term Info Table"@en , "用語情報テーブル"@ja ;
+                "Term Information Table"@en , "用語情報テーブル"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#TermInfoTablePanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -2387,7 +2387,7 @@
 <https://doddle-owl.github.io#AddInputTermSetButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Input Term Set"@en , "入力用語の追加"@ja ;
+                "Add Input Terms"@en , "入力用語の追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#AddButton> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3396,14 +3396,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロパティの設定" .
 
-<https://doddle-owl.github.io#AddInputTermListButton>
+<https://doddle-owl.github.io#AddSelectedTermsToInputTermsButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Terms to Input Term List"@en , "入力用語リストに用語を追加"@ja ;
+                "Add Selected Terms to Input Terms"@en , "選択用語を入力用語に追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#AddButton> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "入力用語リストに用語を追加" .
+                "選択用語を入力用語に追加" .
 
 <https://doddle-owl.github.io#SubConceptRadioButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
