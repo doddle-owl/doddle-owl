@@ -352,10 +352,10 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
                     inputTermList.add(iwModel.getTerm());
                 }
             }
-            DefaultListModel undefinedTermListModel = conceptSelectionPanel
-                    .getUndefinedTermListPanel().getModel();
-            for (int i = 0; i < undefinedTermListModel.size(); i++) {
-                String undefTerm = (String) undefinedTermListModel.getElementAt(i);
+            DefaultListModel unmatchedTermListModel = conceptSelectionPanel
+                    .getUnmatchedTermListPanel().getModel();
+            for (int i = 0; i < unmatchedTermListModel.size(); i++) {
+                String undefTerm = (String) unmatchedTermListModel.getElementAt(i);
                 inputTermList.add(undefTerm);
             }
             Collections.sort(inputTermList);

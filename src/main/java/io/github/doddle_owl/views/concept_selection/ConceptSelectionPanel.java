@@ -43,7 +43,7 @@ import io.github.doddle_owl.models.ontology_api.WordNet;
 import io.github.doddle_owl.models.term_selection.TermModel;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.OptionDialog;
-import io.github.doddle_owl.views.common.UndefinedTermListPanel;
+import io.github.doddle_owl.views.common.UnmatchedTermListPanel;
 import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
 import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
 import io.github.doddle_owl.views.document_selection.DocumentSelectionPanel;
@@ -93,18 +93,18 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private Map<String, Set<EvalConcept>> termEvalConceptSetMap;
     private Map<TermModel, TreeConstructionOption> compoundConstructTreeOptionMap;
 
-    private TitledBorder exactMatchTermJListTitle;
-    private TitledBorder partialMatchTermJListTitle;
+    private TitledBorder exactlyMatchedTermJListTitle;
+    private TitledBorder partiallyMatchedTermJListTitle;
 
     private JTextField searchTermField;
     private JButton searchTermButton;
 
-    private JList exactMatchTermJList; // 完全照合した単語リスト
-    private Set<TermModel> exactMatchTermModelSet;
-    private JList partialMatchTermJList; // 部分照合した単語リスト
-    private Set<TermModel> partialMatchTermModelSet;
+    private JList exactlyMatchedTermJList; // 完全照合した単語リスト
+    private Set<TermModel> exactlyMatchedTermModelSet;
+    private JList partiallyMatchedTermJList; // 部分照合した単語リスト
+    private Set<TermModel> partiallyMatchedTermModelSet;
     private final JList conceptSetJList;
-    private final UndefinedTermListPanel undefinedTermListPanel;
+    private final UnmatchedTermListPanel unmatchedTermListPanel;
 
     private JCheckBox exactMatchAmbiguityCntCheckBox;
     private JCheckBox exactMatchIsSyncCheckBox;
@@ -122,7 +122,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private final JPanel constructTreeOptionPanel;
     private final JPanel partialMatchConstructTreeOptionPanel;
     private final JPanel exactMatchConstructTreeOptionPanel;
-    private final JPanel systemAddedPerfectlyMatchedConstructTreeOptionPanel;
+    private final JPanel systemAddedExactlyMatchedConstructTreeOptionPanel;
 
     private final JCheckBox replaceSubClassesCheckBox;
 
@@ -140,16 +140,16 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private final PropertyTreeConstructionPanel constructPropertyPanel;
 
     private final ConstructionTypePanel constructionTypePanel;
-    private final PerfectlyMatchedOptionPanel perfectlyMatchedOptionPanel;
-    private final PartiallyMatchedOptionPanel partiallyMatchedOptionPanel;
+    private final ExactlyMatchedOptionPanel exactlyMatchedOptionsPanel;
+    private final PartiallyMatchedOptionPanel partiallyMatchedOptionsPanel;
     // private JButton showConceptDescriptionButton;
 
     private final AutomaticDisAmbiguationAction automaticDisAmbiguationAction;
     private ConstructTreeAction constructNounTreeAction;
     private ConstructTreeAction constructNounAndVerbTreeAction;
 
-    private Action savePerfectlyMatchedTermAction;
-    private Action savePerfectlyMatchedTermWithCompoundWordAcion;
+    private Action saveExactlyMatchedTermAction;
+    private Action saveExactlyMatchedTermWithCompoundWordAcion;
 
     // private ConceptDescriptionFrame conceptDescriptionFrame;
 
@@ -251,11 +251,11 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         partialMatchConstructTreeOptionPanel.add(addAsSubConceptRadioButton);
 
         exactMatchConstructTreeOptionPanel = new JPanel();
-        systemAddedPerfectlyMatchedConstructTreeOptionPanel = new JPanel();
-        systemAddedPerfectlyMatchedConstructTreeOptionPanel.setLayout(new BorderLayout());
+        systemAddedExactlyMatchedConstructTreeOptionPanel = new JPanel();
+        systemAddedExactlyMatchedConstructTreeOptionPanel.setLayout(new BorderLayout());
         replaceSubClassesCheckBox = new JCheckBox("下位概念に置換");
         replaceSubClassesCheckBox.addActionListener(this);
-        systemAddedPerfectlyMatchedConstructTreeOptionPanel.add(replaceSubClassesCheckBox,
+        systemAddedExactlyMatchedConstructTreeOptionPanel.add(replaceSubClassesCheckBox,
                 BorderLayout.CENTER);
 
         constructTreeOptionPanel.add(partialMatchConstructTreeOptionPanel, BorderLayout.CENTER);
@@ -271,7 +271,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         conceptInfoPanel.add(constructTreeOptionPanel, BorderLayout.SOUTH);
         conceptInfoPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptInformationPanel")));
 
-        undefinedTermListPanel = new UndefinedTermListPanel();
+        unmatchedTermListPanel = new UnmatchedTermListPanel();
 
         highlightPartJList = new JList();
         highlightPartJList.addListSelectionListener(this);
@@ -308,12 +308,11 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         documentPanel.add(highlightInputTermCheckBox, BorderLayout.SOUTH);
         documentPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentArea")));
 
-        automaticDisAmbiguationAction = new AutomaticDisAmbiguationAction(
-                Translator.getTerm("AutomaticInputConceptSelectionAction"));
+        automaticDisAmbiguationAction = new AutomaticDisAmbiguationAction(Translator.getTerm("AutomaticInputConceptSelectionAction"));
 
         constructionTypePanel = new ConstructionTypePanel();
-        perfectlyMatchedOptionPanel = new PerfectlyMatchedOptionPanel();
-        partiallyMatchedOptionPanel = new PartiallyMatchedOptionPanel();
+        exactlyMatchedOptionsPanel = new ExactlyMatchedOptionPanel();
+        partiallyMatchedOptionsPanel = new PartiallyMatchedOptionPanel();
 
         JButton constructNounTreeButton = new JButton(new ConstructNounTreeAction());
         JButton constructNounAndVerbTreeButton = new JButton(new ConstructNounAndVerbTreeAction());
@@ -326,8 +325,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         buttonLayoutPanel.add(buttonPanel, BorderLayout.EAST);
 
         JTabbedPane optionTab = new JTabbedPane();
-        optionTab.add(perfectlyMatchedOptionPanel, Translator.getTerm("ExactMatchOptionBorder"));
-        optionTab.add(partiallyMatchedOptionPanel, Translator.getTerm("PartialMatchOptionBorder"));
+        optionTab.add(exactlyMatchedOptionsPanel, Translator.getTerm("ExactMatchOptionsBorder"));
+        optionTab.add(partiallyMatchedOptionsPanel, Translator.getTerm("PartialMatchOptionsBorder"));
         JPanel optionPanel = new JPanel();
         optionPanel.setLayout(new BorderLayout());
         optionPanel.add(optionTab, BorderLayout.CENTER);
@@ -337,7 +336,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         xBoxPanel1.setLayout(new BoxLayout(xBoxPanel1, BoxLayout.X_AXIS));
         xBoxPanel1.add(conceptJListScroll);
         xBoxPanel1.add(conceptInfoPanel);
-        xBoxPanel1.add(undefinedTermListPanel);
+        xBoxPanel1.add(unmatchedTermListPanel);
 
         var xBoxPanel2 = new JPanel();
         xBoxPanel2.setLayout(new BoxLayout(xBoxPanel2, BoxLayout.X_AXIS));
@@ -360,7 +359,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     public void removeRefOntConceptLabel(Concept c, boolean isInputConcept) {
-        if (!isInputConcept || perfectlyMatchedOptionPanel.isIncludeRefOntConceptLabel()) {
+        if (!isInputConcept || exactlyMatchedOptionsPanel.isIncludeRefOntConceptLabel()) {
             return;
         }
         Set<DODDLELiteral> removedLabelSet = new HashSet<>();
@@ -447,12 +446,12 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return constructionTypePanel;
     }
 
-    public PerfectlyMatchedOptionPanel getPerfectlyMatchedOptionPanel() {
-        return perfectlyMatchedOptionPanel;
+    public ExactlyMatchedOptionPanel getExactlyMatchedOptionsPanel() {
+        return exactlyMatchedOptionsPanel;
     }
 
-    public PartiallyMatchedOptionPanel getPartiallyMatchedOptionPanel() {
-        return partiallyMatchedOptionPanel;
+    public PartiallyMatchedOptionPanel getPartiallyMatchedOptionsPanel() {
+        return partiallyMatchedOptionsPanel;
     }
 
     public class ConstructionTypePanel extends JPanel {
@@ -476,12 +475,12 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
     }
 
-    public class PerfectlyMatchedOptionPanel extends JPanel implements ActionListener {
+    public class ExactlyMatchedOptionPanel extends JPanel implements ActionListener {
         private final JCheckBox constructionBox;
         private final JCheckBox trimmingBox;
         private final JCheckBox includeRefOntConceptLabelBox;
 
-        PerfectlyMatchedOptionPanel() {
+        ExactlyMatchedOptionPanel() {
             constructionBox = new JCheckBox(Translator.getTerm("ConstructionCheckBox"), true);
             constructionBox.addActionListener(this);
             trimmingBox = new JCheckBox(Translator.getTerm("TrimmingCheckBox"), true);
@@ -597,24 +596,21 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     private JPanel getTermListPanel() {
-        JPanel exactMatchTermListPanel = getExactMatchTermListPanel();
-        JPanel partialMatchTermListPanel = getPartialMatchTermListPanel();
+        JPanel exactMatchTermListPanel = getExactlyMatchedTermListPanel();
+        JPanel partialMatchTermListPanel = getPartiallyMatchedTermListPanel();
 
         var termListTabbedPane = new JTabbedPane();
-        termListTabbedPane.addTab(Translator.getTerm("ExactMatchTermListPanel"), null,
-                exactMatchTermListPanel);
-        termListTabbedPane.addTab(Translator.getTerm("PartialMatchTermListPanel"), null,
-                partialMatchTermListPanel);
+        termListTabbedPane.addTab(Translator.getTerm("ExactlyMatchedTermsPanel"), null, exactMatchTermListPanel);
+        termListTabbedPane.addTab(Translator.getTerm("PartiallyMatchedTermsPanel"), null, partialMatchTermListPanel);
 
         JPanel termListPanel = new JPanel();
         termListPanel.setLayout(new BorderLayout());
         termListPanel.add(getSearchTermPanel(), BorderLayout.NORTH);
         termListPanel.add(termListTabbedPane, BorderLayout.CENTER);
         termListPanel.add(new EditPanel(), BorderLayout.SOUTH);
-        termListPanel.setPreferredSize(new Dimension(300, 100));
-        termListPanel.setMinimumSize(new Dimension(300, 100));
-        termListPanel.setBorder(BorderFactory.createTitledBorder(
-                Translator.getTerm("InputTermListArea")));
+        termListPanel.setPreferredSize(new Dimension(380, 100));
+        termListPanel.setMinimumSize(new Dimension(380, 100));
+        termListPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputTermListArea")));
 
         return termListPanel;
     }
@@ -631,56 +627,48 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return searchPanel;
     }
 
-    private JPanel getExactMatchTermListPanel() {
-        exactMatchTermJList = new JList();
-        exactMatchTermJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        exactMatchTermJList.addListSelectionListener(this);
-        JScrollPane perfectlyMatchedTermListScroll = new JScrollPane(exactMatchTermJList);
-        exactMatchTermJListTitle = BorderFactory.createTitledBorder(Translator.getTerm("ExactMatchTermList"));
+    private JPanel getExactlyMatchedTermListPanel() {
+        exactlyMatchedTermJList = new JList();
+        exactlyMatchedTermJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        exactlyMatchedTermJList.addListSelectionListener(this);
+        JScrollPane exactlyMatchedTermListScroll = new JScrollPane(exactlyMatchedTermJList);
+        exactlyMatchedTermJListTitle = BorderFactory.createTitledBorder(Translator.getTerm("ExactlyMatchedTermList"));
         // perfectMatchedWordListScroll.setBorder(perfectMatchedWordJListTitle);
 
-        exactMatchAmbiguityCntCheckBox = new JCheckBox(
-                Translator.getTerm("SenseCountCheckBox"), true);
+        exactMatchAmbiguityCntCheckBox = new JCheckBox(Translator.getTerm("SenseCountCheckBox"), true);
         exactMatchAmbiguityCntCheckBox.addActionListener(this);
-        exactMatchIsSyncCheckBox = new JCheckBox(
-                Translator.getTerm("SyncPartialMatchTermListCheckBox"), true);
-        exactMatchIsSystemAddedTermCheckBox = new JCheckBox(
-                Translator.getTerm("SystemAddedInputTermCheckBox"), true);
+        exactMatchIsSyncCheckBox = new JCheckBox(Translator.getTerm("SyncPartiallyMatchedTermListCheckBox"), true);
+        exactMatchIsSystemAddedTermCheckBox = new JCheckBox(Translator.getTerm("SystemAddedInputTermCheckBox"), true);
         exactMatchIsSystemAddedTermCheckBox.addActionListener(this);
-        JPanel perfectlyMatchedFilterPanel = new JPanel();
-        perfectlyMatchedFilterPanel.setLayout(new GridLayout(3, 1));
-        perfectlyMatchedFilterPanel.add(exactMatchAmbiguityCntCheckBox);
-        perfectlyMatchedFilterPanel.add(exactMatchIsSystemAddedTermCheckBox);
-        perfectlyMatchedFilterPanel.add(exactMatchIsSyncCheckBox);
+        JPanel exactlyMatchedFilterPanel = new JPanel();
+        exactlyMatchedFilterPanel.setLayout(new GridLayout(3, 1));
+        exactlyMatchedFilterPanel.add(exactMatchAmbiguityCntCheckBox);
+        exactlyMatchedFilterPanel.add(exactMatchIsSystemAddedTermCheckBox);
+        exactlyMatchedFilterPanel.add(exactMatchIsSyncCheckBox);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.add(perfectlyMatchedTermListScroll, BorderLayout.CENTER);
-        panel.add(perfectlyMatchedFilterPanel, BorderLayout.SOUTH);
+        panel.add(exactlyMatchedTermListScroll, BorderLayout.CENTER);
+        panel.add(exactlyMatchedFilterPanel, BorderLayout.SOUTH);
 
         return panel;
     }
 
-    private JPanel getPartialMatchTermListPanel() {
-        partialMatchTermJList = new JList();
-        partialMatchTermJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        partialMatchTermJList.addListSelectionListener(this);
-        JScrollPane partiallyMatchedTermListScroll = new JScrollPane(partialMatchTermJList);
-        partialMatchTermJListTitle = BorderFactory.createTitledBorder(Translator
-                .getTerm("PartiallyMatchedTermList"));
+    private JPanel getPartiallyMatchedTermListPanel() {
+        partiallyMatchedTermJList = new JList();
+        partiallyMatchedTermJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        partiallyMatchedTermJList.addListSelectionListener(this);
+        JScrollPane partiallyMatchedTermListScroll = new JScrollPane(partiallyMatchedTermJList);
+        partiallyMatchedTermJListTitle = BorderFactory.createTitledBorder(Translator.getTerm("PartiallyMatchedTermList"));
         // partialMatchedWordListScroll.setBorder(partialMatchedWordJListTitle);
 
-        partialMatchCompoundWordCheckBox = new JCheckBox(
-                Translator.getTerm("ShowMorphemeListCheckBox"), true);
+        partialMatchCompoundWordCheckBox = new JCheckBox(Translator.getTerm("ShowMorphemeListCheckBox"), true);
         partialMatchCompoundWordCheckBox.addActionListener(this);
-        partialMatchMatchedTermBox = new JCheckBox(Translator.getTerm("MatchResultCheckBox"),
-                true);
+        partialMatchMatchedTermBox = new JCheckBox(Translator.getTerm("MatchResultCheckBox"), true);
         partialMatchMatchedTermBox.addActionListener(this);
-        partialMatchAmbiguityCntCheckBox = new JCheckBox(
-                Translator.getTerm("SenseCountCheckBox"), true);
+        partialMatchAmbiguityCntCheckBox = new JCheckBox(Translator.getTerm("SenseCountCheckBox"), true);
         partialMatchAmbiguityCntCheckBox.addActionListener(this);
-        partialMatchShowOnlyRelatedCompoundWordsCheckBox = new JCheckBox(
-                Translator.getTerm("ShowOnlyCorrespondCompoundWordsCheckBox"), false);
+        partialMatchShowOnlyRelatedCompoundWordsCheckBox = new JCheckBox(Translator.getTerm("ShowOnlyCompoundTermsCheckBox"), false);
         partialMatchShowOnlyRelatedCompoundWordsCheckBox.addActionListener(this);
         JPanel partialMatchedFilterPanel = new JPanel();
         partialMatchedFilterPanel.setLayout(new GridLayout(2, 2));
@@ -690,8 +678,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         JPanel partialMatchedOptionPanel = new JPanel();
         partialMatchedOptionPanel.setLayout(new BorderLayout());
         partialMatchedOptionPanel.add(partialMatchedFilterPanel, BorderLayout.CENTER);
-        partialMatchedOptionPanel.add(partialMatchShowOnlyRelatedCompoundWordsCheckBox,
-                BorderLayout.SOUTH);
+        partialMatchedOptionPanel.add(partialMatchShowOnlyRelatedCompoundWordsCheckBox, BorderLayout.SOUTH);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -702,18 +689,18 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     public int getPartiallyMatchedTermCnt() {
-        if (partialMatchTermModelSet == null) {
+        if (partiallyMatchedTermModelSet == null) {
             return 0;
         }
-        return partialMatchTermModelSet.size();
+        return partiallyMatchedTermModelSet.size();
     }
 
-    private int getPerfectlyMatchedTermCnt(boolean isSystemAdded) {
-        if (exactMatchTermModelSet == null) {
+    private int getExactlyMatchedTermCnt(boolean isSystemAdded) {
+        if (exactlyMatchedTermModelSet == null) {
             return 0;
         }
         int num = 0;
-        for (TermModel iwModel : exactMatchTermModelSet) {
+        for (TermModel iwModel : exactlyMatchedTermModelSet) {
             if (isSystemAdded) {
                 if (iwModel.isSystemAdded()) {
                     num++;
@@ -728,28 +715,28 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     public int getInputTermCnt() {
-        return getPartiallyMatchedTermCnt() + getPerfectlyMatchedTermCnt() + getUndefinedTermCnt();
+        return getPartiallyMatchedTermCnt() + getExactlyMatchedTermCnt() + getUnmatchedTermCnt();
     }
 
-    public int getPerfectlyMatchedTermCnt() {
-        return getPerfectlyMatchedTermCnt(false);
+    public int getExactlyMatchedTermCnt() {
+        return getExactlyMatchedTermCnt(false);
     }
 
-    public int getSystemAddedPerfectlyMatchedTermCnt() {
-        return getPerfectlyMatchedTermCnt(true);
+    public int getSystemAddedExactlyMatchedTermCnt() {
+        return getExactlyMatchedTermCnt(true);
     }
 
     public int getMatchedTermCnt() {
-        return getPartiallyMatchedTermCnt() + getPerfectlyMatchedTermCnt()
-                + getSystemAddedPerfectlyMatchedTermCnt();
+        return getPartiallyMatchedTermCnt() + getExactlyMatchedTermCnt()
+                + getSystemAddedExactlyMatchedTermCnt();
     }
 
-    public int getUndefinedTermCnt() {
-        return undefinedTermListPanel.getModel().getSize();
+    public int getUnmatchedTermCnt() {
+        return unmatchedTermListPanel.getModel().getSize();
     }
 
-    public UndefinedTermListPanel getUndefinedTermListPanel() {
-        return undefinedTermListPanel;
+    public UnmatchedTermListPanel getUnmatchedTermListPanel() {
+        return unmatchedTermListPanel;
     }
 
     public void setDocumentSelectionPanel(DocumentSelectionPanel p) {
@@ -757,8 +744,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     public void selectTopList() {
-        if (exactMatchTermJList.getModel().getSize() != 0) {
-            exactMatchTermJList.setSelectedIndex(0);
+        if (exactlyMatchedTermJList.getModel().getSize() != 0) {
+            exactlyMatchedTermJList.setSelectedIndex(0);
         } else {
             clearConceptInfoPanel();
         }
@@ -804,35 +791,35 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     private void showOnlyRelatedCompoundWords() {
         if (partialMatchShowOnlyRelatedCompoundWordsCheckBox.isSelected()) {
-            TermModel targetIWModel = (TermModel) exactMatchTermJList
+            TermModel targetIWModel = (TermModel) exactlyMatchedTermJList
                     .getSelectedValue();
             if (targetIWModel == null) {
                 return;
             }
             Set searchedPartiallyMatchedTermModelSet = new TreeSet();
-            for (TermModel iwModel : partialMatchTermModelSet) {
+            for (TermModel iwModel : partiallyMatchedTermModelSet) {
                 if (iwModel.getMatchedTerm().equals(targetIWModel.getMatchedTerm())) {
                     searchedPartiallyMatchedTermModelSet.add(iwModel);
                 }
             }
-            partialMatchTermJList.setListData(searchedPartiallyMatchedTermModelSet.toArray());
-            partialMatchTermJListTitle.setTitle(Translator.getTerm("PartiallyMatchTermList")
+            partiallyMatchedTermJList.setListData(searchedPartiallyMatchedTermModelSet.toArray());
+            partiallyMatchedTermJListTitle.setTitle(Translator.getTerm("PartiallyMatchTermList")
                     + " (" + searchedPartiallyMatchedTermModelSet.size() + "/"
-                    + partialMatchTermModelSet.size() + ")");
+                    + partiallyMatchedTermModelSet.size() + ")");
         } else {
-            partialMatchTermJList.setListData(partialMatchTermModelSet.toArray());
-            partialMatchTermJListTitle.setTitle(Translator.getTerm("PartiallyMatchTermList")
-                    + " (" + partialMatchTermModelSet.size() + ")");
+            partiallyMatchedTermJList.setListData(partiallyMatchedTermModelSet.toArray());
+            partiallyMatchedTermJListTitle.setTitle(Translator.getTerm("PartiallyMatchTermList")
+                    + " (" + partiallyMatchedTermModelSet.size() + ")");
         }
-        exactMatchTermJList.repaint();
-        partialMatchTermJList.repaint();
+        exactlyMatchedTermJList.repaint();
+        partiallyMatchedTermJList.repaint();
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == exactMatchTermJList
-                || e.getSource() == partialMatchTermJList) {
-            exactMatchTermJList.repaint();
-            partialMatchTermJList.repaint();
+        if (e.getSource() == exactlyMatchedTermJList
+                || e.getSource() == partiallyMatchedTermJList) {
+            exactlyMatchedTermJList.repaint();
+            partiallyMatchedTermJList.repaint();
         } else if (e.getSource() == highlightInputTermCheckBox) {
             highlightInputTerm();
         } else if (e.getSource() == showAroundConceptTreeCheckBox) {
@@ -848,49 +835,49 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 || e.getSource() == partialMatchCompoundWordCheckBox
                 || e.getSource() == partialMatchMatchedTermBox
                 || e.getSource() == exactMatchIsSystemAddedTermCheckBox) {
-            exactMatchTermJList.repaint();
-            partialMatchTermJList.repaint();
+            exactlyMatchedTermJList.repaint();
+            partiallyMatchedTermJList.repaint();
         } else if (e.getSource() == partialMatchShowOnlyRelatedCompoundWordsCheckBox) {
             showOnlyRelatedCompoundWords();
         } else if (e.getSource() == searchTermButton || e.getSource() == searchTermField) {
             String keyWord = searchTermField.getText();
             if (keyWord.length() == 0) {
-                exactMatchTermJList.setListData(exactMatchTermModelSet.toArray());
-                exactMatchTermJListTitle.setTitle(Translator
+                exactlyMatchedTermJList.setListData(exactlyMatchedTermModelSet.toArray());
+                exactlyMatchedTermJListTitle.setTitle(Translator
                         .getTerm("ExactMatchTermList")
                         + " ("
-                        + exactMatchTermModelSet.size() + ")");
+                        + exactlyMatchedTermModelSet.size() + ")");
 
-                partialMatchTermJList.setListData(partialMatchTermModelSet.toArray());
-                partialMatchTermJListTitle.setTitle(Translator
+                partiallyMatchedTermJList.setListData(partiallyMatchedTermModelSet.toArray());
+                partiallyMatchedTermJListTitle.setTitle(Translator
                         .getTerm("PartialMatchTermList")
                         + " ("
-                        + partialMatchTermModelSet.size() + ")");
+                        + partiallyMatchedTermModelSet.size() + ")");
             } else {
-                Set searchedPerfectlyMatchedTermModelSet = new TreeSet();
+                Set searchedExactlyMatchedTermModelSet = new TreeSet();
                 Set searchedPartiallyMatchedTermModelSet = new TreeSet();
-                for (TermModel iwModel : exactMatchTermModelSet) {
+                for (TermModel iwModel : exactlyMatchedTermModelSet) {
                     if (iwModel.getTerm().contains(keyWord)) {
-                        searchedPerfectlyMatchedTermModelSet.add(iwModel);
+                        searchedExactlyMatchedTermModelSet.add(iwModel);
                     }
                 }
-                exactMatchTermJList.setListData(searchedPerfectlyMatchedTermModelSet
+                exactlyMatchedTermJList.setListData(searchedExactlyMatchedTermModelSet
                         .toArray());
-                exactMatchTermJListTitle.setTitle(Translator
-                        .getTerm("PerfectlyMatchedTermList")
+                exactlyMatchedTermJListTitle.setTitle(Translator
+                        .getTerm("ExactlyMatchedTermList")
                         + " ("
-                        + searchedPerfectlyMatchedTermModelSet.size()
+                        + searchedExactlyMatchedTermModelSet.size()
                         + "/"
-                        + exactMatchTermModelSet.size() + ")");
+                        + exactlyMatchedTermModelSet.size() + ")");
 
-                TermModel targetIWModel = (TermModel) exactMatchTermJList
+                TermModel targetIWModel = (TermModel) exactlyMatchedTermJList
                         .getSelectedValue();
-                if (targetIWModel == null && 0 < exactMatchTermJList.getModel().getSize()) {
-                    targetIWModel = (TermModel) exactMatchTermJList.getModel()
+                if (targetIWModel == null && 0 < exactlyMatchedTermJList.getModel().getSize()) {
+                    targetIWModel = (TermModel) exactlyMatchedTermJList.getModel()
                             .getElementAt(0);
-                    exactMatchTermJList.setSelectedValue(targetIWModel, true);
+                    exactlyMatchedTermJList.setSelectedValue(targetIWModel, true);
                 }
-                for (TermModel iwModel : partialMatchTermModelSet) {
+                for (TermModel iwModel : partiallyMatchedTermModelSet) {
                     if (iwModel.getTerm().contains(keyWord)) {
                         if (partialMatchShowOnlyRelatedCompoundWordsCheckBox.isSelected()) {
                             if (targetIWModel != null
@@ -904,14 +891,14 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                     }
                 }
 
-                partialMatchTermJList.setListData(searchedPartiallyMatchedTermModelSet
+                partiallyMatchedTermJList.setListData(searchedPartiallyMatchedTermModelSet
                         .toArray());
-                partialMatchTermJListTitle.setTitle(Translator
+                partiallyMatchedTermJListTitle.setTitle(Translator
                         .getTerm("PartiallyMatchedTermList")
                         + " ("
                         + searchedPartiallyMatchedTermModelSet.size()
                         + "/"
-                        + partialMatchTermModelSet.size() + ")");
+                        + partiallyMatchedTermModelSet.size() + ")");
             }
         }
     }
@@ -938,7 +925,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return exactMatchAmbiguityCntCheckBox.isSelected();
     }
 
-    public boolean isPerfectlyMatchedSystemAddedTermCheckBox() {
+    public boolean isExactlyMatchedSystemAddedTermCheckBox() {
         return exactMatchIsSystemAddedTermCheckBox.isSelected();
     }
 
@@ -962,15 +949,15 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return constructNounAndVerbTreeAction;
     }
 
-    public Action getSavePerfectlyMatchedTermAction() {
-        return savePerfectlyMatchedTermAction;
+    public Action getSaveExactlyMatchedTermAction() {
+        return saveExactlyMatchedTermAction;
     }
 
     /*
      * 特に現状では使っていない
      */
-    public Action getSavePerfectlyMatchedTermWithCompoundWordAction() {
-        return savePerfectlyMatchedTermWithCompoundWordAcion;
+    public Action getSaveExactlyMatchedTermWithCompoundWordAction() {
+        return saveExactlyMatchedTermWithCompoundWordAcion;
     }
 
     public Map<String, Set<Concept>> getTermCorrespondConceptSetMap() {
@@ -1209,7 +1196,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                     }
                 }
             } else if (iwModel.isSystemAdded()) {
-                switchConstructTreeOptionPanel(systemAddedPerfectlyMatchedConstructTreeOptionPanel);
+                switchConstructTreeOptionPanel(systemAddedExactlyMatchedConstructTreeOptionPanel);
                 if (compoundConstructTreeOptionMap.get(iwModel) == null) {
                     replaceSubClassesCheckBox.setSelected(false);
                     EvalConcept evalConcept = (EvalConcept) conceptSetJList.getSelectedValue();
@@ -1228,7 +1215,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private void switchConstructTreeOptionPanel(JPanel optionPanel) {
         constructTreeOptionPanel.remove(partialMatchConstructTreeOptionPanel);
         constructTreeOptionPanel.remove(exactMatchConstructTreeOptionPanel);
-        constructTreeOptionPanel.remove(systemAddedPerfectlyMatchedConstructTreeOptionPanel);
+        constructTreeOptionPanel.remove(systemAddedExactlyMatchedConstructTreeOptionPanel);
         constructTreeOptionPanel.add(optionPanel);
         constructTreeOptionPanel.validate();
         constructTreeOptionPanel.repaint();
@@ -1261,16 +1248,16 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
         */
         // TODO fix
-        return exactMatchTermJList;
+        return exactlyMatchedTermJList;
     }
 
     private Set<TermModel> getTargetTermModelSet() {
-        if (getTargetTermJList() == exactMatchTermJList) {
-            return exactMatchTermModelSet;
-        } else if (getTargetTermJList() == partialMatchTermJList) {
-            return partialMatchTermModelSet;
+        if (getTargetTermJList() == exactlyMatchedTermJList) {
+            return exactlyMatchedTermModelSet;
+        } else if (getTargetTermJList() == partiallyMatchedTermJList) {
+            return partiallyMatchedTermModelSet;
         }
-        return exactMatchTermModelSet;
+        return exactlyMatchedTermModelSet;
     }
 
     private void syncPartiallyMatchedAmbiguousConceptSet(String orgTerm,
@@ -1278,7 +1265,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         if (!exactMatchIsSyncCheckBox.isSelected()) {
             return;
         }
-        for (TermModel iwModel : partialMatchTermModelSet) {
+        for (TermModel iwModel : partiallyMatchedTermModelSet) {
             if (iwModel.getMatchedTerm().equals(orgTerm)) {
                 termCorrespondConceptSetMap.put(iwModel.getTerm(), correspondConceptSet);
             }
@@ -1308,7 +1295,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 }
             }
 
-            if (getTargetTermJList() == exactMatchTermJList) {
+            if (getTargetTermJList() == exactlyMatchedTermJList) {
                 switchConstructTreeOptionPanel(exactMatchConstructTreeOptionPanel);
             } else {
                 switchConstructTreeOptionPanel(partialMatchConstructTreeOptionPanel);
@@ -1430,11 +1417,11 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        if (e.getSource() == exactMatchTermJList) {
-            selectAmbiguousConcept(exactMatchTermJList);
+        if (e.getSource() == exactlyMatchedTermJList) {
+            selectAmbiguousConcept(exactlyMatchedTermJList);
             showOnlyRelatedCompoundWords();
-        } else if (e.getSource() == partialMatchTermJList) {
-            selectAmbiguousConcept(partialMatchTermJList);
+        } else if (e.getSource() == partiallyMatchedTermJList) {
+            selectAmbiguousConcept(partiallyMatchedTermJList);
         } else if (e.getSource() == conceptSetJList) {
             selectCorrectConcept(getTargetTermJList());
         } else if (e.getSource() == highlightPartJList) {
@@ -1456,40 +1443,40 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     public void initTermList() {
         systemAddedTermSet = new HashSet<>();
         termModelSet = inputModule.getTermModelSet();
-        exactMatchTermModelSet = new TreeSet<>();
-        partialMatchTermModelSet = new TreeSet<>();
+        exactlyMatchedTermModelSet = new TreeSet<>();
+        partiallyMatchedTermModelSet = new TreeSet<>();
 
         for (TermModel itModel : termModelSet) {
             if (itModel.isPartiallyMatchTerm()) {
-                partialMatchTermModelSet.add(itModel);
+                partiallyMatchedTermModelSet.add(itModel);
             } else {
-                exactMatchTermModelSet.add(itModel);
+                exactlyMatchedTermModelSet.add(itModel);
                 if (itModel.isSystemAdded()) {
                     systemAddedTermSet.add(itModel.getTerm());
                 }
             }
         }
-        exactMatchTermJList.setListData(exactMatchTermModelSet.toArray());
-        exactMatchTermJListTitle.setTitle(Translator.getTerm("ExactMatchTermList")
-                + " (" + exactMatchTermModelSet.size() + ")");
+        exactlyMatchedTermJList.setListData(exactlyMatchedTermModelSet.toArray());
+        exactlyMatchedTermJListTitle.setTitle(Translator.getTerm("ExactMatchTermList")
+                + " (" + exactlyMatchedTermModelSet.size() + ")");
 
-        partialMatchTermJList.setListData(partialMatchTermModelSet.toArray());
-        partialMatchTermJListTitle.setTitle(Translator.getTerm("PartialMatchTermList")
-                + " (" + partialMatchTermModelSet.size() + ")");
+        partiallyMatchedTermJList.setListData(partiallyMatchedTermModelSet.toArray());
+        partiallyMatchedTermJListTitle.setTitle(Translator.getTerm("PartialMatchTermList")
+                + " (" + partiallyMatchedTermModelSet.size() + ")");
 
         termConceptSetMap = inputModule.getTermConceptSetMap();
 
-        Set<String> undefinedTermSet = inputModule.getUndefinedTermSet();
-        DefaultListModel listModel = undefinedTermListPanel.getModel();
+        Set<String> unmatchedTermSet = inputModule.getUnmatchedTermSet();
+        DefaultListModel listModel = unmatchedTermListPanel.getModel();
         listModel.clear();
-        for (String term : undefinedTermSet) {
+        for (String term : unmatchedTermSet) {
             if (0 < term.length()) {
                 listModel.addElement(term);
             }
         }
-        undefinedTermListPanel.setTitleWithSize();
-        exactMatchTermJList.repaint();
-        partialMatchTermJList.repaint();
+        unmatchedTermListPanel.setTitleWithSize();
+        exactlyMatchedTermJList.repaint();
+        partiallyMatchedTermJList.repaint();
     }
 
     public boolean isLoadInputTermSet() {
@@ -1541,9 +1528,9 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     public void loadInputTermSet(Set<String> termSet, int taskCnt) {
         this.termSet = termSet;
-        exactMatchTermJList.clearSelection();
-        partialMatchTermJList.clearSelection();
-        undefinedTermListPanel.clearSelection();
+        exactlyMatchedTermJList.clearSelection();
+        partiallyMatchedTermJList.clearSelection();
+        unmatchedTermListPanel.clearSelection();
         compoundConstructTreeOptionMap.clear();
         EDRTree.getEDRTree().clear();
         EDRTree.getEDRTTree().clear();
@@ -1558,7 +1545,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
     private Set<String> getIDSet(String ns) {
         Set<String> idSet = new HashSet<>();
-        for (TermModel itModel : exactMatchTermModelSet) {
+        for (TermModel itModel : exactlyMatchedTermModelSet) {
             String term = itModel.getTerm();
             Set<Concept> conceptSet = termConceptSetMap.get(term);
             if (conceptSet == null) {
@@ -1654,7 +1641,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
 
         private Map<Concept, EvalConcept> getConceptEvalConceptMap() {
             Map<Concept, EvalConcept> conceptEvalConceptMap = new HashMap<>();
-            for (TermModel termModel : exactMatchTermModelSet) {
+            for (TermModel termModel : exactlyMatchedTermModelSet) {
                 String inputTerm = termModel.getMatchedTerm();
                 for (Concept c : termConceptSetMap.get(inputTerm)) {
                     if (conceptEvalConceptMap.get(c) == null) {
@@ -1710,7 +1697,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 return;
             }
             termSet = new HashSet<>();
-            for (TermModel iwModel : exactMatchTermModelSet) {
+            for (TermModel iwModel : exactlyMatchedTermModelSet) {
                 termSet.add(iwModel.getTerm());
             }
             termEvalConceptSetMap = new HashMap<>();
@@ -1738,7 +1725,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 DODDLE_OWL.STATUS_BAR.addValue();
             }
 
-            for (TermModel termModel : exactMatchTermModelSet) {
+            for (TermModel termModel : exactlyMatchedTermModelSet) {
                 String inputTerm = termModel.getMatchedTerm();
                 Set<Concept> conceptSet = termConceptSetMap.get(inputTerm);
                 Set<EvalConcept> evalConceptSet = new TreeSet<>();
@@ -1935,7 +1922,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             for (TermModel iwModel : termModelSet) {
                 termSet.add(iwModel.getTerm());
             }
-            termSet.addAll(inputModule.getUndefinedTermSet());
+            termSet.addAll(inputModule.getUnmatchedTermSet());
             JList list = new JList();
             list.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputTermListArea") + " (" + termSet.size() + ")"));
             list.setListData(termSet.toArray());
@@ -1950,15 +1937,15 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         try {
             Properties properties = new Properties();
             properties.setProperty("ConstructTree.isTreeConstruction",
-                    String.valueOf(perfectlyMatchedOptionPanel.isConstruction()));
+                    String.valueOf(exactlyMatchedOptionsPanel.isConstruction()));
             properties.setProperty("ConstructTree.isTrimmingInternalNode",
-                    String.valueOf(perfectlyMatchedOptionPanel.isTrimming()));
+                    String.valueOf(exactlyMatchedOptionsPanel.isTrimming()));
             properties.setProperty("ConstructTree.isConstructionWithCompoundWordTree",
-                    String.valueOf(partiallyMatchedOptionPanel.isConstruction()));
+                    String.valueOf(partiallyMatchedOptionsPanel.isConstruction()));
             properties.setProperty("ConstructTree.isTrimmingInternalNodeWithCompoundWordTree",
-                    String.valueOf(partiallyMatchedOptionPanel.isTrimming()));
+                    String.valueOf(partiallyMatchedOptionsPanel.isTrimming()));
             properties.setProperty("ConstructTree.isAddAbstractConceptWithCompoundWordTree",
-                    String.valueOf(partiallyMatchedOptionPanel.isAddAbstractConcept()));
+                    String.valueOf(partiallyMatchedOptionsPanel.isAddAbstractConcept()));
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {
                 properties.store(writer, "Construct Tree Option");
@@ -1983,15 +1970,15 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                 properties.load(reader);
             }
             boolean t = Boolean.valueOf(properties.getProperty("ConstructTree.isTreeConstruction"));
-            perfectlyMatchedOptionPanel.setConstruction(t);
+            exactlyMatchedOptionsPanel.setConstruction(t);
             t = Boolean.valueOf(properties.getProperty("ConstructTree.isTrimmingInternalNode"));
-            perfectlyMatchedOptionPanel.setTrimming(t);
+            exactlyMatchedOptionsPanel.setTrimming(t);
             t = Boolean.valueOf(properties.getProperty("ConstructTree.isConstructionWithCompoundWordTree"));
-            partiallyMatchedOptionPanel.setConstruction(t);
+            partiallyMatchedOptionsPanel.setConstruction(t);
             t = Boolean.valueOf(properties.getProperty("ConstructTree.isTrimmingInternalNodeWithCompoundWordTree"));
-            partiallyMatchedOptionPanel.setTrimming(t);
+            partiallyMatchedOptionsPanel.setTrimming(t);
             t = Boolean.valueOf(properties.getProperty("ConstructTree.isAddAbstractConceptWithCompoundWordTree"));
-            partiallyMatchedOptionPanel.setAddAbstractConcept(t);
+            partiallyMatchedOptionsPanel.setAddAbstractConcept(t);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -2104,7 +2091,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
                     buf.append(System.lineSeparator());
                 }
             }
-            for (String inputTerm : inputModule.getUndefinedTermSet()) {
+            for (String inputTerm : inputModule.getUnmatchedTermSet()) {
                 buf.append(inputTerm);
                 buf.append(System.lineSeparator());
             }
@@ -2127,46 +2114,46 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
     }
 
-    public void loadUndefinedTermSet(File file) {
+    public void loadUnmatchedTermSet(File file) {
         if (!file.exists()) {
             return;
         }
-        DefaultListModel undefinedTermListModel = undefinedTermListPanel.getModel();
-        undefinedTermListModel.clear();
+        DefaultListModel unmatchedTermListModel = unmatchedTermListPanel.getModel();
+        unmatchedTermListModel.clear();
         try {
             BufferedReader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (reader) {
                 while (reader.ready()) {
                     String line = reader.readLine();
                     if (line != null) {
-                        undefinedTermListModel.addElement(line);
+                        unmatchedTermListModel.addElement(line);
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        constructClassPanel.setUndefinedTermListModel(undefinedTermListModel);
-        constructPropertyPanel.setUndefinedTermListModel(undefinedTermListModel);
+        constructClassPanel.setUnmatchedTermListModel(unmatchedTermListModel);
+        constructPropertyPanel.setUnmatchedTermListModel(unmatchedTermListModel);
     }
 
-    public void loadUndefinedTermSet(int projectID, Statement stmt) {
-        DefaultListModel undefinedTermListModel = undefinedTermListPanel.getModel();
-        undefinedTermListModel.clear();
+    public void loadUnmatchedTermSet(int projectID, Statement stmt) {
+        DefaultListModel unmatchedTermListModel = unmatchedTermListPanel.getModel();
+        unmatchedTermListModel.clear();
         try {
-            String sql = "SELECT * from undefined_term_set where Project_ID=" + projectID;
+            String sql = "SELECT * from unmatched_term_set where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String term = URLDecoder.decode(rs.getString("Term"), StandardCharsets.UTF_8);
                 if (term != null) {
-                    undefinedTermListModel.addElement(term);
+                    unmatchedTermListModel.addElement(term);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        constructClassPanel.setUndefinedTermListModel(undefinedTermListModel);
-        constructPropertyPanel.setUndefinedTermListModel(undefinedTermListModel);
+        constructClassPanel.setUnmatchedTermListModel(unmatchedTermListModel);
+        constructPropertyPanel.setUnmatchedTermListModel(unmatchedTermListModel);
     }
 
     public void loadInputConceptSet(File file) {
@@ -2207,16 +2194,16 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
     }
 
-    public void saveUndefinedTermSet(File file) {
-        DefaultListModel undefinedTermListModel = undefinedTermListPanel.getModel();
-        if (undefinedTermListModel == null) {
+    public void saveUnmatchedTermSet(File file) {
+        DefaultListModel unmatchedTermListModel = unmatchedTermListPanel.getModel();
+        if (unmatchedTermListModel == null) {
             return;
         }
         try {
             StringBuilder buf = new StringBuilder();
-            for (int i = 0; i < undefinedTermListModel.getSize(); i++) {
-                String undefinedTerm = (String) undefinedTermListModel.getElementAt(i);
-                buf.append(undefinedTerm);
+            for (int i = 0; i < unmatchedTermListModel.getSize(); i++) {
+                String unmatchedTerm = (String) unmatchedTermListModel.getElementAt(i);
+                buf.append(unmatchedTerm);
                 buf.append(System.lineSeparator());
             }
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
@@ -2351,20 +2338,20 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
     }
 
-    public void savePerfectlyMatchedTerm() {
+    public void saveExactlyMatchedTerms() {
         JFileChooser chooser = new JFileChooser(".");
         int retval = chooser.showSaveDialog(DODDLE_OWL.rootPane);
         if (retval == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
-            savePerfectlyMatchedTerm(file);
+            saveExactlyMatchedTerms(file);
         }
     }
 
-    private void savePerfectlyMatchedTerm(File file) {
+    private void saveExactlyMatchedTerms(File file) {
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {
-                for (TermModel iwModel : exactMatchTermModelSet) {
+                for (TermModel iwModel : exactlyMatchedTermModelSet) {
                     writer.write(iwModel.getTerm());
                     writer.newLine();
                 }
@@ -2374,38 +2361,38 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
     }
 
-    public void savePerfectlyMatchedTermWithCompoundWord() {
+    public void saveExactlyMatchedTermWithCompoundWord() {
         JFileChooser chooser = new JFileChooser(".");
         int retval = chooser.showSaveDialog(DODDLE_OWL.rootPane);
         if (retval == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
-            savePerfectlyMatchedTermWithCompoundWord(file);
+            saveExactlyMatchedTermWithCompoundWord(file);
         }
     }
 
-    private void savePerfectlyMatchedTermWithCompoundWord(File file) {
+    private void saveExactlyMatchedTermWithCompoundWord(File file) {
         try {
-            Map perfectlyMatchedTermWithCompoundWordMap = new TreeMap();
+            Map exactlyMatchedTermWithCompoundWordMap = new TreeMap();
             for (TermModel iwModel : termModelSet) {
-                if (perfectlyMatchedTermWithCompoundWordMap.get(iwModel.getMatchedTerm()) != null) {
-                    Set compoundWordSet = (Set) perfectlyMatchedTermWithCompoundWordMap.get(iwModel
+                if (exactlyMatchedTermWithCompoundWordMap.get(iwModel.getMatchedTerm()) != null) {
+                    Set compoundWordSet = (Set) exactlyMatchedTermWithCompoundWordMap.get(iwModel
                             .getMatchedTerm());
                     compoundWordSet.add(iwModel.getTerm());
-                    perfectlyMatchedTermWithCompoundWordMap.put(iwModel.getMatchedTerm(),
+                    exactlyMatchedTermWithCompoundWordMap.put(iwModel.getMatchedTerm(),
                             compoundWordSet);
                 } else {
                     Set compoundWordSet = new TreeSet();
                     compoundWordSet.add(iwModel.getTerm());
-                    perfectlyMatchedTermWithCompoundWordMap.put(iwModel.getMatchedTerm(),
+                    exactlyMatchedTermWithCompoundWordMap.put(iwModel.getMatchedTerm(),
                             compoundWordSet);
                 }
             }
 
             StringBuilder buf = new StringBuilder();
-            for (Object o1 : perfectlyMatchedTermWithCompoundWordMap.keySet()) {
+            for (Object o1 : exactlyMatchedTermWithCompoundWordMap.keySet()) {
                 String matchedTerm = (String) o1;
                 buf.append(matchedTerm).append("=>");
-                Set compoundWordSet = (Set) perfectlyMatchedTermWithCompoundWordMap.get(matchedTerm);
+                Set compoundWordSet = (Set) exactlyMatchedTermWithCompoundWordMap.get(matchedTerm);
                 for (Object o : compoundWordSet) {
                     String compoundWord = (String) o;
                     buf.append(compoundWord).append(",");

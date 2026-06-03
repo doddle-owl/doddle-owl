@@ -123,7 +123,7 @@ public class SaveProjectAction extends AbstractAction {
         conceptSelectionPanel.saveInputTermConstructTreeOptionSet(new File(saveDir,
                 ProjectFileNames.INPUT_TERM_CONSTRUCT_TREE_OPTION_SET_FILE));
         conceptSelectionPanel.saveInputConceptSet(new File(saveDir, ProjectFileNames.INPUT_CONCEPT_SET_FILE));
-        conceptSelectionPanel.saveUndefinedTermSet(new File(saveDir, ProjectFileNames.UNDEFINED_TERM_SET_FILE));
+        conceptSelectionPanel.saveUnmatchedTermSet(new File(saveDir, ProjectFileNames.UNMATCHED_TERM_SET_FILE));
         doddle.saveOntology(currentProject, new File(saveDir, ProjectFileNames.ONTOLOGY_FILE));
 
         currentProject.getConstructClassPanel().getConceptDriftManagementPanel().saveTrimmedResultAnalysis(
@@ -165,11 +165,11 @@ public class SaveProjectAction extends AbstractAction {
             if (conceptSelectionPanel.getTermModelSet() != null) {
                 buf.append(Translator.getTerm("InputTermCountMessage")).append(": ").append(conceptSelectionPanel.getInputTermCnt()).append(System.lineSeparator());
             }
-            buf.append(Translator.getTerm("ExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPerfectlyMatchedTermCnt()).append(System.lineSeparator());
-            buf.append(Translator.getTerm("SystemAddedExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("ExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getExactlyMatchedTermCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("SystemAddedExactMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getSystemAddedExactlyMatchedTermCnt()).append(System.lineSeparator());
             buf.append(Translator.getTerm("PartialMatchTermCountMessage")).append(": ").append(conceptSelectionPanel.getPartiallyMatchedTermCnt()).append(System.lineSeparator());
             buf.append(Translator.getTerm("MatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getMatchedTermCnt()).append(System.lineSeparator());
-            buf.append(Translator.getTerm("UndefinedTermCountMessage")).append(": ").append(conceptSelectionPanel.getUndefinedTermCnt()).append(System.lineSeparator());
+            buf.append(Translator.getTerm("UnmatchedTermCountMessage")).append(": ").append(conceptSelectionPanel.getUnmatchedTermCnt()).append(System.lineSeparator());
 
             if (conceptSelectionPanel.getInputConceptSet() != null) {
                 buf.append(Translator.getTerm("InputConceptCountMessage")).append(": ").append(conceptSelectionPanel.getInputConceptSet().size()).append(System.lineSeparator());

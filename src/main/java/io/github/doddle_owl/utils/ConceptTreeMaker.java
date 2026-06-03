@@ -191,7 +191,7 @@ public class ConceptTreeMaker {
         beforeTrimmingConceptNum = Utils.getAllConcept(treeModel).size();
         ConceptTreeNode rootNode = (ConceptTreeNode) treeModel.getRoot();
         trimmedConceptSet.clear();
-        if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel().isTrimming()) {
+        if (project.getConceptSelectionPanel().getExactlyMatchedOptionsPanel().isTrimming()) {
             trimTree(rootNode);
             removeSameNode(rootNode);
         }

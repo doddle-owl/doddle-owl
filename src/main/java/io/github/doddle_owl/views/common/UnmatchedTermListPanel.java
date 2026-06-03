@@ -39,9 +39,9 @@ import java.util.List;
 /**
  * @author Takeshi Morita
  */
-public class UndefinedTermListPanel extends JPanel implements ActionListener {
+public class UnmatchedTermListPanel extends JPanel implements ActionListener {
 
-    public static boolean isDragUndefinedList = false;
+    public static boolean isDragUnmatchedList = false;
 
     private final JButton searchButton;
     private final JTextField searchField;
@@ -50,11 +50,11 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
     private final JButton addButton;
     private final JButton removeButton;
 
-    private ListModel undefinedTermListModel;
-    private final JList undefinedTermJList;
-    private final TitledBorder undefinedTermJListTitle;
+    private ListModel unmatchedTermListModel;
+    private final JList unmatchedTermJList;
+    private final TitledBorder unmatchedTermJListTitle;
 
-    public UndefinedTermListPanel() {
+    public UnmatchedTermListPanel() {
         searchButton = new JButton(Translator.getTerm("SearchButton"));
         searchButton.addActionListener(this);
         searchField = new JTextField(30);
@@ -64,12 +64,12 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
         searchPanel.add(searchField, BorderLayout.CENTER);
         searchPanel.add(searchButton, BorderLayout.EAST);
 
-        undefinedTermListModel = new DefaultListModel();
-        undefinedTermJList = new JList(undefinedTermListModel);
-        JScrollPane undefinedWordJListScroll = new JScrollPane(undefinedTermJList);
-        undefinedTermJListTitle = BorderFactory.createTitledBorder(Translator.getTerm("UndefinedTermList"));
-        undefinedTermJList.setDragEnabled(true);
-        new DropTarget(undefinedTermJList, new UndefinedTermJListDropTargetAdapter());
+        unmatchedTermListModel = new DefaultListModel();
+        unmatchedTermJList = new JList(unmatchedTermListModel);
+        JScrollPane unmatchedTermJListScroll = new JScrollPane(unmatchedTermJList);
+        unmatchedTermJListTitle = BorderFactory.createTitledBorder(Translator.getTerm("UnmatchedTermList"));
+        unmatchedTermJList.setDragEnabled(true);
+        new DropTarget(unmatchedTermJList, new UnmatchedTermJListDropTargetAdapter());
 
         addWordField = new JTextField(30);
         addWordField.addActionListener(this);
@@ -91,14 +91,14 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
 
         setLayout(new BorderLayout());
         add(northPanel, BorderLayout.NORTH);
-        add(undefinedWordJListScroll, BorderLayout.CENTER);
-        setBorder(undefinedTermJListTitle);
+        add(unmatchedTermJListScroll, BorderLayout.CENTER);
+        setBorder(unmatchedTermJListTitle);
     }
 
-    class UndefinedTermJListDropTargetAdapter extends DropTargetAdapter {
+    class UnmatchedTermJListDropTargetAdapter extends DropTargetAdapter {
 
         public void dragEnter(DropTargetDragEvent dtde) {
-            isDragUndefinedList = true;
+            isDragUnmatchedList = true;
         }
 
         public void drop(DropTargetDropEvent dtde) {
@@ -106,18 +106,18 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
     }
 
     public List getSelectedValuesList() {
-        return undefinedTermJList.getSelectedValuesList();
+        return unmatchedTermJList.getSelectedValuesList();
     }
 
     public DefaultListModel getModel() {
-        return (DefaultListModel) undefinedTermListModel;
+        return (DefaultListModel) unmatchedTermListModel;
     }
 
     public DefaultListModel getViewModel() {
-        if (undefinedTermJList.getModel() == undefinedTermListModel) {
+        if (unmatchedTermJList.getModel() == unmatchedTermListModel) {
             return null;
         }
-        return (DefaultListModel) undefinedTermJList.getModel();
+        return (DefaultListModel) unmatchedTermJList.getModel();
     }
 
     public String getSearchRegex() {
@@ -125,22 +125,22 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
     }
 
     public void clearSelection() {
-        undefinedTermJList.clearSelection();
+        unmatchedTermJList.clearSelection();
     }
 
     private void setTitle() {
-        undefinedTermJListTitle.setTitle(Translator.getTerm("UndefinedTermList"));
+        unmatchedTermJListTitle.setTitle(Translator.getTerm("UnmatchedTermList"));
     }
 
     public void setTitleWithSize() {
-        undefinedTermJListTitle.setTitle(Translator.getTerm("UndefinedTermList") + " （"
-                + undefinedTermJList.getModel().getSize() + "/" + getModel().getSize() + "）");
+        unmatchedTermJListTitle.setTitle(Translator.getTerm("UnmatchedTermList") + " （"
+                + unmatchedTermJList.getModel().getSize() + "/" + getModel().getSize() + "）");
         repaint();
     }
 
-    public void setUndefinedTermListModel(ListModel model) {
-        undefinedTermListModel = model;
-        undefinedTermJList.setModel(model);
+    public void setUnmatchedTermListModel(ListModel model) {
+        unmatchedTermListModel = model;
+        unmatchedTermJList.setModel(model);
         setTitle();
     }
 
@@ -148,28 +148,28 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
         if (e.getSource() == searchField || e.getSource() == searchButton) {
             String searchRegex = searchField.getText();
             if (searchRegex.length() == 0) {
-                undefinedTermJList.setModel(undefinedTermListModel);
+                unmatchedTermJList.setModel(unmatchedTermListModel);
             } else {
                 DefaultListModel searchListModel = new DefaultListModel();
-                for (int i = 0; i < undefinedTermListModel.getSize(); i++) {
-                    String word = (String) undefinedTermListModel.getElementAt(i);
+                for (int i = 0; i < unmatchedTermListModel.getSize(); i++) {
+                    String word = (String) unmatchedTermListModel.getElementAt(i);
                     if (word.matches(searchRegex)) {
                         searchListModel.addElement(word);
                     }
                 }
-                undefinedTermJList.setModel(searchListModel);
+                unmatchedTermJList.setModel(searchListModel);
             }
             setTitleWithSize();
         } else if (e.getSource() == addButton || e.getSource() == addWordField) {
             String addWord = addWordField.getText();
             if (0 < addWord.length()) {
-                for (int i = 0; i < undefinedTermListModel.getSize(); i++) {
-                    String word = (String) undefinedTermListModel.getElementAt(i);
+                for (int i = 0; i < unmatchedTermListModel.getSize(); i++) {
+                    String word = (String) unmatchedTermListModel.getElementAt(i);
                     if (word.equals(addWord)) {
                         return;
                     }
                 }
-                ((DefaultListModel) undefinedTermListModel).addElement(addWord);
+                ((DefaultListModel) unmatchedTermListModel).addElement(addWord);
                 if (getViewModel() != null && addWord.matches(getSearchRegex())) {
                     getViewModel().addElement(addWord);
                 }
@@ -177,11 +177,11 @@ public class UndefinedTermListPanel extends JPanel implements ActionListener {
                 addWordField.setText("");
             }
         } else if (e.getSource() == removeButton) {
-            DefaultListModel model = (DefaultListModel) undefinedTermJList.getModel();
-            List removeWordList = undefinedTermJList.getSelectedValuesList();
+            DefaultListModel model = (DefaultListModel) unmatchedTermJList.getModel();
+            List removeWordList = unmatchedTermJList.getSelectedValuesList();
             for (Object word : removeWordList) {
                 model.removeElement(word);
-                ((DefaultListModel) undefinedTermListModel).removeElement(word);
+                ((DefaultListModel) unmatchedTermListModel).removeElement(word);
             }
             setTitleWithSize();
         }

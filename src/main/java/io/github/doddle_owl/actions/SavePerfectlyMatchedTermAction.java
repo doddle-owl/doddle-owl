@@ -40,7 +40,7 @@ public class SavePerfectlyMatchedTermAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         DODDLEProjectPanel currentProject = DODDLE_OWL.getCurrentProject();
-        currentProject.getConceptSelectionPanel().savePerfectlyMatchedTerm();
+        currentProject.getConceptSelectionPanel().saveExactlyMatchedTerms();
     }
 }
 

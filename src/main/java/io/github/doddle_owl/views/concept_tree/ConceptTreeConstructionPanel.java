@@ -32,7 +32,7 @@ import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.common.ConceptSelectionDialog;
-import io.github.doddle_owl.views.common.UndefinedTermListPanel;
+import io.github.doddle_owl.views.common.UnmatchedTermListPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -48,7 +48,7 @@ import java.util.TreeSet;
 public abstract class ConceptTreeConstructionPanel extends JPanel implements CompoundConceptTreeInterface {
     ConceptTreePanel isaTreePanel;
     ConceptTreePanel hasaTreePanel;
-    UndefinedTermListPanel undefinedTermListPanel;
+    UnmatchedTermListPanel unmatchedTermListPanel;
     ConceptInformationPanel conceptInfoPanel;
 
     ConceptDriftManagementPanel conceptDriftManagementPanel;
@@ -80,8 +80,8 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
         return conceptDriftManagementPanel;
     }
 
-    public void setUndefinedTermListModel(ListModel model) {
-        undefinedTermListPanel.setUndefinedTermListModel(model);
+    public void setUnmatchedTermListModel(ListModel model) {
+        unmatchedTermListPanel.setUnmatchedTermListModel(model);
         repaint();
     }
 

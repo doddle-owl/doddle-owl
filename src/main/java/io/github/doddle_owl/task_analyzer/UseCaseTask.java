@@ -134,7 +134,7 @@ class UseCaseTask {
             System.out.println("ユースケース記述数: " + useCaseTaskList.size());
             int taskNum = 0;
             int validTaskNum = 0;
-            Set<String> undefinedTermSet = new HashSet<>();
+            Set<String> unmatchedTermSet = new HashSet<>();
             for (UseCaseTask useCaseTask : useCaseTaskList) {
                 System.out.println(useCaseTask);
                 for (PrimitiveTask task : useCaseTask.getPrimitiveTaskList()) {
@@ -148,14 +148,14 @@ class UseCaseTask {
                         if (isDefinedSubjectConcept) {
                             System.out.print(task.getSubjectString());
                         } else {
-                            undefinedTermSet.add(task.getSubjectString());
+                            unmatchedTermSet.add(task.getSubjectString());
                             System.out.print("<" + task.getSubjectString() + ">");
                         }
                         System.out.print("\t");
                         if (isDefinedObjectConcept) {
                             System.out.println(task.getObjectString());
                         } else {
-                            undefinedTermSet.add(task.getObjectString());
+                            unmatchedTermSet.add(task.getObjectString());
                             System.out.println("<" + task.getObjectString() + ">");
                         }
                     } else {
@@ -166,16 +166,16 @@ class UseCaseTask {
             }
             System.out.println(validTaskNum + "/" + taskNum);
 
-            System.out.println("未定義語数: "+undefinedTermSet.size());
-            Set<String> undefinedTermWithCaseSet = new HashSet<>();
-            for (String term : undefinedTermSet) {
+            System.out.println("未照合語数: "+unmatchedTermSet.size());
+            Set<String> unmatchedTermWithCaseSet = new HashSet<>();
+            for (String term : unmatchedTermSet) {
                 if (term.contains("(") || term.contains(")")) {
-                    undefinedTermWithCaseSet.add(term);
+                    unmatchedTermWithCaseSet.add(term);
                 } else {
                     System.out.println(term);
                 }
             }            
-            for (String term : undefinedTermWithCaseSet) {
+            for (String term : unmatchedTermWithCaseSet) {
                 System.out.println(term);
             }
         } catch (Exception e) {

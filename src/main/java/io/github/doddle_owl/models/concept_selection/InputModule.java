@@ -49,7 +49,7 @@ import java.util.*;
 public class InputModule {
 
     private boolean isLoadInputTermSet;
-    private Set<String> undefinedTermSet;
+    private Set<String> unmatchedTermSet;
     private Set<TermModel> termModelSet;
     private Map<String, Set<Concept>> termConceptSetMap;
 
@@ -58,7 +58,7 @@ public class InputModule {
 
     public void initialize() {
         isLoadInputTermSet = false;
-        undefinedTermSet = new TreeSet<>();
+        unmatchedTermSet = new TreeSet<>();
         termModelSet = new TreeSet<>();
         termConceptSetMap = new HashMap<>();
     }
@@ -85,7 +85,7 @@ public class InputModule {
     private void clearData() {
         isLoadInputTermSet = false;
         termModelSet.clear();
-        undefinedTermSet.clear();
+        unmatchedTermSet.clear();
         termConceptSetMap.clear();
     }
 
@@ -304,7 +304,7 @@ public class InputModule {
                         }
                     } else {
                         if (0 < term.length()) {
-                            undefinedTermSet.add(term);
+                            unmatchedTermSet.add(term);
                         }
                     }
                 }
@@ -346,7 +346,7 @@ public class InputModule {
         return termConceptSetMap;
     }
 
-    public Set<String> getUndefinedTermSet() {
-        return undefinedTermSet;
+    public Set<String> getUnmatchedTermSet() {
+        return unmatchedTermSet;
     }
 }

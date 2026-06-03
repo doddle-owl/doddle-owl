@@ -82,10 +82,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "DODDLE" .
 
-<https://doddle-owl.github.io#SyncPartialMatchTermListCheckBox>
+<https://doddle-owl.github.io#SyncPartiallyMatchedTermListCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Apply Concept Selection Results to Partial Match Terms"@en , "概念選択結果を対応する部分照合語に適用"@ja ;
+                "Apply Concept Selection to Partial Matches"@en , "概念選択結果を対応する部分照合語に適用"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactMatchTermListPanel> ;
@@ -148,19 +148,19 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "汎用オントロジー選択" .
 
-<https://doddle-owl.github.io#ExactMatchTermCountMessage>
+<https://doddle-owl.github.io#NumberOfExactlyMatchedTermsMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Exact Match Term Count"@en , "完全照合語数"@ja ;
+                "Number of Exactly Matched Terms"@en , "完全照合語数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "完全照合語数" .
 
-<https://doddle-owl.github.io#ExactMatchTermList>
+<https://doddle-owl.github.io#ExactlyMatchedTermList>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Exact Match Terms"@en , "完全照合語"@ja ;
+                "Exactly Matched Terms"@en , "完全照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#List> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactMatchTermListPanel> ;
@@ -194,10 +194,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念と優先見出しの対応を保存" .
 
-<https://doddle-owl.github.io#SaveExactMatchTermCompoundWordMapAction>
+<https://doddle-owl.github.io#SaveExactlyMatchedTermCompoundTermMapAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Exact Match Term Compound Word Map"@en , "完全照合語と対応する複合語を保存"@ja ;
+                "Save Exactly Matched Term Compound Term Map"@en , "完全照合語と対応する複合語を保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -289,15 +289,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "WordSpace の結果" .
 
-<https://doddle-owl.github.io#UndefinedTermList>
+<https://doddle-owl.github.io#UnmatchedTermList>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Undefined Terms"@en , "未定義語"@ja ;
+                "Unmatched Terms"@en , "未照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#List> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#UndefinedTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#UnmatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "未定義語" .
+                "未照合語" .
 
 <https://doddle-owl.github.io#EditInputDocumentButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -508,13 +508,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "有効" .
 
-<https://doddle-owl.github.io#ShowOnlyCorrespondCompoundWordsCheckBox>
+<https://doddle-owl.github.io#ShowOnlyCompoundTermsCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Show Compound Words Corresponding to the Selected Exact Match Term"@en , "選択中の完全照合語に対応する複合語のみ表示"@ja ;
+                "Show Only Compound Terms for Selected Exact Matches"@en , "選択中の完全照合語に対応する複合語のみ表示"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PartialMatchTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PartiallyMatchedTermsPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "選択中の完全照合語に対応する複合語のみ表示" .
 
@@ -594,7 +594,7 @@
 <https://doddle-owl.github.io#SystemAddedExactMatchTermCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "System Added Exact Match Term Count"@en , "システムが追加した完全照合語数"@ja ;
+                "System Added Exactly Matched Term Count"@en , "システムが追加した完全照合語数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -723,15 +723,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "言語" .
 
-<https://doddle-owl.github.io#PartialMatchTermListPanel>
+<https://doddle-owl.github.io#PartiallyMatchedTermsPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partial Match"@en , "部分照合"@ja ;
+                "Partially Matched Terms"@en , "部分照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#TermListPanel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "部分照合" .
+                "部分照合語" .
 
 <https://doddle-owl.github.io#InputDocumentLabel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1269,13 +1269,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念情報" .
 
-<https://doddle-owl.github.io#PartialMatchTermList>
+<https://doddle-owl.github.io#PartiallyMatchedTermList>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partial Match Terms"@en , "部分照合語"@ja ;
+                "Partially Matched Terms"@en , "部分照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#List> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PartialMatchTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PartiallyMatchedTermsPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "部分照合語" .
 
@@ -1372,15 +1372,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "構築オプション" .
 
-<https://doddle-owl.github.io#UndefineTermAction>
+<https://doddle-owl.github.io#UnmatchedTermAction>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Undefine Term"@en , "未定義"@ja ;
+                "Unmatched Terms"@en , "未照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "未定義" .
+                "未照合語" .
 
 <https://doddle-owl.github.io#OpenAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1647,10 +1647,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "修飾名を表示" .
 
-<https://doddle-owl.github.io#ExactMatchOptionBorder>
+<https://doddle-owl.github.io#ExactMatchOptionsBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Exact Match Option"@en , "完全照合オプション"@ja ;
+                "Exact Match Options"@en , "完全照合オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
@@ -1741,10 +1741,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Property Tree Construction" .
 
-<https://doddle-owl.github.io#PartialMatchTermCountMessage>
+<https://doddle-owl.github.io#NumberOfPartiallyMatchedTermsMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partial Match Term Count"@en , "部分照合語数"@ja ;
+                "Number of Partially Matched Terms"@en , "部分照合語数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -1798,14 +1798,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "用語情報テーブル" .
 
-<https://doddle-owl.github.io#UndefinedTermSetCheckBox>
+<https://doddle-owl.github.io#UnmatchedTermsCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Undefined Term Set"@en , "未定義用語のセット"@ja ;
+                "Unmatched Terms"@en , "未照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "未定義用語のセット" .
+                "未照合語" .
 
 <https://doddle-owl.github.io#AverageSiblingClassesMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2012,10 +2012,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "ボタン" .
 
-<https://doddle-owl.github.io#SaveExactMatchTermListAction>
+<https://doddle-owl.github.io#SaveExactlyMatchedTermListAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Save Exact Match Term List"@en , "完全照合語リストを保存"@ja ;
+                "Save Exactly Matched Term List"@en , "完全照合語リストを保存"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#SaveAction> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -2150,7 +2150,7 @@
                 "Search"@en , "検索"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#UndefinedTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#UnmatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "検索" .
 
@@ -2443,15 +2443,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクト" .
 
-<https://doddle-owl.github.io#ExactMatchTermListPanel>
+<https://doddle-owl.github.io#ExactlyMatchedTermsPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Exact Match"@en , "完全照合"@ja ;
+                "Exactly Matched Terms"@en , "完全照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#TermListPanel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "完全照合" .
+                "完全照合語" .
 
 <https://doddle-owl.github.io#AddAbstractInternalConceptsMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2637,7 +2637,7 @@
                 "Add"@en , "追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> , <https://doddle-owl.github.io#UndefinedTermListPanel> , <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#DescriptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NamespaceTable> , <https://doddle-owl.github.io#UnmatchedTermListPanel> , <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#DescriptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "追加" .
 
@@ -3234,7 +3234,7 @@
                 "削除"@ja , "Remove"@en ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#SwoogleWebServiceWrapperPanel> , <https://doddle-owl.github.io#DescriptionPanel> , <https://doddle-owl.github.io#WebOntologySelectionPanel> , <https://doddle-owl.github.io#NamespaceTable> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#UndefinedTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TermListPanel> , <https://doddle-owl.github.io#SwoogleWebServiceWrapperPanel> , <https://doddle-owl.github.io#DescriptionPanel> , <https://doddle-owl.github.io#WebOntologySelectionPanel> , <https://doddle-owl.github.io#NamespaceTable> , <https://doddle-owl.github.io#ConceptDefinitionPanel> , <https://doddle-owl.github.io#LabelPanel> , <https://doddle-owl.github.io#UnmatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "削除" .
 
@@ -3351,10 +3351,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロパティ" .
 
-<https://doddle-owl.github.io#UndefinedTermCountMessage>
+<https://doddle-owl.github.io#UnmatchedTermCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Undefined Term Count"@en , "未照合語数"@ja ;
+                "Unmatched Term Count"@en , "未照合語数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3517,7 +3517,7 @@
                 "System Added Term"@en , "システムが追加した用語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactMatchTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactlyMatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "システムが追加した用語" .
 
@@ -3621,15 +3621,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "ツール" .
 
-<https://doddle-owl.github.io#AddUndefinedTermAction>
+<https://doddle-owl.github.io#AddUnmatchedTermAction>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Undefined Term"@en , "未定義語の追加"@ja ;
+                "Add Unmatched Term"@en , "未照合語の追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#AddAction> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "未定義語の追加" .
+                "未照合語の追加" .
 
 <https://doddle-owl.github.io#LabelLangList>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -3875,10 +3875,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "DODDLEプロジェクトファイル (.ddl)" .
 
-<https://doddle-owl.github.io#PartialMatchOptionBorder>
+<https://doddle-owl.github.io#PartialMatchOptionsBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Partial Match Option"@en , "部分照合オプション"@ja ;
+                "Partial Match Options"@en , "部分照合オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
@@ -4008,15 +4008,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "正解概念対の追加" .
 
-<https://doddle-owl.github.io#UndefinedTermListPanel>
+<https://doddle-owl.github.io#UnmatchedTermListPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Undefined Terms"@en , "未定義語"@ja ;
+                "Unmatched Terms"@en , "未照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> , <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "未定義語" .
+                "未照合語" .
 
 <https://doddle-owl.github.io#CompoundWordOptionPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;

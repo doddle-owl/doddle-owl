@@ -264,7 +264,7 @@ public class DODDLEProjectPanel extends JPanel {
     }
 
     public boolean isPerfectlyMatchedSystemAddedWordCheckBox() {
-        return conceptSelectionPanel.isPerfectlyMatchedSystemAddedTermCheckBox();
+        return conceptSelectionPanel.isExactlyMatchedSystemAddedTermCheckBox();
     }
 
     public boolean isPartiallyMatchedAmbiguityCntCheckBox() {

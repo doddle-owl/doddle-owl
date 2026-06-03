@@ -32,7 +32,7 @@ import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
-import io.github.doddle_owl.views.common.UndefinedTermListPanel;
+import io.github.doddle_owl.views.common.UnmatchedTermListPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -55,11 +55,11 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
 
     public ClassTreeConstructionPanel(DODDLEProjectPanel p) {
         project = p;
-        undefinedTermListPanel = new UndefinedTermListPanel();
+        unmatchedTermListPanel = new UnmatchedTermListPanel();
         isaTreePanel = new ConceptTreePanel(Translator.getTerm("IsaTreeBorder"), ConceptTreePanel.CLASS_ISA_TREE,
-                undefinedTermListPanel, p);
+                unmatchedTermListPanel, p);
         hasaTreePanel = new ConceptTreePanel(Translator.getTerm("HasaTreeBorder"),
-                ConceptTreePanel.CLASS_HASA_TREE, undefinedTermListPanel, project);
+                ConceptTreePanel.CLASS_HASA_TREE, unmatchedTermListPanel, project);
         isaTreePanel.setHasaTree(hasaTreePanel.getConceptTree());
 
         var treeTabbedPane = new JTabbedPane();
@@ -76,7 +76,7 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
         var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         leftSplitPane.setBorder(Utils.createEmptyBorder());
         leftSplitPane.setOneTouchExpandable(true);
-        leftSplitPane.add(undefinedTermListPanel);
+        leftSplitPane.add(unmatchedTermListPanel);
         leftSplitPane.add(treeTabbedPane);
 
         var rightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);

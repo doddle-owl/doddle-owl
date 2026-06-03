@@ -39,7 +39,7 @@ public class ProjectFileNames {
     public static final String CONSTRUCT_TREE_OPTION_FILE = "TreeConstructionOption.txt";
     public static final String INPUT_TERM_CONSTRUCT_TREE_OPTION_SET_FILE = "InputWord_ConstructTreeOption.txt";
     public static final String INPUT_CONCEPT_SET_FILE = "InputConceptSet.txt";
-    public static final String UNDEFINED_TERM_SET_FILE = "UndefinedWordSet.txt";
+    public static final String UNMATCHED_TERM_SET_FILE = "UnmatchedTermSet.txt";
     public static final String ONTOLOGY_FILE = "Ontology.owl";
     public static String CONCEPT_PREFERENTIAL_TERM_MAP_FILE = "ConceptTypicalWordMap.txt";
     public static final String CLASS_TRIMMED_RESULT_ANALYSIS_FILE = "ClassTrimmedResultAnalysis.txt";

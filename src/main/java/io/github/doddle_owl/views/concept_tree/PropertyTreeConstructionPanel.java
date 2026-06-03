@@ -35,7 +35,7 @@ import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
-import io.github.doddle_owl.views.common.UndefinedTermListPanel;
+import io.github.doddle_owl.views.common.UnmatchedTermListPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -67,11 +67,11 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
 
     public PropertyTreeConstructionPanel(DODDLEProjectPanel p) {
         project = p;
-        undefinedTermListPanel = new UndefinedTermListPanel();
+        unmatchedTermListPanel = new UnmatchedTermListPanel();
         isaTreePanel = new ConceptTreePanel(Translator.getTerm("IsaTreeBorder"), ConceptTreePanel.PROPERTY_ISA_TREE,
-                undefinedTermListPanel, project);
+                unmatchedTermListPanel, project);
         hasaTreePanel = new ConceptTreePanel(Translator.getTerm("HasaTreeBorder"), ConceptTreePanel.PROPERTY_HASA_TREE,
-                undefinedTermListPanel, p);
+                unmatchedTermListPanel, p);
         isaTreePanel.setHasaTree(hasaTreePanel.getConceptTree());
         edrConceptDefinitionPanel = new EDRConceptDefinitionPanel(p);
         conceptDriftManagementPanel = new ConceptDriftManagementPanel(ConceptTreeCellRenderer.VERB_CONCEPT_TREE,
@@ -88,7 +88,7 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         leftSplitPane.setBorder(Utils.createEmptyBorder());
         leftSplitPane.setOneTouchExpandable(true);
-        leftSplitPane.add(undefinedTermListPanel);
+        leftSplitPane.add(unmatchedTermListPanel);
         leftSplitPane.add(treeTabbedPane);
 
         var southTabbedPane = new JTabbedPane();

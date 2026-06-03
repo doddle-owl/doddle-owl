@@ -61,7 +61,7 @@ public class ConstructTreeAction {
     private final ClassTreeConstructionPanel constructClassPanel;
     private final PropertyTreeConstructionPanel constructPropertyPanel;
 
-    private final DefaultListModel undefinedTermListModel;
+    private final DefaultListModel unmatchedTermListModel;
 
     private final DODDLEProjectPanel project;
 
@@ -71,7 +71,7 @@ public class ConstructTreeAction {
         constructClassPanel = p.getConstructClassPanel();
         constructPropertyPanel = p.getConstructPropertyPanel();
         wordCorrespondConceptSetMap = conceptSelectionPanel.getTermCorrespondConceptSetMap();
-        undefinedTermListModel = conceptSelectionPanel.getUndefinedTermListPanel().getModel();
+        unmatchedTermListModel = conceptSelectionPanel.getUnmatchedTermListPanel().getModel();
         compoundConstructTreeOptionMap = conceptSelectionPanel
                 .getCompoundConstructTreeOptionMap();
         constructClassPanel.clearPanel();
@@ -315,7 +315,7 @@ public class ConstructTreeAction {
         DODDLE_OWL.getLogger().info(Translator.getTerm("ConstructConceptTreeFromCompoundWordsMessage"));
 
         // printDebugTree(rootNode, "before trimming");
-        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel().isTrimming()) {
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionsPanel().isTrimming()) {
             // childNodeは汎用オントロジー中の概念と対応しているため処理しない
             for (int i = 0; i < rootNode.getChildCount(); i++) {
                 DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) rootNode.getChildAt(i);
@@ -324,7 +324,7 @@ public class ConstructTreeAction {
             DODDLE_OWL.getLogger().info(Translator.getTerm("TrimmingCompoundWordsMessage"));
         }
 
-        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionsPanel()
                 .isAddAbstractConcept()) {
             addAbstractTreeNode(rootNode);
             trimAbstractNode(rootNode);
@@ -338,7 +338,7 @@ public class ConstructTreeAction {
     }
 
     private int getAbstractConceptChildNum() {
-        return project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        return project.getConceptSelectionPanel().getPartiallyMatchedOptionsPanel()
                 .getAbstractConceptChildNodeNum();
     }
 
@@ -573,7 +573,7 @@ public class ConstructTreeAction {
         TreeModel classTreeModel;
         if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
             constructClassPanel.initialize();
-            if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
+            if (project.getConceptSelectionPanel().getExactlyMatchedOptionsPanel()
                     .isConstruction()) {
                 classTreeModel = constructClassPanel.getTreeModel(nounConceptSet);
             } else {
@@ -586,9 +586,9 @@ public class ConstructTreeAction {
             classTreeModel = constructClassPanel.getConceptTreeModel();
             nounConceptSet = constructClassPanel.getConceptSet();
         }
-        constructClassPanel.setUndefinedTermListModel(undefinedTermListModel);
+        constructClassPanel.setUnmatchedTermListModel(unmatchedTermListModel);
         DODDLE_OWL.STATUS_BAR.addValue();
-        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionsPanel()
                 .isConstruction()) {
             setCompoundConcept(constructClassPanel, nounConceptSet);
             trimUnnecessaryAbstractNode(constructClassPanel);
@@ -638,7 +638,7 @@ public class ConstructTreeAction {
         TreeModel propertyTreeModel;
         if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
             constructPropertyPanel.initialize();
-            if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
+            if (project.getConceptSelectionPanel().getExactlyMatchedOptionsPanel()
                     .isConstruction()) {
                 propertyTreeModel = constructPropertyPanel.getTreeModel(
                         constructClassPanel.getAllConceptURI(), verbConceptSet,
@@ -652,10 +652,10 @@ public class ConstructTreeAction {
             propertyTreeModel = constructPropertyPanel.getConceptTreeModel();
             verbConceptSet = constructClassPanel.getConceptSet();
         }
-        constructPropertyPanel.setUndefinedTermListModel(undefinedTermListModel);
+        constructPropertyPanel.setUnmatchedTermListModel(unmatchedTermListModel);
 
         DODDLE_OWL.STATUS_BAR.addValue();
-        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionPanel()
+        if (project.getConceptSelectionPanel().getPartiallyMatchedOptionsPanel()
                 .isConstruction()) {
             setCompoundConcept(constructPropertyPanel, verbConceptSet);
             trimUnnecessaryAbstractNode(constructPropertyPanel);
@@ -704,12 +704,12 @@ public class ConstructTreeAction {
     /**
      * 「該当なし」とされた概念を辞書載っていない単語リストに追加
      */
-    private void setUndefinedTermSet() {
+    private void setUnmatchedTermSet() {
         for (Entry<String, Set<Concept>> entry : wordCorrespondConceptSetMap.entrySet()) {
             String word = entry.getKey();
             Set<Concept> cset = entry.getValue();
             if (cset.size() == 1 && cset.contains(ConceptSelectionPanel.nullConcept)) {
-                undefinedTermListModel.addElement(word);
+                unmatchedTermListModel.addElement(word);
             }
         }
     }
@@ -717,7 +717,7 @@ public class ConstructTreeAction {
     public void constructTree() {
         if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
             project.resetURIConceptMap();
-        } else if (project.getConceptSelectionPanel().getPerfectlyMatchedOptionPanel()
+        } else if (project.getConceptSelectionPanel().getExactlyMatchedOptionsPanel()
                 .isConstruction()) {
             JOptionPane
                     .showMessageDialog(DODDLE_OWL.getCurrentProject(),
@@ -734,7 +734,7 @@ public class ConstructTreeAction {
         constructPropertyPanel.setVisibleIsaTree(false);
         constructPropertyPanel.setVisibleHasaTree(false);
 
-        setUndefinedTermSet();
+        setUnmatchedTermSet();
         conceptSelectionPanel.setInputConceptSet(); // 入力概念のセット
         Set<Concept> inputConceptSet = conceptSelectionPanel.getInputConceptSet();
         if (inputConceptSet.size() == 0) {
@@ -743,9 +743,9 @@ public class ConstructTreeAction {
         }
 
         DODDLE_OWL.getLogger().info(Translator.getTerm("ExactMatchTermCountMessage") + ": "
-                + conceptSelectionPanel.getPerfectlyMatchedTermCnt());
+                + conceptSelectionPanel.getExactlyMatchedTermCnt());
         DODDLE_OWL.getLogger().info(Translator.getTerm("SystemAddedExactMatchTermCountMessage") + ": "
-                + conceptSelectionPanel.getSystemAddedPerfectlyMatchedTermCnt());
+                + conceptSelectionPanel.getSystemAddedExactlyMatchedTermCnt());
         DODDLE_OWL.getLogger().info(Translator.getTerm("PartialMatchTermCountMessage") + ": "
                 + conceptSelectionPanel.getPartiallyMatchedTermCnt());
         DODDLE_OWL.getLogger().info(Translator.getTerm("InputTermCountMessage") + ": "

@@ -35,7 +35,7 @@ import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.common.ConceptSelectionDialog;
-import io.github.doddle_owl.views.common.UndefinedTermListPanel;
+import io.github.doddle_owl.views.common.UnmatchedTermListPanel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -76,7 +76,7 @@ public class ConceptTreePanel extends JPanel {
     private DeleteInternalConceptAction deleteInternalConceptAction;
     private DeleteLinkToUpperConceptAction deleteLinkToUpperConceptAction;
     private DeleteConceptAction deleteConceptAction;
-    private AddUndefinedTermListAction addUndefinedTermListAction;
+    private AddUnmatchedTermListAction addUnmatchedTermListAction;
     private UndoAction undoAction;
     private RedoAction redoAction;
     private final JCheckBox showPrefixCheckBox;
@@ -98,7 +98,7 @@ public class ConceptTreePanel extends JPanel {
     private final ImageIcon undoIcon = Utils.getImageIcon("baseline_undo_black_18dp.png");
     private final ImageIcon redoIcon = Utils.getImageIcon("baseline_redo_black_18dp.png");
 
-    private final UndefinedTermListPanel undefinedTermListPanel;
+    private final UnmatchedTermListPanel unmatchedTermListPanel;
     private ConceptDriftManagementPanel conceptDriftManagementPanel;
 
     private final Map<String, Concept> idConceptMap;
@@ -117,7 +117,7 @@ public class ConceptTreePanel extends JPanel {
     public static final String CLASS_HASA_TREE = "class has-a Tree";
     public static final String PROPERTY_HASA_TREE = "property has-a Tree";
 
-    public ConceptTreePanel(String title, String type, UndefinedTermListPanel undefPanel, DODDLEProjectPanel p) {
+    public ConceptTreePanel(String title, String type, UnmatchedTermListPanel undefPanel, DODDLEProjectPanel p) {
         project = p;
         treeType = type;
         if (type.equals(CLASS_HASA_TREE)) {
@@ -125,7 +125,7 @@ public class ConceptTreePanel extends JPanel {
         } else if (type.equals(PROPERTY_HASA_TREE)) {
             conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.VERB_CONCEPT_TREE, "Property Is-a Selection Dialog");
         }
-        undefinedTermListPanel = undefPanel;
+        unmatchedTermListPanel = undefPanel;
         abstractLabelSet = new HashSet<>();
         idConceptMap = new HashMap<>();
         conceptSameConceptTreeNodeMap = new HashMap<>();
@@ -207,8 +207,8 @@ public class ConceptTreePanel extends JPanel {
         deleteLinkToUpperConceptAction = new DeleteLinkToUpperConceptAction(Translator
                 .getTerm("DeleteLinkToUpperConceptAction"));
         deleteConceptAction = new DeleteConceptAction(Translator.getTerm("DeleteConceptAction"));
-        addUndefinedTermListAction = new AddUndefinedTermListAction(Translator.getTerm("AddUndefinedTermAction"));
-        MoveUndefinedTermListAction moveUndefinedTermListAction = new MoveUndefinedTermListAction(Translator.getTerm("UndefineTermAction"));
+        addUnmatchedTermListAction = new AddUnmatchedTermListAction(Translator.getTerm("AddUnmatchedTermAction"));
+        MoveUnmatchedTermListAction moveUnmatchedTermListAction = new MoveUnmatchedTermListAction(Translator.getTerm("UnmatchedTermAction"));
         undoAction = new UndoAction(Translator.getTerm("UndoAction"), undoIcon);
         redoAction = new RedoAction(Translator.getTerm("RedoAction"), redoIcon);
     }
@@ -297,8 +297,8 @@ public class ConceptTreePanel extends JPanel {
             deleteMenu.add(deleteInternalConceptAction);
             if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
                 deleteMenu.add(deleteConceptAction);
-                popupMenu.add(addUndefinedTermListAction);
-                // popupMenu.add(moveUndefinedTermListAction);
+                popupMenu.add(addUnmatchedTermListAction);
+                // popupMenu.add(moveUnmatchedTermListAction);
             }
             popupMenu.add(undoAction);
             popupMenu.add(redoAction);
@@ -538,10 +538,10 @@ public class ConceptTreePanel extends JPanel {
             if (dropNode == null || dragPaths == null) {
                 dragPaths = null;
                 return;
-            } else if (UndefinedTermListPanel.isDragUndefinedList) {
-                DefaultListModel listModel = undefinedTermListPanel.getModel();
-                DefaultListModel viewListModel = undefinedTermListPanel.getViewModel();
-                for (Object selectedValue : undefinedTermListPanel.getSelectedValuesList()) {
+            } else if (UnmatchedTermListPanel.isDragUnmatchedList) {
+                DefaultListModel listModel = unmatchedTermListPanel.getModel();
+                DefaultListModel viewListModel = unmatchedTermListPanel.getViewModel();
+                for (Object selectedValue : unmatchedTermListPanel.getSelectedValuesList()) {
                     ConceptTreeNode parent = (ConceptTreeNode) conceptTree.getLastSelectedPathComponent();
                     insertNewConceptTreeNode(selectedValue.toString(), parent.getConcept());
                     listModel.removeElement(selectedValue);
@@ -549,8 +549,8 @@ public class ConceptTreePanel extends JPanel {
                         viewListModel.removeElement(selectedValue);
                     }
                 }
-                undefinedTermListPanel.setTitleWithSize();
-                UndefinedTermListPanel.isDragUndefinedList = false;
+                unmatchedTermListPanel.setTitleWithSize();
+                UnmatchedTermListPanel.isDragUnmatchedList = false;
             } else {
                 DefaultTreeModel treeModel = (DefaultTreeModel) conceptTree.getModel();
                 for (TreePath dragPath : dragPaths) {
@@ -1358,7 +1358,7 @@ public class ConceptTreePanel extends JPanel {
         }
     }
 
-    class AddUndefinedTermListAction extends AbstractAction {
+    class AddUnmatchedTermListAction extends AbstractAction {
 
         private final String title;
 
@@ -1366,16 +1366,16 @@ public class ConceptTreePanel extends JPanel {
             return title;
         }
 
-        AddUndefinedTermListAction(String title) {
+        AddUnmatchedTermListAction(String title) {
             super(title);
             this.title = title;
             setToolTipText(title);
         }
 
         public void actionPerformed(ActionEvent e) {
-            DefaultListModel listModel = undefinedTermListPanel.getModel();
-            DefaultListModel viewListModel = undefinedTermListPanel.getViewModel();
-            for (Object selectedValue : undefinedTermListPanel.getSelectedValuesList()) {
+            DefaultListModel listModel = unmatchedTermListPanel.getModel();
+            DefaultListModel viewListModel = unmatchedTermListPanel.getViewModel();
+            for (Object selectedValue : unmatchedTermListPanel.getSelectedValuesList()) {
                 ConceptTreeNode parent = (ConceptTreeNode) conceptTree.getLastSelectedPathComponent();
                 if (parent != null) {
                     insertNewConceptTreeNode(selectedValue.toString(), parent.getConcept());
@@ -1385,11 +1385,11 @@ public class ConceptTreePanel extends JPanel {
                     }
                 }
             }
-            undefinedTermListPanel.setTitleWithSize();
+            unmatchedTermListPanel.setTitleWithSize();
         }
     }
 
-    class MoveUndefinedTermListAction extends AbstractAction {
+    class MoveUnmatchedTermListAction extends AbstractAction {
 
         private final String title;
 
@@ -1397,7 +1397,7 @@ public class ConceptTreePanel extends JPanel {
             return title;
         }
 
-        MoveUndefinedTermListAction(String title) {
+        MoveUnmatchedTermListAction(String title) {
             super(title);
             this.title = title;
             setToolTipText(title);
@@ -1408,15 +1408,15 @@ public class ConceptTreePanel extends JPanel {
             if (path.getLastPathComponent() != null) {
                 ConceptTreeNode conceptTreeNode = (ConceptTreeNode) path.getLastPathComponent();
                 // もう少し，実装をつめる必要あり
-                DefaultListModel listModel = undefinedTermListPanel.getModel();
-                DefaultListModel viewListModel = undefinedTermListPanel.getViewModel();
+                DefaultListModel listModel = unmatchedTermListPanel.getModel();
+                DefaultListModel viewListModel = unmatchedTermListPanel.getViewModel();
                 listModel.addElement(conceptTreeNode.toString());
                 if (viewListModel != null
-                        && conceptTreeNode.toString().matches(undefinedTermListPanel.getSearchRegex())) {
+                        && conceptTreeNode.toString().matches(unmatchedTermListPanel.getSearchRegex())) {
                     viewListModel.addElement(conceptTreeNode.toString());
                 }
                 deleteConcept();
-                undefinedTermListPanel.setTitleWithSize();
+                unmatchedTermListPanel.setTitleWithSize();
             }
         }
     }
