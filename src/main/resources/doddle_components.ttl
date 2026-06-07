@@ -1,7 +1,7 @@
-<https://doddle-owl.github.io#CorrectConceptPairTable>
+<https://doddle-owl.github.io#PositiveConceptPairTable>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Correct Concept Pairs"@en , "正解概念対"@ja ;
+                "Positive Concept Pairs"@en , "正解概念対"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Table> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TextBasedConceptDefinitionPanel> ;
@@ -14,7 +14,7 @@
                 "Domain"@en , "定義域"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WrongConceptPairTable> , <https://doddle-owl.github.io#CorrectConceptPairTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NegativeConceptPairTable> , <https://doddle-owl.github.io#PositiveConceptPairTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "定義域" .
 
@@ -333,7 +333,7 @@
                 "Range"@en , "値域"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WrongConceptPairTable> , <https://doddle-owl.github.io#CorrectConceptPairTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NegativeConceptPairTable> , <https://doddle-owl.github.io#PositiveConceptPairTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "値域" .
 
@@ -609,10 +609,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "平均兄弟クラスグループ化数" .
 
-<https://doddle-owl.github.io#AddWrongConceptPairButton>
+<https://doddle-owl.github.io#AddNegativeConceptPairButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Wrong Concept Pair"@en , "不正解概念対の追加"@ja ;
+                "Add Negative Concept Pair"@en , "不正解概念対の追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#AddButton> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DefineConceptPairPanel> ;
@@ -1095,7 +1095,7 @@
                 "Meta Property"@en , "メタプロパティ"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#CorrectConceptPairTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PositiveConceptPairTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "メタプロパティ" .
 
@@ -1119,13 +1119,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "複合語(言選)" .
 
-<https://doddle-owl.github.io#RemoveWrongConceptPairButton>
+<https://doddle-owl.github.io#RemoveNegativeConceptPairButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Remove Wrong Concept Pair"@en , "不正解概念対の削除"@ja ;
+                "Remove Negative Concept Pair"@en , "不正解概念対の削除"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#RemoveButton> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#WrongConceptPairTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#NegativeConceptPairTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "不正解概念対の削除" .
 
@@ -1429,10 +1429,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Is-a 階層" .
 
-<https://doddle-owl.github.io#WrongConceptPairsCheckBox>
+<https://doddle-owl.github.io#NegativeConceptPairsCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Wrong Concept Pairs"@en , "不正解概念対"@ja ;
+                "Negative Concept Pairs"@en , "不正解概念対"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -2269,10 +2269,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念記述を開く" .
 
-<https://doddle-owl.github.io#WrongConceptPairTable>
+<https://doddle-owl.github.io#NegativeConceptPairTable>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Wrong Concept Pairs"@en , "不正解概念対"@ja ;
+                "Negative Concept Pairs"@en , "不正解概念対"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Table> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TextBasedConceptDefinitionPanel> ;
@@ -2470,13 +2470,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念定義" .
 
-<https://doddle-owl.github.io#RemoveCorrectConceptPairButton>
+<https://doddle-owl.github.io#RemovePositiveConceptPairButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Remove Correct Concept Pair"@en , "正解概念対の削除"@ja ;
+                "Remove Positive Concept Pair"@en , "正解概念対の削除"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#CorrectConceptPairTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PositiveConceptPairTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "正解概念対の削除" .
 
@@ -3347,7 +3347,7 @@
                 "Property"@en , "プロパティ"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Label> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#CorrectConceptPairTable> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PositiveConceptPairTable> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロパティ" .
 
@@ -3998,10 +3998,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "EDR 電子化辞書" .
 
-<https://doddle-owl.github.io#AddCorrectConceptPairButton>
+<https://doddle-owl.github.io#AddPositiveConceptPairButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Add Correct Concept Pair"@en , "正解概念対の追加"@ja ;
+                "Add Positive Concept Pair"@en , "正解概念対の追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#AddButton> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DefineConceptPairPanel> ;

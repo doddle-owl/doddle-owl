@@ -6,11 +6,11 @@ import io.github.doddle_owl.views.DODDLEDictConverterUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class ShowDODDLEDictConverterAction extends AbstractAction {
+public class ShowDODDLE_OWL_DictionaryConverterAction extends AbstractAction {
 
     private final String title;
 
-    public ShowDODDLEDictConverterAction(String title) {
+    public ShowDODDLE_OWL_DictionaryConverterAction(String title) {
         super(title, Utils.getImageIcon("baseline_build_black_18dp.png"));
         this.title = title;
     }

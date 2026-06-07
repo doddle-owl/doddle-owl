@@ -134,7 +134,7 @@ public class SaveProjectAction extends AbstractAction {
         conceptDefinitionPanel.saveConeptDefinitionParameters(new File(saveDir,
                 ProjectFileNames.CONCEPT_DEFINITION_PARAMETERS_FILE));
         conceptDefinitionPanel.saveConceptDefinition(new File(saveDir, ProjectFileNames.CONCEPT_DEFINITION_FILE));
-        conceptDefinitionPanel.saveWrongPairSet(new File(saveDir, ProjectFileNames.WRONG_PAIR_SET_FILE));
+        conceptDefinitionPanel.saveNegativeConceptPairSet(new File(saveDir, ProjectFileNames.NEGATIVE_CONCEPT_PAIR_SET_FILE));
         File conceptDefinitionResultDir = new File(saveDir, ProjectFileNames.WORDSPACE_RESULTS_DIR);
         conceptDefinitionResultDir.mkdir();
         removeFiles(conceptDefinitionResultDir);

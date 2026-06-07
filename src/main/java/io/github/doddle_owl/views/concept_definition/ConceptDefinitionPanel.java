@@ -108,10 +108,10 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
                 resultPanel.getWAResultTable()));
 
         var conceptPairsTabbedPane = new JTabbedPane();
-        conceptPairsTabbedPane.addTab(Translator.getTerm("CorrectConceptPairTable"), null,
-                resultPanel.getAcceptedPairPanel());
-        conceptPairsTabbedPane.addTab(Translator.getTerm("WrongConceptPairTable"), null,
-                resultPanel.getWrongPairPanel());
+        conceptPairsTabbedPane.addTab(Translator.getTerm("PositiveConceptPairTable"), null,
+                resultPanel.getPositiveConceptPairPanel());
+        conceptPairsTabbedPane.addTab(Translator.getTerm("NegativeConceptPairTable"), null,
+                resultPanel.getNegativeConceptPairPanel());
         conceptPairsTabbedPane.setPreferredSize(new Dimension(800, 200));
 
         var splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -304,12 +304,12 @@ public class ConceptDefinitionPanel extends JPanel implements ListSelectionListe
         resultPanel.loadConceptDefinition(file);
     }
 
-    public void saveWrongPairSet(File file) {
-        resultPanel.saveWrongPairSet(file);
+    public void saveNegativeConceptPairSet(File file) {
+        resultPanel.saveNegativeConceptPairSet(file);
     }
 
-    public void loadWrongPairSet(File file) {
-        resultPanel.loadWrongPairSet(file);
+    public void loadNegativeConceptPairSet(File file) {
+        resultPanel.loadNegativeConceptPairSet(file);
     }
 
     public void saveConeptDefinitionParameters(File file) {

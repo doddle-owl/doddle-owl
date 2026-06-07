@@ -46,6 +46,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Takeshi Morita
@@ -168,16 +169,15 @@ class ConceptInformationPanel extends JPanel implements ActionListener {
         descriptionPanel.setDescriptionList();
         setURI(conceptTreeNode.getURI());
         labelPanel.setPreferentialTerm(conceptTreeNode.getInputWord());
-        StringBuilder trimmedCntStr = new StringBuilder();
-        for (int trimmedCnt : conceptTreeNode.getTrimmedCountList()) {
-            trimmedCntStr.append(trimmedCnt).append(", ");
-        }
+        String trimmedNodeCntValue = conceptTreeNode.getTrimmedCountList().stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
         if (conceptTreeNode.isSINNode()) {
             nodeTypeBox.setSelectedItem(Translator.getTerm("SINLabel"));
         } else {
             nodeTypeBox.setSelectedItem(Translator.getTerm("BestMatchNodeLabel"));
         }
-        trimmedNodeCntValueLabel.setText(trimmedCntStr.toString());
+        trimmedNodeCntValueLabel.setText(trimmedNodeCntValue);
         isMultipleInheritanceLabel.setText(Translator.getTerm("IsMultipleInheritanceLabel")+": "+conceptTreeNode.isMultipleInheritance());
         if (edrConceptDefinitionPanel != null && conceptTreeNode.getConcept() instanceof VerbConcept) {
             edrConceptDefinitionPanel.init();

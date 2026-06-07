@@ -106,7 +106,7 @@ public class NonTaxonomicRelation {
         return new Object[] {isMetaProperty, domain, relation, range};
     }
 
-    public Object[] getWrongTableData() {
+    public Object[] getNegativeConceptPairTableData() {
         return new Object[] { domain, range};
     }
 

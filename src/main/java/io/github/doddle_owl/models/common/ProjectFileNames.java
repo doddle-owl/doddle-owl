@@ -47,7 +47,7 @@ public class ProjectFileNames {
     public static final String PROJECT_INFO_FILE = "projectInfo.txt";
     public static final String CONCEPT_DEFINITION_PARAMETERS_FILE = "ConceptDefinitionParameters.txt";
     public static final String CONCEPT_DEFINITION_FILE = "ConceptDefinition.txt";
-    public static final String WRONG_PAIR_SET_FILE = "WrongPairSet.txt";
+    public static final String NEGATIVE_CONCEPT_PAIR_SET_FILE = "NegativeConceptPairSet.txt";
     public static final String WORDSPACE_RESULTS_DIR = "WordSpaceResults";
     public static final String APRIORI_RESULTS_DIR = "AprioriResults";
     public static final String DOC_INFO_FILE = "docInfo.txt";

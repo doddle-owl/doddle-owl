@@ -275,8 +275,8 @@ public class OpenProjectAction extends AbstractAction {
                 conceptDefinitionPanel.loadConceptDefinition(new File(openDir,
                         ProjectFileNames.CONCEPT_DEFINITION_FILE));
                 setProgress(currentTaskCnt++);
-                conceptDefinitionPanel.loadWrongPairSet(new File(openDir,
-                        ProjectFileNames.WRONG_PAIR_SET_FILE));
+                conceptDefinitionPanel.loadNegativeConceptPairSet(new File(openDir,
+                        ProjectFileNames.NEGATIVE_CONCEPT_PAIR_SET_FILE));
                 setProgress(currentTaskCnt++);
 
                 conceptSelectionPanel.selectTopList();

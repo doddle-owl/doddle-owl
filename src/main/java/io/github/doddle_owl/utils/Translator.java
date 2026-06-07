@@ -105,6 +105,6 @@ public class Translator {
         Translator.loadDODDLEComponentOntology("ja");
         System.out.println(Translator.getTerm("PropertyHierarchyConstructionPanel"));
         System.out.println(Translator.getTerm("RangeLabel"));
-        System.out.println(Translator.getTerm("RemoveCorrectConceptPairButton"));
+        System.out.println(Translator.getTerm("RemovePositiveConceptPairButton"));
     }
 }

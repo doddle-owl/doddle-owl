@@ -38,7 +38,7 @@ public class ConceptPair implements Comparable {
     private Double nvValue = 0.0;
     private Double sumValue = 0.0;
 
-    private boolean isCorrectPair = false;
+    private boolean isPositiveConceptPair = false;
     private boolean isNotFoundPair = false;
 
     public int compareTo(Object o) {
@@ -164,8 +164,8 @@ public class ConceptPair implements Comparable {
         return arValue;
     }
 
-    public boolean isCorrectPair() {
-        return isCorrectPair;
+    public boolean isPositiveConceptPair() {
+        return isPositiveConceptPair;
     }
 
     private Double getNvValue() {
@@ -190,8 +190,8 @@ public class ConceptPair implements Comparable {
     /**
      * @param b
      */
-    public void setCorrectPair(boolean b) {
-        isCorrectPair = b;
+    public void setPositiveConceptPair(boolean b) {
+        isPositiveConceptPair = b;
     }
 
     /**

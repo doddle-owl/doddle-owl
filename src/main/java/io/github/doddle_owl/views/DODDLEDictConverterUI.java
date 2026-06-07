@@ -142,7 +142,7 @@ public class DODDLEDictConverterUI extends JDialog implements ActionListener {
 		contentPane.add(mainPanel, BorderLayout.CENTER);
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 		pack();
-		setTitle("DODDLE Dict Converter");
+		setTitle("DODDLE-OWL Dictionary Converter");
 		setLocationRelativeTo(null);
 	}
 

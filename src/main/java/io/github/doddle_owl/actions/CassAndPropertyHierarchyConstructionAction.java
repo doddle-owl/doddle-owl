@@ -25,6 +25,7 @@ package io.github.doddle_owl.actions;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.utils.Translator;
+import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,20 +33,23 @@ import java.awt.event.ActionEvent;
 /**
  * @author Takeshi Morita
  */
-public class ConstructNounTreeAction extends AbstractAction {
+public class CassAndPropertyHierarchyConstructionAction extends AbstractAction {
 
-    public ConstructNounTreeAction() {
-        super(Translator.getTerm("ClassHierarchyConstructionAction"));
+    public CassAndPropertyHierarchyConstructionAction() {
+        super(Translator.getTerm("ClassAndPropertyHierarchyConstructionAction"));
     }
 
     public void actionPerformed(ActionEvent e) {
         SwingWorker<String, String> worker = new SwingWorker<>() {
             public String doInBackground() {
-                DODDLE_OWL.STATUS_BAR.initNormal(9);
+                DODDLE_OWL.STATUS_BAR.initNormal(10);
                 DODDLE_OWL.STATUS_BAR.startTime();
-                DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("ClassHierarchyConstructionAction"));
-                new ConstructTreeAction(false, DODDLE_OWL.getCurrentProject()).constructTree();
-                DODDLE_OWL.getCurrentProject().addLog("ClassHierarchyConstructionAction");
+                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("ClassAndPropertyHierarchyConstructionAction"));
+                ConceptSelectionPanel conceptSelectionPanel = DODDLE_OWL.getCurrentProject() .getConceptSelectionPanel();
+                conceptSelectionPanel.makeEDRTree();
+                DODDLE_OWL.STATUS_BAR.addValue();
+                new ConstructTreeAction(true, DODDLE_OWL.getCurrentProject()).constructTree();
+                DODDLE_OWL.getCurrentProject().addLog("ClassAndPropertyHierarchyConstructionAction");
                 return "done";
             }
         };

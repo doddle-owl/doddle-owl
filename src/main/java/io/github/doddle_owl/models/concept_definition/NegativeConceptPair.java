@@ -26,18 +26,18 @@ package io.github.doddle_owl.models.concept_definition;
 /**
  * @author Takeshi Morita
  */
-public class WrongPair {
+public class NegativeConceptPair {
     private final String domain;
     private final String range;
 
-    public WrongPair(String d, String r) {
+    public NegativeConceptPair(String d, String r) {
         domain = d;
         range = r;
     }
 
     @Override
     public boolean equals(Object obj) {
-        WrongPair wp = (WrongPair) obj;
+        NegativeConceptPair wp = (NegativeConceptPair) obj;
         return wp.getDomain().equals(domain) && wp.getRange().equals(range);
     }
 

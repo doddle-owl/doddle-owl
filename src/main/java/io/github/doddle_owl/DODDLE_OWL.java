@@ -89,7 +89,7 @@ public class DODDLE_OWL extends JFrame {
     private ShowVersionInfoAction showVersionInfoAction;
     private ShowManualAction showManualAction;
 
-    private ShowDODDLEDictConverterAction showDODDLEDictConverterAction;
+    private ShowDODDLE_OWL_DictionaryConverterAction showDODDLEDictConverterAction;
 
     private static final int WINDOW_WIDTH = 1280;
     private static final int WINDOW_HEIGHT = 768;
@@ -230,7 +230,7 @@ public class DODDLE_OWL extends JFrame {
         showOptionDialogAction = new ShowOptionDialogAction(Translator.getTerm("ShowOptionDialogAction"), this);
         showVersionInfoAction = new ShowVersionInfoAction(this);
         showManualAction = new ShowManualAction(Translator.getTerm("ShowManualAction"));
-        showDODDLEDictConverterAction = new ShowDODDLEDictConverterAction("DODDLE Dict Converter");
+        showDODDLEDictConverterAction = new ShowDODDLE_OWL_DictionaryConverterAction("DODDLE-OWL Dictionary Converter");
     }
 
     private void makeMenuBar() {
@@ -274,11 +274,6 @@ public class DODDLE_OWL extends JFrame {
 
         JMenu toolMenu = new JMenu(Translator.getTerm("ToolMenu"));
         toolMenu.add(new ShowAllTermAction(Translator.getTerm("ShowAllTermAction")));
-        toolMenu.addSeparator();
-        toolMenu.add(new AutomaticDisAmbiguationAction(Translator.getTerm("AutomaticInputConceptSelectionAction")));
-        toolMenu.addSeparator();
-        toolMenu.add(new ConstructNounTreeAction());
-        toolMenu.add(new ConstructNounAndVerbTreeAction());
         toolMenu.addSeparator();
         toolMenu.add(showDODDLEDictConverterAction);
         toolMenu.addSeparator();

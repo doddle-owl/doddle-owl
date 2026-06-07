@@ -25,7 +25,7 @@ package io.github.doddle_owl.views.concept_definition;
 
 import io.github.doddle_owl.models.concept_definition.ConceptPair;
 import io.github.doddle_owl.models.concept_definition.NonTaxonomicRelation;
-import io.github.doddle_owl.models.concept_definition.WrongPair;
+import io.github.doddle_owl.models.concept_definition.NegativeConceptPair;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
 import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
@@ -68,7 +68,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     private final ConceptDefinitionAlgorithmPanel algorithmPanel;
 
     private final Set<NonTaxonomicRelation> nonTaxRelSet;
-    private final Set<WrongPair> wrongPairSet;
+    private final Set<NegativeConceptPair> negativeConceptPairSet;
 
     private final DefaultListModel<Document> documentListModel;
     private final JList<Document> documentJList;
@@ -79,16 +79,15 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
     private final JTable conceptDefinitionTable;
     private final JButton setRelationButton;
-    private final JButton deleteAcceptedPairButton;
+    private final JButton deletePositiveConceptPairButton;
 
-    private final JTable wrongPairTable;
-    private final JButton deleteWrongPairButton;
+    private final JTable negativeConceptPairTable;
+    private final JButton deleteNegativeConceptPairButton;
 
     private final String[] definedColumnNames = {Translator.getTerm("MetaPropertyLabel"),
             Translator.getTerm("DomainLabel"), Translator.getTerm("RelationLabel"),
             Translator.getTerm("RangeLabel")};
-    private final String[] wrongDefinedColumnNames = {Translator.getTerm("DomainLabel"),
-            Translator.getTerm("RangeLabel")};
+    private final String[] negativeDefinedColumnNames = {Translator.getTerm("DomainLabel"), Translator.getTerm("RangeLabel")};
 
     private final DODDLEProjectPanel doddleProjectPanel;
     private final PropertyHierarchyConstructionPanel propertyHierarchyConstructionPanel;
@@ -102,19 +101,19 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
 
     private final JPanel inputConceptPanel;
     private final JPanel inputDocPanel;
-    private final JPanel acceptedPairPanel;
-    private final JPanel wrongPairPanel;
+    private final JPanel positiveConceptPairPanel;
+    private final JPanel negativeConceptPairPanel;
 
     public JPanel getInputConceptPanel() {
         return inputConceptPanel;
     }
 
-    public JPanel getAcceptedPairPanel() {
-        return acceptedPairPanel;
+    public JPanel getPositiveConceptPairPanel() {
+        return positiveConceptPairPanel;
     }
 
-    public JPanel getWrongPairPanel() {
-        return wrongPairPanel;
+    public JPanel getNegativeConceptPairPanel() {
+        return negativeConceptPairPanel;
     }
 
     public JPanel getInputDocPanel() {
@@ -144,9 +143,9 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         var resultTableModel = new ResultTableModel(null, definedColumnNames);
         resultTableModel.addTableModelListener(this);
         conceptDefinitionTable.setModel(resultTableModel);
-        resultTableModel = new ResultTableModel(null, wrongDefinedColumnNames);
+        resultTableModel = new ResultTableModel(null, negativeDefinedColumnNames);
         resultTableModel.addTableModelListener(this);
-        wrongPairTable.setModel(resultTableModel);
+        negativeConceptPairTable.setModel(resultTableModel);
     }
 
     public ConceptDefinitionResultPanel(JList icList, ConceptDefinitionAlgorithmPanel ap,
@@ -157,7 +156,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         inputConceptJList = icList;
 
         nonTaxRelSet = new HashSet<>();
-        wrongPairSet = new HashSet<>();
+        negativeConceptPairSet = new HashSet<>();
 
         definePanel = new ConceptDefinitionPanel();
         JPanel panel = new JPanel();
@@ -182,29 +181,28 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         JScrollPane conceptDefinitionTableScroll = new JScrollPane(conceptDefinitionTable);
         setRelationButton = new JButton(Translator.getTerm("SetPropertyButton"));
         setRelationButton.addActionListener(this);
-        deleteAcceptedPairButton = new JButton(Translator.getTerm("RemoveCorrectConceptPairButton"));
-        deleteAcceptedPairButton.addActionListener(this);
+        deletePositiveConceptPairButton = new JButton(Translator.getTerm("RemovePositiveConceptPairButton"));
+        deletePositiveConceptPairButton.addActionListener(this);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
         buttonPanel.add(setRelationButton);
-        buttonPanel.add(deleteAcceptedPairButton);
-        acceptedPairPanel = new JPanel();
-        acceptedPairPanel.setLayout(new BorderLayout());
-        acceptedPairPanel.add(conceptDefinitionTableScroll, BorderLayout.CENTER);
-        acceptedPairPanel.add(getEastComponent(buttonPanel), BorderLayout.SOUTH);
+        buttonPanel.add(deletePositiveConceptPairButton);
+        positiveConceptPairPanel = new JPanel();
+        positiveConceptPairPanel.setLayout(new BorderLayout());
+        positiveConceptPairPanel.add(conceptDefinitionTableScroll, BorderLayout.CENTER);
+        positiveConceptPairPanel.add(getEastComponent(buttonPanel), BorderLayout.SOUTH);
 
-        wrongPairTable = new JTable();
-        JScrollPane wrongConceptPairTableScroll = new JScrollPane(wrongPairTable);
-        deleteWrongPairButton = new JButton(Translator.getTerm("RemoveWrongConceptPairButton"));
-        deleteWrongPairButton.addActionListener(this);
-        wrongPairPanel = new JPanel();
-        wrongPairPanel.setLayout(new BorderLayout());
-        wrongPairPanel.add(wrongConceptPairTableScroll, BorderLayout.CENTER);
-        wrongPairPanel.add(getEastComponent(deleteWrongPairButton), BorderLayout.SOUTH);
+        negativeConceptPairTable = new JTable();
+        JScrollPane negativeConceptPairTableScroll = new JScrollPane(negativeConceptPairTable);
+        deleteNegativeConceptPairButton = new JButton(Translator.getTerm("RemoveNegativeConceptPairButton"));
+        deleteNegativeConceptPairButton.addActionListener(this);
+        negativeConceptPairPanel = new JPanel();
+        negativeConceptPairPanel.setLayout(new BorderLayout());
+        negativeConceptPairPanel.add(negativeConceptPairTableScroll, BorderLayout.CENTER);
+        negativeConceptPairPanel.add(getEastComponent(deleteNegativeConceptPairButton), BorderLayout.SOUTH);
 
         JScrollPane inputConceptJListScroll = new JScrollPane(inputConceptJList);
-        inputConceptJListScroll.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("InputConceptList")));
+        inputConceptJListScroll.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputConceptList")));
         inputConceptJListScroll.setPreferredSize(new Dimension(200, 100));
 
         inputConceptPanel = new JPanel();
@@ -260,12 +258,12 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         }
     }
 
-    public void saveWrongPairSet(File file) {
+    public void saveNegativeConceptPairSet(File file) {
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
             try (writer) {
                 StringBuilder builder = new StringBuilder();
-                for (WrongPair wp : wrongPairSet) {
+                for (NegativeConceptPair wp : negativeConceptPairSet) {
                     builder.append(wp.getDomain());
                     builder.append("\t");
                     builder.append(wp.getRange());
@@ -278,7 +276,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         }
     }
 
-    public void loadWrongPairSet(File file) {
+    public void loadNegativeConceptPairSet(File file) {
         if (!file.exists()) {
             return;
         }
@@ -288,8 +286,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                 while (reader.ready()) {
                     String line = reader.readLine();
                     String[] lines = line.split("\t");
-                    WrongPair wp = new WrongPair(lines[0], lines[1]);
-                    addWrongPair(wp);
+                    NegativeConceptPair wp = new NegativeConceptPair(lines[0], lines[1]);
+                    addNegativeConceptPair(wp);
                 }
             }
         } catch (IOException uee) {
@@ -297,15 +295,15 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         }
     }
 
-    public void loadWrongPairSet(int projectID, Statement stmt) {
+    public void loadNegativeConceptPairSet(int projectID, Statement stmt) {
         try {
             String sql = "SELECT * from wrong_pair where Project_ID=" + projectID;
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String term1 = URLDecoder.decode(rs.getString("Term1"), StandardCharsets.UTF_8);
                 String term2 = URLDecoder.decode(rs.getString("Term2"), StandardCharsets.UTF_8);
-                WrongPair wp = new WrongPair(term1, term2);
-                addWrongPair(wp);
+                NegativeConceptPair wp = new NegativeConceptPair(term1, term2);
+                addNegativeConceptPair(wp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -395,11 +393,11 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         return relation;
     }
 
-    private void addWrongPair(WrongPair wp) {
-        DefaultTableModel model = (DefaultTableModel) wrongPairTable.getModel();
-        wrongPairSet.add(wp);
+    private void addNegativeConceptPair(NegativeConceptPair wp) {
+        DefaultTableModel model = (DefaultTableModel) negativeConceptPairTable.getModel();
+        negativeConceptPairSet.add(wp);
         reCalcWSandARValue();
-        // System.out.println(wrongPairSet);
+        // System.out.println(negativeConceptPairSet);
         model.addRow(new Object[]{wp.getDomain(), wp.getRange()});
     }
 
@@ -425,8 +423,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         Set<ConceptPair> validPairSet = new TreeSet<>();
         for (ConceptPair pair : wsConceptPairList) {
             String[] data = pair.getTableData();
-            WrongPair wp = new WrongPair(selectedInputConcept, data[0]);
-            if (!wrongPairSet.contains(wp)) {
+            NegativeConceptPair wp = new NegativeConceptPair(selectedInputConcept, data[0]);
+            if (!negativeConceptPairSet.contains(wp)) {
                 validPairSet.add(pair);
             }
         }
@@ -447,8 +445,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         Set<ConceptPair> validPairSet = new TreeSet<>();
         for (ConceptPair pair : arConceptPairSet) {
             String[] data = pair.getTableData();
-            WrongPair wp = new WrongPair(inputConcept, data[0]);
-            if (!wrongPairSet.contains(wp)) {
+            NegativeConceptPair wp = new NegativeConceptPair(inputConcept, data[0]);
+            if (!negativeConceptPairSet.contains(wp)) {
                 validPairSet.add(pair);
             }
         }
@@ -547,12 +545,12 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         if (e.getSource() == setRelationButton) {
             setRelation();
             doddleProjectPanel.addLog("SetPropertyButton");
-        } else if (e.getSource() == deleteAcceptedPairButton) {
+        } else if (e.getSource() == deletePositiveConceptPairButton) {
             deleteConceptDefinition();
-            doddleProjectPanel.addLog("RemoveCorrectConceptPairButton");
-        } else if (e.getSource() == deleteWrongPairButton) {
-            deleteWrongPair();
-            doddleProjectPanel.addLog("RemoveWrongConceptPairButton");
+            doddleProjectPanel.addLog("RemovePositiveConceptPairButton");
+        } else if (e.getSource() == deleteNegativeConceptPairButton) {
+            deleteNegativeConceptPair();
+            doddleProjectPanel.addLog("RemoveNegativeConceptPairButton");
         }
     }
 
@@ -597,32 +595,32 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         // System.out.println(acceptedPairSet);
     }
 
-    private void deleteWrongPair() {
-        DefaultTableModel wrongPairTableModel = (DefaultTableModel) wrongPairTable.getModel();
-        Set<WrongPair> deleteWrongPairSet = new HashSet<>();
-        int[] row = wrongPairTable.getSelectedRows();
+    private void deleteNegativeConceptPair() {
+        DefaultTableModel negativeConceptPairTableModel = (DefaultTableModel) negativeConceptPairTable.getModel();
+        Set<NegativeConceptPair> deleteNegativeConceptPairSet = new HashSet<>();
+        int[] row = negativeConceptPairTable.getSelectedRows();
 
         if (row != null) {
             for (int i1 : row) {
-                String c1 = (String) wrongPairTableModel.getValueAt(i1, 0);
-                String c2 = (String) wrongPairTableModel.getValueAt(i1, 1);
-                WrongPair delWp = new WrongPair(c1, c2);
-                deleteWrongPairSet.add(delWp);
-                wrongPairSet.remove(delWp);
+                String c1 = (String) negativeConceptPairTableModel.getValueAt(i1, 0);
+                String c2 = (String) negativeConceptPairTableModel.getValueAt(i1, 1);
+                NegativeConceptPair delWp = new NegativeConceptPair(c1, c2);
+                deleteNegativeConceptPairSet.add(delWp);
+                negativeConceptPairSet.remove(delWp);
             }
             reCalcWSandARValue();
 
-            for (int i = 0; i < wrongPairTableModel.getRowCount(); i++) {
-                String c1 = (String) wrongPairTableModel.getValueAt(i, 0);
-                String c2 = (String) wrongPairTableModel.getValueAt(i, 1);
-                WrongPair wp = new WrongPair(c1, c2);
-                if (deleteWrongPairSet.contains(wp)) {
-                    wrongPairTableModel.removeRow(i);
+            for (int i = 0; i < negativeConceptPairTableModel.getRowCount(); i++) {
+                String c1 = (String) negativeConceptPairTableModel.getValueAt(i, 0);
+                String c2 = (String) negativeConceptPairTableModel.getValueAt(i, 1);
+                NegativeConceptPair wp = new NegativeConceptPair(c1, c2);
+                if (deleteNegativeConceptPairSet.contains(wp)) {
+                    negativeConceptPairTableModel.removeRow(i);
                     --i;
                 }
             }
         }
-        // System.out.println(wrongPairSet);
+        // System.out.println(negativeConceptPairSet);
     }
 
     public class ConceptDefinitionPanel extends JPanel implements ActionListener {
@@ -631,8 +629,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         private final JLabel c2Label;
         private final JLabel allowLabel;
         private final JButton reverseButton;
-        private final JButton addAcceptedPairButton;
-        private final JButton addWrongPairButton;
+        private final JButton addPositiveConceptPairButton;
+        private final JButton addNegativeConceptPairButton;
 
         private final ImageIcon rightIcon = Utils.getImageIcon("baseline_arrow_forward_black_18dp.png");
         private final ImageIcon leftIcon = Utils.getImageIcon("baseline_arrow_back_black_18dp.png");
@@ -642,10 +640,10 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
             c2Label = new JLabel();
             reverseButton = new JButton(Translator.getTerm("ReverseButton"));
             reverseButton.addActionListener(this);
-            addAcceptedPairButton = new JButton(Translator.getTerm("AddCorrectConceptPairButton"));
-            addAcceptedPairButton.addActionListener(this);
-            addWrongPairButton = new JButton(Translator.getTerm("AddWrongConceptPairButton"));
-            addWrongPairButton.addActionListener(this);
+            addPositiveConceptPairButton = new JButton(Translator.getTerm("AddPositiveConceptPairButton"));
+            addPositiveConceptPairButton.addActionListener(this);
+            addNegativeConceptPairButton = new JButton(Translator.getTerm("AddNegativeConceptPairButton"));
+            addNegativeConceptPairButton.addActionListener(this);
             allowLabel = new JLabel(rightIcon, JLabel.CENTER);
 
             c1Label.setFont(new Font("Dialog", Font.PLAIN, 14));
@@ -660,8 +658,8 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new GridLayout(1, 3, 5, 5));
             buttonPanel.add(reverseButton);
-            buttonPanel.add(addAcceptedPairButton);
-            buttonPanel.add(addWrongPairButton);
+            buttonPanel.add(addPositiveConceptPairButton);
+            buttonPanel.add(addNegativeConceptPairButton);
 
             setBorder(BorderFactory.createEtchedBorder());
             setLayout(new BorderLayout());
@@ -672,18 +670,18 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == reverseButton) {
                 reverseAction();
-            } else if (e.getSource() == addAcceptedPairButton) {
+            } else if (e.getSource() == addPositiveConceptPairButton) {
                 addNonTaxonomicRelation(getNonTaxonomicRelation());
-                doddleProjectPanel.addLog("AddCorrectConceptPairButton");
-            } else if (e.getSource() == addWrongPairButton) {
+                doddleProjectPanel.addLog("AddPositiveConceptPairButton");
+            } else if (e.getSource() == addNegativeConceptPairButton) {
                 String c1 = c1Label.getText();
                 String c2 = c2Label.getText();
                 if (c1.equals("") || c2.equals("")) {
                     return;
                 }
-                WrongPair wp = new WrongPair(c1, c2);
-                addWrongPair(wp);
-                doddleProjectPanel.addLog("AddWrongConceptPairButton");
+                NegativeConceptPair wp = new NegativeConceptPair(c1, c2);
+                addNegativeConceptPair(wp);
+                doddleProjectPanel.addLog("AddNegativeConceptPairButton");
             }
         }
 

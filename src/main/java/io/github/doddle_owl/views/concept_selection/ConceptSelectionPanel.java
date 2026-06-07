@@ -26,8 +26,8 @@ package io.github.doddle_owl.views.concept_selection;
 import io.github.doddle_owl.utils.*;
 import org.apache.jena.rdf.model.ResourceFactory;
 import io.github.doddle_owl.DODDLE_OWL;
-import io.github.doddle_owl.actions.ConstructNounAndVerbTreeAction;
-import io.github.doddle_owl.actions.ConstructNounTreeAction;
+import io.github.doddle_owl.actions.CassAndPropertyHierarchyConstructionAction;
+import io.github.doddle_owl.actions.ClassHierarchyConstructionAction;
 import io.github.doddle_owl.actions.ConstructTreeAction;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
@@ -119,7 +119,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private final LiteralPanel labelPanel;
     private final LiteralPanel descriptionPanel;
 
-    private final JPanel constructTreeOptionPanel;
+    private final JPanel hierarchyConstructionOptionPanel;
     private final JPanel partialMatchConstructTreeOptionPanel;
     private final JPanel exactMatchConstructTreeOptionPanel;
     private final JPanel systemAddedExactlyMatchedConstructTreeOptionPanel;
@@ -144,7 +144,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private final PartiallyMatchedOptionPanel partiallyMatchedOptionsPanel;
     // private JButton showConceptDescriptionButton;
 
-    private final AutomaticDisAmbiguationAction automaticDisAmbiguationAction;
+    private final AutomaticInputConceptSelectionAction automaticInputConceptSelectionAction;
     private ConstructTreeAction constructNounTreeAction;
     private ConstructTreeAction constructNounAndVerbTreeAction;
 
@@ -214,8 +214,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         descriptionPanel.clearData();
     }
 
-    public ConceptSelectionPanel(ClassHierarchyConstructionPanel tp, PropertyHierarchyConstructionPanel pp,
-                                 DODDLEProjectPanel p) {
+    public ConceptSelectionPanel(ClassHierarchyConstructionPanel tp, PropertyHierarchyConstructionPanel pp, DODDLEProjectPanel p) {
         project = p;
         constructClassPanel = tp;
         constructPropertyPanel = pp;
@@ -233,18 +232,16 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         descriptionPanel = new LiteralPanel(Translator.getTerm("LanguageLabel"),
                 Translator.getTerm("DescriptionList"), LiteralPanel.DESCRIPTION);
 
-        addAsSameConceptRadioButton = new JRadioButton(
-                Translator.getTerm("SameConceptRadioButton"), true);
+        addAsSameConceptRadioButton = new JRadioButton(Translator.getTerm("SameConceptRadioButton"), true);
         addAsSameConceptRadioButton.addActionListener(this);
         addAsSubConceptRadioButton = new JRadioButton(Translator.getTerm("SubConceptRadioButton"));
         addAsSubConceptRadioButton.addActionListener(this);
         ButtonGroup group = new ButtonGroup();
         group.add(addAsSameConceptRadioButton);
         group.add(addAsSubConceptRadioButton);
-        constructTreeOptionPanel = new JPanel();
-        constructTreeOptionPanel.setLayout(new BorderLayout());
-        constructTreeOptionPanel.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("HierarchyConstructionOptionBorder")));
+        hierarchyConstructionOptionPanel = new JPanel();
+        hierarchyConstructionOptionPanel.setLayout(new BorderLayout());
+        hierarchyConstructionOptionPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("HierarchyConstructionOptionBorder")));
         partialMatchConstructTreeOptionPanel = new JPanel();
         partialMatchConstructTreeOptionPanel.setLayout(new GridLayout(1, 2));
         partialMatchConstructTreeOptionPanel.add(addAsSameConceptRadioButton);
@@ -255,10 +252,9 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         systemAddedExactlyMatchedConstructTreeOptionPanel.setLayout(new BorderLayout());
         replaceSubClassesCheckBox = new JCheckBox("下位概念に置換");
         replaceSubClassesCheckBox.addActionListener(this);
-        systemAddedExactlyMatchedConstructTreeOptionPanel.add(replaceSubClassesCheckBox,
-                BorderLayout.CENTER);
+        systemAddedExactlyMatchedConstructTreeOptionPanel.add(replaceSubClassesCheckBox, BorderLayout.CENTER);
 
-        constructTreeOptionPanel.add(partialMatchConstructTreeOptionPanel, BorderLayout.CENTER);
+        hierarchyConstructionOptionPanel.add(partialMatchConstructTreeOptionPanel, BorderLayout.CENTER);
 
         JPanel labelAndDescriptionPanel = new JPanel();
         labelAndDescriptionPanel.setLayout(new GridLayout(2, 1));
@@ -268,7 +264,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         JPanel conceptInfoPanel = new JPanel();
         conceptInfoPanel.setLayout(new BorderLayout());
         conceptInfoPanel.add(labelAndDescriptionPanel, BorderLayout.CENTER);
-        conceptInfoPanel.add(constructTreeOptionPanel, BorderLayout.SOUTH);
+        conceptInfoPanel.add(hierarchyConstructionOptionPanel, BorderLayout.SOUTH);
         conceptInfoPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptInformationPanel")));
 
         unmatchedTermListPanel = new UnmatchedTermListPanel();
@@ -281,12 +277,10 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         documentArea = new JEditorPane("text/html", "");
         documentArea.setEditable(false);
         JScrollPane documentAreaScroll = new JScrollPane(documentArea);
-        highlightInputTermCheckBox = new JCheckBox(
-                Translator.getTerm("HighlightInputTermCheckBox"), true);
+        highlightInputTermCheckBox = new JCheckBox(Translator.getTerm("HighlightInputTermCheckBox"), true);
         highlightInputTermCheckBox.addActionListener(this);
 
-        showAroundConceptTreeCheckBox = new JCheckBox(
-                Translator.getTerm("ShowConceptHierarchyCheckBox"), true);
+        showAroundConceptTreeCheckBox = new JCheckBox(Translator.getTerm("ShowConceptHierarchyCheckBox"), true);
         showAroundConceptTreeCheckBox.addActionListener(this);
 
         TreeModel aroundConceptTreeModel = new DefaultTreeModel(null);
@@ -308,18 +302,20 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         documentPanel.add(highlightInputTermCheckBox, BorderLayout.SOUTH);
         documentPanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("InputDocumentArea")));
 
-        automaticDisAmbiguationAction = new AutomaticDisAmbiguationAction(Translator.getTerm("AutomaticInputConceptSelectionAction"));
+        automaticInputConceptSelectionAction = new AutomaticInputConceptSelectionAction(Translator.getTerm("AutomaticInputConceptSelectionAction"));
 
         constructionTypePanel = new ConstructionTypePanel();
         exactlyMatchedOptionsPanel = new ExactlyMatchedOptionPanel();
         partiallyMatchedOptionsPanel = new PartiallyMatchedOptionPanel();
 
-        JButton constructNounTreeButton = new JButton(new ConstructNounTreeAction());
-        JButton constructNounAndVerbTreeButton = new JButton(new ConstructNounAndVerbTreeAction());
+        JButton automaticInputConceptSelectionButton = new JButton(automaticInputConceptSelectionAction);
+        JButton classHierarchyConstructionButton = new JButton(new ClassHierarchyConstructionAction());
+        JButton classAndPropertyHierarchyConstructionButton = new JButton(new CassAndPropertyHierarchyConstructionAction());
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 2));
-        buttonPanel.add(constructNounTreeButton);
-        buttonPanel.add(constructNounAndVerbTreeButton);
+        buttonPanel.setLayout(new GridLayout(1, 3));
+        buttonPanel.add(automaticInputConceptSelectionButton);
+        buttonPanel.add(classHierarchyConstructionButton);
+        buttonPanel.add(classAndPropertyHierarchyConstructionButton);
         JPanel buttonLayoutPanel = new JPanel();
         buttonLayoutPanel.setLayout(new BorderLayout());
         buttonLayoutPanel.add(buttonPanel, BorderLayout.EAST);
@@ -483,8 +479,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             constructionBox = new JCheckBox(Translator.getTerm("ConstructionCheckBox"), true);
             constructionBox.addActionListener(this);
             trimmingBox = new JCheckBox(Translator.getTerm("TrimmingCheckBox"), true);
-            includeRefOntConceptLabelBox = new JCheckBox(
-                    Translator.getTerm("AddLabelsFromReferenceOntology"), true);
+            includeRefOntConceptLabelBox = new JCheckBox(Translator.getTerm("AddLabelsFromReferenceOntology"), true);
             add(constructionBox);
             add(trimmingBox);
             add(includeRefOntConceptLabelBox);
@@ -1212,12 +1207,12 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     }
 
     private void switchConstructTreeOptionPanel(JPanel optionPanel) {
-        constructTreeOptionPanel.remove(partialMatchConstructTreeOptionPanel);
-        constructTreeOptionPanel.remove(exactMatchConstructTreeOptionPanel);
-        constructTreeOptionPanel.remove(systemAddedExactlyMatchedConstructTreeOptionPanel);
-        constructTreeOptionPanel.add(optionPanel);
-        constructTreeOptionPanel.validate();
-        constructTreeOptionPanel.repaint();
+        hierarchyConstructionOptionPanel.remove(partialMatchConstructTreeOptionPanel);
+        hierarchyConstructionOptionPanel.remove(exactMatchConstructTreeOptionPanel);
+        hierarchyConstructionOptionPanel.remove(systemAddedExactlyMatchedConstructTreeOptionPanel);
+        hierarchyConstructionOptionPanel.add(optionPanel);
+        hierarchyConstructionOptionPanel.validate();
+        hierarchyConstructionOptionPanel.repaint();
     }
 
     /**
@@ -1259,8 +1254,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return exactlyMatchedTermModelSet;
     }
 
-    private void syncPartiallyMatchedAmbiguousConceptSet(String orgTerm,
-                                                         Set<Concept> correspondConceptSet) {
+    private void syncPartiallyMatchedAmbiguousConceptSet(String orgTerm, Set<Concept> correspondConceptSet) {
         if (!exactMatchIsSyncCheckBox.isSelected()) {
             return;
         }
@@ -1588,8 +1582,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         return inputModule.getTermModelSet();
     }
 
-    public AutomaticDisAmbiguationAction getAutomaticDisAmbiguationAction() {
-        return automaticDisAmbiguationAction;
+    public AutomaticInputConceptSelectionAction getAutomaticInputConceptSelectionAction() {
+        return automaticInputConceptSelectionAction;
     }
 
     // public class ShowConceptDescriptionAction extends AbstractAction {
@@ -1630,11 +1624,11 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         }
     }
 
-    public class AutomaticDisAmbiguationAction extends AbstractAction {
+    public class AutomaticInputConceptSelectionAction extends AbstractAction {
 
         private Set<String> termSet;
 
-        AutomaticDisAmbiguationAction(String title) {
+        AutomaticInputConceptSelectionAction(String title) {
             super(title);
         }
 
@@ -1702,8 +1696,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             termEvalConceptSetMap = new HashMap<>();
             Map<Concept, EvalConcept> conceptEvalConceptMap = getConceptEvalConceptMap();
 
-            DODDLE_OWL.STATUS_BAR.setLastMessage(Translator
-                    .getTerm("AutomaticInputConceptSelectionAction"));
+            DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("AutomaticInputConceptSelectionAction"));
             DODDLE_OWL.STATUS_BAR.startTime();
             DODDLE_OWL.STATUS_BAR.initNormal(conceptEvalConceptMap.keySet().size());
             Object[] allDisambiguationCandidate = conceptEvalConceptMap.keySet().toArray();
