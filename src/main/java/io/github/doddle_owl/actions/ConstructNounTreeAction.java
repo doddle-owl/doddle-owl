@@ -35,7 +35,7 @@ import java.awt.event.ActionEvent;
 public class ConstructNounTreeAction extends AbstractAction {
 
     public ConstructNounTreeAction() {
-        super(Translator.getTerm("ClassTreeConstructionAction"));
+        super(Translator.getTerm("ClassHierarchyConstructionAction"));
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -43,9 +43,9 @@ public class ConstructNounTreeAction extends AbstractAction {
             public String doInBackground() {
                 DODDLE_OWL.STATUS_BAR.initNormal(9);
                 DODDLE_OWL.STATUS_BAR.startTime();
-                DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("ClassTreeConstructionAction"));
+                DODDLE_OWL.STATUS_BAR.setLastMessage(Translator.getTerm("ClassHierarchyConstructionAction"));
                 new ConstructTreeAction(false, DODDLE_OWL.getCurrentProject()).constructTree();
-                DODDLE_OWL.getCurrentProject().addLog("ClassTreeConstructionAction");
+                DODDLE_OWL.getCurrentProject().addLog("ClassHierarchyConstructionAction");
                 return "done";
             }
         };

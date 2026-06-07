@@ -21,7 +21,7 @@
  * 
  */
 
-package io.github.doddle_owl.models.concept_tree;
+package io.github.doddle_owl.models.concept_hierarchy;
 
 import java.util.*;
 

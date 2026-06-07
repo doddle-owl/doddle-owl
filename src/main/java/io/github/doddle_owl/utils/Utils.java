@@ -28,7 +28,7 @@ import com.atilika.kuromoji.ipadic.Tokenizer;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import org.apache.jena.ontapi.OntModelFactory;
 import org.apache.jena.ontapi.OntSpecification;
 import org.apache.jena.ontapi.model.OntModel;

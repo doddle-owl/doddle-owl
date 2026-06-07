@@ -36,7 +36,7 @@ import java.awt.event.ActionEvent;
 public class ConstructNounAndVerbTreeAction extends AbstractAction {
 
     public ConstructNounAndVerbTreeAction() {
-        super(Translator.getTerm("ClassAndPropertyTreeConstructionAction"));
+        super(Translator.getTerm("ClassAndPropertyHierarchyConstructionAction"));
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -44,13 +44,13 @@ public class ConstructNounAndVerbTreeAction extends AbstractAction {
             public String doInBackground() {
                 DODDLE_OWL.STATUS_BAR.initNormal(10);
                 DODDLE_OWL.STATUS_BAR.startTime();
-                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("ClassAndPropertyTreeConstructionAction"));
+                DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("ClassAndPropertyHierarchyConstructionAction"));
                 ConceptSelectionPanel conceptSelectionPanel = DODDLE_OWL.getCurrentProject()
                         .getConceptSelectionPanel();
                 conceptSelectionPanel.makeEDRTree();
                 DODDLE_OWL.STATUS_BAR.addValue();
                 new ConstructTreeAction(true, DODDLE_OWL.getCurrentProject()).constructTree();
-                DODDLE_OWL.getCurrentProject().addLog("ClassAndPropertyTreeConstructionAction");
+                DODDLE_OWL.getCurrentProject().addLog("ClassAndPropertyHierarchyConstructionAction");
                 return "done";
             }
         };

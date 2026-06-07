@@ -21,13 +21,13 @@
  *
  */
 
-package io.github.doddle_owl.views.concept_tree;
+package io.github.doddle_owl.views.concept_hierarchy;
 
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
@@ -46,31 +46,31 @@ import java.util.Set;
 /**
  * @author Takeshi Morita
  */
-public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
+public class ClassHierarchyConstructionPanel extends ConceptHierarchyConstructionPanel {
 
     @Override
     public void initialize() {
         super.initialize();
     }
 
-    public ClassTreeConstructionPanel(DODDLEProjectPanel p) {
+    public ClassHierarchyConstructionPanel(DODDLEProjectPanel p) {
         project = p;
         unmatchedTermListPanel = new UnmatchedTermListPanel();
-        isaTreePanel = new ConceptTreePanel(Translator.getTerm("IsaTreeBorder"), ConceptTreePanel.CLASS_ISA_TREE,
+        isaHierarchyPanel = new ConceptHierarcyPanel(Translator.getTerm("IsaHierarchyBorder"), ConceptHierarcyPanel.ISA_CLASS_HIERARCHY,
                 unmatchedTermListPanel, p);
-        hasaTreePanel = new ConceptTreePanel(Translator.getTerm("HasaTreeBorder"),
-                ConceptTreePanel.CLASS_HASA_TREE, unmatchedTermListPanel, project);
-        isaTreePanel.setHasaTree(hasaTreePanel.getConceptTree());
+        hasaHierarchyPanel = new ConceptHierarcyPanel(Translator.getTerm("HasaHierarchyBorder"),
+                ConceptHierarcyPanel.HASA_CLASS_HIERARCHY, unmatchedTermListPanel, project);
+        isaHierarchyPanel.setHasaTree(hasaHierarchyPanel.getConceptTree());
 
         var treeTabbedPane = new JTabbedPane();
-        treeTabbedPane.addTab(Translator.getTerm("IsaConceptTreePanel"), null, isaTreePanel);
-        treeTabbedPane.addTab(Translator.getTerm("HasaConceptTreePanel"), null, hasaTreePanel);
+        treeTabbedPane.addTab(Translator.getTerm("IsaConceptHierarchyPanel"), null, isaHierarchyPanel);
+        treeTabbedPane.addTab(Translator.getTerm("HasaConceptHierarchyPanel"), null, hasaHierarchyPanel);
 
         conceptDriftManagementPanel = new ConceptDriftManagementPanel(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE,
-                isaTreePanel.getConceptTree(), project);
-        isaTreePanel.setConceptDriftManagementPanel(conceptDriftManagementPanel);
+                isaHierarchyPanel.getConceptTree(), project);
+        isaHierarchyPanel.setConceptDriftManagementPanel(conceptDriftManagementPanel);
 
-        conceptInfoPanel = new ConceptInformationPanel(isaTreePanel.getConceptTree(), hasaTreePanel.getConceptTree(),
+        conceptInfoPanel = new ConceptInformationPanel(isaHierarchyPanel.getConceptTree(), hasaHierarchyPanel.getConceptTree(),
                 new ConceptTreeCellRenderer(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE), conceptDriftManagementPanel);
 
         var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -108,22 +108,22 @@ public class ClassTreeConstructionPanel extends ConceptTreeConstructionPanel {
         DODDLE_OWL.getLogger().info(Translator.getTerm("BeforeTrimmingClassCountMessage") + ": " + beforeTrimmingConceptNum);
         DODDLE_OWL.getLogger().info(Translator.getTerm("TrimmedClassCountMessage") + ": " + trimmedConceptNum);
         DODDLE_OWL.getLogger().info(Translator.getTerm("AfterTrimmingClassCountMessage") + ": " + getAfterTrimmingConceptNum());
-        isaTreePanel.checkAllMultipleInheritanceNode(model);
+        isaHierarchyPanel.checkAllMultipleInheritanceNode(model);
         return model;
     }
 
     public void addCompoundWordConcept(Map matchedWordIDMap, Map abstractNodeLabelMap, TreeNode rootNode) {
-        DefaultTreeModel model = (DefaultTreeModel) isaTreePanel.getConceptTree().getModel();
+        DefaultTreeModel model = (DefaultTreeModel) isaHierarchyPanel.getConceptTree().getModel();
         ConceptTreeNode conceptTreeRootNode = (ConceptTreeNode) model.getRoot();
-        isaTreePanel.addCompoundWordConcept(matchedWordIDMap, rootNode, conceptTreeRootNode, abstractNodeLabelMap);
+        isaHierarchyPanel.addCompoundWordConcept(matchedWordIDMap, rootNode, conceptTreeRootNode, abstractNodeLabelMap);
         //DODDLE.getLogger().info("追加した抽象中間ノード数: " + isaTreePanel.getAbstractNodeCnt());
-        addedAbstractCompoundConceptCnt = isaTreePanel.getAbstractConceptCnt();
+        addedAbstractCompoundConceptCnt = isaHierarchyPanel.getAbstractConceptCnt();
         DODDLE_OWL.getLogger().info(Translator.getTerm("AbstractInternalClassCountMessage") + ": " + addedAbstractCompoundConceptCnt);
 
         if (addedAbstractCompoundConceptCnt == 0) {
             averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
         } else {
-            averageAbstracCompoundConceptGroupSiblingConceptCnt = isaTreePanel.getTotalAbstractNodeGroupSiblingNodeCnt()
+            averageAbstracCompoundConceptGroupSiblingConceptCnt = isaHierarchyPanel.getTotalAbstractNodeGroupSiblingNodeCnt()
                     / addedAbstractCompoundConceptCnt;
         }
         DODDLE_OWL.getLogger().info(Translator.getTerm("AverageAbstractSiblingConceptCountInClassesMessage") + ": " + averageAbstracCompoundConceptGroupSiblingConceptCnt);

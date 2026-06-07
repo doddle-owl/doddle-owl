@@ -262,9 +262,8 @@ public class DODDLE_OWL extends JFrame {
         saveMenu.add(new SaveTermInfoTableAction(Translator.getTerm("SaveInputTermTableAction")));
         saveMenu.add(new SaveTermEvalConceptSetAction(Translator.getTerm("SaveInputConceptSelectionResultAction")));
         saveMenu.add(new SaveTermConceptMapAction(Translator.getTerm("SaveInputTermConceptMapAction")));
-        saveMenu.add(new SavePerfectlyMatchedTermAction(Translator.getTerm("SaveExactMatchTermListAction")));
-        saveMenu.add(new SavePerfectlyMatchedTermWithCompoundWordAction(Translator
-                .getTerm("SaveExactMatchTermCompoundWordMapAction")));
+        saveMenu.add(new SavePerfectlyMatchedTermAction(Translator.getTerm("SaveExactlyMatchedTermListAction")));
+        saveMenu.add(new SavePerfectlyMatchedTermWithCompoundWordAction(Translator.getTerm("SaveExactlyMatchedTermCompoundTermMapAction")));
         saveMenu.add(saveOntologyAction);
         saveMenu.add(saveFreeMindOntologyAction);
         saveMenu.add(saveConceptDisplayTermAction);

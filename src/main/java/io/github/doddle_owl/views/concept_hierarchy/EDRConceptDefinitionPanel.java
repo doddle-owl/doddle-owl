@@ -21,12 +21,12 @@
  *
  */
 
-package io.github.doddle_owl.views.concept_tree;
+package io.github.doddle_owl.views.concept_hierarchy;
 
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
-import io.github.doddle_owl.models.concept_tree.VerbConcept;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.VerbConcept;
 import io.github.doddle_owl.models.ontology_api.EDR;
 import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;

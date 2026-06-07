@@ -21,13 +21,13 @@
  *
  */
 
-package io.github.doddle_owl.views.concept_tree;
+package io.github.doddle_owl.views.concept_hierarchy;
 
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.CompoundConceptTreeInterface;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.CompoundConceptTreeInterface;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
@@ -45,9 +45,9 @@ import java.util.TreeSet;
 /**
  * @author Takeshi Morita
  */
-public abstract class ConceptTreeConstructionPanel extends JPanel implements CompoundConceptTreeInterface {
-    ConceptTreePanel isaTreePanel;
-    ConceptTreePanel hasaTreePanel;
+public abstract class ConceptHierarchyConstructionPanel extends JPanel implements CompoundConceptTreeInterface {
+    ConceptHierarcyPanel isaHierarchyPanel;
+    ConceptHierarcyPanel hasaHierarchyPanel;
     UnmatchedTermListPanel unmatchedTermListPanel;
     ConceptInformationPanel conceptInfoPanel;
 
@@ -63,8 +63,8 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     DODDLEProjectPanel project;
 
     public void initUndo() {
-        isaTreePanel.initUndo();
-        hasaTreePanel.initUndo();
+        isaHierarchyPanel.initUndo();
+        hasaHierarchyPanel.initUndo();
     }
 
     public void clearPanel() {
@@ -86,19 +86,19 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     }
 
     public Map getIDPreferentialTermMap() {
-        return isaTreePanel.getConceptPreferentialTermMap();
+        return isaHierarchyPanel.getConceptPreferentialTermMap();
     }
 
     public void loadIDPreferentialTerm(Map idPreferentialTermMap) {
-        isaTreePanel.loadConceptPreferentialTerm(idPreferentialTermMap);
+        isaHierarchyPanel.loadConceptPreferentialTerm(idPreferentialTermMap);
     }
 
     public TreeModel getConceptTreeModel() {
-        return isaTreePanel.getConceptTree().getModel();
+        return isaHierarchyPanel.getConceptTree().getModel();
     }
 
     public void loadDescriptions(Map<String, DODDLELiteral> wordDescriptionMap) {
-        isaTreePanel.loadDescriptions(wordDescriptionMap);
+        isaHierarchyPanel.loadDescriptions(wordDescriptionMap);
     }
 
     public Concept getConcept(String uri) {
@@ -140,7 +140,7 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     }
 
     public JTree getIsaTree() {
-        return isaTreePanel.getConceptTree();
+        return isaHierarchyPanel.getConceptTree();
     }
 
     public TreeModel getDefaultConceptTreeModel(Set pathSet, String type) {
@@ -148,11 +148,11 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     }
 
     public void addJPWord(String identity, String word) {
-        isaTreePanel.addJPWord(identity, word);
+        isaHierarchyPanel.addJPWord(identity, word);
     }
 
     public void addSubConcept(String identity, String word) {
-        isaTreePanel.addSubConcept(identity, word);
+        isaHierarchyPanel.addSubConcept(identity, word);
     }
 
     public double getAddedAbstractCompoundConceptCnt() {
@@ -167,7 +167,7 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
         addedAbstractCompoundConceptCnt = 0;
         averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
         ConceptTreeMaker.getInstance().init();
-        isaTreePanel.getConceptTree().setModel(new DefaultTreeModel(null));
+        isaHierarchyPanel.getConceptTree().setModel(new DefaultTreeModel(null));
     }
 
     public int getBeforeTrimmingConceptNum() {
@@ -188,19 +188,19 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
 
     public int getAllConceptCnt() {
         // System.out.println(Utils.getAllConcept(conceptTreePanel.getConceptTree().getModel()));
-        return Utils.getAllConcept(isaTreePanel.getConceptTree().getModel()).size();
+        return Utils.getAllConcept(isaHierarchyPanel.getConceptTree().getModel()).size();
     }
 
     public double getChildCntAverage() {
-        return Utils.getChildCntAverage(isaTreePanel.getConceptTree().getModel());
+        return Utils.getChildCntAverage(isaHierarchyPanel.getConceptTree().getModel());
     }
 
     public Set<String> getAllConceptURI() {
-        return isaTreePanel.getAllConceptURI();
+        return isaHierarchyPanel.getAllConceptURI();
     }
 
     public ConceptTreeNode getIsaTreeModelRoot() {
-        JTree conceptTree = isaTreePanel.getConceptTree();
+        JTree conceptTree = isaHierarchyPanel.getConceptTree();
         if (conceptTree.getModel().getRoot() instanceof ConceptTreeNode) {
             return (ConceptTreeNode) conceptTree.getModel().getRoot();
         }
@@ -208,22 +208,22 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     }
 
     public void expandIsaTree() {
-        JTree conceptTree = isaTreePanel.getConceptTree();
+        JTree conceptTree = isaHierarchyPanel.getConceptTree();
         for (int i = 0; i < conceptTree.getRowCount(); i++) {
             conceptTree.expandPath(conceptTree.getPathForRow(i));
         }
     }
 
     public Map<String, Concept> getCompoundWordConceptMap() {
-        return isaTreePanel.getCompoundWordConceptMap();
+        return isaHierarchyPanel.getCompoundWordConceptMap();
     }
 
     public Set getSupConceptSet(String id) {
-        return isaTreePanel.getSupConceptSet(id);
+        return isaHierarchyPanel.getSupConceptSet(id);
     }
 
     public void setVisibleIsaTree(boolean isVisible) {
-        isaTreePanel.getConceptTree().setVisible(isVisible);
+        isaHierarchyPanel.getConceptTree().setVisible(isVisible);
     }
 
     public void setConceptDriftManagementResult() {
@@ -248,41 +248,41 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
         DefaultTreeModel sortedTreeModel = new DefaultTreeModel(sortedRootNode);
         makeSortedTreeModel(rootNode, sortedRootNode);
         checkMultipleInheritance(sortedTreeModel);
-        isaTreePanel.getConceptTree().setModel(sortedTreeModel);
+        isaHierarchyPanel.getConceptTree().setModel(sortedTreeModel);
         treeMaker.conceptDriftManagement(sortedTreeModel);
         setConceptDriftManagementResult();
         return sortedTreeModel;
     }
 
     private void checkMultipleInheritance(TreeModel model) {
-        isaTreePanel.checkAllMultipleInheritanceNode(model);
+        isaHierarchyPanel.checkAllMultipleInheritanceNode(model);
     }
 
     public void searchSameConceptTreeNode(Concept concept, ConceptTreeNode node, Set sameConceptSet) {
-        isaTreePanel.searchSameConceptTreeNode(concept, node, sameConceptSet);
+        isaHierarchyPanel.searchSameConceptTreeNode(concept, node, sameConceptSet);
     }
 
     public void deleteLinkToUpperConcept(ConceptTreeNode targetDeleteNode) {
-        isaTreePanel.deleteLinkToUpperConcept(targetDeleteNode);
+        isaHierarchyPanel.deleteLinkToUpperConcept(targetDeleteNode);
     }
 
     public void setHasaTreeModel(TreeModel model) {
-        hasaTreePanel.getConceptTree().setModel(model);
+        hasaHierarchyPanel.getConceptTree().setModel(model);
     }
 
     public void setVisibleHasaTree(boolean isVisible) {
-        hasaTreePanel.getConceptTree().setVisible(isVisible);
+        hasaHierarchyPanel.getConceptTree().setVisible(isVisible);
     }
 
     public void expandHasaTree() {
-        JTree conceptTree = hasaTreePanel.getConceptTree();
+        JTree conceptTree = hasaHierarchyPanel.getConceptTree();
         for (int i = 0; i < conceptTree.getRowCount(); i++) {
             conceptTree.expandPath(conceptTree.getPathForRow(i));
         }
     }
 
     public ConceptTreeNode getHasaTreeModelRoot() {
-        JTree conceptTree = hasaTreePanel.getConceptTree();
+        JTree conceptTree = hasaHierarchyPanel.getConceptTree();
         if (conceptTree.getModel().getRoot() instanceof ConceptTreeNode) {
             return (ConceptTreeNode) conceptTree
                     .getModel().getRoot();
@@ -291,16 +291,16 @@ public abstract class ConceptTreeConstructionPanel extends JPanel implements Com
     }
 
     public JTree getHasaTree() {
-        return hasaTreePanel.getConceptTree();
+        return hasaHierarchyPanel.getConceptTree();
     }
 
     public void selectIsaTreeNode(Concept targetConcept, Concept parentConcept) {
-        ConceptTreeNode rootNode = (ConceptTreeNode) isaTreePanel.getConceptTree().getModel().getRoot();
-        isaTreePanel.selectConceptTreeNode(rootNode, targetConcept, parentConcept);
+        ConceptTreeNode rootNode = (ConceptTreeNode) isaHierarchyPanel.getConceptTree().getModel().getRoot();
+        isaHierarchyPanel.selectConceptTreeNode(rootNode, targetConcept, parentConcept);
     }
 
     public void selectHasaTreeNode(Concept targetConcept, Concept parentConcept) {
-        ConceptTreeNode rootNode = (ConceptTreeNode) hasaTreePanel.getConceptTree().getModel().getRoot();
-        hasaTreePanel.selectConceptTreeNode(rootNode, targetConcept, parentConcept);
+        ConceptTreeNode rootNode = (ConceptTreeNode) hasaHierarchyPanel.getConceptTree().getModel().getRoot();
+        hasaHierarchyPanel.selectConceptTreeNode(rootNode, targetConcept, parentConcept);
     }
 }

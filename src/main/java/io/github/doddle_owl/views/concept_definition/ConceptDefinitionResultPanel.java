@@ -27,13 +27,13 @@ import io.github.doddle_owl.models.concept_definition.ConceptPair;
 import io.github.doddle_owl.models.concept_definition.NonTaxonomicRelation;
 import io.github.doddle_owl.models.concept_definition.WrongPair;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.models.document_selection.Document;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.common.ConceptSelectionDialog;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 
 import javax.swing.*;
@@ -91,7 +91,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
             Translator.getTerm("RangeLabel")};
 
     private final DODDLEProjectPanel doddleProjectPanel;
-    private final PropertyTreeConstructionPanel constructPropertyTreePanel;
+    private final PropertyHierarchyConstructionPanel propertyHierarchyConstructionPanel;
 
     private static final String[] WS_COLUMN_NAMES = {Translator.getTerm("RelatedConceptList"),
             Translator.getTerm("WordSpaceValueLabel")};
@@ -153,7 +153,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
                                         DODDLEProjectPanel project) {
         algorithmPanel = ap;
         doddleProjectPanel = project;
-        constructPropertyTreePanel = project.getConstructPropertyPanel();
+        propertyHierarchyConstructionPanel = project.getConstructPropertyPanel();
         inputConceptJList = icList;
 
         nonTaxRelSet = new HashSet<>();
@@ -503,7 +503,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
     }
 
     private Concept getPropertyRootConcept() {
-        TreeModel treeModel = constructPropertyTreePanel.getIsaTree().getModel();
+        TreeModel treeModel = propertyHierarchyConstructionPanel.getIsaTree().getModel();
         if (treeModel.getRoot() instanceof ConceptTreeNode) {
             return ((ConceptTreeNode) treeModel.getRoot()).getConcept();
         }
@@ -516,7 +516,7 @@ public class ConceptDefinitionResultPanel extends JPanel implements ActionListen
         if (conceptDefinitionTable.getSelectedRowCount() == 1) {
             ConceptSelectionDialog dialog = new ConceptSelectionDialog(
                     ConceptTreeCellRenderer.VERB_CONCEPT_TREE, "Relation Selection Dialog");
-            TreeModel treeModel = constructPropertyTreePanel.getIsaTree().getModel();
+            TreeModel treeModel = propertyHierarchyConstructionPanel.getIsaTree().getModel();
             if (treeModel.getRoot() instanceof ConceptTreeNode) {
                 dialog.setTreeModel(treeModel);
                 dialog.setSingleSelection();

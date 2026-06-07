@@ -21,15 +21,15 @@
  *
  */
 
-package io.github.doddle_owl.views.concept_tree;
+package io.github.doddle_owl.views.concept_hierarchy;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
-import io.github.doddle_owl.models.concept_tree.VerbConcept;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.VerbConcept;
 import io.github.doddle_owl.models.term_selection.TermModel;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
@@ -53,7 +53,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * @author Takeshi Morita
  */
-public class ConceptTreePanel extends JPanel {
+public class ConceptHierarcyPanel extends JPanel {
     private final DODDLEProjectPanel project;
 
     private final JTextField searchConceptField;
@@ -79,7 +79,6 @@ public class ConceptTreePanel extends JPanel {
     private AddUnmatchedTermListAction addUnmatchedTermListAction;
     private UndoAction undoAction;
     private RedoAction redoAction;
-    private final JCheckBox showPrefixCheckBox;
 
     private final ImageIcon addSubConceptIcon = Utils.getImageIcon("add_sub_concept.png");
     private final ImageIcon addSibConceptIcon = Utils.getImageIcon("add_sib_concept.png");
@@ -112,17 +111,17 @@ public class ConceptTreePanel extends JPanel {
 
     private JTree hasaTree;
 
-    public static final String CLASS_ISA_TREE = "class is-a Tree";
-    public static final String PROPERTY_ISA_TREE = "property is-a Tree";
-    public static final String CLASS_HASA_TREE = "class has-a Tree";
-    public static final String PROPERTY_HASA_TREE = "property has-a Tree";
+    public static final String ISA_CLASS_HIERARCHY = "Is-a Class Hierarchy";
+    public static final String ISA_PROPERTY_HIERARCHY = "Is-a Property Hierarchy";
+    public static final String HASA_CLASS_HIERARCHY = "Has-a Class Hierarchy";
+    public static final String HASA_PROPERTY_HIERARCHY = "Has-a Property Hierarchy";
 
-    public ConceptTreePanel(String title, String type, UnmatchedTermListPanel undefPanel, DODDLEProjectPanel p) {
+    public ConceptHierarcyPanel(String title, String type, UnmatchedTermListPanel undefPanel, DODDLEProjectPanel p) {
         project = p;
         treeType = type;
-        if (type.equals(CLASS_HASA_TREE)) {
+        if (type.equals(HASA_CLASS_HIERARCHY)) {
             conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE, "Class Is-a Selection Dialog");
-        } else if (type.equals(PROPERTY_HASA_TREE)) {
+        } else if (type.equals(HASA_PROPERTY_HIERARCHY)) {
             conceptSelectionDialog = new ConceptSelectionDialog(ConceptTreeCellRenderer.VERB_CONCEPT_TREE, "Property Is-a Selection Dialog");
         }
         unmatchedTermListPanel = undefPanel;
@@ -169,8 +168,6 @@ public class ConceptTreePanel extends JPanel {
         searchPanel.add(searchButtonPanel, BorderLayout.EAST);
         searchPanel.add(searchOptionPanel, BorderLayout.SOUTH);
 
-        showPrefixCheckBox = new JCheckBox(Translator.getTerm("ShowQNameAction"), false);
-
         conceptTree = new JTree();
         conceptTree.setEditable(false);
         conceptTree.setDragEnabled(true);
@@ -204,8 +201,7 @@ public class ConceptTreePanel extends JPanel {
         cutConceptAction = new CutConceptAction(Translator.getTerm("CutConceptAction"));
         pasteConceptAction = new PasteConceptAction(Translator.getTerm("PasteConceptAction"));
         deleteInternalConceptAction = new DeleteInternalConceptAction(Translator.getTerm("DeleteInternalConceptAction"));
-        deleteLinkToUpperConceptAction = new DeleteLinkToUpperConceptAction(Translator
-                .getTerm("DeleteLinkToUpperConceptAction"));
+        deleteLinkToUpperConceptAction = new DeleteLinkToUpperConceptAction(Translator.getTerm("DeleteLinkToUpperConceptAction"));
         deleteConceptAction = new DeleteConceptAction(Translator.getTerm("DeleteConceptAction"));
         addUnmatchedTermListAction = new AddUnmatchedTermListAction(Translator.getTerm("AddUnmatchedTermAction"));
         MoveUnmatchedTermListAction moveUnmatchedTermListAction = new MoveUnmatchedTermListAction(Translator.getTerm("UnmatchedTermAction"));
@@ -236,7 +232,7 @@ public class ConceptTreePanel extends JPanel {
         toolBar.add(pasteConceptAction).setToolTipText(pasteConceptAction.getTitle());
         toolBar.add(deleteLinkToUpperConceptAction).setToolTipText(deleteLinkToUpperConceptAction.getTitle());
         toolBar.add(deleteInternalConceptAction).setToolTipText(deleteInternalConceptAction.getTitle());
-        if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
+        if (treeType.equals(ISA_CLASS_HIERARCHY) || treeType.equals(ISA_PROPERTY_HIERARCHY)) {
             toolBar.add(deleteConceptAction).setToolTipText(deleteConceptAction.getTitle());
         }
         toolBar.add(undoAction);
@@ -254,10 +250,6 @@ public class ConceptTreePanel extends JPanel {
 
     public void setConceptDriftManagementPanel(ConceptDriftManagementPanel cdmp) {
         conceptDriftManagementPanel = cdmp;
-    }
-
-    public boolean isShowPrefix() {
-        return showPrefixCheckBox.isSelected();
     }
 
     public void loadDescriptions(Map<String, DODDLELiteral> wordDescriptionMap) {
@@ -295,14 +287,14 @@ public class ConceptTreePanel extends JPanel {
             popupMenu.add(deleteMenu);
             deleteMenu.add(deleteLinkToUpperConceptAction);
             deleteMenu.add(deleteInternalConceptAction);
-            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
+            if (treeType.equals(ISA_CLASS_HIERARCHY) || treeType.equals(ISA_PROPERTY_HIERARCHY)) {
                 deleteMenu.add(deleteConceptAction);
                 popupMenu.add(addUnmatchedTermListAction);
                 // popupMenu.add(moveUnmatchedTermListAction);
             }
             popupMenu.add(undoAction);
             popupMenu.add(redoAction);
-            popupMenu.add(new ExpandSelectedPathAction(Translator.getTerm("ExpandConceptTreeAction")));
+            popupMenu.add(new ExpandSelectedPathAction(Translator.getTerm("ExpandConceptHierarchyAction")));
         }
 
         public void mouseClicked(MouseEvent e) {
@@ -1081,7 +1073,7 @@ public class ConceptTreePanel extends JPanel {
             project.undo();
             setEnabled(project.canUndo());
             redoAction.setEnabled(project.canRedo());
-            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
+            if (treeType.equals(ISA_CLASS_HIERARCHY) || treeType.equals(ISA_PROPERTY_HIERARCHY)) {
                 TreeModel model = conceptTree.getModel();
                 ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
                 conceptDriftManagementPanel.resetConceptDriftManagementResult(rootNode);
@@ -1105,7 +1097,7 @@ public class ConceptTreePanel extends JPanel {
             project.redo();
             undoAction.setEnabled(project.canUndo());
             setEnabled(project.canRedo());
-            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
+            if (treeType.equals(ISA_CLASS_HIERARCHY) || treeType.equals(ISA_PROPERTY_HIERARCHY)) {
                 TreeModel model = conceptTree.getModel();
                 ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
                 conceptDriftManagementPanel.resetConceptDriftManagementResult(rootNode);
@@ -1141,9 +1133,9 @@ public class ConceptTreePanel extends JPanel {
 
         private void insertIsaTreeConcept() {
             TreeModel isaTreeModel = null;
-            if (treeType.equals(CLASS_HASA_TREE)) {
+            if (treeType.equals(HASA_CLASS_HIERARCHY)) {
                 isaTreeModel = project.getConstructClassPanel().getIsaTree().getModel();
-            } else if (treeType.equals(PROPERTY_HASA_TREE)) {
+            } else if (treeType.equals(HASA_PROPERTY_HIERARCHY)) {
                 isaTreeModel = project.getConstructPropertyPanel().getIsaTree().getModel();
             }
             conceptSelectionDialog.setTreeModel(isaTreeModel);
@@ -1191,11 +1183,11 @@ public class ConceptTreePanel extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
+            if (treeType.equals(ISA_CLASS_HIERARCHY) || treeType.equals(ISA_PROPERTY_HIERARCHY)) {
                 addCommand();
                 insertNewConcept();
                 project.addLog(getTitle(), treeType);
-            } else if (treeType.equals(CLASS_HASA_TREE) || treeType.equals(PROPERTY_HASA_TREE)) {
+            } else if (treeType.equals(HASA_CLASS_HIERARCHY) || treeType.equals(HASA_PROPERTY_HIERARCHY)) {
                 addCommand();
                 insertIsaTreeConcept();
                 project.addLog(getTitle(), treeType);
@@ -1249,7 +1241,7 @@ public class ConceptTreePanel extends JPanel {
                 }
             }
             model.removeNodeFromParent(targetDeleteNode);
-            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
+            if (treeType.equals(ISA_CLASS_HIERARCHY) || treeType.equals(ISA_PROPERTY_HIERARCHY)) {
                 checkMultipleInheritanceNode(targetDeleteNode.getConcept());
                 conceptDriftManagementPanel.resetConceptDriftManagementResult((ConceptTreeNode) model.getRoot());
             }
@@ -1273,7 +1265,7 @@ public class ConceptTreePanel extends JPanel {
                     model.removeNodeFromParent(deleteTreeNode);
                 }
             }
-            if (treeType.equals(CLASS_ISA_TREE) || treeType.equals(PROPERTY_ISA_TREE)) {
+            if (treeType.equals(ISA_CLASS_HIERARCHY) || treeType.equals(ISA_PROPERTY_HIERARCHY)) {
                 checkMultipleInheritanceNode(targetDeleteNode.getConcept());
                 conceptDriftManagementPanel.resetConceptDriftManagementResult(rootNode);
             }

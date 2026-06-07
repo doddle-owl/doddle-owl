@@ -27,8 +27,8 @@ import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.concept_selection.TreeConstructionOption;
-import io.github.doddle_owl.models.concept_tree.CompoundConceptTreeInterface;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.CompoundConceptTreeInterface;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.models.ontology_api.EDR;
 import io.github.doddle_owl.models.term_selection.TermModel;
 import io.github.doddle_owl.task_analyzer.Morpheme;
@@ -37,9 +37,9 @@ import io.github.doddle_owl.utils.WebOntologyManager;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.ConceptTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ConceptHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -58,8 +58,8 @@ public class ConstructTreeAction {
     private Map<DefaultMutableTreeNode, String> abstractNodeLabelMap;
     private final Map<TermModel, TreeConstructionOption> compoundConstructTreeOptionMap;
     private final ConceptSelectionPanel conceptSelectionPanel;
-    private final ClassTreeConstructionPanel constructClassPanel;
-    private final PropertyTreeConstructionPanel constructPropertyPanel;
+    private final ClassHierarchyConstructionPanel classHierarchyConstructionPanel;
+    private final PropertyHierarchyConstructionPanel propertyHierarchyConstructionPanel;
 
     private final DefaultListModel unmatchedTermListModel;
 
@@ -68,14 +68,14 @@ public class ConstructTreeAction {
     public ConstructTreeAction(boolean isNounAndVerbTree, DODDLEProjectPanel p) {
         project = p;
         conceptSelectionPanel = p.getConceptSelectionPanel();
-        constructClassPanel = p.getConstructClassPanel();
-        constructPropertyPanel = p.getConstructPropertyPanel();
+        classHierarchyConstructionPanel = p.getConstructClassPanel();
+        propertyHierarchyConstructionPanel = p.getConstructPropertyPanel();
         wordCorrespondConceptSetMap = conceptSelectionPanel.getTermCorrespondConceptSetMap();
         unmatchedTermListModel = conceptSelectionPanel.getUnmatchedTermListPanel().getModel();
         compoundConstructTreeOptionMap = conceptSelectionPanel
                 .getCompoundConstructTreeOptionMap();
-        constructClassPanel.clearPanel();
-        constructPropertyPanel.clearPanel();
+        classHierarchyConstructionPanel.clearPanel();
+        propertyHierarchyConstructionPanel.clearPanel();
         conceptSelectionPanel.setConstructNounAndVerbTree(isNounAndVerbTree);
     }
 
@@ -489,8 +489,8 @@ public class ConstructTreeAction {
     }
 
     private Set getSupConceptSet(String id) {
-        Set supConceptSet = constructClassPanel.getSupConceptSet(id);
-        supConceptSet.addAll(constructPropertyPanel.getSupConceptSet(id));
+        Set supConceptSet = classHierarchyConstructionPanel.getSupConceptSet(id);
+        supConceptSet.addAll(propertyHierarchyConstructionPanel.getSupConceptSet(id));
         return supConceptSet;
     }
 
@@ -569,31 +569,31 @@ public class ConstructTreeAction {
         return abstractNode;
     }
 
-    private TreeModel makeClassTreeModel(Set<Concept> nounConceptSet) {
-        TreeModel classTreeModel;
+    private TreeModel makeClassHierarchyModel(Set<Concept> nounConceptSet) {
+        TreeModel classHierarchyModel;
         if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
-            constructClassPanel.initialize();
+            classHierarchyConstructionPanel.initialize();
             if (project.getConceptSelectionPanel().getExactlyMatchedOptionsPanel()
                     .isConstruction()) {
-                classTreeModel = constructClassPanel.getTreeModel(nounConceptSet);
+                classHierarchyModel = classHierarchyConstructionPanel.getTreeModel(nounConceptSet);
             } else {
-                classTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
+                classHierarchyModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
                         new HashSet<>(), project,
                         ConceptTreeMaker.DODDLE_CLASS_ROOT_URI);
             }
-            classTreeModel = constructClassPanel.setConceptTreeModel(classTreeModel);
+            classHierarchyModel = classHierarchyConstructionPanel.setConceptTreeModel(classHierarchyModel);
         } else { // add concepts action
-            classTreeModel = constructClassPanel.getConceptTreeModel();
-            nounConceptSet = constructClassPanel.getConceptSet();
+            classHierarchyModel = classHierarchyConstructionPanel.getConceptTreeModel();
+            nounConceptSet = classHierarchyConstructionPanel.getConceptSet();
         }
-        constructClassPanel.setUnmatchedTermListModel(unmatchedTermListModel);
+        classHierarchyConstructionPanel.setUnmatchedTermListModel(unmatchedTermListModel);
         DODDLE_OWL.STATUS_BAR.addValue();
         if (project.getConceptSelectionPanel().getPartiallyMatchedOptionsPanel()
                 .isConstruction()) {
-            setCompoundConcept(constructClassPanel, nounConceptSet);
-            trimUnnecessaryAbstractNode(constructClassPanel);
+            setCompoundConcept(classHierarchyConstructionPanel, nounConceptSet);
+            trimUnnecessaryAbstractNode(classHierarchyConstructionPanel);
         }
-        ConceptTreeNode rootNode = (ConceptTreeNode) classTreeModel.getRoot();
+        ConceptTreeNode rootNode = (ConceptTreeNode) classHierarchyModel.getRoot();
         Set<ConceptTreeNode> replaceNodeSet = new HashSet<>();
         Set<String> conceptIdSetForReplaceSubConcepts = conceptSelectionPanel
                 .getURISetForReplaceSubConcepts();
@@ -601,7 +601,7 @@ public class ConstructTreeAction {
         checkReplaceSubConcepts(rootNode, conceptIdSetForReplaceSubConcepts, replaceNodeSet);
         replaceSubConcepts(replaceNodeSet);
         DODDLE_OWL.STATUS_BAR.addValue();
-        return classTreeModel;
+        return classHierarchyModel;
     }
 
     private void replaceSubConcepts(Set<ConceptTreeNode> replaceNodeSet) {
@@ -634,46 +634,46 @@ public class ConstructTreeAction {
         }
     }
 
-    private TreeModel makePropertyTreeModel(Set<Concept> verbConceptSet) {
-        TreeModel propertyTreeModel;
+    private TreeModel makePropertyHierarchyModel(Set<Concept> verbConceptSet) {
+        TreeModel propertyHierarchyModel;
         if (project.getConceptSelectionPanel().getConstructionTypePanel().isNewConstruction()) {
-            constructPropertyPanel.initialize();
+            propertyHierarchyConstructionPanel.initialize();
             if (project.getConceptSelectionPanel().getExactlyMatchedOptionsPanel()
                     .isConstruction()) {
-                propertyTreeModel = constructPropertyPanel.getTreeModel(
-                        constructClassPanel.getAllConceptURI(), verbConceptSet,
+                propertyHierarchyModel = propertyHierarchyConstructionPanel.getTreeModel(
+                        classHierarchyConstructionPanel.getAllConceptURI(), verbConceptSet,
                         ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI);
             } else {
-                propertyTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(new HashSet<>(), project,
+                propertyHierarchyModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(new HashSet<>(), project,
                         ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI);
             }
-            propertyTreeModel = constructPropertyPanel.setConceptTreeModel(propertyTreeModel);
+            propertyHierarchyModel = propertyHierarchyConstructionPanel.setConceptTreeModel(propertyHierarchyModel);
         } else {
-            propertyTreeModel = constructPropertyPanel.getConceptTreeModel();
-            verbConceptSet = constructClassPanel.getConceptSet();
+            propertyHierarchyModel = propertyHierarchyConstructionPanel.getConceptTreeModel();
+            verbConceptSet = classHierarchyConstructionPanel.getConceptSet();
         }
-        constructPropertyPanel.setUnmatchedTermListModel(unmatchedTermListModel);
+        propertyHierarchyConstructionPanel.setUnmatchedTermListModel(unmatchedTermListModel);
 
         DODDLE_OWL.STATUS_BAR.addValue();
         if (project.getConceptSelectionPanel().getPartiallyMatchedOptionsPanel()
                 .isConstruction()) {
-            setCompoundConcept(constructPropertyPanel, verbConceptSet);
-            trimUnnecessaryAbstractNode(constructPropertyPanel);
+            setCompoundConcept(propertyHierarchyConstructionPanel, verbConceptSet);
+            trimUnnecessaryAbstractNode(propertyHierarchyConstructionPanel);
         }
-        ConceptTreeNode rootNode = (ConceptTreeNode) propertyTreeModel.getRoot();
+        ConceptTreeNode rootNode = (ConceptTreeNode) propertyHierarchyModel.getRoot();
         Set<ConceptTreeNode> replaceNodeSet = new HashSet<>();
         Set<String> uriSetForReplaceSubConcepts = conceptSelectionPanel
                 .getURISetForReplaceSubConcepts();
         checkReplaceSubConcepts(rootNode, uriSetForReplaceSubConcepts, replaceNodeSet);
         replaceSubConcepts(replaceNodeSet);
         DODDLE_OWL.STATUS_BAR.addValue();
-        return propertyTreeModel;
+        return propertyHierarchyModel;
     }
 
     /**
      * 不要な抽象ノードを削除（抽象ノードの親ノードの子ノードが対象の抽象ノードのみの場合は，抽象ノードを追加する意味がないため削除））
      */
-    private void trimUnnecessaryAbstractNode(ConceptTreeConstructionPanel conceptTreePanel) {
+    private void trimUnnecessaryAbstractNode(ConceptHierarchyConstructionPanel conceptTreePanel) {
         DefaultTreeModel treeModel = (DefaultTreeModel) conceptTreePanel.getConceptTreeModel();
         Set<ConceptTreeNode> unnecessaryNodeSet = new HashSet<>();
         getUnnecessaryAbstractNode((ConceptTreeNode) treeModel.getRoot(), unnecessaryNodeSet);
@@ -727,12 +727,12 @@ public class ConstructTreeAction {
             return;
         }
         project.initUndoManager();
-        constructClassPanel.initUndo();
-        constructPropertyPanel.initUndo();
-        constructClassPanel.setVisibleIsaTree(false);
-        constructClassPanel.setVisibleHasaTree(false);
-        constructPropertyPanel.setVisibleIsaTree(false);
-        constructPropertyPanel.setVisibleHasaTree(false);
+        classHierarchyConstructionPanel.initUndo();
+        propertyHierarchyConstructionPanel.initUndo();
+        classHierarchyConstructionPanel.setVisibleIsaTree(false);
+        classHierarchyConstructionPanel.setVisibleHasaTree(false);
+        propertyHierarchyConstructionPanel.setVisibleIsaTree(false);
+        propertyHierarchyConstructionPanel.setVisibleHasaTree(false);
 
         setUnmatchedTermSet();
         conceptSelectionPanel.setInputConceptSet(); // 入力概念のセット
@@ -742,11 +742,11 @@ public class ConstructTreeAction {
             return;
         }
 
-        DODDLE_OWL.getLogger().info(Translator.getTerm("ExactMatchTermCountMessage") + ": "
+        DODDLE_OWL.getLogger().info(Translator.getTerm("ExactlyMatchedTermCountMessage") + ": "
                 + conceptSelectionPanel.getExactlyMatchedTermCnt());
-        DODDLE_OWL.getLogger().info(Translator.getTerm("SystemAddedExactMatchTermCountMessage") + ": "
+        DODDLE_OWL.getLogger().info(Translator.getTerm("SystemAddedExactlyMatchedTermCountMessage") + ": "
                 + conceptSelectionPanel.getSystemAddedExactlyMatchedTermCnt());
-        DODDLE_OWL.getLogger().info(Translator.getTerm("PartialMatchTermCountMessage") + ": "
+        DODDLE_OWL.getLogger().info(Translator.getTerm("PartiallyMatchedTermCountMessage") + ": "
                 + conceptSelectionPanel.getPartiallyMatchedTermCnt());
         DODDLE_OWL.getLogger().info(Translator.getTerm("InputTermCountMessage") + ": "
                 + (conceptSelectionPanel.getMatchedTermCnt()));
@@ -767,49 +767,49 @@ public class ConstructTreeAction {
             DODDLE_OWL.getLogger().info(Translator.getTerm("InputNounConceptCountMessage") + ": "
                     + inputNounConceptSet.size());
             DODDLE_OWL.STATUS_BAR.addValue();
-            constructClassPanel.setConceptTreeModel(makeClassTreeModel(inputNounConceptSet));
+            classHierarchyConstructionPanel.setConceptTreeModel(makeClassHierarchyModel(inputNounConceptSet));
             TreeModel hasaTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
                     new HashSet<>(), project,
                     ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI);
-            constructClassPanel.setHasaTreeModel(hasaTreeModel);
+            classHierarchyConstructionPanel.setHasaTreeModel(hasaTreeModel);
             DODDLE_OWL.STATUS_BAR.addValue();
             DODDLE_OWL.getLogger().info(Translator.getTerm("InputVerbConceptCountMessage") + ": "
                     + inputVerbConceptSet.size());
-            constructPropertyPanel.setConceptTreeModel(makePropertyTreeModel(inputVerbConceptSet));
+            propertyHierarchyConstructionPanel.setConceptTreeModel(makePropertyHierarchyModel(inputVerbConceptSet));
             hasaTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
                     new HashSet<>(), project,
                     ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI);
-            constructPropertyPanel.setHasaTreeModel(hasaTreeModel);
+            propertyHierarchyConstructionPanel.setHasaTreeModel(hasaTreeModel);
             DODDLE_OWL.STATUS_BAR.addValue();
         } else {
             Set<Concept> inputNounConceptSet = new HashSet<>(inputConceptSet);
             DODDLE_OWL.getLogger().info(Translator.getTerm("InputNounConceptCountMessage") + ": "
                     + inputNounConceptSet.size());
-            constructClassPanel.setConceptTreeModel(makeClassTreeModel(inputNounConceptSet));
+            classHierarchyConstructionPanel.setConceptTreeModel(makeClassHierarchyModel(inputNounConceptSet));
             TreeModel hasaTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
                     new HashSet<>(), project,
                     ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI);
-            constructClassPanel.setHasaTreeModel(hasaTreeModel);
+            classHierarchyConstructionPanel.setHasaTreeModel(hasaTreeModel);
             DODDLE_OWL.STATUS_BAR.addValue();
-            constructPropertyPanel
-                    .setConceptTreeModel(makePropertyTreeModel(new HashSet<>()));
+            propertyHierarchyConstructionPanel
+                    .setConceptTreeModel(makePropertyHierarchyModel(new HashSet<>()));
             hasaTreeModel = ConceptTreeMaker.getInstance().getDefaultConceptTreeModel(
                     new HashSet<>(), project,
                     ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI);
-            constructPropertyPanel.setHasaTreeModel(hasaTreeModel);
+            propertyHierarchyConstructionPanel.setHasaTreeModel(hasaTreeModel);
             DODDLE_OWL.STATUS_BAR.addValue();
         }
 
-        constructClassPanel.expandIsaTree();
-        constructClassPanel.expandHasaTree();
+        classHierarchyConstructionPanel.expandIsaTree();
+        classHierarchyConstructionPanel.expandHasaTree();
         DODDLE_OWL.STATUS_BAR.addValue();
-        constructPropertyPanel.expandIsaTree();
-        constructPropertyPanel.expandHasaTree();
+        propertyHierarchyConstructionPanel.expandIsaTree();
+        propertyHierarchyConstructionPanel.expandHasaTree();
         DODDLE_OWL.STATUS_BAR.addValue();
-        constructClassPanel.setVisibleIsaTree(true);
-        constructClassPanel.setVisibleHasaTree(true);
-        constructPropertyPanel.setVisibleIsaTree(true);
-        constructPropertyPanel.setVisibleHasaTree(true);
+        classHierarchyConstructionPanel.setVisibleIsaTree(true);
+        classHierarchyConstructionPanel.setVisibleHasaTree(true);
+        propertyHierarchyConstructionPanel.setVisibleIsaTree(true);
+        propertyHierarchyConstructionPanel.setVisibleHasaTree(true);
         DODDLE_OWL.setSelectedIndex(DODDLEConstants.TAXONOMIC_PANEL);
         DODDLE_OWL.STATUS_BAR.printMessage(Translator.getTerm("TreeConstructionDoneMessage"));
         DODDLE_OWL.STATUS_BAR.addValue();

@@ -21,12 +21,12 @@
  *
  */
 
-package io.github.doddle_owl.views.concept_tree;
+package io.github.doddle_owl.views.concept_hierarchy;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.models.ontology_api.ReferenceOntology;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.Translator;
@@ -103,7 +103,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         trimmedNodeTree.setCellRenderer(new ConceptTreeCellRenderer(type));
         trimmedNodeTree.setModel(new DefaultTreeModel(null));
         trimmedNodeTree.setEditable(false);
-        traButton = new JButton(Translator.getTerm("TrimmedResultAnalysisButton"));
+        traButton = new JButton(Translator.getTerm("TrimmedResultsAnalysisButton"));
         traButton.addActionListener(this);
         checkTRAButton = new JButton(Translator.getTerm("CheckTRAButton"));
         checkTRAButton.addActionListener(this);
@@ -112,9 +112,9 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
 
         rmMultipleInheritancePanel = new RemoveMultipleInheritancePanel();
         var mainTabbedPane = new JTabbedPane();
-        mainTabbedPane.addTab(Translator.getTerm("MatchedResultAnalysisResultBorder"), null, getMRAPanel());
-        mainTabbedPane.addTab(Translator.getTerm("TrimmedResultAnalysisResultBorder"), null, getTRAPanel());
-        mainTabbedPane.addTab(Translator.getTerm("RemoveMultipleInheritanceBorder"), null, rmMultipleInheritancePanel);
+        mainTabbedPane.addTab(Translator.getTerm("MatchedResultsAnalysisBorder"), null, getMRAPanel());
+        mainTabbedPane.addTab(Translator.getTerm("TrimmedResultsAnalysisBorder"), null, getTRAPanel());
+        mainTabbedPane.addTab(Translator.getTerm("MultipleInheritanceRemovalBorder"), null, rmMultipleInheritancePanel);
 
         setLayout(new BorderLayout());
         add(mainTabbedPane, BorderLayout.CENTER);
@@ -421,7 +421,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         }
 
         public void valueChanged(ListSelectionEvent e) {
-            ConceptTreeConstructionPanel conceptTreePanel = getConceptTreePanel();
+            ConceptHierarchyConstructionPanel conceptTreePanel = getConceptTreePanel();
             DefaultTreeModel model = (DefaultTreeModel) conceptTreePanel.getConceptTreeModel();
             Concept c = (Concept) multipleInheritanceConceptJList.getSelectedValue();
             if (e.getSource() == multipleInheritanceConceptJList) {
@@ -465,7 +465,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
          * @return
          */
         private Set<ConceptTreeNode> getSameConceptTreeNodeSet(
-                ConceptTreeConstructionPanel conceptTreePanel, DefaultTreeModel model, Concept c) {
+                ConceptHierarchyConstructionPanel conceptTreePanel, DefaultTreeModel model, Concept c) {
             ConceptTreeNode rootNode = (ConceptTreeNode) model.getRoot();
             Set<ConceptTreeNode> sameConceptTreeNodeSet = new HashSet<>();
             conceptTreePanel.searchSameConceptTreeNode(c, rootNode, sameConceptTreeNodeSet);
@@ -477,7 +477,7 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
             if (e.getSource() == removeUpperConceptLinkButton) {
                 ConceptTreeNode upperConceptTreeNode = (ConceptTreeNode) multipleInheritanceUpperConceptJList
                         .getSelectedValue();
-                ConceptTreeConstructionPanel conceptTreePanel = getConceptTreePanel();
+                ConceptHierarchyConstructionPanel conceptTreePanel = getConceptTreePanel();
                 DefaultTreeModel model = (DefaultTreeModel) conceptTreePanel.getConceptTreeModel();
                 Set<ConceptTreeNode> sameConceptTreeNodeSet = getSameConceptTreeNodeSet(
                         conceptTreePanel, model, c);
@@ -512,8 +512,8 @@ public class ConceptDriftManagementPanel extends JPanel implements ActionListene
         /**
          * @return
          */
-        private ConceptTreeConstructionPanel getConceptTreePanel() {
-            ConceptTreeConstructionPanel conceptTreePanel = null;
+        private ConceptHierarchyConstructionPanel getConceptTreePanel() {
+            ConceptHierarchyConstructionPanel conceptTreePanel = null;
             if (conceptTreeType.equals(ConceptTreeCellRenderer.NOUN_CONCEPT_TREE)) {
                 conceptTreePanel = project.getConstructClassPanel();
             } else if (conceptTreeType.equals(ConceptTreeCellRenderer.VERB_CONCEPT_TREE)) {

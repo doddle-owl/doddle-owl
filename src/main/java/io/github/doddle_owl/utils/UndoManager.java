@@ -27,9 +27,9 @@ import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.actions.LoadOntologyAction;
 import io.github.doddle_owl.actions.SaveOntologyAction;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.views.concept_tree.ConceptTreePanel;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ConceptHierarcyPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,22 +80,22 @@ public class UndoManager {
 
     private void loadFiles() {
         loadOntologyAction.loadWebOntology(project, lastCommand.getOntFile());
-        ClassTreeConstructionPanel classPanel = project.getConstructClassPanel();
-        PropertyTreeConstructionPanel propertyPanel = project.getConstructPropertyPanel();
+        ClassHierarchyConstructionPanel classPanel = project.getConstructClassPanel();
+        PropertyHierarchyConstructionPanel propertyPanel = project.getConstructPropertyPanel();
         classPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getClassTRAFile());
         propertyPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(lastCommand.getPropertyTRAFile());
         if (lastCommand.getTargetConcept() != null) {
             switch (lastCommand.getTreeType()) {
-                case ConceptTreePanel.CLASS_ISA_TREE:
+                case ConceptHierarcyPanel.ISA_CLASS_HIERARCHY:
                     classPanel.selectIsaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
                     break;
-                case ConceptTreePanel.CLASS_HASA_TREE:
+                case ConceptHierarcyPanel.HASA_CLASS_HIERARCHY:
                     classPanel.selectHasaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
                     break;
-                case ConceptTreePanel.PROPERTY_ISA_TREE:
+                case ConceptHierarcyPanel.ISA_PROPERTY_HIERARCHY:
                     propertyPanel.selectIsaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
                     break;
-                case ConceptTreePanel.PROPERTY_HASA_TREE:
+                case ConceptHierarcyPanel.HASA_PROPERTY_HIERARCHY:
                     propertyPanel.selectHasaTreeNode(lastCommand.getTargetConcept(), lastCommand.getParentConcept());
                     break;
             }

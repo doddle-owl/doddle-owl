@@ -21,11 +21,11 @@
 <https://doddle-owl.github.io#CheckMRAButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Check MRA"@en , "照合結果分析結果の確認"@ja ;
+                "Check Matched Results Analysis"@en , "照合結果分析の確認"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "照合結果分析結果の確認" .
+                "照合結果分析の確認" .
 
 <https://doddle-owl.github.io#CopyConceptAction>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -33,7 +33,7 @@
                 "Copy Concept"@en , "概念のコピー"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> , <https://doddle-owl.github.io#HasaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> , <https://doddle-owl.github.io#HasaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念のコピー" .
 
@@ -46,10 +46,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "ラベル" .
 
-<https://doddle-owl.github.io#TreeConstructionDoneMessage>
+<https://doddle-owl.github.io#HierarchyConstructionDoneMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Tree Construction Done"@en , "階層構築完了"@ja ;
+                "Hierarchy Construction Done"@en , "階層構築完了"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#DoneMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -88,7 +88,7 @@
                 "Apply Concept Selection to Partial Matches"@en , "概念選択結果を対応する部分照合語に適用"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactMatchTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactlyMatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念選択結果を対応する部分照合語に適用" .
 
@@ -98,7 +98,7 @@
                 "Trimming"@en , "剪定"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "剪定" .
 
@@ -163,7 +163,7 @@
                 "Exactly Matched Terms"@en , "完全照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#List> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactMatchTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactlyMatchedTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "完全照合語" .
 
@@ -229,7 +229,7 @@
                 "Exact Match Search"@en , "完全一致検索"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "完全一致検索" .
 
@@ -415,10 +415,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "上位概念" .
 
-<https://doddle-owl.github.io#ExpandConceptTreeButton>
+<https://doddle-owl.github.io#ExpandConceptHierarchyButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Expand Concept Tree"@en , "概念階層の展開"@ja ;
+                "Expand Concept Hierarchy"@en , "概念階層の展開"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -433,19 +433,19 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "照合語数" .
 
-<https://doddle-owl.github.io#IsaConceptTree>
+<https://doddle-owl.github.io#IsaConceptHierarchy>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "is-a Tree"@en , "is-a 階層"@ja ;
+                "is-a Hierarchy"@en , "is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#ConceptTree> ;
+                <https://doddle-owl.github.io#ConceptHierarchy> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "is-a 階層" .
 
 <https://doddle-owl.github.io#ClassSINCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "The number of SIN in class tree construction"@en , "クラス階層構築におけるSIN数"@ja ;
+                "The number of SIN in class hierarchy construction"@en , "クラス階層構築におけるSIN数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -469,15 +469,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "保存" .
 
-<https://doddle-owl.github.io#ClassHasaTreeBorder>
+<https://doddle-owl.github.io#ClassHasaHierarchyBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "partOf Tree (Class)"@en , "partOf階層（クラス）"@ja ;
+                "partOf Class Hierarchy"@en , "partOf クラス階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#HasaTreeBorder> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ClassTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#HasaHierarchyBorder> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ClassHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "partOf階層（クラス）" .
+                "partOf クラス階層" .
 
 <https://doddle-owl.github.io#AutomaticInputConceptSelectionAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -494,7 +494,7 @@
                 "Add Abstract Internal Nodes"@en , "抽象概念を追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "抽象概念を追加" .
 
@@ -591,7 +591,7 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "基本接頭辞" .
 
-<https://doddle-owl.github.io#SystemAddedExactMatchTermCountMessage>
+<https://doddle-owl.github.io#SystemAddedExactlyMatchedTermCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "System Added Exactly Matched Term Count"@en , "システムが追加した完全照合語数"@ja ;
@@ -679,12 +679,12 @@
 <https://doddle-owl.github.io#TechnicalEDRCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "EDR (Technical)"@en , "EDR 専門辞書"@ja ;
+                "EDR Technical Terminology Dictionary"@en , "EDR 専門用語辞書"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#GenericOntologySelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "EDR 専門辞書" .
+                "EDR 専門用語辞書" .
 
 <https://doddle-owl.github.io#InputTermExtractionDoneMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -762,14 +762,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "WordSpace & Apriori" .
 
-<https://doddle-owl.github.io#ClassTreeConstructionTab>
+<https://doddle-owl.github.io#ClassHierarchyConstructionTab>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Tree Construction"@en , "クラス階層構築"@ja ;
+                "Class Hierarchy Construction"@en , "クラス階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Tab> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Class Tree Construction" .
+                "Class Hierarchy Construction" .
 
 <https://doddle-owl.github.io#NounCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -842,7 +842,7 @@
                 "Add Sub Concept"@en , "下位概念の追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#AddAction> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> , <https://doddle-owl.github.io#HasaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> , <https://doddle-owl.github.io#HasaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "下位概念の追加" .
 
@@ -907,7 +907,7 @@
                 "Case Sensitivity"@en , "大文字と小文字の区別"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "大文字と小文字の区別" .
 
@@ -1030,7 +1030,7 @@
                 "Lang(Description)"@en , "言語（説明）"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#List> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "言語（説明）" .
 
@@ -1172,7 +1172,7 @@
                 "Concept Drift Management"@en , "概念変動管理"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念変動管理" .
 
@@ -1191,7 +1191,7 @@
                 "Copy Concept"@en , "概念の複製"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念の複製" .
 
@@ -1265,7 +1265,7 @@
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Concept Information "@en , "概念情報"@ja ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念情報" .
 
@@ -1362,13 +1362,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクトの更新" .
 
-<https://doddle-owl.github.io#TreeConstructionOptionBorder>
+<https://doddle-owl.github.io#HierarchyConstructionOptionBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Tree Construction Option"@en , "構築オプション"@ja ;
+                "Hierarchy Construction Option"@en , "構築オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "構築オプション" .
 
@@ -1378,7 +1378,7 @@
                 "Unmatched Terms"@en , "未照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "未照合語" .
 
@@ -1419,13 +1419,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "剪定概念数: " .
 
-<https://doddle-owl.github.io#IsaTreeBorder>
+<https://doddle-owl.github.io#IsaHierarchyBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Tree"@en , "Is-a 階層"@ja ;
+                "is-a Hierarchy"@en , "Is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Is-a 階層" .
 
@@ -1504,13 +1504,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "JWO フォルダ" .
 
-<https://doddle-owl.github.io#ClassTreeConstructionButton>
+<https://doddle-owl.github.io#ClassHierarchyConstructionButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Tree Construction"@en , "クラス階層構築"@ja ;
+                "Class Hierarchy Construction"@en , "クラス階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "クラス階層構築" .
 
@@ -1524,20 +1524,20 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "名前空間" .
 
-<https://doddle-owl.github.io#ClassAndPropertyTreeConstructionButton>
+<https://doddle-owl.github.io#ClassAndPropertyHierarchyConstructionButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class and Property Tree Construction"@en , "クラス及びプロパティ階層構築"@ja ;
+                "Class and Property Hierarchy Construction"@en , "クラス及びプロパティ階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "クラス及びプロパティ階層構築" .
 
-<https://doddle-owl.github.io#ClassTreeBorder>
+<https://doddle-owl.github.io#ClassHierarchyBorder>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Tree"@en , "クラス階層"@ja ;
+                "Class Hierarchy"@en , "クラス階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -1558,7 +1558,7 @@
                 "Paste Concept"@en , "概念の貼り付け"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> , <https://doddle-owl.github.io#HasaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> , <https://doddle-owl.github.io#HasaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念の貼り付け" .
 
@@ -1653,7 +1653,7 @@
                 "Exact Match Options"@en , "完全照合オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "完全照合オプション" .
 
@@ -1726,20 +1726,20 @@
 <https://doddle-owl.github.io#CheckTRAButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Check TRA"@en , "剪定結果分析結果の確認"@ja ;
+                "Check Trimmed Results Analysis"@en , "剪定結果分析の確認"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "剪定結果分析結果の確認" .
+                "剪定結果分析の確認" .
 
-<https://doddle-owl.github.io#PropertyTreeConstructionTab>
+<https://doddle-owl.github.io#PropertyHierarchyConstructionTab>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Property Tree Construction"@en , "プロパティ階層構築"@ja ;
+                "Property Hierarchy Construction"@en , "プロパティ階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Tab> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "Property Tree Construction" .
+                "Property Hierarchy Construction" .
 
 <https://doddle-owl.github.io#NumberOfPartiallyMatchedTermsMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -1861,15 +1861,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "用語情報テーブル" .
 
-<https://doddle-owl.github.io#TrimmedResultAnalysisResultBorder>
+<https://doddle-owl.github.io#TrimmedResultsAnalysisBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Trimmed Result Analysis Result"@en , "剪定結果分析の結果"@ja ;
+                "Trimmed Results Analysis"@en , "剪定結果分析"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptDriftManagementPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "剪定結果分析の結果" .
+                "剪定結果分析" .
 
 <https://doddle-owl.github.io#RemoveInputDocumentButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -1964,35 +1964,35 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "用語" .
 
-<https://doddle-owl.github.io#ConceptTreePanel>
+<https://doddle-owl.github.io#ConceptHierarchyPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Tree"@en , "Is-a 階層"@ja ;
+                "is-a Hierarchy"@en , "Is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Is-a 階層" .
 
-<https://doddle-owl.github.io#HasaTreeBorder>
+<https://doddle-owl.github.io#HasaHierarchyBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Has-a Concept Tree"@en , "Has-a 階層"@ja ;
+                "Has-a Hierarchy"@en , "Has-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HasaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HasaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Has-a 階層" .
 
-<https://doddle-owl.github.io#RemoveMultipleInheritanceBorder>
+<https://doddle-owl.github.io#MultipleInheritanceRemovalBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Remove Multiple Inheritance"@en , "多重継承の除去"@ja ;
+                "Multiple Inheritance Removal"@en , "多重継承除去"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptDriftManagementPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "多重継承の除去" .
+                "多重継承除去" .
 
 <https://doddle-owl.github.io#Table>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2038,13 +2038,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "抽象中間プロパティ数" .
 
-<https://doddle-owl.github.io#PropertyIs-aTreeBorder>
+<https://doddle-owl.github.io#PropertyIs-aHierarchyBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Property Tree"@en , "プロパティ階層"@ja ;
+                "Property Hierarchy"@en , "プロパティ階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#IsaTreeBorder> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#IsaHierarchyBorder> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロパティ階層" .
 
@@ -2057,13 +2057,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "XGAレイアウト" .
 
-<https://doddle-owl.github.io#ClassIsaTreeBorder>
+<https://doddle-owl.github.io#ClassIsaHierarchyBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Tree"@en , "クラス階層"@ja ;
+                "Class Hierarchy"@en , "クラス階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#IsaTreeBorder> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ClassTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#IsaHierarchyBorder> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ClassHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "クラス階層" .
 
@@ -2097,10 +2097,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "定義域・値域抽出テンプレート" .
 
-<https://doddle-owl.github.io#TreeConstructionOptionPanel>
+<https://doddle-owl.github.io#HierarchyConstructionOptionPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Tree Construction Option"@en , "階層構築オプション"@ja ;
+                "Hierarchy Construction Option"@en , "階層構築オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> ;
@@ -2223,12 +2223,12 @@
 <https://doddle-owl.github.io#EDRDicFolderTextField>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "EDR Dic Folder"@en , "EDR辞書フォルダ"@ja ;
+                "EDR Electronic Dictionary Folder"@en , "EDR電子化辞書フォルダ"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#TextField> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#FolderOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "EDR辞書フォルダ" .
+                "EDR電子化辞書フォルダ" .
 
 <https://doddle-owl.github.io#InputConceptSelectionButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -2240,13 +2240,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念選択" .
 
-<https://doddle-owl.github.io#ExpandConceptTreeAction>
+<https://doddle-owl.github.io#ExpandConceptHierarchyAction>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Expand Concept Tree"@en , "概念階層の展開"@ja ;
+                "Expand Concept Hierarchy"@en , "概念階層の展開"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> , <https://doddle-owl.github.io#HasaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> , <https://doddle-owl.github.io#HasaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念階層の展開" .
 
@@ -2316,15 +2316,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "未実装" .
 
-<https://doddle-owl.github.io#MatchedResultAnalysisResultBorder>
+<https://doddle-owl.github.io#MatchedResultsAnalysisBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Matched Results Analysis Result"@en , "照合結果分析の結果"@ja ;
+                "Matched Results Analysis"@en , "照合結果分析"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptDriftManagementPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "照合結果分析の結果" .
+                "照合結果分析" .
 
 <https://doddle-owl.github.io#InputTermExtractionButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -2352,7 +2352,7 @@
                 "New"@en , "新規"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#RadioButton> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "新規" .
 
@@ -2466,7 +2466,7 @@
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Concept Definition"@en , "概念定義"@ja ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyTreeConstructionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念定義" .
 
@@ -2524,7 +2524,7 @@
                 "Sense Count"@en , "意味数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactMatchTermListPanel> , <https://doddle-owl.github.io#PartialMatchTermListPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ExactlyMatchedTermListPanel> , <https://doddle-owl.github.io#PartialMatchTermListPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "意味数" .
 
@@ -2564,13 +2564,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "剪定クラス数" .
 
-<https://doddle-owl.github.io#HasaConceptTreePanel>
+<https://doddle-owl.github.io#HasaConceptHierarchyPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Has-a Concept Tree"@en , "Has-a 階層"@ja ;
+                "Has-a Hierarchy"@en , "Has-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#ConceptTreePanel> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Has-a 階層" .
 
@@ -2654,7 +2654,7 @@
 <https://doddle-owl.github.io#PropertySINCountMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "The number of SIN in property tree construction"@en , "プロパティ階層構築におけるSIN数"@ja ;
+                "The number of SIN in property Hierarchy Construction"@en , "プロパティ階層構築におけるSIN数"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectInformationMessage> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -2675,7 +2675,7 @@
                 "Search URI"@en , "URI検索"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "URI検索" .
 
@@ -2716,10 +2716,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Japanese" .
 
-<https://doddle-owl.github.io#ConceptTreeConstructionPanel>
+<https://doddle-owl.github.io#ConceptHierarchyConstructionPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Concept Tree Construction"@en , "概念階層構築"@ja ;
+                "Concept Hierarchy Construction"@en , "概念階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#CLASS_HASA_ROOT> ;
@@ -2819,14 +2819,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Webオントロジーを保存" .
 
-<https://doddle-owl.github.io#HasaConceptTree>
+<https://doddle-owl.github.io#HasaConceptHierarchy>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "has-a Tree"@en , "has-a階層"@ja ;
+                "has-a Hierarchy"@en , "has-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#ConceptTree> ;
+                <https://doddle-owl.github.io#ConceptHierarchy> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "has-a階層" .
+                "has-a 階層" .
 
 <https://doddle-owl.github.io#NewProjectAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -2875,13 +2875,13 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Tab" .
 
-<https://doddle-owl.github.io#IsaConceptTreePanel>
+<https://doddle-owl.github.io#IsaConceptHierarchyPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Is-a Tree"@en , "Is-a 階層"@ja ;
+                "Is-a Hierarchy"@en , "Is-a 階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#ConceptTreePanel> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Is-a 階層" .
 
@@ -2957,7 +2957,7 @@
                 "Delete Concept"@en , "概念の削除"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#RemoveAction> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念の削除" .
 
@@ -2976,7 +2976,7 @@
                 "Add"@en , "追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#RadioButton> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "追加" .
 
@@ -3031,10 +3031,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "オントロジーの獲得" .
 
-<https://doddle-owl.github.io#ConstructTreeOptionCheckBox>
+<https://doddle-owl.github.io#HierarchyConstructionOptionCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Construct Tree Option"@en , "階層構築オプション"@ja ;
+                "Hierarchy Construction Option"@en , "階層構築オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3058,12 +3058,12 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "剪定後プロパティ数" .
 
-<https://doddle-owl.github.io#ConceptTree>
+<https://doddle-owl.github.io#ConceptHierarchy>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Concept Tree"@en , "概念階層"@ja ;
+                "Concept Hierarchy"@en , "概念階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#Tree> ;
+                <https://doddle-owl.github.io#Hierarchy> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念階層" .
@@ -3145,15 +3145,15 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "やり直す" .
 
-<https://doddle-owl.github.io#PropertyHasaTreeBorder>
+<https://doddle-owl.github.io#PropertyHasaHierarchyBorder>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "partOf Tree (Property)"@en , "partOf階層（プロパティ）"@ja ;
+                "partOf Property Hierarchy"@en , "partOf プロパティ階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#HasaTreeBorder> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#HasaHierarchyBorder> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#PropertyHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "partOf階層（プロパティ）" .
+                "partOf プロパティ階層" .
 
 <https://doddle-owl.github.io#VisualizationPanel>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -3201,10 +3201,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "該当なし" .
 
-<https://doddle-owl.github.io#ConstructConceptTreeFromCompoundsWordsMessage>
+<https://doddle-owl.github.io#ConstructConceptHierarchyFromCompoundsWordsMessage>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Construct Class Tree from Compounds Words"@en , "複合語階層構築"@ja ;
+                "Construct Class Hierarchy from Compounds Words"@en , "複合語階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Message> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3258,19 +3258,19 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Swoogleクエリー結果フォルダ" .
 
-<https://doddle-owl.github.io#ClassTreeConstructionAction>
+<https://doddle-owl.github.io#ClassHierarchyConstructionAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Tree Construction"@en , "クラス階層構築"@ja ;
+                "Class Hierarchy Construction"@en , "クラス階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "クラス階層構築" .
 
-<https://doddle-owl.github.io#ClassAndPropertyTreeConstructionAction>
+<https://doddle-owl.github.io#ClassAndPropertyHierarchyConstructionAction>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class and Property Tree Construction"@en , "クラス及びプロパティ階層構築"@ja ;
+                "Class and Property Hierarchy Construction"@en , "クラス及びプロパティ階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3319,7 +3319,7 @@
                 "Search Concept"@en , "概念検索"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#TextField> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念検索" .
 
@@ -3378,14 +3378,14 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "IDF" .
 
-<https://doddle-owl.github.io#Tree>
+<https://doddle-owl.github.io#Hierarchy>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Tree"@en , "ツリー"@ja ;
+                "Hierarchy"@en , "階層"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CLASS_ROOT> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "ツリー" .
+                "階層" .
 
 <https://doddle-owl.github.io#SetPropertyButton>
         a       <http://www.w3.org/2002/07/owl#Class> ;
@@ -3521,10 +3521,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "システムが追加した用語" .
 
-<https://doddle-owl.github.io#PropertyTrimmedResultAnalysisCheckBox>
+<https://doddle-owl.github.io#PropertyTrimmedResultsAnalysisCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Property Trimmed Result Analysis"@en , "プロパティの剪定結果分析"@ja ;
+                "Property Trimmed Results Analysis"@en , "プロパティの剪定結果分析"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3627,7 +3627,7 @@
                 "Add Unmatched Term"@en , "未照合語の追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#AddAction> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "未照合語の追加" .
 
@@ -3637,7 +3637,7 @@
                 "Lang(Label)"@en , "言語（見出し）"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#List> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "言語（見出し）" .
 
@@ -3656,7 +3656,7 @@
                 "Add Labels from Reference Ontology"@en , "参照オントロジーの概念見出しを追加"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "参照オントロジーの概念見出しを追加" .
 
@@ -3670,10 +3670,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Japanese Wikipedia Ontology" .
 
-<https://doddle-owl.github.io#ShowConceptTreeCheckBox>
+<https://doddle-owl.github.io#ShowConceptHierarchyCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Show Concept Tree"@en , "概念階層を表示"@ja ;
+                "Show Concept Hierarchy"@en , "概念階層を表示"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> ;
@@ -3709,10 +3709,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクト名" .
 
-<https://doddle-owl.github.io#InputTermConstructTreeOptionCheckBox>
+<https://doddle-owl.github.io#InputTermHierarchyConstructionOptionCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Input Term Construct Tree Option"@en , "入力用語と対応する階層構築オプション"@ja ;
+                "Input Term Hierarchy Construction Option"@en , "入力用語と対応する階層構築オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3728,20 +3728,20 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロジェクトフォルダ" .
 
-<https://doddle-owl.github.io#ClassTreeConstructionPanel>
+<https://doddle-owl.github.io#ClassHierarchyConstructionPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Tree Construction"@en , "クラス階層構築"@ja ;
+                "Class Hierarchy Construction"@en , "クラス階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#CLASS_HASA_ROOT> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "クラス階層構築" .
 
-<https://doddle-owl.github.io#ClassTrimmedResultAnalysisCheckBox>
+<https://doddle-owl.github.io#ClassTrimmedResultsAnalysisCheckBox>
         a       <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Class Trimmed Result Analysis"@en , "クラスの剪定結果分析"@ja ;
+                "Class Trimmed Results Analysis"@en , "クラスの剪定結果分析"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#ProjectItemCheckBox> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
@@ -3826,7 +3826,7 @@
                 "Cut Concept"@en , "概念の切り取り"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Action> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> , <https://doddle-owl.github.io#HasaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> , <https://doddle-owl.github.io#HasaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "概念の切り取り" .
 
@@ -3881,7 +3881,7 @@
                 "Partial Match Options"@en , "部分照合オプション"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Border> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "部分照合オプション" .
 
@@ -3931,16 +3931,16 @@
                 "Construction"@en , "構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#TreeConstructionOptionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#HierarchyConstructionOptionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "構築" .
 
-<https://doddle-owl.github.io#PropertyTreeConstructionPanel>
+<https://doddle-owl.github.io#PropertyHierarchyConstructionPanel>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Property Tree Construction"@en , "プロパティ階層構築"@ja ;
+                "Property Hierarchy Construction"@en , "プロパティ階層構築"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
-                <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+                <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#CLASS_HASA_ROOT> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "プロパティ階層構築" .
@@ -3991,12 +3991,12 @@
 <https://doddle-owl.github.io#GenericEDRCheckBox>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "EDR (Generic)"@en , "EDR 一般辞書"@ja ;
+                "EDR Electronic Dictionary"@en , "EDR 電子化辞書"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#CheckBox> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#GenericOntologySelectionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
-                "EDR 一般辞書" .
+                "EDR 電子化辞書" .
 
 <https://doddle-owl.github.io#AddCorrectConceptPairButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
@@ -4014,7 +4014,7 @@
                 "Unmatched Terms"@en , "未照合語"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Panel> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> , <https://doddle-owl.github.io#ConceptTreeConstructionPanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#DisambiguationPanel> , <https://doddle-owl.github.io#ConceptHierarchyConstructionPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "未照合語" .
 
@@ -4038,10 +4038,10 @@
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "Webオントロジーフォルダ" .
 
-<https://doddle-owl.github.io#TrimmedResultAnalysisButton>
+<https://doddle-owl.github.io#TrimmedResultsAnalysisButton>
         a                               <http://www.w3.org/2002/07/owl#Class> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "Trimmed Result Analysis"@en , "剪定結果分析"@ja ;
+                "Trimmed Results Analysis"@en , "剪定結果分析"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#Button> ;
         <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#ConceptDriftManagementPanel> ;
@@ -4072,7 +4072,7 @@
                 "Delete Link To Upper Concept"@en , "上位概念へのリンクを削除"@ja ;
         <http://www.w3.org/2000/01/rdf-schema#subClassOf>
                 <https://doddle-owl.github.io#RemoveAction> ;
-        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptTreePanel> , <https://doddle-owl.github.io#HasaConceptTreePanel> ;
+        <https://doddle-owl.github.io#partOf>  <https://doddle-owl.github.io#IsaConceptHierarchyPanel> , <https://doddle-owl.github.io#HasaConceptHierarchyPanel> ;
         <http://www.w3.org/2004/02/skos/core#prefLabel>
                 "上位概念へのリンクを削除" .
 

@@ -21,7 +21,7 @@
  *
  */
 
-package io.github.doddle_owl.views.concept_tree;
+package io.github.doddle_owl.views.concept_hierarchy;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLELiteral;

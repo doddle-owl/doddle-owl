@@ -31,15 +31,15 @@ import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.FreeMindFileFilter;
 import io.github.doddle_owl.models.common.TurtleFileFilter;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.utils.FreeMindModelMaker;
 import io.github.doddle_owl.utils.JenaModelMaker;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.ConceptTreePanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ConceptHierarcyPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -78,26 +78,26 @@ public class SaveOntologyAction extends AbstractAction {
     }
 
     private static Model getOntology(DODDLEProjectPanel currentProject) {
-        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
-        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+        ClassHierarchyConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyHierarchyConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         ConceptDefinitionPanel conceptDefinitionPanel = currentProject.getConceptDefinitionPanel();
 
         Model ontology = JenaModelMaker.makeClassModel(constructClassPanel.getIsaTreeModelRoot(),
-                ModelFactory.createDefaultModel(), ConceptTreePanel.CLASS_ISA_TREE);
+                ModelFactory.createDefaultModel(), ConceptHierarcyPanel.ISA_CLASS_HIERARCHY);
         JenaModelMaker.makeClassModel(constructClassPanel.getHasaTreeModelRoot(), ontology,
-                ConceptTreePanel.CLASS_HASA_TREE);
+                ConceptHierarcyPanel.HASA_CLASS_HIERARCHY);
         JenaModelMaker.makePropertyModel(constructPropertyPanel.getIsaTreeModelRoot(), ontology,
-                ConceptTreePanel.PROPERTY_ISA_TREE);
+                ConceptHierarcyPanel.ISA_PROPERTY_HIERARCHY);
         JenaModelMaker.makePropertyModel(constructPropertyPanel.getHasaTreeModelRoot(), ontology,
-                ConceptTreePanel.PROPERTY_HASA_TREE);
+                ConceptHierarcyPanel.HASA_PROPERTY_HIERARCHY);
         conceptDefinitionPanel.addConceptDefinition(ontology);
         return ontology;
     }
 
     private void saveFreeMindOntology(DODDLEProjectPanel project, File file) {
         try {
-            ClassTreeConstructionPanel constructClassPanel = project.getConstructClassPanel();
-            PropertyTreeConstructionPanel constructPropertyPanel = project.getConstructPropertyPanel();
+            ClassHierarchyConstructionPanel constructClassPanel = project.getConstructClassPanel();
+            PropertyHierarchyConstructionPanel constructPropertyPanel = project.getConstructPropertyPanel();
 
             DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docbuilder = dbfactory.newDocumentBuilder();

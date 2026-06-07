@@ -30,8 +30,8 @@ import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.UndoManager;
 import io.github.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
 import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 import io.github.doddle_owl.views.document_selection.DocumentSelectionPanel;
 import io.github.doddle_owl.views.reference_ontology_selection.ReferenceOntologySelectionPanel;
 import io.github.doddle_owl.views.term_selection.TermSelectionPanel;
@@ -60,8 +60,8 @@ public class DODDLEProjectPanel extends JPanel {
     private DocumentSelectionPanel documentSelectionPanel;
     private TermSelectionPanel termSelectionPanel;
     private ConceptSelectionPanel conceptSelectionPanel;
-    private ClassTreeConstructionPanel constructClassPanel;
-    private PropertyTreeConstructionPanel constructPropertyPanel;
+    private ClassHierarchyConstructionPanel constructClassPanel;
+    private PropertyHierarchyConstructionPanel constructPropertyPanel;
     private ConceptDefinitionPanel conceptDefinitionPanel;
 
     private int userIDCount;
@@ -89,9 +89,9 @@ public class DODDLEProjectPanel extends JPanel {
             logList = new ArrayList<>();
 
             addLog("NewProjectAction");
-            constructClassPanel = new ClassTreeConstructionPanel(this);
+            constructClassPanel = new ClassHierarchyConstructionPanel(this);
             ontologySelectionPanel = new ReferenceOntologySelectionPanel();
-            constructPropertyPanel = new PropertyTreeConstructionPanel(this);
+            constructPropertyPanel = new PropertyHierarchyConstructionPanel(this);
             conceptSelectionPanel = new ConceptSelectionPanel(constructClassPanel, constructPropertyPanel, this);
             termSelectionPanel = new TermSelectionPanel(conceptSelectionPanel);
             documentSelectionPanel = new DocumentSelectionPanel(termSelectionPanel, this);
@@ -103,8 +103,8 @@ public class DODDLEProjectPanel extends JPanel {
             rootTabbedPane.addTab(Translator.getTerm("DocumentSelectionTab"), documentSelectionPanel);
             rootTabbedPane.addTab(Translator.getTerm("TermSelectionTab"), termSelectionPanel);
             rootTabbedPane.addTab(Translator.getTerm("ConceptSelectionTab"), conceptSelectionPanel);
-            rootTabbedPane.addTab(Translator.getTerm("ClassTreeConstructionTab"), constructClassPanel);
-            rootTabbedPane.addTab(Translator.getTerm("PropertyTreeConstructionTab"), constructPropertyPanel);
+            rootTabbedPane.addTab(Translator.getTerm("ClassHierarchyConstructionTab"), constructClassPanel);
+            rootTabbedPane.addTab(Translator.getTerm("PropertyHierarchyConstructionTab"), constructPropertyPanel);
             rootTabbedPane.addTab(Translator.getTerm("RelationConstructionTab"), conceptDefinitionPanel);
             setLayout(new BorderLayout());
             add(rootTabbedPane, BorderLayout.CENTER);
@@ -247,11 +247,11 @@ public class DODDLEProjectPanel extends JPanel {
         return conceptSelectionPanel.makeInputTermModel(iw);
     }
 
-    public PropertyTreeConstructionPanel getConstructPropertyPanel() {
+    public PropertyHierarchyConstructionPanel getConstructPropertyPanel() {
         return constructPropertyPanel;
     }
 
-    public ClassTreeConstructionPanel getConstructClassPanel() {
+    public ClassHierarchyConstructionPanel getConstructClassPanel() {
         return constructClassPanel;
     }
 

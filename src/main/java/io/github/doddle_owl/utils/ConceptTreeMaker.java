@@ -29,14 +29,14 @@ import org.apache.jena.vocabulary.RDFS;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
-import io.github.doddle_owl.models.concept_tree.VerbConcept;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.VerbConcept;
 import io.github.doddle_owl.models.ontology_api.EDRTree;
 import io.github.doddle_owl.models.ontology_api.JaWordNetTree;
 import io.github.doddle_owl.models.ontology_api.WordNet;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.DODDLE_OWL;
-import io.github.doddle_owl.views.concept_tree.ConceptTreePanel;
+import io.github.doddle_owl.views.concept_hierarchy.ConceptHierarcyPanel;
 import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -481,12 +481,12 @@ public class ConceptTreeMaker {
     public TreeNode getConceptTreeRoot(DODDLEProjectPanel currentProject, Model model, Resource rootResource, String type) {
         Concept rootConcept = null;
         Property property = null;
-        if (type.equals(ConceptTreePanel.CLASS_ISA_TREE)) {
+        if (type.equals(ConceptHierarcyPanel.ISA_CLASS_HIERARCHY)) {
             property = RDFS.subClassOf;
             rootConcept = new VerbConcept(DODDLE_CLASS_ROOT_URI, "");
             rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (Is-a)"));
             rootConcept.addLabel(new DODDLELiteral("en", "Is-a Root Class"));
-        } else if (type.equals(ConceptTreePanel.CLASS_HASA_TREE)) {
+        } else if (type.equals(ConceptHierarcyPanel.HASA_CLASS_HIERARCHY)) {
             property = DODDLE_OWL.HASA_PROPERTY;
             rootConcept = new VerbConcept(DODDLE_CLASS_HASA_ROOT_URI, "");
             rootConcept.addLabel(new DODDLELiteral("ja", "名詞的概念 (has-a)"));
@@ -523,15 +523,15 @@ public class ConceptTreeMaker {
         return rootNode;
     }
 
-    public TreeNode getPropertyTreeRoot(DODDLEProjectPanel currentProject, Model model, Resource rootResource, String type) {
+    public TreeNode getPropertyHierarchyRoot(DODDLEProjectPanel currentProject, Model model, Resource rootResource, String type) {
         Concept rootProperty = null;
         Property property = null;
-        if (type.equals(ConceptTreePanel.PROPERTY_ISA_TREE)) {
+        if (type.equals(ConceptHierarcyPanel.ISA_PROPERTY_HIERARCHY)) {
             property = RDFS.subPropertyOf;
             rootProperty = new VerbConcept(DODDLE_PROPERTY_ROOT_URI, "");
             rootProperty.addLabel(new DODDLELiteral("ja", "動詞的概念"));
             rootProperty.addLabel(new DODDLELiteral("en", "Root Property"));
-        } else if (type.equals(ConceptTreePanel.PROPERTY_HASA_TREE)) {
+        } else if (type.equals(ConceptHierarcyPanel.HASA_PROPERTY_HIERARCHY)) {
             property = DODDLE_OWL.HASA_PROPERTY;
             rootProperty = new VerbConcept(DODDLE_PROPERTY_HASA_ROOT_URI, "");
             rootProperty.addLabel(new DODDLELiteral("ja", "動詞的概念 (has-a)"));

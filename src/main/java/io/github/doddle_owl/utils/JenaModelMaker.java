@@ -34,10 +34,10 @@ import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
-import io.github.doddle_owl.models.concept_tree.VerbConcept;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.VerbConcept;
 import io.github.doddle_owl.models.reference_ontology_selection.ReferenceWebOntology;
-import io.github.doddle_owl.views.concept_tree.ConceptTreePanel;
+import io.github.doddle_owl.views.concept_hierarchy.ConceptHierarcyPanel;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -92,9 +92,9 @@ public class JenaModelMaker {
     }
 
     private static void addClassStatement(String type, Model ontology, Resource child, Resource parent) {
-        if (type.equals(ConceptTreePanel.CLASS_ISA_TREE)) {
+        if (type.equals(ConceptHierarcyPanel.ISA_CLASS_HIERARCHY)) {
             ontology.add(child, RDFS.subClassOf, parent);
-        } else if (type.equals(ConceptTreePanel.CLASS_HASA_TREE)) {
+        } else if (type.equals(ConceptHierarcyPanel.HASA_CLASS_HIERARCHY)) {
             ontology.add(child, DODDLE_OWL.HASA_PROPERTY, parent);
         }
     }
@@ -133,9 +133,9 @@ public class JenaModelMaker {
     }
 
     private static void addPropertyStatement(String type, Model ontology, Resource child, Resource parent) {
-        if (type.equals(ConceptTreePanel.PROPERTY_ISA_TREE)) {
+        if (type.equals(ConceptHierarcyPanel.ISA_PROPERTY_HIERARCHY)) {
             ontology.add(child, RDFS.subPropertyOf, parent);
-        } else if (type.equals(ConceptTreePanel.PROPERTY_HASA_TREE)) {
+        } else if (type.equals(ConceptHierarcyPanel.HASA_PROPERTY_HIERARCHY)) {
             ontology.add(child, DODDLE_OWL.HASA_PROPERTY, parent);
         }
     }

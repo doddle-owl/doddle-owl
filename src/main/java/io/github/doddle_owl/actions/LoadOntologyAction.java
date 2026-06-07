@@ -31,17 +31,17 @@ import io.github.doddle_owl.models.common.DODDLELiteral;
 import io.github.doddle_owl.models.common.FreeMindFileFilter;
 import io.github.doddle_owl.models.common.TurtleFileFilter;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
-import io.github.doddle_owl.models.concept_tree.VerbConcept;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.VerbConcept;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.utils.ConceptTreeMaker;
 import io.github.doddle_owl.utils.FreeMindModelMaker;
 import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
-import io.github.doddle_owl.views.concept_tree.ConceptTreePanel;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ConceptHierarcyPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -73,8 +73,8 @@ public class LoadOntologyAction extends AbstractAction {
     private void loadFreeMindOntology(DODDLEProjectPanel currentProject, File file) {
         ConceptSelectionPanel conceptSelectionPanel = currentProject
                 .getConceptSelectionPanel();
-        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
-        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+        ClassHierarchyConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyHierarchyConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
         if (!file.exists()) {
             return;
@@ -149,8 +149,8 @@ public class LoadOntologyAction extends AbstractAction {
     private void loadWebOntology(DODDLEProjectPanel currentProject, Model model) {
         ConceptSelectionPanel conceptSelectionPanel = currentProject
                 .getConceptSelectionPanel();
-        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
-        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+        ClassHierarchyConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyHierarchyConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
 
         constructClassPanel.initialize();
         constructPropertyPanel.initialize();
@@ -161,7 +161,7 @@ public class LoadOntologyAction extends AbstractAction {
         currentProject.initUserIDCount();
         TreeNode rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject,
                 model, ResourceFactory.createResource(ConceptTreeMaker.DODDLE_CLASS_ROOT_URI),
-                ConceptTreePanel.CLASS_ISA_TREE);
+                ConceptHierarcyPanel.ISA_CLASS_HIERARCHY);
         DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
         treeModel = constructClassPanel.setConceptTreeModel(treeModel);
         constructClassPanel.setVisibleIsaTree(true);
@@ -172,16 +172,16 @@ public class LoadOntologyAction extends AbstractAction {
 
         rootNode = ConceptTreeMaker.getInstance().getConceptTreeRoot(currentProject, model,
                 ResourceFactory.createResource(ConceptTreeMaker.DODDLE_CLASS_HASA_ROOT_URI),
-                ConceptTreePanel.CLASS_HASA_TREE);
+                ConceptHierarcyPanel.HASA_CLASS_HIERARCHY);
         treeModel = new DefaultTreeModel(rootNode);
         constructClassPanel.setHasaTreeModel(treeModel);
         constructClassPanel.setVisibleHasaTree(true);
         treeModel.reload();
 
         currentProject.setUserIDCount(currentProject.getUserIDCount());
-        rootNode = ConceptTreeMaker.getInstance().getPropertyTreeRoot(currentProject, model,
+        rootNode = ConceptTreeMaker.getInstance().getPropertyHierarchyRoot(currentProject, model,
                 ResourceFactory.createResource(ConceptTreeMaker.DODDLE_PROPERTY_ROOT_URI),
-                ConceptTreePanel.PROPERTY_ISA_TREE);
+                ConceptHierarcyPanel.ISA_PROPERTY_HIERARCHY);
         treeModel = new DefaultTreeModel(rootNode);
         treeModel = constructPropertyPanel.setConceptTreeModel(treeModel);
         constructPropertyPanel.setVisibleIsaTree(true);
@@ -189,9 +189,9 @@ public class LoadOntologyAction extends AbstractAction {
         constructPropertyPanel.setConceptDriftManagementResult();
         treeModel.reload();
 
-        rootNode = ConceptTreeMaker.getInstance().getPropertyTreeRoot(currentProject, model,
+        rootNode = ConceptTreeMaker.getInstance().getPropertyHierarchyRoot(currentProject, model,
                 ResourceFactory.createResource(ConceptTreeMaker.DODDLE_PROPERTY_HASA_ROOT_URI),
-                ConceptTreePanel.PROPERTY_HASA_TREE);
+                ConceptHierarcyPanel.HASA_PROPERTY_HIERARCHY);
         treeModel = new DefaultTreeModel(rootNode);
         constructPropertyPanel.setHasaTreeModel(treeModel);
         constructPropertyPanel.setVisibleHasaTree(true);

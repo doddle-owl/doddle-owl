@@ -33,8 +33,8 @@ import io.github.doddle_owl.utils.Translator;
 import io.github.doddle_owl.utils.Utils;
 import io.github.doddle_owl.views.concept_definition.ConceptDefinitionPanel;
 import io.github.doddle_owl.views.concept_selection.ConceptSelectionPanel;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 import io.github.doddle_owl.views.document_selection.DocumentSelectionPanel;
 import io.github.doddle_owl.views.reference_ontology_selection.ReferenceOntologySelectionPanel;
 import io.github.doddle_owl.views.term_selection.TermSelectionPanel;
@@ -250,8 +250,8 @@ public class OpenProjectAction extends AbstractAction {
                         ProjectFileNames.ONTOLOGY_FILE));
                 setProgress(currentTaskCnt++);
 
-                ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
-                PropertyTreeConstructionPanel constructPropertyPanel = currentProject
+                ClassHierarchyConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+                PropertyHierarchyConstructionPanel constructPropertyPanel = currentProject
                         .getConstructPropertyPanel();
                 constructClassPanel.getConceptDriftManagementPanel().loadTrimmedResultAnalysis(
                         new File(openDir, ProjectFileNames.CLASS_TRIMMED_RESULT_ANALYSIS_FILE));

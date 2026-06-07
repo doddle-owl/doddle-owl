@@ -25,8 +25,8 @@ package io.github.doddle_owl.views.common;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.utils.Translator;
 
@@ -84,7 +84,7 @@ public class ConceptSelectionDialog extends JDialog implements ActionListener, L
             mainPanel.add(predefinedRelationJList, BorderLayout.EAST);
         }
 
-        expandButton = new JButton(Translator.getTerm("ExpandConceptTreeButton"));
+        expandButton = new JButton(Translator.getTerm("ExpandConceptHierarchyButton"));
         expandButton.addActionListener(this);
         applyButton = new JButton(Translator.getTerm("OKButton"));
         applyButton.addActionListener(this);

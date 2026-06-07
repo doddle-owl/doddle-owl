@@ -21,14 +21,14 @@
  *
  */
 
-package io.github.doddle_owl.views.concept_tree;
+package io.github.doddle_owl.views.concept_hierarchy;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
 import io.github.doddle_owl.models.concept_selection.Concept;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeCellRenderer;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
-import io.github.doddle_owl.models.concept_tree.VerbConcept;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeCellRenderer;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.VerbConcept;
 import io.github.doddle_owl.models.ontology_api.EDR;
 import io.github.doddle_owl.models.ontology_api.EDRTree;
 import io.github.doddle_owl.utils.WebOntologyManager;
@@ -50,7 +50,7 @@ import java.util.Set;
 /**
  * @author Takeshi Morita
  */
-public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel {
+public class PropertyHierarchyConstructionPanel extends ConceptHierarchyConstructionPanel {
 
     private final EDRConceptDefinitionPanel edrConceptDefinitionPanel;
 
@@ -65,25 +65,25 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         edrConceptDefinitionPanel.init();
     }
 
-    public PropertyTreeConstructionPanel(DODDLEProjectPanel p) {
+    public PropertyHierarchyConstructionPanel(DODDLEProjectPanel p) {
         project = p;
         unmatchedTermListPanel = new UnmatchedTermListPanel();
-        isaTreePanel = new ConceptTreePanel(Translator.getTerm("IsaTreeBorder"), ConceptTreePanel.PROPERTY_ISA_TREE,
+        isaHierarchyPanel = new ConceptHierarcyPanel(Translator.getTerm("IsaHierarchyBorder"), ConceptHierarcyPanel.ISA_PROPERTY_HIERARCHY,
                 unmatchedTermListPanel, project);
-        hasaTreePanel = new ConceptTreePanel(Translator.getTerm("HasaTreeBorder"), ConceptTreePanel.PROPERTY_HASA_TREE,
+        hasaHierarchyPanel = new ConceptHierarcyPanel(Translator.getTerm("HasaHierarchyBorder"), ConceptHierarcyPanel.HASA_PROPERTY_HIERARCHY,
                 unmatchedTermListPanel, p);
-        isaTreePanel.setHasaTree(hasaTreePanel.getConceptTree());
+        isaHierarchyPanel.setHasaTree(hasaHierarchyPanel.getConceptTree());
         edrConceptDefinitionPanel = new EDRConceptDefinitionPanel(p);
         conceptDriftManagementPanel = new ConceptDriftManagementPanel(ConceptTreeCellRenderer.VERB_CONCEPT_TREE,
-                isaTreePanel.getConceptTree(), project);
-        isaTreePanel.setConceptDriftManagementPanel(conceptDriftManagementPanel);
-        conceptInfoPanel = new ConceptInformationPanel(isaTreePanel.getConceptTree(), hasaTreePanel.getConceptTree(),
+                isaHierarchyPanel.getConceptTree(), project);
+        isaHierarchyPanel.setConceptDriftManagementPanel(conceptDriftManagementPanel);
+        conceptInfoPanel = new ConceptInformationPanel(isaHierarchyPanel.getConceptTree(), hasaHierarchyPanel.getConceptTree(),
                 new ConceptTreeCellRenderer(ConceptTreeCellRenderer.VERB_CONCEPT_TREE), edrConceptDefinitionPanel,
                 conceptDriftManagementPanel);
 
         var treeTabbedPane = new JTabbedPane();
-        treeTabbedPane.addTab(Translator.getTerm("IsaConceptTreePanel"), null, isaTreePanel);
-        treeTabbedPane.addTab(Translator.getTerm("HasaConceptTreePanel"), null, hasaTreePanel);
+        treeTabbedPane.addTab(Translator.getTerm("IsaConceptHierarchyPanel"), null, isaHierarchyPanel);
+        treeTabbedPane.addTab(Translator.getTerm("HasaConceptHierarchyPanel"), null, hasaHierarchyPanel);
 
         var leftSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         leftSplitPane.setBorder(Utils.createEmptyBorder());
@@ -113,17 +113,17 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
     }
 
     public void addCompoundWordConcept(Map matchedWordIDMap, Map abstractNodeLabelMap, TreeNode rootNode) {
-        DefaultTreeModel model = (DefaultTreeModel) isaTreePanel.getConceptTree().getModel();
+        DefaultTreeModel model = (DefaultTreeModel) isaHierarchyPanel.getConceptTree().getModel();
         ConceptTreeNode conceptTreeRootNode = (ConceptTreeNode) model.getRoot();
-        isaTreePanel.addCompoundWordConcept(matchedWordIDMap, rootNode, conceptTreeRootNode, abstractNodeLabelMap);
+        isaHierarchyPanel.addCompoundWordConcept(matchedWordIDMap, rootNode, conceptTreeRootNode, abstractNodeLabelMap);
         // DODDLE.getLogger().info("追加した抽象中間ノード数: " +
         // isaTreePanel.getAbstractNodeCnt());
-        addedAbstractCompoundConceptCnt = isaTreePanel.getAbstractConceptCnt();
+        addedAbstractCompoundConceptCnt = isaHierarchyPanel.getAbstractConceptCnt();
         DODDLE_OWL.getLogger().info(Translator.getTerm("AbstractInternalPropertyCountMessage") + ": " + addedAbstractCompoundConceptCnt);
         if (addedAbstractCompoundConceptCnt == 0) {
             averageAbstracCompoundConceptGroupSiblingConceptCnt = 0;
         } else {
-            averageAbstracCompoundConceptGroupSiblingConceptCnt = isaTreePanel
+            averageAbstracCompoundConceptGroupSiblingConceptCnt = isaHierarchyPanel
                     .getTotalAbstractNodeGroupSiblingNodeCnt()
                     / addedAbstractCompoundConceptCnt;
         }
@@ -135,7 +135,7 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
     public TreeModel getTreeModel(Set<String> nounURISet, Set<Concept> verbConceptSet, String type) {
         Set<List<Concept>> pathSet = treeMaker.getPathListSet(verbConceptSet);
         trimmedConceptNum = 0;
-        TreeModel propertyTreeModel = treeMaker.getTrimmedTreeModel(pathSet, project, type);
+        TreeModel propertyHierarchyModel = treeMaker.getTrimmedTreeModel(pathSet, project, type);
         trimmedConceptNum = treeMaker.getTrimmedConceptNum();
         beforeTrimmingConceptNum = treeMaker.getBeforeTrimmingConceptNum();
         if (beforeTrimmingConceptNum != 1) {
@@ -148,9 +148,9 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         DODDLE_OWL.getLogger().info(Translator.getTerm("BeforeTrimmingPropertyCountMessage") + ": " + beforeTrimmingConceptNum);
         DODDLE_OWL.getLogger().info(Translator.getTerm("TrimmedPropertyCountMessage") + ": " + trimmedConceptNum);
 
-        setRegion(propertyTreeModel, nounURISet);
-        isaTreePanel.checkAllMultipleInheritanceNode(propertyTreeModel);
-        return propertyTreeModel;
+        setRegion(propertyHierarchyModel, nounURISet);
+        isaHierarchyPanel.checkAllMultipleInheritanceNode(propertyHierarchyModel);
+        return propertyHierarchyModel;
     }
 
     /**
@@ -224,8 +224,8 @@ public class PropertyTreeConstructionPanel extends ConceptTreeConstructionPanel 
         c.addAllRange(refineRegion(rangeSet, nounURISet));
     }
 
-    private void setRegion(TreeModel propertyTreeModel, Set<String> nounURISet) {
-        TreeNode rootNode = (TreeNode) propertyTreeModel.getRoot();
+    private void setRegion(TreeModel propertyHierarchyModel, Set<String> nounURISet) {
+        TreeNode rootNode = (TreeNode) propertyHierarchyModel.getRoot();
         setRegion(rootNode, nounURISet);
     }
 }

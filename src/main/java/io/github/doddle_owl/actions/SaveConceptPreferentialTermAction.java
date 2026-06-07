@@ -26,8 +26,8 @@ package io.github.doddle_owl.actions;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLEConstants;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -47,8 +47,8 @@ public class SaveConceptPreferentialTermAction extends AbstractAction {
     }
 
     public void saveIDPreferentialTerm(DODDLEProjectPanel currentProject, File file) {
-        ClassTreeConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
-        PropertyTreeConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
+        ClassHierarchyConstructionPanel constructClassPanel = currentProject.getConstructClassPanel();
+        PropertyHierarchyConstructionPanel constructPropertyPanel = currentProject.getConstructPropertyPanel();
         try {
 
             Map uriPreferentialTermMap = constructClassPanel.getIDPreferentialTermMap();

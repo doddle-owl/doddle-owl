@@ -35,7 +35,7 @@ import io.github.doddle_owl.models.concept_selection.Concept;
 import io.github.doddle_owl.models.concept_selection.EvalConcept;
 import io.github.doddle_owl.models.concept_selection.InputModule;
 import io.github.doddle_owl.models.concept_selection.TreeConstructionOption;
-import io.github.doddle_owl.models.concept_tree.ConceptTreeNode;
+import io.github.doddle_owl.models.concept_hierarchy.ConceptTreeNode;
 import io.github.doddle_owl.models.ontology_api.EDRTree;
 import io.github.doddle_owl.models.ontology_api.JaWordNetTree;
 import io.github.doddle_owl.models.ontology_api.ReferenceOntology;
@@ -44,8 +44,8 @@ import io.github.doddle_owl.models.term_selection.TermModel;
 import io.github.doddle_owl.views.DODDLEProjectPanel;
 import io.github.doddle_owl.views.OptionDialog;
 import io.github.doddle_owl.views.common.UnmatchedTermListPanel;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 import io.github.doddle_owl.views.document_selection.DocumentSelectionPanel;
 
 import javax.swing.*;
@@ -136,8 +136,8 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
     private final JTree aroundConceptTree;
 
     private final InputModule inputModule;
-    private final ClassTreeConstructionPanel constructClassPanel;
-    private final PropertyTreeConstructionPanel constructPropertyPanel;
+    private final ClassHierarchyConstructionPanel constructClassPanel;
+    private final PropertyHierarchyConstructionPanel constructPropertyPanel;
 
     private final ConstructionTypePanel constructionTypePanel;
     private final ExactlyMatchedOptionPanel exactlyMatchedOptionsPanel;
@@ -214,7 +214,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         descriptionPanel.clearData();
     }
 
-    public ConceptSelectionPanel(ClassTreeConstructionPanel tp, PropertyTreeConstructionPanel pp,
+    public ConceptSelectionPanel(ClassHierarchyConstructionPanel tp, PropertyHierarchyConstructionPanel pp,
                                  DODDLEProjectPanel p) {
         project = p;
         constructClassPanel = tp;
@@ -244,7 +244,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         constructTreeOptionPanel = new JPanel();
         constructTreeOptionPanel.setLayout(new BorderLayout());
         constructTreeOptionPanel.setBorder(BorderFactory.createTitledBorder(Translator
-                .getTerm("TreeConstructionOptionBorder")));
+                .getTerm("HierarchyConstructionOptionBorder")));
         partialMatchConstructTreeOptionPanel = new JPanel();
         partialMatchConstructTreeOptionPanel.setLayout(new GridLayout(1, 2));
         partialMatchConstructTreeOptionPanel.add(addAsSameConceptRadioButton);
@@ -286,7 +286,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         highlightInputTermCheckBox.addActionListener(this);
 
         showAroundConceptTreeCheckBox = new JCheckBox(
-                Translator.getTerm("ShowConceptTreeCheckBox"), true);
+                Translator.getTerm("ShowConceptHierarchyCheckBox"), true);
         showAroundConceptTreeCheckBox.addActionListener(this);
 
         TreeModel aroundConceptTreeModel = new DefaultTreeModel(null);
@@ -300,7 +300,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
         treePanel.setLayout(new BorderLayout());
         treePanel.add(aroundConceptTreeScroll, BorderLayout.CENTER);
         treePanel.add(showAroundConceptTreeCheckBox, BorderLayout.SOUTH);
-        treePanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptTreePanel")));
+        treePanel.setBorder(BorderFactory.createTitledBorder(Translator.getTerm("ConceptHierarchyPanel")));
 
         JPanel documentPanel = new JPanel();
         documentPanel.setLayout(new BorderLayout());
@@ -466,8 +466,7 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             group.add(addButton);
             add(newButton);
             add(addButton);
-            setBorder(BorderFactory.createTitledBorder(Translator
-                    .getTerm("TreeConstructionOptionBorder")));
+            setBorder(BorderFactory.createTitledBorder(Translator.getTerm("HierarchyConstructionOptionBorder")));
         }
 
         public boolean isNewConstruction() {
@@ -844,13 +843,13 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             if (keyWord.length() == 0) {
                 exactlyMatchedTermJList.setListData(exactlyMatchedTermModelSet.toArray());
                 exactlyMatchedTermJListTitle.setTitle(Translator
-                        .getTerm("ExactMatchTermList")
+                        .getTerm("ExactlyMatchedTermList")
                         + " ("
                         + exactlyMatchedTermModelSet.size() + ")");
 
                 partiallyMatchedTermJList.setListData(partiallyMatchedTermModelSet.toArray());
                 partiallyMatchedTermJListTitle.setTitle(Translator
-                        .getTerm("PartialMatchTermList")
+                        .getTerm("PartiallyMatchedTermList")
                         + " ("
                         + partiallyMatchedTermModelSet.size() + ")");
             } else {
@@ -1457,11 +1456,11 @@ public class ConceptSelectionPanel extends JPanel implements ListSelectionListen
             }
         }
         exactlyMatchedTermJList.setListData(exactlyMatchedTermModelSet.toArray());
-        exactlyMatchedTermJListTitle.setTitle(Translator.getTerm("ExactMatchTermList")
+        exactlyMatchedTermJListTitle.setTitle(Translator.getTerm("ExactlyMatchedTermList")
                 + " (" + exactlyMatchedTermModelSet.size() + ")");
 
         partiallyMatchedTermJList.setListData(partiallyMatchedTermModelSet.toArray());
-        partiallyMatchedTermJListTitle.setTitle(Translator.getTerm("PartialMatchTermList")
+        partiallyMatchedTermJListTitle.setTitle(Translator.getTerm("PartiallyMatchedTermList")
                 + " (" + partiallyMatchedTermModelSet.size() + ")");
 
         termConceptSetMap = inputModule.getTermConceptSetMap();

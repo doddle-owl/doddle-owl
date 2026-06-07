@@ -86,16 +86,24 @@ public class Translator {
     }
 
     public static String getTerm(String key) {
-        return uriTermMap.get(DODDLEConstants.DODDLE_URI + key); // BASE_URIは変化することがあるため，DODDLE_URIを用いる
+        String term = uriTermMap.getOrDefault(DODDLEConstants.DODDLE_URI + key, "FAILED");
+        if (term.equals("FAILED")) {
+            System.err.println(key);
+        }
+        return term;
     }
 
     public static String getDescription(String key) {
-        return uriDescriptionMap.get(DODDLEConstants.DODDLE_URI + key); // BASE_URIは変化することがあるため，DODDLE_URIを用いる
+        String description = uriDescriptionMap.getOrDefault(DODDLEConstants.DODDLE_URI + key, "FAILED");
+        if (description.equals("FAILED")) {
+            System.err.println(key);
+        }
+        return description;
     }
 
     public static void main(String[] args) {
         Translator.loadDODDLEComponentOntology("ja");
-        System.out.println(Translator.getTerm("PropertyTreeConstructionPanel"));
+        System.out.println(Translator.getTerm("PropertyHierarchyConstructionPanel"));
         System.out.println(Translator.getTerm("RangeLabel"));
         System.out.println(Translator.getTerm("RemoveCorrectConceptPairButton"));
     }

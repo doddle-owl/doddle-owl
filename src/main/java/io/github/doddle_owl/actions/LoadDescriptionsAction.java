@@ -25,8 +25,8 @@ package io.github.doddle_owl.actions;
 
 import io.github.doddle_owl.DODDLE_OWL;
 import io.github.doddle_owl.models.common.DODDLELiteral;
-import io.github.doddle_owl.views.concept_tree.ClassTreeConstructionPanel;
-import io.github.doddle_owl.views.concept_tree.PropertyTreeConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.ClassHierarchyConstructionPanel;
+import io.github.doddle_owl.views.concept_hierarchy.PropertyHierarchyConstructionPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -48,8 +48,8 @@ public class LoadDescriptionsAction extends AbstractAction {
         JFileChooser chooser = new JFileChooser();
         int retval = chooser.showOpenDialog(DODDLE_OWL.rootPane);
         if (retval != JFileChooser.APPROVE_OPTION) { return; }
-        ClassTreeConstructionPanel classPanel = DODDLE_OWL.getCurrentProject().getConstructClassPanel();
-        PropertyTreeConstructionPanel propertyPanel = DODDLE_OWL.getCurrentProject().getConstructPropertyPanel();
+        ClassHierarchyConstructionPanel classPanel = DODDLE_OWL.getCurrentProject().getConstructClassPanel();
+        PropertyHierarchyConstructionPanel propertyPanel = DODDLE_OWL.getCurrentProject().getConstructPropertyPanel();
 
         Map<String, DODDLELiteral> classWordDescriptionMap = new HashMap<>();
         Map<String, DODDLELiteral> propertyWordDescriptionMap = new HashMap<>();
